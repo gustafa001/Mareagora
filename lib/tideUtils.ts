@@ -3,7 +3,8 @@ export type TideDay = { data: string; mares: TideEvent[] };
 
 // Retorna os eventos de maré da data mais próxima do dia atual a partir do JSON do porto
 export function getTodayTides(portData: { eventos: TideDay[] }): { tides: TideEvent[], date: string } {
-  const today = new Date().toISOString().split('T')[0];
+  const now = new Date();
+  const today = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
   const day = portData.eventos.find(e => e.data === today);
   
   if (day) return { tides: day.mares, date: today };

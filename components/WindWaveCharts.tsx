@@ -75,11 +75,15 @@ export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
 
 const styles = {
   sectionTitle: {
-    color: "var(--sand, #E8D5A3)",
-    fontSize: 18,
-    fontWeight: 700,
-    letterSpacing: "-0.3px",
-    marginBottom: 16,
+    color: "var(--white)",
+    fontSize: 14,
+    fontWeight: 800,
+    letterSpacing: "0.15em",
+    marginBottom: 24,
+    textTransform: "uppercase" as const,
+    fontFamily: "var(--font-fira-code)",
+    textAlign: "center" as const,
+    opacity: 0.9,
   } as React.CSSProperties,
   grid: {
     display: "grid",

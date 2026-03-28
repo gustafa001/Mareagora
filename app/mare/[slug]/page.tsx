@@ -9,6 +9,7 @@ import WavesCard from '@/components/WavesCard';
 import ForecastStrip from '@/components/ForecastStrip';
 import ConditionsCard from '@/components/ConditionsCard';
 import NearbyPorts from '@/components/NearbyPorts';
+import WindWaveCharts from '@/components/WindWaveCharts';
 import Link from 'next/link';
 
 // Gera todas as rotas estáticas em build time

@@ -6,18 +6,32 @@ import { getTodayTides, tideAtMinute, getTideStatus } from '@/lib/tideUtils';
 
 type Props = {
   port: { slug: string; name: string; state: string; dataFile: string };
+  data?: any;
 };
 
-export default function TideCardLive({ port, data }: Props & { data: any }) {
+export default function TideCardLive({ port, data: initialData }: Props) {
+  const [tideData, setTideData] = useState<any>(initialData || null);
   const [height, setHeight] = useState<number | null>(null);
   const [rising, setRising] = useState<boolean>(true);
   const [nextTide, setNextTide] = useState<{ hora: string; altura_m: number; tipo?: string } | null>(null);
 
   useEffect(() => {
+    if (!tideData && port.dataFile) {
+      // Lazy fetch if data is not provided
+      const portId = port.dataFile.replace('.json', '');
+      fetch(`https://mareagora-api.onrender.com/api/mare/${portId}`)
+        .then(res => res.json())
+        .then(data => setTideData(data))
+        .catch(err => console.error(`Error fetching tide for ${port.name}:`, err));
+    }
+  }, [port.dataFile, tideData, port.name]);
+
+  useEffect(() => {
     function update() {
+      if (!tideData) return;
       const now = new Date();
       const min = now.getHours() * 60 + now.getMinutes();
-      const { tides } = getTodayTides(data);
+      const { tides } = getTodayTides(tideData);
       if (!tides || tides.length === 0) return;
 
       const h = tideAtMinute(min, tides);
@@ -30,7 +44,7 @@ export default function TideCardLive({ port, data }: Props & { data: any }) {
     update();
     const interval = setInterval(update, 60000);
     return () => clearInterval(interval);
-  }, [data]);
+  }, [tideData]);
 
   const isLoading = height === null;
 

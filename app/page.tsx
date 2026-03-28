@@ -1,6 +1,4 @@
 import { PORTS } from '@/lib/ports';
-import path from 'path';
-import fs from 'fs';
 import NavBar from '@/components/NavBar';
 import TideCardLive from '@/components/TideCardLive';
 import Link from 'next/link';
@@ -14,16 +12,6 @@ const REGION_DESC: Record<string, string> = {
   Sudeste: 'Espírito Santo, RJ e SP',
   Sul: 'Paraná, SC e Rio Grande do Sul',
 };
-
-function loadPortData(dataFile: string) {
-  try {
-    const filePath = path.join(process.cwd(), 'data', dataFile);
-    const raw = fs.readFileSync(filePath, 'utf-8');
-    return JSON.parse(raw);
-  } catch {
-    return null;
-  }
-}
 
 export default function Home() {
   const regions = ['Norte', 'Nordeste', 'Sudeste', 'Sul'];
@@ -78,7 +66,7 @@ export default function Home() {
           {/* Quick tags */}
           <div className="flex flex-wrap justify-center gap-2">
             <span className="text-[var(--muted)] text-sm self-center mr-1">Acesso rápido:</span>
-            {['porto-de-salvador','porto-do-rio-de-janeiro','porto-de-santos','porto-de-mucuripe-fortaleza','porto-de-maceio'].map(slug => {
+            {['salvador','rio-de-janeiro-fiscal','santos','porto-de-mucuripe-fortaleza','maceio'].map(slug => {
               const p = PORTS.find(x => x.slug === slug);
               if (!p) return null;
               return (
@@ -110,9 +98,8 @@ export default function Home() {
 
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
                 {regionPorts.map((port) => {
-                  const data = loadPortData(port.dataFile);
                   return (
-                    <TideCardLive key={port.slug} port={port} data={data} />
+                    <TideCardLive key={port.slug} port={port} />
                   );
                 })}
               </div>

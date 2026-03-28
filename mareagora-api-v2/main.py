@@ -13,7 +13,12 @@ app = FastAPI(title="MaréAgora API V2", description="Motor Harmônico de Marés
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://www.mareagora.com.br", "https://mareagora.com.br", "*"],
+    allow_origins=[
+        "https://www.mareagora.com.br",
+        "https://mareagora.com.br",
+        "https://mareagora-git-main-gustafa001-1772s-projects.vercel.app",
+        "http://localhost:3000"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

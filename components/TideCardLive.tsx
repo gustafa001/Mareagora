@@ -20,7 +20,7 @@ export default function TideCardLive({ port, data: initialData }: Props) {
     if (!tideData && port.dataFile) {
       // Lazy fetch if data is not provided
       const portId = port.dataFile.replace('.json', '');
-      fetch(`/api/tide/${portId}`)
+      fetch(`/api/tide/${portId}?v=2`)
         .then(res => res.json())
         .then(data => setTideData(data))
         .catch(err => console.error(`Error fetching tide for ${port.name}:`, err));

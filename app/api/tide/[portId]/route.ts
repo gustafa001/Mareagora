@@ -10,7 +10,7 @@ export async function GET(
 
   try {
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://mareagora-api.onrender.com';
-    const response = await fetch(`${apiBaseUrl}/api/mare/${portId}?start_date=${date}`, {
+    const response = await fetch(`${apiBaseUrl}/api/mare/${portId}?start_date=${date}&v=2`, {
       next: { revalidate: 3600 }, // Cache por 1 hora
     });
 

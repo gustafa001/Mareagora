@@ -66,7 +66,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
 
   // Busca dados dinamicamente da API (URL configurada via NEXT_PUBLIC_API_URL)
   const id = port.dataFile.replace('.json', '');
-  const apiUrl = `${API_BASE}/api/mare/${id}`;
+  const apiUrl = `${API_BASE}/api/mare/${id}?v=2`;
   
   let portData: any;
   try {

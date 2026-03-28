@@ -5,18 +5,20 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { PORTS } from "@/lib/ports";
 
+const normalize = (str: string) =>
+  str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+
 export default function NavBar() {
   const [search, setSearch] = useState("");
   const router = useRouter();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const query = search.trim().toLowerCase();
+    const query = normalize(search);
     if (query) {
-      // Mapeamento manual para termos comuns
+      // Mapeamento manual para termos comuns (já normalizados)
       const aliases: Record<string, string> = {
         "guaruja": "porto-de-santos",
-        "guarujá": "porto-de-santos",
         "bertioga": "porto-de-santos",
         "caraguatatuba": "porto-de-sao-sebastiao",
         "ubatuba": "porto-de-sao-sebastiao",
@@ -30,9 +32,9 @@ export default function NavBar() {
 
       // Busca por nome ou slug
       const match = PORTS.find(p => 
-        p.name.toLowerCase().includes(query) || 
+        normalize(p.name).includes(query) || 
         p.slug.includes(query) ||
-        p.state.toLowerCase() === query
+        normalize(p.state).includes(query)
       );
 
       if (match) {

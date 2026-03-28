@@ -1,25 +1,27 @@
-import requests
+import os
+import glob
 import numpy as np
 import pandas as pd
 from scipy.interpolate import PchipInterpolator
 import utide
 import json
-import os
 
 def fetch_ports():
-    resp = requests.get("https://mareagora-api.onrender.com/api/portos")
-    data = resp.json()
-    if isinstance(data, list):
-        return data
-    return data.get("portos", [])
+    # Agora buscamos nos arquivos locais restaurados
+    files = glob.glob("../temp_data/*.json")
+    ports = []
+    for f in files:
+        basename = os.path.basename(f)
+        port_id = basename.replace(".json", "")
+        ports.append({"id": port_id, "file_path": f})
+    return ports
 
-def extract_dna(port_id, lat=None):
-    url = f"https://mareagora-api.onrender.com/api/mare/{port_id}"
+def extract_dna(file_path, lat=None):
     try:
-        resp = requests.get(url, timeout=10)
-        if not resp.ok: return None
-        data = resp.json()
-    except:
+        with open(file_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception as e:
+        print(f"Erro ao ler arquivo {file_path}: {e}")
         return None
         
     times = []
@@ -29,33 +31,41 @@ def extract_dna(port_id, lat=None):
         date_str = evento["data"]
         for mare in evento.get("mares", []):
             time_str = mare["hora"]
-            dt = pd.to_datetime(f"{date_str} {time_str}")
-            times.append(dt)
-            heights.append(mare["altura_m"])
+            try:
+                dt = pd.to_datetime(f"{date_str} {time_str}")
+                times.append(dt)
+                heights.append(mare["altura_m"])
+            except:
+                continue
             
     df = pd.DataFrame({"time": times, "height": heights})
-    # Remove duplicates and MUST BE STRICTLY INCREASING
     df = df.sort_values("time").drop_duplicates(subset=["time"])
     
-    if len(df) < 100: return None
-    
-    df['timestamp'] = df['time'].astype(np.int64) // 10**9
-    
-    # Resolve strictly increasing for PCHIP
-    # Se houver timestamps idênticos, a interpolação PCHIP quebra
-    df = df.groupby('timestamp', as_index=False).mean()
-    
-    # Interpolação para hourly
-    interp = PchipInterpolator(df['timestamp'], df['height'])
-    hourly_ts = np.arange(df['timestamp'].min(), df['timestamp'].max(), 3600)
-    hourly_heights = interp(hourly_ts)
-    hourly_dates = pd.to_datetime(hourly_ts, unit='s')
-    
-    try:
-        # ResolveUTide
-        coef = utide.solve(hourly_dates, hourly_heights, lat=lat or 0, method='ols')
+    if len(df) < 50:
+        return None
         
-        # Transforma os numpy arrays em listas para o JSON
+    try:
+        # Resample para horário e interpola
+        df = df.set_index("time")
+        # Garante que temos um range contínuo
+        full_range = pd.date_range(start=df.index.min(), end=df.index.max(), freq='h')
+        df = df.reindex(full_range).interpolate(method='pchip')
+        
+        hourly_dates = df.index
+        hourly_heights = df["height"].values
+
+        if np.isnan(hourly_heights).any():
+            print(f" [AVISO] NaNs remanescentes em {file_path}")
+            return None
+
+        # Resolve UTide
+        port_lat = data.get("lat", lat or -15.0)
+        coef = utide.solve(hourly_dates, hourly_heights, 
+                           lat=port_lat, 
+                           method='ols', 
+                           conf_int='none', 
+                           Rayleigh_min=0.5) # Aumentando sensibilidade
+        
         const_dict = {
             "name": [str(x) for x in coef['name']],
             "A": [float(x) for x in coef['A']],
@@ -63,7 +73,6 @@ def extract_dna(port_id, lat=None):
             "mean": float(coef.get('mean', 0.0))
         }
         
-        # aux contém as configs do fourier e frq, precisamos salvar tbm
         if 'aux' in coef:
             aux_dict = {}
             for k, v in coef['aux'].items():
@@ -72,7 +81,7 @@ def extract_dna(port_id, lat=None):
                 elif isinstance(v, (np.float32, np.float64, float, int)):
                     aux_dict[k] = float(v)
                 elif isinstance(v, dict):
-                    aux_dict[k] = v # Assumindo simples
+                    aux_dict[k] = v
                 else:
                     aux_dict[k] = str(v)
             const_dict["aux"] = aux_dict
@@ -80,32 +89,44 @@ def extract_dna(port_id, lat=None):
         return const_dict
         
     except Exception as e:
-        print(f"Erro no UTide para {port_id}: {e}")
+        print(f"Erro no UTide para {file_path}: {e}")
         return None
 
 if __name__ == "__main__":
-    print("Mapeando Portos do Brasil...")
+    print("[INICIO] Iniciando Extração Offline de Constantes Harmônicas...")
     ports = fetch_ports()
+    print(f"Encontrados {len(ports)} arquivos de dados em temp_data/.")
     
     all_dna = {}
     
     for p in ports:
         pid = p["id"]
-        # Fake lat for nodal correction if missing
-        print(f"[{pid}] Minerando e Treinando Modelo...")
-        dna = extract_dna(pid, lat=-15.0)
+        fpath = p["file_path"]
+        print(f"[{pid}] Extraindo DNA...", end="", flush=True)
+        dna = extract_dna(fpath)
         
         if dna:
+            # Pegar nome real do porto de dentro do JSON se possível
+            try:
+                with open(fpath, "r", encoding="utf-8") as f:
+                    meta = json.load(f)
+                    p_name = meta.get("porto", pid)
+                    p_state = meta.get("estado", "")
+            except:
+                p_name = pid
+                p_state = ""
+
             all_dna[pid] = {
-                "name": p.get("porto", pid),
-                "state": p.get("estado", ""),
+                "name": p_name,
+                "state": p_state,
                 "consts": dna
             }
-            print(f" -> Sucesso: {len(dna)} constantes extraídas.")
+            print(f" [OK] {len(dna['name'])} componentes.")
         else:
-            print(f" -> Falhou/Sem Dados: {pid}")
+            print(f" [FALHOU]")
             
     with open("harmonics_db.json", "w", encoding="utf-8") as f:
         json.dump(all_dna, f, ensure_ascii=False, indent=2)
         
-    print(f"\nTreinamento concluído. {len(all_dna)} portos matematicamente mapeados em harmonics_db.json!")
+    print(f"\n[FIM] Sucesso! harmonics_db.json gerado com {len(all_dna)} portos.")
+

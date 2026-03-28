@@ -7,6 +7,7 @@ import pandas as pd
 from scipy.signal import find_peaks
 from typing import Optional
 from datetime import datetime, timedelta
+import pytz
 import os
 
 app = FastAPI(title="MaréAgora API V2", description="Motor Harmônico de Marés para Portos Brasileiros")
@@ -110,7 +111,10 @@ def prever_mare(port_id: str, start_date: Optional[str] = None, days: int = 7):
         except:
             raise HTTPException(status_code=400, detail="Use o formato YYYY-MM-DD")
     else:
-        dt_start = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
+        tz = pytz.timezone("America/Sao_Paulo")
+        dt_start = datetime.now(tz).replace(hour=0, minute=0, second=0, microsecond=0)
+        # Convert back to naive datetime to avoid pandas offset errors with utide
+        dt_start = dt_start.replace(tzinfo=None)
         
     dt_end = dt_start + timedelta(days=days)
     
@@ -124,9 +128,10 @@ def prever_mare(port_id: str, start_date: Optional[str] = None, days: int = 7):
     heights = recon.h
     
     # Encontrar as altas (peaks) e baixas (valleys)
-    # distance=18 em 10min = 180 minutos (3 horas mínimo entre extremos)
-    peaks, _ = find_peaks(heights, distance=18)
-    valleys, _ = find_peaks(-heights, distance=18)
+    # distance=30 em 10min = 300 minutos (5 horas)
+    # prominence=0.2 para evitar falsos picos
+    peaks, _ = find_peaks(heights, distance=30, prominence=0.2)
+    valleys, _ = find_peaks(-heights, distance=30, prominence=0.2)
     
     events_raw = []
     

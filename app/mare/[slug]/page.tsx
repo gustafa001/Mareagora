@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { PORTS, getPortBySlug, getNearbySlugs } from '@/lib/ports';
 import { getTodayTides, getTideStatus, tideAtMinute } from '@/lib/tideUtils';
+import { API_BASE } from '@/lib/apiConfig';
 import type { Metadata } from 'next';
 import NavBar from '@/components/NavBar';
 import TideChart from '@/components/TideChart';
@@ -63,9 +64,9 @@ export default async function PortPage({ params }: { params: { slug: string } })
   const port = getPortBySlug(slug);
   if (!port) notFound();
 
-  // Busca dados dinamicamente da API no Render
+  // Busca dados dinamicamente da API (URL configurada via NEXT_PUBLIC_API_URL)
   const id = port.dataFile.replace('.json', '');
-  const apiUrl = `https://mareagora-api.onrender.com/api/mare/${id}`;
+  const apiUrl = `${API_BASE}/api/mare/${id}`;
   
   let portData: any;
   try {

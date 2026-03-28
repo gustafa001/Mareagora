@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { getTodayTides, tideAtMinute, getTideStatus } from '@/lib/tideUtils';
+import { API_BASE } from '@/lib/apiConfig';
 
 type Props = {
   port: { slug: string; name: string; state: string; dataFile: string };
@@ -19,7 +20,7 @@ export default function TideCardLive({ port, data: initialData }: Props) {
     if (!tideData && port.dataFile) {
       // Lazy fetch if data is not provided
       const portId = port.dataFile.replace('.json', '');
-      fetch(`https://mareagora-api.onrender.com/api/mare/${portId}`)
+      fetch(`${API_BASE}/api/mare/${portId}`)
         .then(res => res.json())
         .then(data => setTideData(data))
         .catch(err => console.error(`Error fetching tide for ${port.name}:`, err));

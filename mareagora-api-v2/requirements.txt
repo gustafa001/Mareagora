@@ -1,0 +1,8 @@
+fastapi==0.110.0
+uvicorn==0.29.0
+pandas==2.2.1
+numpy<2.0.0
+scipy==1.13.0
+requests==2.31.0
+utide==0.3.0
+pydantic==2.6.4

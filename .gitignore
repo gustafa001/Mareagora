@@ -42,4 +42,8 @@ next-env.d.ts
 api/__pycache__/
 api/*.pyc
 **/*.pyc
+**/__pycache__/
+*.log
 .env
+
+# harmonics_db.json must NOT be ignored — it is required by the Render service

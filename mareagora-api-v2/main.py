@@ -13,7 +13,7 @@ app = FastAPI(title="MaréAgora API V2", description="Motor Harmônico de Marés
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://www.mareagora.com.br", "https://mareagora.com.br", "*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -109,8 +109,8 @@ def prever_mare(port_id: str, start_date: Optional[str] = None, days: int = 7):
         
     dt_end = dt_start + timedelta(days=days)
     
-    # Criar um timeseries minuto a minuto para encontrar picos
-    times = pd.date_range(dt_start, dt_end, freq="1min")
+    # Criar um timeseries de 10 em 10 minutos (economiza 10x RAM vs 1min)
+    times = pd.date_range(dt_start, dt_end, freq="10min")
     
     coef = reconstruct_tide_coef(porto["consts"])
     
@@ -119,8 +119,9 @@ def prever_mare(port_id: str, start_date: Optional[str] = None, days: int = 7):
     heights = recon.h
     
     # Encontrar as altas (peaks) e baixas (valleys)
-    peaks, _ = find_peaks(heights, distance=180) # Mínimo de 3 horas entre altas
-    valleys, _ = find_peaks(-heights, distance=180) # Mínimo de 3 horas entre baixas
+    # distance=18 em 10min = 180 minutos (3 horas mínimo entre extremos)
+    peaks, _ = find_peaks(heights, distance=18)
+    valleys, _ = find_peaks(-heights, distance=18)
     
     events_raw = []
     

@@ -10,8 +10,6 @@ import ForecastStrip from '@/components/ForecastStrip';
 import ConditionsCard from '@/components/ConditionsCard';
 import NearbyPorts from '@/components/NearbyPorts';
 import Link from 'next/link';
-import fs from 'fs';
-import path from 'path';
 
 // Gera todas as rotas estáticas em build time
 export async function generateStaticParams() {
@@ -64,17 +62,19 @@ export default async function PortPage({ params }: { params: { slug: string } })
   const port = getPortBySlug(slug);
   if (!port) notFound();
 
-  // Lê JSON local via filesystem
+  // Busca dados dinamicamente da API no Render
+  const id = port.dataFile.replace('.json', '');
+  const apiUrl = `https://mareagora-api.onrender.com/api/mare/${id}`;
+  
   let portData: any;
   try {
-    const filePath = path.join(process.cwd(), 'data', port.dataFile);
-    const fileContent = fs.readFileSync(filePath, 'utf-8');
-    portData = JSON.parse(fileContent);
+    const res = await fetch(apiUrl, { next: { revalidate: 3600 } });
+    if (!res.ok) throw new Error(`Status: ${res.status}`);
+    portData = await res.json();
   } catch (e) {
-    console.error(`Erro ao carregar dados para ${port.name}:`, e);
+    console.error(`Erro ao carregar dados da API para ${port.name}:`, e);
     notFound();
   }
-
   const { tides: todayTides, date: closestDate } = getTodayTides(portData);
   const now = new Date();
   const today = now.toISOString().split('T')[0];

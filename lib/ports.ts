@@ -48,7 +48,7 @@ export const PORTS: Port[] = [
   { slug: "ilha-da-trindade",             name: "Ilha da Trindade",            state: "ES", lat: -20.51, lon: -29.32, dataFile: "36_-_ilha_da_trindade_-_118_-_120.json",                          region: "Sudeste" },
   { slug: "porto-do-acu",                 name: "Porto do Açu",                state: "RJ", lat: -21.84, lon: -41.00, dataFile: "38_-_porto_do_açu_-_rj_-_122-124.json",                          region: "Sudeste" },
   { slug: "terminal-maritimo-de-imbetiba",name: "Terminal Marítimo de Imbetiba",state: "RJ", lat: -22.38, lon: -41.79, dataFile: "39_-_terminal_marítimo_de_imbetiba_-_rj_-_125-127.json",         region: "Sudeste" },
-  { slug: "porto-do-rio-de-janeiro",      name: "Porto do Rio de Janeiro",     state: "RJ", lat: -22.89, lon: -43.17, dataFile: "40_-_porto_do_rio_de_janeiro_-_i_fiscal_-_130_-_132.json",       region: "Sudeste" },
+  { slug: "porto-do-rio-de-janeiro",      name: "Porto do Rio de Janeiro",     state: "RJ", lat: -22.89, lon: -43.17, dataFile: "4_-_porto_do_rio_de_janeiro_-_ilha_fiscal_(estado_do_rio_de_janeiro)_-_2025_-_páginas_129_a_131.json",       region: "Sudeste" },
   { slug: "porto-de-itaguai",             name: "Porto de Itaguaí",            state: "RJ", lat: -22.95, lon: -43.82, dataFile: "41_-_porto_de_itaguaí_-_133_-_135.json",                         region: "Sudeste" },
   { slug: "porto-do-forno",               name: "Porto do Forno",              state: "RJ", lat: -22.97, lon: -42.03, dataFile: "42_-_porto_do_forno_-_136_-_138.json",                            region: "Sudeste" },
   { slug: "terminal-ilha-guaiba",         name: "Terminal da Ilha Guaíba",     state: "RJ", lat: -22.99, lon: -43.89, dataFile: "43_-_terminal_da_ilha_guaíba_-_139_-_141.json",                   region: "Sudeste" },
@@ -63,7 +63,7 @@ export const PORTS: Port[] = [
   { slug: "barra-de-paranagua-canal-galheta", name: "Barra de Paranaguá — Canal da Galheta", state: "PR", lat: -25.58, lon: -48.32, dataFile: "50_-_barra_de_paranaguá_-_canal_da_galheta_160_-162.json", region: "Sul" },
   { slug: "porto-de-sao-francisco-do-sul",name: "Porto de São Francisco do Sul",state: "SC", lat: -26.24, lon: -48.64, dataFile: "51_-_porto_de_são_francisco_do_sul_-_163_-165.json",           region: "Sul" },
   { slug: "porto-de-itajai",              name: "Porto de Itajaí",             state: "SC", lat: -26.91, lon: -48.67, dataFile: "52_-_porto_de_itajaí_-_166_-_168.json",                         region: "Sul" },
-  { slug: "porto-do-rio-grande",          name: "Porto do Rio Grande",         state: "RS", lat: -32.03, lon: -52.10, dataFile: "55_-_porto_do_rio_grande_-_175_-177.json",                       region: "Sul" },
+// { slug: "porto-do-rio-grande",          name: "Porto do Rio Grande",         state: "RS", lat: -32.03, lon: -52.10, dataFile: "55_-_porto_do_rio_grande_-_175_-177.json",                       region: "Sul" },
 ];
 
 export function getPortBySlug(slug: string): Port | undefined {

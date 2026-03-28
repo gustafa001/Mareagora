@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { PORTS } from "@/lib/ports";
 
 export default function NavBar() {
   const [search, setSearch] = useState("");
@@ -10,11 +11,37 @@ export default function NavBar() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (search.trim()) {
-      // Logic for search would go here, for now let's just go to the slug if it exists
-      // or a search results page if we had one.
-      // For this migration, we'll keep it simple.
-      router.push(`/mare/${search.toLowerCase().replace(/ /g, "-")}`);
+    const query = search.trim().toLowerCase();
+    if (query) {
+      // Mapeamento manual para termos comuns
+      const aliases: Record<string, string> = {
+        "guaruja": "porto-de-santos",
+        "guarujá": "porto-de-santos",
+        "bertioga": "porto-de-santos",
+        "caraguatatuba": "porto-de-sao-sebastiao",
+        "ubatuba": "porto-de-sao-sebastiao",
+      };
+
+      if (aliases[query]) {
+        router.push(`/mare/${aliases[query]}`);
+        setSearch("");
+        return;
+      }
+
+      // Busca por nome ou slug
+      const match = PORTS.find(p => 
+        p.name.toLowerCase().includes(query) || 
+        p.slug.includes(query) ||
+        p.state.toLowerCase() === query
+      );
+
+      if (match) {
+        router.push(`/mare/${match.slug}`);
+      } else {
+        // Fallback para o comportamento original
+        router.push(`/mare/${query.replace(/ /g, "-")}`);
+      }
+      setSearch("");
     }
   };
 

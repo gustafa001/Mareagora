@@ -1,74 +1,109 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { PORTS, Port } from "@/lib/ports";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { PORTS } from "@/lib/ports";
 
 const normalize = (str: string) =>
   str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 
 export default function NavBar() {
   const [search, setSearch] = useState("");
+  const [suggestions, setSuggestions] = useState<Port[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const router = useRouter();
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleInputChange = (val: string) => {
+    setSearch(val);
+    const searchNormalized = normalize(val);
+    if (searchNormalized.length > 1) {
+      const filtered = PORTS.filter(p => 
+        normalize(p.name).includes(searchNormalized) || 
+        normalize(p.state).includes(searchNormalized) ||
+        p.searchNames?.some(sn => normalize(sn).includes(searchNormalized))
+      ).slice(0, 8);
+      setSuggestions(filtered);
+      setShowSuggestions(true);
+    } else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+  };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const query = normalize(search);
-    if (query) {
-      // Mapeamento manual para termos comuns (já normalizados)
-      const aliases: Record<string, string> = {
-        "guaruja": "porto-de-santos",
-        "bertioga": "porto-de-santos",
-        "caraguatatuba": "porto-de-sao-sebastiao",
-        "ubatuba": "porto-de-sao-sebastiao",
-      };
-
-      if (aliases[query]) {
-        router.push(`/mare/${aliases[query]}`);
-        setSearch("");
-        return;
-      }
-
-      // Busca por nome ou slug
-      const match = PORTS.find(p => 
-        normalize(p.name).includes(query) || 
-        p.slug.includes(query) ||
-        normalize(p.state).includes(query)
-      );
-
-      if (match) {
-        router.push(`/mare/${match.slug}`);
-      } else {
-        // Fallback para o comportamento original
-        router.push(`/mare/${query.replace(/ /g, "-")}`);
-      }
-      setSearch("");
+    if (suggestions.length > 0) {
+      goToPort(suggestions[0]);
     }
+  };
+
+  const goToPort = (port: Port) => {
+    setSearch("");
+    setShowSuggestions(false);
+    router.push(`/mare/${port.slug}`);
   };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-6 py-4 bg-[rgba(6,16,30,0.9)] backdrop-blur-xl border-b border-[rgba(56,201,240,0.08)]">
-      <Link href="/" className="font-syne font-extrabold text-xl text-[var(--foam)]">
-        Maré<span className="text-[var(--sun)]">Agora</span>
+      <Link href="/" className="font-syne font-extrabold text-xl text-[var(--white)]">
+        Maré<span className="text-[var(--foam)]">Agora</span>
       </Link>
 
       <div className="flex items-center gap-4">
-        <form onSubmit={handleSearch} className="hidden sm:flex items-center gap-2 bg-[rgba(255,255,255,0.05)] border border-[rgba(56,201,240,0.15)] rounded-full px-4 py-1.5 overflow-hidden">
-          <span className="text-sm">🔍</span>
-          <input
-            type="text"
-            placeholder="Outra cidade…"
-            className="bg-transparent border-none outline-none text-[var(--white)] text-sm w-40 placeholder:text-[var(--muted)]"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </form>
-        <button className="hidden sm:block bg-[rgba(56,201,240,0.15)] border border-[rgba(56,201,240,0.3)] text-[var(--foam)] font-syne font-bold text-xs px-4 py-1.5 rounded-full hover:bg-[rgba(56,201,240,0.3)] transition-all">
-          📲 Instalar app
+        <div className="relative" ref={menuRef}>
+          <form onSubmit={handleSearch} className="hidden sm:flex items-center gap-2 bg-[rgba(255,255,255,0.05)] border border-[rgba(56,201,240,0.15)] rounded-full px-4 py-1.5 overflow-hidden focus-within:border-[var(--foam)] transition-all">
+            <span className="text-sm">🔍</span>
+            <input
+              type="text"
+              placeholder="Buscar porto ou cidade…"
+              className="bg-transparent border-none outline-none text-[var(--white)] text-sm w-48 placeholder:text-[var(--muted)]"
+              value={search}
+              onChange={(e) => handleInputChange(e.target.value)}
+              onFocus={() => search.length > 1 && setShowSuggestions(true)}
+            />
+          </form>
+
+          {showSuggestions && suggestions.length > 0 && (
+            <div className="absolute top-full right-0 mt-2 w-72 bg-[rgba(13,34,64,0.95)] border border-[rgba(56,201,240,0.2)] rounded-2xl shadow-2xl backdrop-blur-2xl overflow-hidden py-2 animate-in fade-in slide-in-from-top-2 duration-200">
+              {suggestions.map((p) => (
+                <button
+                  key={p.slug}
+                  onClick={() => goToPort(p)}
+                  className="w-full text-left px-4 py-2.5 hover:bg-[rgba(56,201,240,0.12)] flex items-center justify-between group transition-colors"
+                >
+                  <div className="flex flex-col">
+                    <span className="text-sm font-bold text-[var(--white)] group-hover:text-[var(--foam)]">
+                      {p.searchNames && p.searchNames.some(sn => normalize(sn).includes(normalize(search))) 
+                        ? `${p.searchNames.find(sn => normalize(sn).includes(normalize(search)))} (${p.name})`
+                        : p.name
+                      }
+                    </span>
+                    <span className="text-[0.7rem] text-[var(--muted)]">{p.state} · {p.region}</span>
+                  </div>
+                  <span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">⚓</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <button className="hidden sm:block bg-[rgba(14,127,190,0.15)] border border-[rgba(56,201,240,0.3)] text-[var(--foam)] font-syne font-bold text-xs px-4 py-1.5 rounded-full hover:bg-[rgba(14,127,190,0.3)] transition-all">
+          📲 App
         </button>
       </div>
-      
+
       <style jsx>{`
         nav {
           font-family: var(--font-dm-sans);

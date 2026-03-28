@@ -20,6 +20,14 @@ export default function TideChart({ tides }: TideChartProps) {
     return () => clearInterval(interval);
   }, []);
 
+  if (!tides || tides.length === 0) {
+    return (
+      <div className="mt-5 mb-2 rounded-xl flex items-center justify-center bg-[rgba(56,201,240,0.05)] h-[90px]">
+        <span className="text-[var(--muted)] text-xs font-syne uppercase tracking-widest">Sem dados de gráfico</span>
+      </div>
+    );
+  }
+
   const W = 600, H = 90, PAD_V = 8;
   const heights = tides.map(t => t.altura_m);
   const maxH = Math.max(...heights);

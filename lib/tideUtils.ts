@@ -62,8 +62,10 @@ export function degToCompass(d: number): string {
   return dirs[Math.round(d / 22.5) % 16];
 }
 
-// Helper to get tide status (rising/falling)
-export function getTideStatus(min: number, tides: TideEvent[]): { rising: boolean, next: TideEvent, prev: TideEvent } {
+export function getTideStatus(min: number, tides: TideEvent[]): { rising: boolean, next: TideEvent | null, prev: TideEvent | null } {
+  if (!tides || tides.length === 0) {
+    return { rising: false, next: null, prev: null };
+  }
   const toMin = (t: string) => {
     const [h, m] = t.split(':').map(Number);
     return h * 60 + m;

@@ -144,7 +144,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
                 {rising ? '⬆️ Maré subindo' : '⬇️ Maré descendo'}
               </div>
               <div className="mt-1 text-[0.85rem] text-[var(--muted)]">
-                Próxima: {next?.tipo || 'Maré'} de {next?.altura_m.toFixed(2)}m às {next?.hora}
+                Próxima: {next?.tipo || 'Maré'} de {next?.altura_m ? next.altura_m.toFixed(2) : '--'}m às {next?.hora || '--:--'}
               </div>
 
               <TideChart tides={todayTides} />

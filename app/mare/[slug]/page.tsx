@@ -61,17 +61,20 @@ export default async function PortPage({ params }: { params: { slug: string } })
       {/* HERO SECTION - LEGACY LOOK */}
       <section className="hero-section">
         <div className="hero-overlay" />
-        <div className="container relative z-10 text-white text-center">
-          <div className="flex flex-col gap-2 items-center">
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight font-syne">
+        <div className="container relative z-10 text-white text-center pt-24 md:pt-16">
+          <div className="flex flex-col gap-3 items-center px-2">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight font-syne leading-tight max-w-4xl">
               {port.name}
             </h1>
-            <p className="text-xl opacity-90 font-medium font-syne">
+            <p className="text-sm sm:text-lg md:text-xl opacity-90 font-medium font-syne hidden sm:block">
               {port.name} - 2026 | Estado do {port.state}
             </p>
-            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-4 text-sm opacity-80 font-mono">
-              <span>Latitude: {port.lat.toFixed(4)}°</span>
-              <span>Longitude: {port.lon.toFixed(4)}°</span>
+            <p className="text-sm opacity-90 font-medium font-syne sm:hidden">
+              Estado do {port.state}
+            </p>
+            <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4 text-xs sm:text-sm opacity-80 font-mono">
+              <span>Lat: {port.lat.toFixed(4)}°</span>
+              <span>Lon: {port.lon.toFixed(4)}°</span>
               <span>Fuso: UTC-3</span>
               <span>Nível Médio: {portData?.nivel_medio || "--"} m</span>
             </div>

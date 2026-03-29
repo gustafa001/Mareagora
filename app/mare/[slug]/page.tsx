@@ -3,6 +3,7 @@ import { PORTS, getPortBySlug, getNearbySlugs } from '@/lib/ports';
 import { getTodayTides, getTideStatus, tideAtMinute } from '@/lib/tideUtils';
 import { getPortData } from '@/lib/tideData';
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import NavBar from '@/components/NavBar';
 import TideChart from '@/components/TideChart';
 import TideTable from '@/components/TideTable';
@@ -28,26 +29,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return {
     title,
     description,
-    alternates: {
-      canonical: url,
-    },
-    openGraph: {
-      title,
-      description,
-      url,
-      siteName: 'MaréAgora',
-      locale: 'pt_BR',
-      type: 'website',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-    },
-    robots: {
-      index: true,
-      follow: true,
-    },
+    alternates: { canonical: url },
+    openGraph: { title, description, url, siteName: 'MaréAgora', locale: 'pt_BR', type: 'website' },
+    twitter: { card: 'summary_large_image', title, description },
+    robots: { index: true, follow: true },
   };
 }
 
@@ -66,7 +51,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
   const now = new Date();
   const currentMin = now.getHours() * 60 + now.getMinutes();
 
-  // Lógica para os Summary Cards (Picos e Vales)
   const heights = todayTides.map(t => t.altura_m);
   const maxH = Math.max(...heights);
   const minH = Math.min(...heights);
@@ -84,7 +68,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
     return min > currentMin && t.altura_m < avgH;
   }) || todayTides.find(t => t.altura_m < avgH);
 
-  // JSON-LD
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -109,15 +92,18 @@ export default async function PortPage({ params }: { params: { slug: string } })
 
   return (
     <main className="min-h-screen pb-20">
-      {/* JSON-LD */}
-      <script
+
+      {/* JSON-LD — usando next/script para evitar hydration error */}
+      <Script
+        id={`jsonld-${slug}`}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        strategy="beforeInteractive"
       />
 
       <NavBar />
 
-      {/* HERO SECTION - LEGACY LOOK */}
+      {/* HERO SECTION */}
       <section className="hero-section">
         <div className="hero-overlay" />
         <div className="container relative z-10 text-white text-center pt-24 md:pt-16">
@@ -142,7 +128,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
       </section>
 
       <div className="container">
-        {/* SUMMARY CARDS - FLOATING */}
         <SummaryCards
           nextHigh={nextHigh || null}
           nextLow={nextLow || null}
@@ -151,7 +136,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
         />
 
         <div className="mt-12 flex flex-col lg:grid lg:grid-cols-[1fr_350px] gap-8">
-          {/* Lado Esquerdo: Principais Dados */}
           <div className="flex flex-col gap-8">
             <div className="classic-card">
               <TideChart tides={todayTides} />
@@ -164,7 +148,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
 
             <DetailedForecastTable lat={port.lat} lon={port.lon} todayTides={todayTides} />
 
-            {/* SEO Content */}
             <section className="classic-card prose prose-slate max-w-none">
               <h2 className="text-2xl font-bold mb-4 font-syne tracking-tight">Guia de Maré em {port.name}</h2>
               <p className="text-gray-600 leading-relaxed text-sm">
@@ -173,7 +156,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
                 tábuas oficiais publicadas pelo Centro de Hidrografia da Marinha do Brasil (CHM) para o{' '}
                 <strong>ano de {ano}</strong>.
               </p>
-
               <div className="grid md:grid-cols-2 gap-8 mt-6">
                 <div>
                   <h3 className="text-base font-bold mb-2 text-gray-800">🎣 Como usar a tábua?</h3>
@@ -193,7 +175,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
             </section>
           </div>
 
-          {/* Lado Direito: Condições e Extras */}
           <aside className="flex flex-col gap-8">
             <WavesCard lat={port.lat} lon={port.lon} />
             <ForecastStrip lat={port.lat} lon={port.lon} />

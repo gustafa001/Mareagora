@@ -1,9 +1,8 @@
 import { notFound } from 'next/navigation';
-import { PORTS, getPortBySlug, getNearbySlugs } from '@/lib/ports';
-import { getTodayTides, getTideStatus, tideAtMinute } from '@/lib/tideUtils';
+import { getPortBySlug, getNearbySlugs } from '@/lib/ports';
+import { getTodayTides } from '@/lib/tideUtils';
 import { getPortData } from '@/lib/tideData';
 import type { Metadata } from 'next';
-
 import NavBar from '@/components/NavBar';
 import TideChart from '@/components/TideChart';
 import TideTable from '@/components/TideTable';
@@ -45,29 +44,29 @@ export default async function PortPage({ params }: { params: { slug: string } })
 
   const id = port.dataFile.replace('.json', '');
   const portData = await getPortData(id);
-  const { tides: todayTides, date: closestDate } = getTodayTides(portData ?? { eventos: [] });
+  const { tides: todayTides } = getTodayTides(portData ?? { eventos: [] });
 
   const ano = new Date().getFullYear();
   const now = new Date();
   const currentMin = now.getHours() * 60 + now.getMinutes();
 
-  const heights = todayTides.map(t => t.altura_m);
+  // ── Guard: evita Math.max/min de array vazio ──
+  const heights = todayTides.length > 0 ? todayTides.map(t => t.altura_m) : [0];
   const maxH = Math.max(...heights);
   const minH = Math.min(...heights);
   const avgH = (maxH + minH) / 2;
 
   const nextHigh = todayTides.find(t => {
     const [h, m] = t.hora.split(':').map(Number);
-    const min = (h || 0) * 60 + (m || 0);
-    return min > currentMin && t.altura_m >= avgH;
-  }) || todayTides.find(t => t.altura_m >= avgH);
+    return (h || 0) * 60 + (m || 0) > currentMin && t.altura_m >= avgH;
+  }) ?? todayTides.find(t => t.altura_m >= avgH) ?? null;
 
   const nextLow = todayTides.find(t => {
     const [h, m] = t.hora.split(':').map(Number);
-    const min = (h || 0) * 60 + (m || 0);
-    return min > currentMin && t.altura_m < avgH;
-  }) || todayTides.find(t => t.altura_m < avgH);
+    return (h || 0) * 60 + (m || 0) > currentMin && t.altura_m < avgH;
+  }) ?? todayTides.find(t => t.altura_m < avgH) ?? null;
 
+  // ── JSON-LD ──
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -92,18 +91,13 @@ export default async function PortPage({ params }: { params: { slug: string } })
 
   return (
     <main className="min-h-screen pb-20">
-
-      {/* JSON-LD — usando next/script para evitar hydration error */}
       <script
-        id={`jsonld-${slug}`}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        
       />
 
       <NavBar />
 
-      {/* HERO SECTION */}
       <section className="hero-section">
         <div className="hero-overlay" />
         <div className="container relative z-10 text-white text-center pt-24 md:pt-16">
@@ -121,7 +115,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
               <span>Lat: {port.lat.toFixed(4)}°</span>
               <span>Lon: {port.lon.toFixed(4)}°</span>
               <span>Fuso: UTC-3</span>
-              <span>Nível Médio: {portData?.nivel_medio || "--"} m</span>
+              <span>Nível Médio: {portData?.nivel_medio ?? '--'} m</span>
             </div>
           </div>
         </div>
@@ -129,8 +123,8 @@ export default async function PortPage({ params }: { params: { slug: string } })
 
       <div className="container">
         <SummaryCards
-          nextHigh={nextHigh || null}
-          nextLow={nextLow || null}
+          nextHigh={nextHigh}
+          nextLow={nextLow}
           lat={port.lat}
           lon={port.lon}
         />
@@ -167,7 +161,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
                 <div>
                   <h3 className="text-base font-bold mb-2 text-gray-800">📏 Nível Médio</h3>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    O nível médio ({portData?.nivel_medio || "--"}m) é a referência. Alturas positivas indicam
+                    O nível médio ({portData?.nivel_medio ?? '--'}m) é a referência. Alturas positivas indicam
                     quanto a água estará acima deste nível para que você possa atracar em segurança.
                   </p>
                 </div>

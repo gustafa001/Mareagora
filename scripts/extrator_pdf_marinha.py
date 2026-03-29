@@ -6,50 +6,67 @@ MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
          'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro']
 MESES_NUM = {m: i+1 for i, m in enumerate(MESES)}
 
-def detectar_blocos_x(words):
+def detectar_blocos_x(words, page):
     """
-    Detecta as faixas X de cada bloco dinamicamente usando os cabeçalhos HORA/ALT(m).
-    O PDF tem 8 blocos por página (4 meses × 2 quinzenas).
-    Cada bloco tem: [HORA] [ALT(m)] — dois cabeçalhos em top ≈ 102.
+    Versão robusta:
+    - aceita variações de 'HORA'
+    - tolerância maior de posição
+    - fallback automático se falhar
     """
-    hora_headers = [w for w in words
-                    if w['text'] == 'HORA' and 99 < w['top'] < 107]
+
+    def is_hora(text):
+        t = text.replace(" ", "").upper()
+        return "HORA" in t
+
+    hora_headers = [
+        w for w in words
+        if is_hora(w['text']) and 80 < w['top'] < 140
+    ]
+
+    # Ordenar por X0 para agrupar em pares
     hora_headers.sort(key=lambda w: w['x0'])
 
-    if len(hora_headers) < 8:
-        return None  # fallback
+    # ✅ Layout padrão detectado
+    if len(hora_headers) >= 4:
+        blocos = []
+
+        for i in range(0, len(hora_headers), 2):
+            if i+1 >= len(hora_headers):
+                break
+
+            h1 = hora_headers[i]
+            h2 = hora_headers[i + 1]
+
+            h1_next = h2
+            h2_next = hora_headers[i + 2] if i + 2 < len(hora_headers) else None
+
+            blocos.append((h1['x0'] - 23, h1['x0'], h1['x0'] + 19, h1_next['x0'] - 5))
+            blocos.append((h2['x0'] - 23, h2['x0'], h2['x0'] + 19,
+                           (h2_next['x0'] - 5) if h2_next else h2['x0'] + 60))
+
+        return blocos
+
+    # 🔴 FALLBACK (usado se não detectar os cabeçalhos HORA, não perdendo a página)
+    print("  [FALLBACK] Usando divisão por largura da página", file=sys.stderr)
+
+    largura = page.width
+    col_width = largura / 8
 
     blocos = []
-    for i in range(0, 8, 2):
-        h1 = hora_headers[i]    # HORA da 1ª quinzena do mês
-        h2 = hora_headers[i+1]  # HORA da 2ª quinzena do mês
-
-        # Próximo cabeçalho HORA para definir fim
-        h1_next = hora_headers[i+1]
-        h2_next = hora_headers[i+2] if i+2 < 8 else None
-
-        x_dia1   = h1['x0'] - 23
-        x_hora1  = h1['x0']
-        x_alt1   = h1['x0'] + 19
-        x_fim1   = h1_next['x0'] - 5
-
-        x_dia2   = h2['x0'] - 23
-        x_hora2  = h2['x0']
-        x_alt2   = h2['x0'] + 19
-        x_fim2   = (h2_next['x0'] - 5) if h2_next else h2['x0'] + 60
-
-        blocos.append((x_dia1, x_hora1, x_alt1, x_fim1))
-        blocos.append((x_dia2, x_hora2, x_alt2, x_fim2))
+    for i in range(8):
+        x_base = i * col_width
+        blocos.append((
+            x_base,
+            x_base + col_width * 0.3,
+            x_base + col_width * 0.6,
+            x_base + col_width
+        ))
 
     return blocos
 
 def extrair_pagina(page, meses_pagina, ano):
     words = page.extract_words(x_tolerance=2, y_tolerance=2)
-    blocos = detectar_blocos_x(words)
-
-    if blocos is None:
-        print(f"  [AVISO] Não foi possível detectar blocos na página", file=sys.stderr)
-        return []
+    blocos = detectar_blocos_x(words, page)
 
     resultados = {m: defaultdict(list) for m in meses_pagina}
 
@@ -57,18 +74,21 @@ def extrair_pagina(page, meses_pagina, ano):
         mes_idx = bi // 2
         if mes_idx >= len(meses_pagina):
             continue
+
         mes = meses_pagina[mes_idx]
 
         bloco_words = [w for w in words
                        if x_dia <= w['x0'] < x_fim and w['top'] > 105]
+
         bloco_words.sort(key=lambda w: (round(w['top'] / 2) * 2, w['x0']))
 
         dia_atual = None
+
         for w in bloco_words:
             txt = w['text'].strip()
             x0  = w['x0']
 
-            # Número de dia: coluna esquerda do bloco, texto 01-31
+            # DIA
             if x_dia <= x0 < x_hora:
                 m_dia = re.match(r'^(\d{1,2})$', txt)
                 if m_dia:
@@ -76,16 +96,18 @@ def extrair_pagina(page, meses_pagina, ano):
                     if 1 <= d <= 31:
                         dia_atual = d
 
-            # Hora: formato HHMM, 4 dígitos
-            if x_hora <= x0 < x_alt and dia_atual is not None:
+            # HORA
+            elif x_hora <= x0 < x_alt and dia_atual is not None:
                 if re.match(r'^\d{4}$', txt):
-                    hora_fmt = txt[:2] + ':' + txt[2:]
-                    resultados[mes][dia_atual].append({'hora': hora_fmt, 'altura_m': None})
+                    resultados[mes][dia_atual].append(
+                        {'hora': txt[:2] + ':' + txt[2:], 'altura_m': None}
+                    )
 
-            # Altitude: N.NN ou -N.NN
-            if x_alt <= x0 < x_fim and dia_atual is not None:
-                if re.match(r'^-?\d+\.\d+$', txt):
-                    alt = float(txt)
+            # ALTURA (aceita ponto ou vírgula)
+            elif x_alt <= x0 < x_fim and dia_atual is not None:
+                if re.match(r'^-?\d+[.,]?\d*$', txt):
+                    alt = float(txt.replace(',', '.'))
+
                     for entry in reversed(resultados[mes][dia_atual]):
                         if entry['altura_m'] is None:
                             entry['altura_m'] = alt

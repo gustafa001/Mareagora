@@ -99,9 +99,6 @@ export default function NavBar() {
           )}
         </div>
 
-        <button className="hidden sm:block bg-[rgba(14,127,190,0.15)] border border-[rgba(56,201,240,0.3)] text-[var(--foam)] font-syne font-bold text-xs px-4 py-1.5 rounded-full hover:bg-[rgba(14,127,190,0.3)] transition-all">
-          📲 App
-        </button>
       </div>
 
       <style jsx>{`

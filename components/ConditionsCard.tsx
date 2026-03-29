@@ -45,15 +45,15 @@ export default function ConditionsCard({ lat, lon }: ConditionsCardProps) {
     fetchConditions();
   }, [lat, lon]);
 
-  if (loading) return <div className="card text-center p-4 text-[var(--muted)] text-sm">Calculando condições…</div>;
+  if (loading) return <div className="classic-card text-center p-6 text-gray-500 text-sm">Calculando condições…</div>;
 
   return (
-    <div className="card">
-      <div className="card-title">🏄 Condições</div>
-      <div className="text-center py-2">
-        <div className="text-[2.5rem]">{conditions?.icon || '⏳'}</div>
-        <div className="font-syne font-extrabold text-[1.2rem] my-1.5 text-[var(--white)]">{conditions?.label || 'Calculando…'}</div>
-        <div className="text-[var(--muted)] text-[0.82rem] leading-[1.5]">{conditions?.desc || '—'}</div>
+    <div className="classic-card">
+      <h3 className="card-title mb-4">🏄 Condições da Água</h3>
+      <div className="text-center py-6 bg-gray-50 rounded-2xl border border-gray-100 mt-2">
+        <div className="text-[3.5rem] mb-3 leading-none">{conditions?.icon || '⏳'}</div>
+        <div className="font-syne font-extrabold text-[1.4rem] tracking-tight text-gray-800 mb-2">{conditions?.label || 'Calculando…'}</div>
+        <div className="text-gray-500 text-sm leading-relaxed px-5">{conditions?.desc || '—'}</div>
       </div>
     </div>
   );

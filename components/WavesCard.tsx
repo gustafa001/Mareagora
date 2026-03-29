@@ -53,41 +53,42 @@ export default function WavesCard({ lat, lon }: WavesCardProps) {
     fetchWaves();
   }, [lat, lon]);
 
-  if (loading) return <div className="card text-center p-4 text-[var(--muted)] text-sm">Carregando ondas…</div>;
-  if (!data) return <div className="card text-center p-4 text-[var(--muted)] text-sm">Sem dados de ondas.</div>;
+  if (loading) return <div className="classic-card text-center p-6 text-gray-500 text-sm">Carregando ondas…</div>;
+  if (!data) return <div className="classic-card text-center p-6 text-gray-500 text-sm">Sem dados de ondas.</div>;
 
   return (
-    <div className="card">
-      <div className="card-title">🌊 Ondas & Vento agora</div>
-      <div className="flex flex-col gap-2.5">
-        <div className="flex justify-between items-center py-2.5 border-b border-[rgba(56,201,240,0.06)]">
-          <span className="text-[var(--muted)] text-sm">Altura das ondas</span>
-          <span className="font-syne font-bold text-base text-[var(--foam)]">{data.height.toFixed(1)} m</span>
+    <div className="classic-card">
+      <h3 className="card-title mb-6">🌊 Ondas e Vento agora</h3>
+      <div className="flex flex-col gap-1">
+        <div className="flex justify-between items-center py-3 border-b border-gray-100">
+          <span className="text-gray-500 text-sm font-medium">Altura das ondas</span>
+          <span className="font-syne font-bold text-base text-blue-600">{data.height.toFixed(1)} m</span>
         </div>
-        <div className="flex justify-between items-center py-2.5 border-b border-[rgba(56,201,240,0.06)]">
-          <span className="text-[var(--muted)] text-sm">Período</span>
-          <span className="font-syne font-bold text-base text-[var(--white)]">{data.period.toFixed(0)} s</span>
+        <div className="flex justify-between items-center py-3 border-b border-gray-100">
+          <span className="text-gray-500 text-sm font-medium">Período</span>
+          <span className="font-syne font-bold text-base text-gray-800">{data.period.toFixed(0)} s</span>
         </div>
-        <div className="flex justify-between items-center py-2.5 border-b border-[rgba(56,201,240,0.06)]">
-          <span className="text-[var(--muted)] text-sm">Direção das ondas</span>
-          <span className="font-syne font-bold text-base text-[var(--white)]">{degToCompass(data.direction)} ({data.direction}°)</span>
+        <div className="flex justify-between items-center py-3 border-b border-gray-100">
+          <span className="text-gray-500 text-sm font-medium">Dir. das ondas</span>
+          <span className="font-syne font-bold text-base text-gray-800">{degToCompass(data.direction)} ({data.direction}°)</span>
         </div>
-        <div className="flex justify-between items-center py-2.5 border-none pb-0">
-          <span className="text-[var(--muted)] text-sm">Vento</span>
-          <span className="font-syne font-bold text-base text-[var(--white)]">{data.windWave.toFixed(1)} m ondas vento</span>
+        <div className="flex justify-between items-center py-3">
+          <span className="text-gray-500 text-sm font-medium">Vento</span>
+          <span className="font-syne font-bold text-base text-gray-800">{data.windWave.toFixed(1)} m</span>
         </div>
-        <div className="flex items-center gap-5 mt-3">
-          <div className="w-[70px] h-[70px] rounded-full border-2 border-[rgba(56,201,240,0.2)] flex items-center justify-center relative shrink-0">
+        
+        <div className="flex justify-center items-center gap-6 mt-4 bg-gray-50 p-5 rounded-2xl border border-gray-100">
+          <div className="w-[60px] h-[60px] rounded-full bg-white shadow-sm border border-gray-200 flex items-center justify-center relative shrink-0">
             <span 
-              className="text-2xl transition-transform duration-500 ease-out inline-block" 
+              className="text-2xl text-blue-600 transition-transform duration-500 ease-out inline-block" 
               style={{ transform: `rotate(${data.direction}deg)` }}
             >
               ↑
             </span>
           </div>
           <div className="flex flex-col gap-1">
-            <div className="font-syne font-bold text-2xl text-[var(--white)]">{data.height.toFixed(1)}m</div>
-            <div className="text-[var(--muted)] text-sm">{degToCompass(data.direction)}</div>
+            <div className="font-syne font-bold text-3xl text-gray-800 leading-none">{data.height.toFixed(1)}m</div>
+            <div className="text-gray-500 text-sm font-bold tracking-wide uppercase">{degToCompass(data.direction)}</div>
           </div>
         </div>
       </div>

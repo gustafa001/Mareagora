@@ -60,15 +60,15 @@ export default async function PortPage({ params }: { params: { slug: string } })
       {/* HERO SECTION - LEGACY LOOK */}
       <section className="hero-section">
         <div className="hero-overlay" />
-        <div className="container relative z-10 text-white">
-          <div className="flex flex-col gap-2">
-            <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight font-syne">
+        <div className="container relative z-10 text-white text-center">
+          <div className="flex flex-col gap-2 items-center">
+            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight font-syne">
               {port.name}
             </h1>
             <p className="text-xl opacity-90 font-medium font-syne">
               {port.name} - 2026 | Estado do {port.state}
             </p>
-            <div className="flex flex-wrap gap-x-6 gap-y-2 mt-4 text-sm opacity-80 font-mono">
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-4 text-sm opacity-80 font-mono">
               <span>Latitude: {port.lat.toFixed(4)}°</span>
               <span>Longitude: {port.lon.toFixed(4)}°</span>
               <span>Fuso: UTC-3</span>
@@ -107,7 +107,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
           <aside className="flex flex-col gap-8">
             <WavesCard lat={port.lat} lon={port.lon} />
             <ForecastStrip lat={port.lat} lon={port.lon} />
-            <ConditionsCard lat={port.lat} lon={port.lon} />
+            <ConditionsCard lat={port.lon} lon={port.lon} />
             
             <div className="classic-card">
               <h3 className="card-title">Cidades Próximas</h3>

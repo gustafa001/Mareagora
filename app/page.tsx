@@ -1,6 +1,7 @@
 import { PORTS } from '@/lib/ports';
 import NavBar from '@/components/NavBar';
 import TideCardLive from '@/components/TideCardLive';
+import HeroSearch from '@/components/HeroSearch';
 import Link from 'next/link';
 
 const REGION_ICONS: Record<string, string> = {
@@ -21,63 +22,63 @@ export default function Home() {
     <div className="min-h-screen bg-[var(--ocean)]">
       <NavBar />
 
-      <div className="bg-waves" aria-hidden>
-        <svg viewBox="0 0 1440 120" preserveAspectRatio="none" fill="rgba(56,201,240,.6)">
-          <path d="M0,60 C180,100 360,20 540,60 C720,100 900,20 1080,60 C1260,100 1350,40 1440,60 L1440,120 L0,120Z"/>
-        </svg>
-        <svg viewBox="0 0 1440 120" preserveAspectRatio="none" fill="rgba(14,127,190,.5)">
-          <path d="M0,80 C200,40 400,100 600,80 C800,60 1000,110 1200,80 C1320,65 1380,85 1440,80 L1440,120 L0,120Z"/>
-        </svg>
-      </div>
-
-      <main className="container pt-28 pb-20">
-
-        {/* HERO */}
-        <div className="text-center mb-16 px-2">
-          <div className="inline-flex items-center gap-2 bg-[rgba(14,127,190,0.2)] border border-[rgba(56,201,240,0.3)] rounded-full px-4 py-1.5 text-[var(--foam)] text-sm mb-6">
-            <span className="live-dot"></span>
-            Dados oficiais · Marinha do Brasil 2026
+      {/* HERO PRO MAX SECTION */}
+      <section className="hero-section border-b border-[rgba(56,201,240,0.15)]" style={{ minHeight: '600px', paddingBottom: '30px' }}>
+        <div className="hero-overlay" style={{ background: 'linear-gradient(to bottom, rgba(6,16,30,0.4) 0%, rgba(6,16,30,0.85) 80%, rgba(10,22,40,1) 100%)' }} />
+        <div className="container relative z-10 text-white text-center pt-32 pb-8 px-2">
+          
+          <div className="inline-flex items-center gap-2 bg-[rgba(255,255,255,0.08)] border border-[rgba(255,255,255,0.15)] backdrop-blur-md rounded-full px-4 py-1.5 text-[var(--foam)] text-[0.8rem] mb-6 shadow-xl uppercase tracking-widest font-bold">
+            <span className="live-dot bg-[var(--foam)]"></span>
+            Dados Oficiais da Marinha 2026
           </div>
-          <h1 className="font-syne font-extrabold text-[clamp(2.8rem,9vw,5rem)] tracking-[-3px] leading-[1.05] text-[var(--white)] mb-5">
+          
+          <h1 className="font-syne font-extrabold text-[clamp(2.8rem,9vw,5.5rem)] tracking-[-2px] leading-[1] text-white mb-6 drop-shadow-2xl">
             A maré certa,<br/>
-            <span className="text-[var(--foam)]">na hora certa.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--foam)] to-[#2a68f6] filter drop-shadow">na hora certa.</span>
           </h1>
-          <p className="max-w-xl mx-auto text-[var(--muted)] text-lg leading-relaxed mb-8">
-            Previsão de marés, ondas e ventos para{' '}
-            <strong className="text-[var(--sand)]">{totalPorts} portos</strong>{' '}
-            do litoral brasileiro — dados da Marinha em tempo real.
+          
+          <p className="max-w-2xl mx-auto text-[rgba(255,255,255,0.8)] text-lg md:text-xl leading-relaxed mb-6 drop-shadow font-light">
+            Condições de maré, ondas e ventos em tempo real para{' '}
+            <strong className="text-white font-bold bg-[rgba(56,201,240,0.15)] px-2 py-0.5 rounded border border-[rgba(56,201,240,0.2)] mx-1">{totalPorts} portos</strong>{' '}
+            em todo o litoral brasileiro.
           </p>
 
-          {/* Stats */}
-          <div className="flex flex-wrap justify-center gap-3 mb-10">
+          <HeroSearch />
+
+          {/* Stats em formato Glassmorphism Bento */}
+          <div className="flex flex-wrap justify-center gap-4 mt-12 mb-4">
             {[
-              { val: `${totalPorts}`, lbl: 'Portos cobertos' },
-              { val: '365', lbl: 'Dias de previsão' },
-              { val: '4', lbl: 'Regiões' },
-              { val: '24/7', lbl: 'Disponível' },
+              { val: `${totalPorts}`, lbl: 'Portos', icon: '📍' },
+              { val: '365', lbl: 'Dias de Previsão', icon: '📅' },
+              { val: '4', lbl: 'Regiões', icon: '🗺️' },
+              { val: '24/7', lbl: 'Disponível', icon: '⚡' },
             ].map(s => (
-              <div key={s.lbl} className="bg-[rgba(13,34,64,0.8)] border border-[rgba(56,201,240,0.12)] rounded-2xl px-5 py-3 text-center min-w-[90px]">
-                <div className="font-syne font-extrabold text-xl text-[var(--foam)]">{s.val}</div>
-                <div className="text-[var(--muted)] text-xs mt-0.5">{s.lbl}</div>
+              <div key={s.lbl} className="glass-card hover:bg-[rgba(255,255,255,0.1)] transition-colors rounded-2xl px-6 py-4 text-center min-w-[120px] max-w-[140px] flex-1">
+                <div className="text-2xl mb-1 opacity-80">{s.icon}</div>
+                <div className="font-syne font-extrabold text-2xl text-white drop-shadow-sm">{s.val}</div>
+                <div className="text-[var(--foam)] text-[10px] sm:text-xs mt-1 font-bold uppercase tracking-wider">{s.lbl}</div>
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <main className="container pt-8 pb-20 relative z-10">
 
           {/* Quick tags */}
-          <div className="flex flex-wrap justify-center gap-2">
-            <span className="text-[var(--muted)] text-sm self-center mr-1">Acesso rápido:</span>
+          <div className="flex flex-wrap justify-center gap-2 mb-10">
+            <span className="text-[var(--muted)] text-sm self-center mr-1 drop-shadow">Acesso rápido:</span>
             {['salvador','rio-de-janeiro-fiscal','santos','porto-de-mucuripe-fortaleza','maceio'].map(slug => {
               const p = PORTS.find(x => x.slug === slug);
               if (!p) return null;
               return (
                 <Link key={slug} href={`/mare/${slug}`}
-                  className="bg-[rgba(56,201,240,0.1)] border border-[rgba(56,201,240,0.2)] text-[var(--foam)] text-sm px-3 py-1.5 rounded-full hover:bg-[rgba(56,201,240,0.2)] hover:border-[var(--foam)] transition-all">
+                  className="bg-[rgba(56,201,240,0.1)] border border-[rgba(56,201,240,0.2)] text-[var(--foam)] text-sm px-3 py-1.5 rounded-full hover:bg-[rgba(56,201,240,0.25)] hover:border-[var(--foam)] transition-all drop-shadow-sm font-medium">
                   {p.name.replace('Porto de ','').replace('Porto do ','')}
                 </Link>
               );
             })}
           </div>
-        </div>
 
         {/* REGIONS + LIVE CARDS */}
         {regions.map((region) => {

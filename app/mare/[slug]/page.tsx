@@ -10,6 +10,7 @@ import WavesCard from '@/components/WavesCard';
 import ForecastStrip from '@/components/ForecastStrip';
 import ConditionsCard from '@/components/ConditionsCard';
 import SummaryCards from '@/components/SummaryCards';
+import DetailedForecastTable from '@/components/DetailedForecastTable';
 import Link from 'next/link';
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
@@ -99,7 +100,10 @@ export default async function PortPage({ params }: { params: { slug: string } })
               <TideTable tides={todayTides} currentMin={currentMin} />
             </div>
 
-            {/* SEO Content Movidp para a esquerda para preencher o buraco visual */}
+            {/* BURACO VISUAL PREENCHIDO COM A NOVA MEGATABELA WINDFINDER-STYLE */}
+            <DetailedForecastTable lat={port.lat} lon={port.lon} todayTides={todayTides} />
+
+            {/* SEO Content */}
             <section className="classic-card prose prose-slate max-w-none">
               <h2 className="text-2xl font-bold mb-4 font-syne tracking-tight">Guia de Maré em {port.name}</h2>
               <p className="text-gray-600 leading-relaxed text-sm">A tábua de maré de {port.name} é essencial para pescadores, surfistas, mergulhadores e navegantes que frequentam o litoral de {port.state}. Os dados apresentados pelo MaréAgora são baseados nas tábuas oficiais publicadas pelo Centro de Hidrografia da Marinha do Brasil (CHM) para o <strong>ano de 2026</strong>.</p>

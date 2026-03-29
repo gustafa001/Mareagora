@@ -18,7 +18,7 @@ export default function Home() {
   const totalPorts = PORTS.length;
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[var(--ocean)]">
       <NavBar />
 
       <div className="bg-waves" aria-hidden>

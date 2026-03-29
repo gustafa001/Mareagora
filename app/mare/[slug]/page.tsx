@@ -3,7 +3,7 @@ import { PORTS, getPortBySlug, getNearbySlugs } from '@/lib/ports';
 import { getTodayTides, getTideStatus, tideAtMinute } from '@/lib/tideUtils';
 import { getPortData } from '@/lib/tideData';
 import type { Metadata } from 'next';
-import Script from 'next/script';
+
 import NavBar from '@/components/NavBar';
 import TideChart from '@/components/TideChart';
 import TideTable from '@/components/TideTable';
@@ -94,11 +94,11 @@ export default async function PortPage({ params }: { params: { slug: string } })
     <main className="min-h-screen pb-20">
 
       {/* JSON-LD — usando next/script para evitar hydration error */}
-      <Script
+      <script
         id={`jsonld-${slug}`}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        strategy="beforeInteractive"
+        
       />
 
       <NavBar />

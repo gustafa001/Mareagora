@@ -101,23 +101,40 @@ export default async function PortPage({ params }: { params: { slug: string } })
               <h3 className="card-title">Tabela de Marés</h3>
               <TideTable tides={todayTides} currentMin={currentMin} />
             </div>
+
+            {/* SEO Content Movidp para a esquerda para preencher o buraco visual */}
+            <section className="classic-card prose prose-slate max-w-none">
+              <h2 className="text-2xl font-bold mb-4 font-syne tracking-tight">Guia de Maré em {port.name}</h2>
+              <p className="text-gray-600 leading-relaxed text-sm">A tábua de maré de {port.name} é essencial para pescadores, surfistas, mergulhadores e navegantes que frequentam o litoral de {port.state}. Os dados apresentados pelo MaréAgora são baseados nas tábuas oficiais publicadas pelo Centro de Hidrografia da Marinha do Brasil (CHM) para o <strong>ano de 2026</strong>.</p>
+              
+              <div className="grid md:grid-cols-2 gap-8 mt-6">
+                <div>
+                  <h3 className="text-base font-bold mb-2 text-gray-800">🎣 Como usar a tábua?</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">Ela indica os horários e alturas das marés altas e baixas ao longo do dia. Para a pesca, os momentos de virada (quando a maré muda de direção) costumam ser muito produtivos.</p>
+                </div>
+                <div>
+                  <h3 className="text-base font-bold mb-2 text-gray-800">📏 Nível Médio</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">O nível médio ({portData?.nivel_medio || "--"}m) é a referência. Alturas positivas indicam quanto a água estará acima deste nível para que você possa atracar em segurança.</p>
+                </div>
+              </div>
+            </section>
           </div>
 
           {/* Lado Direito: Condições e Extras */}
           <aside className="flex flex-col gap-8">
             <WavesCard lat={port.lat} lon={port.lon} />
             <ForecastStrip lat={port.lat} lon={port.lon} />
-            <ConditionsCard lat={port.lon} lon={port.lon} />
+            <ConditionsCard lat={port.lat} lon={port.lon} />
             
             <div className="classic-card">
-              <h3 className="card-title">Cidades Próximas</h3>
+              <h3 className="card-title mb-4">📍 Cidades Próximas</h3>
               <div className="flex flex-col gap-3">
                 {getNearbySlugs(port).map(p => {
                   return (
                     <Link 
                       key={p.slug} 
                       href={`/mare/${p.slug}`}
-                      className="group flex flex-col p-3 rounded-lg border border-gray-100 hover:border-[#2a68f6] hover:bg-gray-50 transition-all"
+                      className="group flex flex-col p-3.5 rounded-xl border border-gray-100 hover:border-[#2a68f6] hover:bg-gray-50 transition-all"
                     >
                       <span className="font-bold text-gray-800 group-hover:text-[#2a68f6]">{p.name}</span>
                       <span className="text-xs text-gray-400 capitalize">{p.state} • Ver tábua de maré</span>
@@ -128,22 +145,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
             </div>
           </aside>
         </div>
-
-        {/* SEO Content Section */}
-        <section className="mt-16 classic-card prose prose-slate max-w-none">
-          <h2 className="text-2xl font-bold mb-4 font-syne">Tábua de Maré em {port.name} ({port.state}) — 2026</h2>
-          <p>A tábua de maré de {port.name} é essencial para pescadores, surfistas, mergulhadores e navegantes que frequentam o litoral de {port.state}. Os dados apresentados pelo MaréAgora são baseados nas tábuas oficiais publicadas pelo Centro de Hidrografia da Marinha do Brasil (CHM) para o ano de 2026.</p>
-          <div className="grid md:grid-cols-2 gap-8 mt-8">
-            <div>
-              <h3 className="text-lg font-bold mb-2">Como usar a tábua de maré</h3>
-              <p>A tábua de maré indica os horários e alturas das marés altas (preamar) e baixas (baixa-mar) ao longo do dia. Para pesca, os momentos de virada — quando a maré muda de direção — costumam ser os mais produtivos.</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold mb-2">Importância do Nível Médio</h3>
-              <p>O nível médio ({portData?.nivel_medio || "--"}m) é a referência vertical para todas as medições neste porto. Alturas positivas indicam quanto a água estará acima deste nível.</p>
-            </div>
-          </div>
-        </section>
       </div>
 
       <footer className="mt-20 py-10 border-t border-gray-200 text-center text-gray-400 text-sm">

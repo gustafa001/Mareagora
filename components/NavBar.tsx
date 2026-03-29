@@ -102,7 +102,7 @@ export default function NavBar() {
               {suggestions.map((p) => (
                 <button
                   key={p.slug}
-                  onClick={() => goToPort(p)}
+                  onMouseDown={() => goToPort(p)}
                   className="w-full text-left px-4 py-2.5 hover:bg-gray-50 flex items-center justify-between group transition-colors"
                 >
                   <div className="flex flex-col">
@@ -148,7 +148,7 @@ export default function NavBar() {
               {suggestions.map((p) => (
                 <button
                   key={p.slug}
-                  onClick={() => goToPort(p)}
+                  onMouseDown={() => goToPort(p)}
                   className="w-full text-left px-4 py-2.5 hover:bg-gray-50 flex items-center justify-between group transition-colors"
                 >
                   <div className="flex flex-col">
@@ -177,4 +177,4 @@ export default function NavBar() {
       `}</style>
     </nav>
   );
-}
+          }

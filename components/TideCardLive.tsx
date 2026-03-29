@@ -8,9 +8,10 @@ import { API_BASE } from '@/lib/apiConfig';
 type Props = {
   port: { slug: string; name: string; state: string; dataFile: string };
   data?: any;
+  index?: number;
 };
 
-export default function TideCardLive({ port, data: initialData }: Props) {
+export default function TideCardLive({ port, data: initialData, index = 0 }: Props) {
   const [tideData, setTideData] = useState<any>(initialData || null);
   const [height, setHeight] = useState<number | null>(null);
   const [rising, setRising] = useState<boolean>(true);
@@ -18,14 +19,23 @@ export default function TideCardLive({ port, data: initialData }: Props) {
 
   useEffect(() => {
     if (!tideData && port.dataFile) {
-      // Lazy fetch if data is not provided
       const portId = port.dataFile.replace('.json', '');
-      fetch(`/api/tide/${portId}?v=2`)
-        .then(res => res.json())
-        .then(data => setTideData(data))
-        .catch(err => console.error(`Error fetching tide for ${port.name}:`, err));
+      // Delay escalonado: evita 47 requests simultâneos no carregamento da home
+      const delay = index * 80;
+
+      const timer = setTimeout(() => {
+        fetch(`/api/tide/${encodeURIComponent(portId)}`)
+          .then(res => {
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            return res.json();
+          })
+          .then(data => setTideData(data))
+          .catch(err => console.error(`Erro ao carregar ${port.name}:`, err));
+      }, delay);
+
+      return () => clearTimeout(timer);
     }
-  }, [port.dataFile, tideData, port.name]);
+  }, [port.dataFile, tideData, port.name, index]);
 
   useEffect(() => {
     function update() {

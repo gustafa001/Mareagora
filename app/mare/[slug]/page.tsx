@@ -64,20 +64,27 @@ export default async function PortPage({ params }: { params: { slug: string } })
   const port = getPortBySlug(slug);
   if (!port) notFound();
 
-  // Busca dados dinamicamente da API (URL configurada via NEXT_PUBLIC_API_URL)
+  // Lê o JSON estático via API route interna
   const id = port.dataFile.replace('.json', '');
-  const apiUrl = `${API_BASE}/api/mare/${id}?v=2`;
-  
-  let portData: any;
+  let portData: any = null;
+
   try {
-    const res = await fetch(apiUrl, { next: { revalidate: 3600 } });
-    if (!res.ok) throw new Error(`Status: ${res.status}`);
-    portData = await res.json();
+    const baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : 'http://localhost:3000';
+
+    const res = await fetch(`${baseUrl}/api/tide/${encodeURIComponent(id)}`, {
+      next: { revalidate: 86400 }, // revalida 1x por dia
+    });
+
+    if (res.ok) {
+      portData = await res.json();
+    }
   } catch (e) {
-    console.error(`Erro ao carregar dados da API para ${port.name}:`, e);
-    notFound();
+    console.error(`Erro ao carregar dados de ${port.name}:`, e);
   }
-  const { tides: todayTides, date: closestDate } = getTodayTides(portData);
+  
+  const { tides: todayTides, date: closestDate } = getTodayTides(portData ?? { eventos: [] });
   const now = new Date();
   const today = now.toISOString().split('T')[0];
   const isToday = closestDate === today;

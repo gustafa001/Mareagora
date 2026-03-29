@@ -1,33 +1,29 @@
 import { NextResponse } from 'next/server';
+import { promises as fs } from 'fs';
+import path from 'path';
 
 export async function GET(
   request: Request,
   { params }: { params: { portId: string } }
 ) {
-  const portId = params.portId;
-  const { searchParams } = new URL(request.url);
-  const date = searchParams.get('date') || new Date().toISOString().split('T')[0];
+  const { portId } = params;
 
   try {
-    const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://mareagora-api.onrender.com';
-    const response = await fetch(`${apiBaseUrl}/api/mare/${portId}?start_date=${date}&v=2`, {
-      next: { revalidate: 3600 }, // Cache por 1 hora
+    // portId é o nome do dataFile sem .json (ex: "46_-_porto_de_santos_-_148_-_150")
+    const filePath = path.join(process.cwd(), 'data', `${portId}.json`);
+    const fileContent = await fs.readFile(filePath, 'utf-8');
+    const data = JSON.parse(fileContent);
+
+    return NextResponse.json(data, {
+      headers: {
+        // Cache de 24h no browser, 7 dias no CDN do Vercel
+        'Cache-Control': 'public, s-maxage=604800, stale-while-revalidate=86400',
+      },
     });
-
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: 'Failed to fetch from backend' },
-        { status: response.status }
-      );
-    }
-
-    const data = await response.json();
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error('Tide Proxy Error:', error);
+  } catch {
     return NextResponse.json(
-      { error: 'Internal Server Error' },
-      { status: 500 }
+      { error: 'Porto não encontrado' },
+      { status: 404 }
     );
   }
 }

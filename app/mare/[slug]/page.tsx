@@ -94,6 +94,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        suppressHydrationWarning
       />
 
       <NavBar />

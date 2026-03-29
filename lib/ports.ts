@@ -531,4 +531,368 @@ export const PORTS: Port[] = [
     name: "Barra da Tijuca",
     state: "RJ", lat: -23.001, lon: -43.366,
     dataFile: "40_-_porto_do_rio_de_janeiro_-_i_fiscal_-_130_-_132.json", region: "Sudeste",
-    searchNames: ["Bar
+    searchNames: ["Barra da Tijuca", "Recreio dos Bandeirantes", "Prainha (RJ)", "Grumari"]
+  },
+  {
+    slug: "niteroi",
+    name: "Niterói",
+    state: "RJ", lat: -22.883, lon: -43.104,
+    dataFile: "40_-_porto_do_rio_de_janeiro_-_i_fiscal_-_130_-_132.json", region: "Sudeste",
+    searchNames: ["Niterói", "Icaraí", "Charitas", "Jurujuba", "Itaipu", "Camboinhas", "Piratininga"]
+  },
+  {
+    slug: "marica",
+    name: "Maricá",
+    state: "RJ", lat: -22.919, lon: -42.819,
+    dataFile: "40_-_porto_do_rio_de_janeiro_-_i_fiscal_-_130_-_132.json", region: "Sudeste",
+    searchNames: ["Maricá", "Itaipuaçu", "Ponta Negra (RJ)", "Jaconé", "Barra de Maricá"]
+  },
+  {
+    slug: "itaguai",
+    name: "Porto de Itaguaí",
+    state: "RJ", lat: -22.91692, lon: -43.83347,
+    dataFile: "41_-_porto_de_itaguaí_-_133_-_135.json", region: "Sudeste",
+    searchNames: ["Itaguaí", "Sepetiba", "Coroa Grande"]
+  },
+  {
+    slug: "porto-do-forno",
+    name: "Porto do Forno (Arraial)",
+    state: "RJ", lat: -22.96678, lon: -42.00022,
+    dataFile: "42_-_porto_do_forno_-_136_-_138.json", region: "Sudeste",
+    searchNames: ["Arraial do Cabo", "Cabo Frio", "Búzios", "São Pedro da Aldeia", "Saquarema"]
+  },
+  {
+    slug: "arraial-do-cabo",
+    name: "Arraial do Cabo",
+    state: "RJ", lat: -22.966, lon: -42.022,
+    dataFile: "42_-_porto_do_forno_-_136_-_138.json", region: "Sudeste",
+    searchNames: ["Arraial do Cabo", "Praia do Forno", "Praia dos Anjos", "Praia Grande (Arraial)"]
+  },
+  {
+    slug: "cabo-frio",
+    name: "Cabo Frio",
+    state: "RJ", lat: -22.879, lon: -42.019,
+    dataFile: "42_-_porto_do_forno_-_136_-_138.json", region: "Sudeste",
+    searchNames: ["Cabo Frio", "Ogiva", "Peró", "Praia do Forte (RJ)", "São Pedro da Aldeia"]
+  },
+  {
+    slug: "buzios",
+    name: "Búzios",
+    state: "RJ", lat: -22.745, lon: -41.882,
+    dataFile: "42_-_porto_do_forno_-_136_-_138.json", region: "Sudeste",
+    searchNames: ["Búzios", "Armação dos Búzios", "Ferradura", "Geribá", "João Fernandes", "Manguinhos (Búzios)"]
+  },
+  {
+    slug: "saquarema",
+    name: "Saquarema",
+    state: "RJ", lat: -22.920, lon: -42.510,
+    dataFile: "42_-_porto_do_forno_-_136_-_138.json", region: "Sudeste",
+    searchNames: ["Saquarema", "Barra Nova", "Jaconé", "Bacaxá"]
+  },
+  {
+    slug: "terminal-ilha-guaiba",
+    name: "Ilha Guaíba / Mangaratiba",
+    state: "RJ", lat: -23.0, lon: -44.01692,
+    dataFile: "43_-_terminal_da_ilha_guaíba_-_139_-_141.json", region: "Sudeste",
+    searchNames: ["Mangaratiba", "Ilha Grande", "Conceição de Jacareí", "Costa Verde"]
+  },
+  {
+    slug: "mangaratiba",
+    name: "Mangaratiba",
+    state: "RJ", lat: -22.960, lon: -44.044,
+    dataFile: "43_-_terminal_da_ilha_guaíba_-_139_-_141.json", region: "Sudeste",
+    searchNames: ["Mangaratiba", "Conceição de Jacareí", "Muriqui", "Costa Verde"]
+  },
+  {
+    slug: "ilha-grande",
+    name: "Ilha Grande",
+    state: "RJ", lat: -23.147, lon: -44.217,
+    dataFile: "43_-_terminal_da_ilha_guaíba_-_139_-_141.json", region: "Sudeste",
+    searchNames: ["Ilha Grande", "Abraão", "Lopes Mendes", "Dois Rios", "Lagoa Verde"]
+  },
+  {
+    slug: "angra-dos-reis",
+    name: "Angra dos Reis",
+    state: "RJ", lat: -23.00022, lon: -44.30025,
+    dataFile: "44_-_porto_de_angra_dos_reis_-_142_-144.json", region: "Sudeste",
+    searchNames: ["Angra", "Ilha Grande (Abraão)", "Paraty", "Jabaquara", "Trindade (Paraty)"]
+  },
+  {
+    slug: "paraty",
+    name: "Paraty",
+    state: "RJ", lat: -23.218, lon: -44.713,
+    dataFile: "44_-_porto_de_angra_dos_reis_-_142_-144.json", region: "Sudeste",
+    searchNames: ["Paraty", "Trindade", "Jabaquara", "Sono", "Mamanguá"]
+  },
+  {
+    slug: "sao-sebastiao",
+    name: "São Sebastião / Ilhabela",
+    state: "SP", lat: -23.80017, lon: -45.38358,
+    dataFile: "45_-_porto_de_são_sebastião_-_145_-_147.json", region: "Sudeste",
+    searchNames: ["São Sebastião", "Ilhabela", "Ubatuba", "Caraguatatuba", "Maresias", "Camburi", "Juquehy"]
+  },
+  {
+    slug: "ilhabela",
+    name: "Ilhabela",
+    state: "SP", lat: -23.778, lon: -45.358,
+    dataFile: "45_-_porto_de_são_sebastião_-_145_-_147.json", region: "Sudeste",
+    searchNames: ["Ilhabela", "Perequê (Ilhabela)", "Veloso", "Curral", "Castelhanos (SP)"]
+  },
+  {
+    slug: "ubatuba",
+    name: "Ubatuba",
+    state: "SP", lat: -23.434, lon: -45.084,
+    dataFile: "45_-_porto_de_são_sebastião_-_145_-_147.json", region: "Sudeste",
+    searchNames: ["Ubatuba", "Toninhas", "Enseada (Ubatuba)", "Lagoinha", "Itamambuca", "Maranduba", "Prumirim"]
+  },
+  {
+    slug: "caraguatatuba",
+    name: "Caraguatatuba",
+    state: "SP", lat: -23.622, lon: -45.413,
+    dataFile: "45_-_porto_de_são_sebastião_-_145_-_147.json", region: "Sudeste",
+    searchNames: ["Caraguatatuba", "Caraguá", "Martim de Sá", "Indaiá (SP)", "Tabatinga", "Mococa"]
+  },
+  {
+    slug: "maresias",
+    name: "Maresias",
+    state: "SP", lat: -23.791, lon: -45.528,
+    dataFile: "45_-_porto_de_são_sebastião_-_145_-_147.json", region: "Sudeste",
+    searchNames: ["Maresias", "Camburi", "Juquehy", "Barra do Sahy", "Boiçucanga", "Toque-Toque"]
+  },
+  {
+    slug: "santos",
+    name: "Porto de Santos / Guarujá",
+    state: "SP", lat: -23.95011, lon: -46.30014,
+    dataFile: "46_-_porto_de_santos_-_148_-_150.json", region: "Sudeste",
+    searchNames: ["Santos", "Guarujá", "Bertioga", "Praia Grande", "São Vicente", "Riviera", "Cubatão", "Itanhaém", "Peruíbe"]
+  },
+  {
+    slug: "guaruja",
+    name: "Guarujá",
+    state: "SP", lat: -23.993, lon: -46.256,
+    dataFile: "46_-_porto_de_santos_-_148_-_150.json", region: "Sudeste",
+    searchNames: ["Guarujá", "Pitangueiras", "Enseada (Guarujá)", "Pernambuco", "Tombo", "Astúrias", "Perequê (Guarujá)"]
+  },
+  {
+    slug: "sao-vicente",
+    name: "São Vicente",
+    state: "SP", lat: -23.964, lon: -46.392,
+    dataFile: "46_-_porto_de_santos_-_148_-_150.json", region: "Sudeste",
+    searchNames: ["São Vicente", "Itararé", "González", "Japuí", "Ilha Porchat"]
+  },
+  {
+    slug: "praia-grande",
+    name: "Praia Grande",
+    state: "SP", lat: -24.006, lon: -46.403,
+    dataFile: "46_-_porto_de_santos_-_148_-_150.json", region: "Sudeste",
+    searchNames: ["Ocian", "Aviação", "Tupi", "Boqueirão", "Mirim", "Caiçara", "Real", "Guilhermina", "Balneário Praia Grande"]
+  },
+  {
+    slug: "bertioga",
+    name: "Bertioga",
+    state: "SP", lat: -23.856, lon: -46.139,
+    dataFile: "46_-_porto_de_santos_-_148_-_150.json", region: "Sudeste",
+    searchNames: ["Bertioga", "Riviera de São Lourenço", "Vista Linda", "Boracéia", "Indaiá (Bertioga)"]
+  },
+  {
+    slug: "itanhaem",
+    name: "Itanhaém",
+    state: "SP", lat: -24.182, lon: -46.789,
+    dataFile: "46_-_porto_de_santos_-_148_-_150.json", region: "Sudeste",
+    searchNames: ["Itanhaém", "Cibratel", "Belas Artes", "Suarão", "Gaivota"]
+  },
+  {
+    slug: "peruibe",
+    name: "Peruíbe",
+    state: "SP", lat: -24.319, lon: -47.005,
+    dataFile: "46_-_porto_de_santos_-_148_-_150.json", region: "Sudeste",
+    searchNames: ["Peruíbe", "Arpoador (SP)", "Estância Balneária"]
+  },
+  {
+    slug: "ponta-do-felix",
+    name: "Antonina / Ponta do Félix",
+    state: "PR", lat: -25.45008, lon: -48.66686,
+    dataFile: "47_-_terminal_portuário_da_ponta_do_félix__151_-_153.json", region: "Sudeste",
+    searchNames: ["Antonina", "Morretes"]
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // SUL
+  // ══════════════════════════════════════════════════════════════════════════════
+  {
+    slug: "paranagua-cais-oeste",
+    name: "Paranaguá (Cais Oeste)",
+    state: "PR", lat: -25.50003, lon: -48.51692,
+    dataFile: "48_-_porto_de_paranaguá_-_cais_oeste_-_154_-_156.json", region: "Sul",
+    searchNames: ["Paranaguá", "Ilha do Mel", "Pontal do Paraná", "Pontal do Sul"]
+  },
+  {
+    slug: "ilha-do-mel",
+    name: "Ilha do Mel",
+    state: "PR", lat: -25.530, lon: -48.300,
+    dataFile: "48_-_porto_de_paranaguá_-_cais_oeste_-_154_-_156.json", region: "Sul",
+    searchNames: ["Ilha do Mel", "Encantadas", "Nova Brasília", "Fortaleza (PR)"]
+  },
+  {
+    slug: "pontal-do-parana",
+    name: "Pontal do Paraná",
+    state: "PR", lat: -25.575, lon: -48.352,
+    dataFile: "48_-_porto_de_paranaguá_-_cais_oeste_-_154_-_156.json", region: "Sul",
+    searchNames: ["Pontal do Paraná", "Pontal do Sul", "Praia de Leste", "Shangri-Lá"]
+  },
+  {
+    slug: "paranagua-canal-sueste",
+    name: "Paranaguá (Canal Sueste)",
+    state: "PR", lat: -25.53344, lon: -48.28353,
+    dataFile: "49_-_barra_de_paranaguá_-_canal_sueste_157_-_159.json", region: "Sul",
+    searchNames: ["Matinhos", "Caiobá", "Guaratuba"]
+  },
+  {
+    slug: "matinhos",
+    name: "Matinhos",
+    state: "PR", lat: -25.817, lon: -48.542,
+    dataFile: "49_-_barra_de_paranaguá_-_canal_sueste_157_-_159.json", region: "Sul",
+    searchNames: ["Matinhos", "Caiobá", "Riviera (PR)", "Flamingo (PR)"]
+  },
+  {
+    slug: "guaratuba",
+    name: "Guaratuba",
+    state: "PR", lat: -25.884, lon: -48.576,
+    dataFile: "49_-_barra_de_paranaguá_-_canal_sueste_157_-_159.json", region: "Sul",
+    searchNames: ["Guaratuba", "Coroados", "Brejatuba", "Praia Central (Guaratuba)"]
+  },
+  {
+    slug: "paranagua-canal-galheta",
+    name: "Paranaguá (C. Galheta)",
+    state: "PR", lat: -25.56667, lon: -48.31667,
+    dataFile: "50_-_barra_de_paranaguá_-_canal_da_galheta_160_-162.json", region: "Sul",
+    searchNames: ["Matinhos", "Praia de Leste"]
+  },
+  {
+    slug: "sao-francisco-do-sul",
+    name: "São Francisco do Sul",
+    state: "SC", lat: -26.23353, lon: -48.63347,
+    dataFile: "51_-_porto_de_são_francisco_do_sul_-_163_-165.json", region: "Sul",
+    searchNames: ["SFS", "Enseada", "Joinville", "Itapoá", "Barra do Sul"]
+  },
+  {
+    slug: "joinville",
+    name: "Joinville",
+    state: "SC", lat: -26.305, lon: -48.846,
+    dataFile: "51_-_porto_de_são_francisco_do_sul_-_163_-165.json", region: "Sul",
+    searchNames: ["Joinville", "Barra do Rio (SC)"]
+  },
+  {
+    slug: "itapoa",
+    name: "Itapoá",
+    state: "SC", lat: -26.112, lon: -48.614,
+    dataFile: "51_-_porto_de_são_francisco_do_sul_-_163_-165.json", region: "Sul",
+    searchNames: ["Itapoá", "Barra do Sul", "Prainha (SC)"]
+  },
+  {
+    slug: "itajai",
+    name: "Porto de Itajaí / BC",
+    state: "SC", lat: -26.90008, lon: -48.65006,
+    dataFile: "52_-_porto_de_itajaí_-_166_-_168.json", region: "Sul",
+    searchNames: ["Itajaí", "Balneário Camboriú", "BC", "Itapema", "Meia Praia", "Bombinhas", "Porto Belo", "Penha", "Piçarras", "Barra Velha", "Navegantes"]
+  },
+  {
+    slug: "balneario-camboriu",
+    name: "Balneário Camboriú",
+    state: "SC", lat: -26.990, lon: -48.635,
+    dataFile: "52_-_porto_de_itajaí_-_166_-_168.json", region: "Sul",
+    searchNames: ["Balneário Camboriú", "BC", "Praia Central (BC)", "Laranjeiras (BC)", "Estaleiro", "Taquaras"]
+  },
+  {
+    slug: "itapema",
+    name: "Itapema",
+    state: "SC", lat: -27.089, lon: -48.614,
+    dataFile: "52_-_porto_de_itajaí_-_166_-_168.json", region: "Sul",
+    searchNames: ["Itapema", "Meia Praia", "Porto Belo", "Bombinhas", "Mariscal"]
+  },
+  {
+    slug: "bombinhas",
+    name: "Bombinhas",
+    state: "SC", lat: -27.143, lon: -48.513,
+    dataFile: "52_-_porto_de_itajaí_-_166_-_168.json", region: "Sul",
+    searchNames: ["Bombinhas", "Quatro Ilhas", "Mariscal", "Zimbros", "Canto Grande"]
+  },
+  {
+    slug: "navegantes",
+    name: "Navegantes",
+    state: "SC", lat: -26.899, lon: -48.654,
+    dataFile: "52_-_porto_de_itajaí_-_166_-_168.json", region: "Sul",
+    searchNames: ["Navegantes", "Penha", "Piçarras", "Barra Velha"]
+  },
+  {
+    slug: "florianopolis",
+    name: "Porto de Florianópolis",
+    state: "SC", lat: -27.593, lon: -48.552,
+    dataFile: "53_-_porto_de_florianópolis_-_169_-_171.json", region: "Sul",
+    searchNames: ["Floripa", "Canasvieiras", "Jurerê", "Campeche", "Praia Mole", "Lagoa da Conceição"]
+  },
+  {
+    slug: "canasvieiras",
+    name: "Canasvieiras (Florianópolis)",
+    state: "SC", lat: -27.428, lon: -48.463,
+    dataFile: "53_-_porto_de_florianópolis_-_169_-_171.json", region: "Sul",
+    searchNames: ["Canasvieiras", "Jurerê Internacional", "Jurerê", "Daniela", "Ingleses", "Rio Vermelho (SC)"]
+  },
+  {
+    slug: "campeche",
+    name: "Campeche (Florianópolis)",
+    state: "SC", lat: -27.685, lon: -48.494,
+    dataFile: "53_-_porto_de_florianópolis_-_169_-_171.json", region: "Sul",
+    searchNames: ["Campeche", "Praia Mole", "Lagoa da Conceição", "Armação (SC)", "Pântano do Sul"]
+  },
+  {
+    slug: "imbituba",
+    name: "Porto de Imbituba",
+    state: "SC", lat: -28.233, lon: -48.65,
+    dataFile: "54_-_porto_de_imbituba_-_172_-_174.json", region: "Sul",
+    searchNames: ["Imbituba", "Garopaba", "Praia do Rosa"]
+  },
+  {
+    slug: "garopaba",
+    name: "Garopaba",
+    state: "SC", lat: -28.029, lon: -48.621,
+    dataFile: "54_-_porto_de_imbituba_-_172_-_174.json", region: "Sul",
+    searchNames: ["Garopaba", "Praia do Rosa", "Silveira", "Ferrugem", "Barra (Garopaba)"]
+  },
+  {
+    slug: "rio-grande",
+    name: "Porto do Rio Grande",
+    state: "RS", lat: -32.116, lon: -52.083,
+    dataFile: "55_-_porto_do_rio_grande_-_175_-177.json", region: "Sul",
+    searchNames: ["Rio Grande", "Cassino", "Pelotas"]
+  },
+  {
+    slug: "cassino",
+    name: "Praia do Cassino",
+    state: "RS", lat: -32.173, lon: -52.170,
+    dataFile: "55_-_porto_do_rio_grande_-_175_-177.json", region: "Sul",
+    searchNames: ["Cassino", "Praia do Cassino", "Rio Grande (Praia)"]
+  },
+  {
+    slug: "pelotas",
+    name: "Pelotas",
+    state: "RS", lat: -31.771, lon: -52.342,
+    dataFile: "55_-_porto_do_rio_grande_-_175_-177.json", region: "Sul",
+    searchNames: ["Pelotas", "Laranjal", "São Lourenço do Sul"]
+  },
+];
+
+export function getPortBySlug(slug: string): Port | undefined {
+  return PORTS.find(p => p.slug === slug);
+}
+
+export function getNearbySlugs(port: Port, count = 6): Port[] {
+  return PORTS
+    .filter(p => p.slug !== port.slug)
+    .sort((a, b) => {
+      const da = Math.hypot(a.lat - port.lat, a.lon - port.lon);
+      const db = Math.hypot(b.lat - port.lat, b.lon - port.lon);
+      return da - db;
+    })
+    .slice(0, count);
+}

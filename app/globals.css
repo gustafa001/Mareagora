@@ -6,14 +6,16 @@
   --ocean: #0a1628;
   --deep: #06101e;
   --mid: #0d2240;
-  --wave: #0e7fbe;
+  --wave: #2a68f6;
   --foam: #38c9f0;
   --sand: #f5e8c8;
-  --sun: #f5a623;
+  --sun: #ff914d;
   --white: #f0f8ff;
   --muted: #7aa8c7;
   --safe: #3ecf8e;
+  --emerald: #14b8a6;
   --danger: #e05252;
+  --bg-classic: #f0f4f8;
 }
 
 *, *::before, *::after {
@@ -27,10 +29,11 @@ html {
 }
 
 body {
-  background: var(--deep);
-  color: var(--white);
+  background: var(--bg-classic);
+  color: #1a202c;
   overflow-x: hidden;
   min-height: 100vh;
+  font-family: var(--font-inter);
 }
 
 /* ── WAVES BG ── */
@@ -62,36 +65,53 @@ body {
   to { transform: translateX(-50%) }
 }
 
-/* ── HELPER CLASSES ── */
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
+/* ── LEGACY HERO ── */
+.hero-section {
   position: relative;
-  z-index: 1;
+  background: url('/hero-bg.jpg') center/cover no-repeat;
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  padding-bottom: 60px;
 }
 
-.card {
-  background: rgba(13, 34, 64, .75);
-  border: 1px solid rgba(56, 201, 240, .1);
-  border-radius: 1.4rem;
-  padding: 1.4rem;
-  backdrop-filter: blur(10px);
-  transition: border-color .2s;
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.6));
 }
 
-.card:hover {
-  border-color: rgba(56, 201, 240, .25);
+.bg-mare-high { background: var(--wave); color: white; }
+.bg-mare-low { background: var(--sun); color: white; }
+.bg-mare-cond { background: var(--emerald); color: white; }
+
+.summary-card {
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.summary-card:hover {
+  transform: translateY(-4px);
+}
+
+.classic-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  color: #2d3748;
 }
 
 .card-title {
   font-family: var(--font-syne);
   font-weight: 700;
-  font-size: .75rem;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 1.2rem;
+  font-size: 1.25rem;
+  color: #2d3748;
+  margin-bottom: 1.5rem;
 }
 
 /* ── ANIMATIONS ── */

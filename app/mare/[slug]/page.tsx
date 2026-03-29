@@ -9,174 +9,146 @@ import TideTable from '@/components/TideTable';
 import WavesCard from '@/components/WavesCard';
 import ForecastStrip from '@/components/ForecastStrip';
 import ConditionsCard from '@/components/ConditionsCard';
-import NearbyPorts from '@/components/NearbyPorts';
-import WindWaveCharts from '@/components/WindWaveCharts';
+import SummaryCards from '@/components/SummaryCards';
 import Link from 'next/link';
 
-// Gera todas as rotas estáticas em build time
-export async function generateStaticParams() {
-  return PORTS.map(p => ({ slug: p.slug }));
-}
-
-// SEO dinâmico por porto
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const port = getPortBySlug(params.slug);
-  if (!port) return {};
-
-  const title = `Tábua de Maré ${port.name} ${port.state} 2026 — MaréAgora`;
-  const description = `Horários e alturas das marés em ${port.name} (${port.state}) hoje e para os próximos dias. Dados oficiais da Marinha do Brasil + ondas e vento em tempo real.`;
-  const url = `https://mareagora.com.br/mare/${port.slug}`;
-
+  if (!port) return { title: 'Porto não encontrado' };
   return {
-    title,
-    description,
-    keywords: `tábua de maré, maré hoje, ${port.name}, ${port.state}, Marinha do Brasil, previsão maré 2026`,
-    alternates: { canonical: url },
-    openGraph: {
-      title: `Maré em ${port.name} hoje — MaréAgora`,
-      description,
-      url,
-      type: 'website',
-      images: [{ url: 'https://mareagora.com.br/og-image.png' }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-    },
-    other: {
-      'application/ld+json': JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'WebPage',
-        name: title,
-        description,
-        url,
-        publisher: { '@type': 'Organization', name: 'MaréAgora' },
-        geo: { '@type': 'GeoCoordinates', latitude: port.lat, longitude: port.lon },
-      }),
-    },
+    title: `Tábua de Maré ${port.name} ${new Date().getFullYear()} — MaréAgora`,
+    description: `Horários e alturas das marés em ${port.name} (${port.state}) hoje e para os próximos dias. Dados oficiais da Marinha do Brasil + ondas e vento em tempo real.`,
   };
 }
 
-// Página principal
 export default async function PortPage({ params }: { params: { slug: string } }) {
   const { slug } = params;
   const port = getPortBySlug(slug);
   if (!port) notFound();
 
-  // Lê o JSON estático DIRETAMENTE no servidor (evita falhas de fetch)
   const id = port.dataFile.replace('.json', '');
   const portData = await getPortData(id);
-  
-  if (!portData) {
-    console.error(`Falha crítica ao carregar dados de ${port.name} (${id})`);
-  }
-  
   const { tides: todayTides, date: closestDate } = getTodayTides(portData ?? { eventos: [] });
+  
   const now = new Date();
-  const today = now.toISOString().split('T')[0];
-  const isToday = closestDate === today;
-
   const currentMin = now.getHours() * 60 + now.getMinutes();
-  const { rising, next } = getTideStatus(currentMin, todayTides);
-  const currentHeight = tideAtMinute(currentMin, todayTides);
+  
+  // Lógica para os Summary Cards (Picos e Vales)
+  const heights = todayTides.map(t => t.altura_m);
+  const maxH = Math.max(...heights);
+  const minH = Math.min(...heights);
+  const avgH = (maxH + minH) / 2;
+  
+  const nextHigh = todayTides.find(t => {
+    const [h, m] = t.hora.split(':').map(Number);
+    const min = (h || 0) * 60 + (m || 0);
+    return min > currentMin && t.altura_m >= avgH;
+  }) || todayTides.find(t => t.altura_m >= avgH);
 
-  const nearby = getNearbySlugs(port);
+  const nextLow = todayTides.find(t => {
+    const [h, m] = t.hora.split(':').map(Number);
+    const min = (h || 0) * 60 + (m || 0);
+    return min > currentMin && t.altura_m < avgH;
+  }) || todayTides.find(t => t.altura_m < avgH);
+
+  const currentTimeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
   return (
-    <div className="min-h-screen">
+    <main className="min-h-screen pb-20">
       <NavBar />
       
-      <main className="container pt-24 pb-12">
-        {/* BREADCRUMB */}
-        <div className="text-[0.82rem] text-[var(--muted)] mb-6">
-          <Link href="/" className="hover:text-[var(--foam)]">MaréAgora</Link>
-          <span className="mx-2">›</span>
-          <span className="hover:text-[var(--foam)]">Portos</span>
-          <span className="mx-2">›</span>
-          <span className="text-[var(--white)] font-medium">{port.name} — {port.state}</span>
-        </div>
-
-        {/* HERO */}
-        <div className="mb-10">
-          {!isToday && (
-            <div className="mb-6 p-4 bg-[rgba(245,166,35,0.1)] border border-[rgba(245,166,35,0.3)] rounded-2xl flex items-start gap-3">
-              <span className="text-xl">⚠️</span>
-              <div className="text-sm text-[var(--sun)] leading-relaxed">
-                <strong>Nota:</strong> Hoje não é dia de sizígia. Exibindo dados de <strong>{new Date(closestDate).toLocaleDateString('pt-BR')}</strong>, a sizígia mais próxima disponível.
-              </div>
-            </div>
-          )}
-          <h1 className="font-syne font-extrabold text-[clamp(2rem,6vw,3.5rem)] tracking-[-1.5px] leading-[1.1] text-[var(--white)] mb-4">
-            Maré em <em className="not-italic text-[var(--foam)]">{port.name}</em>
-          </h1>
-          <div className="flex flex-wrap items-center gap-3 mt-4">
-            <div className="flex items-center gap-2 bg-[rgba(56,201,240,0.08)] border border-[rgba(56,201,240,0.15)] rounded-full px-3.5 py-1 text-[0.8rem] text-[var(--muted)]">
-              <div className="live-dot"></div> Ao vivo
-            </div>
-            <div className="flex items-center gap-2 bg-[rgba(56,201,240,0.08)] border border-[rgba(56,201,240,0.15)] rounded-full px-3.5 py-1 text-[0.8rem] text-[var(--muted)]">
-              ⚓ {Math.abs(port.lat).toFixed(2)}°{port.lat < 0 ? 'S' : 'N'} {Math.abs(port.lon).toFixed(2)}°{port.lon < 0 ? 'W' : 'E'}
-            </div>
-            <div className="flex items-center gap-2 bg-[rgba(56,201,240,0.08)] border border-[rgba(56,201,240,0.15)] rounded-full px-3.5 py-1 text-[0.8rem] text-[var(--muted)]">
-              🗓 {now.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' })}
-            </div>
-            <div className="flex items-center gap-2 bg-[rgba(56,201,240,0.08)] border border-[rgba(56,201,240,0.15)] rounded-full px-3.5 py-1 text-[0.8rem] text-[var(--muted)]">
-              ⚓ Dados: Marinha do Brasil
+      {/* HERO SECTION - LEGACY LOOK */}
+      <section className="hero-section">
+        <div className="hero-overlay" />
+        <div className="container relative z-10 text-white">
+          <div className="flex flex-col gap-2">
+            <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight font-syne">
+              {port.name}
+            </h1>
+            <p className="text-xl opacity-90 font-medium font-syne">
+              {port.name} - 2026 | Estado do {port.state}
+            </p>
+            <div className="flex flex-wrap gap-x-6 gap-y-2 mt-4 text-sm opacity-80 font-mono">
+              <span>Latitude: {port.lat.toFixed(4)}°</span>
+              <span>Longitude: {port.lon.toFixed(4)}°</span>
+              <span>Fuso: UTC-3</span>
+              <span>Nível Médio: {portData?.nivel_medio || "--"} m</span>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* MAIN GRID */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-5">
-          {/* LEFT COLUMN */}
-          <div className="flex flex-col gap-5">
-            {/* NOW CARD */}
-            <div className="card">
-              <div className="card-title">Altura atual</div>
-              <div className="font-syne font-extrabold text-[clamp(3.5rem,10vw,5.5rem)] leading-none tracking-[-3px] text-[var(--foam)]">
-                {currentHeight.toFixed(2)}<span className="text-2xl text-[var(--muted)] font-normal ml-2">m</span>
-              </div>
-              <div className="mt-2 text-base text-[var(--sand)] flex items-center gap-2">
-                {rising ? '⬆️ Maré subindo' : '⬇️ Maré descendo'}
-              </div>
-              <div className="mt-1 text-[0.85rem] text-[var(--muted)]">
-                Próxima: {next?.tipo || 'Maré'} de {next?.altura_m ? next.altura_m.toFixed(2) : '--'}m às {next?.hora || '--:--'}
-              </div>
+      <div className="container">
+        {/* SUMMARY CARDS - FLOATING */}
+        <SummaryCards 
+          nextHigh={nextHigh || null} 
+          nextLow={nextLow || null} 
+          currentConditions={{
+            time: currentTimeStr,
+            wind: "17 km/h NE",
+            waves: "1.4 m"
+          }} 
+        />
 
+        <div className="mt-12 flex flex-col lg:grid lg:grid-cols-[1fr_350px] gap-8">
+          {/* Lado Esquerdo: Principais Dados */}
+          <div className="flex flex-col gap-8">
+            <div className="classic-card">
               <TideChart tides={todayTides} />
             </div>
 
-            {/* TIDE TABLE */}
-            <TideTable tides={todayTides} currentMin={currentMin} />
+            <div className="classic-card overflow-hidden">
+              <h3 className="card-title">Tabela de Marés</h3>
+              <TideTable tides={todayTides} currentMin={currentMin} />
+            </div>
           </div>
 
-          {/* RIGHT COLUMN */}
-          <div className="flex flex-col gap-5">
+          {/* Lado Direito: Condições e Extras */}
+          <aside className="flex flex-col gap-8">
             <WavesCard lat={port.lat} lon={port.lon} />
             <ForecastStrip lat={port.lat} lon={port.lon} />
             <ConditionsCard lat={port.lat} lon={port.lon} />
-          </div>
+            
+            <div className="classic-card">
+              <h3 className="card-title">Cidades Próximas</h3>
+              <div className="flex flex-col gap-3">
+                {getNearbySlugs(port).map(p => {
+                  return (
+                    <Link 
+                      key={p.slug} 
+                      href={`/mare/${p.slug}`}
+                      className="group flex flex-col p-3 rounded-lg border border-gray-100 hover:border-[#2a68f6] hover:bg-gray-50 transition-all"
+                    >
+                      <span className="font-bold text-gray-800 group-hover:text-[#2a68f6]">{p.name}</span>
+                      <span className="text-xs text-gray-400 capitalize">{p.state} • Ver tábua de maré</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          </aside>
         </div>
 
-        {/* NEARBY PORTS */}
-        <NearbyPorts ports={nearby} />
-
-        {/* SEO TEXT */}
-        <div className="mt-16 text-[var(--muted)] text-[0.9rem] leading-[1.8]">
-          <h2 className="font-syne font-bold text-[1.1rem] text-[var(--sand)] mb-3 mt-8">Tábua de Maré em {port.name} ({port.state}) — 2026</h2>
+        {/* SEO Content Section */}
+        <section className="mt-16 classic-card prose prose-slate max-w-none">
+          <h2 className="text-2xl font-bold mb-4 font-syne">Tábua de Maré em {port.name} ({port.state}) — 2026</h2>
           <p>A tábua de maré de {port.name} é essencial para pescadores, surfistas, mergulhadores e navegantes que frequentam o litoral de {port.state}. Os dados apresentados pelo MaréAgora são baseados nas tábuas oficiais publicadas pelo Centro de Hidrografia da Marinha do Brasil (CHM) para o ano de 2026.</p>
-          <h2 className="font-syne font-bold text-[1.1rem] text-[var(--sand)] mb-3 mt-8">Como usar a tábua de maré</h2>
-          <p>A tábua de maré indica os horários e alturas das marés altas (preamar) e baixas (baixa-mar) ao longo do dia. Para pesca, os momentos de virada — quando a maré muda de direção — costumam ser os mais produtivos. Para surfe, marés de meio ciclo com bom período de ondas tendem a oferecer as melhores condições.</p>
-        </div>
-      </main>
+          <div className="grid md:grid-cols-2 gap-8 mt-8">
+            <div>
+              <h3 className="text-lg font-bold mb-2">Como usar a tábua de maré</h3>
+              <p>A tábua de maré indica os horários e alturas das marés altas (preamar) e baixas (baixa-mar) ao longo do dia. Para pesca, os momentos de virada — quando a maré muda de direção — costumam ser os mais produtivos.</p>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold mb-2">Importância do Nível Médio</h3>
+              <p>O nível médio ({portData?.nivel_medio || "--"}m) é a referência vertical para todas as medições neste porto. Alturas positivas indicam quanto a água estará acima deste nível.</p>
+            </div>
+          </div>
+        </section>
+      </div>
 
-      {/* FOOTER */}
-      <footer className="container py-10 mt-10 border-t border-[rgba(56,201,240,0.07)] flex flex-wrap justify-between items-center gap-4">
-        <p className="text-[var(--muted)] text-[0.8rem]">© 2026 MaréAgora · Todos os direitos reservados</p>
-        <div className="flex items-center gap-2 bg-[rgba(56,201,240,0.07)] border border-[rgba(56,201,240,0.12)] rounded-full px-3.5 py-1 text-[var(--muted)] text-[0.75rem]">
-          ⚓ Dados: Marinha do Brasil 2026
-        </div>
+      <footer className="mt-20 py-10 border-t border-gray-200 text-center text-gray-400 text-sm">
+        <p>© {now.getFullYear()} MaréAgora · Todos os direitos reservados</p>
       </footer>
-    </div>
+    </main>
   );
 }

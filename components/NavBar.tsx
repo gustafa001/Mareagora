@@ -29,8 +29,8 @@ export default function NavBar() {
     setSearch(val);
     const searchNormalized = normalize(val);
     if (searchNormalized.length > 1) {
-      const filtered = PORTS.filter(p => 
-        normalize(p.name).includes(searchNormalized) || 
+      const filtered = PORTS.filter(p =>
+        normalize(p.name).includes(searchNormalized) ||
         normalize(p.state).includes(searchNormalized) ||
         p.searchNames?.some(sn => normalize(sn).includes(searchNormalized))
       ).slice(0, 8);
@@ -85,13 +85,13 @@ export default function NavBar() {
                 >
                   <div className="flex flex-col">
                     <span className="text-sm font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
-                      {p.searchNames && p.searchNames.some(sn => normalize(sn).includes(normalize(search))) 
+                      {p.searchNames && p.searchNames.some(sn => normalize(sn).includes(normalize(search)))
                         ? p.searchNames.find(sn => normalize(sn).includes(normalize(search)))
                         : p.name
                       }
                     </span>
                     <span className="text-[0.7rem] text-gray-400">
-                      {p.searchNames && p.searchNames.some(sn => normalize(sn).includes(normalize(search))) 
+                      {p.searchNames && p.searchNames.some(sn => normalize(sn).includes(normalize(search)))
                         ? `Aprox. de ${p.name} · ${p.state}`
                         : `${p.state} · ${p.region}`
                       }

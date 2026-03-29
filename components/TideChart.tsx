@@ -63,61 +63,73 @@ export default function TideChart({ tides }: TideChartProps) {
 
   return (
     <div className="mt-8 mb-4">
-      <h3 className="card-title mb-8">Tabela de Marés</h3>
-      <div className="relative h-[220px] bg-white rounded-xl p-4 overflow-visible shadow-sm border border-gray-100">
-        <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="w-full h-full overflow-visible">
-          <defs>
-            <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#3b82f6" stopOpacity=".15" />
-              <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          
-          {/* Linha de base opcional */}
-          <line x1="0" y1={H} x2={W} y2={H} stroke="#edf2f7" strokeWidth="1" strokeDasharray="4 4" />
-          
-          {/* Área e Linha da Curva */}
-          <path d={area} fill="url(#cg)" />
-          <path d={d} fill="none" stroke="#2a68f6" strokeWidth="2.5" strokeLinejoin="round" />
-          
-          {/* Pontos de Maré e Labels */}
-          {tidePoints.map((p, i) => (
-            <g key={i}>
-              <circle 
-                cx={p.x} 
-                cy={p.y} 
-                r="4" 
-                fill="white" 
-                stroke={p.isHigh ? "#2a68f6" : "#ff914d"} 
-                strokeWidth="2.5" 
-              />
-              <text 
-                x={p.x} 
-                y={p.y - 12} 
-                textAnchor="middle" 
-                fontSize="10" 
-                fontWeight="700"
-                className="fill-gray-700 font-inter"
-              >
-                {p.label}
-              </text>
-            </g>
-          ))}
-        </svg>
-
-        {/* Cursor de Tempo Atual */}
-        <div 
-          className="absolute top-4 bottom-4 w-[1px] border-l border-dashed border-gray-300 pointer-events-none transition-all duration-500" 
-          style={{ left: `calc(${cursorPct}% + 16px)` }}
-        />
-      </div>
+      <h3 className="card-title mb-8 text-[#2d3748]">Tabela de Marés</h3>
       
-      <div className="flex justify-between text-[0.65rem] font-bold text-gray-400 mt-3 px-4 uppercase tracking-tighter">
-        <span>00h</span>
-        <span>06h</span>
-        <span>12h</span>
-        <span>18h</span>
-        <span>24h</span>
+      {/* Wrapper dinâmico para garantir que o SVG não esmaga nos telemóveis */}
+      <div className="relative bg-white rounded-xl shadow-sm border border-[rgba(56,201,240,0.15)] overflow-x-auto overflow-y-hidden scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
+        
+        {/* Container que barra o encolhimento perigoso em mobile */}
+        <div className="min-w-[600px] relative p-5 pb-3">
+          
+          <div className="h-[170px] w-full relative overflow-visible">
+            <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="w-full h-full overflow-visible">
+              <defs>
+                <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#3b82f6" stopOpacity=".15" />
+                  <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              
+              {/* Linha de base opcional */}
+              <line x1="0" y1={H} x2={W} y2={H} stroke="#edf2f7" strokeWidth="1" strokeDasharray="4 4" />
+              
+              {/* Área e Linha da Curva */}
+              <path d={area} fill="url(#cg)" />
+              <path d={d} fill="none" stroke="#2a68f6" strokeWidth="2.5" strokeLinejoin="round" />
+              
+              {/* Pontos de Maré e Labels */}
+              {tidePoints.map((p, i) => (
+                <g key={i}>
+                  <circle 
+                    cx={p.x} 
+                    cy={p.y} 
+                    r="4.5" 
+                    fill="white" 
+                    stroke={p.isHigh ? "#2a68f6" : "#ff914d"} 
+                    strokeWidth="2.5" 
+                  />
+                  <text 
+                    x={p.x} 
+                    y={p.y - 12} 
+                    textAnchor="middle" 
+                    fontSize="11" 
+                    fontWeight="800"
+                    className="fill-gray-700 font-syne drop-shadow-sm"
+                  >
+                    {p.label}
+                  </text>
+                </g>
+              ))}
+            </svg>
+
+            {/* Cursor de Tempo Atual */}
+            <div 
+              className="absolute top-[-10px] bottom-[-10px] w-[1px] border-l border-dashed border-[rgba(56,201,240,0.4)] pointer-events-none transition-all duration-500 z-10" 
+              style={{ left: `calc(${cursorPct}%)` }}
+            >
+              <div className="w-2 h-2 rounded-full bg-[var(--foam)] absolute -left-[4.5px] top-1/2 shadow-md"></div>
+            </div>
+          </div>
+          
+          {/* Legendas de base do Eixo X */}
+          <div className="flex justify-between text-[11px] font-bold text-gray-400 mt-4 uppercase tracking-wider font-syne">
+            <span>00h</span>
+            <span>06h</span>
+            <span>12h</span>
+            <span>18h</span>
+            <span>24h</span>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -63,12 +63,12 @@ export default function NavBar() {
 
       <div className="flex items-center gap-4">
         <div className="relative" ref={menuRef}>
-          <form onSubmit={handleSearch} className="hidden sm:flex items-center gap-2 bg-[rgba(255,255,255,0.05)] border border-[rgba(56,201,240,0.15)] rounded-full px-4 py-1.5 overflow-hidden focus-within:border-[var(--foam)] transition-all">
+          <form onSubmit={handleSearch} className="flex items-center gap-2 bg-[rgba(255,255,255,0.05)] border border-[rgba(56,201,240,0.15)] rounded-full px-4 py-1.5 overflow-hidden focus-within:border-[var(--foam)] transition-all">
             <span className="text-sm">🔍</span>
             <input
               type="text"
               placeholder="Buscar porto ou cidade…"
-              className="bg-transparent border-none outline-none text-[var(--white)] text-sm w-48 placeholder:text-[var(--muted)]"
+              className="bg-transparent border-none outline-none text-[var(--white)] text-sm w-32 sm:w-48 placeholder:text-[var(--muted)]"
               value={search}
               onChange={(e) => handleInputChange(e.target.value)}
               onFocus={() => search.length > 1 && setShowSuggestions(true)}
@@ -103,7 +103,6 @@ export default function NavBar() {
             </div>
           )}
         </div>
-
       </div>
 
       <style jsx>{`

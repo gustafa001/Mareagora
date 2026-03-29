@@ -54,19 +54,19 @@ export default function ForecastStrip({ lat, lon }: ForecastStripProps) {
   return (
     <div className="classic-card">
       <h3 className="card-title mb-4">📅 Próximos 7 dias</h3>
-      <div className="flex gap-3 overflow-x-auto pb-2 -mx-2 px-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+      <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
         {dayData.map((d, i) => {
           const wIcon = parseFloat(d.maxW) < 0.5 ? '🌊' : parseFloat(d.maxW) < 1.5 ? '🏄' : parseFloat(d.maxW) < 2.5 ? '🌊' : '⚠️';
           return (
             <div 
               key={i} 
-              className={`flex-shrink-0 flex flex-col items-center justify-center border ${i === activeIndex ? 'border-blue-400 bg-blue-50/50' : 'border-gray-100 bg-gray-50'} rounded-xl p-3 min-w-[75px] cursor-pointer hover:border-blue-300 transition-colors`}
+              className={`flex flex-col items-center justify-center border ${i === activeIndex ? 'border-blue-400 bg-blue-50/50' : 'border-gray-100 bg-gray-50'} rounded-xl py-3 px-1 cursor-pointer hover:border-blue-300 transition-colors w-full`}
               onClick={() => setActiveIndex(i)}
             >
               <div className="text-[0.65rem] font-bold uppercase text-gray-500 mb-2">{d.label}</div>
               <div className="text-xl mb-1">{wIcon}</div>
               <div className="text-sm font-bold text-blue-600">{d.maxW}m</div>
-              <div className="text-[0.7rem] text-orange-400 font-medium">{d.minW}m</div>
+              <div className="text-[0.7rem] text-orange-400 font-medium hidden sm:block">{d.minW}m</div>
             </div>
           );
         })}

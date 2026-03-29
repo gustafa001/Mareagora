@@ -76,21 +76,26 @@ export default function NavBar() {
           </form>
 
           {showSuggestions && suggestions.length > 0 && (
-            <div className="absolute top-full right-0 mt-2 w-72 bg-[rgba(13,34,64,0.95)] border border-[rgba(56,201,240,0.2)] rounded-2xl shadow-2xl backdrop-blur-2xl overflow-hidden py-2 animate-in fade-in slide-in-from-top-2 duration-200">
+            <div className="absolute top-full right-0 mt-2 w-72 bg-white border border-gray-100 rounded-2xl shadow-2xl backdrop-blur-2xl overflow-hidden py-2 animate-in fade-in slide-in-from-top-2 duration-200">
               {suggestions.map((p) => (
                 <button
                   key={p.slug}
                   onClick={() => goToPort(p)}
-                  className="w-full text-left px-4 py-2.5 hover:bg-[rgba(56,201,240,0.12)] flex items-center justify-between group transition-colors"
+                  className="w-full text-left px-4 py-2.5 hover:bg-gray-50 flex items-center justify-between group transition-colors"
                 >
                   <div className="flex flex-col">
-                    <span className="text-sm font-bold text-[var(--white)] group-hover:text-[var(--foam)]">
+                    <span className="text-sm font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
                       {p.searchNames && p.searchNames.some(sn => normalize(sn).includes(normalize(search))) 
-                        ? `${p.searchNames.find(sn => normalize(sn).includes(normalize(search)))} (${p.name})`
+                        ? p.searchNames.find(sn => normalize(sn).includes(normalize(search)))
                         : p.name
                       }
                     </span>
-                    <span className="text-[0.7rem] text-[var(--muted)]">{p.state} · {p.region}</span>
+                    <span className="text-[0.7rem] text-gray-400">
+                      {p.searchNames && p.searchNames.some(sn => normalize(sn).includes(normalize(search))) 
+                        ? `Aprox. de ${p.name} · ${p.state}`
+                        : `${p.state} · ${p.region}`
+                      }
+                    </span>
                   </div>
                   <span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">⚓</span>
                 </button>

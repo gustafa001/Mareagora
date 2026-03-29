@@ -81,21 +81,35 @@ body {
   background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.6));
 }
 
-.bg-mare-high { background: var(--wave); color: white; }
-.bg-mare-low { background: var(--sun); color: white; }
-.bg-mare-cond { background: var(--emerald); color: white; }
+/* ── COMPONENTES PRO MAX (GLASSMORPHISM) ── */
+.glass-card {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+/* Color-coding para Tábua de Marés */
+.card-mare-alta { background: linear-gradient(135deg, rgba(42, 104, 246, 0.6), rgba(10, 22, 40, 0.85)); }
+.card-mare-baixa { background: linear-gradient(135deg, rgba(255, 145, 77, 0.6), rgba(10, 22, 40, 0.85)); }
+
+/* Color-coding condicional (Windfinder style) para Condições Agora */
+.card-mar-calmo { background: linear-gradient(135deg, rgba(56, 201, 240, 0.6), rgba(10, 22, 40, 0.85)); } /* Cyan */
+.card-mar-suave { background: linear-gradient(135deg, rgba(20, 184, 166, 0.6), rgba(10, 22, 40, 0.85)); } /* Emerald */
+.card-mar-agitado { background: linear-gradient(135deg, rgba(42, 104, 246, 0.6), rgba(10, 22, 40, 0.85)); } /* Blue */
+.card-mar-revolto { background: linear-gradient(135deg, rgba(224, 82, 82, 0.6), rgba(10, 22, 40, 0.85)); } /* Red */
 
 .summary-card {
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
 }
 
 .summary-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
 }
 
 .classic-card {

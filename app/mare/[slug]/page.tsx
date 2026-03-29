@@ -51,7 +51,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
     return min > currentMin && t.altura_m < avgH;
   }) || todayTides.find(t => t.altura_m < avgH);
 
-  const currentTimeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  // A data atual está a ser tratada dentro dos componentes dinâmicos no cliente
 
   return (
     <main className="min-h-screen pb-20">
@@ -83,11 +83,8 @@ export default async function PortPage({ params }: { params: { slug: string } })
         <SummaryCards 
           nextHigh={nextHigh || null} 
           nextLow={nextLow || null} 
-          currentConditions={{
-            time: currentTimeStr,
-            wind: "17 km/h NE",
-            waves: "1.4 m"
-          }} 
+          lat={port.lat}
+          lon={port.lon}
         />
 
         <div className="mt-12 flex flex-col lg:grid lg:grid-cols-[1fr_350px] gap-8">

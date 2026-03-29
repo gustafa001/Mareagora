@@ -17,6 +17,11 @@ export default function ForecastStrip({ lat, lon }: ForecastStripProps) {
       try {
         const res = await fetch(url);
         const json = await res.json();
+        
+        if (!json || !json.hourly || !json.hourly.time) {
+          return;
+        }
+
         const h = json.hourly;
         const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
         const seen = new Set();
@@ -28,8 +33,11 @@ export default function ForecastStrip({ lat, lon }: ForecastStripProps) {
           if (!seen.has(key) && results.length < 7) {
             seen.add(key);
             const dayIdxs = h.time.map((tt: string, ii: number) => new Date(tt).toDateString() === key ? ii : -1).filter((x: number) => x >= 0);
-            const maxW = Math.max(...dayIdxs.map((ii: number) => h.wave_height[ii] || 0));
-            const minW = Math.min(...dayIdxs.map((ii: number) => h.wave_height[ii] || 0));
+            
+            const heights = dayIdxs.map((ii: number) => h.wave_height ? h.wave_height[ii] : 0);
+            const maxW = heights.length > 0 ? Math.max(...heights) : 0;
+            const minW = heights.length > 0 ? Math.min(...heights) : 0;
+            
             results.push({ 
               label: days[d.getDay()], 
               maxW: maxW.toFixed(1), 

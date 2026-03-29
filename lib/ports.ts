@@ -36,7 +36,7 @@ export const PORTS: Port[] = [
     slug: "ilha-dos-guaras", 
     name: "Ilha dos Guarás", 
     state: "PA", lat: -0.58358, lon: -47.90025, 
-    dataFile: "4_-_ilha_dos_guarás_(estado_do_pará)_-_2026__22_-_24.json", region: "Norte",
+    dataFile: "4_-_ilha_dos_guarás__estado_do_pará__-_2026__22_-_24.json", region: "Norte",
     searchNames: ["Salvaterra", "Soure", "Ilha de Marajó"]
   },
   { 
@@ -57,7 +57,7 @@ export const PORTS: Port[] = [
     slug: "porto-de-belem", 
     name: "Porto de Belém", 
     state: "PA", lat: -1.38356, lon: -48.4835, 
-    dataFile: "7_-_porto_de_belém_(estado_do_pará)_-_2026_-_31_-_33.json", region: "Norte",
+    dataFile: "7_-_porto_de_belém__estado_do_pará__-_2026_-_31_-_33.json", region: "Norte",
     searchNames: ["Belém", "Ananindeua", "Icoaraci"]
   },
   { 
@@ -138,6 +138,13 @@ export const PORTS: Port[] = [
     state: "PE", lat: -3.83333, lon: -32.40006, 
     dataFile: "18_-_arquipélago_de_fernando_de_noronha_64_-_66.json", region: "Nordeste",
     searchNames: ["Noronha", "Vila dos Remédios", "Praia do Sancho", "Baía dos Porcos"]
+  },
+  { 
+    slug: "porto-de-areia-branca", 
+    name: "Porto de Areia Branca (Termisa)", 
+    state: "RN", lat: -4.81667, lon: -37.13333, 
+    dataFile: "19_-_porto_de_areia_branca_-_termisa_-_67_-_69.json", region: "Nordeste",
+    searchNames: ["Areia Branca", "Tibau", "Mossoró"]
   },
   { 
     slug: "porto-de-macau", 
@@ -243,14 +250,14 @@ export const PORTS: Port[] = [
     slug: "porto-do-acu", 
     name: "Porto do Açu", 
     state: "RJ", lat: -21.80014, lon: -40.96692, 
-    dataFile: "38_-_porto_do_açu_-_rj_-_122-124.json", region: "Sudeste",
+    dataFile: "38_-_porto_do_açu_-_124_-_126.json", region: "Sudeste",
     searchNames: ["São João da Barra", "São Francisco de Itabapoana", "Atafona", "Grussaí"]
   },
   { 
     slug: "terminal-imbetiba", 
     name: "Terminal de Imbetiba / Macaé", 
     state: "RJ", lat: -22.41678, lon: -41.43336, 
-    dataFile: "39_-_terminal_marítimo_de_imbetiba_-_rj_-_125-127.json", region: "Sudeste",
+    dataFile: "39_-_terminal_marítimo_de_imbetiba_-_127_-_129.json", region: "Sudeste",
     searchNames: ["Macaé", "Rio das Ostras", "Cavaleiros", "Barra de São João"]
   },
   { 
@@ -285,7 +292,7 @@ export const PORTS: Port[] = [
     slug: "rio-de-janeiro-fiscal", 
     name: "Rio de Janeiro (Ilha Fiscal)", 
     state: "RJ", lat: -22.88356, lon: -43.16667, 
-    dataFile: "4_-_porto_do_rio_de_janeiro_-_ilha_fiscal_(estado_do_rio_de_janeiro)_-_2025_-_páginas_129_a_131.json", region: "Sudeste",
+    dataFile: "40_-_porto_do_rio_de_janeiro_-_i_fiscal_-_130_-_132.json", region: "Sudeste",
     searchNames: ["Rio de Janeiro", "Niterói", "Maricá", "Sambaetiba", "Copacabana", "Ipanema", "Barra da Tijuca", "Recreio"]
   },
   { 
@@ -345,6 +352,27 @@ export const PORTS: Port[] = [
     state: "SC", lat: -26.90008, lon: -48.65006, 
     dataFile: "52_-_porto_de_itajaí_-_166_-_168.json", region: "Sul",
     searchNames: ["Itajaí", "Balneário Camboriú", "BC", "Itapema", "Meia Praia", "Bombinhas", "Porto Belo", "Penha", "Piçarras", "Barra Velha", "Navegantes"]
+  },
+  { 
+    slug: "florianopolis", 
+    name: "Porto de Florianópolis", 
+    state: "SC", lat: -27.593, lon: -48.552, 
+    dataFile: "53_-_porto_de_florianópolis_-_169_-_171.json", region: "Sul",
+    searchNames: ["Floripa", "Canasvieiras", "Jurerê", "Campeche", "Praia Mole", "Lagoa da Conceição"]
+  },
+  { 
+    slug: "imbituba", 
+    name: "Porto de Imbituba", 
+    state: "SC", lat: -28.233, lon: -48.65, 
+    dataFile: "54_-_porto_de_imbituba_-_172_-_174.json", region: "Sul",
+    searchNames: ["Imbituba", "Garopaba", "Praia do Rosa"]
+  },
+  { 
+    slug: "rio-grande", 
+    name: "Porto do Rio Grande", 
+    state: "RS", lat: -32.116, lon: -52.083, 
+    dataFile: "55_-_porto_do_rio_grande_-_175_-177.json", region: "Sul",
+    searchNames: ["Rio Grande", "Cassino", "Pelotas"]
   },
 ];
 

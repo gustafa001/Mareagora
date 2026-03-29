@@ -21,23 +21,30 @@ export default function WavesCard({ lat, lon }: WavesCardProps) {
       try {
         const res = await fetch(url);
         const json = await res.json();
+        
+        if (!json || !json.hourly || !json.hourly.time) {
+          setLoading(false);
+          return;
+        }
+
         const h = json.hourly;
         const now = new Date();
         const nowH = now.getHours();
         
-        // Find current hour index
         const idx = h.time.findIndex((t: string) => {
           const d = new Date(t);
           return d.getHours() === nowH && d.toDateString() === now.toDateString();
         });
         const i = idx >= 0 ? idx : 0;
 
-        setData({
-          height: h.wave_height[i],
-          period: h.wave_period[i],
-          direction: h.wave_direction[i],
-          windWave: h.wind_wave_height[i],
-        });
+        if (h.wave_height && h.wave_height[i] !== undefined) {
+          setData({
+            height: h.wave_height[i],
+            period: h.wave_period ? h.wave_period[i] : 0,
+            direction: h.wave_direction ? h.wave_direction[i] : 0,
+            windWave: h.wind_wave_height ? h.wind_wave_height[i] : 0,
+          });
+        }
         setLoading(false);
       } catch (e) {
         setLoading(false);

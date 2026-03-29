@@ -26,11 +26,12 @@ export function getTodayTides(portData: { eventos: TideDay[] } | null): { tides:
 
 // Interpolação cosseno entre dois extremos de maré
 export function tideAtMinute(min: number, tides: TideEvent[]): number {
-  if (tides.length === 0) return 0;
+  if (!tides || tides.length === 0) return 0;
+  if (tides.length === 1) return tides[0].altura_m;
   
   const toMin = (t: string) => {
     const [h, m] = t.split(':').map(Number);
-    return h * 60 + m;
+    return (h || 0) * 60 + (m || 0);
   };
   
   const sorted = [...tides].sort((a, b) => toMin(a.hora) - toMin(b.hora));
@@ -38,8 +39,11 @@ export function tideAtMinute(min: number, tides: TideEvent[]): number {
   let next = sorted[0];
   
   for (let i = 0; i < sorted.length; i++) {
-    if (toMin(sorted[i].hora) <= min) prev = sorted[i];
-    if (toMin(sorted[i].hora) > min) {
+    const tMin = toMin(sorted[i].hora);
+    if (tMin <= min) {
+      prev = sorted[i];
+    }
+    if (tMin > min) {
       next = sorted[i];
       break;
     }
@@ -50,10 +54,10 @@ export function tideAtMinute(min: number, tides: TideEvent[]): number {
   
   const span = t1 > t0 ? t1 - t0 : 1440 - (t0 - t1);
   const elapsed = min >= t0 ? min - t0 : 1440 - t0 + min;
-  const frac = elapsed / span;
+  const frac = elapsed / (span || 1);
   const cos = (1 - Math.cos(frac * Math.PI)) / 2;
   
-  return Math.max(0, prev.altura_m + (next.altura_m - prev.altura_m) * cos);
+  return Math.max(0, (prev.altura_m || 0) + ((next.altura_m || 0) - (prev.altura_m || 0)) * cos);
 }
 
 // Converte graus em direção (português correto)
@@ -66,13 +70,20 @@ export function getTideStatus(min: number, tides: TideEvent[]): { rising: boolea
   if (!tides || tides.length === 0) {
     return { rising: false, next: null, prev: null };
   }
+  
   const toMin = (t: string) => {
     const [h, m] = t.split(':').map(Number);
-    return h * 60 + m;
+    return (h || 0) * 60 + (m || 0);
   };
+  
   const sorted = [...tides].sort((a,b)=>toMin(a.hora)-toMin(b.hora));
+  
   const next = sorted.find(t=>toMin(t.hora)>min) || sorted[0];
-  const prev = sorted.filter(t=>toMin(t.hora)<=min).pop() || sorted[sorted.length-1];
-  const rising = next.altura_m > prev.altura_m;
+  const prevIndex = sorted.findIndex(t => t === next) - 1;
+  const prev = prevIndex >= 0 ? sorted[prevIndex] : sorted[sorted.length - 1];
+  
+  if (!next || !prev) return { rising: false, next: null, prev: null };
+  
+  const rising = (next.altura_m || 0) > (prev.altura_m || 0);
   return { rising, next, prev };
 }

@@ -2,6 +2,7 @@ import { PORTS } from '@/lib/ports';
 import NavBar from '@/components/NavBar';
 import TideCardLive from '@/components/TideCardLive';
 import HeroSearch from '@/components/HeroSearch';
+import Footer from '@/components/Footer';
 import Link from 'next/link';
 
 const REGION_ICONS: Record<string, string> = {
@@ -150,15 +151,7 @@ export default function Home() {
 
       </main>
 
-      <footer className="container py-8 border-t border-[rgba(56,201,240,0.07)]">
-        <div className="flex flex-wrap justify-between items-center gap-4">
-          <p className="text-[var(--muted)] text-sm">© 2026 MaréAgora · Todos os direitos reservados</p>
-          <div className="flex items-center gap-2 bg-[rgba(56,201,240,0.07)] border border-[rgba(56,201,240,0.12)] rounded-full px-4 py-1.5">
-            <span className="text-sm">⚓</span>
-            <span className="text-[var(--muted)] text-xs">Dados: Marinha do Brasil</span>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

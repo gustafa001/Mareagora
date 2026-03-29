@@ -11,6 +11,7 @@ import ForecastStrip from '@/components/ForecastStrip';
 import ConditionsCard from '@/components/ConditionsCard';
 import SummaryCards from '@/components/SummaryCards';
 import DetailedForecastTable from '@/components/DetailedForecastTable';
+import Footer from '@/components/Footer';
 import Link from 'next/link';
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
@@ -151,9 +152,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
         </div>
       </div>
 
-      <footer className="mt-20 py-10 border-t border-gray-200 text-center text-gray-400 text-sm">
-        <p>© {now.getFullYear()} MaréAgora · Todos os direitos reservados</p>
-      </footer>
+      <Footer />
     </main>
   );
 }

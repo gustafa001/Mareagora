@@ -49,6 +49,20 @@ export default function RootLayout({
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
+        {/* Google Analytics GA4 — G-LP14YCN9MZ */}
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-LP14YCN9MZ"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-LP14YCN9MZ');
+          `}
+        </Script>
         <style>{`
           @keyframes wave1 {
             0%   { d: path("M0,60 C180,100 360,20 540,60 C720,100 900,20 1080,60 C1260,100 1350,40 1440,60 L1440,120 L0,120Z"); }

@@ -13,6 +13,8 @@ import SummaryCards from '@/components/SummaryCards';
 import DetailedForecastTable from '@/components/DetailedForecastTable';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
+import AdSlot from '@/components/ads/AdSlot';       // ← AdSense
+import { AD_SLOTS } from '@/lib/adConfig';           // ← AdSense
 
 // ─── helpers de texto por região ──────────────────────────────────────────────
 
@@ -125,6 +127,13 @@ export default async function PortPage({ params }: { params: { slug: string } })
 
       <NavBar />
 
+      {/* ① LEADERBOARD — logo abaixo do nav ─────────────────────────────────── */}
+      <div className="w-full flex justify-center px-4 my-2">
+        <div className="w-full max-w-[728px] min-h-[90px]">
+          <AdSlot slotId={AD_SLOTS.LEADERBOARD_NAV} format="auto" />
+        </div>
+      </div>
+
       <section className="hero-section">
         <div className="hero-overlay" />
         <div className="container relative z-10 text-white text-center pt-24 md:pt-16">
@@ -162,9 +171,23 @@ export default async function PortPage({ params }: { params: { slug: string } })
               <TideChart tides={todayTides} />
             </div>
 
+            {/* ② IN-CONTENT RECT — entre gráfico e tabela ────────────────────── */}
+            <div className="flex justify-center">
+              <div className="w-full max-w-[336px] min-h-[280px]">
+                <AdSlot slotId={AD_SLOTS.INCONTENT_RECT} format="rectangle" />
+              </div>
+            </div>
+
             <div className="classic-card overflow-hidden">
               <h3 className="card-title">Tabela de Marés</h3>
               <TideTable tides={todayTides} currentMin={currentMin} />
+            </div>
+
+            {/* ③ PÓS-TABELA — após tabela, antes de DetailedForecastTable ─────── */}
+            <div className="flex justify-center">
+              <div className="w-full max-w-[336px] min-h-[280px]">
+                <AdSlot slotId={AD_SLOTS.POS_TABELA} format="auto" />
+              </div>
             </div>
 
             <DetailedForecastTable lat={port.lat} lon={port.lon} todayTides={todayTides} />
@@ -231,12 +254,33 @@ export default async function PortPage({ params }: { params: { slug: string } })
             </section>
             {/* ── fim do bloco editorial ── */}
 
+            {/* ⑤ PRÉ-FOOTER — antes do footer ──────────────────────────────────── */}
+            <div className="flex justify-center my-2">
+              <div className="w-full max-w-[728px] min-h-[90px]">
+                <AdSlot slotId={AD_SLOTS.PREFOOTER} format="auto" />
+              </div>
+            </div>
+
           </div>
 
           <aside className="flex flex-col gap-8">
             <WavesCard lat={port.lat} lon={port.lon} />
             <ForecastStrip lat={port.lat} lon={port.lon} />
             <ConditionsCard lat={port.lat} lon={port.lon} />
+
+            {/* ④ SIDEBAR STICKY — desktop only (oculto abaixo de 1024px) ──────── */}
+            <div className="hidden lg:block">
+              <div className="sticky top-5">
+                <div className="min-h-[600px] w-[300px]">
+                  <AdSlot
+                    slotId={AD_SLOTS.SIDEBAR_STICKY}
+                    format="auto"
+                    style={{ width: '300px', height: '600px' }}
+                    fullWidthResponsive={false}
+                  />
+                </div>
+              </div>
+            </div>
 
             <div className="classic-card">
               <h3 className="card-title mb-4">📍 Cidades Próximas</h3>

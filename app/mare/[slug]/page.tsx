@@ -40,14 +40,13 @@ function getActivityTips(region: string): string {
 // ─── SEO ──────────────────────────────────────────────────────────────────────
 
 export async function generateMetadata(
-  { params }: { params: Promise<{ slug: string }> }
+  { params }: { params: { slug: string } }
 ): Promise<Metadata> {
-  const { slug } = await params;
-  const port = getPortBySlug(slug);
+  const port = getPortBySlug(params.slug);
   if (!port) return { title: 'Porto não encontrado' };
 
   const ano = new Date().getFullYear();
-  const url = `https://www.mareagora.com.br/mare/${slug}`;
+  const url = `https://www.mareagora.com.br/mare/${params.slug}`;
   const title = `Tábua de Maré ${port.name} ${ano} — MaréAgora`;
   const description = `Horários e alturas das marés em ${port.name} (${port.state}) hoje e para os próximos dias. Dados oficiais da Marinha do Brasil + ondas e vento em tempo real.`;
 
@@ -64,9 +63,9 @@ export async function generateMetadata(
 // ─── Página ───────────────────────────────────────────────────────────────────
 
 export default async function PortPage(
-  { params }: { params: Promise<{ slug: string }> }
+  { params }: { params: { slug: string } }
 ) {
-  const { slug } = await params;
+  const { slug } = params;
   const port = getPortBySlug(slug);
   if (!port) notFound();
 

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Syne, DM_Sans, Fira_Code, Fira_Sans } from "next/font/google";
 import "./globals.css";
-
+import Script from "next/script";
+import MobileStickyAd from "@/components/ads/MobileStickyAd";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -41,6 +42,13 @@ export default function RootLayout({
       <head>
         {/* Google AdSense */}
         <meta name="google-adsense-account" content="ca-pub-2920008879492175" />
+        {/* Script AdSense */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2920008879492175"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         <style>{`
           @keyframes wave1 {
             0%   { d: path("M0,60 C180,100 360,20 540,60 C720,100 900,20 1080,60 C1260,100 1350,40 1440,60 L1440,120 L0,120Z"); }
@@ -70,6 +78,8 @@ export default function RootLayout({
           </svg>
         </div>
         {children}
+        {/* Mobile Sticky Ad — aparece apenas em telas < 768px */}
+        <MobileStickyAd />
       </body>
     </html>
   );

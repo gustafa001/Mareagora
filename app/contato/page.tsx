@@ -107,7 +107,7 @@ export default function ContatoPage() {
           background: linear-gradient(160deg, #0a1f44 0%, #0e3a6e 60%, #0a7ea4 100%);
         }
 
-        /* CONTENT */
+         /* CONTENT */
         .content {
           max-width: 680px;
           margin: 0 auto;

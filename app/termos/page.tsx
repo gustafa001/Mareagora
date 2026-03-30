@@ -66,7 +66,7 @@ export default function TermosPage() {
             href="mailto:mareagora.br@gmail.com"
             className="inline-flex items-center gap-2 text-[var(--ocean)] font-semibold hover:underline break-all"
           >
-            ✉️ mareagora.br@gmail.com
+            ✉️ contatos@mareagora.com.br
           </a>
         </div>
       </main>

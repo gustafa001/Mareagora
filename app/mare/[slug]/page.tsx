@@ -5,6 +5,7 @@ import { getPortData } from '@/lib/tideData';
 import type { Metadata } from 'next';
 import NavBar from '@/components/NavBar';
 import TideChart from '@/components/TideChart';
+import TideTable30Days from '@/components/TideTable30Days';
 import TideTable from '@/components/TideTable';
 import WavesCard from '@/components/WavesCard';
 import ForecastStrip from '@/components/ForecastStrip';
@@ -147,12 +148,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
             <p className="text-sm opacity-90 font-medium font-syne sm:hidden">
               Estado do {port.state}
             </p>
-            <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4 text-xs sm:text-sm opacity-80 font-mono">
-              <span>Lat: {port.lat.toFixed(4)}°</span>
-              <span>Lon: {port.lon.toFixed(4)}°</span>
-              <span>Fuso: UTC-3</span>
-              <span>Nível Médio: {portData?.nivel_medio ?? '--'} m</span>
-            </div>
           </div>
         </div>
       </section>
@@ -171,7 +166,10 @@ export default async function PortPage({ params }: { params: { slug: string } })
               <TideChart tides={todayTides} />
             </div>
 
-            {/* ② IN-CONTENT RECT — entre gráfico e tabela ────────────────────── */}
+            {/* ── TABELA DE 30 DIAS — nova seção entre gráfico e tabela de hoje ── */}
+            <TideTable30Days portData={portData} />
+
+            {/* ② IN-CONTENT RECT — entre tabela de 30 dias e tabela de hoje ──── */}
             <div className="flex justify-center">
               <div className="w-full max-w-[336px] min-h-[280px]">
                 <AdSlot slotId={AD_SLOTS.INCONTENT_RECT} format="rectangle" />

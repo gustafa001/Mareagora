@@ -1,0 +1,8 @@
+// Configuração dos slots de anúncios AdSense para o MaréAgora
+export const AD_SLOTS = {
+  LEADERBOARD_NAV: 'ca-pub-2920008879492175/1234567890', // 728x90
+  INCONTENT_RECT: 'ca-pub-2920008879492175/1234567891',   // 336x280
+  POS_TABELA: 'ca-pub-2920008879492175/1234567892',       // Auto/Responsive
+  SIDEBAR_STICKY: 'ca-pub-2920008879492175/1234567893',   // 300x600
+  PREFOOTER: 'ca-pub-2920008879492175/1234567894',        // 728x90
+};

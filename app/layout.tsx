@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Syne, DM_Sans, Fira_Code, Fira_Sans } from "next/font/google";
 import "./globals.css";
-import Script from "next/script";
+
 
 const syne = Syne({
   subsets: ["latin"],
@@ -40,12 +40,7 @@ export default function RootLayout({
     <html lang="pt-BR" className={`${syne.variable} ${dmSans.variable} ${firaCode.variable} ${firaSans.variable}`}>
       <head>
         {/* Google AdSense */}
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2920008879492175"
-          crossOrigin="anonymous"
-          strategy="beforeInteractive"
-        />
+        <meta name="google-adsense-account" content="ca-pub-2920008879492175" />
       </head>
       <body className="font-dm-sans">
         <div className="bg-waves">

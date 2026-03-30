@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Syne, DM_Sans, Fira_Code, Fira_Sans } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
-import MobileStickyAd from "@/components/ads/MobileStickyAd";
+import MobileStickyAd from "./components/ads/MobileStickyAd";
 
 const syne = Syne({
   subsets: ["latin"],

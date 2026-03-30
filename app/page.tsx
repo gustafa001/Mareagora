@@ -151,6 +151,57 @@ export default function Home() {
 
       </main>
 
+      {/* SEO CONTENT SECTION */}
+      <section className="container pb-16 relative z-10">
+        <div className="bg-[rgba(13,34,64,0.4)] border border-[rgba(56,201,240,0.08)] rounded-3xl p-6 md:p-10">
+
+          <h2 className="font-syne font-extrabold text-2xl text-[var(--white)] mb-2">
+            O que é a <span className="text-[var(--foam)]">Tábua de Marés?</span>
+          </h2>
+          <p className="text-[var(--muted)] text-sm leading-relaxed mb-6">
+            A tábua de marés é uma previsão dos horários e alturas das marés altas (preamares) e baixas (baixa-mares) para um determinado local ao longo do dia, mês ou ano. No Brasil, as tábuas oficiais são publicadas anualmente pelo <strong className="text-[var(--foam)]">Centro de Hidrografia da Marinha (CHM)</strong>, órgão responsável pelas informações oceanográficas do país. O MaréAgora utiliza exclusivamente esses dados oficiais para garantir máxima precisão em todos os{' '}<strong className="text-white">122 portos</strong> disponíveis na plataforma.
+          </p>
+
+          <h2 className="font-syne font-extrabold text-xl text-[var(--white)] mb-2">
+            Como as marés funcionam no <span className="text-[var(--foam)]">litoral brasileiro?</span>
+          </h2>
+          <p className="text-[var(--muted)] text-sm leading-relaxed mb-4">
+            O Brasil possui mais de 7.400 km de costa, e o comportamento das marés varia bastante de região para região. No litoral norte, como no Maranhão e no Pará, as marés são semidiurnas de grande amplitude — podendo ultrapassar 6 metros em cidades como São Luís. Já no Nordeste e no Sudeste, as amplitudes são bem menores, com preamares geralmente entre 1 e 2 metros. No Sul do país, além das marés astronômicas, ventos e pressão atmosférica têm grande influência no nível do mar.
+          </p>
+          <p className="text-[var(--muted)] text-sm leading-relaxed mb-6">
+            Conhecer essas diferenças regionais é fundamental para quem pratica pesca, surf, mergulho ou navegação ao longo do litoral brasileiro. O MaréAgora organiza os dados por região — Norte, Nordeste, Sudeste e Sul — facilitando a consulta para cada perfil de usuário.
+          </p>
+
+          <h2 className="font-syne font-extrabold text-xl text-[var(--white)] mb-2">
+            Para que serve a <span className="text-[var(--foam)]">previsão de marés?</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            {[
+              { icon: '🎣', title: 'Pesca', desc: 'Os momentos de virada da maré são os mais produtivos para a pesca. Conhecer os horários exatos de preamar e baixa-mar aumenta significativamente as chances de uma boa pescaria.' },
+              { icon: '🏄', title: 'Surf', desc: 'A altura e o período das ondas são influenciados diretamente pela maré. Surfistas experientes combinam os dados de maré com a previsão de ondas para escolher o melhor momento de entrar no mar.' },
+              { icon: '⛵', title: 'Navegação', desc: 'Embarcações de pequeno porte precisam monitorar o nível da maré para evitar encalhes em áreas rasas. Portos e marinas também dependem dessas previsões para operações seguras.' },
+              { icon: '🤿', title: 'Mergulho', desc: 'A visibilidade subaquática melhora consideravelmente durante a preamar em muitos pontos do litoral brasileiro. Mergulhadores planejam suas saídas com base nos dados de maré e correntes.' },
+            ].map(item => (
+              <div key={item.title} className="flex gap-3 bg-[rgba(56,201,240,0.05)] border border-[rgba(56,201,240,0.08)] rounded-2xl p-4">
+                <span className="text-2xl flex-shrink-0">{item.icon}</span>
+                <div>
+                  <div className="font-syne font-bold text-sm text-[var(--white)] mb-1">{item.title}</div>
+                  <div className="text-[var(--muted)] text-xs leading-relaxed">{item.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <h2 className="font-syne font-extrabold text-xl text-[var(--white)] mb-2">
+            Por que usar o <span className="text-[var(--foam)]">MaréAgora?</span>
+          </h2>
+          <p className="text-[var(--muted)] text-sm leading-relaxed">
+            O MaréAgora nasceu da necessidade de ter uma plataforma brasileira, gratuita e confiável para consulta de marés. Diferente de apps internacionais que utilizam modelos matemáticos genéricos, o MaréAgora trabalha com as tábuas publicadas pela Marinha do Brasil — a mesma fonte utilizada por capitanias dos portos, empresas de navegação e órgãos de segurança marítima. Além dos dados de maré, a plataforma integra previsão de ondas e ventos via Open-Meteo, oferecendo uma visão completa das condições marítimas para cada localidade, disponível 24 horas por dia, 7 dias por semana, direto no seu celular.
+          </p>
+
+        </div>
+      </section>
+
       <Footer />
     </div>
   );

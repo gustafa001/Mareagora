@@ -11,6 +11,7 @@ import ForecastStrip from '@/components/ForecastStrip';
 import ConditionsCard from '@/components/ConditionsCard';
 import SummaryCards from '@/components/SummaryCards';
 import DetailedForecastTable from '@/components/DetailedForecastTable';
+import MonthlyTideTable from '@/components/MonthlyTideTable';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 
@@ -38,12 +39,15 @@ function getActivityTips(region: string): string {
 
 // ─── SEO ──────────────────────────────────────────────────────────────────────
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const port = getPortBySlug(params.slug);
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> }
+): Promise<Metadata> {
+  const { slug } = await params;
+  const port = getPortBySlug(slug);
   if (!port) return { title: 'Porto não encontrado' };
 
   const ano = new Date().getFullYear();
-  const url = `https://www.mareagora.com.br/mare/${params.slug}`;
+  const url = `https://www.mareagora.com.br/mare/${slug}`;
   const title = `Tábua de Maré ${port.name} ${ano} — MaréAgora`;
   const description = `Horários e alturas das marés em ${port.name} (${port.state}) hoje e para os próximos dias. Dados oficiais da Marinha do Brasil + ondas e vento em tempo real.`;
 
@@ -59,8 +63,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 // ─── Página ───────────────────────────────────────────────────────────────────
 
-export default async function PortPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function PortPage(
+  { params }: { params: Promise<{ slug: string }> }
+) {
+  const { slug } = await params;
   const port = getPortBySlug(slug);
   if (!port) notFound();
 
@@ -168,6 +174,9 @@ export default async function PortPage({ params }: { params: { slug: string } })
             </div>
 
             <DetailedForecastTable lat={port.lat} lon={port.lon} todayTides={todayTides} />
+
+            {/* ── Tábua 30 dias ── */}
+            <MonthlyTideTable eventos={portData?.eventos ?? []} />
 
             {/* ── Bloco de conteúdo editorial ── */}
             <section className="classic-card prose prose-slate max-w-none">

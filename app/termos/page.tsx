@@ -57,6 +57,17 @@ export default function TermosPage() {
           <p className="text-gray-600 leading-relaxed mb-6">
             Ao usar o MaréAgora, compromete-se com a leitura atenta das condições explicitadas nesta morada web que possam transitar futuramente, conforme a adesão continuada assuma os novos padrões de uso do serviço.
           </p>
+
+          <h2 className="font-syne font-bold text-2xl mb-4 text-[#0a1628]">5. Contato</h2>
+          <p className="text-gray-600 leading-relaxed mb-2">
+            Dúvidas, sugestões ou solicitações relacionadas a estes Termos de Uso podem ser enviadas diretamente para a nossa equipe:
+          </p>
+          <a
+            href="mailto:mareagora.br@gmail.com"
+            className="inline-flex items-center gap-2 text-[var(--ocean)] font-semibold hover:underline break-all"
+          >
+            ✉️ mareagora.br@gmail.com
+          </a>
         </div>
       </main>
 

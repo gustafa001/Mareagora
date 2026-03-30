@@ -124,7 +124,7 @@ export default function MonthlyTideTable({ eventos }: Props) {
                           <span className={`text-xs font-medium ${isPreamar ? 'text-blue-400' : 'text-orange-400'}`}>
                             {isPreamar ? '▲' : '▼'} {t.altura_m.toFixed(1)}m
                           </span>
-                        </div>
+                         </div>
                       </td>
                     );
                   })}

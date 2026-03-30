@@ -36,14 +36,40 @@ function getActivityTips(region: string): string {
   return map[region] ?? 'Consulte sempre a tábua de marés antes de qualquer atividade marítima e combine com a previsão de vento e ondas disponível na plataforma.';
 }
 
+// ─── helper: tábua do dia seguinte ────────────────────────────────────────────
+
+function getTomorrowTides(portData: { eventos: any[] } | null) {
+  try {
+    if (!portData?.eventos?.length) return [];
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const yyyy = tomorrow.getFullYear();
+    const mm = String(tomorrow.getMonth() + 1).padStart(2, '0');
+    const dd = String(tomorrow.getDate()).padStart(2, '0');
+    const tomorrowStr = `${yyyy}-${mm}-${dd}`;
+    return (portData.eventos ?? []).filter((e: any) => e?.data === tomorrowStr);
+  } catch {
+    return [];
+  }
+}
+
+function formatTomorrowDate(): string {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  return tomorrow.toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long' });
+}
+
 // ─── SEO ──────────────────────────────────────────────────────────────────────
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const port = getPortBySlug(params.slug);
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> }
+): Promise<Metadata> {
+  const { slug } = await params;
+  const port = getPortBySlug(slug);
   if (!port) return { title: 'Porto não encontrado' };
 
   const ano = new Date().getFullYear();
-  const url = `https://www.mareagora.com.br/mare/${params.slug}`;
+  const url = `https://www.mareagora.com.br/mare/${slug}`;
   const title = `Tábua de Maré ${port.name} ${ano} — MaréAgora`;
   const description = `Horários e alturas das marés em ${port.name} (${port.state}) hoje e para os próximos dias. Dados oficiais da Marinha do Brasil + ondas e vento em tempo real.`;
 
@@ -59,8 +85,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 // ─── Página ───────────────────────────────────────────────────────────────────
 
-export default async function PortPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function PortPage(
+  { params }: { params: Promise<{ slug: string }> }
+) {
+  const { slug } = await params;
   const port = getPortBySlug(slug);
   if (!port) notFound();
 
@@ -87,6 +115,10 @@ export default async function PortPage({ params }: { params: { slug: string } })
     const [h, m] = t.hora.split(':').map(Number);
     return (h || 0) * 60 + (m || 0) > currentMin && t.altura_m < avgH;
   }) ?? todayTides.find(t => t.altura_m < avgH) ?? null;
+
+  // ── tábua de amanhã ──
+  const tomorrowTides = getTomorrowTides(portData);
+  const tomorrowLabel = formatTomorrowDate();
 
   // ── textos dinâmicos ──
   const regionContext = getRegionContext(port.region, port.state);
@@ -168,6 +200,17 @@ export default async function PortPage({ params }: { params: { slug: string } })
             </div>
 
             <DetailedForecastTable lat={port.lat} lon={port.lon} todayTides={todayTides} />
+
+            {/* ── Tábua do Dia Seguinte ── */}
+            {tomorrowTides.length > 0 && (
+              <div className="classic-card overflow-hidden">
+                <div className="flex items-center justify-between mb-1">
+                  <h3 className="card-title">Tabela de Marés — Amanhã</h3>
+                  <span className="text-xs text-gray-400 capitalize font-medium">{tomorrowLabel}</span>
+                </div>
+                <TideTable tides={tomorrowTides} currentMin={-1} />
+              </div>
+            )}
 
             {/* ── Bloco de conteúdo editorial ── */}
             <section className="classic-card prose prose-slate max-w-none">

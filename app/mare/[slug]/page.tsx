@@ -11,7 +11,6 @@ import ForecastStrip from '@/components/ForecastStrip';
 import ConditionsCard from '@/components/ConditionsCard';
 import SummaryCards from '@/components/SummaryCards';
 import DetailedForecastTable from '@/components/DetailedForecastTable';
-import MonthlyTideTable from '@/components/MonthlyTideTable';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 
@@ -39,9 +38,7 @@ function getActivityTips(region: string): string {
 
 // ─── SEO ──────────────────────────────────────────────────────────────────────
 
-export async function generateMetadata(
-  { params }: { params: { slug: string } }
-): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const port = getPortBySlug(params.slug);
   if (!port) return { title: 'Porto não encontrado' };
 
@@ -62,9 +59,7 @@ export async function generateMetadata(
 
 // ─── Página ───────────────────────────────────────────────────────────────────
 
-export default async function PortPage(
-  { params }: { params: { slug: string } }
-) {
+export default async function PortPage({ params }: { params: { slug: string } }) {
   const { slug } = params;
   const port = getPortBySlug(slug);
   if (!port) notFound();
@@ -173,9 +168,6 @@ export default async function PortPage(
             </div>
 
             <DetailedForecastTable lat={port.lat} lon={port.lon} todayTides={todayTides} />
-
-            {/* ── Tábua 30 dias ── */}
-            <MonthlyTideTable eventos={portData?.eventos ?? []} />
 
             {/* ── Bloco de conteúdo editorial ── */}
             <section className="classic-card prose prose-slate max-w-none">

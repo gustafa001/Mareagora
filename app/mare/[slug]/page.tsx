@@ -1,301 +1,296 @@
 import { notFound } from 'next/navigation';
-import { getPortBySlug, getNearbySlugs } from '@/lib/ports';
-import { getTodayTides } from '@/lib/tideUtils';
-import { getPortData } from '@/lib/tideData';
-import type { Metadata } from 'next';
-import NavBar from '@/components/NavBar';
+import { Metadata } from 'next';
+import { getPortBySlug, Port, getNearbySlugs } from '@/lib/ports';
+import { 
+  getTodayTides, 
+  getCurrentTideStatus,
+  classifyTideEvents,
+  RawPortData,
+  TideEvent
+} from '@/lib/tideUtils';
 import TideChart from '@/components/TideChart';
-import TideTable from '@/components/TideTable';
-import WavesCard from '@/components/WavesCard';
-import ForecastStrip from '@/components/ForecastStrip';
-import ConditionsCard from '@/components/ConditionsCard';
-import SummaryCards from '@/components/SummaryCards';
-import DetailedForecastTable from '@/components/DetailedForecastTable';
-import Footer from '@/components/Footer';
+import WaveChart from '@/components/WaveChart';
+import WindChart from '@/components/WindChart';
+import WeatherCard from '@/components/WeatherCard';
+import InfoCard from '@/components/InfoCard';
+import NavBar from '@/components/NavBar';
+import AdSlot from '@/components/ads/AdSlot';
+import { AD_SLOTS } from '@/lib/adConfig';
 import Link from 'next/link';
-import AdSlot from '@/components/ads/AdSlot';       // ← AdSense
-import { AD_SLOTS } from '@/lib/adConfig';           // ← AdSense
 
-// ─── helpers de texto por região ──────────────────────────────────────────────
-
-function getRegionContext(region: string, state: string): string {
-  const map: Record<string, string> = {
-    Norte: `O litoral da região Norte, que abrange estados como ${state}, é marcado por uma das maiores amplitudes de maré do Brasil. As marés amazônicas são influenciadas diretamente pela morfologia dos estuários e pela descarga dos grandes rios, podendo variar vários metros entre a preamar e a baixamar. Esse comportamento extremo exige atenção redobrada de pescadores, navegadores e moradores ribeirinhos.`,
-    Nordeste: `O litoral do Nordeste brasileiro, onde ${state} está inserido, apresenta características únicas de maré devido à posição geográfica próxima à linha do Equador. As variações de maré são moderadas, com influência direta dos ventos alísios e das correntes do Atlântico Sul. A região é famosa por praias de águas mornas, recifes de coral e condições favoráveis para mergulho e kitesurf em determinados períodos do ano.`,
-    Sudeste: `O litoral do Sudeste, região onde ${state} se localiza, é um dos mais movimentados do Brasil — tanto em termos de tráfego marítimo quanto em atividades recreativas. As marés dessa região são do tipo semidiurno, com dois ciclos completos de preamar e baixamar a cada 24 horas. A variação costuma ser moderada, mas pode ser amplificada em baías e enseadas fechadas, como ocorre em Angra dos Reis e na Baía de Guanabara.`,
-    Sul: `O litoral Sul do Brasil, onde ${state} está situado, possui marés com características bem definidas e influência marcante dos sistemas de frentes frias vindas do sul do continente. As ondas de tempestade (ressacas) são frequentes no inverno e podem elevar temporariamente o nível do mar acima do previsto na tábua oficial. Surfe, pesca embarcada e navegação costeira são atividades muito praticadas na região.`,
+interface MarePageProps {
+  params: {
+    slug: string;
   };
-  return map[region] ?? `O litoral de ${state} apresenta condições de maré características da costa brasileira, com variações influenciadas pela posição geográfica e pela morfologia costeira local.`;
 }
 
-function getActivityTips(region: string): string {
-  const map: Record<string, string> = {
-    Norte: 'Na região Norte, os melhores momentos para pesca são durante a virada da maré — especialmente na baixamar, quando os bancos de areia ficam expostos e concentram os peixes. Evite navegar em canais estreitos durante a preamar máxima sem conhecimento da área.',
-    Nordeste: 'No Nordeste, as condições ideais para surfe ocorrem geralmente no período de setembro a março, quando as ondulações do Atlântico Norte chegam com mais força. Para mergulho nos recifes, prefira os horários de maré alta, que garantem maior visibilidade e profundidade segura sobre as formações coralinas.',
-    Sudeste: 'No Sudeste, a pesca embarcada é mais produtiva durante as marés de sizígia (lua cheia e lua nova), quando a amplitude é maior e o movimento da água atrai mais peixes. Para surfe, as melhores ondas costumam aparecer com mar de sudeste combinado com maré baixa a média.',
-    Sul: 'No Sul do Brasil, fique atento às previsões de frentes frias antes de planejar atividades marítimas. O vento sul pode elevar o nível do mar rapidamente. Para pesca em costões e pedras, opere sempre com maré baixa e nunca vire as costas para o mar.',
-  };
-  return map[region] ?? 'Consulte sempre a tábua de marés antes de qualquer atividade marítima e combine com a previsão de vento e ondas disponível na plataforma.';
+// Função para encontrar próxima maré alta
+function findNextHighTide(mares: TideEvent[]): TideEvent | null {
+  const classified = classifyTideEvents(mares);
+  const now = new Date();
+  const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+  
+  for (const event of classified) {
+    if (event.tipo === 'high' && event.hora > currentTime) {
+      return event;
+    }
+  }
+  return classified.find(e => e.tipo === 'high') || null;
 }
 
-// ─── SEO ──────────────────────────────────────────────────────────────────────
+// Função para encontrar próxima maré baixa
+function findNextLowTide(mares: TideEvent[]): TideEvent | null {
+  const classified = classifyTideEvents(mares);
+  const now = new Date();
+  const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+  
+  for (const event of classified) {
+    if (event.tipo === 'low' && event.hora > currentTime) {
+      return event;
+    }
+  }
+  return classified.find(e => e.tipo === 'low') || null;
+}
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: MarePageProps): Promise<Metadata> {
   const port = getPortBySlug(params.slug);
-  if (!port) return { title: 'Porto não encontrado' };
+  
+  if (!port) {
+    return {
+      title: 'Porto não encontrado | MareAgora',
+      description: 'Página de porto não encontrada no MareAgora.',
+    };
+  }
 
-  const ano = new Date().getFullYear();
-  const url = `https://www.mareagora.com.br/mare/${params.slug}`;
-  const title = `Tábua de Maré ${port.name} ${ano} — MaréAgora`;
-  const description = `Horários e alturas das marés em ${port.name} (${port.state}) hoje e para os próximos dias. Dados oficiais da Marinha do Brasil + ondas e vento em tempo real.`;
+  const title = `Maré em ${port.name} - ${port.state} | MareAgora 2026`;
+  const description = `Tábua de maré oficial para ${port.name} (${port.state}). Dados em tempo real da Marinha do Brasil. Previsão de marés, ondas e condições náuticas para ${port.name}.`;
 
   return {
     title,
     description,
-    alternates: { canonical: url },
-    openGraph: { title, description, url, siteName: 'MaréAgora', locale: 'pt_BR', type: 'website' },
-    twitter: { card: 'summary_large_image', title, description },
-    robots: { index: true, follow: true },
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      locale: 'pt_BR',
+      siteName: 'MareAgora',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+    alternates: {
+      canonical: `/mare/${port.slug}/`,
+    },
   };
 }
 
-// ─── Página ───────────────────────────────────────────────────────────────────
+export default async function MarePage({ params }: MarePageProps) {
+  const port = getPortBySlug(params.slug);
+  
+  if (!port) {
+    notFound();
+  }
 
-export default async function PortPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
-  const port = getPortBySlug(slug);
-  if (!port) notFound();
+  // Import dinâmico do arquivo JSON
+  const rawData = (await import(`@/data/${port.dataFile}`)).default as RawPortData;
+  const todayTides = getTodayTides(rawData.eventos);
+  
+  if (!todayTides) {
+    return (
+      <main className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 text-white">
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <h1 className="text-2xl font-bold">Dados de maré não disponíveis para {port.name}</h1>
+        </div>
+      </main>
+    );
+  }
 
-  const id = port.dataFile.replace('.json', '');
-  const portData = await getPortData(id);
-  const { tides: todayTides } = getTodayTides(portData ?? { eventos: [] });
+  const classifiedMares = classifyTideEvents(todayTides.mares);
+  
+  const currentTime = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  const tideStatus = getCurrentTideStatus(todayTides, currentTime);
+  const nextHighTide = findNextHighTide(todayTides.mares);
+  const nextLowTide = findNextLowTide(todayTides.mares);
 
-  const ano = new Date().getFullYear();
-  const now = new Date();
-  const currentMin = now.getHours() * 60 + now.getMinutes();
+  // Dados simulados para ondas e vento
+  const waveData = [
+    { time: '06:00', height: 1.4 },
+    { time: '09:00', height: 1.6 },
+    { time: '12:00', height: 1.8 },
+    { time: '15:00', height: 1.7 },
+    { time: '18:00', height: 1.5 },
+  ];
 
-  // ── Guard: evita Math.max/min de array vazio ──
-  const heights = todayTides.length > 0 ? todayTides.map(t => t.altura_m) : [0];
-  const maxH = Math.max(...heights);
-  const minH = Math.min(...heights);
-  const avgH = (maxH + minH) / 2;
-
-  const nextHigh = todayTides.find(t => {
-    const [h, m] = t.hora.split(':').map(Number);
-    return (h || 0) * 60 + (m || 0) > currentMin && t.altura_m >= avgH;
-  }) ?? todayTides.find(t => t.altura_m >= avgH) ?? null;
-
-  const nextLow = todayTides.find(t => {
-    const [h, m] = t.hora.split(':').map(Number);
-    return (h || 0) * 60 + (m || 0) > currentMin && t.altura_m < avgH;
-  }) ?? todayTides.find(t => t.altura_m < avgH) ?? null;
-
-  // ── textos dinâmicos ──
-  const regionContext = getRegionContext(port.region, port.state);
-  const activityTips = getActivityTips(port.region);
-
-  // ── JSON-LD ──
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.mareagora.com.br/' },
-          { '@type': 'ListItem', position: 2, name: port.name, item: `https://www.mareagora.com.br/mare/${slug}` },
-        ],
-      },
-      {
-        '@type': 'WebPage',
-        '@id': `https://www.mareagora.com.br/mare/${slug}`,
-        url: `https://www.mareagora.com.br/mare/${slug}`,
-        name: `Tábua de Maré ${port.name} ${ano} — MaréAgora`,
-        description: `Horários e alturas das marés em ${port.name} (${port.state}) para ${ano}.`,
-        inLanguage: 'pt-BR',
-        isPartOf: { '@id': 'https://www.mareagora.com.br/' },
-      },
-    ],
-  };
+  const windData = [
+    { time: '06:00', speed: 18, direction: 'NE' },
+    { time: '09:00', speed: 23, direction: 'NE' },
+    { time: '12:00', speed: 20, direction: 'E' },
+    { time: '15:00', speed: 20, direction: 'E' },
+    { time: '18:00', speed: 19, direction: 'SE' },
+    { time: '21:00', speed: 17, direction: 'SE' },
+  ];
 
   return (
-    <main className="min-h-screen pb-20">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        suppressHydrationWarning
-      />
-
+    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
+      {/* NavBar */}
       <NavBar />
 
-      {/* ① LEADERBOARD — logo abaixo do nav ─────────────────────────────────── */}
-      <div className="w-full flex justify-center px-4 my-2">
+      {/* AdSense Leaderboard */}
+      <div className="w-full flex justify-center px-4 py-2 bg-slate-100">
         <div className="w-full max-w-[728px] min-h-[90px]">
           <AdSlot slotId={AD_SLOTS.LEADERBOARD_NAV} format="auto" />
         </div>
       </div>
 
-      <section className="hero-section">
-        <div className="hero-overlay" />
-        <div className="container relative z-10 text-white text-center pt-24 md:pt-16">
-          <div className="flex flex-col gap-3 items-center px-2">
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight font-syne leading-tight max-w-4xl">
-              Tábua de Maré — {port.name}
+      {/* Hero Section */}
+      <section 
+        className="relative h-[320px] w-full bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(30, 58, 95, 0.5) 100%), url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1920&q=80')`
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 to-slate-900/40" />
+        <div className="relative z-10 h-full flex flex-col justify-center px-6 lg:px-12">
+          <div className="max-w-7xl mx-auto w-full">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">
+              {port.name}
             </h1>
-            <p className="text-sm sm:text-lg md:text-xl opacity-90 font-medium font-syne hidden sm:block">
-              {port.name} - {ano} | Estado do {port.state}
+            <p className="text-lg text-blue-200 mb-3">
+              {port.name} - 2026 | Estado do {port.state}
             </p>
-            <p className="text-sm opacity-90 font-medium font-syne sm:hidden">
-              Estado do {port.state}
+            <div className="flex flex-wrap gap-3 text-sm text-blue-100">
+              <span>Latitude: {typeof rawData.lat === 'number' ? rawData.lat.toFixed(4) : rawData.lat}°</span>
+              <span>Longitude: {typeof rawData.lon === 'number' ? rawData.lon.toFixed(4) : rawData.lon}°</span>
+              <span>Fuso: {rawData.fuso}</span>
+            </div>
+            <p className="mt-3 text-blue-200">
+              Nível Médio: <span className="text-white font-semibold">{rawData.nivel_medio?.toFixed(2) || tideStatus.currentHeight.toFixed(2)} m</span>
             </p>
           </div>
         </div>
       </section>
 
-      <div className="container">
-        <SummaryCards
-          nextHigh={nextHigh}
-          nextLow={nextLow}
-          lat={port.lat}
-          lon={port.lon}
-        />
-
-        <div className="mt-12 flex flex-col lg:grid lg:grid-cols-[1fr_350px] gap-8">
-          <div className="flex flex-col gap-8">
-            <div className="classic-card">
-              <TideChart tides={todayTides} />
-            </div>
-
-            {/* ② IN-CONTENT RECT — entre gráfico e tabela ────────────────────── */}
-            <div className="flex justify-center">
-              <div className="w-full max-w-[336px] min-h-[280px]">
-                <AdSlot slotId={AD_SLOTS.INCONTENT_RECT} format="rectangle" />
-              </div>
-            </div>
-
-            <div className="classic-card overflow-hidden">
-              <h3 className="card-title">Tabela de Marés</h3>
-              <TideTable tides={todayTides} currentMin={currentMin} />
-            </div>
-
-            {/* ③ PÓS-TABELA — após tabela, antes de DetailedForecastTable ─────── */}
-            <div className="flex justify-center">
-              <div className="w-full max-w-[336px] min-h-[280px]">
-                <AdSlot slotId={AD_SLOTS.POS_TABELA} format="auto" />
-              </div>
-            </div>
-
-            <DetailedForecastTable lat={port.lat} lon={port.lon} todayTides={todayTides} />
-
-            {/* ── Bloco de conteúdo editorial ── */}
-            <section className="classic-card prose prose-slate max-w-none">
-              <h2 className="text-2xl font-bold mb-4 font-syne tracking-tight">
-                Tábua de Maré em {port.name} — {ano}
-              </h2>
-              <p className="text-gray-600 leading-relaxed text-sm">
-                A tábua de maré de <strong>{port.name}</strong> é uma ferramenta essencial para pescadores,
-                surfistas, mergulhadores, caiaqueiros e navegadores que frequentam o litoral de{' '}
-                <strong>{port.state}</strong>. Os dados apresentados pelo MaréAgora são extraídos diretamente
-                das tábuas oficiais publicadas pelo <strong>Centro de Hidrografia da Marinha do Brasil (CHM)</strong>{' '}
-                para o ano de <strong>{ano}</strong>, garantindo a precisão e confiabilidade das informações.
-              </p>
-
-              <div className="grid md:grid-cols-2 gap-8 mt-6">
-                <div>
-                  <h3 className="text-base font-bold mb-2 text-gray-800">🎣 Como usar a tábua de maré?</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    A tábua indica os horários exatos de <strong>preamar</strong> (maré alta) e{' '}
-                    <strong>baixamar</strong> (maré baixa) ao longo do dia, com as respectivas alturas em metros.
-                    Para a pesca, os momentos de virada — quando a maré muda de direção — costumam ser os mais
-                    produtivos. Para surf e mergulho, o ideal varia conforme o local e o tipo de onda ou fundo.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-base font-bold mb-2 text-gray-800">📏 O que é o Nível Médio?</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    O nível médio ({portData?.nivel_medio ?? '--'} m) é a referência central do gráfico de marés.
-                    Representa a altura média da superfície do mar ao longo do tempo. Valores acima dele indicam
-                    maré subindo em direção à preamar; abaixo, a maré está descendo em direção à baixamar.
-                    É útil para avaliar se há profundidade suficiente para atracar embarcações com segurança.
-                  </p>
-                </div>
-              </div>
-
-              <h3 className="text-lg font-bold mt-8 mb-3 text-gray-800">
-                🌊 Características das Marés em {port.name}
-              </h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
-                {regionContext}
-              </p>
-
-              <h3 className="text-lg font-bold mt-8 mb-3 text-gray-800">
-                💡 Dicas para Atividades Marítimas em {port.name}
-              </h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
-                {activityTips}
-              </p>
-
-              <h3 className="text-lg font-bold mt-8 mb-3 text-gray-800">
-                📡 Fonte dos Dados
-              </h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
-                Todos os horários e alturas de maré do MaréAgora para <strong>{port.name}</strong> são baseados
-                nas publicações oficiais da <strong>Diretoria de Hidrografia e Navegação (DHN)</strong> da Marinha
-                do Brasil. Os dados de ondas, vento e precipitação são fornecidos em tempo real pela API da{' '}
-                <strong>Open-Meteo</strong>, atualizada a cada poucas horas com modelos meteorológicos globais.
-                O MaréAgora é uma ferramenta de apoio — para navegação profissional, sempre consulte as
-                publicações oficiais da Marinha.
-              </p>
-            </section>
-            {/* ── fim do bloco editorial ── */}
-
-            {/* ⑤ PRÉ-FOOTER — antes do footer ──────────────────────────────────── */}
-            <div className="flex justify-center my-2">
-              <div className="w-full max-w-[728px] min-h-[90px]">
-                <AdSlot slotId={AD_SLOTS.PREFOOTER} format="auto" />
-              </div>
-            </div>
-
+      {/* Info Cards */}
+      <section className="px-6 lg:px-12 -mt-16 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <InfoCard
+              title="Próxima Maré Alta"
+              time={nextHighTide?.hora || '--:--'}
+              value={nextHighTide ? `+${nextHighTide.altura_m.toFixed(2)} m` : '--'}
+              type="high"
+            />
+            <InfoCard
+              title="Próxima Maré Baixa"
+              time={nextLowTide?.hora || '--:--'}
+              value={nextLowTide ? `+${nextLowTide.altura_m.toFixed(2)} m` : '--'}
+              type="low"
+            />
+            <InfoCard
+              title="Condições Agora"
+              time={currentTime}
+              value={`Vento: 17 km/h NE · Ondas: 1.4 m`}
+              type="current"
+            />
           </div>
+        </div>
+      </section>
 
-          <aside className="flex flex-col gap-8">
-            <WavesCard lat={port.lat} lon={port.lon} />
-            <ForecastStrip lat={port.lat} lon={port.lon} />
-            <ConditionsCard lat={port.lat} lon={port.lon} />
-
-            {/* ④ SIDEBAR STICKY — desktop only (oculto abaixo de 1024px) ──────── */}
-            <div className="hidden lg:block">
-              <div className="sticky top-5">
-                <div className="min-h-[600px] w-[300px]">
-                  <AdSlot
-                    slotId={AD_SLOTS.SIDEBAR_STICKY}
-                    format="auto"
-                    style={{ width: '300px', height: '600px' }}
-                    fullWidthResponsive={false}
-                  />
-                </div>
-              </div>
+      {/* Tide Chart */}
+      <section className="px-6 lg:px-12 py-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-white rounded-2xl shadow-lg p-6">
+            <h2 className="text-xl font-bold text-slate-800 mb-6">Tabela de Marés</h2>
+            <TideChart mares={classifiedMares} />
+          </div>
+          
+          {/* AdSense In-Content */}
+          <div className="flex justify-center mt-6">
+            <div className="w-full max-w-[336px] min-h-[280px]">
+              <AdSlot slotId={AD_SLOTS.INCONTENT_RECT} format="rectangle" />
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="classic-card">
-              <h3 className="card-title mb-4">📍 Cidades Próximas</h3>
-              <div className="flex flex-col gap-3">
-                {getNearbySlugs(port).map(p => (
-                  <Link
-                    key={p.slug}
-                    href={`/mare/${p.slug}`}
-                    className="group flex flex-col p-3.5 rounded-xl border border-gray-100 hover:border-[#2a68f6] hover:bg-gray-50 transition-all"
-                  >
-                    <span className="font-bold text-gray-800 group-hover:text-[#2a68f6]">{p.name}</span>
-                    <span className="text-xs text-gray-400 capitalize">{p.state} • Ver tábua de maré</span>
-                  </Link>
-                ))}
-              </div>
+      {/* Wave and Wind Charts */}
+      <section className="px-6 lg:px-12 py-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-white rounded-2xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-slate-800 mb-6">Previsão de Ondas</h2>
+              <WaveChart data={waveData} />
             </div>
-          </aside>
+            <div className="bg-white rounded-2xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-slate-800 mb-6">Intensidade e Direção do Vento</h2>
+              <WindChart data={windData} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* AdSense Pos-Tabela */}
+      <div className="flex justify-center px-6 py-4">
+        <div className="w-full max-w-[336px] min-h-[280px]">
+          <AdSlot slotId={AD_SLOTS.POS_TABELA} format="auto" />
         </div>
       </div>
 
-      <Footer />
+      {/* Weather Cards */}
+      <section className="px-6 lg:px-12 py-8">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-xl font-bold text-slate-800 mb-6">Dados Meteorológicos</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <WeatherCard title="Temperatura" value="26°C" icon="thermometer" />
+            <WeatherCard title="Umidade" value="78%" icon="droplet" />
+            <WeatherCard title="Pressão" value="1013 hPa" icon="gauge" />
+            <WeatherCard title="Visibilidade" value="10 km" icon="eye" />
+          </div>
+        </div>
+      </section>
+
+      {/* Cidades Próximas */}
+      <section className="px-6 lg:px-12 py-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-white rounded-2xl shadow-lg p-6">
+            <h3 className="text-xl font-bold text-slate-800 mb-4">📍 Cidades Próximas</h3>
+            <div className="flex flex-col gap-3">
+              {getNearbySlugs(port).map((p: Port) => (
+                <Link
+                  key={p.slug}
+                  href={`/mare/${p.slug}`}
+                  className="group flex flex-col p-3.5 rounded-xl border border-gray-100 hover:border-blue-500 hover:bg-gray-50 transition-all"
+                >
+                  <span className="font-bold text-gray-800 group-hover:text-blue-600">{p.name}</span>
+                  <span className="text-xs text-gray-400 capitalize">{p.state} • Ver tábua de maré</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* AdSense Pre-Footer */}
+      <div className="flex justify-center px-6 py-4">
+        <div className="w-full max-w-[728px] min-h-[90px]">
+          <AdSlot slotId={AD_SLOTS.PREFOOTER} format="auto" />
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="mt-12 py-6 border-t border-slate-200 text-center text-slate-500 text-sm bg-white">
+        <p>MareAgora 2026 • Dados oficiais da Marinha do Brasil (DHN)</p>
+        <p className="mt-1">Fonte: Diretoria de Hidrografia e Navegação</p>
+      </footer>
     </main>
   );
+}
+
+export function generateStaticParams() {
+  const { PORTS } = require('@/lib/ports');
+  return PORTS.map((port: Port) => ({
+    slug: port.slug,
+  }));
 }

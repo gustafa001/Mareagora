@@ -10,6 +10,7 @@ export interface Port {
   state: string;
   region: 'norte' | 'nordeste' | 'sudeste' | 'sul';
   dataFile: string;
+  searchNames?: string[];
 }
 
 export const PORTS: Port[] = [

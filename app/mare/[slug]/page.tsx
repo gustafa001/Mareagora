@@ -123,14 +123,14 @@ export default async function MarePage({ params }: MarePageProps) {
     { time: '18:00', height: 1.5 },
   ];
 
-  const windData = [
-    { time: '06:00', speed: 18, direction: 'NE' },
-    { time: '09:00', speed: 23, direction: 'NE' },
-    { time: '12:00', speed: 20, direction: 'E' },
-    { time: '15:00', speed: 20, direction: 'E' },
-    { time: '18:00', speed: 19, direction: 'SE' },
-    { time: '21:00', speed: 17, direction: 'SE' },
-  ];
+  const windData = {
+    time: ['06:00', '09:00', '12:00', '15:00', '18:00', '21:00'].map(t => {
+      const today = new Date().toISOString().split('T')[0];
+      return `${today}T${t}`;
+    }),
+    windspeed_10m: [18, 23, 20, 20, 19, 17],
+    winddirection_10m: [45, 45, 90, 90, 135, 135],
+  };
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
@@ -225,7 +225,7 @@ export default async function MarePage({ params }: MarePageProps) {
             </div>
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h2 className="text-xl font-bold text-slate-800 mb-6">Intensidade e Direção do Vento</h2>
-              <WindChart data={windData} />
+              <WindChart hourly={windData} />
             </div>
           </div>
         </div>

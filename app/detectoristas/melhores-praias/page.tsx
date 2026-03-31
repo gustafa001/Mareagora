@@ -63,7 +63,7 @@ export default function MelhoresPraias() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@700;800&display=swap');
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         .root {
           min-height: 100vh;

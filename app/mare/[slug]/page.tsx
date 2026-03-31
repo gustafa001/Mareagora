@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import dynamic from 'next/dynamic';
 import { getPortBySlug, Port, getNearbySlugs } from '@/lib/ports';
 import { 
   getTodayTides, 
@@ -9,16 +8,16 @@ import {
   RawPortData,
   TideEvent
 } from '@/lib/tideUtils';
-import WeatherCard from '@/components/WeatherCard';
-import InfoCard from '@/components/InfoCard';
+import TideChart from '@/components/TideChart';
 import NavBar from '@/components/NavBar';
+import SummaryCards from '@/components/SummaryCards';
+import WindWaveCharts from '@/components/WindWaveCharts';
+import ConditionsCard from '@/components/ConditionsCard';
+import ForecastStrip from '@/components/ForecastStrip';
+import DetailedForecastTable from '@/components/DetailedForecastTable';
 import AdSlot from '@/components/ads/AdSlot';
 import { AD_SLOTS } from '@/lib/adConfig';
 import Link from 'next/link';
-
-const TideChart = dynamic(() => import('@/components/TideChart'), { ssr: false });
-const WaveChart = dynamic(() => import('@/components/WaveChart'), { ssr: false });
-const WindChart = dynamic(() => import('@/components/WindChart'), { ssr: false });
 
 interface MarePageProps {
   params: {
@@ -26,49 +25,76 @@ interface MarePageProps {
   };
 }
 
+// Função para encontrar próxima maré alta
 function findNextHighTide(mares: TideEvent[]): TideEvent | null {
   const classified = classifyTideEvents(mares);
   const now = new Date();
   const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+  
   for (const event of classified) {
-    if (event.tipo === 'high' && event.hora > currentTime) return event;
+    if (event.tipo === 'high' && event.hora > currentTime) {
+      return event;
+    }
   }
   return classified.find(e => e.tipo === 'high') || null;
 }
 
+// Função para encontrar próxima maré baixa
 function findNextLowTide(mares: TideEvent[]): TideEvent | null {
   const classified = classifyTideEvents(mares);
   const now = new Date();
   const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+  
   for (const event of classified) {
-    if (event.tipo === 'low' && event.hora > currentTime) return event;
+    if (event.tipo === 'low' && event.hora > currentTime) {
+      return event;
+    }
   }
   return classified.find(e => e.tipo === 'low') || null;
 }
 
 export async function generateMetadata({ params }: MarePageProps): Promise<Metadata> {
   const port = getPortBySlug(params.slug);
+  
   if (!port) {
     return {
       title: 'Porto não encontrado | MareAgora',
       description: 'Página de porto não encontrada no MareAgora.',
     };
   }
+
   const title = `Maré em ${port.name} - ${port.state} | MareAgora 2026`;
   const description = `Tábua de maré oficial para ${port.name} (${port.state}). Dados em tempo real da Marinha do Brasil. Previsão de marés, ondas e condições náuticas para ${port.name}.`;
+
   return {
     title,
     description,
-    openGraph: { title, description, type: 'website', locale: 'pt_BR', siteName: 'MareAgora' },
-    twitter: { card: 'summary_large_image', title, description },
-    alternates: { canonical: `/mare/${port.slug}/` },
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      locale: 'pt_BR',
+      siteName: 'MareAgora',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+    alternates: {
+      canonical: `/mare/${port.slug}/`,
+    },
   };
 }
 
 export default async function MarePage({ params }: MarePageProps) {
   const port = getPortBySlug(params.slug);
-  if (!port) notFound();
+  
+  if (!port) {
+    notFound();
+  }
 
+  // Import dinâmico do arquivo JSON
   const rawData = (await import(`@/data/${port.dataFile}`)).default as RawPortData;
   const todayTides = getTodayTides(rawData.eventos);
   
@@ -83,47 +109,40 @@ export default async function MarePage({ params }: MarePageProps) {
   }
 
   const classifiedMares = classifyTideEvents(todayTides.mares);
+  
   const currentTime = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
   const tideStatus = getCurrentTideStatus(todayTides, currentTime);
   const nextHighTide = findNextHighTide(todayTides.mares);
   const nextLowTide = findNextLowTide(todayTides.mares);
 
-  const waveData = [
-    { time: '06:00', height: 1.4 },
-    { time: '09:00', height: 1.6 },
-    { time: '12:00', height: 1.8 },
-    { time: '15:00', height: 1.7 },
-    { time: '18:00', height: 1.5 },
-  ];
-
-  const windData = {
-    time: ['06:00', '09:00', '12:00', '15:00', '18:00', '21:00'].map(t => {
-      const today = new Date().toISOString().split('T')[0];
-      return `${today}T${t}`;
-    }),
-    windspeed_10m: [18, 23, 20, 20, 19, 17],
-    winddirection_10m: [45, 45, 90, 90, 135, 135],
-  };
-
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
+      {/* NavBar */}
       <NavBar />
 
+      {/* AdSense Leaderboard */}
       <div className="w-full flex justify-center px-4 py-2 bg-slate-100">
         <div className="w-full max-w-[728px] min-h-[90px]">
           <AdSlot slotId={AD_SLOTS.LEADERBOARD_NAV} format="auto" />
         </div>
       </div>
 
+      {/* Hero Section */}
       <section 
         className="relative h-[320px] w-full bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(30, 58, 95, 0.5) 100%), url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1920&q=80')` }}
+        style={{
+          backgroundImage: `linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(30, 58, 95, 0.5) 100%), url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1920&q=80')`
+        }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 to-slate-900/40" />
         <div className="relative z-10 h-full flex flex-col justify-center px-6 lg:px-12">
           <div className="max-w-7xl mx-auto w-full">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">{port.name}</h1>
-            <p className="text-lg text-blue-200 mb-3">{port.name} - 2026 | Estado do {port.state}</p>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">
+              {port.name}
+            </h1>
+            <p className="text-lg text-blue-200 mb-3">
+              {port.name} - 2026 | Estado do {port.state}
+            </p>
             <div className="flex flex-wrap gap-3 text-sm text-blue-100">
               <span>Latitude: {typeof rawData.lat === 'number' ? rawData.lat.toFixed(4) : rawData.lat}°</span>
               <span>Longitude: {typeof rawData.lon === 'number' ? rawData.lon.toFixed(4) : rawData.lon}°</span>
@@ -136,22 +155,27 @@ export default async function MarePage({ params }: MarePageProps) {
         </div>
       </section>
 
+      {/* Info Cards - Dados Reais */}
       <section className="px-6 lg:px-12 -mt-16 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <InfoCard title="Próxima Maré Alta" time={nextHighTide?.hora || '--:--'} value={nextHighTide ? `+${nextHighTide.altura_m.toFixed(2)} m` : '--'} type="high" />
-            <InfoCard title="Próxima Maré Baixa" time={nextLowTide?.hora || '--:--'} value={nextLowTide ? `+${nextLowTide.altura_m.toFixed(2)} m` : '--'} type="low" />
-            <InfoCard title="Condições Agora" time={currentTime} value={`Vento: 17 km/h NE · Ondas: 1.4 m`} type="current" />
-          </div>
+          <SummaryCards 
+            nextHigh={nextHighTide} 
+            nextLow={nextLowTide} 
+            lat={Number(rawData.lat) || 0} 
+            lon={Number(rawData.lon) || 0}
+          />
         </div>
       </section>
 
+      {/* Tide Chart */}
       <section className="px-6 lg:px-12 py-8">
         <div className="max-w-7xl mx-auto">
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <h2 className="text-xl font-bold text-slate-800 mb-6">Tabela de Marés</h2>
             <TideChart tides={classifiedMares} />
           </div>
+          
+          {/* AdSense In-Content */}
           <div className="flex justify-center mt-6">
             <div className="w-full max-w-[336px] min-h-[280px]">
               <AdSlot slotId={AD_SLOTS.INCONTENT_RECT} format="rectangle" />
@@ -160,27 +184,31 @@ export default async function MarePage({ params }: MarePageProps) {
         </div>
       </section>
 
+      {/* Wave and Wind Charts - Dados Reais */}
       <section className="px-6 lg:px-12 py-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white rounded-2xl shadow-lg p-6">
-              <h2 className="text-xl font-bold text-slate-800 mb-6">Previsão de Ondas</h2>
-              <WaveChart data={waveData} />
-            </div>
-            <div className="bg-white rounded-2xl shadow-lg p-6">
-              <h2 className="text-xl font-bold text-slate-800 mb-6">Intensidade e Direção do Vento</h2>
-              <WindChart hourly={windData} />
-            </div>
+          <WindWaveCharts lat={Number(rawData.lat) || 0} lon={Number(rawData.lon) || 0} />
+        </div>
+      </section>
+
+      {/* Conditions Card - Dados Reais */}
+      <section className="px-6 lg:px-12 py-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <ConditionsCard lat={Number(rawData.lat) || 0} lon={Number(rawData.lon) || 0} />
+            <ForecastStrip lat={Number(rawData.lat) || 0} lon={Number(rawData.lon) || 0} />
           </div>
         </div>
       </section>
 
+      {/* AdSense Pos-Tabela */}
       <div className="flex justify-center px-6 py-4">
         <div className="w-full max-w-[336px] min-h-[280px]">
           <AdSlot slotId={AD_SLOTS.POS_TABELA} format="auto" />
         </div>
       </div>
 
+      {/* Weather Cards */}
       <section className="px-6 lg:px-12 py-8">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-xl font-bold text-slate-800 mb-6">Dados Meteorológicos</h2>
@@ -193,13 +221,18 @@ export default async function MarePage({ params }: MarePageProps) {
         </div>
       </section>
 
+      {/* Cidades Próximas */}
       <section className="px-6 lg:px-12 py-8">
         <div className="max-w-7xl mx-auto">
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <h3 className="text-xl font-bold text-slate-800 mb-4">📍 Cidades Próximas</h3>
             <div className="flex flex-col gap-3">
               {getNearbySlugs(port).map((p: Port) => (
-                <Link key={p.slug} href={`/mare/${p.slug}`} className="group flex flex-col p-3.5 rounded-xl border border-gray-100 hover:border-blue-500 hover:bg-gray-50 transition-all">
+                <Link
+                  key={p.slug}
+                  href={`/mare/${p.slug}`}
+                  className="group flex flex-col p-3.5 rounded-xl border border-gray-100 hover:border-blue-500 hover:bg-gray-50 transition-all"
+                >
                   <span className="font-bold text-gray-800 group-hover:text-blue-600">{p.name}</span>
                   <span className="text-xs text-gray-400 capitalize">{p.state} • Ver tábua de maré</span>
                 </Link>
@@ -209,12 +242,14 @@ export default async function MarePage({ params }: MarePageProps) {
         </div>
       </section>
 
+      {/* AdSense Pre-Footer */}
       <div className="flex justify-center px-6 py-4">
         <div className="w-full max-w-[728px] min-h-[90px]">
           <AdSlot slotId={AD_SLOTS.PREFOOTER} format="auto" />
         </div>
       </div>
 
+      {/* Footer */}
       <footer className="mt-12 py-6 border-t border-slate-200 text-center text-slate-500 text-sm bg-white">
         <p>MareAgora 2026 • Dados oficiais da Marinha do Brasil (DHN)</p>
         <p className="mt-1">Fonte: Diretoria de Hidrografia e Navegação</p>
@@ -225,5 +260,7 @@ export default async function MarePage({ params }: MarePageProps) {
 
 export function generateStaticParams() {
   const { PORTS } = require('@/lib/ports');
-  return PORTS.map((port: Port) => ({ slug: port.slug }));
+  return PORTS.map((port: Port) => ({
+    slug: port.slug,
+  }));
 }

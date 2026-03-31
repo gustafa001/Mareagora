@@ -252,3 +252,36 @@ export function tideAtMinute(minute: number, tides: TideEvent[]): number {
   
   return sorted[0].altura_m;
 }
+
+/**
+ * Retorna se a maré está subindo e qual o próximo evento
+ */
+export function getTideStatus(
+  minute: number,
+  tides: TideEvent[]
+): { rising: boolean; next: TideEvent | null } {
+  if (!tides || tides.length === 0) return { rising: true, next: null };
+
+  const sorted = [...tides].sort((a, b) => a.hora.localeCompare(b.hora));
+
+  let next: TideEvent | null = null;
+  let prev: TideEvent | null = null;
+
+  for (const tide of sorted) {
+    const [h, m] = tide.hora.split(':').map(Number);
+    const t = h * 60 + m;
+    if (t > minute) {
+      next = tide;
+      break;
+    }
+    prev = tide;
+  }
+
+  if (!next) next = sorted[0];
+
+  const rising = next
+    ? next.altura_m > (prev?.altura_m ?? 0)
+    : true;
+
+  return { rising, next };
+}

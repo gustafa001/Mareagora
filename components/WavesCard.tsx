@@ -29,11 +29,11 @@ export default function WavesCard({ lat, lon }: WavesCardProps) {
 
         const h = json.hourly;
         const now = new Date();
-        const nowH = now.getHours();
-        
+        const nowPad = now.getHours().toString().padStart(2, '0');
+        const todayStr = now.toLocaleDateString('en-CA'); // formato YYYY-MM-DD
+
         const idx = h.time.findIndex((t: string) => {
-          const d = new Date(t);
-          return d.getHours() === nowH && d.toDateString() === now.toDateString();
+          return t.startsWith(todayStr) && t.includes(`T${nowPad}:`);
         });
         const i = idx >= 0 ? idx : 0;
 

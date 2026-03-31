@@ -152,23 +152,13 @@ export default async function MarePage({ params }: MarePageProps) {
     console.error("Erro ao buscar dados meteorológicos:", e);
   }
 
-  // Dados para os gráficos (podem ser atualizados com dados reais)
-  const waveData = [
-    { time: '06:00', height: 1.4 },
-    { time: '09:00', height: 1.6 },
-    { time: '12:00', height: 1.8 },
-    { time: '15:00', height: 1.7 },
-    { time: '18:00', height: 1.5 },
-  ];
-
-  const windData = [
-    { time: '06:00', speed: 18, direction: 'NE' },
-    { time: '09:00', speed: 23, direction: 'NE' },
-    { time: '12:00', speed: 20, direction: 'E' },
-    { time: '15:00', speed: 20, direction: 'E' },
-    { time: '18:00', speed: 19, direction: 'SE' },
-    { time: '21:00', speed: 17, direction: 'SE' },
-  ];
+  // Dados para os gráficos no formato que os componentes do GitHub esperam
+  const today = new Date().toISOString().split('T')[0];
+  const windData = {
+    time: ['06:00', '09:00', '12:00', '15:00', '18:00', '21:00'].map(t => `${today}T${t}`),
+    windspeed_10m: [18, 23, 20, 20, 19, 17],
+    winddirection_10m: [45, 45, 90, 90, 135, 135],
+  };
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
@@ -272,11 +262,11 @@ export default async function MarePage({ params }: MarePageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h2 className="text-xl font-bold text-slate-800 mb-6">Previsão de Ondas</h2>
-              <WaveChart data={waveData} />
+              <WaveChart data={[]} />
             </div>
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h2 className="text-xl font-bold text-slate-800 mb-6">Intensidade e Direção do Vento</h2>
-              <WindChart data={windData} />
+              <WindChart hourly={windData} />
             </div>
           </div>
         </div>

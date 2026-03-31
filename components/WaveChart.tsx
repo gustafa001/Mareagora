@@ -1,16 +1,12 @@
 'use client';
-
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
-
 interface WaveData {
   time: string;
   height: number;
 }
-
 interface WaveChartProps {
   data: WaveData[];
 }
-
 export default function WaveChart({ data }: WaveChartProps) {
   return (
     <div className="h-[250px] w-full">
@@ -26,7 +22,7 @@ export default function WaveChart({ data }: WaveChartProps) {
             axisLine={false}
             tickLine={false}
             tick={{ fill: '#64748B', fontSize: 12 }}
-            tickFormatter={(v) => `${v.toFixed(1)}m`}
+            tickFormatter={(v: number) => `${v.toFixed(1)}m`}
           />
           <Tooltip
             content={({ active, payload }) => {
@@ -50,7 +46,7 @@ export default function WaveChart({ data }: WaveChartProps) {
               fill: '#1E3A5F', 
               fontSize: 12,
               fontWeight: 600,
-              formatter: (v: number) => `${v.toFixed(1)}m`
+              formatter: (v: unknown) => `${Number(v).toFixed(1)}m`
             }}
           />
         </BarChart>

@@ -42,8 +42,9 @@ export default function TideCardLive({ port, data: initialData, index = 0 }: Pro
       if (!tideData) return;
       const now = new Date();
       const min = now.getHours() * 60 + now.getMinutes();
-      const { tides } = getTodayTides(tideData);
-      if (!tides || tides.length === 0) return;
+      const today = getTodayTides(tideData);
+      if (!today || !today.mares || today.mares.length === 0) return;
+      const tides = today.mares;
 
       const h = tideAtMinute(min, tides);
       const status = getTideStatus(min, tides);

@@ -19,6 +19,35 @@ import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
+/**
+ * Converte coordenadas no formato "32° 08'.3 S" ou número decimal para graus decimais.
+ * Retorna null se não conseguir parsear.
+ */
+function parseCoord(value: number | string | undefined, type: 'lat' | 'lon'): number | null {
+  if (value === undefined || value === null || value === '') return null;
+  const n = Number(value);
+  if (!isNaN(n) && n !== 0) return n;
+
+  // Tenta parsear formato DMS: "32° 08'.3 S" ou "52° 06'.2 W"
+  const str = String(value).trim();
+  const match = str.match(/(\d+)[°\s]+(\d+)'?\.?(\d*)\s*([NSWE])?/i);
+  if (!match) return null;
+
+  const deg = parseInt(match[1]);
+  const min = parseFloat(`${match[2]}.${match[3] || '0'}`);
+  const dir = (match[4] || '').toUpperCase();
+  let decimal = deg + min / 60;
+
+  if (dir === 'S' || dir === 'W') decimal = -decimal;
+  // Se não tem direção, infere pelo tipo e contexto brasileiro
+  else if (!dir) {
+    if (type === 'lat') decimal = -Math.abs(decimal); // Brasil é Sul
+    if (type === 'lon') decimal = -Math.abs(decimal); // Brasil é Oeste
+  }
+
+  return decimal;
+}
+
 interface MarePageProps {
   params: {
     slug: string;
@@ -87,9 +116,9 @@ export default async function MarePage({ params }: MarePageProps) {
   const nextHighTide = findNextHighTide(todayTides.mares);
   const nextLowTide = findNextLowTide(todayTides.mares);
 
-  const lat = Number(rawData.lat);
-  const lon = Number(rawData.lon);
-  const hasCoords = !isNaN(lat) && !isNaN(lon) && lat !== 0 && lon !== 0;
+  const lat = parseCoord(rawData.lat, 'lat');
+  const lon = parseCoord(rawData.lon, 'lon');
+  const hasCoords = lat !== null && lon !== null;
 
   let weatherData = { temp: 26, humidity: 78, pressure: 1013, visibility: 10, wind: "17 km/h", waves: "1.4 m" };
 
@@ -157,8 +186,8 @@ export default async function MarePage({ params }: MarePageProps) {
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">{port.name}</h1>
             <p className="text-lg text-blue-200 mb-3">{port.name} - 2026 | Estado do {port.state}</p>
             <div className="flex flex-wrap gap-3 text-sm text-blue-100">
-              <span>Latitude: {hasCoords ? lat.toFixed(4) : rawData.lat}°</span>
-              <span>Longitude: {hasCoords ? lon.toFixed(4) : rawData.lon}°</span>
+              <span>Latitude: {lat !== null ? lat.toFixed(4) : String(rawData.lat)}°</span>
+              <span>Longitude: {lon !== null ? lon.toFixed(4) : String(rawData.lon)}°</span>
               <span>Fuso: {rawData.fuso}</span>
             </div>
             <p className="mt-3 text-blue-200">

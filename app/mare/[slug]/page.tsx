@@ -136,10 +136,10 @@ export default async function MarePage({ params }: MarePageProps) {
         const weatherJson = await weatherRes.json();
         const h = waveJson.hourly;
         const now = new Date();
-        const nowH = now.getHours();
+        const nowPad = now.getHours().toString().padStart(2, '0');
+        const todayStr = now.toLocaleDateString('en-CA'); // formato YYYY-MM-DD
         const idx = h.time.findIndex((t: string) => {
-          const d = new Date(t);
-          return d.getHours() === nowH && d.toDateString() === now.toDateString();
+          return t.startsWith(todayStr) && t.includes(`T${nowPad}:`);
         });
         const waveHeight = h.wave_height[idx >= 0 ? idx : 0];
         const current = weatherJson.current;

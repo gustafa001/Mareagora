@@ -20,7 +20,7 @@ export default function NavBar({ className = '' }: NavBarProps) {
             <Link href="/" className="text-sm text-slate-300 hover:text-white transition-colors">
               Início
             </Link>
-            <Link href="/#portos" className="text-sm text-slate-300 hover:text-white transition-colors">
+            <Link href="/portos" className="text-sm text-slate-300 hover:text-white transition-colors">
               Portos
             </Link>
             <Link href="/sobre" className="text-sm text-slate-300 hover:text-white transition-colors">

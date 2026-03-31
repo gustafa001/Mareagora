@@ -18,11 +18,6 @@ import AdSlot from '@/components/ads/AdSlot';
 import { AD_SLOTS } from '@/lib/adConfig';
 import Link from 'next/link';
 
-interface MarePageProps {
-  params?: {
-    slug?: string;
-  };
-}
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;

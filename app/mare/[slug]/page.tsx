@@ -203,7 +203,7 @@ export default async function MarePage({ params }: MarePageProps) {
         <div className="max-w-7xl mx-auto">
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <h2 className="text-xl font-bold text-slate-800 mb-6">Tabela de Marés</h2>
-            <TideChart mares={classifiedMares} />
+            <TideChart tides={classifiedMares} />
           </div>
           
           {/* AdSense In-Content */}

@@ -4,14 +4,14 @@ import { TideEvent } from '@/lib/tideUtils';
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis, ReferenceLine } from 'recharts';
 
 interface TideChartProps {
-  mares: TideEvent[];
+  tides: TideEvent[];
 }
 
-export default function TideChart({ mares }: TideChartProps) {
-  if (!mares || mares.length === 0) return null;
+export default function TideChart({ tides }: TideChartProps) {
+  if (!tides || tides.length === 0) return null;
 
   // Sort by time and create smooth curve data
-  const sorted = [...mares].sort((a, b) => a.hora.localeCompare(b.hora));
+  const sorted = [...tides].sort((a, b) => a.hora.localeCompare(b.hora));
   
   // Generate smooth curve points between tide events
   const chartData: { time: string; height: number; isEvent: boolean; tipo?: 'high' | 'low' }[] = [];

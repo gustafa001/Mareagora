@@ -9,6 +9,7 @@ import {
   TideEvent
 } from '@/lib/tideUtils';
 import TideChart from '@/components/TideChart';
+import TideMonthTable from '@/components/TideMonthTable';
 import WaveChart from '@/components/WaveChart';
 import WindChart from '@/components/WindChart';
 import WeatherCard from '@/components/WeatherCard';
@@ -247,6 +248,13 @@ export default async function MarePage({ params }: MarePageProps) {
               <AdSlot slotId={AD_SLOTS.INCONTENT_RECT} format="rectangle" />
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="px-6 lg:px-12 py-8">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-xl font-bold text-slate-800 mb-6">Tábua de Marés — Mensal</h2>
+          <TideMonthTable eventos={rawData.eventos} />
         </div>
       </section>
 

@@ -310,7 +310,7 @@ export default async function MarePage({ params }: MarePageProps) {
                 <Link
                   key={p.slug}
                   href={`/mare/${p.slug}`}
-                   className="group flex flex-col p-3.5 rounded-xl border border-gray-100 hover:border-blue-500 hover:bg-gray-50 transition-all"
+                  className="group flex flex-col p-3.5 rounded-xl border border-gray-100 hover:border-blue-500 hover:bg-gray-50 transition-all"
                 >
                   <span className="font-bold text-gray-800 group-hover:text-blue-600">{p.name}</span>
                   <span className="text-xs text-gray-400 capitalize">{p.state} • Ver tábua de maré</span>

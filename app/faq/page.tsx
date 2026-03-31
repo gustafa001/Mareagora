@@ -25,7 +25,7 @@ export default function FAQPage() {
       {/* Content */}
       <main className="flex-1 container py-16">
         <div className="max-w-4xl mx-auto classic-card p-8 md:p-12 prose prose-slate prose-blue max-w-none">
-
+  
           <h2 className="font-syne font-bold text-2xl mb-6 text-[#0a1628]">1. O que significa a altura em metros exibida na tábua de marés?</h2>
           <p className="text-gray-600 leading-relaxed mb-8">
             Os valores indicam a <strong>elevação da superfície da água</strong> em relação ao <em>Zero Hidrográfico</em> — um nível de referência adotado pela Marinha do Brasil para cada porto, baseado na média histórica das marés mais baixas registradas naquele local. Na prática: se a previsão mostra 1,80 m, significa que o nível da água está 1,80 metro acima desse ponto de referência, o que indica uma maré alta. Quanto mais alto o número, maior a maré.

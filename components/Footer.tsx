@@ -32,6 +32,9 @@ export default function Footer() {
               <li>
                 <Link href="/faq" className="hover:text-[var(--foam)] transition-colors">Ajuda & FAQ</Link>
               </li>
+              <li>
+                <Link href="/contato" className="hover:text-[var(--foam)] transition-colors">Contato</Link>
+              </li>
             </ul>
           </div>
           

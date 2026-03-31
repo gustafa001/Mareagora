@@ -132,7 +132,7 @@ export default function SobrePage() {
             </p>
             <p className="text-gray-600 leading-relaxed">
               Envie um e-mail para:{' '}
-              <a href="mailto:contato@mareagora.com.br" className="text-blue-600 hover:underline font-medium">
+              <a href="mailto:contatos@mareagora.com.br" className="text-blue-600 hover:underline font-medium">
                 contatos@mareagora.com.br
               </a>
             </p>

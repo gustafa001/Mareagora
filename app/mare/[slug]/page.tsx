@@ -5,8 +5,7 @@ import { getPortData } from '@/lib/tideData';
 import type { Metadata } from 'next';
 import NavBar from '@/components/NavBar';
 import TideChart from '@/components/TideChart';
-import TideTable30Days from '@/components/TideTable30Days';
-import TideTable from '@/components/TideTable';
+import MonthlyTideTable from '@/components/MonthlyTideTable';
 import WavesCard from '@/components/WavesCard';
 import ForecastStrip from '@/components/ForecastStrip';
 import ConditionsCard from '@/components/ConditionsCard';
@@ -61,17 +60,17 @@ export default async function PortPage({ params }: { params: { slug: string } })
   const port = getPortBySlug(slug);
   if (!port) notFound();
 
-  const id = port.dataFile.replace('.json', '');
+  const id = port!.dataFile.replace('.json', '');
   const portData = await getPortData(id);
-  const { mares: todayTides } = getTodayTides(portData ?? { eventos: [] }) ?? { mares: [] };
+  const todayDay = getTodayTides(portData?.eventos ?? []);
+  const todayTides: import('@/lib/tideUtils').TideEvent[] = todayDay?.mares ?? [];
 
   const ano = new Date().getFullYear();
   const now = new Date();
   const currentMin = now.getHours() * 60 + now.getMinutes();
-  
-  // Horário atual no timezone de São Paulo
-  const currentTimeBR = new Date().toLocaleTimeString('pt-BR', { 
-    hour: '2-digit', 
+
+  const currentTimeBR = new Date().toLocaleTimeString('pt-BR', {
+    hour: '2-digit',
     minute: '2-digit',
     timeZone: 'America/Sao_Paulo'
   });
@@ -91,8 +90,8 @@ export default async function PortPage({ params }: { params: { slug: string } })
     return (h || 0) * 60 + (m || 0) > currentMin && t.altura_m < avgH;
   }) ?? todayTides.find(t => t.altura_m < avgH) ?? null;
 
-  const regionContext = getRegionContext(port.region, port.state);
-  const activityTips = getActivityTips(port.region);
+  const regionContext = getRegionContext(port!.region, port!.state);
+  const activityTips = getActivityTips(port!.region);
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -101,15 +100,15 @@ export default async function PortPage({ params }: { params: { slug: string } })
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.mareagora.com.br/' },
-          { '@type': 'ListItem', position: 2, name: port.name, item: `https://www.mareagora.com.br/mare/${slug}` },
+          { '@type': 'ListItem', position: 2, name: port!.name, item: `https://www.mareagora.com.br/mare/${slug}` },
         ],
       },
       {
         '@type': 'WebPage',
         '@id': `https://www.mareagora.com.br/mare/${slug}`,
         url: `https://www.mareagora.com.br/mare/${slug}`,
-        name: `Tábua de Maré ${port.name} ${ano} — MaréAgora`,
-        description: `Horários e alturas das marés em ${port.name} (${port.state}) para ${ano}.`,
+        name: `Tábua de Maré ${port!.name} ${ano} — MaréAgora`,
+        description: `Horários e alturas das marés em ${port!.name} (${port!.state}) para ${ano}.`,
         inLanguage: 'pt-BR',
         isPartOf: { '@id': 'https://www.mareagora.com.br/' },
       },
@@ -137,21 +136,19 @@ export default async function PortPage({ params }: { params: { slug: string } })
         <div className="container relative z-10 text-white text-center pt-24 md:pt-16">
           <div className="flex flex-col gap-3 items-center px-2">
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight font-syne leading-tight max-w-4xl">
-              Tábua de Maré — {port.name}
+              Tábua de Maré — {port!.name}
             </h1>
             <p className="text-sm sm:text-lg md:text-xl opacity-90 font-medium font-syne hidden sm:block">
-              {port.name} - {ano} | Estado do {port.state}
+              {port!.name} - {ano} | Estado do {port!.state}
             </p>
             <p className="text-sm opacity-90 font-medium font-syne sm:hidden">
-              Estado do {port.state}
+              Estado do {port!.state}
             </p>
-            
-            {/* Botão de Pesquisa */}
+
             <div className="mt-6 w-full max-w-md">
               <SearchPorts ports={PORTS} />
             </div>
-            
-            {/* Horário atual */}
+
             <p className="mt-4 text-xs opacity-70">
               Horário local: {currentTimeBR}
             </p>
@@ -163,8 +160,8 @@ export default async function PortPage({ params }: { params: { slug: string } })
         <SummaryCards
           nextHigh={nextHigh}
           nextLow={nextLow}
-          lat={port.lat}
-          lon={port.lon}
+          lat={port!.lat}
+          lon={port!.lon}
         />
 
         <div className="mt-12 flex flex-col lg:grid lg:grid-cols-[1fr_350px] gap-8">
@@ -173,18 +170,12 @@ export default async function PortPage({ params }: { params: { slug: string } })
               <TideChart tides={todayTides} />
             </div>
 
-            <TideTable30Days portData={portData} />
-
-            <div className="flex justify-center">
-              <div className="w-full max-w-[336px] min-h-[280px]">
-                <AdSlot slotId={AD_SLOTS.INCONTENT_RECT} format="rectangle" />
-              </div>
-            </div>
-
-            <div className="classic-card overflow-hidden">
-              <h3 className="card-title">Tabela de Marés</h3>
-              <TideTable tides={todayTides} currentMin={currentMin} />
-            </div>
+            <MonthlyTideTable
+              eventos={portData?.eventos ?? []}
+              portName={port!.name}
+              lat={port!.lat}
+              lon={port!.lon}
+            />
 
             <div className="flex justify-center">
               <div className="w-full max-w-[336px] min-h-[280px]">
@@ -192,16 +183,16 @@ export default async function PortPage({ params }: { params: { slug: string } })
               </div>
             </div>
 
-            <DetailedForecastTable lat={port.lat} lon={port.lon} todayTides={todayTides} />
+            <DetailedForecastTable lat={port!.lat} lon={port!.lon} todayTides={todayTides} />
 
             <section className="classic-card prose prose-slate max-w-none">
               <h2 className="text-2xl font-bold mb-4 font-syne tracking-tight">
-                Tábua de Maré em {port.name} — {ano}
+                Tábua de Maré em {port!.name} — {ano}
               </h2>
               <p className="text-gray-600 leading-relaxed text-sm">
-                A tábua de maré de <strong>{port.name}</strong> é uma ferramenta essencial para pescadores,
+                A tábua de maré de <strong>{port!.name}</strong> é uma ferramenta essencial para pescadores,
                 surfistas, mergulhadores, caiaqueiros e navegadores que frequentam o litoral de{' '}
-                <strong>{port.state}</strong>. Os dados apresentados pelo MaréAgora são extraídos diretamente
+                <strong>{port!.state}</strong>. Os dados apresentados pelo MaréAgora são extraídos diretamente
                 das tábuas oficiais publicadas pelo <strong>Centro de Hidrografia da Marinha do Brasil (CHM)</strong>{' '}
                 para o ano de <strong>{ano}</strong>, garantindo a precisão e confiabilidade das informações.
               </p>
@@ -227,18 +218,18 @@ export default async function PortPage({ params }: { params: { slug: string } })
               </div>
 
               <h3 className="text-lg font-bold mt-8 mb-3 text-gray-800">
-                🌊 Características das Marés em {port.name}
+                🌊 Características das Marés em {port!.name}
               </h3>
               <p className="text-sm text-gray-600 leading-relaxed">{regionContext}</p>
 
               <h3 className="text-lg font-bold mt-8 mb-3 text-gray-800">
-                💡 Dicas para Atividades Marítimas em {port.name}
+                💡 Dicas para Atividades Marítimas em {port!.name}
               </h3>
               <p className="text-sm text-gray-600 leading-relaxed">{activityTips}</p>
 
               <h3 className="text-lg font-bold mt-8 mb-3 text-gray-800">📡 Fonte dos Dados</h3>
               <p className="text-sm text-gray-600 leading-relaxed">
-                Todos os horários e alturas de maré do MaréAgora para <strong>{port.name}</strong> são baseados
+                Todos os horários e alturas de maré do MaréAgora para <strong>{port!.name}</strong> são baseados
                 nas publicações oficiais da <strong>Diretoria de Hidrografia e Navegação (DHN)</strong> da Marinha
                 do Brasil. Os dados de ondas, vento e precipitação são fornecidos em tempo real pela API da{' '}
                 <strong>Open-Meteo</strong>. O MaréAgora é uma ferramenta de apoio — para navegação profissional,
@@ -254,9 +245,9 @@ export default async function PortPage({ params }: { params: { slug: string } })
           </div>
 
           <aside className="flex flex-col gap-8">
-            <WavesCard lat={port.lat} lon={port.lon} />
-            <ForecastStrip lat={port.lat} lon={port.lon} />
-            <ConditionsCard lat={port.lat} lon={port.lon} />
+            <WavesCard lat={port!.lat} lon={port!.lon} />
+            <ForecastStrip lat={port!.lat} lon={port!.lon} />
+            <ConditionsCard lat={port!.lat} lon={port!.lon} />
 
             <div className="hidden lg:block">
               <div className="sticky top-5">
@@ -274,7 +265,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
             <div className="classic-card">
               <h3 className="card-title mb-4">📍 Cidades Próximas</h3>
               <div className="flex flex-col gap-3">
-                {getNearbySlugs(port).map(p => (
+                {getNearbySlugs(port!).map(p => (
                   <Link
                     key={p.slug}
                     href={`/mare/${p.slug}`}

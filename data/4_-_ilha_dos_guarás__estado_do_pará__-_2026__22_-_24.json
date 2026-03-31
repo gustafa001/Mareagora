@@ -1,15 +1,14 @@
 {
-  "porto": "4 - ILHA DOS GUARÁS (ESTADO DO PARÁ) - 2026  22 - 24",
-  "estado": "",
-  "lat": -0.58358,
-  "lon": -47.90025,
-  "fuso": "UTC-3",
+  "porto": "ILHA DOS GUARÁS",
+  "estado": "Pará",
+  "lat": "00° 35'.9 S",
+  "lon": "47° 54'.9 W",
+  "fuso": "UTC-03.0",
+  "nivel_medio": 2.74,
   "ano": 2026,
-  "total_dias": 364,
   "eventos": [
     {
       "data": "2026-01-01",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "00:29",
@@ -31,7 +30,6 @@
     },
     {
       "data": "2026-01-02",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "01:29",
@@ -53,7 +51,6 @@
     },
     {
       "data": "2026-01-03",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "02:17",
@@ -75,7 +72,6 @@
     },
     {
       "data": "2026-01-04",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "03:06",
@@ -97,7 +93,6 @@
     },
     {
       "data": "2026-01-05",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "03:57",
@@ -119,7 +114,6 @@
     },
     {
       "data": "2026-01-06",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "04:38",
@@ -141,7 +135,6 @@
     },
     {
       "data": "2026-01-07",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "05:08",
@@ -163,7 +156,6 @@
     },
     {
       "data": "2026-01-08",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "05:53",
@@ -181,7 +173,6 @@
     },
     {
       "data": "2026-01-09",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "00:14",
@@ -203,7 +194,6 @@
     },
     {
       "data": "2026-01-10",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "00:55",
@@ -225,7 +215,6 @@
     },
     {
       "data": "2026-01-11",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "01:34",
@@ -247,7 +236,6 @@
     },
     {
       "data": "2026-01-12",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "02:19",
@@ -269,7 +257,6 @@
     },
     {
       "data": "2026-01-13",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "03:31",
@@ -291,7 +278,6 @@
     },
     {
       "data": "2026-01-14",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "05:08",
@@ -309,7 +295,6 @@
     },
     {
       "data": "2026-01-15",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "00:02",
@@ -331,7 +316,6 @@
     },
     {
       "data": "2026-01-16",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "00:57",
@@ -353,7 +337,6 @@
     },
     {
       "data": "2026-01-17",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "01:42",
@@ -375,7 +358,6 @@
     },
     {
       "data": "2026-01-18",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "02:14",
@@ -397,7 +379,6 @@
     },
     {
       "data": "2026-01-19",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "02:57",
@@ -419,7 +400,6 @@
     },
     {
       "data": "2026-01-20",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "03:34",
@@ -441,7 +421,6 @@
     },
     {
       "data": "2026-01-21",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "04:01",
@@ -463,7 +442,6 @@
     },
     {
       "data": "2026-01-22",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "04:38",
@@ -485,7 +463,6 @@
     },
     {
       "data": "2026-01-23",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "05:12",
@@ -507,7 +484,6 @@
     },
     {
       "data": "2026-01-24",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "05:55",
@@ -525,7 +501,6 @@
     },
     {
       "data": "2026-01-25",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "00:31",
@@ -547,7 +522,6 @@
     },
     {
       "data": "2026-01-26",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "01:31",
@@ -569,7 +543,6 @@
     },
     {
       "data": "2026-01-27",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "02:36",
@@ -591,7 +564,6 @@
     },
     {
       "data": "2026-01-28",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "03:47",
@@ -613,7 +585,6 @@
     },
     {
       "data": "2026-01-29",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "05:12",
@@ -631,7 +602,6 @@
     },
     {
       "data": "2026-01-30",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "00:27",
@@ -653,7 +623,6 @@
     },
     {
       "data": "2026-01-31",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "01:19",
@@ -675,11 +644,14 @@
     },
     {
       "data": "2026-02-01",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "02:06",
           "altura_m": 0.14
+        },
+        {
+          "hora": "08:19",
+          "altura_m": 4.99
         },
         {
           "hora": "14:14",
@@ -693,7 +665,6 @@
     },
     {
       "data": "2026-02-02",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "02:57",
@@ -715,7 +686,6 @@
     },
     {
       "data": "2026-02-03",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "03:32",
@@ -737,7 +707,6 @@
     },
     {
       "data": "2026-02-04",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "04:06",
@@ -759,7 +728,6 @@
     },
     {
       "data": "2026-02-05",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "04:46",
@@ -781,7 +749,6 @@
     },
     {
       "data": "2026-02-06",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "05:06",
@@ -803,7 +770,6 @@
     },
     {
       "data": "2026-02-07",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "05:44",
@@ -816,20 +782,19 @@
         {
           "hora": "17:59",
           "altura_m": 0.86
-        },
-        {
-          "hora": "18:59",
-          "altura_m": 0.92
         }
       ]
     },
     {
       "data": "2026-02-08",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "00:02",
           "altura_m": 4.35
+        },
+        {
+          "hora": "06:10",
+          "altura_m": 1.0
         },
         {
           "hora": "12:12",
@@ -843,7 +808,6 @@
     },
     {
       "data": "2026-02-09",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "00:32",
@@ -865,7 +829,6 @@
     },
     {
       "data": "2026-02-10",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "01:12",
@@ -887,7 +850,6 @@
     },
     {
       "data": "2026-02-11",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "02:14",
@@ -909,7 +871,6 @@
     },
     {
       "data": "2026-02-12",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "03:47",
@@ -931,7 +892,6 @@
     },
     {
       "data": "2026-02-13",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "05:21",
@@ -949,7 +909,6 @@
     },
     {
       "data": "2026-02-14",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "00:23",
@@ -971,11 +930,14 @@
     },
     {
       "data": "2026-02-15",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "01:08",
           "altura_m": 1.19
+        },
+        {
+          "hora": "07:14",
+          "altura_m": 3.99
         },
         {
           "hora": "13:16",
@@ -989,7 +951,6 @@
     },
     {
       "data": "2026-02-16",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "01:59",
@@ -1011,15 +972,10 @@
     },
     {
       "data": "2026-02-17",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "02:40",
           "altura_m": 0.7
-        },
-        {
-          "hora": "08:19",
-          "altura_m": 4.99
         },
         {
           "hora": "08:32",
@@ -1037,7 +993,6 @@
     },
     {
       "data": "2026-02-18",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "03:08",
@@ -1059,7 +1014,6 @@
     },
     {
       "data": "2026-02-19",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "03:49",
@@ -1081,7 +1035,6 @@
     },
     {
       "data": "2026-02-20",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "04:21",
@@ -1103,7 +1056,6 @@
     },
     {
       "data": "2026-02-21",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "04:59",
@@ -1125,7 +1077,6 @@
     },
     {
       "data": "2026-02-22",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "05:46",
@@ -1143,7 +1094,6 @@
     },
     {
       "data": "2026-02-23",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "00:12",
@@ -1156,20 +1106,19 @@
         {
           "hora": "12:31",
           "altura_m": 4.49
+        },
+        {
+          "hora": "18:59",
+          "altura_m": 0.92
         }
       ]
     },
     {
       "data": "2026-02-24",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "01:06",
           "altura_m": 4.26
-        },
-        {
-          "hora": "06:10",
-          "altura_m": 1.0
         },
         {
           "hora": "07:14",
@@ -1187,7 +1136,6 @@
     },
     {
       "data": "2026-02-25",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "02:06",
@@ -1209,7 +1157,6 @@
     },
     {
       "data": "2026-02-26",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "03:27",
@@ -1231,7 +1178,6 @@
     },
     {
       "data": "2026-02-27",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "05:16",
@@ -1249,7 +1195,6 @@
     },
     {
       "data": "2026-02-28",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "00:14",
@@ -1266,16 +1211,11 @@
         {
           "hora": "18:46",
           "altura_m": 4.67
-        },
-        {
-          "hora": "07:14",
-          "altura_m": 3.99
         }
       ]
     },
     {
       "data": "2026-03-01",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "01:04",
@@ -1297,7 +1237,6 @@
     },
     {
       "data": "2026-03-02",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "01:53",
@@ -1319,7 +1258,6 @@
     },
     {
       "data": "2026-03-03",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "02:25",
@@ -1341,7 +1279,6 @@
     },
     {
       "data": "2026-03-04",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "03:04",
@@ -1363,7 +1300,6 @@
     },
     {
       "data": "2026-03-05",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "03:42",
@@ -1385,7 +1321,6 @@
     },
     {
       "data": "2026-03-06",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "04:04",
@@ -1407,7 +1342,6 @@
     },
     {
       "data": "2026-03-07",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "04:36",
@@ -1429,7 +1363,6 @@
     },
     {
       "data": "2026-03-08",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "05:02",
@@ -1451,7 +1384,6 @@
     },
     {
       "data": "2026-03-09",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "05:38",
@@ -1473,7 +1405,6 @@
     },
     {
       "data": "2026-03-10",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "06:14",
@@ -1491,7 +1422,6 @@
     },
     {
       "data": "2026-03-11",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "00:36",
@@ -1513,7 +1443,6 @@
     },
     {
       "data": "2026-03-12",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "01:44",
@@ -1535,7 +1464,6 @@
     },
     {
       "data": "2026-03-13",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "03:02",
@@ -1557,7 +1485,6 @@
     },
     {
       "data": "2026-03-14",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "04:16",
@@ -1579,7 +1506,6 @@
     },
     {
       "data": "2026-03-15",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "05:32",
@@ -1597,7 +1523,6 @@
     },
     {
       "data": "2026-03-16",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "00:49",
@@ -1619,7 +1544,6 @@
     },
     {
       "data": "2026-03-17",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "01:36",
@@ -1641,7 +1565,6 @@
     },
     {
       "data": "2026-03-18",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "02:08",
@@ -1663,7 +1586,6 @@
     },
     {
       "data": "2026-03-19",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "02:51",
@@ -1685,7 +1607,6 @@
     },
     {
       "data": "2026-03-20",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "03:25",
@@ -1707,7 +1628,6 @@
     },
     {
       "data": "2026-03-21",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "04:01",
@@ -1729,7 +1649,6 @@
     },
     {
       "data": "2026-03-22",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "04:46",
@@ -1751,7 +1670,6 @@
     },
     {
       "data": "2026-03-23",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "05:21",
@@ -1773,7 +1691,6 @@
     },
     {
       "data": "2026-03-24",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "06:04",
@@ -1791,7 +1708,6 @@
     },
     {
       "data": "2026-03-25",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "00:49",
@@ -1813,7 +1729,6 @@
     },
     {
       "data": "2026-03-26",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "01:53",
@@ -1835,7 +1750,6 @@
     },
     {
       "data": "2026-03-27",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "03:36",
@@ -1857,7 +1771,6 @@
     },
     {
       "data": "2026-03-28",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "05:02",
@@ -1879,7 +1792,6 @@
     },
     {
       "data": "2026-03-29",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "05:59",
@@ -1897,7 +1809,6 @@
     },
     {
       "data": "2026-03-30",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "00:44",
@@ -1919,7 +1830,6 @@
     },
     {
       "data": "2026-03-31",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "01:19",
@@ -1941,7 +1851,6 @@
     },
     {
       "data": "2026-04-01",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "02:01",
@@ -1963,11 +1872,14 @@
     },
     {
       "data": "2026-04-02",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "02:38",
           "altura_m": 0.31
+        },
+        {
+          "hora": "08:42",
+          "altura_m": 5.08
         },
         {
           "hora": "14:55",
@@ -1981,11 +1893,14 @@
     },
     {
       "data": "2026-04-03",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "03:04",
           "altura_m": 0.39
+        },
+        {
+          "hora": "09:12",
+          "altura_m": 5.01
         },
         {
           "hora": "15:25",
@@ -1999,11 +1914,14 @@
     },
     {
       "data": "2026-04-04",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "03:38",
           "altura_m": 0.54
+        },
+        {
+          "hora": "09:38",
+          "altura_m": 4.88
         },
         {
           "hora": "15:57",
@@ -2017,11 +1935,14 @@
     },
     {
       "data": "2026-04-05",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "04:02",
           "altura_m": 0.7
+        },
+        {
+          "hora": "09:51",
+          "altura_m": 4.75
         },
         {
           "hora": "16:29",
@@ -2035,7 +1956,6 @@
     },
     {
       "data": "2026-04-06",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "04:36",
@@ -2057,11 +1977,14 @@
     },
     {
       "data": "2026-04-07",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "05:08",
           "altura_m": 1.11
+        },
+        {
+          "hora": "10:51",
+          "altura_m": 4.48
         },
         {
           "hora": "17:36",
@@ -2075,7 +1998,6 @@
     },
     {
       "data": "2026-04-08",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "05:47",
@@ -2088,20 +2010,19 @@
         {
           "hora": "18:16",
           "altura_m": 1.35
-        },
-        {
-          "hora": "20:40",
-          "altura_m": 1.41
         }
       ]
     },
     {
       "data": "2026-04-09",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "00:14",
           "altura_m": 3.76
+        },
+        {
+          "hora": "06:40",
+          "altura_m": 1.56
         },
         {
           "hora": "12:32",
@@ -2115,11 +2036,14 @@
     },
     {
       "data": "2026-04-10",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "01:14",
           "altura_m": 3.57
+        },
+        {
+          "hora": "07:36",
+          "altura_m": 1.75
         },
         {
           "hora": "13:42",
@@ -2133,11 +2057,14 @@
     },
     {
       "data": "2026-04-11",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "02:19",
           "altura_m": 3.49
+        },
+        {
+          "hora": "08:34",
+          "altura_m": 1.85
         },
         {
           "hora": "14:51",
@@ -2151,11 +2078,14 @@
     },
     {
       "data": "2026-04-12",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "03:31",
           "altura_m": 3.55
+        },
+        {
+          "hora": "09:38",
+          "altura_m": 1.81
         },
         {
           "hora": "16:01",
@@ -2169,7 +2099,6 @@
     },
     {
       "data": "2026-04-13",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "04:51",
@@ -2182,20 +2111,19 @@
         {
           "hora": "17:14",
           "altura_m": 4.12
-        },
-        {
-          "hora": "19:14",
-          "altura_m": 4.76
         }
       ]
     },
     {
       "data": "2026-04-14",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "00:01",
           "altura_m": 1.36
+        },
+        {
+          "hora": "06:02",
+          "altura_m": 4.15
         },
         {
           "hora": "12:32",
@@ -2209,7 +2137,6 @@
     },
     {
       "data": "2026-04-15",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "00:57",
@@ -2231,7 +2158,6 @@
     },
     {
       "data": "2026-04-16",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "01:44",
@@ -2252,340 +2178,7 @@
       ]
     },
     {
-      "data": "2026-04-17",
-      "dia_semana": "FRI",
-      "mares": [
-        {
-          "hora": "02:17",
-          "altura_m": 0.37
-        },
-        {
-          "hora": "08:27",
-          "altura_m": 5.12
-        },
-        {
-          "hora": "14:47",
-          "altura_m": 0.11
-        },
-        {
-          "hora": "20:51",
-          "altura_m": 5.19
-        }
-      ]
-    },
-    {
-      "data": "2026-04-18",
-      "dia_semana": "SAT",
-      "mares": [
-        {
-          "hora": "02:59",
-          "altura_m": 0.22
-        },
-        {
-          "hora": "08:42",
-          "altura_m": 5.08
-        },
-        {
-          "hora": "09:06",
-          "altura_m": 5.22
-        },
-        {
-          "hora": "15:25",
-          "altura_m": 0.04
-        },
-        {
-          "hora": "21:32",
-          "altura_m": 5.16
-        }
-      ]
-    },
-    {
-      "data": "2026-04-19",
-      "dia_semana": "SUN",
-      "mares": [
-        {
-          "hora": "03:44",
-          "altura_m": 0.23
-        },
-        {
-          "hora": "09:12",
-          "altura_m": 5.01
-        },
-        {
-          "hora": "09:47",
-          "altura_m": 5.19
-        },
-        {
-          "hora": "16:04",
-          "altura_m": 0.08
-        },
-        {
-          "hora": "22:12",
-          "altura_m": 5.01
-        }
-      ]
-    },
-    {
-      "data": "2026-04-20",
-      "dia_semana": "MON",
-      "mares": [
-        {
-          "hora": "04:19",
-          "altura_m": 0.37
-        },
-        {
-          "hora": "09:38",
-          "altura_m": 4.88
-        },
-        {
-          "hora": "10:25",
-          "altura_m": 5.03
-        },
-        {
-          "hora": "16:53",
-          "altura_m": 0.27
-        },
-        {
-          "hora": "22:57",
-          "altura_m": 4.77
-        }
-      ]
-    },
-    {
-      "data": "2026-04-21",
-      "dia_semana": "TUE",
-      "mares": [
-        {
-          "hora": "05:02",
-          "altura_m": 0.59
-        },
-        {
-          "hora": "09:51",
-          "altura_m": 4.75
-        },
-        {
-          "hora": "11:06",
-          "altura_m": 4.79
-        },
-        {
-          "hora": "17:40",
-          "altura_m": 0.58
-        },
-        {
-          "hora": "23:44",
-          "altura_m": 4.46
-        }
-      ]
-    },
-    {
-      "data": "2026-04-22",
-      "dia_semana": "WED",
-      "mares": [
-        {
-          "hora": "05:55",
-          "altura_m": 0.9
-        },
-        {
-          "hora": "11:57",
-          "altura_m": 4.49
-        },
-        {
-          "hora": "18:25",
-          "altura_m": 0.93
-        }
-      ]
-    },
-    {
-      "data": "2026-04-23",
-      "dia_semana": "THU",
-      "mares": [
-        {
-          "hora": "00:42",
-          "altura_m": 4.16
-        },
-        {
-          "hora": "10:51",
-          "altura_m": 4.48
-        },
-        {
-          "hora": "06:51",
-          "altura_m": 1.22
-        },
-        {
-          "hora": "13:01",
-          "altura_m": 4.2
-        },
-        {
-          "hora": "19:21",
-          "altura_m": 1.23
-        }
-      ]
-    },
-    {
-      "data": "2026-04-24",
-      "dia_semana": "FRI",
-      "mares": [
-        {
-          "hora": "01:59",
-          "altura_m": 3.96
-        },
-        {
-          "hora": "07:53",
-          "altura_m": 1.48
-        },
-        {
-          "hora": "14:25",
-          "altura_m": 4.04
-        }
-      ]
-    },
-    {
-      "data": "2026-04-25",
-      "dia_semana": "SAT",
-      "mares": [
-        {
-          "hora": "03:19",
-          "altura_m": 3.97
-        },
-        {
-          "hora": "06:40",
-          "altura_m": 1.56
-        },
-        {
-          "hora": "09:02",
-          "altura_m": 1.57
-        },
-        {
-          "hora": "15:44",
-          "altura_m": 4.08
-        },
-        {
-          "hora": "22:19",
-          "altura_m": 1.34
-        }
-      ]
-    },
-    {
-      "data": "2026-04-26",
-      "dia_semana": "SUN",
-      "mares": [
-        {
-          "hora": "04:25",
-          "altura_m": 4.13
-        },
-        {
-          "hora": "07:36",
-          "altura_m": 1.75
-        },
-        {
-          "hora": "10:25",
-          "altura_m": 1.43
-        },
-        {
-          "hora": "16:47",
-          "altura_m": 4.25
-        },
-        {
-          "hora": "23:17",
-          "altura_m": 1.13
-        }
-      ]
-    },
-    {
-      "data": "2026-04-27",
-      "dia_semana": "MON",
-      "mares": [
-        {
-          "hora": "05:19",
-          "altura_m": 4.34
-        },
-        {
-          "hora": "08:34",
-          "altura_m": 1.85
-        },
-        {
-          "hora": "11:31",
-          "altura_m": 1.15
-        },
-        {
-          "hora": "17:40",
-          "altura_m": 4.45
-        }
-      ]
-    },
-    {
-      "data": "2026-04-28",
-      "dia_semana": "TUE",
-      "mares": [
-        {
-          "hora": "00:06",
-          "altura_m": 0.92
-        },
-        {
-          "hora": "09:38",
-          "altura_m": 1.81
-        },
-        {
-          "hora": "06:08",
-          "altura_m": 4.56
-        },
-        {
-          "hora": "12:21",
-          "altura_m": 0.86
-        },
-        {
-          "hora": "18:29",
-          "altura_m": 4.63
-        }
-      ]
-    },
-    {
-      "data": "2026-04-29",
-      "dia_semana": "WED",
-      "mares": [
-        {
-          "hora": "00:55",
-          "altura_m": 0.76
-        },
-        {
-          "hora": "06:53",
-          "altura_m": 4.74
-        },
-        {
-          "hora": "13:06",
-          "altura_m": 0.61
-        }
-      ]
-    },
-    {
-      "data": "2026-04-30",
-      "dia_semana": "THU",
-      "mares": [
-        {
-          "hora": "01:34",
-          "altura_m": 0.69
-        },
-        {
-          "hora": "06:02",
-          "altura_m": 4.15
-        },
-        {
-          "hora": "07:34",
-          "altura_m": 4.85
-        },
-        {
-          "hora": "13:55",
-          "altura_m": 0.47
-        },
-        {
-          "hora": "19:59",
-          "altura_m": 4.8
-        }
-      ]
-    },
-    {
       "data": "2026-05-01",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "02:04",
@@ -2607,7 +2200,6 @@
     },
     {
       "data": "2026-05-02",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "02:42",
@@ -2629,7 +2221,6 @@
     },
     {
       "data": "2026-05-03",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "03:06",
@@ -2651,7 +2242,6 @@
     },
     {
       "data": "2026-05-04",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "03:44",
@@ -2673,7 +2263,6 @@
     },
     {
       "data": "2026-05-05",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "04:16",
@@ -2695,7 +2284,6 @@
     },
     {
       "data": "2026-05-06",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "04:51",
@@ -2717,7 +2305,6 @@
     },
     {
       "data": "2026-05-07",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "05:36",
@@ -2735,7 +2322,6 @@
     },
     {
       "data": "2026-05-08",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "00:01",
@@ -2757,7 +2343,6 @@
     },
     {
       "data": "2026-05-09",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "00:57",
@@ -2779,7 +2364,6 @@
     },
     {
       "data": "2026-05-10",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "01:53",
@@ -2801,7 +2385,6 @@
     },
     {
       "data": "2026-05-11",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "02:57",
@@ -2823,7 +2406,6 @@
     },
     {
       "data": "2026-05-12",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "04:10",
@@ -2845,7 +2427,6 @@
     },
     {
       "data": "2026-05-13",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "05:23",
@@ -2863,7 +2444,6 @@
     },
     {
       "data": "2026-05-14",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "00:12",
@@ -2885,7 +2465,6 @@
     },
     {
       "data": "2026-05-15",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "01:01",
@@ -2907,7 +2486,6 @@
     },
     {
       "data": "2026-05-16",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "01:51",
@@ -2929,7 +2507,6 @@
     },
     {
       "data": "2026-05-17",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "02:36",
@@ -2951,7 +2528,6 @@
     },
     {
       "data": "2026-05-18",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "03:17",
@@ -2973,7 +2549,6 @@
     },
     {
       "data": "2026-05-19",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "04:04",
@@ -2995,7 +2570,6 @@
     },
     {
       "data": "2026-05-20",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "04:57",
@@ -3017,7 +2591,6 @@
     },
     {
       "data": "2026-05-21",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "05:49",
@@ -3035,7 +2608,6 @@
     },
     {
       "data": "2026-05-22",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "00:46",
@@ -3057,7 +2629,6 @@
     },
     {
       "data": "2026-05-23",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "01:46",
@@ -3079,7 +2650,6 @@
     },
     {
       "data": "2026-05-24",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "02:42",
@@ -3101,7 +2671,6 @@
     },
     {
       "data": "2026-05-25",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "03:34",
@@ -3123,7 +2692,6 @@
     },
     {
       "data": "2026-05-26",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "04:29",
@@ -3145,7 +2713,6 @@
     },
     {
       "data": "2026-05-27",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "05:25",
@@ -3163,7 +2730,6 @@
     },
     {
       "data": "2026-05-28",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "00:17",
@@ -3185,7 +2751,6 @@
     },
     {
       "data": "2026-05-29",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "00:59",
@@ -3207,7 +2772,6 @@
     },
     {
       "data": "2026-05-30",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "01:42",
@@ -3229,7 +2793,6 @@
     },
     {
       "data": "2026-05-31",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "02:10",
@@ -3251,7 +2814,6 @@
     },
     {
       "data": "2026-06-01",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "02:51",
@@ -3273,11 +2835,14 @@
     },
     {
       "data": "2026-06-02",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "03:23",
           "altura_m": 1.07
+        },
+        {
+          "hora": "09:12",
+          "altura_m": 4.55
         },
         {
           "hora": "15:57",
@@ -3291,7 +2856,6 @@
     },
     {
       "data": "2026-06-03",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "03:59",
@@ -3313,11 +2877,14 @@
     },
     {
       "data": "2026-06-04",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "04:38",
           "altura_m": 1.19
+        },
+        {
+          "hora": "10:19",
+          "altura_m": 4.47
         },
         {
           "hora": "16:57",
@@ -3331,11 +2898,14 @@
     },
     {
       "data": "2026-06-05",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "05:08",
           "altura_m": 1.26
+        },
+        {
+          "hora": "11:02",
+          "altura_m": 4.4
         },
         {
           "hora": "17:36",
@@ -3349,29 +2919,31 @@
     },
     {
       "data": "2026-06-06",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "05:51",
           "altura_m": 1.31
         },
         {
-          "hora": "18:10",
-          "altura_m": 1.21
+          "hora": "11:53",
+          "altura_m": 4.3
         },
         {
-          "hora": "20:06",
-          "altura_m": 1.26
+          "hora": "18:10",
+          "altura_m": 1.21
         }
       ]
     },
     {
       "data": "2026-06-07",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "00:21",
           "altura_m": 3.96
+        },
+        {
+          "hora": "06:38",
+          "altura_m": 1.36
         },
         {
           "hora": "12:46",
@@ -3385,7 +2957,6 @@
     },
     {
       "data": "2026-06-08",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "01:14",
@@ -3407,11 +2978,14 @@
     },
     {
       "data": "2026-06-09",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "02:19",
           "altura_m": 3.99
+        },
+        {
+          "hora": "08:31",
+          "altura_m": 1.42
         },
         {
           "hora": "14:55",
@@ -3425,7 +2999,6 @@
     },
     {
       "data": "2026-06-10",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "03:38",
@@ -3447,11 +3020,14 @@
     },
     {
       "data": "2026-06-11",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "04:49",
           "altura_m": 4.37
+        },
+        {
+          "hora": "11:04",
+          "altura_m": 1.09
         },
         {
           "hora": "17:17",
@@ -3465,29 +3041,31 @@
     },
     {
       "data": "2026-06-12",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "05:49",
           "altura_m": 4.65
         },
         {
-          "hora": "18:17",
-          "altura_m": 4.62
+          "hora": "12:14",
+          "altura_m": 0.77
         },
         {
-          "hora": "19:55",
-          "altura_m": 4.17
+          "hora": "18:17",
+          "altura_m": 4.62
         }
       ]
     },
     {
       "data": "2026-06-13",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "00:27",
           "altura_m": 0.81
+        },
+        {
+          "hora": "06:44",
+          "altura_m": 4.9
         },
         {
           "hora": "13:10",
@@ -3501,11 +3079,14 @@
     },
     {
       "data": "2026-06-14",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "01:23",
           "altura_m": 0.59
+        },
+        {
+          "hora": "07:38",
+          "altura_m": 5.07
         },
         {
           "hora": "14:02",
@@ -3519,7 +3100,6 @@
     },
     {
       "data": "2026-06-15",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "02:14",
@@ -3541,7 +3121,6 @@
     },
     {
       "data": "2026-06-16",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "03:04",
@@ -3563,7 +3142,6 @@
     },
     {
       "data": "2026-06-17",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "03:59",
@@ -3585,15 +3163,10 @@
     },
     {
       "data": "2026-06-18",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "04:49",
           "altura_m": 0.48
-        },
-        {
-          "hora": "09:12",
-          "altura_m": 4.55
         },
         {
           "hora": "11:02",
@@ -3611,7 +3184,6 @@
     },
     {
       "data": "2026-06-19",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "05:34",
@@ -3629,15 +3201,10 @@
     },
     {
       "data": "2026-06-20",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "00:23",
           "altura_m": 4.58
-        },
-        {
-          "hora": "10:19",
-          "altura_m": 4.47
         },
         {
           "hora": "06:12",
@@ -3655,15 +3222,10 @@
     },
     {
       "data": "2026-06-21",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "01:06",
           "altura_m": 4.43
-        },
-        {
-          "hora": "11:02",
-          "altura_m": 4.4
         },
         {
           "hora": "07:02",
@@ -3681,15 +3243,10 @@
     },
     {
       "data": "2026-06-22",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "01:55",
           "altura_m": 4.28
-        },
-        {
-          "hora": "11:53",
-          "altura_m": 4.3
         },
         {
           "hora": "07:51",
@@ -3698,20 +3255,19 @@
         {
           "hora": "14:08",
           "altura_m": 4.2
+        },
+        {
+          "hora": "20:06",
+          "altura_m": 1.26
         }
       ]
     },
     {
       "data": "2026-06-23",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "02:42",
           "altura_m": 4.17
-        },
-        {
-          "hora": "06:38",
-          "altura_m": 1.36
         },
         {
           "hora": "08:32",
@@ -3729,7 +3285,6 @@
     },
     {
       "data": "2026-06-24",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "03:32",
@@ -3751,15 +3306,10 @@
     },
     {
       "data": "2026-06-25",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "04:36",
           "altura_m": 4.11
-        },
-        {
-          "hora": "08:31",
-          "altura_m": 1.42
         },
         {
           "hora": "11:29",
@@ -3777,7 +3327,6 @@
     },
     {
       "data": "2026-06-26",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "05:42",
@@ -3795,15 +3344,10 @@
     },
     {
       "data": "2026-06-27",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "00:27",
           "altura_m": 1.48
-        },
-        {
-          "hora": "11:04",
-          "altura_m": 1.09
         },
         {
           "hora": "06:36",
@@ -3821,15 +3365,10 @@
     },
     {
       "data": "2026-06-28",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "01:04",
           "altura_m": 1.35
-        },
-        {
-          "hora": "12:14",
-          "altura_m": 0.77
         },
         {
           "hora": "07:17",
@@ -3838,20 +3377,19 @@
         {
           "hora": "13:49",
           "altura_m": 0.92
+        },
+        {
+          "hora": "19:55",
+          "altura_m": 4.17
         }
       ]
     },
     {
       "data": "2026-06-29",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "01:51",
           "altura_m": 1.22
-        },
-        {
-          "hora": "06:44",
-          "altura_m": 4.9
         },
         {
           "hora": "07:55",
@@ -3869,15 +3407,10 @@
     },
     {
       "data": "2026-06-30",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "02:27",
           "altura_m": 1.15
-        },
-        {
-          "hora": "07:38",
-          "altura_m": 5.07
         },
         {
           "hora": "08:27",
@@ -3895,7 +3428,6 @@
     },
     {
       "data": "2026-07-01",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "03:02",
@@ -3904,13 +3436,192 @@
         {
           "hora": "08:55",
           "altura_m": 4.55
+        },
+        {
+          "hora": "15:38",
+          "altura_m": 0.84
+        },
+        {
+          "hora": "21:25",
+          "altura_m": 4.18
         }
       ]
     },
     {
       "data": "2026-07-02",
-      "dia_semana": "THU",
       "mares": [
+        {
+          "hora": "03:44",
+          "altura_m": 1.07
+        },
+        {
+          "hora": "09:25",
+          "altura_m": 4.57
+        },
+        {
+          "hora": "16:04",
+          "altura_m": 0.87
+        },
+        {
+          "hora": "22:01",
+          "altura_m": 4.2
+        }
+      ]
+    },
+    {
+      "data": "2026-07-03",
+      "mares": [
+        {
+          "hora": "04:12",
+          "altura_m": 1.08
+        },
+        {
+          "hora": "10:04",
+          "altura_m": 4.58
+        },
+        {
+          "hora": "16:40",
+          "altura_m": 0.92
+        },
+        {
+          "hora": "22:34",
+          "altura_m": 4.21
+        }
+      ]
+    },
+    {
+      "data": "2026-07-04",
+      "mares": [
+        {
+          "hora": "04:49",
+          "altura_m": 1.07
+        },
+        {
+          "hora": "10:47",
+          "altura_m": 4.53
+        },
+        {
+          "hora": "17:10",
+          "altura_m": 0.96
+        },
+        {
+          "hora": "23:10",
+          "altura_m": 4.22
+        }
+      ]
+    },
+    {
+      "data": "2026-07-05",
+      "mares": [
+        {
+          "hora": "05:29",
+          "altura_m": 1.09
+        },
+        {
+          "hora": "11:29",
+          "altura_m": 4.44
+        },
+        {
+          "hora": "17:47",
+          "altura_m": 1.0
+        },
+        {
+          "hora": "23:57",
+          "altura_m": 4.21
+        }
+      ]
+    },
+    {
+      "data": "2026-07-06",
+      "mares": [
+        {
+          "hora": "06:12",
+          "altura_m": 1.14
+        },
+        {
+          "hora": "12:17",
+          "altura_m": 4.32
+        },
+        {
+          "hora": "18:36",
+          "altura_m": 1.08
+        }
+      ]
+    },
+    {
+      "data": "2026-07-07",
+      "mares": [
+        {
+          "hora": "00:47",
+          "altura_m": 4.19
+        },
+        {
+          "hora": "07:02",
+          "altura_m": 1.2
+        },
+        {
+          "hora": "13:17",
+          "altura_m": 4.2
+        },
+        {
+          "hora": "19:34",
+          "altura_m": 1.17
+        }
+      ]
+    },
+    {
+      "data": "2026-07-08",
+      "mares": [
+        {
+          "hora": "01:51",
+          "altura_m": 4.18
+        },
+        {
+          "hora": "08:02",
+          "altura_m": 1.24
+        },
+        {
+          "hora": "14:29",
+          "altura_m": 4.12
+        },
+        {
+          "hora": "20:36",
+          "altura_m": 1.24
+        }
+      ]
+    },
+    {
+      "data": "2026-07-09",
+      "mares": [
+        {
+          "hora": "02:59",
+          "altura_m": 4.23
+        },
+        {
+          "hora": "09:08",
+          "altura_m": 1.24
+        },
+        {
+          "hora": "15:40",
+          "altura_m": 4.13
+        },
+        {
+          "hora": "21:42",
+          "altura_m": 1.25
+        }
+      ]
+    },
+    {
+      "data": "2026-07-10",
+      "mares": [
+        {
+          "hora": "04:06",
+          "altura_m": 4.35
+        },
+        {
+          "hora": "10:19",
+          "altura_m": 1.16
+        },
         {
           "hora": "16:49",
           "altura_m": 4.23
@@ -3922,47 +3633,16 @@
       ]
     },
     {
-      "data": "2026-07-03",
-      "dia_semana": "FRI",
+      "data": "2026-07-11",
       "mares": [
         {
-          "hora": "04:12",
-          "altura_m": 1.08
+          "hora": "05:12",
+          "altura_m": 4.52
         },
         {
-          "hora": "10:04",
-          "altura_m": 4.58
-        }
-      ]
-    },
-    {
-      "data": "2026-07-04",
-      "dia_semana": "SAT",
-      "mares": [
-        {
-          "hora": "13:17",
-          "altura_m": 4.2
-        }
-      ]
-    },
-    {
-      "data": "2026-07-05",
-      "dia_semana": "SUN",
-      "mares": [
-        {
-          "hora": "05:29",
-          "altura_m": 1.09
+          "hora": "11:46",
+          "altura_m": 0.95
         },
-        {
-          "hora": "11:29",
-          "altura_m": 4.44
-        }
-      ]
-    },
-    {
-      "data": "2026-07-06",
-      "dia_semana": "MON",
-      "mares": [
         {
           "hora": "17:57",
           "altura_m": 4.4
@@ -3970,74 +3650,7 @@
       ]
     },
     {
-      "data": "2026-07-07",
-      "dia_semana": "TUE",
-      "mares": [
-        {
-          "hora": "00:47",
-          "altura_m": 4.19
-        },
-        {
-          "hora": "07:02",
-          "altura_m": 1.2
-        }
-      ]
-    },
-    {
-      "data": "2026-07-08",
-      "dia_semana": "WED",
-      "mares": [
-        {
-          "hora": "01:51",
-          "altura_m": 4.18
-        },
-        {
-          "hora": "08:02",
-          "altura_m": 1.24
-        }
-      ]
-    },
-    {
-      "data": "2026-07-09",
-      "dia_semana": "THU",
-      "mares": [
-        {
-          "hora": "02:59",
-          "altura_m": 4.23
-        },
-        {
-          "hora": "09:08",
-          "altura_m": 1.24
-        }
-      ]
-    },
-    {
-      "data": "2026-07-10",
-      "dia_semana": "FRI",
-      "mares": [
-        {
-          "hora": "04:06",
-          "altura_m": 4.35
-        },
-        {
-          "hora": "10:19",
-          "altura_m": 1.16
-        }
-      ]
-    },
-    {
-      "data": "2026-07-11",
-      "dia_semana": "SAT",
-      "mares": [
-        {
-          "hora": "19:27",
-          "altura_m": 4.0
-        }
-      ]
-    },
-    {
       "data": "2026-07-12",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "00:01",
@@ -4046,12 +3659,19 @@
         {
           "hora": "06:21",
           "altura_m": 4.74
+        },
+        {
+          "hora": "13:01",
+          "altura_m": 0.6
+        },
+        {
+          "hora": "19:04",
+          "altura_m": 4.63
         }
       ]
     },
     {
       "data": "2026-07-13",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "01:06",
@@ -4060,12 +3680,19 @@
         {
           "hora": "07:29",
           "altura_m": 4.98
+        },
+        {
+          "hora": "13:59",
+          "altura_m": 0.27
+        },
+        {
+          "hora": "20:06",
+          "altura_m": 4.87
         }
       ]
     },
     {
       "data": "2026-07-14",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "02:02",
@@ -4074,12 +3701,19 @@
         {
           "hora": "08:25",
           "altura_m": 5.18
+        },
+        {
+          "hora": "14:51",
+          "altura_m": 0.04
+        },
+        {
+          "hora": "21:01",
+          "altura_m": 5.06
         }
       ]
     },
     {
       "data": "2026-07-15",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "02:59",
@@ -4101,37 +3735,69 @@
     },
     {
       "data": "2026-07-16",
-      "dia_semana": "THU",
       "mares": [
         {
-          "hora": "04:44",
-          "altura_m": 0.25
+          "hora": "03:47",
+          "altura_m": 0.2
+        },
+        {
+          "hora": "10:01",
+          "altura_m": 5.31
+        },
+        {
+          "hora": "16:10",
+          "altura_m": -0.03
+        },
+        {
+          "hora": "22:31",
+          "altura_m": 5.09
         }
       ]
     },
     {
       "data": "2026-07-17",
-      "dia_semana": "FRI",
       "mares": [
         {
-          "hora": "19:04",
-          "altura_m": 4.63
+          "hora": "04:25",
+          "altura_m": 0.26
+        },
+        {
+          "hora": "10:46",
+          "altura_m": 5.2
+        },
+        {
+          "hora": "16:59",
+          "altura_m": 0.12
+        },
+        {
+          "hora": "23:08",
+          "altura_m": 4.97
         }
       ]
     },
     {
       "data": "2026-07-18",
-      "dia_semana": "SAT",
       "mares": [
         {
-          "hora": "21:01",
-          "altura_m": 5.06
+          "hora": "05:04",
+          "altura_m": 0.38
+        },
+        {
+          "hora": "11:21",
+          "altura_m": 4.99
+        },
+        {
+          "hora": "17:34",
+          "altura_m": 0.41
+        },
+        {
+          "hora": "23:49",
+          "altura_m": 4.78
         }
       ]
     },
     {
       "data": "2026-07-19",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "05:51",
@@ -4149,17 +3815,27 @@
     },
     {
       "data": "2026-07-20",
-      "dia_semana": "MON",
       "mares": [
         {
-          "hora": "18:36",
-          "altura_m": 1.08
+          "hora": "00:21",
+          "altura_m": 4.56
+        },
+        {
+          "hora": "06:23",
+          "altura_m": 0.86
+        },
+        {
+          "hora": "12:42",
+          "altura_m": 4.45
+        },
+        {
+          "hora": "18:46",
+          "altura_m": 0.96
         }
       ]
     },
     {
       "data": "2026-07-21",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "01:01",
@@ -4181,7 +3857,6 @@
     },
     {
       "data": "2026-07-22",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "01:40",
@@ -4194,12 +3869,15 @@
         {
           "hora": "14:06",
           "altura_m": 3.9
+        },
+        {
+          "hora": "20:01",
+          "altura_m": 1.45
         }
       ]
     },
     {
       "data": "2026-07-23",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "02:23",
@@ -4221,7 +3899,6 @@
     },
     {
       "data": "2026-07-24",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "03:31",
@@ -4243,7 +3920,6 @@
     },
     {
       "data": "2026-07-25",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "04:53",
@@ -4265,7 +3941,6 @@
     },
     {
       "data": "2026-07-26",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "05:57",
@@ -4283,7 +3958,6 @@
     },
     {
       "data": "2026-07-27",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "00:36",
@@ -4296,12 +3970,15 @@
         {
           "hora": "13:16",
           "altura_m": 1.13
+        },
+        {
+          "hora": "19:27",
+          "altura_m": 4.0
         }
       ]
     },
     {
       "data": "2026-07-28",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "01:19",
@@ -4323,7 +4000,6 @@
     },
     {
       "data": "2026-07-29",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "02:02",
@@ -4345,7 +4021,6 @@
     },
     {
       "data": "2026-07-30",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "02:47",
@@ -4367,7 +4042,6 @@
     },
     {
       "data": "2026-07-31",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "03:21",
@@ -4389,11 +4063,14 @@
     },
     {
       "data": "2026-08-01",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "03:57",
           "altura_m": 0.86
+        },
+        {
+          "hora": "09:51",
+          "altura_m": 4.7
         },
         {
           "hora": "16:19",
@@ -4407,11 +4084,14 @@
     },
     {
       "data": "2026-08-02",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "04:34",
           "altura_m": 0.84
+        },
+        {
+          "hora": "10:29",
+          "altura_m": 4.66
         },
         {
           "hora": "16:51",
@@ -4425,7 +4105,6 @@
     },
     {
       "data": "2026-08-03",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "05:12",
@@ -4442,34 +4121,28 @@
         {
           "hora": "23:36",
           "altura_m": 4.44
-        },
-        {
-          "hora": "18:38",
-          "altura_m": 1.24
         }
       ]
     },
     {
       "data": "2026-08-04",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "05:57",
           "altura_m": 0.92
         },
         {
-          "hora": "18:17",
-          "altura_m": 0.94
+          "hora": "12:01",
+          "altura_m": 4.43
         },
         {
-          "hora": "19:16",
-          "altura_m": 1.53
+          "hora": "18:17",
+          "altura_m": 0.94
         }
       ]
     },
     {
       "data": "2026-08-05",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "00:25",
@@ -4491,11 +4164,14 @@
     },
     {
       "data": "2026-08-06",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "01:21",
           "altura_m": 4.29
+        },
+        {
+          "hora": "07:49",
+          "altura_m": 1.16
         },
         {
           "hora": "14:01",
@@ -4504,20 +4180,19 @@
         {
           "hora": "20:02",
           "altura_m": 1.22
-        },
-        {
-          "hora": "21:16",
-          "altura_m": 1.93
         }
       ]
     },
     {
       "data": "2026-08-07",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "02:23",
           "altura_m": 4.22
+        },
+        {
+          "hora": "08:51",
+          "altura_m": 1.28
         },
         {
           "hora": "15:06",
@@ -4531,11 +4206,14 @@
     },
     {
       "data": "2026-08-08",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "03:36",
           "altura_m": 4.21
+        },
+        {
+          "hora": "10:01",
+          "altura_m": 1.32
         },
         {
           "hora": "16:27",
@@ -4549,11 +4227,14 @@
     },
     {
       "data": "2026-08-09",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "04:59",
           "altura_m": 4.33
+        },
+        {
+          "hora": "11:47",
+          "altura_m": 1.09
         },
         {
           "hora": "17:55",
@@ -4567,7 +4248,6 @@
     },
     {
       "data": "2026-08-10",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "06:19",
@@ -4580,20 +4260,19 @@
         {
           "hora": "19:01",
           "altura_m": 4.63
-        },
-        {
-          "hora": "19:36",
-          "altura_m": 4.18
         }
       ]
     },
     {
       "data": "2026-08-11",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "01:01",
           "altura_m": 0.74
+        },
+        {
+          "hora": "07:19",
+          "altura_m": 4.99
         },
         {
           "hora": "13:49",
@@ -4602,16 +4281,11 @@
         {
           "hora": "19:57",
           "altura_m": 4.98
-        },
-        {
-          "hora": "20:14",
-          "altura_m": 4.39
         }
       ]
     },
     {
       "data": "2026-08-12",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "01:57",
@@ -4633,11 +4307,14 @@
     },
     {
       "data": "2026-08-13",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "02:44",
           "altura_m": 0.13
+        },
+        {
+          "hora": "08:57",
+          "altura_m": 5.43
         },
         {
           "hora": "15:06",
@@ -4651,11 +4328,14 @@
     },
     {
       "data": "2026-08-14",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "03:17",
           "altura_m": 0.03
+        },
+        {
+          "hora": "09:38",
+          "altura_m": 5.42
         },
         {
           "hora": "15:53",
@@ -4669,7 +4349,6 @@
     },
     {
       "data": "2026-08-15",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "04:02",
@@ -4686,6 +4365,15 @@
         {
           "hora": "22:34",
           "altura_m": 5.08
+        }
+      ]
+    },
+    {
+      "data": "2026-08-16",
+      "mares": [
+        {
+          "hora": "04:44",
+          "altura_m": 0.25
         },
         {
           "hora": "10:49",
@@ -4702,350 +4390,7 @@
       ]
     },
     {
-      "data": "2026-08-17",
-      "dia_semana": "MON",
-      "mares": [
-        {
-          "hora": "05:10",
-          "altura_m": 0.49
-        },
-        {
-          "hora": "09:51",
-          "altura_m": 4.7
-        },
-        {
-          "hora": "11:19",
-          "altura_m": 4.75
-        },
-        {
-          "hora": "17:25",
-          "altura_m": 0.68
-        },
-        {
-          "hora": "23:34",
-          "altura_m": 4.62
-        }
-      ]
-    },
-    {
-      "data": "2026-08-18",
-      "dia_semana": "TUE",
-      "mares": [
-        {
-          "hora": "05:49",
-          "altura_m": 0.76
-        },
-        {
-          "hora": "10:29",
-          "altura_m": 4.66
-        },
-        {
-          "hora": "11:55",
-          "altura_m": 4.43
-        },
-        {
-          "hora": "17:59",
-          "altura_m": 0.94
-        }
-      ]
-    },
-    {
-      "data": "2026-08-19",
-      "dia_semana": "WED",
-      "mares": [
-        {
-          "hora": "00:02",
-          "altura_m": 4.39
-        },
-        {
-          "hora": "06:19",
-          "altura_m": 1.05
-        },
-        {
-          "hora": "12:25",
-          "altura_m": 4.1
-        }
-      ]
-    },
-    {
-      "data": "2026-08-20",
-      "dia_semana": "THU",
-      "mares": [
-        {
-          "hora": "00:32",
-          "altura_m": 4.17
-        },
-        {
-          "hora": "12:01",
-          "altura_m": 4.43
-        },
-        {
-          "hora": "07:01",
-          "altura_m": 1.33
-        },
-        {
-          "hora": "13:06",
-          "altura_m": 3.79
-        }
-      ]
-    },
-    {
-      "data": "2026-08-21",
-      "dia_semana": "FRI",
-      "mares": [
-        {
-          "hora": "01:14",
-          "altura_m": 3.96
-        },
-        {
-          "hora": "07:55",
-          "altura_m": 1.6
-        },
-        {
-          "hora": "14:08",
-          "altura_m": 3.53
-        },
-        {
-          "hora": "20:08",
-          "altura_m": 1.78
-        }
-      ]
-    },
-    {
-      "data": "2026-08-22",
-      "dia_semana": "SAT",
-      "mares": [
-        {
-          "hora": "02:17",
-          "altura_m": 3.78
-        },
-        {
-          "hora": "07:49",
-          "altura_m": 1.16
-        },
-        {
-          "hora": "09:02",
-          "altura_m": 1.79
-        },
-        {
-          "hora": "15:44",
-          "altura_m": 3.41
-        }
-      ]
-    },
-    {
-      "data": "2026-08-23",
-      "dia_semana": "SUN",
-      "mares": [
-        {
-          "hora": "03:47",
-          "altura_m": 3.74
-        },
-        {
-          "hora": "08:51",
-          "altura_m": 1.28
-        },
-        {
-          "hora": "10:31",
-          "altura_m": 1.8
-        },
-        {
-          "hora": "17:04",
-          "altura_m": 3.5
-        },
-        {
-          "hora": "22:38",
-          "altura_m": 1.9
-        }
-      ]
-    },
-    {
-      "data": "2026-08-24",
-      "dia_semana": "MON",
-      "mares": [
-        {
-          "hora": "05:10",
-          "altura_m": 3.87
-        },
-        {
-          "hora": "10:01",
-          "altura_m": 1.32
-        },
-        {
-          "hora": "11:59",
-          "altura_m": 1.57
-        },
-        {
-          "hora": "18:08",
-          "altura_m": 3.7
-        },
-        {
-          "hora": "23:57",
-          "altura_m": 1.68
-        }
-      ]
-    },
-    {
-      "data": "2026-08-25",
-      "dia_semana": "TUE",
-      "mares": [
-        {
-          "hora": "06:10",
-          "altura_m": 4.1
-        },
-        {
-          "hora": "11:47",
-          "altura_m": 1.09
-        },
-        {
-          "hora": "12:55",
-          "altura_m": 1.28
-        },
-        {
-          "hora": "18:55",
-          "altura_m": 3.94
-        }
-      ]
-    },
-    {
-      "data": "2026-08-26",
-      "dia_semana": "WED",
-      "mares": [
-        {
-          "hora": "00:57",
-          "altura_m": 1.36
-        },
-        {
-          "hora": "06:57",
-          "altura_m": 4.34
-        },
-        {
-          "hora": "13:40",
-          "altura_m": 1.02
-        }
-      ]
-    },
-    {
-      "data": "2026-08-27",
-      "dia_semana": "THU",
-      "mares": [
-        {
-          "hora": "01:47",
-          "altura_m": 1.07
-        },
-        {
-          "hora": "07:19",
-          "altura_m": 4.99
-        },
-        {
-          "hora": "07:40",
-          "altura_m": 4.56
-        },
-        {
-          "hora": "14:12",
-          "altura_m": 0.81
-        }
-      ]
-    },
-    {
-      "data": "2026-08-28",
-      "dia_semana": "FRI",
-      "mares": [
-        {
-          "hora": "02:29",
-          "altura_m": 0.84
-        },
-        {
-          "hora": "08:21",
-          "altura_m": 4.74
-        },
-        {
-          "hora": "14:55",
-          "altura_m": 0.66
-        },
-        {
-          "hora": "20:49",
-          "altura_m": 4.56
-        }
-      ]
-    },
-    {
-      "data": "2026-08-29",
-      "dia_semana": "SAT",
-      "mares": [
-        {
-          "hora": "03:04",
-          "altura_m": 0.67
-        },
-        {
-          "hora": "08:57",
-          "altura_m": 5.43
-        },
-        {
-          "hora": "09:01",
-          "altura_m": 4.84
-        },
-        {
-          "hora": "15:29",
-          "altura_m": 0.6
-        },
-        {
-          "hora": "21:23",
-          "altura_m": 4.67
-        }
-      ]
-    },
-    {
-      "data": "2026-08-30",
-      "dia_semana": "SUN",
-      "mares": [
-        {
-          "hora": "03:46",
-          "altura_m": 0.57
-        },
-        {
-          "hora": "09:38",
-          "altura_m": 5.42
-        },
-        {
-          "hora": "09:40",
-          "altura_m": 4.86
-        },
-        {
-          "hora": "15:59",
-          "altura_m": 0.57
-        },
-        {
-          "hora": "22:01",
-          "altura_m": 4.73
-        }
-      ]
-    },
-    {
-      "data": "2026-08-31",
-      "dia_semana": "MON",
-      "mares": [
-        {
-          "hora": "04:19",
-          "altura_m": 0.57
-        },
-        {
-          "hora": "10:19",
-          "altura_m": 4.81
-        },
-        {
-          "hora": "16:38",
-          "altura_m": 0.59
-        },
-        {
-          "hora": "22:38",
-          "altura_m": 4.71
-        }
-      ]
-    },
-    {
       "data": "2026-09-01",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "04:57",
@@ -5067,7 +4412,6 @@
     },
     {
       "data": "2026-09-02",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "05:44",
@@ -5089,7 +4433,6 @@
     },
     {
       "data": "2026-09-03",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "06:29",
@@ -5107,7 +4450,6 @@
     },
     {
       "data": "2026-09-04",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "00:53",
@@ -5129,7 +4471,6 @@
     },
     {
       "data": "2026-09-05",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "01:57",
@@ -5151,7 +4492,6 @@
     },
     {
       "data": "2026-09-06",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "03:19",
@@ -5173,7 +4513,6 @@
     },
     {
       "data": "2026-09-07",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "05:02",
@@ -5195,7 +4534,6 @@
     },
     {
       "data": "2026-09-08",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "06:08",
@@ -5213,7 +4551,6 @@
     },
     {
       "data": "2026-09-09",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "00:49",
@@ -5235,7 +4572,6 @@
     },
     {
       "data": "2026-09-10",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "01:32",
@@ -5257,7 +4593,6 @@
     },
     {
       "data": "2026-09-11",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "02:12",
@@ -5279,7 +4614,6 @@
     },
     {
       "data": "2026-09-12",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "02:59",
@@ -5301,7 +4635,6 @@
     },
     {
       "data": "2026-09-13",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "03:38",
@@ -5323,7 +4656,6 @@
     },
     {
       "data": "2026-09-14",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "04:06",
@@ -5345,7 +4677,6 @@
     },
     {
       "data": "2026-09-15",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "04:42",
@@ -5367,7 +4698,6 @@
     },
     {
       "data": "2026-09-16",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "05:08",
@@ -5389,7 +4719,6 @@
     },
     {
       "data": "2026-09-17",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "05:46",
@@ -5411,7 +4740,6 @@
     },
     {
       "data": "2026-09-18",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "06:31",
@@ -5429,7 +4757,6 @@
     },
     {
       "data": "2026-09-19",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "00:31",
@@ -5451,7 +4778,6 @@
     },
     {
       "data": "2026-09-20",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "01:44",
@@ -5473,7 +4799,6 @@
     },
     {
       "data": "2026-09-21",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "03:02",
@@ -5495,7 +4820,6 @@
     },
     {
       "data": "2026-09-22",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "04:14",
@@ -5517,7 +4841,6 @@
     },
     {
       "data": "2026-09-23",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "05:25",
@@ -5535,7 +4858,6 @@
     },
     {
       "data": "2026-09-24",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "00:40",
@@ -5557,7 +4879,6 @@
     },
     {
       "data": "2026-09-25",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "01:29",
@@ -5579,7 +4900,6 @@
     },
     {
       "data": "2026-09-26",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "02:04",
@@ -5601,7 +4921,6 @@
     },
     {
       "data": "2026-09-27",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "02:49",
@@ -5623,7 +4942,6 @@
     },
     {
       "data": "2026-09-28",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "03:25",
@@ -5645,7 +4963,6 @@
     },
     {
       "data": "2026-09-29",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "04:01",
@@ -5667,7 +4984,6 @@
     },
     {
       "data": "2026-09-30",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "04:44",
@@ -5689,7 +5005,6 @@
     },
     {
       "data": "2026-10-01",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "05:21",
@@ -5711,7 +5026,6 @@
     },
     {
       "data": "2026-10-02",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "06:04",
@@ -5724,16 +5038,11 @@
         {
           "hora": "18:32",
           "altura_m": 1.14
-        },
-        {
-          "hora": "19:12",
-          "altura_m": 1.78
         }
       ]
     },
     {
       "data": "2026-10-03",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "00:29",
@@ -5755,7 +5064,6 @@
     },
     {
       "data": "2026-10-04",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "01:42",
@@ -5777,7 +5085,6 @@
     },
     {
       "data": "2026-10-05",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "03:27",
@@ -5799,7 +5106,6 @@
     },
     {
       "data": "2026-10-06",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "04:49",
@@ -5821,7 +5127,6 @@
     },
     {
       "data": "2026-10-07",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "05:47",
@@ -5834,16 +5139,11 @@
         {
           "hora": "18:14",
           "altura_m": 4.73
-        },
-        {
-          "hora": "18:32",
-          "altura_m": 4.42
         }
       ]
     },
     {
       "data": "2026-10-08",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "00:17",
@@ -5865,7 +5165,6 @@
     },
     {
       "data": "2026-10-09",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "01:04",
@@ -5887,7 +5186,6 @@
     },
     {
       "data": "2026-10-10",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "01:55",
@@ -5909,7 +5207,6 @@
     },
     {
       "data": "2026-10-11",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "02:34",
@@ -5931,7 +5228,6 @@
     },
     {
       "data": "2026-10-12",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "03:06",
@@ -5953,7 +5249,6 @@
     },
     {
       "data": "2026-10-13",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "03:47",
@@ -5975,7 +5270,6 @@
     },
     {
       "data": "2026-10-14",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "04:14",
@@ -5997,7 +5291,6 @@
     },
     {
       "data": "2026-10-15",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "04:47",
@@ -6019,7 +5312,6 @@
     },
     {
       "data": "2026-10-16",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "05:25",
@@ -6041,7 +5333,6 @@
     },
     {
       "data": "2026-10-17",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "05:59",
@@ -6059,7 +5350,6 @@
     },
     {
       "data": "2026-10-18",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "00:06",
@@ -6072,12 +5362,15 @@
         {
           "hora": "13:01",
           "altura_m": 3.55
+        },
+        {
+          "hora": "19:12",
+          "altura_m": 1.78
         }
       ]
     },
     {
       "data": "2026-10-19",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "01:10",
@@ -6099,7 +5392,6 @@
     },
     {
       "data": "2026-10-20",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "02:16",
@@ -6121,7 +5413,6 @@
     },
     {
       "data": "2026-10-21",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "03:27",
@@ -6143,7 +5434,6 @@
     },
     {
       "data": "2026-10-22",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "04:47",
@@ -6161,7 +5451,6 @@
     },
     {
       "data": "2026-10-23",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "00:08",
@@ -6174,12 +5463,15 @@
         {
           "hora": "12:38",
           "altura_m": 1.12
+        },
+        {
+          "hora": "18:32",
+          "altura_m": 4.42
         }
       ]
     },
     {
       "data": "2026-10-24",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "00:59",
@@ -6201,7 +5493,6 @@
     },
     {
       "data": "2026-10-25",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "01:46",
@@ -6223,7 +5514,6 @@
     },
     {
       "data": "2026-10-26",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "02:23",
@@ -6245,7 +5535,6 @@
     },
     {
       "data": "2026-10-27",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "03:02",
@@ -6267,7 +5556,6 @@
     },
     {
       "data": "2026-10-28",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "03:46",
@@ -6289,7 +5577,6 @@
     },
     {
       "data": "2026-10-29",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "04:23",
@@ -6311,7 +5598,6 @@
     },
     {
       "data": "2026-10-30",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "05:06",
@@ -6333,7 +5619,6 @@
     },
     {
       "data": "2026-10-31",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "06:01",
@@ -6351,7 +5636,6 @@
     },
     {
       "data": "2026-11-01",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "00:27",
@@ -6373,7 +5657,6 @@
     },
     {
       "data": "2026-11-02",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "01:47",
@@ -6395,7 +5678,6 @@
     },
     {
       "data": "2026-11-03",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "03:04",
@@ -6417,7 +5699,6 @@
     },
     {
       "data": "2026-11-04",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "04:10",
@@ -6439,7 +5720,6 @@
     },
     {
       "data": "2026-11-05",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "05:10",
@@ -6461,7 +5741,6 @@
     },
     {
       "data": "2026-11-06",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "06:04",
@@ -6479,7 +5758,6 @@
     },
     {
       "data": "2026-11-07",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "00:49",
@@ -6501,7 +5779,6 @@
     },
     {
       "data": "2026-11-08",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "01:32",
@@ -6523,7 +5800,6 @@
     },
     {
       "data": "2026-11-09",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "02:08",
@@ -6545,7 +5821,6 @@
     },
     {
       "data": "2026-11-10",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "02:53",
@@ -6567,7 +5842,6 @@
     },
     {
       "data": "2026-11-11",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "03:25",
@@ -6589,7 +5863,6 @@
     },
     {
       "data": "2026-11-12",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "03:59",
@@ -6611,7 +5884,6 @@
     },
     {
       "data": "2026-11-13",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "04:34",
@@ -6633,7 +5905,6 @@
     },
     {
       "data": "2026-11-14",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "05:02",
@@ -6655,7 +5926,6 @@
     },
     {
       "data": "2026-11-15",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "05:46",
@@ -6677,7 +5947,6 @@
     },
     {
       "data": "2026-11-16",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "06:23",
@@ -6695,7 +5964,6 @@
     },
     {
       "data": "2026-11-17",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "00:49",
@@ -6717,7 +5985,6 @@
     },
     {
       "data": "2026-11-18",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "01:47",
@@ -6739,7 +6006,6 @@
     },
     {
       "data": "2026-11-19",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "02:55",
@@ -6761,7 +6027,6 @@
     },
     {
       "data": "2026-11-20",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "04:10",
@@ -6783,7 +6048,6 @@
     },
     {
       "data": "2026-11-21",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "05:23",
@@ -6801,7 +6065,6 @@
     },
     {
       "data": "2026-11-22",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "00:27",
@@ -6823,7 +6086,6 @@
     },
     {
       "data": "2026-11-23",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "01:12",
@@ -6845,7 +6107,6 @@
     },
     {
       "data": "2026-11-24",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "01:59",
@@ -6867,7 +6128,6 @@
     },
     {
       "data": "2026-11-25",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "02:47",
@@ -6889,7 +6149,6 @@
     },
     {
       "data": "2026-11-26",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "03:31",
@@ -6911,7 +6170,6 @@
     },
     {
       "data": "2026-11-27",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "04:12",
@@ -6933,7 +6191,6 @@
     },
     {
       "data": "2026-11-28",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "05:02",
@@ -6955,7 +6212,6 @@
     },
     {
       "data": "2026-11-29",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "05:59",
@@ -6973,7 +6229,6 @@
     },
     {
       "data": "2026-11-30",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "00:31",
@@ -6995,7 +6250,6 @@
     },
     {
       "data": "2026-12-01",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "01:27",
@@ -7017,11 +6271,14 @@
     },
     {
       "data": "2026-12-02",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "02:25",
           "altura_m": 4.24
+        },
+        {
+          "hora": "08:29",
+          "altura_m": 1.23
         },
         {
           "hora": "15:02",
@@ -7035,11 +6292,14 @@
     },
     {
       "data": "2026-12-03",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "03:23",
           "altura_m": 4.19
+        },
+        {
+          "hora": "09:31",
+          "altura_m": 1.32
         },
         {
           "hora": "16:01",
@@ -7053,11 +6313,14 @@
     },
     {
       "data": "2026-12-04",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "04:25",
           "altura_m": 4.2
+        },
+        {
+          "hora": "10:49",
+          "altura_m": 1.31
         },
         {
           "hora": "16:59",
@@ -7071,11 +6334,14 @@
     },
     {
       "data": "2026-12-05",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "05:31",
           "altura_m": 4.27
+        },
+        {
+          "hora": "11:55",
+          "altura_m": 1.2
         },
         {
           "hora": "17:55",
@@ -7085,11 +6351,14 @@
     },
     {
       "data": "2026-12-06",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "00:27",
           "altura_m": 0.94
+        },
+        {
+          "hora": "06:29",
+          "altura_m": 4.37
         },
         {
           "hora": "12:47",
@@ -7103,11 +6372,14 @@
     },
     {
       "data": "2026-12-07",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "01:08",
           "altura_m": 0.75
+        },
+        {
+          "hora": "07:16",
+          "altura_m": 4.45
         },
         {
           "hora": "13:25",
@@ -7121,7 +6393,6 @@
     },
     {
       "data": "2026-12-08",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "01:57",
@@ -7143,11 +6414,14 @@
     },
     {
       "data": "2026-12-09",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "02:34",
           "altura_m": 0.62
+        },
+        {
+          "hora": "08:44",
+          "altura_m": 4.44
         },
         {
           "hora": "14:40",
@@ -7161,11 +6435,14 @@
     },
     {
       "data": "2026-12-10",
-      "dia_semana": "THU",
       "mares": [
         {
           "hora": "03:04",
           "altura_m": 0.63
+        },
+        {
+          "hora": "09:16",
+          "altura_m": 4.34
         },
         {
           "hora": "15:06",
@@ -7179,11 +6456,14 @@
     },
     {
       "data": "2026-12-11",
-      "dia_semana": "FRI",
       "mares": [
         {
           "hora": "03:44",
           "altura_m": 0.72
+        },
+        {
+          "hora": "09:42",
+          "altura_m": 4.24
         },
         {
           "hora": "15:49",
@@ -7197,11 +6477,14 @@
     },
     {
       "data": "2026-12-12",
-      "dia_semana": "SAT",
       "mares": [
         {
           "hora": "04:08",
           "altura_m": 0.83
+        },
+        {
+          "hora": "10:04",
+          "altura_m": 4.16
         },
         {
           "hora": "16:19",
@@ -7215,11 +6498,14 @@
     },
     {
       "data": "2026-12-13",
-      "dia_semana": "SUN",
       "mares": [
         {
           "hora": "04:47",
           "altura_m": 0.94
+        },
+        {
+          "hora": "10:38",
+          "altura_m": 4.1
         },
         {
           "hora": "16:55",
@@ -7233,11 +6519,14 @@
     },
     {
       "data": "2026-12-14",
-      "dia_semana": "MON",
       "mares": [
         {
           "hora": "05:17",
           "altura_m": 1.07
+        },
+        {
+          "hora": "11:10",
+          "altura_m": 4.06
         },
         {
           "hora": "17:34",
@@ -7251,7 +6540,6 @@
     },
     {
       "data": "2026-12-15",
-      "dia_semana": "TUE",
       "mares": [
         {
           "hora": "05:49",
@@ -7264,16 +6552,11 @@
         {
           "hora": "18:10",
           "altura_m": 1.35
-        },
-        {
-          "hora": "20:06",
-          "altura_m": 1.26
         }
       ]
     },
     {
       "data": "2026-12-16",
-      "dia_semana": "WED",
       "mares": [
         {
           "hora": "00:10",
@@ -7290,372 +6573,6 @@
         {
           "hora": "18:57",
           "altura_m": 1.43
-        }
-      ]
-    },
-    {
-      "data": "2026-12-17",
-      "dia_semana": "THU",
-      "mares": [
-        {
-          "hora": "01:06",
-          "altura_m": 4.06
-        },
-        {
-          "hora": "07:23",
-          "altura_m": 1.37
-        },
-        {
-          "hora": "13:46",
-          "altura_m": 3.94
-        },
-        {
-          "hora": "19:57",
-          "altura_m": 1.48
-        }
-      ]
-    },
-    {
-      "data": "2026-12-18",
-      "dia_semana": "FRI",
-      "mares": [
-        {
-          "hora": "02:14",
-          "altura_m": 3.96
-        },
-        {
-          "hora": "08:29",
-          "altura_m": 1.23
-        },
-        {
-          "hora": "08:25",
-          "altura_m": 1.45
-        },
-        {
-          "hora": "14:57",
-          "altura_m": 3.99
-        },
-        {
-          "hora": "21:02",
-          "altura_m": 1.47
-        }
-      ]
-    },
-    {
-      "data": "2026-12-19",
-      "dia_semana": "SAT",
-      "mares": [
-        {
-          "hora": "03:36",
-          "altura_m": 3.98
-        },
-        {
-          "hora": "09:31",
-          "altura_m": 1.32
-        },
-        {
-          "hora": "09:36",
-          "altura_m": 1.43
-        },
-        {
-          "hora": "16:06",
-          "altura_m": 4.16
-        },
-        {
-          "hora": "22:19",
-          "altura_m": 1.33
-        }
-      ]
-    },
-    {
-      "data": "2026-12-20",
-      "dia_semana": "SUN",
-      "mares": [
-        {
-          "hora": "04:49",
-          "altura_m": 4.15
-        },
-        {
-          "hora": "10:49",
-          "altura_m": 1.31
-        },
-        {
-          "hora": "10:49",
-          "altura_m": 1.29
-        },
-        {
-          "hora": "17:12",
-          "altura_m": 4.42
-        },
-        {
-          "hora": "23:42",
-          "altura_m": 1.05
-        }
-      ]
-    },
-    {
-      "data": "2026-12-21",
-      "dia_semana": "MON",
-      "mares": [
-        {
-          "hora": "05:53",
-          "altura_m": 4.38
-        },
-        {
-          "hora": "11:55",
-          "altura_m": 1.2
-        },
-        {
-          "hora": "11:55",
-          "altura_m": 1.04
-        },
-        {
-          "hora": "18:12",
-          "altura_m": 4.7
-        }
-      ]
-    },
-    {
-      "data": "2026-12-22",
-      "dia_semana": "TUE",
-      "mares": [
-        {
-          "hora": "00:49",
-          "altura_m": 0.69
-        },
-        {
-          "hora": "06:29",
-          "altura_m": 4.37
-        },
-        {
-          "hora": "06:53",
-          "altura_m": 4.62
-        },
-        {
-          "hora": "12:57",
-          "altura_m": 0.77
-        },
-        {
-          "hora": "19:08",
-          "altura_m": 4.96
-        }
-      ]
-    },
-    {
-      "data": "2026-12-23",
-      "dia_semana": "WED",
-      "mares": [
-        {
-          "hora": "01:47",
-          "altura_m": 0.37
-        },
-        {
-          "hora": "07:16",
-          "altura_m": 4.45
-        },
-        {
-          "hora": "07:49",
-          "altura_m": 4.83
-        },
-        {
-          "hora": "13:53",
-          "altura_m": 0.52
-        },
-        {
-          "hora": "20:04",
-          "altura_m": 5.14
-        }
-      ]
-    },
-    {
-      "data": "2026-12-24",
-      "dia_semana": "THU",
-      "mares": [
-        {
-          "hora": "02:38",
-          "altura_m": 0.14
-        },
-        {
-          "hora": "08:46",
-          "altura_m": 4.98
-        },
-        {
-          "hora": "14:47",
-          "altura_m": 0.35
-        },
-        {
-          "hora": "20:59",
-          "altura_m": 5.25
-        }
-      ]
-    },
-    {
-      "data": "2026-12-25",
-      "dia_semana": "FRI",
-      "mares": [
-        {
-          "hora": "03:19",
-          "altura_m": 0.02
-        },
-        {
-          "hora": "08:44",
-          "altura_m": 4.44
-        },
-        {
-          "hora": "09:38",
-          "altura_m": 5.06
-        },
-        {
-          "hora": "15:36",
-          "altura_m": 0.28
-        },
-        {
-          "hora": "21:51",
-          "altura_m": 5.27
-        }
-      ]
-    },
-    {
-      "data": "2026-12-26",
-      "dia_semana": "SAT",
-      "mares": [
-        {
-          "hora": "04:06",
-          "altura_m": -0.02
-        },
-        {
-          "hora": "09:16",
-          "altura_m": 4.34
-        },
-        {
-          "hora": "10:27",
-          "altura_m": 5.04
-        },
-        {
-          "hora": "16:17",
-          "altura_m": 0.29
-        },
-        {
-          "hora": "22:40",
-          "altura_m": 5.19
-        }
-      ]
-    },
-    {
-      "data": "2026-12-27",
-      "dia_semana": "SUN",
-      "mares": [
-        {
-          "hora": "04:59",
-          "altura_m": 0.09
-        },
-        {
-          "hora": "09:42",
-          "altura_m": 4.24
-        },
-        {
-          "hora": "11:10",
-          "altura_m": 4.95
-        },
-        {
-          "hora": "17:04",
-          "altura_m": 0.37
-        },
-        {
-          "hora": "23:25",
-          "altura_m": 5.03
-        }
-      ]
-    },
-    {
-      "data": "2026-12-28",
-      "dia_semana": "MON",
-      "mares": [
-        {
-          "hora": "05:42",
-          "altura_m": 0.31
-        },
-        {
-          "hora": "10:04",
-          "altura_m": 4.16
-        },
-        {
-          "hora": "11:57",
-          "altura_m": 4.8
-        },
-        {
-          "hora": "17:57",
-          "altura_m": 0.55
-        }
-      ]
-    },
-    {
-      "data": "2026-12-29",
-      "dia_semana": "TUE",
-      "mares": [
-        {
-          "hora": "00:08",
-          "altura_m": 4.82
-        },
-        {
-          "hora": "10:38",
-          "altura_m": 4.1
-        },
-        {
-          "hora": "06:16",
-          "altura_m": 0.57
-        },
-        {
-          "hora": "12:40",
-          "altura_m": 4.61
-        },
-        {
-          "hora": "18:42",
-          "altura_m": 0.81
-        }
-      ]
-    },
-    {
-      "data": "2026-12-30",
-      "dia_semana": "WED",
-      "mares": [
-        {
-          "hora": "00:57",
-          "altura_m": 4.57
-        },
-        {
-          "hora": "11:10",
-          "altura_m": 4.06
-        },
-        {
-          "hora": "07:02",
-          "altura_m": 0.85
-        },
-        {
-          "hora": "13:21",
-          "altura_m": 4.42
-        },
-        {
-          "hora": "19:19",
-          "altura_m": 1.05
-        }
-      ]
-    },
-    {
-      "data": "2026-12-31",
-      "dia_semana": "THU",
-      "mares": [
-        {
-          "hora": "01:44",
-          "altura_m": 4.3
-        },
-        {
-          "hora": "07:49",
-          "altura_m": 1.16
-        },
-        {
-          "hora": "14:08",
-          "altura_m": 4.24
         }
       ]
     }

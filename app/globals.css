@@ -210,3 +210,354 @@ body {
   background: rgba(56, 201, 240, .12);
   border-color: var(--foam);
 }
+
+/* ─────────────────────────────────────────────────
+   MONTHLY TIDE TABLE (Tabela de Marés 30 Dias)
+───────────────────────────────────────────────── */
+.monthly-tide-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.07);
+  overflow: hidden;
+}
+
+.monthly-tide-header {
+  background: linear-gradient(135deg, #1a3a6b 0%, #0d2240 100%);
+  padding: 1.25rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+
+.monthly-tide-title-row {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+.monthly-tide-icon {
+  font-size: 1.3rem;
+}
+
+.monthly-tide-title {
+  font-family: var(--font-syne);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.monthly-tide-month {
+  background: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.85);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: .2rem .65rem;
+  border-radius: 20px;
+  letter-spacing: .5px;
+}
+
+.monthly-tide-legend {
+  display: flex;
+  gap: 1rem;
+}
+
+.legend-alta {
+  color: #93c5fd;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+
+.legend-baixa {
+  color: #fdba74;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+
+.monthly-tide-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.monthly-tide-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+
+.monthly-tide-scroll::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.monthly-tide-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 2px;
+}
+
+.monthly-tide-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 520px;
+}
+
+.monthly-tide-table thead tr {
+  background: #f8fafc;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.monthly-tide-table th {
+  padding: .6rem 1rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.monthly-tide-table th.col-day {
+  text-align: left;
+  min-width: 72px;
+  position: sticky;
+  left: 0;
+  background: #f8fafc;
+  z-index: 1;
+  border-right: 1px solid #e2e8f0;
+}
+
+.monthly-tide-table th.col-tide {
+  text-align: center;
+  min-width: 110px;
+}
+
+/* Rows */
+.tide-row {
+  border-bottom: 1px solid #f1f5f9;
+  transition: background .15s;
+}
+
+.tide-row:hover {
+  background: #f8fafc;
+}
+
+.tide-row--today {
+  background: #eff6ff !important;
+}
+
+.tide-row--today:hover {
+  background: #dbeafe !important;
+}
+
+/* Day cell */
+.cell-day {
+  padding: .5rem 1rem;
+  position: sticky;
+  left: 0;
+  background: white;
+  z-index: 1;
+  border-right: 1px solid #f1f5f9;
+}
+
+.tide-row--today .cell-day {
+  background: #eff6ff;
+}
+
+.day-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 44px;
+}
+
+.day-badge--today .day-num {
+  background: #2a68f6;
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.day-num {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.day-week {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-top: 1px;
+}
+
+.today-dot {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #2a68f6;
+}
+
+/* Tide cells */
+.cell-tide {
+  padding: .55rem .75rem;
+  text-align: center;
+  border-left: 1px solid #f1f5f9;
+}
+
+.cell-empty {
+  color: #cbd5e1;
+  font-size: .85rem;
+}
+
+.cell-alta {
+  background: rgba(219, 234, 254, 0.35);
+}
+
+.cell-baixa {
+  background: rgba(255, 237, 213, 0.35);
+}
+
+.tide-entry {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.tide-arrow {
+  font-size: 0.55rem;
+}
+
+.arrow-alta {
+  color: #2563eb;
+}
+
+.arrow-baixa {
+  color: #ea580c;
+}
+
+.tide-time {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1e293b;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .3px;
+}
+
+.tide-height {
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.height-alta {
+  color: #2563eb;
+}
+
+.height-baixa {
+  color: #ea580c;
+}
+
+/* Footer note */
+.monthly-tide-footer {
+  font-size: 0.68rem;
+  color: #94a3b8;
+  text-align: center;
+  padding: .75rem 1rem;
+  border-top: 1px solid #f1f5f9;
+  background: #fafafa;
+}
+
+/* ── Legend: sun entry ── */
+.legend-sun {
+  color: #fbbf24;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+
+/* ── Meta columns (coef / sun) ── */
+.monthly-tide-table th.col-meta {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.monthly-tide-table th.col-coef {
+  min-width: 58px;
+  border-left: 2px solid #e2e8f0;
+}
+
+.monthly-tide-table th.col-sun {
+  min-width: 72px;
+}
+
+.cell-meta {
+  padding: .5rem .6rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.cell-coef-val {
+  border-left: 2px solid #f1f5f9;
+  background: #fafafa;
+}
+
+.cell-sun-val {
+  background: #fffbeb;
+}
+
+/* Coef badge */
+.coef-badge {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: .15rem .45rem;
+  border-radius: 20px;
+  border: 1.5px solid currentColor;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .5px;
+}
+
+/* Sun entry */
+.sun-entry {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.sun-icon {
+  font-size: 0.7rem;
+  line-height: 1;
+  color: #f59e0b;
+}
+
+.sun-icon--set {
+  filter: hue-rotate(20deg);
+}
+
+.sun-time {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #92400e;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .3px;
+}

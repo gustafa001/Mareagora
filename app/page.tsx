@@ -1,208 +1,212 @@
-import { PORTS } from '@/lib/ports';
-import NavBar from '@/components/NavBar';
-import TideCardLive from '@/components/TideCardLive';
-import HeroSearch from '@/components/HeroSearch';
-import Footer from '@/components/Footer';
 import Link from 'next/link';
-
-const REGION_ICONS: Record<string, string> = {
-  Norte: '🌿', Nordeste: '☀️', Sudeste: '🏙️', Sul: '🌊',
-};
-const REGION_DESC: Record<string, string> = {
-  Norte: 'Amazônia e litoral norte',
-  Nordeste: 'Do Maranhão à Bahia',
-  Sudeste: 'Espírito Santo, RJ e SP',
-  Sul: 'Paraná, SC e Rio Grande do Sul',
-};
+import { PORTS } from '@/lib/ports';
 
 export default function Home() {
-  const regions = ['Norte', 'Nordeste', 'Sudeste', 'Sul'];
-  const totalPorts = PORTS.length;
-
   return (
-    <div className="min-h-screen bg-[var(--ocean)]">
-      <NavBar />
+    <main className="min-h-screen relative">
+      {/* Background Image - Beach Sunset */}
+      <div 
+        className="fixed inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url('https://images.unsplash.com/photo-1519046904884-53103b34b206?w=1920&q=80')`
+        }}
+      />
+      
+      {/* Dark Overlay for readability - stronger */}
+      <div className="fixed inset-0 bg-gradient-to-br from-slate-950/85 via-slate-900/80 to-slate-950/85" />
+      
+      {/* Aurora Effects on top */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
+      </div>
 
-      {/* HERO PRO MAX SECTION */}
-      <section className="hero-section border-b border-[rgba(56,201,240,0.15)]" style={{ minHeight: '600px', paddingBottom: '30px' }}>
-        <div className="hero-overlay" style={{ background: 'linear-gradient(to bottom, rgba(6,16,30,0.4) 0%, rgba(6,16,30,0.85) 80%, rgba(10,22,40,1) 100%)' }} />
-        <div className="container relative z-10 text-white text-center pt-32 pb-8 px-2">
-          
-          <div className="inline-flex items-center gap-2 bg-[rgba(255,255,255,0.08)] border border-[rgba(255,255,255,0.15)] backdrop-blur-md rounded-full px-4 py-1.5 text-[var(--foam)] text-[0.8rem] mb-6 shadow-xl uppercase tracking-widest font-bold">
-            <span className="live-dot bg-[var(--foam)]"></span>
-            Dados Oficiais da Marinha 2026
-          </div>
-          
-          <h1 className="font-syne font-extrabold text-[clamp(2.8rem,9vw,5.5rem)] tracking-[-2px] leading-[1] text-white mb-6 drop-shadow-2xl">
-            A maré certa,<br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--foam)] to-[#2a68f6] filter drop-shadow">na hora certa.</span>
-          </h1>
-          
-          <p className="max-w-2xl mx-auto text-[rgba(255,255,255,0.8)] text-lg md:text-xl leading-relaxed mb-6 drop-shadow font-light">
-            Condições de maré, ondas e ventos em tempo real para{' '}
-            <strong className="text-white font-bold bg-[rgba(56,201,240,0.15)] px-2 py-0.5 rounded border border-[rgba(56,201,240,0.2)] mx-1">{totalPorts} portos</strong>{' '}
-            em todo o litoral brasileiro.
-          </p>
+      {/* Hero Section - Glassmorphism */}
+      <section className="relative py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-12 text-center shadow-2xl">
+            {/* Logo/Icon */}
+            <div className="inline-flex items-center justify-center w-20 h-20 mb-8 rounded-2xl bg-gradient-to-br from-blue-400 to-cyan-400 shadow-lg shadow-blue-500/25">
+              <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            
+            <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-white via-blue-100 to-cyan-100 bg-clip-text text-transparent mb-6">
+              MaréAgora
+            </h1>
+            
+            <p className="text-xl md:text-2xl text-blue-200/80 mb-4 font-light">
+              Previsão de marés em tempo real
+            </p>
+            
+            <p className="text-lg text-slate-400 mb-8">
+              50+ portos brasileiros • Dados oficiais da Marinha
+            </p>
 
-          <HeroSearch />
-
-          {/* Stats em formato Glassmorphism Bento */}
-          <div className="flex flex-wrap justify-center gap-4 mt-12 mb-4">
-            {[
-              { val: `${totalPorts}`, lbl: 'Portos', icon: '📍' },
-              { val: '365', lbl: 'Dias de Previsão', icon: '📅' },
-              { val: '4', lbl: 'Regiões', icon: '🗺️' },
-              { val: '24/7', lbl: 'Disponível', icon: '⚡' },
-            ].map(s => (
-              <div key={s.lbl} className="glass-card hover:bg-[rgba(255,255,255,0.1)] transition-colors rounded-2xl px-6 py-4 text-center min-w-[120px] max-w-[140px] flex-1">
-                <div className="text-2xl mb-1 opacity-80">{s.icon}</div>
-                <div className="font-syne font-extrabold text-2xl text-white drop-shadow-sm">{s.val}</div>
-                <div className="text-[var(--foam)] text-[10px] sm:text-xs mt-1 font-bold uppercase tracking-wider">{s.lbl}</div>
+            {/* Stats */}
+            <div className="flex flex-wrap justify-center gap-8 mt-8">
+              <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl px-6 py-4">
+                <div className="text-3xl font-bold text-white">50+</div>
+                <div className="text-sm text-slate-400">Portos</div>
               </div>
+              <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl px-6 py-4">
+                <div className="text-3xl font-bold text-white">365</div>
+                <div className="text-sm text-slate-400">Dias/ano</div>
+              </div>
+              <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl px-6 py-4">
+                <div className="text-3xl font-bold text-white">4</div>
+                <div className="text-sm text-slate-400">Marés/dia</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Portos por Região */}
+      <section className="py-16 px-4 max-w-6xl mx-auto relative z-10">
+        
+        {/* Norte */}
+        <div className="mb-16">
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-1 h-8 bg-gradient-to-b from-blue-400 to-cyan-400 rounded-full" />
+            <h2 className="text-3xl font-bold text-white">Região Norte</h2>
+            <div className="flex-1 h-px bg-gradient-to-r from-white/20 to-transparent" />
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {PORTS.filter(p => p.region === 'norte').map((port, i) => (
+              <Link
+                key={port.slug}
+                href={`/mare/${port.slug}`}
+                className="group backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 hover:border-blue-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 hover:-translate-y-1"
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <h4 className="font-semibold text-white group-hover:text-blue-300 transition-colors">{port.name}</h4>
+                  <svg className="w-5 h-5 text-slate-500 group-hover:text-blue-400 transition-all group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+                <p className="text-sm text-slate-400">{port.state}</p>
+                <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                  Ver previsão
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Nordeste */}
+        <div className="mb-16">
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-1 h-8 bg-gradient-to-b from-cyan-400 to-teal-400 rounded-full" />
+            <h2 className="text-3xl font-bold text-white">Região Nordeste</h2>
+            <div className="flex-1 h-px bg-gradient-to-r from-white/20 to-transparent" />
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {PORTS.filter(p => p.region === 'nordeste').map((port, i) => (
+              <Link
+                key={port.slug}
+                href={`/mare/${port.slug}`}
+                className="group backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10 hover:-translate-y-1"
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <h4 className="font-semibold text-white group-hover:text-cyan-300 transition-colors">{port.name}</h4>
+                  <svg className="w-5 h-5 text-slate-500 group-hover:text-cyan-400 transition-all group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+                <p className="text-sm text-slate-400">{port.state}</p>
+                <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                  Ver previsão
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Sudeste */}
+        <div className="mb-16">
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-1 h-8 bg-gradient-to-b from-teal-400 to-emerald-400 rounded-full" />
+            <h2 className="text-3xl font-bold text-white">Região Sudeste</h2>
+            <div className="flex-1 h-px bg-gradient-to-r from-white/20 to-transparent" />
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {PORTS.filter(p => p.region === 'sudeste').map((port, i) => (
+              <Link
+                key={port.slug}
+                href={`/mare/${port.slug}`}
+                className="group backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 hover:border-teal-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/10 hover:-translate-y-1"
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <h4 className="font-semibold text-white group-hover:text-teal-300 transition-colors">{port.name}</h4>
+                  <svg className="w-5 h-5 text-slate-500 group-hover:text-teal-400 transition-all group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+                <p className="text-sm text-slate-400">{port.state}</p>
+                <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                  Ver previsão
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Sul */}
+        <div className="mb-16">
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-1 h-8 bg-gradient-to-b from-emerald-400 to-green-400 rounded-full" />
+            <h2 className="text-3xl font-bold text-white">Região Sul</h2>
+            <div className="flex-1 h-px bg-gradient-to-r from-white/20 to-transparent" />
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {PORTS.filter(p => p.region === 'sul').map((port, i) => (
+              <Link
+                key={port.slug}
+                href={`/mare/${port.slug}`}
+                className="group backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 hover:border-emerald-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 hover:-translate-y-1"
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <h4 className="font-semibold text-white group-hover:text-emerald-300 transition-colors">{port.name}</h4>
+                  <svg className="w-5 h-5 text-slate-500 group-hover:text-emerald-400 transition-all group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+                <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                  Ver previsão
+                </div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      <main className="container pt-8 pb-20 relative z-10">
-
-          {/* Quick tags */}
-          <div className="flex flex-wrap justify-center gap-2 mb-10">
-            <span className="text-[var(--muted)] text-sm self-center mr-1 drop-shadow">Acesso rápido:</span>
-            {['salvador','rio-de-janeiro-fiscal','santos','porto-de-mucuripe-fortaleza','maceio'].map(slug => {
-              const p = PORTS.find(x => x.slug === slug);
-              if (!p) return null;
-              return (
-                <Link key={slug} href={`/mare/${slug}`}
-                  className="bg-[rgba(56,201,240,0.1)] border border-[rgba(56,201,240,0.2)] text-[var(--foam)] text-sm px-3 py-1.5 rounded-full hover:bg-[rgba(56,201,240,0.25)] hover:border-[var(--foam)] transition-all drop-shadow-sm font-medium">
-                  {p.name.replace('Porto de ','').replace('Porto do ','')}
-                </Link>
-              );
-            })}
+      {/* Footer */}
+      <footer className="relative py-12 px-4 border-t border-white/10">
+        <div className="max-w-6xl mx-auto text-center">
+          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 inline-block">
+            <p className="text-slate-400 mb-2">
+              2026 <span className="text-white font-semibold">MaréAgora</span>
+            </p>
+            <p className="text-sm text-slate-500">
+              Dados oficiais da Marinha do Brasil • SHOM
+            </p>
           </div>
-
-        {/* REGIONS + LIVE CARDS */}
-        {regions.map((region) => {
-          const regionPorts = PORTS.filter(p => p.region === region);
-          if (regionPorts.length === 0) return null;
-          return (
-            <section key={region} className="mb-14">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-[rgba(56,201,240,0.1)] border border-[rgba(56,201,240,0.15)] flex items-center justify-center text-xl flex-shrink-0">
-                  {REGION_ICONS[region]}
-                </div>
-                <div>
-                  <h2 className="font-syne font-extrabold text-xl text-[var(--white)] leading-none">{region}</h2>
-                  <p className="text-[var(--muted)] text-sm mt-0.5">{REGION_DESC[region]} · {regionPorts.length} localidades</p>
-                </div>
-                <div className="ml-auto h-px flex-1 bg-gradient-to-r from-[rgba(56,201,240,0.15)] to-transparent max-w-[200px]" />
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                {regionPorts.map((port) => {
-                  const globalIndex = PORTS.indexOf(port);
-                  return (
-                    <TideCardLive key={port.slug} port={port} index={globalIndex} />
-                  );
-                })}
-              </div>
-            </section>
-          );
-        })}
-
-        {/* FEATURES */}
-        <section className="mt-10 mb-8">
-          <div className="text-center mb-8">
-            <h2 className="font-syne font-extrabold text-2xl text-[var(--white)] mb-2">
-              Tudo que você precisa <span className="text-[var(--foam)]">num só lugar</span>
-            </h2>
-            <p className="text-[var(--muted)] text-sm">Informações combinadas de maré, ondas e vento</p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {[
-              {icon:'🌊',title:'Tábua Oficial',desc:'Dados da Marinha do Brasil para 2026'},
-              {icon:'🌬️',title:'Ondas & Vento',desc:'Previsão em tempo real via Open-Meteo'},
-              {icon:'📅',title:'Calendário',desc:'Todos os horários do mês de uma vez'},
-              {icon:'📲',title:'Mobile First',desc:'Funciona perfeitamente no celular'},
-              {icon:'⚡',title:'Tempo Real',desc:'Altura da maré atualizada ao vivo'},
-              {icon:'🔒',title:'Fonte Oficial',desc:'CHM — Centro de Hidrografia da Marinha'},
-            ].map(f => (
-              <div key={f.title} className="bg-[rgba(13,34,64,0.5)] border border-[rgba(56,201,240,0.08)] rounded-2xl p-4 hover:border-[rgba(56,201,240,0.2)] transition-all">
-                <div className="text-2xl mb-2">{f.icon}</div>
-                <div className="font-syne font-bold text-sm text-[var(--white)] mb-1">{f.title}</div>
-                <div className="text-[var(--muted)] text-xs leading-relaxed">{f.desc}</div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* AUDIENCE */}
-        <section className="bg-[rgba(13,34,64,0.4)] border border-[rgba(56,201,240,0.08)] rounded-3xl p-6 md:p-10 text-center">
-          <h3 className="font-syne font-extrabold text-xl text-[var(--foam)] mb-2">Feito para todos</h3>
-          <p className="text-[var(--muted)] text-sm mb-6 max-w-md mx-auto">Do pescador ao engenheiro naval — quem vive o mar precisa do MaréAgora.</p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {['🎣 Pescadores','🏄 Surfistas','⛵ Navegantes','🤿 Mergulhadores','🏖️ Turistas','🏗️ Engenharia'].map(a => (
-              <span key={a} className="bg-[rgba(56,201,240,0.08)] border border-[rgba(56,201,240,0.15)] text-[var(--muted)] px-4 py-2 rounded-full text-sm hover:text-[var(--foam)] hover:border-[var(--foam)] transition-all cursor-default">
-                {a}
-              </span>
-            ))}
-          </div>
-        </section>
-
-      </main>
-
-      {/* SEO CONTENT SECTION */}
-      <section className="container pb-16 relative z-10">
-        <div className="bg-[rgba(13,34,64,0.4)] border border-[rgba(56,201,240,0.08)] rounded-3xl p-6 md:p-10">
-
-          <h2 className="font-syne font-extrabold text-2xl text-[var(--white)] mb-2">
-            O que é a <span className="text-[var(--foam)]">Tábua de Marés?</span>
-          </h2>
-          <p className="text-[var(--muted)] text-sm leading-relaxed mb-6">
-            A tábua de marés é uma previsão dos horários e alturas das marés altas (preamares) e baixas (baixa-mares) para um determinado local ao longo do dia, mês ou ano. No Brasil, as tábuas oficiais são publicadas anualmente pelo <strong className="text-[var(--foam)]">Centro de Hidrografia da Marinha (CHM)</strong>, órgão responsável pelas informações oceanográficas do país. O MaréAgora utiliza exclusivamente esses dados oficiais para garantir máxima precisão em todos os{' '}<strong className="text-white">122 portos</strong> disponíveis na plataforma.
-          </p>
-
-          <h2 className="font-syne font-extrabold text-xl text-[var(--white)] mb-2">
-            Como as marés funcionam no <span className="text-[var(--foam)]">litoral brasileiro?</span>
-          </h2>
-          <p className="text-[var(--muted)] text-sm leading-relaxed mb-4">
-            O Brasil possui mais de 7.400 km de costa, e o comportamento das marés varia bastante de região para região. No litoral norte, como no Maranhão e no Pará, as marés são semidiurnas de grande amplitude — podendo ultrapassar 6 metros em cidades como São Luís. Já no Nordeste e no Sudeste, as amplitudes são bem menores, com preamares geralmente entre 1 e 2 metros. No Sul do país, além das marés astronômicas, ventos e pressão atmosférica têm grande influência no nível do mar.
-          </p>
-          <p className="text-[var(--muted)] text-sm leading-relaxed mb-6">
-            Conhecer essas diferenças regionais é fundamental para quem pratica pesca, surf, mergulho ou navegação ao longo do litoral brasileiro. O MaréAgora organiza os dados por região — Norte, Nordeste, Sudeste e Sul — facilitando a consulta para cada perfil de usuário.
-          </p>
-
-          <h2 className="font-syne font-extrabold text-xl text-[var(--white)] mb-2">
-            Para que serve a <span className="text-[var(--foam)]">previsão de marés?</span>
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            {[
-              { icon: '🎣', title: 'Pesca', desc: 'Os momentos de virada da maré são os mais produtivos para a pesca. Conhecer os horários exatos de preamar e baixa-mar aumenta significativamente as chances de uma boa pescaria.' },
-              { icon: '🏄', title: 'Surf', desc: 'A altura e o período das ondas são influenciados diretamente pela maré. Surfistas experientes combinam os dados de maré com a previsão de ondas para escolher o melhor momento de entrar no mar.' },
-              { icon: '⛵', title: 'Navegação', desc: 'Embarcações de pequeno porte precisam monitorar o nível da maré para evitar encalhes em áreas rasas. Portos e marinas também dependem dessas previsões para operações seguras.' },
-              { icon: '🤿', title: 'Mergulho', desc: 'A visibilidade subaquática melhora consideravelmente durante a preamar em muitos pontos do litoral brasileiro. Mergulhadores planejam suas saídas com base nos dados de maré e correntes.' },
-            ].map(item => (
-              <div key={item.title} className="flex gap-3 bg-[rgba(56,201,240,0.05)] border border-[rgba(56,201,240,0.08)] rounded-2xl p-4">
-                <span className="text-2xl flex-shrink-0">{item.icon}</span>
-                <div>
-                  <div className="font-syne font-bold text-sm text-[var(--white)] mb-1">{item.title}</div>
-                  <div className="text-[var(--muted)] text-xs leading-relaxed">{item.desc}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <h2 className="font-syne font-extrabold text-xl text-[var(--white)] mb-2">
-            Por que usar o <span className="text-[var(--foam)]">MaréAgora?</span>
-          </h2>
-          <p className="text-[var(--muted)] text-sm leading-relaxed">
-            O MaréAgora nasceu da necessidade de ter uma plataforma brasileira, gratuita e confiável para consulta de marés. Diferente de apps internacionais que utilizam modelos matemáticos genéricos, o MaréAgora trabalha com as tábuas publicadas pela Marinha do Brasil — a mesma fonte utilizada por capitanias dos portos, empresas de navegação e órgãos de segurança marítima. Além dos dados de maré, a plataforma integra previsão de ondas e ventos via Open-Meteo, oferecendo uma visão completa das condições marítimas para cada localidade, disponível 24 horas por dia, 7 dias por semana, direto no seu celular.
-          </p>
-
         </div>
-      </section>
-
-      <Footer />
-    </div>
+      </footer>
+    </main>
   );
 }

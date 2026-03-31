@@ -26,11 +26,26 @@ export interface RawPortData {
 }
 
 /**
- * Retorna os dados de maré para o dia atual
+ * Retorna os dados de maré para o dia atual, ou o dia mais próximo disponível
  */
 export function getTodayTides(eventos: TideDay[]): TideDay | null {
+  if (!eventos || eventos.length === 0) return null;
+  
   const today = new Date().toISOString().split('T')[0];
-  return eventos.find(e => e.data === today) || eventos[0] || null;
+  const todayData = eventos.find(e => e.data === today);
+  
+  if (todayData) return todayData;
+  
+  // Se não tem dados de hoje, procurar o dia mais próximo (passado ou futuro)
+  const sorted = [...eventos].sort((a, b) => a.data.localeCompare(b.data));
+  
+  // Procurar o dia mais próximo no passado
+  for (let i = sorted.length - 1; i >= 0; i--) {
+    if (sorted[i].data < today) return sorted[i];
+  }
+  
+  // Se não achou no passado, retornar o primeiro disponível
+  return sorted[0] || null;
 }
 
 /**

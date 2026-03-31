@@ -18,6 +18,7 @@ import { AD_SLOTS } from '@/lib/adConfig';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 /**
  * Converte coordenadas no formato "32° 08'.3 S" ou número decimal para graus decimais.
@@ -314,11 +315,4 @@ export default async function MarePage({ params }: MarePageProps) {
       </footer>
     </main>
   );
-}
-
-export function generateStaticParams() {
-  const { PORTS } = require('@/lib/ports');
-  return PORTS.map((port: Port) => ({
-    slug: port.slug,
-  }));
 }

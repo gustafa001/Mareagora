@@ -229,3 +229,26 @@ export function generateTideCurve(mares: TideEvent[]): { time: string; height: n
   
   return points;
 }
+
+/**
+ * Calcula a altura da maré em um minuto específico
+ */
+export function tideAtMinute(mares: TideEvent[], minute: number): number {
+  if (!mares || mares.length === 0) return 0;
+  
+  const sorted = [...mares].sort((a, b) => a.hora.localeCompare(b.hora));
+  
+  for (let i = 0; i < sorted.length - 1; i++) {
+    const [h1, m1] = sorted[i].hora.split(':').map(Number);
+    const [h2, m2] = sorted[i + 1].hora.split(':').map(Number);
+    const t1 = h1 * 60 + m1;
+    const t2 = h2 * 60 + m2;
+    
+    if (minute >= t1 && minute <= t2) {
+      const ratio = (minute - t1) / (t2 - t1);
+      return sorted[i].altura_m + (sorted[i + 1].altura_m - sorted[i].altura_m) * ratio;
+    }
+  }
+  
+  return sorted[0].altura_m;
+}

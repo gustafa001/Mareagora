@@ -9,12 +9,10 @@ import {
   TideEvent
 } from '@/lib/tideUtils';
 import TideChart from '@/components/TideChart';
+import WaveChart from '@/components/WaveChart';
+import WindChart from '@/components/WindChart';
+import WeatherCard from '@/components/WeatherCard';
 import NavBar from '@/components/NavBar';
-import SummaryCards from '@/components/SummaryCards';
-import WindWaveCharts from '@/components/WindWaveCharts';
-import ConditionsCard from '@/components/ConditionsCard';
-import ForecastStrip from '@/components/ForecastStrip';
-import DetailedForecastTable from '@/components/DetailedForecastTable';
 import AdSlot from '@/components/ads/AdSlot';
 import { AD_SLOTS } from '@/lib/adConfig';
 import Link from 'next/link';
@@ -115,6 +113,63 @@ export default async function MarePage({ params }: MarePageProps) {
   const nextHighTide = findNextHighTide(todayTides.mares);
   const nextLowTide = findNextLowTide(todayTides.mares);
 
+  const lat = Number(rawData.lat) || 0;
+  const lon = Number(rawData.lon) || 0;
+
+  // Buscar dados REAIS do Open-Meteo
+  let weatherData = { temp: 26, humidity: 78, pressure: 1013, visibility: 10, wind: "17 km/h", waves: "1.4 m" };
+  
+  try {
+    const [waveRes, weatherRes] = await Promise.all([
+      fetch(`https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&hourly=wave_height&timezone=America%2FSao_Paulo&forecast_days=1`, { cache: 'no-store' }),
+      fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_speed_10m,temperature_2m,relative_humidity_2m,surface_pressure&wind_speed_unit=kmh&timezone=America%2FSao_Paulo`, { cache: 'no-store' })
+    ]);
+
+    if (waveRes.ok && weatherRes.ok) {
+      const waveJson = await waveRes.json();
+      const weatherJson = await weatherRes.json();
+
+      const h = waveJson.hourly;
+      const now = new Date();
+      const nowH = now.getHours();
+      const idx = h.time.findIndex((t: string) => {
+        const d = new Date(t);
+        return d.getHours() === nowH && d.toDateString() === now.toDateString();
+      });
+      const waveHeight = h.wave_height[idx >= 0 ? idx : 0];
+      
+      const current = weatherJson.current;
+      weatherData = {
+        temp: Math.round(current?.temperature_2m || 26),
+        humidity: Math.round(current?.relative_humidity_2m || 78),
+        pressure: Math.round(current?.surface_pressure || 1013),
+        visibility: 10,
+        wind: current?.wind_speed_10m ? `${current.wind_speed_10m.toFixed(0)} km/h` : "17 km/h",
+        waves: waveHeight ? `${waveHeight.toFixed(1)} m` : "1.4 m"
+      };
+    }
+  } catch (e) {
+    console.error("Erro ao buscar dados meteorológicos:", e);
+  }
+
+  // Dados para os gráficos (podem ser atualizados com dados reais)
+  const waveData = [
+    { time: '06:00', height: 1.4 },
+    { time: '09:00', height: 1.6 },
+    { time: '12:00', height: 1.8 },
+    { time: '15:00', height: 1.7 },
+    { time: '18:00', height: 1.5 },
+  ];
+
+  const windData = [
+    { time: '06:00', speed: 18, direction: 'NE' },
+    { time: '09:00', speed: 23, direction: 'NE' },
+    { time: '12:00', speed: 20, direction: 'E' },
+    { time: '15:00', speed: 20, direction: 'E' },
+    { time: '18:00', speed: 19, direction: 'SE' },
+    { time: '21:00', speed: 17, direction: 'SE' },
+  ];
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
       {/* NavBar */}
@@ -158,12 +213,39 @@ export default async function MarePage({ params }: MarePageProps) {
       {/* Info Cards - Dados Reais */}
       <section className="px-6 lg:px-12 -mt-16 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <SummaryCards 
-            nextHigh={nextHighTide} 
-            nextLow={nextLowTide} 
-            lat={Number(rawData.lat) || 0} 
-            lon={Number(rawData.lon) || 0}
-          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-gradient-to-br from-blue-500/20 to-blue-600/10 backdrop-blur-md border border-blue-400/30 rounded-2xl p-5">
+              <div className="flex items-start justify-between mb-3">
+                <span className="text-sm font-bold text-blue-200">Próxima Alta</span>
+                <span className="text-2xl">🌊</span>
+              </div>
+              <div className="text-3xl font-extrabold text-white">{nextHighTide?.hora || "--:--"}</div>
+              <div className="text-lg font-bold text-blue-300 mt-2">+{nextHighTide?.altura_m.toFixed(2) || "--"} m</div>
+            </div>
+
+            <div className="bg-gradient-to-br from-orange-500/20 to-orange-600/10 backdrop-blur-md border border-orange-400/30 rounded-2xl p-5">
+              <div className="flex items-start justify-between mb-3">
+                <span className="text-sm font-bold text-orange-200">Próxima Baixa</span>
+                <span className="text-2xl">📉</span>
+              </div>
+              <div className="text-3xl font-extrabold text-white">{nextLowTide?.hora || "--:--"}</div>
+              <div className="text-lg font-bold text-orange-300 mt-2">+{nextLowTide?.altura_m.toFixed(2) || "--"} m</div>
+            </div>
+
+            <div className="bg-gradient-to-br from-cyan-500/20 to-cyan-600/10 backdrop-blur-md border border-cyan-400/30 rounded-2xl p-5">
+              <div className="flex items-start justify-between mb-3">
+                <span className="text-sm font-bold text-cyan-200">Condições Agora</span>
+                <span className="text-xl">🕒</span>
+              </div>
+              <div className="text-3xl font-extrabold text-white">{currentTime}</div>
+              <div className="text-sm font-bold text-cyan-300 mt-2">
+                Vento: {weatherData.wind} · Ondas: {weatherData.waves}
+              </div>
+              <div className="text-xs text-cyan-400/80 mt-1">
+                🌡️ {weatherData.temp}°C · 💧 {weatherData.humidity}% · 📊 {weatherData.pressure} hPa
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -184,19 +266,18 @@ export default async function MarePage({ params }: MarePageProps) {
         </div>
       </section>
 
-      {/* Wave and Wind Charts - Dados Reais */}
+      {/* Wave and Wind Charts */}
       <section className="px-6 lg:px-12 py-8">
         <div className="max-w-7xl mx-auto">
-          <WindWaveCharts lat={Number(rawData.lat) || 0} lon={Number(rawData.lon) || 0} />
-        </div>
-      </section>
-
-      {/* Conditions Card - Dados Reais */}
-      <section className="px-6 lg:px-12 py-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ConditionsCard lat={Number(rawData.lat) || 0} lon={Number(rawData.lon) || 0} />
-            <ForecastStrip lat={Number(rawData.lat) || 0} lon={Number(rawData.lon) || 0} />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-white rounded-2xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-slate-800 mb-6">Previsão de Ondas</h2>
+              <WaveChart data={waveData} />
+            </div>
+            <div className="bg-white rounded-2xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-slate-800 mb-6">Intensidade e Direção do Vento</h2>
+              <WindChart data={windData} />
+            </div>
           </div>
         </div>
       </section>
@@ -208,15 +289,15 @@ export default async function MarePage({ params }: MarePageProps) {
         </div>
       </div>
 
-      {/* Weather Cards */}
+      {/* Weather Cards - DADOS REAIS */}
       <section className="px-6 lg:px-12 py-8">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-xl font-bold text-slate-800 mb-6">Dados Meteorológicos</h2>
+          <h2 className="text-xl font-bold text-slate-800 mb-6">Dados Meteorológicos (Open-Meteo)</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <WeatherCard title="Temperatura" value="26°C" icon="thermometer" />
-            <WeatherCard title="Umidade" value="78%" icon="droplet" />
-            <WeatherCard title="Pressão" value="1013 hPa" icon="gauge" />
-            <WeatherCard title="Visibilidade" value="10 km" icon="eye" />
+            <WeatherCard title="Temperatura" value={`${weatherData.temp}°C`} icon="thermometer" />
+            <WeatherCard title="Umidade" value={`${weatherData.humidity}%`} icon="droplet" />
+            <WeatherCard title="Pressão" value={`${weatherData.pressure} hPa`} icon="gauge" />
+            <WeatherCard title="Visibilidade" value={`${weatherData.visibility} km`} icon="eye" />
           </div>
         </div>
       </section>

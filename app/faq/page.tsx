@@ -67,10 +67,10 @@ export default function FAQPage() {
             Sim! O MaréAgora foi desenvolvido com foco em dispositivos móveis. Todos os gráficos, tabelas e informações são otimizados para telas de smartphone. Você pode acessar pelo navegador do celular sem precisar instalar nenhum aplicativo.
           </p>
 
-        </div>
+       
       </main>
 
-      <Footer />
+      < Rodapé  / >
     </div>
   );
 }

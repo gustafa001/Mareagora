@@ -406,7 +406,7 @@ export default function GuiaPage() {
           </p>
         </article>
       </div>
-
+{/* v2 */}
       <Footer />
     </main>
   );

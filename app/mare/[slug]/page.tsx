@@ -133,7 +133,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
 
       <section className="hero-section">
         <div className="hero-overlay" />
-        <div className="container relative z-10 text-white text-center pt-24 md:pt-16">
+        <div className="container relative z-30 text-white text-center pt-24 md:pt-16">
           <div className="flex flex-col gap-3 items-center px-2">
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight font-syne leading-tight max-w-4xl">
               Tábua de Maré — {port!.name}

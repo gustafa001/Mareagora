@@ -1,10 +1,8 @@
 import { TideEvent } from "@/lib/tideUtils";
-
 interface TideTableProps {
   tides: TideEvent[];
   currentMin: number;
 }
-
 export default function TideTable({ tides, currentMin }: TideTableProps) {
   const sorted = [...tides].sort((a, b) => {
     const toMin = (t: string) => {
@@ -13,15 +11,12 @@ export default function TideTable({ tides, currentMin }: TideTableProps) {
     };
     return toMin(a.hora) - toMin(b.hora);
   });
-
   const toMin = (t: string) => {
     const [h, m] = t.split(':').map(Number);
     return h * 60 + m;
   };
-
   const nextIdx = sorted.findIndex(t => toMin(t.hora) > currentMin);
   const maxH = Math.max(...tides.map(t => t.altura_m));
-
   return (
     <div className="overflow-x-auto">
       <table className="w-full border-collapse">
@@ -38,7 +33,7 @@ export default function TideTable({ tides, currentMin }: TideTableProps) {
             const past = toMin(t.hora) < currentMin;
             const isNext = i === nextIdx;
             const pct = Math.round((Math.max(0, t.altura_m) / (maxH || 1)) * 100);
-            const isAlta = t.tipo === "Alta" || (i > 0 && t.altura_m > sorted[i-1].altura_m) || (i === 0 && t.altura_m > sorted[sorted.length-1].altura_m);
+            const isAlta = t.tipo === "high" || (i > 0 && t.altura_m > sorted[i-1].altura_m) || (i === 0 && t.altura_m > sorted[sorted.length-1].altura_m);
             
             return (
               <tr key={i} className={`${past ? 'opacity-30' : ''} ${isNext ? 'bg-blue-50/50' : ''} transition-colors`}>

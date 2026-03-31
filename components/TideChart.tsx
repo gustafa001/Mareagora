@@ -10,10 +10,8 @@ interface TideChartProps {
 export default function TideChart({ tides }: TideChartProps) {
   if (!tides || tides.length === 0) return null;
 
-  // Sort by time and create smooth curve data
   const sorted = [...tides].sort((a, b) => a.hora.localeCompare(b.hora));
   
-  // Generate smooth curve points between tide events
   const chartData: { time: string; height: number; isEvent: boolean; tipo?: 'high' | 'low' }[] = [];
   
   for (let i = 0; i < sorted.length - 1; i++) {
@@ -25,7 +23,6 @@ export default function TideChart({ tides }: TideChartProps) {
     const t1 = h1 * 60 + m1;
     const t2 = h2 * 60 + m2;
     
-    // Add the current event point
     chartData.push({ 
       time: current.hora, 
       height: current.altura_m, 
@@ -33,12 +30,10 @@ export default function TideChart({ tides }: TideChartProps) {
       tipo: current.tipo 
     });
     
-    // Generate intermediate points for smooth curve
     const steps = 8;
     for (let j = 1; j < steps; j++) {
       const t = t1 + (t2 - t1) * j / steps;
       const ratio = j / steps;
-      // Use sine curve for natural tide shape
       const smoothRatio = (1 - Math.cos(ratio * Math.PI)) / 2;
       const height = current.altura_m + (next.altura_m - current.altura_m) * smoothRatio;
       const hh = Math.floor(t / 60) % 24;
@@ -51,7 +46,6 @@ export default function TideChart({ tides }: TideChartProps) {
     }
   }
   
-  // Add last event
   chartData.push({ 
     time: sorted[sorted.length - 1].hora, 
     height: sorted[sorted.length - 1].altura_m, 
@@ -108,7 +102,6 @@ export default function TideChart({ tides }: TideChartProps) {
               return null;
             }}
           />
-          {/* Zero line */}
           <ReferenceLine y={0} stroke="#94A3B8" strokeDasharray="3 3" />
           
           <Area
@@ -117,10 +110,11 @@ export default function TideChart({ tides }: TideChartProps) {
             stroke="#0284C7"
             strokeWidth={3}
             fill="url(#tideGradient)"
-            dot={({ cx, cy, payload }) => {
-              if (payload.isEvent) {
+            dot={(props) => {
+              const { cx, cy, payload } = props;
+              if (payload.isEvent && cx != null && cy != null) {
                 return (
-                  <g>
+                  <g key={`dot-${cx}-${cy}`}>
                     <circle cx={cx} cy={cy} r={6} fill={payload.tipo === 'high' ? '#0EA5E9' : '#F97316'} stroke="white" strokeWidth={2} />
                     <text x={cx} y={cy - 15} textAnchor="middle" fill="#1E3A5F" fontSize={11} fontWeight="600">
                       {payload.time} {payload.height.toFixed(2)}m
@@ -128,7 +122,7 @@ export default function TideChart({ tides }: TideChartProps) {
                   </g>
                 );
               }
-              return <></>;
+              return <g key={`dot-empty-${cx}-${cy}`} />;
             }}
             activeDot={{ r: 8, fill: '#0284C7', stroke: 'white', strokeWidth: 2 }}
           />

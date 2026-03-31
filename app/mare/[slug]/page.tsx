@@ -14,10 +14,8 @@ import SummaryCards from '@/components/SummaryCards';
 import DetailedForecastTable from '@/components/DetailedForecastTable';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import AdSlot from '@/components/ads/AdSlot';       // ← AdSense
-import { AD_SLOTS } from '@/lib/adConfig';           // ← AdSense
-
-// ─── helpers de texto por região ──────────────────────────────────────────────
+import AdSlot from '@/components/ads/AdSlot';
+import { AD_SLOTS } from '@/lib/adConfig';
 
 function getRegionContext(region: string, state: string): string {
   const map: Record<string, string> = {
@@ -39,8 +37,6 @@ function getActivityTips(region: string): string {
   return map[region] ?? 'Consulte sempre a tábua de marés antes de qualquer atividade marítima e combine com a previsão de vento e ondas disponível na plataforma.';
 }
 
-// ─── SEO ──────────────────────────────────────────────────────────────────────
-
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const port = getPortBySlug(params.slug);
   if (!port) return { title: 'Porto não encontrado' };
@@ -51,10 +47,13 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const description = `Horários e alturas das marés em ${port.name} (${port.state}) hoje e para os próximos dias. Dados oficiais da Marinha do Brasil + ondas e vento em tempo real.`;
 
   return {
-@@ -61,245 +60,242 @@
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { title, description, url, type: 'website', locale: 'pt_BR', siteName: 'MaréAgora' },
+    twitter: { card: 'summary_large_image', title, description },
+  };
 }
-
-// ─── Página ───────────────────────────────────────────────────────────────────
 
 export default async function PortPage({ params }: { params: { slug: string } }) {
   const { slug } = params;
@@ -69,7 +68,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
   const now = new Date();
   const currentMin = now.getHours() * 60 + now.getMinutes();
 
-  // ── Guard: evita Math.max/min de array vazio ──
   const heights = todayTides.length > 0 ? todayTides.map(t => t.altura_m) : [0];
   const maxH = Math.max(...heights);
   const minH = Math.min(...heights);
@@ -85,11 +83,9 @@ export default async function PortPage({ params }: { params: { slug: string } })
     return (h || 0) * 60 + (m || 0) > currentMin && t.altura_m < avgH;
   }) ?? todayTides.find(t => t.altura_m < avgH) ?? null;
 
-  // ── textos dinâmicos ──
   const regionContext = getRegionContext(port.region, port.state);
   const activityTips = getActivityTips(port.region);
 
-  // ── JSON-LD ──
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -122,7 +118,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
 
       <NavBar />
 
-      {/* ① LEADERBOARD — logo abaixo do nav ─────────────────────────────────── */}
       <div className="w-full flex justify-center px-4 my-2">
         <div className="w-full max-w-[728px] min-h-[90px]">
           <AdSlot slotId={AD_SLOTS.LEADERBOARD_NAV} format="auto" />
@@ -160,11 +155,8 @@ export default async function PortPage({ params }: { params: { slug: string } })
               <TideChart tides={todayTides} />
             </div>
 
-            {/* ── TABELA DE 30 DIAS — nova seção entre gráfico e tabela de hoje ── */}
             <TideTable30Days portData={portData} />
 
-            {/* ② IN-CONTENT RECT — entre tabela de 30 dias e tabela de hoje ──── */}
-            {/* ② IN-CONTENT RECT — entre gráfico e tabela ────────────────────── */}
             <div className="flex justify-center">
               <div className="w-full max-w-[336px] min-h-[280px]">
                 <AdSlot slotId={AD_SLOTS.INCONTENT_RECT} format="rectangle" />
@@ -176,7 +168,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
               <TideTable tides={todayTides} currentMin={currentMin} />
             </div>
 
-            {/* ③ PÓS-TABELA — após tabela, antes de DetailedForecastTable ─────── */}
             <div className="flex justify-center">
               <div className="w-full max-w-[336px] min-h-[280px]">
                 <AdSlot slotId={AD_SLOTS.POS_TABELA} format="auto" />
@@ -185,7 +176,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
 
             <DetailedForecastTable lat={port.lat} lon={port.lon} todayTides={todayTides} />
 
-            {/* ── Bloco de conteúdo editorial ── */}
             <section className="classic-card prose prose-slate max-w-none">
               <h2 className="text-2xl font-bold mb-4 font-syne tracking-tight">
                 Tábua de Maré em {port.name} — {ano}
@@ -214,7 +204,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
                     O nível médio ({portData?.nivel_medio ?? '--'} m) é a referência central do gráfico de marés.
                     Representa a altura média da superfície do mar ao longo do tempo. Valores acima dele indicam
                     maré subindo em direção à preamar; abaixo, a maré está descendo em direção à baixamar.
-                    É útil para avaliar se há profundidade suficiente para atracar embarcações com segurança.
                   </p>
                 </div>
               </div>
@@ -222,38 +211,28 @@ export default async function PortPage({ params }: { params: { slug: string } })
               <h3 className="text-lg font-bold mt-8 mb-3 text-gray-800">
                 🌊 Características das Marés em {port.name}
               </h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
-                {regionContext}
-              </p>
+              <p className="text-sm text-gray-600 leading-relaxed">{regionContext}</p>
 
               <h3 className="text-lg font-bold mt-8 mb-3 text-gray-800">
                 💡 Dicas para Atividades Marítimas em {port.name}
               </h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
-                {activityTips}
-              </p>
+              <p className="text-sm text-gray-600 leading-relaxed">{activityTips}</p>
 
-              <h3 className="text-lg font-bold mt-8 mb-3 text-gray-800">
-                📡 Fonte dos Dados
-              </h3>
+              <h3 className="text-lg font-bold mt-8 mb-3 text-gray-800">📡 Fonte dos Dados</h3>
               <p className="text-sm text-gray-600 leading-relaxed">
                 Todos os horários e alturas de maré do MaréAgora para <strong>{port.name}</strong> são baseados
                 nas publicações oficiais da <strong>Diretoria de Hidrografia e Navegação (DHN)</strong> da Marinha
                 do Brasil. Os dados de ondas, vento e precipitação são fornecidos em tempo real pela API da{' '}
-                <strong>Open-Meteo</strong>, atualizada a cada poucas horas com modelos meteorológicos globais.
-                O MaréAgora é uma ferramenta de apoio — para navegação profissional, sempre consulte as
-                publicações oficiais da Marinha.
+                <strong>Open-Meteo</strong>. O MaréAgora é uma ferramenta de apoio — para navegação profissional,
+                sempre consulte as publicações oficiais da Marinha.
               </p>
             </section>
-            {/* ── fim do bloco editorial ── */}
 
-            {/* ⑤ PRÉ-FOOTER — antes do footer ──────────────────────────────────── */}
             <div className="flex justify-center my-2">
               <div className="w-full max-w-[728px] min-h-[90px]">
                 <AdSlot slotId={AD_SLOTS.PREFOOTER} format="auto" />
               </div>
             </div>
-
           </div>
 
           <aside className="flex flex-col gap-8">
@@ -261,7 +240,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
             <ForecastStrip lat={port.lat} lon={port.lon} />
             <ConditionsCard lat={port.lat} lon={port.lon} />
 
-            {/* ④ SIDEBAR STICKY — desktop only (oculto abaixo de 1024px) ──────── */}
             <div className="hidden lg:block">
               <div className="sticky top-5">
                 <div className="min-h-[600px] w-[300px]">

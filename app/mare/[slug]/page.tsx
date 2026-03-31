@@ -63,7 +63,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
 
   const id = port.dataFile.replace('.json', '');
   const portData = await getPortData(id);
-  const { tides: todayTides } = getTodayTides(portData ?? { eventos: [] });
+  const { mares: todayTides } = getTodayTides(portData ?? { eventos: [] }) ?? { mares: [] };
 
   const ano = new Date().getFullYear();
   const now = new Date();

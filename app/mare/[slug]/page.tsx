@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getPortBySlug, getNearbySlugs } from '@/lib/ports';
+import { getPortBySlug, getNearbySlugs, PORTS } from '@/lib/ports';
 import { getTodayTides } from '@/lib/tideUtils';
 import { getPortData } from '@/lib/tideData';
 import type { Metadata } from 'next';
@@ -16,6 +16,7 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import AdSlot from '@/components/ads/AdSlot';
 import { AD_SLOTS } from '@/lib/adConfig';
+import SearchPorts from '@/components/SearchPorts';
 
 function getRegionContext(region: string, state: string): string {
   const map: Record<string, string> = {
@@ -67,6 +68,13 @@ export default async function PortPage({ params }: { params: { slug: string } })
   const ano = new Date().getFullYear();
   const now = new Date();
   const currentMin = now.getHours() * 60 + now.getMinutes();
+  
+  // Horário atual no timezone de São Paulo
+  const currentTimeBR = new Date().toLocaleTimeString('pt-BR', { 
+    hour: '2-digit', 
+    minute: '2-digit',
+    timeZone: 'America/Sao_Paulo'
+  });
 
   const heights = todayTides.length > 0 ? todayTides.map(t => t.altura_m) : [0];
   const maxH = Math.max(...heights);
@@ -136,6 +144,16 @@ export default async function PortPage({ params }: { params: { slug: string } })
             </p>
             <p className="text-sm opacity-90 font-medium font-syne sm:hidden">
               Estado do {port.state}
+            </p>
+            
+            {/* Botão de Pesquisa */}
+            <div className="mt-6 w-full max-w-md">
+              <SearchPorts ports={PORTS} />
+            </div>
+            
+            {/* Horário atual */}
+            <p className="mt-4 text-xs opacity-70">
+              Horário local: {currentTimeBR}
             </p>
           </div>
         </div>

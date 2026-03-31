@@ -24,13 +24,13 @@ interface TideTable30DaysProps {
 const TideTable30Days: React.FC<TideTable30DaysProps> = ({ portData }) => {
   const last30Days = useMemo(() => {
     if (!portData?.eventos) return [];
-    
+
     // Pega os últimos 30 eventos (dias)
     return portData.eventos.slice(-30).map(event => {
       const date = new Date(event.data);
       const dayOfWeek = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'][date.getDay()];
       const dayNum = date.getDate();
-      
+
       return {
         data: event.data,
         dayOfWeek,
@@ -62,7 +62,7 @@ const TideTable30Days: React.FC<TideTable30DaysProps> = ({ portData }) => {
   return (
     <div className="classic-card overflow-hidden">
       <h3 className="card-title mb-4">Tabela de Marés — 30 Dias</h3>
-      
+
       <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
         <table className="w-full text-sm">
           <thead>

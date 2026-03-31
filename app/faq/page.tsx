@@ -21,7 +21,7 @@ export default function FAQPage() {
           </p>
         </div>
       </section>
-
+ 
       {/* Content */}
       <main className="flex-1 container py-16">
         <div className="max-w-4xl mx-auto classic-card p-8 md:p-12 prose prose-slate prose-blue max-w-none">

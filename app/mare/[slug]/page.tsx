@@ -21,6 +21,17 @@ import Link from 'next/link';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
+const TZ = 'America/Sao_Paulo';
+
+/** Retorna hora atual no fuso de São Paulo */
+function getNowBR() {
+  const now = new Date();
+  const currentTime = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: TZ });
+  const nowHour = parseInt(now.toLocaleString('en-CA', { hour: '2-digit', hour12: false, timeZone: TZ }));
+  const todayStr = now.toLocaleDateString('en-CA', { timeZone: TZ }); // YYYY-MM-DD
+  return { currentTime, nowHour, todayStr };
+}
+
 function parseCoord(value: number | string | undefined, type: 'lat' | 'lon'): number | null {
   if (value === undefined || value === null || value === '') return null;
   const n = Number(value);
@@ -45,25 +56,19 @@ function parseCoord(value: number | string | undefined, type: 'lat' | 'lon'): nu
 }
 
 interface MarePageProps {
-  params: {
-    slug: string;
-  };
+  params: { slug: string };
 }
 
-function findNextHighTide(mares: TideEvent[]): TideEvent | null {
+function findNextHighTide(mares: TideEvent[], currentTime: string): TideEvent | null {
   const classified = classifyTideEvents(mares);
-  const now = new Date();
-  const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
   for (const event of classified) {
     if (event.tipo === 'high' && event.hora > currentTime) return event;
   }
   return classified.find(e => e.tipo === 'high') || null;
 }
 
-function findNextLowTide(mares: TideEvent[]): TideEvent | null {
+function findNextLowTide(mares: TideEvent[], currentTime: string): TideEvent | null {
   const classified = classifyTideEvents(mares);
-  const now = new Date();
-  const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
   for (const event of classified) {
     if (event.tipo === 'low' && event.hora > currentTime) return event;
   }
@@ -106,11 +111,12 @@ export default async function MarePage({ params }: MarePageProps) {
     );
   }
 
+  const { currentTime, nowHour, todayStr } = getNowBR();
+
   const classifiedMares = classifyTideEvents(todayTides.mares);
-  const currentTime = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
   const tideStatus = getCurrentTideStatus(todayTides, currentTime);
-  const nextHighTide = findNextHighTide(todayTides.mares);
-  const nextLowTide = findNextLowTide(todayTides.mares);
+  const nextHighTide = findNextHighTide(todayTides.mares, currentTime);
+  const nextLowTide = findNextLowTide(todayTides.mares, currentTime);
 
   const lat = parseCoord(rawData.lat, 'lat');
   const lon = parseCoord(rawData.lon, 'lon');
@@ -130,17 +136,17 @@ export default async function MarePage({ params }: MarePageProps) {
         const waveJson = await waveRes.json();
         const weatherJson = await weatherRes.json();
         const h = waveJson.hourly;
-        const now = new Date();
-        const nowPad = now.getHours().toString().padStart(2, '0');
-        const todayStr = now.toLocaleDateString('en-CA');
-        const idx = h.time.findIndex((t: string) => {
-          return t.startsWith(todayStr) && t.includes(`T${nowPad}:`);
-        });
+
+        // Usa todayStr e nowHour já calculados no fuso de SP — sem desvio UTC
+        const nowPad = nowHour.toString().padStart(2, '0');
+        const idx = h.time.findIndex((t: string) =>
+          t.startsWith(todayStr) && t.includes(`T${nowPad}:`)
+        );
 
         const startIdx = idx >= 0 ? idx : 0;
         const waveHeight = h.wave_height[startIdx];
 
-        // Monta array para o gráfico — próximas 8 horas a partir de agora
+        // Próximas 8 horas de ondas
         waveChartData = h.time
           .slice(startIdx, startIdx + 8)
           .map((t: string, i: number) => ({
@@ -165,7 +171,7 @@ export default async function MarePage({ params }: MarePageProps) {
     console.warn(`Porto ${port.slug} sem coordenadas válidas (lat=${rawData.lat}, lon=${rawData.lon}). Usando dados padrão.`);
   }
 
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toLocaleDateString('en-CA', { timeZone: TZ });
   const windData = {
     time: ['06:00', '09:00', '12:00', '15:00', '18:00', '21:00'].map(t => `${today}T${t}`),
     windspeed_10m: [18, 23, 20, 20, 19, 17],

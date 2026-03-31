@@ -21,16 +21,11 @@ import Link from 'next/link';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-/**
- * Converte coordenadas no formato "32° 08'.3 S" ou número decimal para graus decimais.
- * Retorna null se não conseguir parsear.
- */
 function parseCoord(value: number | string | undefined, type: 'lat' | 'lon'): number | null {
   if (value === undefined || value === null || value === '') return null;
   const n = Number(value);
   if (!isNaN(n) && n !== 0) return n;
 
-  // Tenta parsear formato DMS: "32° 08'.3 S" ou "52° 06'.2 W"
   const str = String(value).trim();
   const match = str.match(/(\d+)[°\s]+(\d+)'?\.?(\d*)\s*([NSWE])?/i);
   if (!match) return null;
@@ -41,10 +36,9 @@ function parseCoord(value: number | string | undefined, type: 'lat' | 'lon'): nu
   let decimal = deg + min / 60;
 
   if (dir === 'S' || dir === 'W') decimal = -decimal;
-  // Se não tem direção, infere pelo tipo e contexto brasileiro
   else if (!dir) {
-    if (type === 'lat') decimal = -Math.abs(decimal); // Brasil é Sul
-    if (type === 'lon') decimal = -Math.abs(decimal); // Brasil é Oeste
+    if (type === 'lat') decimal = -Math.abs(decimal);
+    if (type === 'lon') decimal = -Math.abs(decimal);
   }
 
   return decimal;
@@ -123,6 +117,7 @@ export default async function MarePage({ params }: MarePageProps) {
   const hasCoords = lat !== null && lon !== null;
 
   let weatherData = { temp: 26, humidity: 78, pressure: 1013, visibility: 10, wind: "17 km/h", waves: "1.4 m" };
+  let waveChartData: { time: string; height: number }[] = [];
 
   if (hasCoords) {
     try {
@@ -137,11 +132,22 @@ export default async function MarePage({ params }: MarePageProps) {
         const h = waveJson.hourly;
         const now = new Date();
         const nowPad = now.getHours().toString().padStart(2, '0');
-        const todayStr = now.toLocaleDateString('en-CA'); // formato YYYY-MM-DD
+        const todayStr = now.toLocaleDateString('en-CA');
         const idx = h.time.findIndex((t: string) => {
           return t.startsWith(todayStr) && t.includes(`T${nowPad}:`);
         });
-        const waveHeight = h.wave_height[idx >= 0 ? idx : 0];
+
+        const startIdx = idx >= 0 ? idx : 0;
+        const waveHeight = h.wave_height[startIdx];
+
+        // Monta array para o gráfico — próximas 8 horas a partir de agora
+        waveChartData = h.time
+          .slice(startIdx, startIdx + 8)
+          .map((t: string, i: number) => ({
+            time: t.split('T')[1].substring(0, 5),
+            height: h.wave_height[startIdx + i] ?? 0,
+          }));
+
         const current = weatherJson.current;
         weatherData = {
           temp: Math.round(current?.temperature_2m || 26),
@@ -263,7 +269,7 @@ export default async function MarePage({ params }: MarePageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h2 className="text-xl font-bold text-slate-800 mb-6">Previsão de Ondas</h2>
-              <WaveChart data={[]} />
+              <WaveChart data={waveChartData} />
             </div>
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h2 className="text-xl font-bold text-slate-800 mb-6">Intensidade e Direção do Vento</h2>

@@ -18,8 +18,8 @@ import { AD_SLOTS } from '@/lib/adConfig';
 import Link from 'next/link';
 
 interface MarePageProps {
-  params: {
-    slug: string;
+  params?: {
+    slug?: string;
   };
 }
 
@@ -52,7 +52,14 @@ function findNextLowTide(mares: TideEvent[]): TideEvent | null {
 }
 
 export async function generateMetadata({ params }: MarePageProps): Promise<Metadata> {
-  const port = getPortBySlug(params.slug);
+  const slug = params?.slug ?? '';
+  if (!slug) {
+    return {
+      title: 'Porto não encontrado | MareAgora',
+      description: 'Página de porto não encontrada no MareAgora.',
+    };
+  }
+  const port = getPortBySlug(slug);
   
   if (!port) {
     return {
@@ -86,7 +93,11 @@ export async function generateMetadata({ params }: MarePageProps): Promise<Metad
 }
 
 export default async function MarePage({ params }: MarePageProps) {
-  const port = getPortBySlug(params.slug);
+  const slug = params?.slug ?? '';
+  if (!slug) {
+    notFound();
+  }
+  const port = getPortBySlug(slug);
   
   if (!port) {
     notFound();

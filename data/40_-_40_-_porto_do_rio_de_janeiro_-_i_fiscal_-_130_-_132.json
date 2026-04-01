@@ -1,0 +1,55 @@
+{
+  "porto": "Latitude 22° 53'.8 S Longitude 43° 10' W Fuso UTC -03.0 horas",
+  "ano": 2026,
+  "eventos": [
+    {
+      "data": "2026-03-01",
+      "mares": [
+        {
+          "hora": "17:57",
+          "altura_m": 0.3
+        }
+      ]
+    },
+    {
+      "data": "2026-04-10",
+      "mares": [
+        {
+          "hora": "17:27",
+          "altura_m": 0.33
+        }
+      ]
+    },
+    {
+      "data": "2026-09-01",
+      "mares": [
+        {
+          "hora": "23:04",
+          "altura_m": 0.77
+        },
+        {
+          "hora": "23:44",
+          "altura_m": 0.91
+        }
+      ]
+    },
+    {
+      "data": "2026-10-01",
+      "mares": [
+        {
+          "hora": "18:14",
+          "altura_m": 0.35
+        }
+      ]
+    },
+    {
+      "data": "2026-11-14",
+      "mares": [
+        {
+          "hora": "22:34",
+          "altura_m": 0.97
+        }
+      ]
+    }
+  ]
+}

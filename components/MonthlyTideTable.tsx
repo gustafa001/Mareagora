@@ -173,11 +173,22 @@ export default function MonthlyTideTable({
 
   /* 31 days from today */
   const rows = useMemo(() => {
-    if (!eventos?.length) return [];
-    const sorted = [...eventos].sort((a, b) => a.data.localeCompare(b.data));
-    const startIdx = sorted.findIndex((e) => e.data >= today);
-    return sorted.slice(startIdx >= 0 ? startIdx : 0, (startIdx >= 0 ? startIdx : 0) + 31);
-  }, [eventos, today]);
+    const dates = [];
+    const startDate = new Date();
+    // Generate 31 consecutive dates
+    for (let i = 0; i < 31; i++) {
+       const d = new Date(startDate);
+       d.setDate(startDate.getDate() + i);
+       const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+       
+       const evento = eventos?.find(e => e.data === dateStr);
+       dates.push({
+         data: dateStr,
+         evento: evento || null
+       });
+    }
+    return dates;
+  }, [eventos]);
 
   const monthLabel = useMemo(() => {
     if (!rows.length) return "";
@@ -225,22 +236,24 @@ export default function MonthlyTideTable({
             </tr>
           </thead>
           <tbody>
-            {rows.map((evento) => {
-              const date = parseLocalDate(evento.data);
+            {rows.map((row) => {
+              const dateStr = row.data;
+              const evento = row.evento;
+              const date = parseLocalDate(dateStr);
               const year = date.getFullYear();
               const month = date.getMonth() + 1;
               const day = date.getDate();
               const dayNum = day;
               const weekday = WEEKDAYS[date.getDay()];
-              const isToday = evento.data === today;
+              const isToday = dateStr === today;
 
-              const mares = pickBestFour(evento.mares ?? []);
+              const mares = pickBestFour(evento?.mares ?? []);
               const coef = calcCoef(mares);
               const { sunrise, sunset } = getSunTimes(year, month, day, lat, lon);
 
               return (
                 <tr
-                  key={evento.data}
+                  key={dateStr}
                   className={`tide-row ${isToday ? "tide-row--today" : ""}`}
                 >
                   {/* Day */}

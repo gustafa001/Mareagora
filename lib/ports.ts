@@ -1,8 +1,3 @@
-/**
- * MareAgora Ports Database
- * Mapeamento de portos brasileiros para arquivos de dados JSON
- */
-
 export interface Port {
   id: string;
   name: string;
@@ -20,8 +15,8 @@ export const PORTS: Port[] = [
   { id: '1',  name: 'Barra Norte - Arco Lamoso',            slug: 'barra-norte-arco-lamoso',             state: 'PA', region: 'norte',    lat: 0.75,   lon: -50.03,  dataFile: '1_-_1_-barra_norte_-_arco_lamoso_-_2026_-_13_-_15.json' },
   { id: '2',  name: 'Igarapé Grande do Curuá',              slug: 'igarape-grande-do-curua',             state: 'PA', region: 'norte',    lat: -0.73,  lon: -48.52,  dataFile: '2_-_2_-igarape_grande_do_curua_-_2026_-_16_-_18.json' },
   { id: '3',  name: 'Porto de Santana',                     slug: 'porto-de-santana',                    state: 'AP', region: 'norte',    lat: 0.05,   lon: -51.18,  dataFile: '3_-_3_-_porto_de_santana_-_19_-_21.json' },
-  { id: '4',  name: 'Ilha dos Guarás',                      slug: 'ilha-dos-guaras',                     state: 'PA', region: 'norte',    lat: -0.93,  lon: -46.62,  dataFile: '4_-_4_-_porto_do_rio_de_janeiro_-_ilha_fiscal_estado_do_rio_de_janeiro_-_2025_-_paginas_129_a_131.json' },
-  { id: '5',  name: 'Fundeadouro de Salinópolis',           slug: 'fundeadouro-de-salinopolis',          state: 'PA', region: 'norte',    lat: -0.61,  lon: -47.35,  dataFile: '5_-_5_-_terminal_da_ilha_guaiba_estado_do_rio_de_janeiro_-_2025_-_paginas_137_a_139.json' },
+  { id: '4',  name: 'Ilha dos Guarás',                      slug: 'ilha-dos-guaras',                     state: 'PA', region: 'norte',    lat: -0.93,  lon: -46.62,  dataFile: '4_-_4_-_porto_do_rio_de_janeiro_-_ilha_fiscal_estado_do_rio_de_janeiro_-_2025_-_paginas.json' },
+  { id: '5',  name: 'Fundeadouro de Salinópolis',           slug: 'fundeadouro-de-salinopolis',          state: 'PA', region: 'norte',    lat: -0.61,  lon: -47.35,  dataFile: '5_-_5_-terminal_da_ilha_guaiba_estado_do_rio_de_janeiro_-_2025_-_paginas_137_a_139.json' },
   { id: '6',  name: 'Ilha do Mosqueiro',                    slug: 'ilha-do-mosqueiro',                   state: 'PA', region: 'norte',    lat: -1.17,  lon: -48.38,  dataFile: '6_-_6_-_porto_do_rio_grande_estado_do_rio_grande_do_sul_-_2025_-_paginas_173_a_175.json' },
   { id: '7',  name: 'Porto de Belém',                       slug: 'porto-de-belem',                      state: 'PA', region: 'norte',    lat: -1.45,  lon: -48.50,  dataFile: '7_-_7_-_porto_de_belem_estado_do_para_-_2026_-_31_-_33.json' },
   { id: '8',  name: 'Porto de Vila do Conde',               slug: 'porto-de-vila-do-conde',              state: 'PA', region: 'norte',    lat: -1.57,  lon: -48.87,  dataFile: '8_-_8_-_porto_de_vila_do_conde_34_-_36.json' },
@@ -72,42 +67,3 @@ export const PORTS: Port[] = [
   { id: '52', name: 'Porto de Itajaí',                      slug: 'porto-de-itajai',                     state: 'SC', region: 'sul',      lat: -26.90, lon: -48.67,  dataFile: '52_-_52_-_porto_de_itajai_-_166_-_168.json' },
   { id: '55', name: 'Porto do Rio Grande',                  slug: 'porto-do-rio-grande',                 state: 'RS', region: 'sul',      lat: -32.03, lon: -52.10,  dataFile: '55_-_55_-_porto_do_rio_grande_-_175_-177.json' },
 ];
-
-export function getPortBySlug(slug: string): Port | undefined {
-  return PORTS.find(port => port.slug === slug);
-}
-
-export function getAllSlugs(): string[] {
-  return PORTS.map(port => port.slug);
-}
-
-export function getPortsByRegion(region: Port['region']): Port[] {
-  return PORTS.filter(port => port.region === region);
-}
-
-export function getNearbySlugs(port: Port, limit: number = 4): Port[] {
-  const sameState = PORTS.filter(p => p.state === port.state && p.id !== port.id);
-  if (sameState.length >= limit) return sameState.slice(0, limit);
-  const sameRegion = PORTS.filter(p => p.region === port.region && p.id !== port.id);
-  const combined = [...sameState, ...sameRegion.filter(p => p.state !== port.state)];
-  return combined.slice(0, limit);
-}
-
-export function getAllRegions(): { id: Port['region']; name: string }[] {
-  return [
-    { id: 'norte', name: 'Região Norte' },
-    { id: 'nordeste', name: 'Região Nordeste' },
-    { id: 'sudeste', name: 'Região Sudeste' },
-    { id: 'sul', name: 'Região Sul' },
-  ];
-}
-
-export function getNearestPort(lat: number, lon: number): Port {
-  let nearest = PORTS[0];
-  let minDist = Infinity;
-  for (const port of PORTS) {
-    const d = Math.sqrt(Math.pow(port.lat - lat, 2) + Math.pow(port.lon - lon, 2));
-    if (d < minDist) { minDist = d; nearest = port; }
-  }
-  return nearest;
-}

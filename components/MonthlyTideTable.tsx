@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { TideDay } from "@/lib/tideUtils";
 
 interface MonthlyTideTableProps {
@@ -166,20 +166,21 @@ function isAlta(
 export default function MonthlyTideTable({
   eventos, portName, lat, lon,
 }: MonthlyTideTableProps) {
+  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth());
+
   const today = useMemo(() => {
     const n = new Date();
     return `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, "0")}-${String(n.getDate()).padStart(2, "0")}`;
   }, []);
 
-  /* 31 days from today */
+  /* Entire selected month */
   const rows = useMemo(() => {
     const dates = [];
-    const startDate = new Date();
-    // Generate 31 consecutive dates
-    for (let i = 0; i < 31; i++) {
-       const d = new Date(startDate);
-       d.setDate(startDate.getDate() + i);
-       const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
+    
+    for (let i = 1; i <= daysInMonth; i++) {
+       const dateStr = `${selectedYear}-${String(selectedMonth + 1).padStart(2, "0")}-${String(i).padStart(2, "0")}`;
        
        const evento = eventos?.find(e => e.data === dateStr);
        dates.push({
@@ -188,13 +189,19 @@ export default function MonthlyTideTable({
        });
     }
     return dates;
-  }, [eventos]);
+  }, [eventos, selectedMonth, selectedYear]);
 
-  const monthLabel = useMemo(() => {
-    if (!rows.length) return "";
-    const d = parseLocalDate(rows[0].data);
-    return `${MONTHS[d.getMonth()]} de ${d.getFullYear()}`;
-  }, [rows]);
+  const availableYears = useMemo(() => {
+    const currentYear = new Date().getFullYear();
+    const years = new Set<number>([currentYear]);
+    if (eventos) {
+      eventos.forEach(e => {
+        const y = parseInt(e.data.split('-')[0], 10);
+        if (!isNaN(y)) years.add(y);
+      });
+    }
+    return Array.from(years).sort();
+  }, [eventos]);
 
   if (!rows.length) {
     return (
@@ -211,7 +218,33 @@ export default function MonthlyTideTable({
         <div className="monthly-tide-title-row">
           <span className="monthly-tide-icon">🌊</span>
           <h3 className="monthly-tide-title">Tábua de Marés — {portName}</h3>
-          <span className="monthly-tide-month">{monthLabel}</span>
+          
+          <div className="flex gap-2 items-center ml-auto">
+            <select
+              value={selectedMonth}
+              onChange={(e) => setSelectedMonth(Number(e.target.value))}
+              className="bg-black/20 border border-white/10 text-white rounded-md px-3 py-1.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-400 backdrop-blur-md cursor-pointer transition-all hover:bg-black/30"
+              aria-label="Selecionar Mês"
+            >
+              {MONTHS.map((m, idx) => (
+                <option key={m} value={idx} className="text-gray-900 font-medium">
+                  {m}
+                </option>
+              ))}
+            </select>
+            <select
+              value={selectedYear}
+              onChange={(e) => setSelectedYear(Number(e.target.value))}
+              className="bg-black/20 border border-white/10 text-white rounded-md px-3 py-1.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-400 backdrop-blur-md cursor-pointer transition-all hover:bg-black/30"
+              aria-label="Selecionar Ano"
+            >
+              {availableYears.map((y) => (
+                <option key={y} value={y} className="text-gray-900 font-medium">
+                  {y}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         <div className="monthly-tide-legend">
           <span className="legend-alta">▲ Alta</span>

@@ -14,6 +14,8 @@ import DetailedForecastTable from '@/components/DetailedForecastTable';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import SearchPorts from '@/components/SearchPorts';
+import PortStatistics from '@/components/PortStatistics';
+import ActivityRecommendations from '@/components/ActivityRecommendations';
 
 function getRegionContext(region: string, state: string): string {
   const map: Record<string, string> = {
@@ -170,6 +172,18 @@ export default async function PortPage({ params }: { params: { slug: string } })
             />
 
             <DetailedForecastTable lat={port!.lat} lon={port!.lon} todayTides={todayTides} />
+
+            <ActivityRecommendations
+              todayTides={todayTides}
+              nextHigh={nextHigh}
+              nextLow={nextLow}
+              waveHeight={2.5}
+            />
+
+            <PortStatistics
+              eventos={portData?.eventos ?? []}
+              portName={port!.name}
+            />
 
             <section className="classic-card prose prose-slate max-w-none">
               <h2 className="text-2xl font-bold mb-4 font-syne tracking-tight">

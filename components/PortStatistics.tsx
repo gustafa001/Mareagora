@@ -1,6 +1,6 @@
 'use client';
 
-import { TideEvent, getMoonAge, getTideCoefficient } from '@/lib/tideUtils';
+import { TideEvent, getMoonAge, getTideCoefficient, classifyTideEvents } from '@/lib/tideUtils';
 
 interface PortStatisticsProps {
   eventos: any[];
@@ -17,8 +17,8 @@ export default function PortStatistics({ eventos, portName, currentMonth }: Port
   const amplitude = maxHeight - minHeight;
   const avgHeight = allHeights.length > 0 ? allHeights.reduce((a: number, b: number) => a + b, 0) / allHeights.length : 0;
 
-  // Contar marés altas e baixas
-  const allEvents = eventos.flatMap((e: any) => e.mares || []);
+  // Contar marés altas e baixas (classifica antes pois tipo não vem no JSON)
+  const allEvents = eventos.flatMap((e: any) => classifyTideEvents(e.mares || []));
   const highTides = allEvents.filter((e: TideEvent) => e.tipo === 'high').length;
   const lowTides = allEvents.filter((e: TideEvent) => e.tipo === 'low').length;
 

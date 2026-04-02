@@ -86,16 +86,18 @@ export default function PortStatistics({ eventos, portName, currentMonth }: Port
       <div className="mt-6 pt-6 border-t border-gray-200">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
           <div>
-            <div className="text-sm text-gray-600 font-semibold">Total de Marés Altas</div>
+            <div className="text-sm text-gray-600 font-semibold">Marés Altas no Ano</div>
             <div className="text-xl font-bold text-blue-600 mt-1">{highTides}</div>
           </div>
           <div>
-            <div className="text-sm text-gray-600 font-semibold">Total de Marés Baixas</div>
+            <div className="text-sm text-gray-600 font-semibold">Marés Baixas no Ano</div>
             <div className="text-xl font-bold text-orange-600 mt-1">{lowTides}</div>
           </div>
           <div>
-            <div className="text-sm text-gray-600 font-semibold">Variação Mensal</div>
-            <div className="text-xl font-bold text-green-600 mt-1">{(amplitude * 30).toFixed(0)} m</div>
+            <div className="text-sm text-gray-600 font-semibold">Média por Dia</div>
+            <div className="text-xl font-bold text-green-600 mt-1">
+              {eventos.length > 0 ? ((highTides + lowTides) / eventos.length).toFixed(1) : '0'} marés
+            </div>
           </div>
         </div>
       </div>

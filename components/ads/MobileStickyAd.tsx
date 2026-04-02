@@ -2,6 +2,12 @@
 
 import { useEffect } from 'react';
 
+declare global {
+  interface Window {
+    adsbygoogle: any[];
+  }
+}
+
 export default function MobileStickyAd() {
   useEffect(() => {
     // Push do AdSense quando o componente monta

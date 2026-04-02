@@ -47,12 +47,27 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const title = `Tábua de Maré ${port.name} ${ano} — MaréAgora`;
   const description = `Horários e alturas das marés em ${port.name} (${port.state}) hoje e para os próximos dias. Dados oficiais da Marinha do Brasil + ondas e vento em tempo real.`;
 
+  const ogImage = `https://www.mareagora.com.br/mare/${params.slug}/opengraph-image`;
+
   return {
     title,
     description,
     alternates: { canonical: url },
-    openGraph: { title, description, url, type: 'website', locale: 'pt_BR', siteName: 'MaréAgora' },
-    twitter: { card: 'summary_large_image', title, description },
+    openGraph: {
+      title,
+      description,
+      url,
+      type: 'website',
+      locale: 'pt_BR',
+      siteName: 'MaréAgora',
+      images: [{ url: ogImage, width: 1200, height: 630, alt: `Tábua de Maré ${port.name}` }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
+    },
   };
 }
 

@@ -1,4 +1,3 @@
-
 'use client';
 
 import MobileStickyAd from "@/components/ads/MobileStickyAd";
@@ -11,7 +10,6 @@ export default function Providers({
   return (
     <>
       {children}
-      {/* Mobile Sticky Ad — aparece apenas em telas < 768px */}
       <MobileStickyAd />
     </>
   );

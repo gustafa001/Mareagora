@@ -15,12 +15,11 @@ export default function ActivityRecommendations({
   nextLow,
   waveHeight = 0,
 }: ActivityRecommendationsProps) {
-  
-  // Calcular janelas ideais para cada atividade
+
   const getActivityRecommendation = () => {
     const recommendations = [];
 
-    // 🏄 SURF - Melhor com ondas de 0.8m a 2m e em maré média
+    // 🏄 SURF
     if (waveHeight >= 0.8) {
       recommendations.push({
         emoji: '🏄',
@@ -41,10 +40,10 @@ export default function ActivityRecommendations({
       });
     }
 
-    // 🎣 PESCA - Melhor durante virada da maré (transição)
+    // 🎣 PESCA
     const now = new Date();
     const currentMin = now.getHours() * 60 + now.getMinutes();
-    
+
     let bestFishTime = nextLow || nextHigh;
     if (nextLow && nextHigh) {
       const lowMin = parseInt(nextLow.hora.split(':')[0]) * 60 + parseInt(nextLow.hora.split(':')[1]);
@@ -61,17 +60,17 @@ export default function ActivityRecommendations({
       color: 'from-orange-500 to-orange-600',
     });
 
-    // 🤿 MERGULHO - Melhor com maré alta (mais profundidade e visibilidade)
+    // 🤿 MERGULHO
     recommendations.push({
       emoji: '🤿',
       activity: 'MERGULHO',
       icon: '💧',
       time: nextHigh ? `Próximo em ${nextHigh.hora}` : 'Verificar depois',
-      tip: `Maré alta ${nextHigh?.altura_m.toFixed(2)}m - Maior profundidade e visibilidade`,
+      tip: `Maré alta ${nextHigh ? nextHigh.altura_m.toFixed(2) : '--'}m - Maior profundidade e visibilidade`,
       color: 'from-cyan-500 to-cyan-600',
     });
 
-    // 🚣 CAIAQUE - Qualquer maré, mas evitar picos
+    // 🚣 CAIAQUE
     recommendations.push({
       emoji: '🚣',
       activity: 'CAIAQUE',
@@ -89,7 +88,7 @@ export default function ActivityRecommendations({
   return (
     <div className="classic-card">
       <h3 className="card-title mb-6">💡 Recomendações de Atividades — Hoje</h3>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {activities.map((activity, idx) => (
           <div
@@ -106,7 +105,7 @@ export default function ActivityRecommendations({
               </div>
               <span className="text-xl">{activity.icon}</span>
             </div>
-            
+
             <p className="text-sm opacity-95 bg-white/10 px-3 py-2 rounded-lg">
               💬 {activity.tip}
             </p>
@@ -114,7 +113,6 @@ export default function ActivityRecommendations({
         ))}
       </div>
 
-      {/* Resumo rápido */}
       <div className="mt-6 pt-6 border-t border-gray-200">
         <p className="text-sm text-gray-600">
           <strong>💡 Dica:</strong> Combine as recomendações com a previsão de vento e ondas para melhorar seu planejamento.
@@ -123,4 +121,3 @@ export default function ActivityRecommendations({
     </div>
   );
 }
-

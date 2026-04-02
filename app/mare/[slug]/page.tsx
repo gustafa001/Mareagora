@@ -13,8 +13,6 @@ import SummaryCards from '@/components/SummaryCards';
 import DetailedForecastTable from '@/components/DetailedForecastTable';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import AdSlot from '@/components/ads/AdSlot';
-import { AD_SLOTS } from '@/lib/adConfig';
 import SearchPorts from '@/components/SearchPorts';
 
 function getRegionContext(region: string, state: string): string {
@@ -125,12 +123,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
 
       <NavBar />
 
-      <div className="w-full flex justify-center px-4 my-2">
-        <div className="w-full max-w-[728px] min-h-[90px]">
-          <AdSlot slotId={AD_SLOTS.LEADERBOARD_NAV} format="auto" />
-        </div>
-      </div>
-
       <section className="hero-section">
         <div className="hero-overlay" />
         <div className="container relative z-30 text-white text-center pt-24 md:pt-16">
@@ -176,12 +168,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
               lat={port!.lat}
               lon={port!.lon}
             />
-
-            <div className="flex justify-center">
-              <div className="w-full max-w-[336px] min-h-[280px]">
-                <AdSlot slotId={AD_SLOTS.POS_TABELA} format="auto" />
-              </div>
-            </div>
 
             <DetailedForecastTable lat={port!.lat} lon={port!.lon} todayTides={todayTides} />
 
@@ -236,31 +222,12 @@ export default async function PortPage({ params }: { params: { slug: string } })
                 sempre consulte as publicações oficiais da Marinha.
               </p>
             </section>
-
-            <div className="flex justify-center my-2">
-              <div className="w-full max-w-[728px] min-h-[90px]">
-                <AdSlot slotId={AD_SLOTS.PREFOOTER} format="auto" />
-              </div>
-            </div>
           </div>
 
           <aside className="flex flex-col gap-8">
             <WavesCard lat={port!.lat} lon={port!.lon} />
             <ForecastStrip lat={port!.lat} lon={port!.lon} />
             <ConditionsCard lat={port!.lat} lon={port!.lon} />
-
-            <div className="hidden lg:block">
-              <div className="sticky top-5">
-                <div className="min-h-[600px] w-[300px]">
-                  <AdSlot
-                    slotId={AD_SLOTS.SIDEBAR_STICKY}
-                    format="auto"
-                    style={{ width: '300px', height: '600px' }}
-                    fullWidthResponsive={false}
-                  />
-                </div>
-              </div>
-            </div>
 
             <div className="classic-card">
               <h3 className="card-title mb-4">📍 Cidades Próximas</h3>

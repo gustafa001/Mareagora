@@ -79,6 +79,26 @@ export default function RootLayout({
           .wave-path-2 {
             animation: wave2 6s ease-in-out infinite;
           }
+          .mobile-ad-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 40;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: env(safe-area-inset-bottom);
+          }
+          @media (min-width: 768px) {
+            .mobile-ad-container {
+              display: none;
+            }
+          }
         `}</style>
       </head>
       <body className="font-dm-sans">
@@ -91,30 +111,23 @@ export default function RootLayout({
           </svg>
         </div>
         {children}
-        <MobileAdWrapper />
+        <div className="mobile-ad-container">
+          <ins
+            className="adsbygoogle"
+            style={{ display: 'inline-block' }}
+            data-ad-client="ca-pub-2920008879492175"
+            data-ad-slot="7494638408"
+            data-ad-format="horizontal"
+            data-full-width-responsive="true"
+          />
+        </div>
+        <Script
+          id="adsense-init"
+          strategy="afterInteractive"
+        >
+          {`(adsbygoogle = window.adsbygoogle || []).push({});`}
+        </Script>
       </body>
     </html>
-  );
-}
-
-function MobileAdWrapper() {
-  return (
-    <div className="fixed bottom-0 left-0 right-0 md:hidden bg-white border-t border-gray-200 shadow-lg z-40">
-      <div className="w-full h-[90px] flex items-center justify-center bg-gray-50">
-        <ins
-          className="adsbygoogle"
-          style={{ display: 'block' }}
-          data-ad-client="ca-pub-2920008879492175"
-          data-ad-slot="7494638408"
-          data-ad-format="horizontal"
-          data-full-width-responsive="true"
-        />
-      </div>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `(adsbygoogle = window.adsbygoogle || []).push({});`,
-        }}
-      />
-    </div>
   );
 }

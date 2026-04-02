@@ -1,6 +1,6 @@
 'use client';
 
-import { TideEvent } from '@/lib/tideUtils';
+import { TideEvent, getMoonAge, getTideCoefficient } from '@/lib/tideUtils';
 
 interface PortStatisticsProps {
   eventos: any[];
@@ -11,29 +11,33 @@ interface PortStatisticsProps {
 export default function PortStatistics({ eventos, portName, currentMonth }: PortStatisticsProps) {
   // Calcular estatísticas gerais do mês
   const allHeights = eventos.flatMap((e: any) => e.mares?.map((m: TideEvent) => m.altura_m) || []);
-  
-  const maxHeight = Math.max(...allHeights);
-  const minHeight = Math.min(...allHeights);
-  const amplitude = maxHeight - minHeight;
-  const avgHeight = allHeights.length > 0 ? allHeights.reduce((a, b) => a + b, 0) / allHeights.length : 0;
 
-  // Contar dias com maré alta e baixa
+  const maxHeight = allHeights.length > 0 ? Math.max(...allHeights) : 0;
+  const minHeight = allHeights.length > 0 ? Math.min(...allHeights) : 0;
+  const amplitude = maxHeight - minHeight;
+  const avgHeight = allHeights.length > 0 ? allHeights.reduce((a: number, b: number) => a + b, 0) / allHeights.length : 0;
+
+  // Contar marés altas e baixas
   const allEvents = eventos.flatMap((e: any) => e.mares || []);
   const highTides = allEvents.filter((e: TideEvent) => e.tipo === 'high').length;
   const lowTides = allEvents.filter((e: TideEvent) => e.tipo === 'low').length;
 
-  // Encontrar melhor coeficiente
-  const allCoeffs = eventos.map((e: any) => e.coef || 0);
-  const maxCoeff = Math.max(...allCoeffs);
-  const minCoeff = Math.min(...allCoeffs);
+  // Calcular coeficiente real via getMoonAge + getTideCoefficient
+  const allCoeffs = eventos
+    .filter((e: any) => e.data)
+    .map((e: any) => {
+      const date = new Date(e.data);
+      const moonAge = getMoonAge(date);
+      return getTideCoefficient(date, moonAge);
+    });
 
-  const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 
-                   'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+  const maxCoeff = allCoeffs.length > 0 ? Math.max(...allCoeffs) : 0;
+  const minCoeff = allCoeffs.length > 0 ? Math.min(...allCoeffs) : 0;
 
   return (
     <div className="classic-card">
       <h3 className="card-title mb-6">📊 Estatísticas de Marés — {portName}</h3>
-      
+
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {/* Amplitude */}
         <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border border-blue-200">
@@ -78,7 +82,7 @@ export default function PortStatistics({ eventos, portName, currentMonth }: Port
         </div>
       </div>
 
-      {/* Resumo*/}
+      {/* Resumo */}
       <div className="mt-6 pt-6 border-t border-gray-200">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
           <div>
@@ -98,4 +102,3 @@ export default function PortStatistics({ eventos, portName, currentMonth }: Port
     </div>
   );
 }
-

@@ -71,40 +71,49 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon }: SummaryCar
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 -mt-16 relative z-20">
       {/* Próxima Maré Alta */}
-      <div className="summary-card glass-card card-mare-alta flex flex-col justify-between min-h-[160px]">
+      <div className="summary-card bg-gradient-to-br from-blue-500 to-blue-700 shadow-xl hover:shadow-2xl flex flex-col justify-between min-h-[160px] border border-blue-400/50">
         <div>
           <div className="flex justify-between items-start">
-            <span className="text-sm font-bold opacity-80 backdrop-blur-sm shadow-sm md:shadow-none bg-black/10 px-2 py-0.5 rounded md:bg-transparent md:px-0 md:py-0 md:rounded-none inline-block">Próxima Alta</span>
-            <span className="text-2xl drop-shadow-md">🌊</span>
+            <span className="text-sm font-bold opacity-95 bg-white/20 px-3 py-1 rounded-full text-white">Próxima Alta</span>
+            <span className="text-2xl animate-bounce">🌊</span>
           </div>
-          <div className="text-4xl font-extrabold mt-4 font-syne drop-shadow-md">{nextHigh?.hora || "--:--"}</div>
+          <div className="text-4xl font-extrabold mt-4 font-syne text-white">{nextHigh?.hora || "--:--"}</div>
         </div>
-        <div className="text-lg font-bold mt-2 drop-shadow-sm tracking-wide">+{nextHigh?.altura_m.toFixed(2)} m</div>
+        <div className="text-lg font-bold mt-2 text-white/95 tracking-wide bg-white/10 px-3 py-2 rounded-lg w-fit">
+          +{nextHigh?.altura_m.toFixed(2)} m
+        </div>
       </div>
 
       {/* Próxima Maré Baixa */}
-      <div className="summary-card glass-card card-mare-baixa flex flex-col justify-between min-h-[160px]">
+      <div className="summary-card bg-gradient-to-br from-orange-500 to-orange-700 shadow-xl hover:shadow-2xl flex flex-col justify-between min-h-[160px] border border-orange-400/50">
         <div>
           <div className="flex justify-between items-start">
-            <span className="text-sm font-bold opacity-80 backdrop-blur-sm shadow-sm md:shadow-none bg-black/10 px-2 py-0.5 rounded md:bg-transparent md:px-0 md:py-0 md:rounded-none inline-block">Próxima Baixa</span>
-            <span className="text-2xl drop-shadow-md">📉</span>
+            <span className="text-sm font-bold opacity-95 bg-white/20 px-3 py-1 rounded-full text-white">Próxima Baixa</span>
+            <span className="text-2xl">📉</span>
           </div>
-          <div className="text-4xl font-extrabold mt-4 font-syne drop-shadow-md">{nextLow?.hora || "--:--"}</div>
+          <div className="text-4xl font-extrabold mt-4 font-syne text-white">{nextLow?.hora || "--:--"}</div>
         </div>
-        <div className="text-lg font-bold mt-2 drop-shadow-sm tracking-wide">+{nextLow?.altura_m.toFixed(2)} m</div>
+        <div className="text-lg font-bold mt-2 text-white/95 tracking-wide bg-white/10 px-3 py-2 rounded-lg w-fit">
+          +{nextLow?.altura_m.toFixed(2)} m
+        </div>
       </div>
 
       {/* Condições Agora */}
-      <div className={`summary-card glass-card ${seaData ? seaData.colorClass : 'card-mar-suave loading-shimmer'} flex flex-col justify-between min-h-[160px] transition-all duration-700`}>
+      <div className={`summary-card shadow-xl hover:shadow-2xl flex flex-col justify-between min-h-[160px] transition-all duration-700 border border-white/30 ${
+        seaData?.colorClass === 'card-mar-revolto' ? 'bg-gradient-to-br from-red-500 to-red-700 border-red-400/50' :
+        seaData?.colorClass === 'card-mar-agitado' ? 'bg-gradient-to-br from-indigo-500 to-indigo-700 border-indigo-400/50' :
+        seaData?.colorClass === 'card-mar-suave' ? 'bg-gradient-to-br from-teal-500 to-teal-700 border-teal-400/50' :
+        'bg-gradient-to-br from-cyan-500 to-cyan-700 border-cyan-400/50'
+      } ${!seaData ? 'loading-shimmer' : ''}`}>
         <div>
           <div className="flex justify-between items-start">
-            <span className="text-sm font-bold opacity-80 backdrop-blur-sm shadow-sm md:shadow-none bg-black/10 px-2 py-0.5 rounded md:bg-transparent md:px-0 md:py-0 md:rounded-none inline-block">Condições Agora</span>
-            <span className="text-xl animate-pulse">🕒</span>
+            <span className="text-sm font-bold opacity-95 bg-white/20 px-3 py-1 rounded-full text-white">Condições Agora</span>
+            <span className="text-2xl animate-pulse">🕒</span>
           </div>
-          <div className="text-4xl font-extrabold mt-4 font-syne drop-shadow-md">{seaData?.time || "--:--"}</div>
+          <div className="text-4xl font-extrabold mt-4 font-syne text-white">{seaData?.time || "--:--"}</div>
         </div>
-        <div className="text-sm font-bold opacity-90 mt-2 leading-tight drop-shadow-sm bg-black/10 px-3 py-1.5 rounded-lg inline-block self-start">
-          Vento: {seaData?.wind || "--"} · Ondas: {seaData?.waves || "--"}
+        <div className="text-sm font-bold text-white/95 mt-2 leading-tight bg-white/10 px-3 py-2 rounded-lg">
+          🌬️ {seaData?.wind || "--"} · 🌊 {seaData?.waves || "--"}
         </div>
       </div>
     </div>

@@ -17,24 +17,23 @@ import SearchPorts from '@/components/SearchPorts';
 import PortStatistics from '@/components/PortStatistics';
 import ActivityRecommendations from '@/components/ActivityRecommendations';
 import ShareButton from '@/components/ShareButton';
-import AdBanner from '@/components/AdBanner';
 
 function getRegionContext(region: string, state: string): string {
   const map: Record<string, string> = {
-    norte: `O litoral da região Norte, que abrange estados como ${state}, é marcado por uma das maiores amplitudes de maré do Brasil. As marés amazônicas são influenciadas diretamente pela morfologia dos estuários e pela descarga dos grandes rios, podendo variar vários metros entre a preamar e a baixamar. Esse comportamento extremo exige atenção redobrada de pescadores, navegadores e moradores ribeirinhos.`,
-    nordeste: `O litoral do Nordeste brasileiro, onde ${state} está inserido, apresenta características únicas de maré devido à posição geográfica próxima à linha do Equador. As variações de maré são moderadas, com influência direta dos ventos alísios e das correntes do Atlântico Sul. A região é famosa por praias de águas mornas, recifes de coral e condições favoráveis para mergulho e kitesurf em determinados períodos do ano.`,
-    sudeste: `O litoral do Sudeste, região onde ${state} se localiza, é um dos mais movimentados do Brasil — tanto em termos de tráfego marítimo quanto em atividades recreativas. As marés dessa região são do tipo semidiurno, com dois ciclos completos de preamar e baixamar a cada 24 horas. A variação costuma ser moderada, mas pode ser amplificada em baías e enseadas fechadas, como ocorre em Angra dos Reis e na Baía de Guanabara.`,
-    sul: `O litoral Sul do Brasil, onde ${state} está situado, possui marés com características bem definidas e influência marcante dos sistemas de frentes frias vindas do sul do continente. As ondas de tempestade (ressacas) são frequentes no inverno e podem elevar temporariamente o nível do mar acima do previsto na tábua oficial. Surfe, pesca embarcada e navegação costeira são atividades muito praticadas na região.`,
+    Norte: `O litoral da região Norte, que abrange estados como ${state}, é marcado por uma das maiores amplitudes de maré do Brasil. As marés amazônicas são influenciadas diretamente pela morfologia dos estuários e pela descarga dos grandes rios, podendo variar vários metros entre a preamar e a baixamar. Esse comportamento extremo exige atenção redobrada de pescadores, navegadores e moradores ribeirinhos.`,
+    Nordeste: `O litoral do Nordeste brasileiro, onde ${state} está inserido, apresenta características únicas de maré devido à posição geográfica próxima à linha do Equador. As variações de maré são moderadas, com influência direta dos ventos alísios e das correntes do Atlântico Sul. A região é famosa por praias de águas mornas, recifes de coral e condições favoráveis para mergulho e kitesurf em determinados períodos do ano.`,
+    Sudeste: `O litoral do Sudeste, região onde ${state} se localiza, é um dos mais movimentados do Brasil — tanto em termos de tráfego marítimo quanto em atividades recreativas. As marés dessa região são do tipo semidiurno, com dois ciclos completos de preamar e baixamar a cada 24 horas. A variação costuma ser moderada, mas pode ser amplificada em baías e enseadas fechadas, como ocorre em Angra dos Reis e na Baía de Guanabara.`,
+    Sul: `O litoral Sul do Brasil, onde ${state} está situado, possui marés com características bem definidas e influência marcante dos sistemas de frentes frias vindas do sul do continente. As ondas de tempestade (ressacas) são frequentes no inverno e podem elevar temporariamente o nível do mar acima do previsto na tábua oficial. Surfe, pesca embarcada e navegação costeira são atividades muito praticadas na região.`,
   };
   return map[region] ?? `O litoral de ${state} apresenta condições de maré características da costa brasileira, com variações influenciadas pela posição geográfica e pela morfologia costeira local.`;
 }
 
 function getActivityTips(region: string): string {
   const map: Record<string, string> = {
-    norte: 'Na região Norte, os melhores momentos para pesca são durante a virada da maré — especialmente na baixamar, quando os bancos de areia ficam expostos e concentram os peixes. Evite navegar em canais estreitos durante a preamar máxima sem conhecimento da área.',
-    nordeste: 'No Nordeste, as condições ideais para surfe ocorrem geralmente no período de setembro a março, quando as ondulações do Atlântico Norte chegam com mais força. Para mergulho nos recifes, prefira os horários de maré alta, que garantem maior visibilidade e profundidade segura sobre as formações coralinas.',
-    sudeste: 'No Sudeste, a pesca embarcada é mais produtiva durante as marés de sizígia (lua cheia e lua nova), quando a amplitude é maior e o movimento da água atrai mais peixes. Para surfe, as melhores ondas costumam aparecer com mar de sudeste combinado com maré baixa a média.',
-    sul: 'No Sul do Brasil, fique atento às previsões de frentes frias antes de planejar atividades marítimas. O vento sul pode elevar o nível do mar rapidamente. Para pesca em costões e pedras, opere sempre com maré baixa e nunca vire as costas para o mar.',
+    Norte: 'Na região Norte, os melhores momentos para pesca são durante a virada da maré — especialmente na baixamar, quando os bancos de areia ficam expostos e concentram os peixes. Evite navegar em canais estreitos durante a preamar máxima sem conhecimento da área.',
+    Nordeste: 'No Nordeste, as condições ideais para surfe ocorrem geralmente no período de setembro a março, quando as ondulações do Atlântico Norte chegam com mais força. Para mergulho nos recifes, prefira os horários de maré alta, que garantem maior visibilidade e profundidade segura sobre as formações coralinas.',
+    Sudeste: 'No Sudeste, a pesca embarcada é mais produtiva durante as marés de sizígia (lua cheia e lua nova), quando a amplitude é maior e o movimento da água atrai mais peixes. Para surfe, as melhores ondas costumam aparecer com mar de sudeste combinado com maré baixa a média.',
+    Sul: 'No Sul do Brasil, fique atento às previsões de frentes frias antes de planejar atividades marítimas. O vento sul pode elevar o nível do mar rapidamente. Para pesca em costões e pedras, opere sempre com maré baixa e nunca vire as costas para o mar.',
   };
   return map[region] ?? 'Consulte sempre a tábua de marés antes de qualquer atividade marítima e combine com a previsão de vento e ondas disponível na plataforma.';
 }
@@ -138,7 +137,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
         license: 'https://creativecommons.org/licenses/by/4.0/',
         creator: {
           '@type': 'Organization',
-         name: 'Marinha do Brasil — DHN',
+          name: 'Marinha do Brasil — DHN',
           url: 'https://www.marinha.mil.br',
         },
         temporalCoverage: `${ano}`,
@@ -180,9 +179,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
               Horário local: {currentTimeBR}
             </p>
 
-            <div className="mt-2">
-              <ShareButton portName={port!.name} slug={slug} />
-            </div>
           </div>
         </div>
       </section>
@@ -195,10 +191,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
           lon={port!.lon}
         />
 
-        {/* Anúncio 1 — abaixo dos cards de resumo */}
-        <AdBanner slot="7494638408" format="horizontal" className="my-6" />
-
-        <div className="mt-6 flex flex-col lg:grid lg:grid-cols-[1fr_350px] gap-8">
+        <div className="mt-12 flex flex-col lg:grid lg:grid-cols-[1fr_350px] gap-8">
           <div className="flex flex-col gap-8">
             <div className="classic-card">
               <TideChart tides={todayTides} />
@@ -210,9 +203,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
               lat={port!.lat}
               lon={port!.lon}
             />
-
-            {/* Anúncio 2 — entre tábua mensal e previsão detalhada */}
-            <AdBanner slot="7494638408" format="auto" />
 
             <DetailedForecastTable lat={port!.lat} lon={port!.lon} todayTides={todayTides} />
 
@@ -227,9 +217,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
               eventos={portData?.eventos ?? []}
               portName={port!.name}
             />
-
-            {/* Anúncio 3 — antes do bloco de texto SEO */}
-            <AdBanner slot="7494638408" format="horizontal" />
 
             <section className="classic-card prose prose-slate max-w-none">
               <h2 className="text-2xl font-bold mb-4 font-syne tracking-tight">
@@ -289,9 +276,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
             <ForecastStrip lat={port!.lat} lon={port!.lon} />
             <ConditionsCard lat={port!.lat} lon={port!.lon} />
 
-            {/* Anúncio 4 — sidebar */}
-            <AdBanner slot="7494638408" format="rectangle" />
-
             <div className="classic-card">
               <h3 className="card-title mb-4">📍 Cidades Próximas</h3>
               <div className="flex flex-col gap-3">
@@ -309,6 +293,11 @@ export default async function PortPage({ params }: { params: { slug: string } })
             </div>
           </aside>
         </div>
+      </div>
+
+      {/* FAB — botão flutuante fixo canto inferior direito */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <ShareButton portName={port!.name} slug={slug} />
       </div>
 
       <Footer />

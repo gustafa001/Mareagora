@@ -159,11 +159,11 @@ export default function PrivacyPage() {
           <ul>
             <li>
               <strong>E-mail:</strong>{' '}
-              <a href="mailto:contato@mareagora.com.br">contato@mareagora.com.br</a>
+              <a href="mailto:contato@mareagora.com.br">contatos@mareagora.com.br</a>
             </li>
             <li>
               <strong>Formulário:</strong>{' '}
-              <a href="https://contatos.mareagora.com.br">contatos.mareagora.com.br</a>
+              <a href="https://contatos.mareagora.com.br">contatos@mareagora.com.br</a>
             </li>
           </ul>
 

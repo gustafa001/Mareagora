@@ -109,8 +109,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
   const regionContext = getRegionContext(port!.region, port!.state);
   const activityTips = getActivityTips(port!.region);
 
-  // ── ALTERAÇÃO 1: BreadcrumbList agora inclui nível "Portos" intermediário
-  // ── ALTERAÇÃO 2: Dataset schema adicionado ao @graph
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -136,6 +134,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
         name: `Tábua de Marés ${port!.name} ${ano}`,
         description: `Dados de maré para ${port!.name}, ${port!.state}, ${ano}. Fonte: Marinha do Brasil / DHN.`,
         url: `https://www.mareagora.com.br/mare/${slug}`,
+        license: 'https://creativecommons.org/licenses/by/4.0/',
         creator: {
           '@type': 'Organization',
           name: 'Marinha do Brasil — DHN',
@@ -162,7 +161,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
         <div className="hero-overlay" />
         <div className="container relative z-30 text-white text-center pt-24 md:pt-16">
           <div className="flex flex-col gap-3 items-center px-2">
-            {/* ALTERAÇÃO 3: H1 agora inclui o ano, consistente com o title tag */}
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight font-syne leading-tight max-w-4xl">
               Tábua de Maré {port!.name} — {ano}
             </h1>

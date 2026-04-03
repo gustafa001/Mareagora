@@ -9,115 +9,180 @@ interface ActivityRecommendationsProps {
   waveHeight?: number;
 }
 
+interface Activity {
+  emoji: string;
+  activity: string;
+  status: 'ideal' | 'good' | 'wait' | 'flexible';
+  time: string;
+  tip: string;
+  color: string;
+  glow: string;
+  details: { icon: string; label: string }[];
+}
+
+function statusBadge(status: Activity['status']) {
+  const map = {
+    ideal:    { label: 'Ideal agora', color: '#34d399', bg: 'rgba(52,211,153,0.15)', border: 'rgba(52,211,153,0.3)' },
+    good:     { label: 'Bom agora',   color: '#38bdf8', bg: 'rgba(56,189,248,0.15)', border: 'rgba(56,189,248,0.3)' },
+    wait:     { label: 'Aguardar',    color: '#fbbf24', bg: 'rgba(251,191,36,0.15)', border: 'rgba(251,191,36,0.3)' },
+    flexible: { label: 'Flexível',    color: '#a78bfa', bg: 'rgba(167,139,250,0.15)', border: 'rgba(167,139,250,0.3)' },
+  };
+  const s = map[status];
+  return (
+    <span style={{
+      color: s.color, background: s.bg, border: `1px solid ${s.border}`,
+      borderRadius: 20, padding: '2px 10px', fontSize: 10,
+      fontWeight: 700, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.08em',
+    }}>{s.label}</span>
+  );
+}
+
 export default function ActivityRecommendations({
-  todayTides,
-  nextHigh,
-  nextLow,
-  waveHeight = 0,
+  todayTides, nextHigh, nextLow, waveHeight = 0,
 }: ActivityRecommendationsProps) {
 
-  const getActivityRecommendation = () => {
-    const recommendations = [];
+  const now = new Date();
+  const currentMin = now.getHours() * 60 + now.getMinutes();
 
-    // 🏄 SURF
-    if (waveHeight >= 0.8) {
-      recommendations.push({
-        emoji: '🏄',
-        activity: 'SURF',
-        icon: '⭐',
-        time: 'Agora é bom!',
-        tip: `Ondas em ${waveHeight.toFixed(1)}m - Espere maré média (entre alta e baixa)`,
-        color: 'from-blue-500 to-blue-600',
-      });
-    } else {
-      recommendations.push({
-        emoji: '🏄',
-        activity: 'SURF',
-        icon: '⏳',
-        time: nextHigh ? `Próximo em ${nextHigh.hora}` : 'Verificar depois',
-        tip: 'Ondas baixas. Melhor com maré alta gerando movimento de água',
-        color: 'from-blue-400 to-blue-500',
-      });
-    }
-
-    // 🎣 PESCA
-    const now = new Date();
-    const currentMin = now.getHours() * 60 + now.getMinutes();
-
-    let bestFishTime = nextLow || nextHigh;
-    if (nextLow && nextHigh) {
-      const lowMin = parseInt(nextLow.hora.split(':')[0]) * 60 + parseInt(nextLow.hora.split(':')[1]);
-      const highMin = parseInt(nextHigh.hora.split(':')[0]) * 60 + parseInt(nextHigh.hora.split(':')[1]);
-      bestFishTime = Math.abs(lowMin - currentMin) < Math.abs(highMin - currentMin) ? nextLow : nextHigh;
-    }
-
-    recommendations.push({
-      emoji: '🎣',
-      activity: 'PESCA',
-      icon: '✅',
-      time: bestFishTime ? `Melhor em ${bestFishTime.hora}` : 'Verificar depois',
-      tip: 'Melhores resultados na virada da maré quando o peixe se alimenta',
-      color: 'from-orange-500 to-orange-600',
-    });
-
-    // 🤿 MERGULHO
-    recommendations.push({
-      emoji: '🤿',
-      activity: 'MERGULHO',
-      icon: '💧',
-      time: nextHigh ? `Próximo em ${nextHigh.hora}` : 'Verificar depois',
-      tip: `Maré alta ${nextHigh ? nextHigh.altura_m.toFixed(2) : '--'}m - Maior profundidade e visibilidade`,
-      color: 'from-cyan-500 to-cyan-600',
-    });
-
-    // 🚣 CAIAQUE
-    recommendations.push({
-      emoji: '🚣',
-      activity: 'CAIAQUE',
-      icon: '🌊',
-      time: 'Flexível',
-      tip: 'Melhor evitar picos de maré alta/baixa. Maré média é ideal',
-      color: 'from-emerald-500 to-emerald-600',
-    });
-
-    return recommendations;
+  const toMin = (hora: string) => {
+    const [h, m] = hora.split(':').map(Number);
+    return h * 60 + m;
   };
 
-  const activities = getActivityRecommendation();
+  let bestFishTime = nextLow || nextHigh;
+  if (nextLow && nextHigh) {
+    const lowMin = toMin(nextLow.hora);
+    const highMin = toMin(nextHigh.hora);
+    bestFishTime = Math.abs(lowMin - currentMin) < Math.abs(highMin - currentMin) ? nextLow : nextHigh;
+  }
+
+  const activities: Activity[] = [
+    {
+      emoji: '🏄',
+      activity: 'Surf',
+      status: waveHeight >= 0.8 ? 'ideal' : 'wait',
+      time: waveHeight >= 0.8 ? 'Agora é bom!' : nextHigh ? `Próximo em ${nextHigh.hora}` : 'Verificar depois',
+      tip: waveHeight >= 0.8
+        ? `Ondas em ${waveHeight.toFixed(1)}m — espere maré média para melhor formação`
+        : 'Ondas baixas agora. Melhora com maré alta gerando movimento de água',
+      color: '#38bdf8',
+      glow: 'rgba(56,189,248,0.12)',
+      details: [
+        { icon: '🌊', label: `Ondas: ${waveHeight.toFixed(1)} m` },
+        { icon: '⬆️', label: nextHigh ? `Alta: ${nextHigh.hora} (${nextHigh.altura_m.toFixed(2)}m)` : '—' },
+      ],
+    },
+    {
+      emoji: '🎣',
+      activity: 'Pesca',
+      status: 'good',
+      time: bestFishTime ? `Melhor em ${bestFishTime.hora}` : 'Verificar depois',
+      tip: 'Melhores resultados na virada da maré — peixe se alimenta na mudança de corrente',
+      color: '#fb923c',
+      glow: 'rgba(251,146,60,0.12)',
+      details: [
+        { icon: '🔄', label: `Virada: ${bestFishTime?.hora || '—'}` },
+        { icon: '📏', label: bestFishTime ? `${bestFishTime.altura_m.toFixed(2)} m` : '—' },
+      ],
+    },
+    {
+      emoji: '🤿',
+      activity: 'Mergulho',
+      status: nextHigh && nextHigh.altura_m > 1.0 ? 'good' : 'wait',
+      time: nextHigh ? `Próximo em ${nextHigh.hora}` : 'Verificar depois',
+      tip: `Maré alta ${nextHigh ? nextHigh.altura_m.toFixed(2) + 'm' : '--'} — maior profundidade e melhor visibilidade`,
+      color: '#34d399',
+      glow: 'rgba(52,211,153,0.12)',
+      details: [
+        { icon: '📈', label: `Alta: ${nextHigh?.hora || '—'}` },
+        { icon: '💧', label: `${nextHigh?.altura_m.toFixed(2) || '—'} m` },
+      ],
+    },
+    {
+      emoji: '🚣',
+      activity: 'Caiaque',
+      status: 'flexible',
+      time: 'Flexível',
+      tip: 'Evite os picos de alta e baixa — maré média oferece corrente mais suave e segura',
+      color: '#a78bfa',
+      glow: 'rgba(167,139,250,0.12)',
+      details: [
+        { icon: '🔃', label: 'Maré média ideal' },
+        { icon: '💨', label: 'Atenção ao vento' },
+      ],
+    },
+  ];
 
   return (
-    <div className="classic-card">
-      <h3 className="card-title mb-6">💡 Recomendações de Atividades — Hoje</h3>
+    <div style={cardStyle}>
+      {/* Header */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ width: 36, height: 36, background: 'rgba(251,191,36,0.12)', border: '1px solid rgba(251,191,36,0.25)', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 17 }}>💡</div>
+          <div>
+            <div style={{ color: '#e2e8f0', fontSize: 13, fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase', fontFamily: 'monospace' }}>Atividades — Hoje</div>
+            <div style={{ color: '#475569', fontSize: 10, fontFamily: 'monospace', marginTop: 1 }}>baseado em marés e ondas atuais</div>
+          </div>
+        </div>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {activities.map((activity, idx) => (
-          <div
-            key={idx}
-            className={`bg-gradient-to-br ${activity.color} rounded-xl p-5 text-white shadow-lg hover:shadow-xl transition-all`}
-          >
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex items-center gap-3">
-                <span className="text-3xl">{activity.emoji}</span>
+      {/* Grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+        {activities.map((a, idx) => (
+          <div key={idx} style={{
+            background: a.glow,
+            border: `1px solid ${a.color}25`,
+            borderRadius: 16,
+            padding: '16px 14px',
+            display: 'flex', flexDirection: 'column', gap: 10,
+            transition: 'border-color 0.2s',
+          }}>
+            {/* Activity header */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <span style={{ fontSize: '1.8rem', lineHeight: 1, filter: `drop-shadow(0 0 8px ${a.color}60)` }}>{a.emoji}</span>
                 <div>
-                  <h4 className="font-bold text-lg">{activity.activity}</h4>
-                  <p className="text-xs opacity-90">{activity.time}</p>
+                  <div style={{ color: '#e2e8f0', fontFamily: 'monospace', fontWeight: 800, fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{a.activity}</div>
+                  <div style={{ color: a.color, fontSize: '0.68rem', fontFamily: 'monospace', marginTop: 1 }}>{a.time}</div>
                 </div>
               </div>
-              <span className="text-xl">{activity.icon}</span>
+              {statusBadge(a.status)}
             </div>
 
-            <p className="text-sm opacity-95 bg-white/10 px-3 py-2 rounded-lg">
-              💬 {activity.tip}
-            </p>
+            {/* Tip */}
+            <div style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 10, padding: '8px 10px' }}>
+              <span style={{ color: '#94a3b8', fontSize: '0.72rem', lineHeight: 1.5 }}>💬 {a.tip}</span>
+            </div>
+
+            {/* Details */}
+            <div style={{ display: 'flex', gap: 8 }}>
+              {a.details.map((d, di) => (
+                <div key={di} style={{ flex: 1, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 8, padding: '5px 8px', display: 'flex', alignItems: 'center', gap: 5 }}>
+                  <span style={{ fontSize: '0.75rem' }}>{d.icon}</span>
+                  <span style={{ color: '#64748b', fontSize: '0.62rem', fontFamily: 'monospace' }}>{d.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
 
-      <div className="mt-6 pt-6 border-t border-gray-200">
-        <p className="text-sm text-gray-600">
-          <strong>💡 Dica:</strong> Combine as recomendações com a previsão de vento e ondas para melhorar seu planejamento.
-        </p>
+      {/* Footer tip */}
+      <div style={{ marginTop: 14, padding: '10px 14px', background: 'rgba(251,191,36,0.06)', border: '1px solid rgba(251,191,36,0.12)', borderRadius: 12 }}>
+        <span style={{ color: '#78716c', fontSize: '0.7rem', fontFamily: 'monospace' }}>
+          💡 Combine com a previsão de vento e ondas para melhorar seu planejamento
+        </span>
       </div>
     </div>
   );
 }
+
+const cardStyle: React.CSSProperties = {
+  background: 'linear-gradient(145deg, rgba(15,23,42,0.97) 0%, rgba(15,23,42,0.88) 100%)',
+  backdropFilter: 'blur(24px)',
+  WebkitBackdropFilter: 'blur(24px)',
+  border: '1px solid rgba(56,189,248,0.1)',
+  borderRadius: 20,
+  padding: '22px 20px',
+  boxShadow: '0 8px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04)',
+};

@@ -1,0 +1,34 @@
+Total PDFs: 65
+================================================================================
+PORTOS FALTANTES:
+  Porto 19: SEM PDF - PORTO DE AREIA BRANCA - TERMISA
+  Porto 21: SEM PDF - PORTO DE GUAMARE
+  Porto 27: SEM PDF - TERMINAL MARITIMO INACIO BARBOSA
+  Porto 28: SEM PDF - CAPITANIA DOS PORTOS DE SERGIPE
+  Porto 37: SEM PDF - TERMINAL DA PONTA DO UBU
+  Porto 53: SEM PDF - PORTO DE FLORIANOPOLIS
+  Porto 54: SEM PDF - PORTO DE IMBITUBA
+  Porto 56: SEM PDF - EST ANT COM FERRAZ
+
+JSONs COM NOME INCORRETO:
+  38_-_porto_do_açu_-_124_-_126.json
+    -> 'UMISAN 43 Componentes Nível Médio 0.83 m Carta 1405'
+  39_-_terminal_marítimo_de_imbetiba_-_127_-_129.json
+    -> 'IBGE 74 Componentes Nível Médio 0.72 m Carta 1507'
+  40_-_porto_do_rio_de_janeiro_-_i_fiscal_-_130_-_132.json
+    -> 'CHM 70 Componentes Nível Médio 0.73 m Carta 1515'
+  4_-_porto_do_rio_de_janeiro_-_ilha_fiscal__estado_do_rio_de_janeiro__-_2025_-_páginas_129_a_131.json
+    -> 'Latitude 22° 53'.8 S Longitude 43° 10' W Fuso UTC -03.0 horas'
+  55_-_porto_do_rio_grande_-_175_-177.json
+    -> 'CHM 59 Componentes Nível Médio 0.22 m Carta 2101'
+  5_-_terminal_da_ilha_guaíba__estado_do_rio_de_janeiro__-_2025_-_páginas_137_a_139.json
+    -> 'Latitude 22° 60' S Longitude 44° 01'.9 W Fuso UTC -03.0 horas'
+
+JSONs DUPLICADOS (2025 vs 2026):
+  38_-_porto_do_açu_-_rj_-_122-124.json -> Ano 2025 | 365 dias
+  39_-_terminal_marítimo_de_imbetiba_-_rj_-_125-127.json -> Ano 2025 | 365 dias
+  41_-_porto_de_itaguaí_-_rj_-_131-133.json -> Ano 2025 | 365 dias
+  42_-_porto_do_forno_-_rj_-_134-136.json -> Ano 2025 | 365 dias
+  44_-_porto_de_angra_dos_reis_-_rj_-_140-142.json -> Ano 2025 | 364 dias
+  4_-_porto_do_rio_de_janeiro_-_ilha_fiscal__estado_do_rio_de_janeiro__-_2025_-_páginas_129_a_131.json -> Ano 2026 | 365 dias
+  5_-_terminal_da_ilha_guaíba__estado_do_rio_de_janeiro__-_2025_-_páginas_137_a_139.json -> Ano 2026 | 365 dias

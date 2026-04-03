@@ -138,7 +138,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
         license: 'https://creativecommons.org/licenses/by/4.0/',
         creator: {
           '@type': 'Organization',
-          name: 'Marinha do Brasil — DHN',
+         name: 'Marinha do Brasil — DHN',
           url: 'https://www.marinha.mil.br',
         },
         temporalCoverage: `${ano}`,

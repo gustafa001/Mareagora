@@ -11,7 +11,6 @@ interface DetailedForecastTableProps {
 
 interface ForecastBlock {
   hour: string;
-  hourStr: string;
   windDir: number;
   windSpeed: number;
   windGust: number;
@@ -22,64 +21,112 @@ interface ForecastBlock {
   tideHeight: number;
 }
 
+function windColor(kmh: number): { bg: string; text: string; label: string } {
+  if (kmh < 8)  return { bg: "rgba(139,92,246,0.25)",  text: "#c4b5fd", label: "Calmaria" };
+  if (kmh < 15) return { bg: "rgba(99,102,241,0.3)",   text: "#a5b4fc", label: "Brisa leve" };
+  if (kmh < 22) return { bg: "rgba(59,130,246,0.3)",   text: "#93c5fd", label: "Brisa" };
+  if (kmh < 30) return { bg: "rgba(6,182,212,0.3)",    text: "#67e8f9", label: "Moderado" };
+  if (kmh < 40) return { bg: "rgba(16,185,129,0.3)",   text: "#6ee7b7", label: "Forte" };
+  if (kmh < 50) return { bg: "rgba(245,158,11,0.3)",   text: "#fcd34d", label: "Muito forte" };
+  return         { bg: "rgba(239,68,68,0.3)",           text: "#fca5a5", label: "Tempestade" };
+}
+
+function waveColor(m: number): string {
+  if (m < 0.5) return "#34d399";
+  if (m < 1.0) return "#67e8f9";
+  if (m < 1.5) return "#38bdf8";
+  if (m < 2.5) return "#fbbf24";
+  if (m < 3.5) return "#f97316";
+  return "#f87171";
+}
+
+function tideColor(m: number): { bg: string; text: string } {
+  if (m > 1.2) return { bg: "rgba(56,189,248,0.15)", text: "#38bdf8" };
+  if (m > 0.6) return { bg: "rgba(99,102,241,0.15)", text: "#a5b4fc" };
+  return { bg: "rgba(249,115,22,0.15)", text: "#fb923c" };
+}
+
+function WindArrow({ deg }: { deg: number }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
+      <span style={{ color: "#64748b", fontSize: "0.6rem", fontFamily: "monospace", letterSpacing: "0.05em" }}>
+        {degToCompass(deg)}
+      </span>
+      <span
+        style={{
+          fontSize: "1.1rem",
+          color: "#94a3b8",
+          display: "inline-block",
+          transform: `rotate(${deg}deg)`,
+          transition: "transform 0.4s ease",
+          lineHeight: 1,
+        }}
+      >↑</span>
+    </div>
+  );
+}
+
+function Row({ label, sublabel, children }: { label: string; sublabel?: string; children: React.ReactNode }) {
+  return (
+    <div style={{ display: "flex", borderBottom: "1px solid rgba(255,255,255,0.04)", alignItems: "stretch" }}>
+      <div style={{
+        width: 148, minWidth: 148, padding: "12px 14px 12px 0",
+        display: "flex", flexDirection: "column", justifyContent: "center",
+        borderRight: "1px solid rgba(255,255,255,0.05)",
+      }}>
+        <span style={{ color: "#94a3b8", fontSize: "0.72rem", fontFamily: "monospace", textTransform: "uppercase", letterSpacing: "0.08em" }}>{label}</span>
+        {sublabel && <span style={{ color: "#475569", fontSize: "0.6rem", fontFamily: "monospace", marginTop: 2 }}>{sublabel}</span>}
+      </div>
+      <div style={{ flex: 1, display: "flex" }}>{children}</div>
+    </div>
+  );
+}
+
+function Cell({ children, highlight }: { children: React.ReactNode; highlight?: boolean }) {
+  return (
+    <div style={{
+      flex: 1, minWidth: 72, display: "flex", alignItems: "center", justifyContent: "center",
+      padding: "10px 4px",
+      borderRight: "1px solid rgba(255,255,255,0.03)",
+      background: highlight ? "rgba(56,189,248,0.03)" : "transparent",
+    }}>
+      {children}
+    </div>
+  );
+}
+
 export default function DetailedForecastTable({ lat, lon, todayTides }: DetailedForecastTableProps) {
   const [data, setData] = useState<ForecastBlock[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
-      // Pedidos para exatamente 2 dias para termos dados até ao fim do dia seguinte (cobrindo a noite de hoje)
       const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&hourly=wave_height,wave_direction,wave_period&timezone=America%2FSao_Paulo&forecast_days=2`;
       const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m&timezone=America%2FSao_Paulo&forecast_days=2`;
-
       try {
-        const [resMarine, resWeather] = await Promise.all([
-          fetch(marineUrl),
-          fetch(weatherUrl)
-        ]);
-
+        const [resMarine, resWeather] = await Promise.all([fetch(marineUrl), fetch(weatherUrl)]);
         const jsonMarine = await resMarine.json();
         const jsonWeather = await resWeather.json();
-
         const mw = jsonMarine.hourly;
         const hw = jsonWeather.hourly;
-
-        const blocks: ForecastBlock[] = [];
-
-        // Windfinder usa blocos de 3 em 3 horas. Começamos às 00h de hoje e vamos até amanhã
-        // Filtramos para pegar os index 0, 3, 6, 9, 12, 15, 18, 21 (até 48h limitamos a 10 colunas começando da hora atual)
-        
         const now = new Date();
         const nowH = now.getHours();
-        
-        // Encontrar o indice inicial mais próximo de um bloco de 3h no futuro ou atual
-        // Ex: se são 07:00, começamos no bloco das 06:00
         let startIndex = hw.time.findIndex((t: string) => {
           const d = new Date(t);
           return d.getHours() >= nowH - 2 && d.toDateString() === now.toDateString();
         });
-        
         if (startIndex < 0) startIndex = 0;
-        // Ajustar para múltiplo de 3
         startIndex = Math.floor(startIndex / 3) * 3;
-
-        // Pegar próximos 8 blocos (24 horas de previsão 3h)
+        const blocks: ForecastBlock[] = [];
         for (let i = 0; i < 8; i++) {
-          const idx = startIndex + (i * 3);
+          const idx = startIndex + i * 3;
           if (idx >= hw.time.length) break;
-
-          const dateStr = hw.time[idx];
-          const dateObj = new Date(dateStr);
+          const dateObj = new Date(hw.time[idx]);
           const blockHour = dateObj.getHours();
-
-          // Interpolar maré exata para este minuto (no dia atual)
-          // Se passar para o dia seguinte, o cálculo usará as marés do dia base (ligeiro desvio, mas aceitável para aproximação de 24h)
           const minuteOfDay = blockHour * 60;
           const tideH = tideAtMinute(minuteOfDay, todayTides);
-
           blocks.push({
-            hourStr: dateStr,
-            hour: `${String(blockHour).padStart(2, '0')}h`,
+            hour: `${String(blockHour).padStart(2, "0")}h`,
             temp: hw.temperature_2m[idx] || 0,
             windSpeed: hw.wind_speed_10m[idx] || 0,
             windDir: hw.wind_direction_10m[idx] || 0,
@@ -87,146 +134,188 @@ export default function DetailedForecastTable({ lat, lon, todayTides }: Detailed
             waveHeight: mw.wave_height[idx] || 0,
             waveDir: mw.wave_direction[idx] || 0,
             wavePeriod: mw.wave_period[idx] || 0,
-            tideHeight: tideH
+            tideHeight: tideH,
           });
         }
-
         setData(blocks);
-        setLoading(false);
-
       } catch (err) {
         console.error("Erro DetailedForecastTable", err);
-        setLoading(false);
       }
+      setLoading(false);
     }
-    
     fetchData();
   }, [lat, lon, todayTides]);
 
-  function getWindColor(kmh: number): string {
-    if (kmh < 8) return 'bg-[#a78bfa] text-white border border-[#8b5cf6]'; // Roxo claro
-    if (kmh < 15) return 'bg-[#8b5cf6] text-white border border-[#7c3aed]'; // Roxo forte
-    if (kmh < 22) return 'bg-[#3b82f6] text-white border border-[#2563eb]'; // Azul escuro
-    if (kmh < 30) return 'bg-[#06b6d4] text-white border border-[#0891b2]'; // Ciano
-    if (kmh < 40) return 'bg-[#10b981] text-white border border-[#059669]'; // Esmeralda/Verde
-    if (kmh < 50) return 'bg-[#f59e0b] text-white border border-[#d97706]'; // Laranja
-    return 'bg-[#ef4444] text-white border border-[#dc2626]'; // Vermelho
-  }
-
-  if (loading) {
-    return (
-      <div className="classic-card my-8 overflow-hidden relative">
-        <h3 className="card-title mb-4 animate-pulse text-gray-400">Previsão Detalhada Hora a Hora...</h3>
-        <div className="h-[300px] w-full loading-shimmer rounded-xl"></div>
+  if (loading) return (
+    <div style={cardStyle} className="my-8">
+      <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
+        <div className="w-6 h-6 border-2 border-cyan-400/20 border-t-cyan-400 rounded-full animate-spin" />
+        <span style={{ color: "#64748b", fontSize: 12, fontFamily: "monospace", letterSpacing: "0.1em" }}>CARREGANDO PREVISÃO DETALHADA…</span>
       </div>
-    );
-  }
+      <div style={{ height: 280, background: "rgba(255,255,255,0.02)", borderRadius: 12, border: "1px solid rgba(255,255,255,0.04)" }} className="animate-pulse" />
+    </div>
+  );
 
   if (data.length === 0) return null;
 
+  const nowIdx = 0;
+
   return (
-    <div className="classic-card my-12 overflow-hidden shadow-sm border border-[rgba(56,201,240,0.15)] bg-white/95">
-      <div className="flex justify-between items-end mb-6">
-        <h3 className="card-title !mb-0 text-[#2d3748]">📊 Previsão Horizontal Detalhada</h3>
-        <span className="text-xs font-bold uppercase tracking-wider text-[#38c9f0] bg-[#38c9f0]/10 px-3 py-1 rounded-full border border-[#38c9f0]/20">Próximas 24h</span>
+    <div style={cardStyle} className="my-8">
+      {/* Header */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div style={{ width: 36, height: 36, background: "rgba(56,189,248,0.1)", border: "1px solid rgba(56,189,248,0.2)", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 17 }}>📊</div>
+          <div>
+            <div style={{ color: "#e2e8f0", fontSize: 14, fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase", fontFamily: "monospace" }}>Previsão Detalhada</div>
+            <div style={{ color: "#475569", fontSize: 10, fontFamily: "monospace", marginTop: 1 }}>Open-Meteo · atualizado a cada hora</div>
+          </div>
+        </div>
+        <span style={{ color: "#67e8f9", background: "rgba(103,232,249,0.1)", border: "1px solid rgba(103,232,249,0.2)", borderRadius: 20, padding: "4px 12px", fontSize: 10, fontWeight: 700, fontFamily: "monospace", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+          Próximas 24h
+        </span>
       </div>
 
-      <div className="overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
-        <div className="min-w-[760px]">
-          {/* Cabeçalho de Horas */}
-          <div className="grid grid-cols-[160px_repeat(auto-fit,minmax(60px,1fr))] border-b border-gray-200 pb-2 mb-2">
-            <div className="text-xs font-bold text-gray-500 uppercase self-end">Hora Local</div>
-            {data.map((b, i) => (
-              <div key={i} className="text-center font-syne font-bold text-gray-800 text-[15px]">
-                {b.hour}
-              </div>
-            ))}
-          </div>
+      <div style={{ overflowX: "auto", paddingBottom: 4 }}>
+        <div style={{ minWidth: 700 }}>
 
-          {/* Vento Direção */}
-          <div className="grid grid-cols-[160px_repeat(auto-fit,minmax(60px,1fr))] py-2.5 border-b border-gray-100 hover:bg-gray-50 transition-colors">
-            <div className="text-[13px] font-medium text-gray-600 self-center">Dir. do vento</div>
+          {/* Hora header */}
+          <div style={{ display: "flex", marginBottom: 4, borderBottom: "1px solid rgba(255,255,255,0.07)", paddingBottom: 10 }}>
+            <div style={{ width: 148, minWidth: 148 }} />
             {data.map((b, i) => (
-              <div key={i} className="flex justify-center flex-col items-center gap-1">
-                <span className="text-gray-400 text-[10px] uppercase font-bold translate-y-1">{degToCompass(b.windDir)}</span>
-                <span 
-                  className="text-lg text-gray-800 inline-block drop-shadow-sm transition-transform duration-300"
-                  style={{ transform: `rotate(${b.windDir}deg)` }}
-                >
-                  ↑
+              <div key={i} style={{ flex: 1, minWidth: 72, textAlign: "center" }}>
+                <span style={{
+                  fontFamily: "monospace", fontWeight: 800, fontSize: "1rem",
+                  color: i === nowIdx ? "#67e8f9" : "#cbd5e1",
+                  background: i === nowIdx ? "rgba(103,232,249,0.1)" : "transparent",
+                  border: i === nowIdx ? "1px solid rgba(103,232,249,0.2)" : "1px solid transparent",
+                  borderRadius: 8, padding: "2px 8px", display: "inline-block",
+                }}>
+                  {b.hour}
                 </span>
               </div>
             ))}
           </div>
 
-          {/* Vento Velocidade (COLOR CODED) */}
-          <div className="grid grid-cols-[160px_repeat(auto-fit,minmax(60px,1fr))] py-2 border-b border-gray-100 hover:bg-gray-50 transition-colors">
-            <div className="text-[13px] font-medium text-gray-600 self-center">Velocidade (km/h)</div>
+          {/* Dir. vento */}
+          <Row label="Dir. do vento">
             {data.map((b, i) => (
-              <div key={i} className={`flex items-center justify-center font-bold text-[15px] py-[6px] mx-1 rounded-md shadow-inner transition-colors ${getWindColor(b.windSpeed)}`}>
-                {Math.round(b.windSpeed)}
-              </div>
+              <Cell key={i} highlight={i === nowIdx}><WindArrow deg={b.windDir} /></Cell>
             ))}
-          </div>
+          </Row>
 
-          {/* Vento Rajadas (COLOR CODED) */}
-          <div className="grid grid-cols-[160px_repeat(auto-fit,minmax(60px,1fr))] py-2 border-b border-gray-200 hover:bg-gray-50 transition-colors">
-            <div className="text-[13px] font-medium text-gray-600 self-center">Rajadas (km/h)</div>
-            {data.map((b, i) => (
-              <div key={i} className={`flex items-center justify-center font-bold text-[15px] py-[6px] mx-1 rounded-md shadow-inner opacity-85 transition-colors ${getWindColor(b.windGust)}`}>
-                {Math.round(b.windGust)}
-              </div>
-            ))}
-          </div>
+          {/* Vento */}
+          <Row label="Vento" sublabel="km/h">
+            {data.map((b, i) => {
+              const wc = windColor(b.windSpeed);
+              return (
+                <Cell key={i} highlight={i === nowIdx}>
+                  <div style={{ background: wc.bg, border: `1px solid ${wc.text}30`, borderRadius: 8, padding: "5px 0", width: "80%", textAlign: "center" }}>
+                    <span style={{ color: wc.text, fontFamily: "monospace", fontWeight: 800, fontSize: "0.88rem" }}>{Math.round(b.windSpeed)}</span>
+                  </div>
+                </Cell>
+              );
+            })}
+          </Row>
+
+          {/* Rajadas */}
+          <Row label="Rajadas" sublabel="km/h">
+            {data.map((b, i) => {
+              const wc = windColor(b.windGust);
+              return (
+                <Cell key={i} highlight={i === nowIdx}>
+                  <div style={{ background: wc.bg, border: `1px solid ${wc.text}30`, borderRadius: 8, padding: "5px 0", width: "80%", textAlign: "center", opacity: 0.85 }}>
+                    <span style={{ color: wc.text, fontFamily: "monospace", fontWeight: 800, fontSize: "0.88rem" }}>{Math.round(b.windGust)}</span>
+                  </div>
+                </Cell>
+              );
+            })}
+          </Row>
 
           {/* Temperatura */}
-          <div className="grid grid-cols-[160px_repeat(auto-fit,minmax(60px,1fr))] py-3 border-b border-gray-100/50 bg-[#ff914d]/5 hover:bg-[#ff914d]/10 transition-colors">
-            <div className="text-[13px] font-medium text-gray-600 self-center">Temperatura (°C)</div>
+          <Row label="Temperatura" sublabel="°C">
             {data.map((b, i) => (
-              <div key={i} className="text-center font-bold text-[#ff914d] text-sm">
-                {Math.round(b.temp)}°
-              </div>
+              <Cell key={i} highlight={i === nowIdx}>
+                <span style={{ color: "#fb923c", fontFamily: "monospace", fontWeight: 700, fontSize: "0.9rem" }}>{Math.round(b.temp)}°</span>
+              </Cell>
             ))}
-          </div>
+          </Row>
 
-          {/* Ondas Altura */}
-          <div className="grid grid-cols-[160px_repeat(auto-fit,minmax(60px,1fr))] py-3.5 border-b border-gray-100/50 bg-[#2a68f6]/5 hover:bg-[#2a68f6]/10 transition-colors">
-            <div className="text-[13px] font-medium text-gray-600 self-center">Altura da onda (m)</div>
-            {data.map((b, i) => (
-              <div key={i} className="text-center font-syne font-extrabold text-[#2a68f6] text-[15px]">
-                {b.waveHeight.toFixed(1)}
-              </div>
-            ))}
-          </div>
+          {/* Altura onda */}
+          <Row label="Altura onda" sublabel="metros">
+            {data.map((b, i) => {
+              const color = waveColor(b.waveHeight);
+              return (
+                <Cell key={i} highlight={i === nowIdx}>
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
+                    <span style={{ color, fontFamily: "monospace", fontWeight: 800, fontSize: "1rem" }}>{b.waveHeight.toFixed(1)}</span>
+                    <div style={{ width: 28, height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 99, overflow: "hidden" }}>
+                      <div style={{ width: `${Math.min(100, (b.waveHeight / 4) * 100)}%`, height: "100%", background: color, borderRadius: 99 }} />
+                    </div>
+                  </div>
+                </Cell>
+              );
+            })}
+          </Row>
 
-          {/* Ondas Período / Direção */}
-          <div className="grid grid-cols-[160px_repeat(auto-fit,minmax(60px,1fr))] py-3.5 border-b border-gray-200 bg-[#2a68f6]/[0.08] hover:bg-[#2a68f6]/[0.12] transition-colors">
-            <div className="text-[13px] font-medium text-gray-600 self-center leading-tight">Período (s)<br/><span className="text-[10px] font-normal text-gray-400">Dir. onda</span></div>
+          {/* Período / Dir. onda */}
+          <Row label="Período" sublabel="s · dir. onda">
             {data.map((b, i) => (
-              <div key={i} className="flex flex-col items-center justify-center">
-                <span className="text-sm font-bold text-gray-700">{b.wavePeriod.toFixed(0)}</span>
-                <div className="flex items-center gap-1 mt-1 opacity-70">
-                  <span className="text-[9px] uppercase font-bold text-gray-500">{degToCompass(b.waveDir)}</span>
-                  <span className="text-[11px] text-[#2a68f6] transition-transform duration-300" style={{ transform: `rotate(${b.waveDir}deg)`, display: 'inline-block' }}>↑</span>
+              <Cell key={i} highlight={i === nowIdx}>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3 }}>
+                  <span style={{ color: "#cbd5e1", fontFamily: "monospace", fontWeight: 700, fontSize: "0.85rem" }}>{b.wavePeriod.toFixed(0)}s</span>
+                  <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
+                    <span style={{ color: "#475569", fontSize: "0.58rem", fontFamily: "monospace" }}>{degToCompass(b.waveDir)}</span>
+                    <span style={{ fontSize: "0.7rem", color: "#38bdf8", display: "inline-block", transform: `rotate(${b.waveDir}deg)` }}>↑</span>
+                  </div>
                 </div>
-              </div>
+              </Cell>
             ))}
-          </div>
+          </Row>
 
-          {/* Altura da Maré Interpolar */}
-          <div className="grid grid-cols-[160px_repeat(auto-fit,minmax(60px,1fr))] py-4 hover:bg-gray-50 transition-colors mt-2">
-            <div className="text-[14px] font-extrabold text-[#2d3748] self-center tracking-tight">Altura Maré (m)</div>
-            {data.map((b, i) => (
-              <div key={i} className="text-center">
-                <span className={`inline-block px-3 py-1.5 rounded-md text-[13px] font-extrabold border shadow-sm ${b.tideHeight > 1.2 ? 'bg-[#38c9f0]/10 text-[#0d2240] border-[#38c9f0]/30' : 'bg-[#ff914d]/10 text-[#0d2240] border-[#ff914d]/30'}`}>
-                  {b.tideHeight.toFixed(2)}
-                </span>
-              </div>
-            ))}
-          </div>
+          {/* Maré */}
+          <Row label="Maré" sublabel="altura (m)">
+            {data.map((b, i) => {
+              const tc = tideColor(b.tideHeight);
+              return (
+                <Cell key={i} highlight={i === nowIdx}>
+                  <div style={{ background: tc.bg, border: `1px solid ${tc.text}30`, borderRadius: 8, padding: "5px 0", width: "80%", textAlign: "center" }}>
+                    <span style={{ color: tc.text, fontFamily: "monospace", fontWeight: 800, fontSize: "0.88rem" }}>{b.tideHeight.toFixed(2)}</span>
+                  </div>
+                </Cell>
+              );
+            })}
+          </Row>
 
         </div>
+      </div>
+
+      {/* Legend */}
+      <div style={{ marginTop: 16, padding: "10px 14px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.04)", borderRadius: 12, display: "flex", flexWrap: "wrap", gap: 16 }}>
+        <span style={{ color: "#475569", fontSize: "0.65rem", fontFamily: "monospace", textTransform: "uppercase", letterSpacing: "0.08em", alignSelf: "center" }}>Vento:</span>
+        {[
+          { label: "< 8 Calmaria", color: "#c4b5fd" },
+          { label: "8–15 Leve", color: "#a5b4fc" },
+          { label: "15–22 Brisa", color: "#93c5fd" },
+          { label: "22–30 Mod.", color: "#67e8f9" },
+          { label: "30+ Forte", color: "#fcd34d" },
+        ].map((l) => (
+          <div key={l.label} style={{ display: "flex", alignItems: "center", gap: 5 }}>
+            <div style={{ width: 8, height: 8, borderRadius: 2, background: l.color }} />
+            <span style={{ color: "#64748b", fontSize: "0.62rem", fontFamily: "monospace" }}>{l.label}</span>
+          </div>
+        ))}
       </div>
     </div>
   );
 }
+
+const cardStyle: React.CSSProperties = {
+  background: "linear-gradient(145deg, rgba(15,23,42,0.97) 0%, rgba(15,23,42,0.88) 100%)",
+  backdropFilter: "blur(24px)",
+  WebkitBackdropFilter: "blur(24px)",
+  border: "1px solid rgba(56,189,248,0.1)",
+  borderRadius: 20,
+  padding: "22px 20px",
+  boxShadow: "0 8px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04)",
+};

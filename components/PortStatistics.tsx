@@ -8,21 +8,49 @@ interface PortStatisticsProps {
   currentMonth?: number;
 }
 
-export default function PortStatistics({ eventos, portName, currentMonth }: PortStatisticsProps) {
-  // Calcular estatísticas gerais do mês
-  const allHeights = eventos.flatMap((e: any) => e.mares?.map((m: TideEvent) => m.altura_m) || []);
+function StatCard({ label, value, sub, color, icon }: {
+  label: string; value: string; sub: string; color: string; icon: string;
+}) {
+  return (
+    <div style={{
+      background: color + '0d',
+      border: `1px solid ${color}22`,
+      borderRadius: 14,
+      padding: '14px 16px',
+      display: 'flex', flexDirection: 'column', gap: 6,
+      position: 'relative', overflow: 'hidden',
+    }}>
+      <div style={{ position: 'absolute', top: 10, right: 12, fontSize: '1.4rem', opacity: 0.15 }}>{icon}</div>
+      <div style={{ color: '#64748b', fontSize: '0.65rem', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{label}</div>
+      <div style={{ color, fontFamily: 'monospace', fontWeight: 800, fontSize: '1.6rem', lineHeight: 1 }}>{value}</div>
+      <div style={{ color: '#475569', fontSize: '0.6rem', fontFamily: 'monospace' }}>{sub}</div>
+      <div style={{ height: 2, background: 'rgba(255,255,255,0.04)', borderRadius: 99, marginTop: 4 }}>
+        <div style={{ height: '100%', width: '60%', background: color + '60', borderRadius: 99 }} />
+      </div>
+    </div>
+  );
+}
 
+function SummaryItem({ label, value, color }: { label: string; value: string; color: string }) {
+  return (
+    <div style={{ textAlign: 'center', padding: '12px 8px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)', borderRadius: 12 }}>
+      <div style={{ color: '#475569', fontSize: '0.65rem', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>{label}</div>
+      <div style={{ color, fontFamily: 'monospace', fontWeight: 800, fontSize: '1.3rem' }}>{value}</div>
+    </div>
+  );
+}
+
+export default function PortStatistics({ eventos, portName }: PortStatisticsProps) {
+  const allHeights = eventos.flatMap((e: any) => e.mares?.map((m: TideEvent) => m.altura_m) || []);
   const maxHeight = allHeights.length > 0 ? Math.max(...allHeights) : 0;
   const minHeight = allHeights.length > 0 ? Math.min(...allHeights) : 0;
   const amplitude = maxHeight - minHeight;
   const avgHeight = allHeights.length > 0 ? allHeights.reduce((a: number, b: number) => a + b, 0) / allHeights.length : 0;
 
-  // Contar marés altas e baixas (classifica antes pois tipo não vem no JSON)
   const allEvents = eventos.flatMap((e: any) => classifyTideEvents(e.mares || []));
   const highTides = allEvents.filter((e: TideEvent) => e.tipo === 'high').length;
   const lowTides = allEvents.filter((e: TideEvent) => e.tipo === 'low').length;
 
-  // Calcular coeficiente real via getMoonAge + getTideCoefficient
   const allCoeffs = eventos
     .filter((e: any) => e.data)
     .map((e: any) => {
@@ -33,74 +61,66 @@ export default function PortStatistics({ eventos, portName, currentMonth }: Port
 
   const maxCoeff = allCoeffs.length > 0 ? Math.max(...allCoeffs) : 0;
   const minCoeff = allCoeffs.length > 0 ? Math.min(...allCoeffs) : 0;
+  const avgPerDay = eventos.length > 0 ? ((highTides + lowTides) / eventos.length).toFixed(1) : '0';
+
+  const stats = [
+    { label: 'Amplitude Média',  value: `${amplitude.toFixed(2)} m`, sub: 'Diferença alta/baixa', color: '#38bdf8', icon: '📊' },
+    { label: 'Maré Máxima',      value: `${maxHeight.toFixed(2)} m`, sub: 'Nível recorde no ano',  color: '#34d399', icon: '⬆️' },
+    { label: 'Maré Mínima',      value: `${minHeight.toFixed(2)} m`, sub: 'Nível mínimo no ano',   color: '#fb923c', icon: '⬇️' },
+    { label: 'Nível Médio',      value: `${avgHeight.toFixed(2)} m`, sub: 'Média geral anual',     color: '#a78bfa', icon: '〰️' },
+    { label: 'Maior Coeficiente',value: `${maxCoeff}`,               sub: 'Amplitude máxima',      color: '#f472b6', icon: '🌕' },
+    { label: 'Menor Coeficiente',value: `${minCoeff}`,               sub: 'Amplitude mínima',      color: '#67e8f9', icon: '🌑' },
+  ];
 
   return (
-    <div className="classic-card">
-      <h3 className="card-title mb-6">📊 Estatísticas de Marés — {portName}</h3>
-
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        {/* Amplitude */}
-        <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border border-blue-200">
-          <div className="text-sm text-blue-700 font-semibold mb-2">Amplitude Média</div>
-          <div className="text-2xl font-bold text-blue-900">{amplitude.toFixed(2)} m</div>
-          <div className="text-xs text-blue-600 mt-1">Diferença alta/baixa</div>
+    <div style={cardStyle}>
+      {/* Header */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ width: 36, height: 36, background: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.2)', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 17 }}>📊</div>
+          <div>
+            <div style={{ color: '#e2e8f0', fontSize: 13, fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase', fontFamily: 'monospace' }}>Estatísticas de Marés</div>
+            <div style={{ color: '#475569', fontSize: 10, fontFamily: 'monospace', marginTop: 1 }}>{portName} · dados anuais</div>
+          </div>
         </div>
-
-        {/* Maré Máxima */}
-        <div className="bg-gradient-to-br from-cyan-50 to-cyan-100 p-4 rounded-lg border border-cyan-200">
-          <div className="text-sm text-cyan-700 font-semibold mb-2">Maré Máxima</div>
-          <div className="text-2xl font-bold text-cyan-900">{maxHeight.toFixed(2)} m</div>
-          <div className="text-xs text-cyan-600 mt-1">Nível recorde</div>
-        </div>
-
-        {/* Maré Mínima */}
-        <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-4 rounded-lg border border-orange-200">
-          <div className="text-sm text-orange-700 font-semibold mb-2">Maré Mínima</div>
-          <div className="text-2xl font-bold text-orange-900">{minHeight.toFixed(2)} m</div>
-          <div className="text-xs text-orange-600 mt-1">Nível mínimo</div>
-        </div>
-
-        {/* Nível Médio */}
-        <div className="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-lg border border-green-200">
-          <div className="text-sm text-green-700 font-semibold mb-2">Nível Médio</div>
-          <div className="text-2xl font-bold text-green-900">{avgHeight.toFixed(2)} m</div>
-          <div className="text-xs text-green-600 mt-1">Média geral</div>
-        </div>
-
-        {/* Coeficiente Máximo */}
-        <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-lg border border-purple-200">
-          <div className="text-sm text-purple-700 font-semibold mb-2">Maior Coef.</div>
-          <div className="text-2xl font-bold text-purple-900">{maxCoeff}</div>
-          <div className="text-xs text-purple-600 mt-1">Amplitude máxima</div>
-        </div>
-
-        {/* Coeficiente Mínimo */}
-        <div className="bg-gradient-to-br from-pink-50 to-pink-100 p-4 rounded-lg border border-pink-200">
-          <div className="text-sm text-pink-700 font-semibold mb-2">Menor Coef.</div>
-          <div className="text-2xl font-bold text-pink-900">{minCoeff}</div>
-          <div className="text-xs text-pink-600 mt-1">Amplitude mínima</div>
-        </div>
+        <span style={{ color: '#67e8f9', background: 'rgba(103,232,249,0.1)', border: '1px solid rgba(103,232,249,0.2)', borderRadius: 20, padding: '3px 12px', fontSize: 10, fontWeight: 700, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          2026
+        </span>
       </div>
 
-      {/* Resumo */}
-      <div className="mt-6 pt-6 border-t border-gray-200">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
-          <div>
-            <div className="text-sm text-gray-600 font-semibold">Marés Altas no Ano</div>
-            <div className="text-xl font-bold text-blue-600 mt-1">{highTides}</div>
-          </div>
-          <div>
-            <div className="text-sm text-gray-600 font-semibold">Marés Baixas no Ano</div>
-            <div className="text-xl font-bold text-orange-600 mt-1">{lowTides}</div>
-          </div>
-          <div>
-            <div className="text-sm text-gray-600 font-semibold">Média por Dia</div>
-            <div className="text-xl font-bold text-green-600 mt-1">
-              {eventos.length > 0 ? ((highTides + lowTides) / eventos.length).toFixed(1) : '0'} marés
-            </div>
-          </div>
-        </div>
+      {/* Stats grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginBottom: 14 }}>
+        {stats.map((s) => (
+          <StatCard key={s.label} {...s} />
+        ))}
+      </div>
+
+      {/* Divider */}
+      <div style={{ height: 1, background: 'rgba(255,255,255,0.05)', marginBottom: 14 }} />
+
+      {/* Summary row */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
+        <SummaryItem label="Marés altas no ano" value={String(highTides)} color="#38bdf8" />
+        <SummaryItem label="Marés baixas no ano" value={String(lowTides)} color="#fb923c" />
+        <SummaryItem label="Média por dia" value={`${avgPerDay} marés`} color="#34d399" />
+      </div>
+
+      {/* Footer note */}
+      <div style={{ marginTop: 14, padding: '8px 12px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)', borderRadius: 10 }}>
+        <span style={{ color: '#334155', fontSize: '0.62rem', fontFamily: 'monospace' }}>
+          📡 Fonte: Marinha do Brasil (CHM) · Coeficientes calculados via ciclo lunar
+        </span>
       </div>
     </div>
   );
 }
+
+const cardStyle: React.CSSProperties = {
+  background: 'linear-gradient(145deg, rgba(15,23,42,0.97) 0%, rgba(15,23,42,0.88) 100%)',
+  backdropFilter: 'blur(24px)',
+  WebkitBackdropFilter: 'blur(24px)',
+  border: '1px solid rgba(56,189,248,0.1)',
+  borderRadius: 20,
+  padding: '22px 20px',
+  boxShadow: '0 8px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04)',
+};

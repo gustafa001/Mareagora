@@ -1,6 +1,7 @@
 'use client';
 
 import { TideEvent } from '@/lib/tideUtils';
+import { useEffect, useState } from 'react';
 
 interface ActivityRecommendationsProps {
   todayTides: TideEvent[];
@@ -30,9 +31,18 @@ function statusBadge(status: Activity['status']) {
   const s = map[status];
   return (
     <span style={{
-      color: s.color, background: s.bg, border: `1px solid ${s.border}`,
-      borderRadius: 20, padding: '2px 10px', fontSize: 10,
-      fontWeight: 700, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.08em',
+      color: s.color,
+      background: s.bg,
+      border: `1px solid ${s.border}`,
+      borderRadius: 20,
+      padding: '3px 8px',
+      fontSize: 9,
+      fontWeight: 700,
+      fontFamily: 'monospace',
+      textTransform: 'uppercase',
+      letterSpacing: '0.06em',
+      whiteSpace: 'nowrap',
+      flexShrink: 0,
     }}>{s.label}</span>
   );
 }
@@ -40,6 +50,15 @@ function statusBadge(status: Activity['status']) {
 export default function ActivityRecommendations({
   todayTides, nextHigh, nextLow, waveHeight = 0,
 }: ActivityRecommendationsProps) {
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   const now = new Date();
   const currentMin = now.getHours() * 60 + now.getMinutes();
@@ -116,50 +135,111 @@ export default function ActivityRecommendations({
   return (
     <div style={cardStyle}>
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ width: 36, height: 36, background: 'rgba(251,191,36,0.12)', border: '1px solid rgba(251,191,36,0.25)', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 17 }}>💡</div>
+          <div style={{
+            width: 36, height: 36,
+            background: 'rgba(251,191,36,0.12)',
+            border: '1px solid rgba(251,191,36,0.25)',
+            borderRadius: 10,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 17,
+            flexShrink: 0,
+          }}>💡</div>
           <div>
-            <div style={{ color: '#e2e8f0', fontSize: 13, fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase', fontFamily: 'monospace' }}>Atividades — Hoje</div>
-            <div style={{ color: '#475569', fontSize: 10, fontFamily: 'monospace', marginTop: 1 }}>baseado em marés e ondas atuais</div>
+            <div style={{ color: '#e2e8f0', fontSize: 13, fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase', fontFamily: 'monospace' }}>
+              Atividades — Hoje
+            </div>
+            <div style={{ color: '#475569', fontSize: 10, fontFamily: 'monospace', marginTop: 1 }}>
+              baseado em marés e ondas atuais
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+      {/* Grid — 1 coluna no mobile, 2 no desktop */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+        gap: 12,
+      }}>
         {activities.map((a, idx) => (
           <div key={idx} style={{
             background: a.glow,
             border: `1px solid ${a.color}25`,
             borderRadius: 16,
-            padding: '16px 14px',
-            display: 'flex', flexDirection: 'column', gap: 10,
-            transition: 'border-color 0.2s',
+            padding: '14px 12px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 10,
           }}>
             {/* Activity header */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <span style={{ fontSize: '1.8rem', lineHeight: 1, filter: `drop-shadow(0 0 8px ${a.color}60)` }}>{a.emoji}</span>
-                <div>
-                  <div style={{ color: '#e2e8f0', fontFamily: 'monospace', fontWeight: 800, fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{a.activity}</div>
-                  <div style={{ color: a.color, fontSize: '0.68rem', fontFamily: 'monospace', marginTop: 1 }}>{a.time}</div>
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
+                <span style={{
+                  fontSize: '1.6rem',
+                  lineHeight: 1,
+                  flexShrink: 0,
+                  filter: `drop-shadow(0 0 8px ${a.color}60)`,
+                }}>{a.emoji}</span>
+                <div style={{ minWidth: 0 }}>
+                  <div style={{
+                    color: '#e2e8f0',
+                    fontFamily: 'monospace',
+                    fontWeight: 800,
+                    fontSize: '0.85rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.06em',
+                  }}>{a.activity}</div>
+                  <div style={{
+                    color: a.color,
+                    fontSize: '0.68rem',
+                    fontFamily: 'monospace',
+                    marginTop: 2,
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}>{a.time}</div>
                 </div>
               </div>
               {statusBadge(a.status)}
             </div>
 
             {/* Tip */}
-            <div style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 10, padding: '8px 10px' }}>
-              <span style={{ color: '#94a3b8', fontSize: '0.72rem', lineHeight: 1.5 }}>💬 {a.tip}</span>
+            <div style={{
+              background: 'rgba(0,0,0,0.2)',
+              border: '1px solid rgba(255,255,255,0.05)',
+              borderRadius: 10,
+              padding: '8px 10px',
+            }}>
+              <span style={{ color: '#94a3b8', fontSize: '0.72rem', lineHeight: 1.5 }}>
+                💬 {a.tip}
+              </span>
             </div>
 
             {/* Details */}
             <div style={{ display: 'flex', gap: 8 }}>
               {a.details.map((d, di) => (
-                <div key={di} style={{ flex: 1, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 8, padding: '5px 8px', display: 'flex', alignItems: 'center', gap: 5 }}>
-                  <span style={{ fontSize: '0.75rem' }}>{d.icon}</span>
-                  <span style={{ color: '#64748b', fontSize: '0.62rem', fontFamily: 'monospace' }}>{d.label}</span>
+                <div key={di} style={{
+                  flex: 1,
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.05)',
+                  borderRadius: 8,
+                  padding: '5px 8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 5,
+                  minWidth: 0,
+                }}>
+                  <span style={{ fontSize: '0.75rem', flexShrink: 0 }}>{d.icon}</span>
+                  <span style={{
+                    color: '#64748b',
+                    fontSize: '0.62rem',
+                    fontFamily: 'monospace',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  }}>{d.label}</span>
                 </div>
               ))}
             </div>
@@ -168,7 +248,13 @@ export default function ActivityRecommendations({
       </div>
 
       {/* Footer tip */}
-      <div style={{ marginTop: 14, padding: '10px 14px', background: 'rgba(251,191,36,0.06)', border: '1px solid rgba(251,191,36,0.12)', borderRadius: 12 }}>
+      <div style={{
+        marginTop: 14,
+        padding: '10px 14px',
+        background: 'rgba(251,191,36,0.06)',
+        border: '1px solid rgba(251,191,36,0.12)',
+        borderRadius: 12,
+      }}>
         <span style={{ color: '#78716c', fontSize: '0.7rem', fontFamily: 'monospace' }}>
           💡 Combine com a previsão de vento e ondas para melhorar seu planejamento
         </span>
@@ -183,6 +269,6 @@ const cardStyle: React.CSSProperties = {
   WebkitBackdropFilter: 'blur(24px)',
   border: '1px solid rgba(56,189,248,0.1)',
   borderRadius: 20,
-  padding: '22px 20px',
+  padding: '22px 16px',
   boxShadow: '0 8px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04)',
 };

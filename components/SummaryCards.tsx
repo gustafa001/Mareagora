@@ -28,7 +28,7 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon }: SummaryCar
         const h = jsonWave.hourly;
         const now = new Date();
         const nowPad = now.getHours().toString().padStart(2, '0');
-        const todayStr = now.toLocaleDateString('en-CA'); // formato YYYY-MM-DD
+        const todayStr = now.toLocaleDateString('en-CA');
         
         const idx = h.time.findIndex((t: string) => {
           return t.startsWith(todayStr) && t.includes(`T${nowPad}:`);
@@ -80,7 +80,7 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon }: SummaryCar
           <div className="text-4xl font-extrabold mt-4 font-syne text-white">{nextHigh?.hora || "--:--"}</div>
         </div>
         <div className="text-lg font-bold mt-2 text-white/95 tracking-wide bg-white/10 px-3 py-2 rounded-lg w-fit">
-          +{nextHigh?.altura_m.toFixed(2)} m
+          +{nextHigh?.altura_m?.toFixed(2) ?? "--"} m
         </div>
       </div>
 
@@ -94,7 +94,7 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon }: SummaryCar
           <div className="text-4xl font-extrabold mt-4 font-syne text-white">{nextLow?.hora || "--:--"}</div>
         </div>
         <div className="text-lg font-bold mt-2 text-white/95 tracking-wide bg-white/10 px-3 py-2 rounded-lg w-fit">
-          +{nextLow?.altura_m.toFixed(2)} m
+          +{nextLow?.altura_m?.toFixed(2) ?? "--"} m
         </div>
       </div>
 

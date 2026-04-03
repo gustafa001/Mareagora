@@ -109,6 +109,8 @@ export default async function PortPage({ params }: { params: { slug: string } })
   const regionContext = getRegionContext(port!.region, port!.state);
   const activityTips = getActivityTips(port!.region);
 
+  // ── ALTERAÇÃO 1: BreadcrumbList agora inclui nível "Portos" intermediário
+  // ── ALTERAÇÃO 2: Dataset schema adicionado ao @graph
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -116,7 +118,8 @@ export default async function PortPage({ params }: { params: { slug: string } })
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.mareagora.com.br/' },
-          { '@type': 'ListItem', position: 2, name: port!.name, item: `https://www.mareagora.com.br/mare/${slug}` },
+          { '@type': 'ListItem', position: 2, name: 'Portos', item: 'https://www.mareagora.com.br/portos' },
+          { '@type': 'ListItem', position: 3, name: port!.name, item: `https://www.mareagora.com.br/mare/${slug}` },
         ],
       },
       {
@@ -127,6 +130,20 @@ export default async function PortPage({ params }: { params: { slug: string } })
         description: `Horários e alturas das marés em ${port!.name} (${port!.state}) para ${ano}.`,
         inLanguage: 'pt-BR',
         isPartOf: { '@id': 'https://www.mareagora.com.br/' },
+      },
+      {
+        '@type': 'Dataset',
+        name: `Tábua de Marés ${port!.name} ${ano}`,
+        description: `Dados de maré para ${port!.name}, ${port!.state}, ${ano}. Fonte: Marinha do Brasil / DHN.`,
+        url: `https://www.mareagora.com.br/mare/${slug}`,
+        creator: {
+          '@type': 'Organization',
+          name: 'Marinha do Brasil — DHN',
+          url: 'https://www.marinha.mil.br',
+        },
+        temporalCoverage: `${ano}`,
+        spatialCoverage: `${port!.name}, ${port!.state}, Brasil`,
+        inLanguage: 'pt-BR',
       },
     ],
   };
@@ -145,8 +162,9 @@ export default async function PortPage({ params }: { params: { slug: string } })
         <div className="hero-overlay" />
         <div className="container relative z-30 text-white text-center pt-24 md:pt-16">
           <div className="flex flex-col gap-3 items-center px-2">
+            {/* ALTERAÇÃO 3: H1 agora inclui o ano, consistente com o title tag */}
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight font-syne leading-tight max-w-4xl">
-              Tábua de Maré — {port!.name}
+              Tábua de Maré {port!.name} — {ano}
             </h1>
             <p className="text-sm sm:text-lg md:text-xl opacity-90 font-medium font-syne hidden sm:block">
               {port!.name} - {ano} | Estado do {port!.state}

@@ -1,10 +1,10 @@
 import { notFound } from 'next/navigation';
-import { getPortBySlug, getNearbySlugs, PORTS } from '@/lib/ports';
-import { getTodayTides } from '@/lib/tideUtils';
-import { getPortData } from '@/lib/tideData';
+import { getPortBySlug, getNearbySlugs, PORTS, getAllSlugs } from '@/lib/ports';
+import { getEventosDia, getEventosAno, getMetadata } from '@/lib/mare';
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import NavBar from '@/components/NavBar';
-import TideChart from '@/components/TideChart';
+const TideChart = dynamic(() => import('@/components/TideChart'), { ssr: false });
 import MonthlyTideTable from '@/components/MonthlyTideTable';
 import WavesCard from '@/components/WavesCard';
 import ForecastStrip from '@/components/ForecastStrip';
@@ -13,28 +13,35 @@ import SummaryCards from '@/components/SummaryCards';
 import DetailedForecastTable from '@/components/DetailedForecastTable';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import AdSlot from '@/components/ads/AdSlot';
-import { AD_SLOTS } from '@/lib/adConfig';
 import SearchPorts from '@/components/SearchPorts';
+import PortStatistics from '@/components/PortStatistics';
+import ActivityRecommendations from '@/components/ActivityRecommendations';
+import ShareButton from '@/components/ShareButton';
 
+// ✅ CORREÇÃO: chaves em minúsculo, igual ao port.region
 function getRegionContext(region: string, state: string): string {
   const map: Record<string, string> = {
-    Norte: `O litoral da região Norte, que abrange estados como ${state}, é marcado por uma das maiores amplitudes de maré do Brasil. As marés amazônicas são influenciadas diretamente pela morfologia dos estuários e pela descarga dos grandes rios, podendo variar vários metros entre a preamar e a baixamar. Esse comportamento extremo exige atenção redobrada de pescadores, navegadores e moradores ribeirinhos.`,
-    Nordeste: `O litoral do Nordeste brasileiro, onde ${state} está inserido, apresenta características únicas de maré devido à posição geográfica próxima à linha do Equador. As variações de maré são moderadas, com influência direta dos ventos alísios e das correntes do Atlântico Sul. A região é famosa por praias de águas mornas, recifes de coral e condições favoráveis para mergulho e kitesurf em determinados períodos do ano.`,
-    Sudeste: `O litoral do Sudeste, região onde ${state} se localiza, é um dos mais movimentados do Brasil — tanto em termos de tráfego marítimo quanto em atividades recreativas. As marés dessa região são do tipo semidiurno, com dois ciclos completos de preamar e baixamar a cada 24 horas. A variação costuma ser moderada, mas pode ser amplificada em baías e enseadas fechadas, como ocorre em Angra dos Reis e na Baía de Guanabara.`,
-    Sul: `O litoral Sul do Brasil, onde ${state} está situado, possui marés com características bem definidas e influência marcante dos sistemas de frentes frias vindas do sul do continente. As ondas de tempestade (ressacas) são frequentes no inverno e podem elevar temporariamente o nível do mar acima do previsto na tábua oficial. Surfe, pesca embarcada e navegação costeira são atividades muito praticadas na região.`,
+    norte: `O litoral da região Norte, que abrange estados como ${state}, é marcado por uma das maiores amplitudes de maré do Brasil. As marés amazônicas são influenciadas diretamente pela morfologia dos estuários e pela descarga dos grandes rios, podendo variar vários metros entre a preamar e a baixamar. Esse comportamento extremo exige atenção redobrada de pescadores, navegadores e moradores ribeirinhos.`,
+    nordeste: `O litoral do Nordeste brasileiro, onde ${state} está inserido, apresenta características únicas de maré devido à posição geográfica próxima à linha do Equador. As variações de maré são moderadas, com influência direta dos ventos alísios e das correntes do Atlântico Sul. A região é famosa por praias de águas mornas, recifes de coral e condições favoráveis para mergulho e kitesurf em determinados períodos do ano.`,
+    sudeste: `O litoral do Sudeste, região onde ${state} se localiza, é um dos mais movimentados do Brasil — tanto em termos de tráfego marítimo quanto em atividades recreativas. As marés dessa região são do tipo semidiurno, com dois ciclos completos de preamar e baixamar a cada 24 horas. A variação costuma ser moderada, mas pode ser amplificada em baías e enseadas fechadas, como ocorre em Angra dos Reis e na Baía de Guanabara.`,
+    sul: `O litoral Sul do Brasil, onde ${state} está situado, possui marés com características bem definidas e influência marcante dos sistemas de frentes frias vindas do sul do continente. As ondas de tempestade (ressacas) são frequentes no inverno e podem elevar temporariamente o nível do mar acima do previsto na tábua oficial. Surfe, pesca embarcada e navegação costeira são atividades muito praticadas na região.`,
   };
   return map[region] ?? `O litoral de ${state} apresenta condições de maré características da costa brasileira, com variações influenciadas pela posição geográfica e pela morfologia costeira local.`;
 }
 
+// ✅ CORREÇÃO: chaves em minúsculo, igual ao port.region
 function getActivityTips(region: string): string {
   const map: Record<string, string> = {
-    Norte: 'Na região Norte, os melhores momentos para pesca são durante a virada da maré — especialmente na baixamar, quando os bancos de areia ficam expostos e concentram os peixes. Evite navegar em canais estreitos durante a preamar máxima sem conhecimento da área.',
-    Nordeste: 'No Nordeste, as condições ideais para surfe ocorrem geralmente no período de setembro a março, quando as ondulações do Atlântico Norte chegam com mais força. Para mergulho nos recifes, prefira os horários de maré alta, que garantem maior visibilidade e profundidade segura sobre as formações coralinas.',
-    Sudeste: 'No Sudeste, a pesca embarcada é mais produtiva durante as marés de sizígia (lua cheia e lua nova), quando a amplitude é maior e o movimento da água atrai mais peixes. Para surfe, as melhores ondas costumam aparecer com mar de sudeste combinado com maré baixa a média.',
-    Sul: 'No Sul do Brasil, fique atento às previsões de frentes frias antes de planejar atividades marítimas. O vento sul pode elevar o nível do mar rapidamente. Para pesca em costões e pedras, opere sempre com maré baixa e nunca vire as costas para o mar.',
+    norte: 'Na região Norte, os melhores momentos para pesca são durante a virada da maré — especialmente na baixamar, quando os bancos de areia ficam expostos e concentram os peixes. Evite navegar em canais estreitos durante a preamar máxima sem conhecimento da área.',
+    nordeste: 'No Nordeste, as condições ideais para surfe ocorrem geralmente no período de setembro a março, quando as ondulações do Atlântico Norte chegam com mais força. Para mergulho nos recifes, prefira os horários de maré alta, que garantem maior visibilidade e profundidade segura sobre as formações coralinas.',
+    sudeste: 'No Sudeste, a pesca embarcada é mais produtiva durante as marés de sizígia (lua cheia e lua nova), quando a amplitude é maior e o movimento da água atrai mais peixes. Para surfe, as melhores ondas costumam aparecer com mar de sudeste combinado com maré baixa a média.',
+    sul: 'No Sul do Brasil, fique atento às previsões de frentes frias antes de planejar atividades marítimas. O vento sul pode elevar o nível do mar rapidamente. Para pesca em costões e pedras, opere sempre com maré baixa e nunca vire as costas para o mar.',
   };
   return map[region] ?? 'Consulte sempre a tábua de marés antes de qualquer atividade marítima e combine com a previsão de vento e ondas disponível na plataforma.';
+}
+
+export async function generateStaticParams() {
+  return getAllSlugs().map(slug => ({ slug }));
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
@@ -45,13 +52,27 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const url = `https://www.mareagora.com.br/mare/${params.slug}`;
   const title = `Tábua de Maré ${port.name} ${ano} — MaréAgora`;
   const description = `Horários e alturas das marés em ${port.name} (${port.state}) hoje e para os próximos dias. Dados oficiais da Marinha do Brasil + ondas e vento em tempo real.`;
+  const ogImage = `https://www.mareagora.com.br/mare/${params.slug}/opengraph-image`;
 
   return {
     title,
     description,
     alternates: { canonical: url },
-    openGraph: { title, description, url, type: 'website', locale: 'pt_BR', siteName: 'MaréAgora' },
-    twitter: { card: 'summary_large_image', title, description },
+    openGraph: {
+      title,
+      description,
+      url,
+      type: 'website',
+      locale: 'pt_BR',
+      siteName: 'MaréAgora',
+      images: [{ url: ogImage, width: 1200, height: 630, alt: `Tábua de Maré ${port.name}` }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
+    },
   };
 }
 
@@ -60,12 +81,12 @@ export default async function PortPage({ params }: { params: { slug: string } })
   const port = getPortBySlug(slug);
   if (!port) notFound();
 
-  const id = port!.dataFile.replace('.json', '');
-  const portData = await getPortData(id);
-  const todayDay = getTodayTides(portData?.eventos ?? []);
-  const todayTides: import('@/lib/tideUtils').TideEvent[] = todayDay?.mares ?? [];
-
+  const todayStr = new Date().toLocaleDateString('en-CA');
+  const todayTides = getEventosDia(port!, todayStr);
+  const meta = getMetadata(port!);
   const ano = new Date().getFullYear();
+  const dataAno = getEventosAno(port!, ano);
+
   const now = new Date();
   const currentMin = now.getHours() * 60 + now.getMinutes();
 
@@ -92,6 +113,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
 
   const regionContext = getRegionContext(port!.region, port!.state);
   const activityTips = getActivityTips(port!.region);
+  const nearbyPorts = getNearbySlugs(port!);
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -100,7 +122,8 @@ export default async function PortPage({ params }: { params: { slug: string } })
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.mareagora.com.br/' },
-          { '@type': 'ListItem', position: 2, name: port!.name, item: `https://www.mareagora.com.br/mare/${slug}` },
+          { '@type': 'ListItem', position: 2, name: 'Portos', item: 'https://www.mareagora.com.br/portos' },
+          { '@type': 'ListItem', position: 3, name: port!.name, item: `https://www.mareagora.com.br/mare/${slug}` },
         ],
       },
       {
@@ -111,6 +134,21 @@ export default async function PortPage({ params }: { params: { slug: string } })
         description: `Horários e alturas das marés em ${port!.name} (${port!.state}) para ${ano}.`,
         inLanguage: 'pt-BR',
         isPartOf: { '@id': 'https://www.mareagora.com.br/' },
+      },
+      {
+        '@type': 'Dataset',
+        name: `Tábua de Marés ${port!.name} ${ano}`,
+        description: `Dados de maré para ${port!.name}, ${port!.state}, ${ano}. Fonte: Marinha do Brasil / DHN.`,
+        url: `https://www.mareagora.com.br/mare/${slug}`,
+        license: 'https://creativecommons.org/licenses/by/4.0/',
+        creator: {
+          '@type': 'Organization',
+          name: 'Marinha do Brasil — DHN',
+          url: 'https://www.marinha.mil.br',
+        },
+        temporalCoverage: `${ano}`,
+        spatialCoverage: `${port!.name}, ${port!.state}, Brasil`,
+        inLanguage: 'pt-BR',
       },
     ],
   };
@@ -123,20 +161,18 @@ export default async function PortPage({ params }: { params: { slug: string } })
         suppressHydrationWarning
       />
 
-      <NavBar />
-
-      <div className="w-full flex justify-center px-4 my-2">
-        <div className="w-full max-w-[728px] min-h-[90px]">
-          <AdSlot slotId={AD_SLOTS.LEADERBOARD_NAV} format="auto" />
-        </div>
-      </div>
+      <NavBar>
+        <p className="mt-4 text-xs opacity-70">
+          Horário local: {currentTimeBR}
+        </p>
+      </NavBar>
 
       <section className="hero-section">
         <div className="hero-overlay" />
         <div className="container relative z-30 text-white text-center pt-24 md:pt-16">
           <div className="flex flex-col gap-3 items-center px-2">
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight font-syne leading-tight max-w-4xl">
-              Tábua de Maré — {port!.name}
+              Tábua de Maré {port!.name} — {ano}
             </h1>
             <p className="text-sm sm:text-lg md:text-xl opacity-90 font-medium font-syne hidden sm:block">
               {port!.name} - {ano} | Estado do {port!.state}
@@ -145,13 +181,9 @@ export default async function PortPage({ params }: { params: { slug: string } })
               Estado do {port!.state}
             </p>
 
-            <div className="mt-6 w-full max-w-md">
+            <div className="mt-6 mb-24 w-full max-w-md static z-40">
               <SearchPorts ports={PORTS} />
             </div>
-
-            <p className="mt-4 text-xs opacity-70">
-              Horário local: {currentTimeBR}
-            </p>
           </div>
         </div>
       </section>
@@ -171,19 +203,25 @@ export default async function PortPage({ params }: { params: { slug: string } })
             </div>
 
             <MonthlyTideTable
-              eventos={portData?.eventos ?? []}
+              eventos={dataAno}
               portName={port!.name}
               lat={port!.lat}
               lon={port!.lon}
             />
 
-            <div className="flex justify-center">
-              <div className="w-full max-w-[336px] min-h-[280px]">
-                <AdSlot slotId={AD_SLOTS.POS_TABELA} format="auto" />
-              </div>
-            </div>
-
             <DetailedForecastTable lat={port!.lat} lon={port!.lon} todayTides={todayTides} />
+
+            <ActivityRecommendations
+              todayTides={todayTides}
+              nextHigh={nextHigh}
+              nextLow={nextLow}
+              waveHeight={2.5}
+            />
+
+            <PortStatistics
+              eventos={dataAno}
+              portName={port!.name}
+            />
 
             <section className="classic-card prose prose-slate max-w-none">
               <h2 className="text-2xl font-bold mb-4 font-syne tracking-tight">
@@ -210,7 +248,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
                 <div>
                   <h3 className="text-base font-bold mb-2 text-gray-800">📏 O que é o Nível Médio?</h3>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    O nível médio ({portData?.nivel_medio ?? '--'} m) é a referência central do gráfico de marés.
+                    O nível médio ({meta?.nivel_medio_m ?? '--'} m) é a referência central do gráfico de marés.
                     Representa a altura média da superfície do mar ao longo do tempo. Valores acima dele indicam
                     maré subindo em direção à preamar; abaixo, a maré está descendo em direção à baixamar.
                   </p>
@@ -236,12 +274,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
                 sempre consulte as publicações oficiais da Marinha.
               </p>
             </section>
-
-            <div className="flex justify-center my-2">
-              <div className="w-full max-w-[728px] min-h-[90px]">
-                <AdSlot slotId={AD_SLOTS.PREFOOTER} format="auto" />
-              </div>
-            </div>
           </div>
 
           <aside className="flex flex-col gap-8">
@@ -249,23 +281,10 @@ export default async function PortPage({ params }: { params: { slug: string } })
             <ForecastStrip lat={port!.lat} lon={port!.lon} />
             <ConditionsCard lat={port!.lat} lon={port!.lon} />
 
-            <div className="hidden lg:block">
-              <div className="sticky top-5">
-                <div className="min-h-[600px] w-[300px]">
-                  <AdSlot
-                    slotId={AD_SLOTS.SIDEBAR_STICKY}
-                    format="auto"
-                    style={{ width: '300px', height: '600px' }}
-                    fullWidthResponsive={false}
-                  />
-                </div>
-              </div>
-            </div>
-
             <div className="classic-card">
               <h3 className="card-title mb-4">📍 Cidades Próximas</h3>
               <div className="flex flex-col gap-3">
-                {getNearbySlugs(port!).map(p => (
+                {nearbyPorts.map(p => (
                   <Link
                     key={p.slug}
                     href={`/mare/${p.slug}`}
@@ -279,6 +298,10 @@ export default async function PortPage({ params }: { params: { slug: string } })
             </div>
           </aside>
         </div>
+      </div>
+
+      <div className="fixed bottom-6 right-6 z-50">
+        <ShareButton portName={port!.name} slug={slug} />
       </div>
 
       <Footer />

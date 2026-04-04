@@ -1,0 +1,22 @@
+name: Cherry-pick JSON data
+
+on:
+  workflow_dispatch:
+
+jobs:
+  cherry-pick:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cherry-pick commit
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          git cherry-pick e43075c
+
+      - name: Push to main
+        run: git push origin main

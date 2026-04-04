@@ -145,12 +145,12 @@ export default function TideChart({
   return (
     <div className="w-full">
       {/* Gráfico */}
-      <div className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 rounded-xl shadow-lg p-6 border border-slate-700/50">
-        <div className="bg-gradient-to-br from-slate-800/80 via-slate-900/60 to-slate-900 rounded-2xl p-6 relative overflow-hidden shadow-inner">
+      <div className="bg-white dark:bg-slate-900 rounded-xl shadow-lg p-4 sm:p-6 border border-slate-200 dark:border-slate-700">
+        <div className="bg-gradient-to-br from-blue-50 via-cyan-50 to-white dark:from-slate-800/60 dark:via-slate-900/40 dark:to-slate-900 rounded-2xl p-4 sm:p-6 relative overflow-hidden shadow-sm">
           {/* Efeito aquático */}
-          <div className="absolute inset-0 opacity-10 pointer-events-none">
-            <div className="absolute top-0 right-0 w-40 h-40 bg-cyan-500 rounded-full blur-3xl opacity-20"></div>
-            <div className="absolute bottom-0 left-0 w-36 h-36 bg-blue-500 rounded-full blur-3xl opacity-15"></div>
+          <div className="absolute inset-0 opacity-20 dark:opacity-10 pointer-events-none">
+            <div className="absolute top-0 right-0 w-40 h-40 bg-cyan-300 dark:bg-cyan-500 rounded-full blur-3xl opacity-30 dark:opacity-20"></div>
+            <div className="absolute bottom-0 left-0 w-36 h-36 bg-blue-300 dark:bg-blue-500 rounded-full blur-3xl opacity-20 dark:opacity-15"></div>
           </div>
           <svg 
             viewBox={`0 0 ${viewBox.width} ${viewBox.height}`}
@@ -319,23 +319,7 @@ export default function TideChart({
           </svg>
         </div>
 
-        {/* Info boxes */}
-        <div className="mt-6 grid grid-cols-2 gap-4 relative z-10">
-          <div className="bg-gradient-to-br from-cyan-500/20 to-cyan-600/10 rounded-2xl p-5 border border-cyan-500/30 shadow-sm backdrop-blur-sm hover:shadow-md transition-shadow">
-            <div className="text-xs font-semibold text-cyan-300 mb-2 uppercase tracking-wide">Maré Atual</div>
-            <div className="text-4xl font-black text-cyan-400 mb-1">{currentHeight.toFixed(2)}m</div>
-            <div className="text-xs text-cyan-200 mt-2 font-semibold">
-              {isRising ? '↗ Enchente' : '↘ Vazante'}
-            </div>
-          </div>
-          <div className="bg-gradient-to-br from-orange-500/20 to-orange-600/10 rounded-2xl p-5 border border-orange-500/30 shadow-sm backdrop-blur-sm hover:shadow-md transition-shadow">
-            <div className="text-xs font-semibold text-orange-300 mb-2 uppercase tracking-wide">Próximo</div>
-            <div className="text-4xl font-black text-orange-400 mb-1">{displayNextEvent.hora}</div>
-            <div className="text-xs text-orange-200 mt-2 font-semibold">
-              {displayNextEvent.altura_m.toFixed(2)}m
-            </div>
-          </div>
-        </div>
+        {/* Info boxes removido - apenas gráfico */}
       </div>
     </div>
   );

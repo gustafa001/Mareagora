@@ -18,7 +18,6 @@ import PortStatistics from '@/components/PortStatistics';
 import ActivityRecommendations from '@/components/ActivityRecommendations';
 import ShareButton from '@/components/ShareButton';
 
-// ✅ CORREÇÃO: chaves em minúsculo, igual ao port.region
 function getRegionContext(region: string, state: string): string {
   const map: Record<string, string> = {
     norte: `O litoral da região Norte, que abrange estados como ${state}, é marcado por uma das maiores amplitudes de maré do Brasil. As marés amazônicas são influenciadas diretamente pela morfologia dos estuários e pela descarga dos grandes rios, podendo variar vários metros entre a preamar e a baixamar. Esse comportamento extremo exige atenção redobrada de pescadores, navegadores e moradores ribeirinhos.`,
@@ -29,7 +28,6 @@ function getRegionContext(region: string, state: string): string {
   return map[region] ?? `O litoral de ${state} apresenta condições de maré características da costa brasileira, com variações influenciadas pela posição geográfica e pela morfologia costeira local.`;
 }
 
-// ✅ CORREÇÃO: chaves em minúsculo, igual ao port.region
 function getActivityTips(region: string): string {
   const map: Record<string, string> = {
     norte: 'Na região Norte, os melhores momentos para pesca são durante a virada da maré — especialmente na baixamar, quando os bancos de areia ficam expostos e concentram os peixes. Evite navegar em canais estreitos durante a preamar máxima sem conhecimento da área.',
@@ -161,11 +159,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
         suppressHydrationWarning
       />
 
-      <NavBar>
-        <p className="mt-4 text-xs opacity-70">
-          Horário local: {currentTimeBR}
-        </p>
-      </NavBar>
+      <NavBar />
 
       <section className="hero-section">
         <div className="hero-overlay" />
@@ -184,6 +178,10 @@ export default async function PortPage({ params }: { params: { slug: string } })
             <div className="mt-6 mb-24 w-full max-w-md static z-40">
               <SearchPorts ports={PORTS} />
             </div>
+
+            <p className="mt-4 text-xs opacity-70">
+              Horário local: {currentTimeBR}
+            </p>
           </div>
         </div>
       </section>

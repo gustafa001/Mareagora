@@ -10,6 +10,7 @@ export interface MareEvento {
 export interface MareDia {
   data: string;       // "2026-04-03"
   eventos: MareEvento[];
+  mares: MareEvento[]; // alias para compatibilidade
 }
 
 function inferTipo(eventos: { dt: string; height_m: number }[]): MareEvento[] {
@@ -57,10 +58,34 @@ export function getEventosRange(port: Port, dataInicio: string, dias: number): M
       }
     }
 
-    return Object.entries(porDia).map(([data, evs]) => ({
-      data,
-      eventos: inferTipo(evs),
-    }));
+    return Object.entries(porDia).map(([data, evs]) => {
+      const mares = inferTipo(evs);
+      return { data, eventos: mares, mares };
+    });
+  } catch {
+    return [];
+  }
+}
+
+export function getEventosAno(port: Port, ano: number): MareDia[] {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const raw = require(`../data/mare/${port.dhnId}.json`);
+    const anoStr = String(ano);
+
+    const porDia: Record<string, { dt: string; height_m: number }[]> = {};
+    for (const ev of raw.events as { dt: string; height_m: number }[]) {
+      if (ev.dt.startsWith(anoStr)) {
+        const dia = ev.dt.slice(0, 10);
+        if (!porDia[dia]) porDia[dia] = [];
+        porDia[dia].push(ev);
+      }
+    }
+
+    return Object.entries(porDia).map(([data, evs]) => {
+      const mares = inferTipo(evs);
+      return { data, eventos: mares, mares };
+    });
   } catch {
     return [];
   }

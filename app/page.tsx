@@ -1,207 +1,37 @@
-import { PORTS } from '@/lib/ports';
-import NavBar from '@/components/NavBar';
-import TideCardLive from '@/components/TideCardLive';
-import HeroSearch from '@/components/HeroSearch';
-import Footer from '@/components/Footer';
-import Link from 'next/link';
+'use client';
 
-const REGION_ICONS: Record<string, string> = {
-  Norte: '🌿', Nordeste: '☀️', Sudeste: '🏙️', Sul: '🌊',
-};
-const REGION_DESC: Record<string, string> = {
-  Norte: 'Amazônia e litoral norte',
-  Nordeste: 'Do Maranhão à Bahia',
-  Sudeste: 'Espírito Santo, RJ e SP',
-  Sul: 'Paraná, SC e Rio Grande do Sul',
-};
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { getNearestPort } from '@/lib/ports';
 
 export default function Home() {
-  const regions = ['Norte', 'Nordeste', 'Sudeste', 'Sul'];
-  const totalPorts = PORTS.length;
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!navigator.geolocation) {
+      router.replace('/mare/porto-de-santos');
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const nearest = getNearestPort(pos.coords.latitude, pos.coords.longitude);
+        router.replace(`/mare/${nearest.slug}`);
+      },
+      () => {
+        // Se usuário negar ou timeout, vai para Porto de Santos como padrão
+        router.replace('/mare/porto-de-santos');
+      },
+      { timeout: 5000 }
+    );
+  }, [router]);
 
   return (
-    <div className="min-h-screen bg-[var(--ocean)]">
-      <NavBar />
-
-      {/* HERO PRO MAX SECTION */}
-      <section className="hero-section border-b border-[rgba(56,201,240,0.15)]" style={{ minHeight: '600px', paddingBottom: '30px' }}>
-        <div className="hero-overlay" style={{ background: 'linear-gradient(to bottom, rgba(6,16,30,0.4) 0%, rgba(6,16,30,0.85) 80%, rgba(10,22,40,1) 100%)' }} />
-        <div className="container relative z-10 text-white text-center pt-32 pb-8 px-2">
-
-          <div className="inline-flex items-center gap-2 bg-[rgba(255,255,255,0.08)] border border-[rgba(255,255,255,0.15)] backdrop-blur-md rounded-full px-4 py-1.5 text-[var(--foam)] text-[0.8rem] mb-6 shadow-xl uppercase tracking-widest font-bold">
-            <span className="live-dot bg-[var(--foam)]"></span>
-            Dados Oficiais da Marinha 2026
-          </div>
-
-          <h1 className="font-syne font-extrabold text-[clamp(2.8rem,9vw,5.5rem)] tracking-[-2px] leading-[1] text-white mb-6 drop-shadow-2xl">
-            A maré certa,<br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--foam)] to-[#2a68f6] filter drop-shadow">na hora certa.</span>
-          </h1>
-
-          <p className="max-w-2xl mx-auto text-[rgba(255,255,255,0.8)] text-lg md:text-xl leading-relaxed mb-6 drop-shadow font-light">
-            Condições de maré, ondas e ventos em tempo real para{' '}
-            <strong className="text-white font-bold bg-[rgba(56,201,240,0.15)] px-2 py-0.5 rounded border border-[rgba(56,201,240,0.2)] mx-1">{totalPorts} portos</strong>{' '}
-            em todo o litoral brasileiro.
-          </p>
-
-          <HeroSearch />
-
-          {/* Stats em formato Glassmorphism Bento */}
-          <div className="flex flex-wrap justify-center gap-4 mt-12 mb-4">
-            {[
-              { val: `${totalPorts}`, lbl: 'Portos', icon: '📍' },
-              { val: '365', lbl: 'Dias de Previsão', icon: '📅' },
-              { val: '4', lbl: 'Regiões', icon: '🗺️' },
-              { val: '24/7', lbl: 'Disponível', icon: '⚡' },
-            ].map(s => (
-              <div key={s.lbl} className="glass-card hover:bg-[rgba(255,255,255,0.1)] transition-colors rounded-2xl px-6 py-4 text-center min-w-[120px] max-w-[140px] flex-1">
-                <div className="text-2xl mb-1 opacity-80">{s.icon}</div>
-                <div className="font-syne font-extrabold text-2xl text-white drop-shadow-sm">{s.val}</div>
-                <div className="text-[var(--foam)] text-[10px] sm:text-xs mt-1 font-bold uppercase tracking-wider">{s.lbl}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <main className="container pt-8 pb-20 relative z-10">
-
-          {/* Quick tags */}
-          <div className="flex flex-wrap justify-center gap-2 mb-10">
-            <span className="text-[var(--muted)] text-sm self-center mr-1 drop-shadow">Acesso rápido:</span>
-            {['salvador','rio-de-janeiro-fiscal','santos','porto-de-mucuripe-fortaleza','maceio'].map(slug => {
-              const p = PORTS.find(x => x.slug === slug);
-              if (!p) return null;
-              return (
-                <Link key={slug} href={`/mare/${slug}`}
-                  className="bg-[rgba(56,201,240,0.1)] border border-[rgba(56,201,240,0.2)] text-[var(--foam)] text-sm px-3 py-1.5 rounded-full hover:bg-[rgba(56,201,240,0.25)] hover:border-[var(--foam)] transition-all drop-shadow-sm font-medium">
-                  {p.name.replace('Porto de ','').replace('Porto do ','')}
-                </Link>
-              );
-            })}
-          </div>
-
-        {/* REGIONS + LIVE CARDS */}
-        {regions.map((region) => {
-          const regionPorts = PORTS.filter(p => p.region === region);
-          if (regionPorts.length === 0) return null;
-          return (
-            <section key={region} className="mb-14">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-[rgba(56,201,240,0.1)] border border-[rgba(56,201,240,0.15)] flex items-center justify-center text-xl flex-shrink-0">
-                  {REGION_ICONS[region]}
-                </div>
-                <div>
-                  <h2 className="font-syne font-extrabold text-xl text-[var(--white)] leading-none">{region}</h2>
-                  <p className="text-[var(--muted)] text-sm mt-0.5">{REGION_DESC[region]} · {regionPorts.length} localidades</p>
-                </div>
-                <div className="ml-auto h-px flex-1 bg-gradient-to-r from-[rgba(56,201,240,0.15)] to-transparent max-w-[200px]" />
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                {regionPorts.map((port) => {
-                  const globalIndex = PORTS.indexOf(port);
-                  return (
-                    <TideCardLive key={port.slug} port={port} index={globalIndex} />
-                  );
-                })}
-              </div>
-            </section>
-          );
-        })}
-
-        {/* FEATURES */}
-        <section className="mt-10 mb-8">
-          <div className="text-center mb-8">
-            <h2 className="font-syne font-extrabold text-2xl text-[var(--white)] mb-2">
-              Tudo que você precisa <span className="text-[var(--foam)]">num só lugar</span>
-            </h2>
-            <p className="text-[var(--muted)] text-sm">Informações combinadas de maré, ondas e vento</p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {[
-              {icon:'🌊',title:'Tábua Oficial',desc:'Dados da Marinha do Brasil para 2026'},
-              {icon:'🌬️',title:'Ondas & Vento',desc:'Previsão em tempo real via Open-Meteo'},
-              {icon:'📅',title:'Calendário',desc:'Todos os horários do mês de uma vez'},
-              {icon:'📲',title:'Mobile First',desc:'Funciona perfeitamente no celular'},
-              {icon:'⚡',title:'Tempo Real',desc:'Altura da maré atualizada ao vivo'},
-              {icon:'🔒',title:'Fonte Oficial',desc:'CHM — Centro de Hidrografia da Marinha'},
-            ].map(f => (
-              <div key={f.title} className="bg-[rgba(13,34,64,0.5)] border border-[rgba(56,201,240,0.08)] rounded-2xl p-4 hover:border-[rgba(56,201,240,0.2)] transition-all">
-                <div className="text-2xl mb-2">{f.icon}</div>
-                <div className="font-syne font-bold text-sm text-[var(--white)] mb-1">{f.title}</div>
-                <div className="text-[var(--muted)] text-xs leading-relaxed">{f.desc}</div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* AUDIENCE */}
-        <section className="bg-[rgba(13,34,64,0.4)] border border-[rgba(56,201,240,0.08)] rounded-3xl p-6 md:p-10 text-center">
-          <h3 className="font-syne font-extrabold text-xl text-[var(--foam)] mb-2">Feito para todos</h3>
-          <p className="text-[var(--muted)] text-sm mb-6 max-w-md mx-auto">Do pescador ao engenheiro naval — quem vive o mar precisa do MaréAgora.</p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {['🎣 Pescadores','🏄 Surfistas','⛵ Navegantes','🤿 Mergulhadores','🏖️ Turistas','🏗️ Engenharia'].map(a => (
-              <span key={a} className="bg-[rgba(56,201,240,0.08)] border border-[rgba(56,201,240,0.15)] text-[var(--muted)] px-4 py-2 rounded-full text-sm hover:text-[var(--foam)] hover:border-[var(--foam)] transition-all cursor-default">
-                {a}
-              </span>
-            ))}
-          </div>
-        </section>
-
-      </main>
-
-      {/* SEO CONTENT SECTION */}
-      <section className="container pb-16 relative z-10">
-        <div className="bg-[rgba(13,34,64,0.4)] border border-[rgba(56,201,240,0.08)] rounded-3xl p-6 md:p-10">
-
-          <h2 className="font-syne font-extrabold text-2xl text-[var(--white)] mb-2">
-            O que é a <span className="text-[var(--foam)]">Tábua de Marés?</span>
-          </h2>
-          <p className="text-[var(--muted)] text-sm leading-relaxed mb-6">
-            A tábua de marés é uma previsão dos horários e alturas das marés altas (preamares) e baixas (baixa-mares) para um determinado local ao longo do dia, mês ou ano. No Brasil, as tábuas oficiais são publicadas anualmente pelo <strong className="text-[var(--foam)]">Centro de Hidrografia da Marinha (CHM)</strong>, órgão responsável pelas informações oceanográficas do país. O MaréAgora utiliza exclusivamente esses dados oficiais para garantir máxima precisão em todos os{' '}<strong className="text-white">122 portos</strong> disponíveis na plataforma.
-          </p>
-
-          <h2 className="font-syne font-extrabold text-xl text-[var(--white)] mb-2">
-            Como as marés funcionam no <span className="text-[var(--foam)]">litoral brasileiro?</span>
-          </h2>
-          <p className="text-[var(--muted)] text-sm leading-relaxed mb-4">
-            O Brasil possui mais de 7.400 km de costa, e o comportamento das marés varia bastante de região para região. No litoral norte, como no Maranhão e no Pará, as marés são semidiurnas de grande amplitude — podendo ultrapassar 6 metros em cidades como São Luís. Já no Nordeste e no Sudeste, as amplitudes são bem menores, com preamares geralmente entre 1 e 2 metros. No Sul do país, além das marés astronômicas, ventos e pressão atmosférica têm grande influência no nível do mar.
-          </p>
-          <p className="text-[var(--muted)] text-sm leading-relaxed mb-6">
-            Conhecer essas diferenças regionais é fundamental para quem pratica pesca, surf, mergulho ou navegação ao longo do litoral brasileiro. O MaréAgora organiza os dados por região — Norte, Nordeste, Sudeste e Sul — facilitando a consulta para cada perfil de usuário.
-          </p>
-
-          <h2 className="font-syne font-extrabold text-xl text-[var(--white)] mb-2">
-            Para que serve a <span className="text-[var(--foam)]">previsão de marés?</span>
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            {[
-              { icon: '🎣', title: 'Pesca', desc: 'Os momentos de virada da maré são os mais produtivos para a pesca. Conhecer os horários exatos de preamar e baixa-mar aumenta significativamente as chances de uma boa pescaria.' },
-              { icon: '🏄', title: 'Surf', desc: 'A altura e o período das ondas são influenciados diretamente pela maré. Surfistas experientes combinam os dados de maré com a previsão de ondas para escolher o melhor momento de entrar no mar.' },
-              { icon: '⛵', title: 'Navegação', desc: 'Embarcações de pequeno porte precisam monitorar o nível da maré para evitar encalhes em áreas rasas. Portos e marinas também dependem dessas previsões para operações seguras.' },
-              { icon: '🤿', title: 'Mergulho', desc: 'A visibilidade subaquática melhora consideravelmente durante a preamar em muitos pontos do litoral brasileiro. Mergulhadores planejam suas saídas com base nos dados de maré e correntes.' },
-            ].map(item => (
-              <div key={item.title} className="flex gap-3 bg-[rgba(56,201,240,0.05)] border border-[rgba(56,201,240,0.08)] rounded-2xl p-4">
-                <span className="text-2xl flex-shrink-0">{item.icon}</span>
-                <div>
-                  <div className="font-syne font-bold text-sm text-[var(--white)] mb-1">{item.title}</div>
-                  <div className="text-[var(--muted)] text-xs leading-relaxed">{item.desc}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <h2 className="font-syne font-extrabold text-xl text-[var(--white)] mb-2">
-            Por que usar o <span className="text-[var(--foam)]">MaréAgora?</span>
-          </h2>
-          <p className="text-[var(--muted)] text-sm leading-relaxed">
-            O MaréAgora nasceu da necessidade de ter uma plataforma brasileira, gratuita e confiável para consulta de marés. Diferente de apps internacionais que utilizam modelos matemáticos genéricos, o MaréAgora trabalha com as tábuas publicadas pela Marinha do Brasil — a mesma fonte utilizada por capitanias dos portos, empresas de navegação e órgãos de segurança marítima. Além dos dados de maré, a plataforma integra previsão de ondas e ventos via Open-Meteo, oferecendo uma visão completa das condições marítimas para cada localidade, disponível 24 horas por dia, 7 dias por semana, direto no seu celular.
-          </p>
-
-        </div>
-      </section>
-
-      <Footer />
+    <div className="min-h-screen flex items-center justify-center bg-slate-900">
+      <div className="text-center text-white">
+        <div className="text-5xl mb-4">🌊</div>
+        <p className="text-lg text-blue-200">Localizando o porto mais próximo…</p>
+      </div>
     </div>
   );
+}

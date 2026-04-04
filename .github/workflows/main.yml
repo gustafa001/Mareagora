@@ -1,25 +1,39 @@
+
+O commit tá realmente inacessível via git fetch — o GitHub não expõe commits órfãos assim.
+Vamos usar a API REST do GitHub pra recuperar os arquivos diretamente. Edita o main.yml com isso:
 name: Cherry-pick JSON data
 
 on:
   workflow_dispatch:
 
 jobs:
-  cherry-pick:
+  restore-files:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Fetch and apply orphan commit
+      - name: Restore files via GitHub API
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.email "action@github.com"
           git config user.name "GitHub Action"
-          git fetch origin refs/heads/main:refs/remotes/origin/main
-          git fetch --all
-          git fetch origin +e43075c:refs/remotes/origin/orphan
-          git cherry-pick refs/remotes/origin/orphan
-
-      - name: Push to main
-        run: git push origin main
+          
+          # Busca a lista de arquivos do commit órfão via API
+          FILES=$(curl -s -H "Authorization: token $GH_TOKEN" \
+            "https://api.github.com/repos/gustafa001/Mareagora/commits/e43075c" \
+            | python3 -c "import sys,json; [print(f['filename']) for f in json.load(sys.stdin)['files']]")
+          
+          # Baixa cada arquivo
+          for FILE in $FILES; do
+            mkdir -p $(dirname $FILE)
+            curl -s -H "Authorization: token $GH_TOKEN" \
+              "https://api.github.com/repos/gustafa001/Mareagora/contents/$FILE?ref=e43075c" \
+              | python3 -c "import sys,json,base64; open('$FILE','wb').write(base64.b64decode(json.load(sys.stdin)['content'].replace('\n','')))"
+          done
+          
+          git add .
+          git commit -m "Restore JSON data files"
+          git push origin main

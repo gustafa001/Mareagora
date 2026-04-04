@@ -12,6 +12,9 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Fetch orphan commit
+        run: git fetch origin e43075c
+
       - name: Cherry-pick commit
         run: |
           git config user.email "action@github.com"

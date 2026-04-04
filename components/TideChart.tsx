@@ -145,20 +145,26 @@ export default function TideChart({
   return (
     <div className="w-full">
       {/* Gráfico */}
-      <div className="bg-white rounded-xl shadow p-6 border border-slate-100">
-        <div className="bg-gradient-to-b from-blue-50 via-cyan-50 to-white rounded-2xl p-4 relative">
+      <div className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 rounded-xl shadow-lg p-6 border border-slate-700/50">
+        <div className="bg-gradient-to-br from-slate-800/80 via-slate-900/60 to-slate-900 rounded-2xl p-6 relative overflow-hidden shadow-inner">
+          {/* Efeito aquático */}
+          <div className="absolute inset-0 opacity-10 pointer-events-none">
+            <div className="absolute top-0 right-0 w-40 h-40 bg-cyan-500 rounded-full blur-3xl opacity-20"></div>
+            <div className="absolute bottom-0 left-0 w-36 h-36 bg-blue-500 rounded-full blur-3xl opacity-15"></div>
+          </div>
           <svg 
             viewBox={`0 0 ${viewBox.width} ${viewBox.height}`}
-            className="w-full h-auto"
+            className="w-full h-auto relative z-10"
             preserveAspectRatio="xMidYMid meet"
           >
             <defs>
               <linearGradient id="tideGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="rgb(6, 182, 212)" stopOpacity="0.25" />
-                <stop offset="100%" stopColor="rgb(6, 182, 212)" stopOpacity="0.02" />
+                <stop offset="0%" stopColor="rgb(6, 182, 212)" stopOpacity="0.35" />
+                <stop offset="50%" stopColor="rgb(6, 182, 212)" stopOpacity="0.15" />
+                <stop offset="100%" stopColor="rgb(6, 182, 212)" stopOpacity="0.03" />
               </linearGradient>
-              <filter id="glow">
-                <feGaussianBlur stdDeviation="1" result="coloredBlur" />
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="1.5" result="coloredBlur" />
                 <feMerge>
                   <feMergeNode in="coloredBlur" />
                   <feMergeNode in="SourceGraphic" />
@@ -174,15 +180,16 @@ export default function TideChart({
                   y1={scaleY(h)}
                   x2={viewBox.width - padding}
                   y2={scaleY(h)}
-                  stroke="rgb(226, 232, 240)"
+                  stroke="rgb(71, 85, 105)"
                   strokeWidth="0.8"
                   strokeDasharray="3,3"
+                  opacity="0.5"
                 />
                 <text
                   x={padding - 8}
                   y={scaleY(h) + 4}
                   fontSize="9"
-                  fill="rgb(100, 116, 139)"
+                  fill="rgb(148, 163, 184)"
                   textAnchor="end"
                   fontWeight="500"
                 >
@@ -197,8 +204,9 @@ export default function TideChart({
               y1={scaleY(0)}
               x2={viewBox.width - padding}
               y2={scaleY(0)}
-              stroke="rgb(148, 163, 184)"
+              stroke="rgb(100, 116, 139)"
               strokeWidth="1.5"
+              opacity="0.6"
             />
 
             {/* Área preenchida */}
@@ -210,12 +218,13 @@ export default function TideChart({
             {/* Linha principal da maré */}
             <path
               d={pathData}
-              stroke="rgb(6, 182, 212)"
-              strokeWidth="2.5"
+              stroke="rgb(0, 184, 224)"
+              strokeWidth="3"
               fill="none"
               strokeLinecap="round"
               strokeLinejoin="round"
               filter="url(#glow)"
+              opacity="0.95"
             />
 
             {/* Pontos de eventos */}
@@ -260,7 +269,7 @@ export default function TideChart({
                       y={scaleY(data.y) - 20}
                       fontSize="11"
                       fontWeight="700"
-                      fill={hoveredPoint === idx ? (isHigh ? 'rgb(6, 182, 212)' : 'rgb(234, 88, 12)') : 'rgb(51, 65, 85)'}
+                      fill={hoveredPoint === idx ? (isHigh ? 'rgb(34, 211, 238)' : 'rgb(251, 146, 60)') : 'rgb(148, 163, 184)'}
                       textAnchor="middle"
                       className="transition-colors duration-200"
                     >
@@ -300,7 +309,7 @@ export default function TideChart({
                 x={scaleX(h * 60)}
                 y={viewBox.height - 8}
                 fontSize="10"
-                fill="rgb(100, 116, 139)"
+                fill="rgb(148, 163, 184)"
                 textAnchor="middle"
                 fontWeight="500"
               >
@@ -311,18 +320,18 @@ export default function TideChart({
         </div>
 
         {/* Info boxes */}
-        <div className="mt-5 grid grid-cols-2 gap-3">
-          <div className="bg-gradient-to-br from-cyan-50 to-blue-50 rounded-xl p-4 border border-cyan-200">
-            <div className="text-xs font-semibold text-slate-600 mb-1">Maré Atual</div>
-            <div className="text-3xl font-black text-cyan-600">{currentHeight.toFixed(2)}m</div>
-            <div className="text-xs text-slate-500 mt-2 font-medium">
+        <div className="mt-6 grid grid-cols-2 gap-4 relative z-10">
+          <div className="bg-gradient-to-br from-cyan-500/20 to-cyan-600/10 rounded-2xl p-5 border border-cyan-500/30 shadow-sm backdrop-blur-sm hover:shadow-md transition-shadow">
+            <div className="text-xs font-semibold text-cyan-300 mb-2 uppercase tracking-wide">Maré Atual</div>
+            <div className="text-4xl font-black text-cyan-400 mb-1">{currentHeight.toFixed(2)}m</div>
+            <div className="text-xs text-cyan-200 mt-2 font-semibold">
               {isRising ? '↗ Enchente' : '↘ Vazante'}
             </div>
           </div>
-          <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-4 border border-orange-200">
-            <div className="text-xs font-semibold text-slate-600 mb-1">Próximo Evento</div>
-            <div className="text-3xl font-black text-orange-600">{displayNextEvent.hora}</div>
-            <div className="text-xs text-slate-500 mt-2 font-medium">
+          <div className="bg-gradient-to-br from-orange-500/20 to-orange-600/10 rounded-2xl p-5 border border-orange-500/30 shadow-sm backdrop-blur-sm hover:shadow-md transition-shadow">
+            <div className="text-xs font-semibold text-orange-300 mb-2 uppercase tracking-wide">Próximo</div>
+            <div className="text-4xl font-black text-orange-400 mb-1">{displayNextEvent.hora}</div>
+            <div className="text-xs text-orange-200 mt-2 font-semibold">
               {displayNextEvent.altura_m.toFixed(2)}m
             </div>
           </div>

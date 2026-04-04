@@ -12,14 +12,14 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Fetch orphan commit
-        run: git fetch origin e43075c
-
-      - name: Cherry-pick commit
+      - name: Fetch and apply orphan commit
         run: |
           git config user.email "action@github.com"
           git config user.name "GitHub Action"
-          git cherry-pick e43075c
+          git fetch origin refs/heads/main:refs/remotes/origin/main
+          git fetch --all
+          git fetch origin +e43075c:refs/remotes/origin/orphan
+          git cherry-pick refs/remotes/origin/orphan
 
       - name: Push to main
         run: git push origin main

@@ -1,22 +1,27 @@
 'use client';
 
 import { TideEvent } from '@/lib/tideUtils';
-import { Wind, Waves } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import type { TideDay } from '@/lib/tideUtils';
 
 interface TideChartProps {
-  tides: TideEvent[];
+  tides?: TideEvent[];
+  tideDay?: TideDay;
   vento?: string;
   ondas?: string;
 }
 
 export default function TideChart({
   tides,
+  tideDay,
   vento = '5 km/h',
   ondas = '0.8 m'
 }: TideChartProps) {
   const [currentTime, setCurrentTime] = useState<string>('');
   const [hoveredPoint, setHoveredPoint] = useState<number | null>(null);
+
+  // Extrair dados dependendo se é TideDay ou array de TideEvent
+  const tidesArray = tideDay ? tideDay.mares : (tides || []);
 
   useEffect(() => {
     const updateTime = () => {
@@ -31,11 +36,11 @@ export default function TideChart({
     return () => clearInterval(interval);
   }, []);
 
-  if (!tides || tides.length === 0) {
+  if (!tidesArray || tidesArray.length === 0) {
     return <div className="text-center p-4">Sem dados de maré</div>;
   }
 
-  const mares = [...tides].sort((a, b) => a.hora.localeCompare(b.hora));
+  const mares = [...tidesArray].sort((a, b) => a.hora.localeCompare(b.hora));
 
   // Gerar dados do gráfico com interpolação suave
   const generateChartData = () => {

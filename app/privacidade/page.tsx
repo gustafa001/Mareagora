@@ -195,7 +195,7 @@ export default function PrivacidadePage() {
                 href="mailto:privacidade@mareagora.com.br"
                 className="text-blue-400 underline"
               >
-                privacidade@mareagora.com.br
+                contatos@mareagora.com.br
               </a>
             </p>
           </Block>

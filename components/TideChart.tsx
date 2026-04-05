@@ -19,6 +19,8 @@ export default function TideChart({
 }: TideChartProps) {
   const [currentTime, setCurrentTime] = useState<string>('');
   const [hoveredPoint, setHoveredPoint] = useState<number | null>(null);
+  const [tooltipData, setTooltipData] = useState<{ x: number; y: number; time: string; height: number } | null>(null);
+  const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
 
   // Extrair dados dependendo se é TideDay ou array de TideEvent
   const tidesArray = tideDay ? tideDay.mares : (tides || []);
@@ -142,6 +144,44 @@ export default function TideChart({
   const avgHeight = (Math.max(...mares.map(m => m.altura_m)) + Math.min(...mares.map(m => m.altura_m))) / 2;
   const isRising = displayNextEvent.altura_m > avgHeight;
 
+  // Handler para movimento do mouse no SVG
+  const handleSVGMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
+    const svg = e.currentTarget;
+    const rect = svg.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    // Converter coordenadas do viewport para coordenadas do SVG
+    const svgX = (x / rect.width) * viewBox.width;
+    const svgY = (y / rect.height) * viewBox.height;
+
+    // Converter coordenadas SVG para minutos e altura
+    const minutes = ((svgX - padding) / graphArea.width) * maxTime;
+    const height = (viewBox.height - padding - svgY) / graphArea.height * graphMaxHeight;
+
+    // Validar se está dentro dos limites
+    if (minutes >= 0 && minutes <= maxTime && height >= 0 && height <= graphMaxHeight) {
+      setMousePos({ x: svgX, y: svgY });
+      
+      // Formatar horário
+      const hours = Math.floor(minutes / 60);
+      const mins = Math.floor(minutes % 60);
+      const timeStr = `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
+      
+      setTooltipData({
+        x: svgX,
+        y: svgY,
+        time: timeStr,
+        height: Math.max(0, height)
+      });
+    }
+  };
+
+  const handleSVGMouseLeave = () => {
+    setTooltipData(null);
+    setMousePos(null);
+  };
+
   return (
     <div className="w-full">
       {/* Gráfico */}
@@ -154,8 +194,10 @@ export default function TideChart({
           </div>
           <svg 
             viewBox={`0 0 ${viewBox.width} ${viewBox.height}`}
-            className="w-full h-auto relative z-10"
+            className="w-full h-auto relative z-10 cursor-crosshair"
             preserveAspectRatio="xMidYMid meet"
+            onMouseMove={handleSVGMouseMove}
+            onMouseLeave={handleSVGMouseLeave}
           >
             <defs>
               <linearGradient id="tideGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -300,6 +342,68 @@ export default function TideChart({
                 strokeDasharray="4,3"
                 opacity="0.6"
               />
+            )}
+
+            {/* Tooltip interativo ao passar o mouse */}
+            {tooltipData && (
+              <g>
+                {/* Linha vertical de referência */}
+                <line
+                  x1={tooltipData.x}
+                  y1={padding}
+                  x2={tooltipData.x}
+                  y2={viewBox.height - padding}
+                  stroke="rgb(59, 130, 246)"
+                  strokeWidth="1"
+                  strokeDasharray="2,2"
+                  opacity="0.4"
+                />
+
+                {/* Ponto de referência */}
+                <circle
+                  cx={tooltipData.x}
+                  cy={tooltipData.y}
+                  r="4"
+                  fill="rgb(59, 130, 246)"
+                  opacity="0.8"
+                />
+
+                {/* Caixa de tooltip */}
+                <rect
+                  x={tooltipData.x - 45}
+                  y={tooltipData.y - 35}
+                  width="90"
+                  height="30"
+                  rx="4"
+                  fill="rgb(15, 23, 42)"
+                  opacity="0.95"
+                  stroke="rgb(59, 130, 246)"
+                  strokeWidth="1"
+                />
+
+                {/* Texto do tooltip - Horário */}
+                <text
+                  x={tooltipData.x}
+                  y={tooltipData.y - 18}
+                  fontSize="11"
+                  fontWeight="700"
+                  fill="rgb(59, 130, 246)"
+                  textAnchor="middle"
+                >
+                  {tooltipData.time}
+                </text>
+
+                {/* Texto do tooltip - Altura */}
+                <text
+                  x={tooltipData.x}
+                  y={tooltipData.y - 5}
+                  fontSize="10"
+                  fill="rgb(226, 232, 240)"
+                  textAnchor="middle"
+                >
+                  {tooltipData.height.toFixed(2)}m
+                </text>
+              </g>
             )}
 
             {/* Labels de tempo */}

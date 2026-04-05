@@ -9,7 +9,7 @@ interface NavBarProps {
 
 export default function NavBar({ className = '' }: NavBarProps) {
   return (
-    <nav className={`bg-white text-slate-900 shadow-lg ${className}`}>
+    <nav className={`bg-slate-900 text-white shadow-lg ${className}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
@@ -17,14 +17,14 @@ export default function NavBar({ className = '' }: NavBarProps) {
             <span className="font-bold text-xl tracking-tight font-syne">MaréAgora</span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-4 md:gap-6">
-            <Link href="/" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+          <div className="hidden md:flex items-center gap-6">
+            <Link href="/" className="text-sm text-slate-300 hover:text-white transition-colors">
               Início
             </Link>
-            <Link href="/portos" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+            <Link href="/portos" className="text-sm text-slate-300 hover:text-white transition-colors">
               Portos
             </Link>
-            <Link href="/sobre" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+            <Link href="/sobre" className="text-sm text-slate-300 hover:text-white transition-colors">
               Sobre
             </Link>
           </div>

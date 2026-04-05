@@ -172,7 +172,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
           poster="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1200&q=80"
           className="absolute inset-0 w-full h-full object-cover z-0"
         >
-          <source src="/videos/ondas.mp4" type="video/mp4" />
+          <source src="https://res.cloudinary.com/dhnzzduzc/video/upload/lc5nufwye2fh6zpb2df0.mp4" type="video/mp4" />
         </video>
 
         {/* Overlay escuro para legibilidade */}

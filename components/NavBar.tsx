@@ -49,37 +49,41 @@ export default function NavBar({ className = '' }: NavBarProps) {
             <span className="font-bold text-xl tracking-tight font-syne">MaréAgora</span>
           </Link>
           
-          <div className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
-              Início
-            </Link>
-            <Link href="/portos" className="text-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
-              Portos
-            </Link>
-            <Link href="/sobre" className="text-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
-              Sobre
-            </Link>
-          </div>
+          <div className="flex items-center gap-4 md:gap-6">
+            <div className="hidden md:flex items-center gap-6">
+              <Link href="/" className="text-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
+                Início
+              </Link>
+              <Link href="/portos" className="text-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
+                Portos
+              </Link>
+              <Link href="/sobre" className="text-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
+                Sobre
+              </Link>
+            </div>
 
-          {/* Botão de alternância de tema */}
-          {isMounted && (
-            <button
-              onClick={toggleTheme}
-              className="ml-4 p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-yellow-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors duration-300"
-              aria-label="Alternar tema"
-              title={isDark ? "Modo claro" : "Modo escuro"}
-            >
-              {isDark ? (
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l-2.12-2.12a1 1 0 00-1.414 0l-2.12 2.12a1 1 0 001.414 1.414L9 13.414l1.586 1.586a1 1 0 001.414-1.414zM15 11a1 1 0 100-2h-1a1 1 0 100 2h1zm2.657-5.657a1 1 0 00-1.414-1.414l-1.414 1.414a1 1 0 001.414 1.414l1.414-1.414zm2.121 2.121a1 1 0 01-1.414 0l-1.414-1.414a1 1 0 011.414-1.414l1.414 1.414zM5 8a1 1 0 100-2H4a1 1 0 100 2h1zm-2.657 5.657a1 1 0 001.414 1.414l1.414-1.414a1 1 0 00-1.414-1.414l-1.414 1.414zm-2.121-2.121a1 1 0 011.414 0l1.414 1.414a1 1 0 01-1.414 1.414l-1.414-1.414zM10 15a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1z" clipRule="evenodd" />
-                </svg>
-              ) : (
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-                </svg>
-              )}
-            </button>
-          )}
+            {/* Botão de alternância de tema - Renderização forçada após montagem */}
+            {isMounted ? (
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-yellow-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300 flex items-center justify-center min-w-[40px] min-h-[40px]"
+                aria-label="Alternar tema"
+                title={isDark ? "Modo claro" : "Modo escuro"}
+              >
+                {isDark ? (
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l-2.12-2.12a1 1 0 00-1.414 0l-2.12 2.12a1 1 0 001.414 1.414L9 13.414l1.586 1.586a1 1 0 001.414-1.414zM15 11a1 1 0 100-2h-1a1 1 0 100 2h1zm2.657-5.657a1 1 0 00-1.414-1.414l-1.414 1.414a1 1 0 001.414 1.414l1.414-1.414zm2.121 2.121a1 1 0 01-1.414 0l-1.414-1.414a1 1 0 011.414-1.414l1.414 1.414zM5 8a1 1 0 100-2H4a1 1 0 100 2h1zm-2.657 5.657a1 1 0 001.414 1.414l1.414-1.414a1 1 0 00-1.414-1.414l-1.414 1.414zm-2.121-2.121a1 1 0 011.414 0l1.414 1.414a1 1 0 01-1.414 1.414l-1.414-1.414zM10 15a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1z" clipRule="evenodd" />
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                  </svg>
+                )}
+              </button>
+            ) : (
+              <div className="w-10 h-10 bg-slate-100 dark:bg-slate-800 rounded-lg animate-pulse" />
+            )}
+          </div>
         </div>
       </div>
     </nav>

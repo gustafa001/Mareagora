@@ -161,8 +161,26 @@ export default async function PortPage({ params }: { params: { slug: string } })
 
       <NavBar />
 
-      <section className="hero-section">
+      {/* HERO COM VÍDEO DE FUNDO */}
+      <section className="hero-section relative overflow-hidden">
+        {/* Vídeo de fundo — arquivo em /public/videos/ondas.mp4 */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1200&q=80"
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        >
+          <source src="/videos/ondas.mp4" type="video/mp4" />
+        </video>
+
+        {/* Overlay escuro para legibilidade */}
+        <div className="absolute inset-0 bg-black/55 z-10" />
+
+        {/* Overlay original do globals.css mantido */}
         <div className="hero-overlay" />
+
         <div className="container relative z-30 text-white text-center pt-24 md:pt-16">
           <div className="flex flex-col gap-3 items-center px-2">
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight font-syne leading-tight max-w-4xl">
@@ -179,7 +197,8 @@ export default async function PortPage({ params }: { params: { slug: string } })
               <SearchPorts ports={PORTS} />
             </div>
 
-            <p className="mt-4 text-xs opacity-70">
+            {/* suppressHydrationWarning corrige o React Error #425 */}
+            <p className="mt-4 text-xs opacity-70" suppressHydrationWarning>
               Horário local: {currentTimeBR}
             </p>
           </div>

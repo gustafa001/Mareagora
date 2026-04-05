@@ -17,7 +17,7 @@ export default function NavBar({ className = '' }: NavBarProps) {
             <span className="font-bold text-xl tracking-tight font-syne">MaréAgora</span>
           </Link>
 
-          <div className="flex items-center gap-4 md:gap-6">
+          <div className="hidden md:flex items-center gap-4 md:gap-6">
             <Link href="/" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
               Início
             </Link>

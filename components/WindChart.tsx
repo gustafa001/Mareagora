@@ -64,7 +64,6 @@ export default function WindChart({ hourly, days = 7, beachName = "praia" }: Win
     .filter(Boolean) as string[];
 
   const maxSpeed = Math.max(...data.map((d) => d.speed ?? 0));
-  // Setas a cada 6h, máx 14
   const arrows = data.filter((_, i) => i % 6 === 0).slice(0, 14);
 
   return (
@@ -80,7 +79,7 @@ export default function WindChart({ hourly, days = 7, beachName = "praia" }: Win
 
       <ResponsiveContainer width="100%" height={200}>
         <BarChart data={data} margin={{ top: 8, right: 16, left: 0, bottom: 0 }} barCategoryGap="30%">
-          <CartesianGrid stroke="rgba(0,212,255,0.07)" vertical={false} />
+          <CartesianGrid stroke="rgba(255,255,255,0.1)" vertical={false} />
           <XAxis
             dataKey="label"
             ticks={ticks}
@@ -96,7 +95,6 @@ export default function WindChart({ hourly, days = 7, beachName = "praia" }: Win
             axisLine={false}
             tickLine={false}
             width={28}
-            label={{ value: "km/h", angle: -90, position: "insideLeft", fill: "rgba(224,247,255,0.3)", fontSize: 9, dx: 8 }}
           />
           <Tooltip content={<WindTooltip />} />
           <Bar dataKey="speed" radius={[3, 3, 0, 0]}>
@@ -107,7 +105,6 @@ export default function WindChart({ hourly, days = 7, beachName = "praia" }: Win
         </BarChart>
       </ResponsiveContainer>
 
-      {/* Setas de direção */}
       <div style={styles.dirRow}>
         {arrows.map((d, i) => (
           <div key={i} style={styles.dirItem} title={`${d.cardinal} (${d.dir}°)`}>
@@ -120,7 +117,6 @@ export default function WindChart({ hourly, days = 7, beachName = "praia" }: Win
         ))}
       </div>
 
-      {/* Escala Beaufort */}
       <div style={styles.bftScale}>
         {BEAUFORT_LEGEND.map(({ b, label }) => (
           <div key={b} style={styles.bftItem}>
@@ -140,12 +136,12 @@ function WindTooltip({ active, payload }: TooltipProps) {
     <div style={styles.tooltip}>
       <p style={styles.tooltipDate}>{d?.fullDate}</p>
       <div style={styles.tooltipRow}>
-        <span style={{ color: "#00D4FF" }}>💨 Vel.</span>
-        <span style={{ color: "#00D4FF", fontFamily: "monospace" }}>{d?.speed} km/h</span>
+        <span style={{ color: "#22d3ee" }}>💨 Vel.</span>
+        <span style={{ color: "#22d3ee", fontFamily: "monospace", fontWeight: "bold" }}>{d?.speed} km/h</span>
       </div>
       <div style={styles.tooltipRow}>
-        <span style={{ color: "#E0F7FF" }}>🧭 Dir.</span>
-        <span style={{ color: "#E0F7FF", fontFamily: "monospace" }}>{d?.cardinal} ({d?.dir}°)</span>
+        <span style={{ color: "#cbd5e1" }}>🧭 Dir.</span>
+        <span style={{ color: "#cbd5e1", fontFamily: "monospace" }}>{d?.cardinal} ({d?.dir}°)</span>
       </div>
       <p style={{ ...styles.tooltipCond, color: beaufortColor(d?.beaufort ?? 0) }}>
         Beaufort {d?.beaufort} — {BEAUFORT_LABELS[Math.min(d?.beaufort ?? 0, 12)]}
@@ -154,7 +150,6 @@ function WindTooltip({ active, payload }: TooltipProps) {
   );
 }
 
-// ── Beaufort ──────────────────────────────────────────────────────
 function toBeaufort(kmh: number): number {
   if (kmh < 1) return 0; if (kmh < 6) return 1; if (kmh < 12) return 2;
   if (kmh < 20) return 3; if (kmh < 29) return 4; if (kmh < 39) return 5;
@@ -164,9 +159,9 @@ function toBeaufort(kmh: number): number {
 }
 
 const BEAUFORT_COLORS: Record<number, string> = {
-  0: "#00FFB3", 1: "#00FFB3", 2: "#00FFB3", 3: "#00D4FF", 4: "#00D4FF",
-  5: "#FFB700", 6: "#FFB700", 7: "#FF8C42", 8: "#FF8C42",
-  9: "#FF4757", 10: "#FF4757", 11: "#FF4757", 12: "#FF4757",
+  0: "#2dd4bf", 1: "#2dd4bf", 2: "#2dd4bf", 3: "#22d3ee", 4: "#22d3ee",
+  5: "#fbbf24", 6: "#fbbf24", 7: "#f87171", 8: "#f87171",
+  9: "#ef4444", 10: "#ef4444", 11: "#ef4444", 12: "#ef4444",
 };
 
 const BEAUFORT_LABELS = [
@@ -184,13 +179,11 @@ function beaufortColor(b: number): string {
   return BEAUFORT_COLORS[Math.min(b ?? 0, 12)];
 }
 
-// ── Direção ───────────────────────────────────────────────────────
 function toCardinal(deg: number): string {
   const dirs = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSO","SO","OSO","O","ONO","NO","NNO"];
   return dirs[Math.round(deg / 22.5) % 16];
 }
 
-// ── Datas ─────────────────────────────────────────────────────────
 function formatLabel(date: Date) {
   return date.toLocaleString("pt-BR", { weekday: "short", hour: "2-digit", minute: "2-digit" });
 }
@@ -205,7 +198,7 @@ function LegendItem({ color, label }: { color: string; label: string }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
       <div style={{ width: 10, height: 10, borderRadius: 2, background: color }} />
-      <span style={{ color, fontSize: 11, fontFamily: "monospace" }}>{label}</span>
+      <span style={{ color, fontSize: 11, fontFamily: "monospace", fontWeight: "bold" }}>{label}</span>
     </div>
   );
 }
@@ -213,40 +206,35 @@ function LegendItem({ color, label }: { color: string; label: string }) {
 function ChartSkeleton({ label }: { label: string }) {
   return (
     <div style={{ ...styles.card, display: "flex", alignItems: "center", justifyContent: "center", height: 260 }}>
-      <p style={{ color: "rgba(0,212,255,0.5)", fontFamily: "monospace", fontSize: 13 }}>{label}</p>
+      <p style={{ color: "rgba(34, 211, 238, 0.5)", fontFamily: "monospace", fontSize: 13 }}>{label}</p>
     </div>
   );
 }
 
 const styles = {
   card: {
-    background: "rgba(2, 6, 23, 0.7)",
-    backdropFilter: "blur(20px)",
-    WebkitBackdropFilter: "blur(20px)",
-    border: "1px solid rgba(56, 201, 240, 0.15)",
-    borderRadius: 20,
-    padding: "24px 20px 16px",
-    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4)",
+    background: "transparent",
+    padding: "0",
   } as React.CSSProperties,
   header: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 } as React.CSSProperties,
-  title: { color: "var(--white)", fontSize: 13, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, fontFamily: "var(--font-fira-code)" } as React.CSSProperties,
+  title: { color: "#f8fafc", fontSize: 13, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const },
   legend: { display: "flex", gap: 12, alignItems: "center" } as React.CSSProperties,
-  tick: { fill: "rgba(248, 250, 252, 0.5)", fontSize: 10, fontFamily: "var(--font-fira-code)" },
-  dirRow: { display: "flex", justifyContent: "space-around", alignItems: "center", marginTop: 12, padding: "8px 0", borderTop: "1px solid rgba(248, 250, 252, 0.05)" } as React.CSSProperties,
+  tick: { fill: "#cbd5e1", fontSize: 10, fontWeight: 600 },
+  dirRow: { display: "flex", justifyContent: "space-around", alignItems: "center", marginTop: 12, padding: "8px 0", borderTop: "1px solid rgba(255, 255, 255, 0.1)" } as React.CSSProperties,
   dirItem: { display: "flex", flexDirection: "column" as const, alignItems: "center", gap: 3 },
-  dirLabel: { fontSize: 8, fontFamily: "var(--font-fira-code)", letterSpacing: "0.05em", fontWeight: 600 },
-  bftScale: { display: "flex", justifyContent: "space-between", marginTop: 12, padding: "10px 0 0", borderTop: "1px solid rgba(248, 250, 252, 0.05)" } as React.CSSProperties,
+  dirLabel: { fontSize: 8, letterSpacing: "0.05em", fontWeight: 700 },
+  bftScale: { display: "flex", justifyContent: "space-between", marginTop: 12, padding: "10px 0 0", borderTop: "1px solid rgba(255, 255, 255, 0.1)" } as React.CSSProperties,
   bftItem: { display: "flex", alignItems: "center", gap: 6 } as React.CSSProperties,
-  bftLabel: { color: "rgba(248, 250, 252, 0.4)", fontSize: 9, fontFamily: "var(--font-fira-code)", fontWeight: 400 } as React.CSSProperties,
+  bftLabel: { color: "#94a3b8", fontSize: 9, fontWeight: 600 } as React.CSSProperties,
   tooltip: {
-    background: "rgba(2, 6, 23, 0.95)",
-    border: "1px solid rgba(56, 201, 240, 0.3)",
+    background: "#1e293b",
+    border: "1px solid #334155",
     borderRadius: 12,
     padding: "12px 16px",
     fontSize: 12,
     boxShadow: "0 10px 25px rgba(0,0,0,0.5)",
   } as React.CSSProperties,
-  tooltipDate: { color: "rgba(248, 250, 252, 0.6)", fontSize: 10, marginBottom: 8, fontFamily: "var(--font-fira-code)", textTransform: "uppercase" as const } as React.CSSProperties,
+  tooltipDate: { color: "#94a3b8", fontSize: 10, marginBottom: 8, textTransform: "uppercase" as const } as React.CSSProperties,
   tooltipRow: { display: "flex", justifyContent: "space-between", gap: 30, marginBottom: 4 } as React.CSSProperties,
   tooltipCond: { marginTop: 8, fontSize: 11, fontWeight: 700, textAlign: "center" as const, textTransform: "uppercase" as const, letterSpacing: "0.05em" },
 };

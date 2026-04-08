@@ -73,10 +73,10 @@ export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
     <section className="mt-16 mb-20">
       <div className="flex items-center gap-4 mb-10">
         <div className="w-1.5 h-8 bg-gradient-to-b from-blue-400 to-cyan-400 rounded-full" />
-        <h2 className="text-2xl md:text-3xl font-black text-white font-syne tracking-tight uppercase">
+        <h2 className="text-2xl md:text-3xl font-black text-[#0d1526] font-syne tracking-tight uppercase">
           Previsão Detalhada — 7 Dias
         </h2>
-        <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
+        <div className="flex-1 h-px bg-gradient-to-r from-[#0d1526]/20 to-transparent" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

@@ -17,9 +17,10 @@ export default function WavesCard({ lat, lon }: WavesCardProps) {
 
   useEffect(() => {
     async function fetchWaves() {
+      // Usando 7 dias para garantir estabilidade na API gratuita
       const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}`
         + `&hourly=wave_height,wave_period,wave_direction,wind_wave_height`
-        + `&wind_speed_unit=kn&timezone=America%2FSao_Paulo&forecast_days=30`;
+        + `&wind_speed_unit=kn&timezone=America%2FSao_Paulo&forecast_days=7`;
 
       try {
         const res = await fetch(url);
@@ -50,8 +51,7 @@ export default function WavesCard({ lat, lon }: WavesCardProps) {
           });
         }
 
-        // 2. Lógica de Alerta Antecipado (Próximos 30 dias)
-        // Procuramos a primeira ocorrência de ressaca APÓS o momento atual
+        // 2. Lógica de Alerta Antecipado (Próximos 7 dias)
         const futureIdx = h.wave_height.findIndex((height: number, index: number) => {
           return index > i && height >= RESSACA_LIMIT;
         });
@@ -70,13 +70,14 @@ export default function WavesCard({ lat, lon }: WavesCardProps) {
 
         setLoading(false);
       } catch (e) {
+        console.error("[WavesCard] Erro ao buscar ondas:", e);
         setLoading(false);
       }
     }
     fetchWaves();
   }, [lat, lon]);
 
-  if (loading) return <div className="classic-card text-center p-6 text-gray-500 text-sm">Carregando ondas…</div>;
+  if (loading) return <div className="classic-card text-center p-6 text-gray-500 text-sm animate-pulse">Carregando ondas…</div>;
   if (!data) return <div className="classic-card text-center p-6 text-gray-500 text-sm">Sem dados de ondas.</div>;
 
   const isRessacaNow = data.height >= RESSACA_LIMIT;
@@ -92,7 +93,7 @@ export default function WavesCard({ lat, lon }: WavesCardProps) {
         </div>
       )}
 
-      {/* Badge de Alerta Antecipado (Apenas se não houver ressaca agora) */}
+      {/* Badge de Alerta Antecipado */}
       {!isRessacaNow && futureRessaca && (
         <div className="absolute top-0 left-0 right-0 flex justify-center">
           <div className="bg-amber-500 text-white text-[9px] font-black px-4 py-1.5 rounded-b-xl tracking-widest shadow-md flex items-center gap-2">

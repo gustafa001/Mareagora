@@ -103,7 +103,10 @@ export default function WaveChart({ data }: WaveChartProps) {
               fill: '#f1f5f9', 
               fontSize: 10,
               fontWeight: 700,
-              formatter: (v: number) => v >= 0.5 ? `${v.toFixed(1)}m` : ''
+              formatter: (v: any) => {
+                const val = Number(v);
+                return val >= 0.5 ? `${val.toFixed(1)}m` : '';
+              }
             }}
           >
             {data.map((entry, index) => (

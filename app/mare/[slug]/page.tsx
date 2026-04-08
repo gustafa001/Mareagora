@@ -7,7 +7,7 @@ import NavBar from '@/components/NavBar';
 const TideChart = dynamic(() => import('@/components/TideChart'), { ssr: false });
 import MonthlyTideTable from '@/components/MonthlyTideTable';
 import WavesCard from '@/components/WavesCard';
-import ForecastStrip from '@/components/ForecastStrip';
+import BeachConditions from '@/components/BeachConditions';
 import ConditionsCard from '@/components/ConditionsCard';
 import SummaryCards from '@/components/SummaryCards';
 import DetailedForecastTable from '@/components/DetailedForecastTable';
@@ -296,7 +296,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
 
           <aside className="flex flex-col gap-8">
             <WavesCard lat={port!.lat} lon={port!.lon} />
-            <ForecastStrip lat={port!.lat} lon={port!.lon} />
+            <BeachConditions lat={port!.lat} lon={port!.lon} />
             <ConditionsCard lat={port!.lat} lon={port!.lon} />
 
             <div className="classic-card">

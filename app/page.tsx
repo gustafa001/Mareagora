@@ -1,224 +1,77 @@
 'use client';
 
-import Link from 'next/link';
-import { PORTS, getNearestPort } from '@/lib/ports';
+import { getNearestPort } from '@/lib/ports';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const router = useRouter();
-  const [locating, setLocating] = useState(true);
+  const [status, setStatus] = useState<'locating' | 'error' | 'idle'>('locating');
 
   useEffect(() => {
     if (!navigator.geolocation) {
-      setLocating(false);
+      setStatus('error');
       return;
     }
 
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const nearest = getNearestPort(pos.coords.latitude, pos.coords.longitude);
-        router.replace(`/mare/${nearest.slug}`);
-      },
-      () => {
-        setLocating(false);
-      },
-      { timeout: 5000 }
-    );
+    const handleLocate = () => {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const nearest = getNearestPort(pos.coords.latitude, pos.coords.longitude);
+          router.replace(`/mare/${nearest.slug}`);
+        },
+        () => {
+          setStatus('error');
+        },
+        { timeout: 8000, enableHighAccuracy: true }
+      );
+    };
+
+    handleLocate();
   }, [router]);
 
-  if (locating) {
-    return (
-      <main className="min-h-screen flex items-center justify-center bg-slate-950">
-        <div className="text-center text-white">
-          <div className="text-5xl mb-6 animate-bounce">🌊</div>
-          <p className="text-xl font-semibold mb-2">Detectando sua localização...</p>
-          <p className="text-slate-400 text-sm">Buscando o porto mais próximo de você</p>
-        </div>
-      </main>
-    );
-  }
-
   return (
-    <main className="min-h-screen relative">
-      <div
-        className="fixed inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url('https://images.unsplash.com/photo-1519046904884-53103b34b206?w=1920&q=80')` }}
-      />
-      <div className="fixed inset-0 bg-gradient-to-br from-slate-950/85 via-slate-900/80 to-slate-950/85" />
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+    <main className="min-h-screen flex items-center justify-center bg-slate-950 relative overflow-hidden">
+      {/* Background decorativo */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
       </div>
 
-      <section className="relative py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-12 text-center shadow-2xl">
-            <div className="inline-flex items-center justify-center w-20 h-20 mb-8 rounded-2xl bg-gradient-to-br from-blue-400 to-cyan-400 shadow-lg shadow-blue-500/25">
-              <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-white via-blue-100 to-cyan-100 bg-clip-text text-transparent mb-6">
-              MaréAgora
-            </h1>
-            <p className="text-xl md:text-2xl text-blue-200/80 mb-4 font-light">
-              Previsão de marés em tempo real
-            </p>
-            <p className="text-lg text-slate-400 mb-8">
-              50+ portos brasileiros • Dados oficiais da Marinha
-            </p>
+      <div className="relative z-10 text-center px-4">
+        <div className="inline-flex items-center justify-center w-24 h-24 mb-8 rounded-3xl bg-gradient-to-br from-blue-400 to-cyan-400 shadow-2xl shadow-blue-500/20 animate-pulse">
+          <span className="text-5xl">🌊</span>
+        </div>
+        
+        <h1 className="text-5xl md:text-6xl font-black text-white mb-4 font-syne tracking-tighter">
+          MaréAgora
+        </h1>
 
+        {status === 'locating' ? (
+          <div className="space-y-4">
+            <div className="flex items-center justify-center gap-3">
+              <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce [animation-delay:-0.3s]" />
+              <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce [animation-delay:-0.15s]" />
+              <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" />
+            </div>
+            <p className="text-blue-200/60 font-medium uppercase tracking-widest text-xs">
+              Detectando sua localização...
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <p className="text-slate-400 max-w-md mx-auto leading-relaxed">
+              Não conseguimos detectar sua localização automaticamente. Escolha um porto manualmente para continuar.
+            </p>
             <button
-              onClick={() => {
-                setLocating(true);
-                navigator.geolocation.getCurrentPosition(
-                  (pos) => {
-                    const nearest = getNearestPort(pos.coords.latitude, pos.coords.longitude);
-                    router.replace(`/mare/${nearest.slug}`);
-                  },
-                  () => setLocating(false),
-                  { timeout: 5000 }
-                );
-              }}
-              className="mb-8 inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-blue-500 hover:bg-blue-400 text-white font-semibold transition-all shadow-lg shadow-blue-500/25"
+              onClick={() => router.push('/portos')}
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-white text-slate-950 font-black uppercase tracking-widest text-xs hover:bg-blue-400 hover:text-white transition-all shadow-xl"
             >
-              📍 Usar minha localização
+              Ver todos os portos ⚓
             </button>
-
-            <div className="flex flex-wrap justify-center gap-8 mt-4">
-              <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl px-6 py-4">
-                <div className="text-3xl font-bold text-white">50+</div>
-                <div className="text-sm text-slate-400">Portos</div>
-              </div>
-              <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl px-6 py-4">
-                <div className="text-3xl font-bold text-white">365</div>
-                <div className="text-sm text-slate-400">Dias/ano</div>
-              </div>
-              <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl px-6 py-4">
-                <div className="text-3xl font-bold text-white">4</div>
-                <div className="text-sm text-slate-400">Marés/dia</div>
-              </div>
-            </div>
           </div>
-        </div>
-      </section>
-
-      <section className="py-16 px-4 max-w-6xl mx-auto relative z-10">
-
-        <div className="mb-16">
-          <div className="flex items-center gap-4 mb-8">
-            <div className="w-1 h-8 bg-gradient-to-b from-blue-400 to-cyan-400 rounded-full" />
-            <h2 className="text-3xl font-bold text-white">Região Norte</h2>
-            <div className="flex-1 h-px bg-gradient-to-r from-white/20 to-transparent" />
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {PORTS.filter(p => p.region === 'norte').map((port) => (
-              <Link key={port.slug} href={`/mare/${port.slug}`}
-                className="group backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 hover:border-blue-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 hover:-translate-y-1">
-                <div className="flex items-start justify-between mb-3">
-                  <h4 className="font-semibold text-white group-hover:text-blue-300 transition-colors">{port.name}</h4>
-                  <svg className="w-5 h-5 text-slate-500 group-hover:text-blue-400 transition-all group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-                <p className="text-sm text-slate-400">{port.state}</p>
-                <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                  </svg>
-                  Ver previsão
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        <div className="mb-16">
-          <div className="flex items-center gap-4 mb-8">
-            <div className="w-1 h-8 bg-gradient-to-b from-cyan-400 to-teal-400 rounded-full" />
-            <h2 className="text-3xl font-bold text-white">Região Nordeste</h2>
-            <div className="flex-1 h-px bg-gradient-to-r from-white/20 to-transparent" />
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {PORTS.filter(p => p.region === 'nordeste').map((port) => (
-              <Link key={port.slug} href={`/mare/${port.slug}`}
-                className="group backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10 hover:-translate-y-1">
-                <div className="flex items-start justify-between mb-3">
-                  <h4 className="font-semibold text-white group-hover:text-cyan-300 transition-colors">{port.name}</h4>
-                  <svg className="w-5 h-5 text-slate-500 group-hover:text-cyan-400 transition-all group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-                <p className="text-sm text-slate-400">{port.state}</p>
-                <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                  </svg>
-                  Ver previsão
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        <div className="mb-16">
-          <div className="flex items-center gap-4 mb-8">
-            <div className="w-1 h-8 bg-gradient-to-b from-teal-400 to-emerald-400 rounded-full" />
-            <h2 className="text-3xl font-bold text-white">Região Sudeste</h2>
-            <div className="flex-1 h-px bg-gradient-to-r from-white/20 to-transparent" />
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {PORTS.filter(p => p.region === 'sudeste').map((port) => (
-              <Link key={port.slug} href={`/mare/${port.slug}`}
-                className="group backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 hover:border-teal-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/10 hover:-translate-y-1">
-                <div className="flex items-start justify-between mb-3">
-                  <h4 className="font-semibold text-white group-hover:text-teal-300 transition-colors">{port.name}</h4>
-                  <svg className="w-5 h-5 text-slate-500 group-hover:text-teal-400 transition-all group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-                <p className="text-sm text-slate-400">{port.state}</p>
-                <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                  </svg>
-                  Ver previsão
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        <div className="mb-16">
-          <div className="flex items-center gap-4 mb-8">
-            <div className="w-1 h-8 bg-gradient-to-b from-emerald-400 to-green-400 rounded-full" />
-            <h2 className="text-3xl font-bold text-white">Região Sul</h2>
-            <div className="flex-1 h-px bg-gradient-to-r from-white/20 to-transparent" />
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {PORTS.filter(p => p.region === 'sul').map((port) => (
-              <Link key={port.slug} href={`/mare/${port.slug}`}
-                className="group backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 hover:border-emerald-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 hover:-translate-y-1">
-                <div className="flex items-start justify-between mb-3">
-                  <h4 className="font-semibold text-white group-hover:text-emerald-300 transition-colors">{port.name}</h4>
-                  <svg className="w-5 h-5 text-slate-500 group-hover:text-emerald-400 transition-all group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-                <p className="text-sm text-slate-400">{port.state}</p>
-                <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                  </svg>
-                  Ver previsão
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-      </section>
+        )}
+      </div>
     </main>
   );
 }

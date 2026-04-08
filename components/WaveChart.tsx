@@ -34,8 +34,8 @@ export default function WaveChart({ data }: WaveChartProps) {
             dataKey="time" 
             axisLine={false}
             tickLine={false}
-            tick={{ fill: '#cbd5e1', fontSize: 11, fontWeight: 600 }}
-            interval="preserveStartEnd"
+            tick={{ fill: '#cbd5e1', fontSize: 10, fontWeight: 600 }}
+            interval={data.length > 15 ? 2 : 0} // Pula alguns rótulos se houver muitos dados
           />
           
           <YAxis 
@@ -55,7 +55,7 @@ export default function WaveChart({ data }: WaveChartProps) {
                 return (
                   <div className="bg-[#1e293b] border border-slate-700 p-3 rounded-xl shadow-2xl">
                     <p className="text-slate-300 text-[10px] font-bold uppercase tracking-wider mb-1">
-                      {payload[0].payload.time}
+                      Data: {payload[0].payload.time}
                     </p>
                     <div className="flex items-center gap-2">
                       <span className={`text-lg font-black font-syne ${isRessaca ? "text-red-400" : "text-cyan-400"}`}>
@@ -96,9 +96,9 @@ export default function WaveChart({ data }: WaveChartProps) {
 
           <Bar 
             dataKey="height" 
-            radius={[6, 6, 0, 0]}
-            barSize={24}
-            label={{ 
+            radius={[4, 4, 0, 0]}
+            barSize={data.length > 15 ? 12 : 24} // Barras mais finas para 30 dias
+            label={data.length <= 15 ? { 
               position: 'top', 
               fill: '#f1f5f9', 
               fontSize: 10,
@@ -107,7 +107,7 @@ export default function WaveChart({ data }: WaveChartProps) {
                 const val = Number(v);
                 return val >= 0.5 ? `${val.toFixed(1)}m` : '';
               }
-            }}
+            } : false} // Oculta rótulos individuais se houver muitos dados para não poluir
           >
             {data.map((entry, index) => (
               <Cell 

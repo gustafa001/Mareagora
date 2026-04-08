@@ -36,14 +36,14 @@ export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
       `https://marine-api.open-meteo.com/v1/marine` +
       `?latitude=${lat}&longitude=${lon}` +
       `&hourly=wave_height,wave_period,wave_direction,swell_wave_height,swell_wave_period` +
-      `&forecast_days=7&timezone=${tz}`;
+      `&forecast_days=30&timezone=${tz}`;
 
     const windUrl =
       `https://api.open-meteo.com/v1/forecast` +
       `?latitude=${lat}&longitude=${lon}` +
       `&hourly=windspeed_10m,winddirection_10m` +
       `&wind_speed_unit=kmh` +
-      `&forecast_days=7&timezone=${tz}`;
+      `&forecast_days=30&timezone=${tz}`;
 
     Promise.all([
       fetch(marineUrl).then((r) => r.json()),
@@ -92,7 +92,7 @@ export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
               </div>
               <div>
                 <h3 className="text-white font-bold text-lg leading-none">Altura das Ondas</h3>
-                <p className="text-slate-500 text-xs mt-1 font-medium uppercase tracking-widest">Próximas 24 horas</p>
+                <p className="text-slate-500 text-xs mt-1 font-medium uppercase tracking-widest">Próximos 30 dias</p>
               </div>
             </div>
             <div className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-[10px] font-black text-blue-400 uppercase tracking-tighter">
@@ -100,9 +100,9 @@ export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
             </div>
           </div>
           
-          <WaveChart data={marineHourly?.time.slice(0, 24).map((t, i) => ({
-            time: new Date(t).getHours() + "h",
-            height: marineHourly.wave_height[i]
+          <WaveChart data={marineHourly?.time.filter((_, i) => i % 24 === 12).map((t, i) => ({
+            time: new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }),
+            height: marineHourly.wave_height[marineHourly.time.findIndex(tt => tt === t)]
           })) || []} />
         </div>
 

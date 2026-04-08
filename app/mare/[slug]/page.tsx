@@ -12,6 +12,7 @@ import ConditionsCard from '@/components/ConditionsCard';
 import SummaryCards from '@/components/SummaryCards';
 import DetailedForecastTable from '@/components/DetailedForecastTable';
 import Footer from '@/components/Footer';
+import WindWaveCharts from '@/components/WindWaveCharts';
 import Link from 'next/link';
 import SearchPorts from '@/components/SearchPorts';
 import PortStatistics from '@/components/PortStatistics';
@@ -321,7 +322,10 @@ export default async function PortPage({ params }: { params: { slug: string } })
         <ShareButton portName={port!.name} slug={slug} />
       </div>
 
-      <Footer />
+      <div className="container mb-20">
+          <WindWaveCharts lat={port!.lat} lon={port!.lon} />
+        </div>
+        <Footer />
     </main>
   );
 }

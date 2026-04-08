@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import SwellChart from "@/components/SwellChart";
+import WaveChart from "@/components/WaveChart";
 import WindChart from "@/components/WindChart";
 
 interface WindWaveChartsProps {
@@ -66,7 +66,15 @@ export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
     <section style={{ marginTop: 32 }}>
       <h2 style={styles.sectionTitle}>📊 Previsão detalhada — 7 dias</h2>
       <div style={styles.grid}>
-        <SwellChart hourly={marineHourly} days={7} />
+        <div className="bg-slate-900/50 p-6 rounded-3xl border border-slate-800">
+          <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+            <span className="text-xl">🌊</span> Gráfico de Ondas (7 dias)
+          </h3>
+          <WaveChart data={marineHourly?.time.slice(0, 24).map((t, i) => ({
+            time: new Date(t).getHours() + "h",
+            height: marineHourly.wave_height[i]
+          })) || []} />
+        </div>
         <WindChart  hourly={windHourly}   days={7} />
       </div>
     </section>

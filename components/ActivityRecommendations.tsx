@@ -67,15 +67,21 @@ export default function ActivityRecommendations({
   todayTides,
   nextHigh,
   nextLow,
-  waveHeight = 1.0,
+  waveHeight,
 }: ActivityRecommendationsProps) {
-  const activities = getActivities(nextHigh, nextLow, waveHeight);
+  const activities = waveHeight !== undefined 
+    ? getActivities(nextHigh, nextLow, waveHeight)
+    : [];
 
   return (
     <section className="classic-card">
       <h2 className="card-title">🏖️ Atividades Recomendadas</h2>
       <div className="grid sm:grid-cols-2 gap-4">
-        {activities.map((activity) => (
+        {waveHeight === undefined ? (
+          <div className="col-span-full py-8 text-center text-gray-400 animate-pulse">
+            Carregando recomendações...
+          </div>
+        ) : activities.map((activity) => (
           <div key={activity.name} className="flex gap-3 p-3 rounded-xl border border-gray-100">
             <span className="text-2xl">{activity.icon}</span>
             <div className="flex-1">

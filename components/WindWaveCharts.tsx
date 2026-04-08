@@ -63,8 +63,8 @@ export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
   if (loading) {
     return (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-12">
-        <div className="h-[400px] bg-slate-900/50 rounded-3xl animate-pulse border border-slate-800" />
-        <div className="h-[400px] bg-slate-900/50 rounded-3xl animate-pulse border border-slate-800" />
+        <div className="h-[400px] bg-[#0d1526] rounded-3xl animate-pulse border border-white/5" />
+        <div className="h-[400px] bg-[#0d1526] rounded-3xl animate-pulse border border-white/5" />
       </div>
     );
   }
@@ -81,7 +81,10 @@ export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Gráfico de Ondas */}
-        <div className="backdrop-blur-xl bg-slate-900/40 border border-white/5 rounded-[2.5rem] p-8 shadow-2xl hover:border-blue-500/20 transition-all duration-500">
+        <div className="bg-[#0d1526] border border-white/5 rounded-[2.5rem] p-8 shadow-2xl overflow-hidden relative">
+          {/* Efeito de brilho sutil no topo */}
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          
           <div className="flex justify-between items-center mb-8">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
@@ -104,7 +107,10 @@ export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
         </div>
 
         {/* Gráfico de Vento */}
-        <div className="backdrop-blur-xl bg-slate-900/40 border border-white/5 rounded-[2.5rem] p-8 shadow-2xl hover:border-cyan-500/20 transition-all duration-500">
+        <div className="bg-[#0d1526] border border-white/5 rounded-[2.5rem] p-8 shadow-2xl overflow-hidden relative">
+          {/* Efeito de brilho sutil no topo */}
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          
           <div className="flex justify-between items-center mb-8">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20">

@@ -10,7 +10,6 @@ import WavesCard from '@/components/WavesCard';
 import BeachConditions from '@/components/BeachConditions';
 import ConditionsCard from '@/components/ConditionsCard';
 import SummaryCards from '@/components/SummaryCards';
-import DetailedForecastTable from '@/components/DetailedForecastTable';
 import Footer from '@/components/Footer';
 import WindWaveCharts from '@/components/WindWaveCharts';
 import Link from 'next/link';
@@ -227,7 +226,8 @@ export default async function PortPage({ params }: { params: { slug: string } })
               lon={port!.lon}
             />
 
-            <DetailedForecastTable lat={port!.lat} lon={port!.lon} todayTides={todayTides} />
+            {/* NOVOS GRÁFICOS VISUAIS REPOSICIONADOS AQUI */}
+            <WindWaveCharts lat={port!.lat} lon={port!.lon} />
 
             <ActivityRecommendations
               todayTides={todayTides}
@@ -242,55 +242,22 @@ export default async function PortPage({ params }: { params: { slug: string } })
             />
 
             <section className="classic-card prose prose-slate max-w-none">
-              <h2 className="text-2xl font-bold mb-4 font-syne tracking-tight">
-                Tábua de Maré em {port!.name} — {ano}
-              </h2>
-              <p className="text-gray-600 leading-relaxed text-sm">
-                A tábua de maré de <strong>{port!.name}</strong> é uma ferramenta essencial para pescadores,
-                surfistas, mergulhadores, caiaqueiros e navegadores que frequentam o litoral de{' '}
-                <strong>{port!.state}</strong>. Os dados apresentados pelo MaréAgora são extraídos diretamente
-                das tábuas oficiais publicadas pelo <strong>Centro de Hidrografia da Marinha do Brasil (CHM)</strong>{' '}
-                para o ano de <strong>{ano}</strong>, garantindo a precisão e confiabilidade das informações.
+              <h2 className="text-2xl font-bold mb-4 font-syne">Sobre as Marés em {port!.name}</h2>
+              <p className="text-slate-600 leading-relaxed">
+                {regionContext}
               </p>
-
-              <div className="grid md:grid-cols-2 gap-8 mt-6">
-                <div>
-                  <h3 className="text-base font-bold mb-2 text-gray-800">🎣 Como usar a tábua de maré?</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    A tábua indica os horários exatos de <strong>preamar</strong> (maré alta) e{' '}
-                    <strong>baixamar</strong> (maré baixa) ao longo do dia, com as respectivas alturas em metros.
-                    Para a pesca, os momentos de virada — quando a maré muda de direção — costumam ser os mais
-                    produtivos. Para surf e mergulho, o ideal varia conforme o local e o tipo de onda ou fundo.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-base font-bold mb-2 text-gray-800">📏 O que é o Nível Médio?</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    O nível médio ({meta?.nivel_medio_m ?? '--'} m) é a referência central do gráfico de marés.
-                    Representa a altura média da superfície do mar ao longo do tempo. Valores acima dele indicam
-                    maré subindo em direção à preamar; abaixo, a maré está descendo em direção à baixamar.
-                  </p>
-                </div>
+              <h3 className="text-xl font-bold mt-6 mb-3 font-syne">Dicas para Atividades Locais</h3>
+              <p className="text-slate-600 leading-relaxed">
+                {activityTips}
+              </p>
+              <div className="mt-8 p-4 bg-blue-50 rounded-xl border border-blue-100">
+                <h4 className="text-blue-800 font-bold mb-2 flex items-center gap-2">
+                  <span>📡</span> Fonte dos Dados
+                </h4>
+                <p className="text-blue-700 text-sm">
+                  Todos os horários e alturas de maré do MaréAgora para <strong>{port!.name}</strong> são baseados nas publicações oficiais da Diretoria de Hidrografia e Navegação (DHN) da Marinha do Brasil. Os dados de ondas, vento e precipitação são fornecidos em tempo real pela API da Open-Meteo. O MaréAgora é uma ferramenta de apoio — para navegação profissional, sempre consulte as publicações oficiais da Marinha.
+                </p>
               </div>
-
-              <h3 className="text-lg font-bold mt-8 mb-3 text-gray-800">
-                🌊 Características das Marés em {port!.name}
-              </h3>
-              <p className="text-sm text-gray-600 leading-relaxed">{regionContext}</p>
-
-              <h3 className="text-lg font-bold mt-8 mb-3 text-gray-800">
-                💡 Dicas para Atividades Marítimas em {port!.name}
-              </h3>
-              <p className="text-sm text-gray-600 leading-relaxed">{activityTips}</p>
-
-              <h3 className="text-lg font-bold mt-8 mb-3 text-gray-800">📡 Fonte dos Dados</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
-                Todos os horários e alturas de maré do MaréAgora para <strong>{port!.name}</strong> são baseados
-                nas publicações oficiais da <strong>Diretoria de Hidrografia e Navegação (DHN)</strong> da Marinha
-                do Brasil. Os dados de ondas, vento e precipitação são fornecidos em tempo real pela API da{' '}
-                <strong>Open-Meteo</strong>. O MaréAgora é uma ferramenta de apoio — para navegação profissional,
-                sempre consulte as publicações oficiais da Marinha.
-              </p>
             </section>
           </div>
 
@@ -306,10 +273,10 @@ export default async function PortPage({ params }: { params: { slug: string } })
                   <Link
                     key={p.slug}
                     href={`/mare/${p.slug}`}
-                    className="group flex flex-col p-3.5 rounded-xl border border-gray-100 hover:border-[#2a68f6] hover:bg-gray-50 transition-all"
+                    className="flex items-center justify-between p-3 rounded-xl border border-gray-100 hover:border-blue-400 hover:bg-blue-50 transition-all group"
                   >
-                    <span className="font-bold text-gray-800 group-hover:text-[#2a68f6]">{p.name}</span>
-                    <span className="text-xs text-gray-400 capitalize">{p.state} • Ver tábua de maré</span>
+                    <span className="text-sm font-medium text-gray-700 group-hover:text-blue-700">{p.name} {p.state}</span>
+                    <span className="text-xs text-gray-400 group-hover:text-blue-400">Ver Tábua →</span>
                   </Link>
                 ))}
               </div>
@@ -322,10 +289,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
         <ShareButton portName={port!.name} slug={slug} />
       </div>
 
-      <div className="container mb-20">
-          <WindWaveCharts lat={port!.lat} lon={port!.lon} />
-        </div>
-        <Footer />
+      <Footer />
     </main>
   );
 }

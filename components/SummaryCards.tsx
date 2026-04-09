@@ -74,45 +74,45 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon }: SummaryCar
         </div>
       </div>
 
-      {/* Coeficiente e Lua — Design Refinado */}
+      {/* Coeficiente e Lua — Design Premium Dark (#0f1f3d) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="summary-card glass-card bg-slate-900/40 border-white/5 p-6 flex items-center justify-between rounded-[2rem] hover:bg-slate-900/60 transition-all duration-500">
+        <div className="p-6 flex items-center justify-between rounded-3xl transition-all duration-500 border border-white/5 shadow-2xl" style={{ background: '#0f1f3d' }}>
           <div className="flex items-center gap-5">
             <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-2xl shadow-inner border border-white/5">
               📊
             </div>
             <div>
-              <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-1">Coeficiente</div>
-              <div className={`text-4xl font-black font-syne leading-none ${coef.color} drop-shadow-sm`}>{coef.value}</div>
-              <div className="text-xs font-bold text-slate-400 mt-2 flex items-center gap-1.5">
-                <span className={`w-1.5 h-1.5 rounded-full ${coef.color.replace('text-', 'bg-')}`}></span>
+              <div className="text-[10px] font-black text-cyan-400/60 uppercase tracking-[0.2em] mb-1 font-syne">Coeficiente</div>
+              <div className={`text-4xl font-black font-syne leading-none ${coef.color} drop-shadow-md`}>{coef.value}</div>
+              <div className="text-xs font-bold text-slate-300 mt-2 flex items-center gap-1.5">
+                <span className={`w-2 h-2 rounded-full ${coef.color.replace('text-', 'bg-')}`}></span>
                 {coef.label}
               </div>
             </div>
           </div>
           <div className="hidden lg:block text-right max-w-[140px]">
-            <p className="text-[10px] leading-relaxed text-slate-500 font-medium italic">
+            <p className="text-[10px] leading-relaxed text-slate-400 font-medium opacity-60">
               Amplitude da maré. Valores altos indicam marés vivas.
             </p>
           </div>
         </div>
 
-        <div className="summary-card glass-card bg-slate-900/40 border-white/5 p-6 flex items-center justify-between rounded-[2rem] hover:bg-slate-900/60 transition-all duration-500">
+        <div className="p-6 flex items-center justify-between rounded-3xl transition-all duration-500 border border-white/5 shadow-2xl" style={{ background: '#0f1f3d' }}>
           <div className="flex items-center gap-5">
             <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-3xl shadow-inner border border-white/5">
               {moon.icon}
             </div>
             <div>
-              <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-1">Fase Lunar</div>
-              <div className="text-3xl font-black font-syne text-white leading-none drop-shadow-sm">{moon.name}</div>
-              <div className="text-xs font-bold text-blue-400/80 mt-2 flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                Influência na Pesca
+              <div className="text-[10px] font-black text-blue-400/60 uppercase tracking-[0.2em] mb-1 font-syne">Fase Lunar</div>
+              <div className="text-3xl font-black font-syne text-white leading-none drop-shadow-md">{moon.name}</div>
+              <div className="text-xs font-bold text-blue-400 mt-2 flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]"></span>
+                Ideal para Pesca
               </div>
             </div>
           </div>
           <div className="hidden lg:block text-right max-w-[140px]">
-            <p className="text-[10px] leading-relaxed text-slate-500 font-medium italic">
+            <p className="text-[10px] leading-relaxed text-slate-400 font-medium opacity-60">
               A lua rege a força das marés e o peixe.
             </p>
           </div>

@@ -74,40 +74,46 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon }: SummaryCar
         </div>
       </div>
 
-      {/* Coeficiente e Lua */}
+      {/* Coeficiente e Lua — Design Refinado */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="glass-card p-6 flex items-center justify-between bg-white/5 border border-white/10 rounded-3xl">
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-3xl shadow-inner">
+        <div className="summary-card glass-card bg-slate-900/40 border-white/5 p-6 flex items-center justify-between rounded-[2rem] hover:bg-slate-900/60 transition-all duration-500">
+          <div className="flex items-center gap-5">
+            <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-2xl shadow-inner border border-white/5">
               📊
             </div>
             <div>
-              <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Coeficiente de Maré</div>
-              <div className={`text-3xl font-black font-syne ${coef.color}`}>{coef.value}</div>
-              <div className="text-sm font-bold text-slate-300 mt-1">{coef.label}</div>
+              <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-1">Coeficiente</div>
+              <div className={`text-4xl font-black font-syne leading-none ${coef.color} drop-shadow-sm`}>{coef.value}</div>
+              <div className="text-xs font-bold text-slate-400 mt-2 flex items-center gap-1.5">
+                <span className={`w-1.5 h-1.5 rounded-full ${coef.color.replace('text-', 'bg-')}`}></span>
+                {coef.label}
+              </div>
             </div>
           </div>
-          <div className="hidden sm:block text-right max-w-[180px]">
-            <p className="text-[10px] leading-tight text-slate-500 font-medium">
-              Indica a amplitude da maré. Valores altos (90+) significam marés vivas com grande variação.
+          <div className="hidden lg:block text-right max-w-[140px]">
+            <p className="text-[10px] leading-relaxed text-slate-500 font-medium italic">
+              Amplitude da maré. Valores altos indicam marés vivas.
             </p>
           </div>
         </div>
 
-        <div className="glass-card p-6 flex items-center justify-between bg-white/5 border border-white/10 rounded-3xl">
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-4xl shadow-inner">
+        <div className="summary-card glass-card bg-slate-900/40 border-white/5 p-6 flex items-center justify-between rounded-[2rem] hover:bg-slate-900/60 transition-all duration-500">
+          <div className="flex items-center gap-5">
+            <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-3xl shadow-inner border border-white/5">
               {moon.icon}
             </div>
             <div>
-              <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Fase Lunar</div>
-              <div className="text-3xl font-black font-syne text-white">{moon.name}</div>
-              <div className="text-sm font-bold text-blue-300 mt-1">Ideal para pesca</div>
+              <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-1">Fase Lunar</div>
+              <div className="text-3xl font-black font-syne text-white leading-none drop-shadow-sm">{moon.name}</div>
+              <div className="text-xs font-bold text-blue-400/80 mt-2 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                Influência na Pesca
+              </div>
             </div>
           </div>
-          <div className="hidden sm:block text-right max-w-[180px]">
-            <p className="text-[10px] leading-tight text-slate-500 font-medium">
-              A lua influencia diretamente a força das marés e o comportamento dos peixes.
+          <div className="hidden lg:block text-right max-w-[140px]">
+            <p className="text-[10px] leading-relaxed text-slate-500 font-medium italic">
+              A lua rege a força das marés e o peixe.
             </p>
           </div>
         </div>

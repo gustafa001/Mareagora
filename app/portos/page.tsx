@@ -1,6 +1,29 @@
 import Link from 'next/link';
 import { PORTS } from '@/lib/ports';
 import NavBar from '@/components/NavBar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Tábua de Marés de Todos os Portos e Praias do Brasil 2026 | MaréAgora',
+  description: 'Consulte a tábua de marés para 122 portos e praias do Brasil em 2026. Do Pará à Antártida, dados oficiais da Marinha do Brasil para surf, pesca, mergulho e navegação.',
+  keywords: [
+    'tabua de mares brasil',
+    'tabua de mares 2026',
+    'maré brasil portos',
+    'tábua de maré todas praias brasil',
+    'tábua de maré litoral brasileiro',
+    'previsão maré brasil',
+  ],
+  alternates: {
+    canonical: 'https://www.mareagora.com.br/portos',
+  },
+  openGraph: {
+    title: 'Tábua de Marés — 122 Portos do Brasil 2026 | MaréAgora',
+    description: 'Consulte a tábua de marés para 122 portos e praias do Brasil em 2026. Dados oficiais da Marinha do Brasil.',
+    url: 'https://www.mareagora.com.br/portos',
+    type: 'website',
+  },
+};
 
 export default function PortosPage() {
   return (

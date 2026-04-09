@@ -1,11 +1,14 @@
 
 import Link from "next/link";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Política de Privacidade | MaréAgora",
   description:
-    "Saiba como o MaréAgora coleta, usa e protege seus dados pessoais.",
+    "Saiba como o MaréAgora coleta, usa e protege seus dados pessoais de acordo com a LGPD.",
 };
+
+const ULTIMA_ATUALIZACAO = "09 de abril de 2026";
 
 export default function PrivacidadePage() {
   return (
@@ -34,7 +37,7 @@ export default function PrivacidadePage() {
           </h1>
           <p className="mt-4 text-sm text-slate-400">
             Última atualização:{" "}
-            <span className="text-slate-300">01 de abril de 2026</span>
+            <span className="text-slate-300">{ULTIMA_ATUALIZACAO}</span>
           </p>
         </div>
       </section>
@@ -42,15 +45,20 @@ export default function PrivacidadePage() {
       {/* Content */}
       <section className="mx-auto max-w-3xl px-6 py-14">
         <div className="prose prose-invert prose-slate max-w-none space-y-10">
-          <Block title="1. Sobre esta Política">
-            Esta Política de Privacidade descreve como o{" "}
-            <strong>MaréAgora</strong> («nós», «nosso») coleta, usa e protege as
-            informações dos usuários ao acessar{" "}
-            <span className="text-blue-400">mareagora.com.br</span>. Ao usar
-            nosso serviço, você concorda com as práticas descritas aqui.
+          <Block title="1. Quem somos">
+            O <strong>MaréAgora</strong> (mareagora.com.br) é uma plataforma
+            independente de previsão de marés, ondas e ventos para o litoral
+            brasileiro. Para dúvidas ou solicitações relacionadas a esta
+            política, entre em contato pelo e-mail:{" "}
+            <a
+              href="mailto:cantatos@mareagora.com.br"
+              className="text-blue-400 underline"
+            >
+              cantatos@mareagora.com.br
+            </a>
           </Block>
 
-          <Block title="2. Dados que Coletamos">
+          <Block title="2. Dados que coletamos">
             <ul className="mt-3 space-y-2 text-slate-300">
               <li>
                 <Dot />
@@ -76,78 +84,135 @@ export default function PrivacidadePage() {
             </ul>
           </Block>
 
-          <Block title="3. Como Usamos seus Dados">
+          <Block title="3. Como usamos os dados">
             Usamos as informações coletadas exclusivamente para:
             <ul className="mt-3 space-y-2 text-slate-300">
               <li>
                 <Dot />
-                Exibir previsões de marés personalizadas pela localização.
+                Exibir previsões personalizadas pela região do usuário.
               </li>
               <li>
                 <Dot />
-                Melhorar a performance e a experiência da plataforma.
+                Melhorar a performance e a experiência do site.
               </li>
               <li>
                 <Dot />
-                Responder mensagens enviadas pelo formulário de contato.
+                Responder mensagens de contato enviadas pelo usuário.
               </li>
               <li>
                 <Dot />
                 Gerar relatórios de uso agregados e anônimos.
               </li>
             </ul>
-            Não vendemos, alugamos ou compartilhamos seus dados pessoais com
-            terceiros para fins comerciais.
+            <p className="mt-3">
+              Não vendemos, alugamos nem compartilhamos dados pessoais com
+              terceiros para fins comerciais.
+            </p>
           </Block>
 
-          <Block title="4. Cookies e Tecnologias de Rastreamento">
-            Utilizamos cookies de sessão para manter preferências do usuário
-            (porto favorito, tema) e ferramentas de analytics (ex.: Google
-            Analytics) com anonimização de IP ativada. Você pode desativar
-            cookies nas configurações do seu navegador; algumas funcionalidades
-            podem ficar limitadas.
-          </Block>
-
-          <Block title="5. Anúncios">
-            O MaréAgora pode exibir anúncios via{" "}
-            <strong>Google AdSense</strong>. O Google pode usar cookies para
-            veicular anúncios personalizados com base em visitas anteriores a
-            este e a outros sites. Consulte a{" "}
+          <Block title="4. Google Analytics (GA4)">
+            Utilizamos o <strong>Google Analytics 4</strong> com anonimização
+            de IP ativada para entender como os visitantes usam o site. Os
+            dados são agregados e anônimos. Você pode desativar o rastreamento
+            em:{" "}
             <a
-              href="https://policies.google.com/privacy"
+              href="https://tools.google.com/dlpage/gaoptout"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-400 underline"
             >
-              Política de Privacidade do Google
-            </a>{" "}
-            para mais informações.
+              tools.google.com/dlpage/gaoptout
+            </a>
           </Block>
 
-          <Block title="6. Compartilhamento com Terceiros">
-            Podemos compartilhar dados apenas com:
+          <Block title="5. Google AdSense e anúncios personalizados">
+            O MaréAgora exibe anúncios via <strong>Google AdSense</strong>. O
+            Google utiliza cookies para veicular anúncios com base nos seus
+            interesses e visitas anteriores a este e outros sites. Você pode:
             <ul className="mt-3 space-y-2 text-slate-300">
               <li>
                 <Dot />
-                Provedores de infraestrutura (Vercel, Supabase) sob acordos de
+                Verificar e ajustar suas preferências em:{" "}
+                <a
+                  href="https://adssettings.google.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-400 underline"
+                >
+                  adssettings.google.com
+                </a>
+              </li>
+              <li>
+                <Dot />
+                Consultar a Política de Privacidade do Google:{" "}
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-400 underline"
+                >
+                  policies.google.com/privacy
+                </a>
+              </li>
+            </ul>
+            <p className="mt-3">
+              Para cumprir os requisitos do AdSense e da LGPD, este site exibe
+              um aviso de cookies na primeira visita.
+            </p>
+          </Block>
+
+          <Block title="6. Cookies">
+            Utilizamos:
+            <ul className="mt-3 space-y-2 text-slate-300">
+              <li>
+                <Dot />
+                <strong>Cookies funcionais:</strong> preferências de porto e
+                tema (sem expiração de sessão). Não coletam dados pessoais
+                identificáveis.
+              </li>
+              <li>
+                <Dot />
+                <strong>Cookies analíticos:</strong> Google Analytics 4 (com
+                anonimização de IP).
+              </li>
+              <li>
+                <Dot />
+                <strong>Cookies de publicidade:</strong> Google AdSense.
+              </li>
+            </ul>
+            <p className="mt-3">
+              Você pode gerenciar ou desativar cookies nas configurações do seu
+              navegador. Algumas funcionalidades podem ficar limitadas. Consulte
+              nossa{" "}
+              <Link href="/cookies" className="text-blue-400 underline">
+                Política de Cookies
+              </Link>{" "}
+              para mais detalhes.
+            </p>
+          </Block>
+
+          <Block title="7. Compartilhamento com terceiros">
+            Compartilhamos dados apenas com:
+            <ul className="mt-3 space-y-2 text-slate-300">
+              <li>
+                <Dot />
+                <strong>Google LLC</strong> (Analytics e AdSense) — sujeito à
+                política de privacidade do Google.
+              </li>
+              <li>
+                <Dot />
+                <strong>Vercel Inc.</strong> (hospedagem) — sob acordo de
                 confidencialidade.
               </li>
               <li>
                 <Dot />
-                Autoridades competentes, quando exigido por lei.
+                Autoridades competentes, quando exigido por lei brasileira.
               </li>
             </ul>
           </Block>
 
-          <Block title="7. Segurança">
-            Adotamos medidas técnicas e organizacionais adequadas — incluindo
-            HTTPS e acesso restrito a banco de dados — para proteger seus dados
-            contra acesso não autorizado, alteração ou divulgação indevida.
-          </Block>
-
-          <Block title="8. Seus Direitos (LGPD)">
-            Nos termos da Lei Geral de Proteção de Dados (Lei nº 13.709/2018),
-            você tem direito a:
+          <Block title="8. Seus direitos (LGPD — Lei nº 13.709/2018)">
+            Nos termos da Lei Geral de Proteção de Dados, você tem direito a:
             <ul className="mt-3 space-y-2 text-slate-300">
               <li>
                 <Dot />
@@ -155,7 +220,7 @@ export default function PrivacidadePage() {
               </li>
               <li>
                 <Dot />
-                Solicitar acesso, correção ou exclusão dos dados.
+                Acessar, corrigir ou excluir seus dados pessoais.
               </li>
               <li>
                 <Dot />
@@ -165,26 +230,41 @@ export default function PrivacidadePage() {
                 <Dot />
                 Solicitar portabilidade dos dados.
               </li>
+              <li>
+                <Dot />
+                Opor-se ao tratamento.
+              </li>
             </ul>
-            Para exercer seus direitos, entre em contato pelo e-mail:{" "}
-            <a
-              href="mailto:privacidade@mareagora.com.br"
-              className="text-blue-400 underline"
-            >
-              privacidade@mareagora.com.br
-            </a>
+            <p className="mt-3">
+              Para exercer esses direitos, entre em contato:{" "}
+              <a
+                href="mailto:cantatos@mareagora.com.br"
+                className="text-blue-400 underline"
+              >
+                cantatos@mareagora.com.br
+              </a>
+            </p>
           </Block>
 
-          <Block title="9. Retenção de Dados">
-            Dados de uso são retidos por até 12 meses. E-mails de contato são
-            mantidos pelo tempo necessário para responder à solicitação e por
-            período adicional exigido por lei.
+          <Block title="9. Retenção de dados">
+            <ul className="mt-3 space-y-2 text-slate-300">
+              <li>
+                <Dot />
+                <strong>Dados de uso (Analytics):</strong> retidos por até 14
+                meses.
+              </li>
+              <li>
+                <Dot />
+                <strong>E-mails de contato:</strong> retidos pelo tempo
+                necessário para resposta e pelo período mínimo exigido por lei.
+              </li>
+            </ul>
           </Block>
 
-          <Block title="10. Alterações nesta Política">
-            Podemos atualizar esta política periodicamente. Notificaremos
-            alterações relevantes via aviso no site. O uso contínuo após a
-            publicação constitui aceite das mudanças.
+          <Block title="10. Alterações nesta política">
+            Podemos atualizar esta política periodicamente. Alterações
+            relevantes serão comunicadas via aviso no site. O uso contínuo após
+            a publicação constitui aceite das mudanças.
           </Block>
 
           <Block title="11. Contato">
@@ -192,10 +272,10 @@ export default function PrivacidadePage() {
             <p className="mt-2 text-slate-300">
               📧{" "}
               <a
-                href="mailto:privacidade@mareagora.com.br"
+                href="mailto:cantatos@mareagora.com.br"
                 className="text-blue-400 underline"
               >
-                contatos@mareagora.com.br
+                cantatos@mareagora.com.br
               </a>
             </p>
           </Block>

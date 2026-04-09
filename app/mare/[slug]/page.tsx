@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation';
 import { getPortBySlug, getAllSlugs } from '@/lib/ports';
 import type { Metadata } from 'next';
 import PortPageContent from '@/components/PortPageContent';
+import PortoFAQ from '@/components/PortoFAQ';
+import { portosConfig, categoryDefaults } from '@/data/porto-seo-config';
 
 function getRegionContext(region: string, state: string): string {
   const map: Record<string, string> = {
@@ -21,15 +23,30 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const port = getPortBySlug(params.slug);
   if (!port) return { title: 'Porto não encontrado' };
 
+  const slug = params.slug;
+  const config = portosConfig[slug];
   const ano = new Date().getFullYear();
-  const url = `https://www.mareagora.com.br/mare/${params.slug}`;
-  const title = `Tábua de Maré ${port.name} ${ano} — MaréAgora`;
-  const description = `Horários e alturas das marés em ${port.name} (${port.state}) hoje e para os próximos dias. Dados oficiais da Marinha do Brasil + ondas e vento em tempo real.`;
-  const ogImage = `https://www.mareagora.com.br/mare/${params.slug}/opengraph-image`;
+  const url = `https://www.mareagora.com.br/mare/${slug}`;
+  const ogImage = `https://www.mareagora.com.br/mare/${slug}/opengraph-image`;
+
+  // Usar config específica do porto se disponível, senão usar defaults por categoria
+  const suffix = config?.titleSuffix ?? categoryDefaults['turismo'].titleSuffix;
+  const title = `Tábua de Maré ${port.name} — ${suffix} | MaréAgora`;
+
+  const description = config?.description
+    ?? categoryDefaults['turismo'].descriptionTemplate(port.name, port.state);
+
+  const keywords = config?.keywords
+    ?? [
+      `maré ${port.name.toLowerCase()}`,
+      `tabua maré ${port.name.toLowerCase()} ${ano}`,
+      `tábua de maré ${port.name.toLowerCase()}`,
+    ];
 
   return {
     title,
     description,
+    keywords,
     alternates: { canonical: url },
     openGraph: {
       title,
@@ -57,6 +74,9 @@ export default async function PortPage({ params }: { params: { slug: string } })
   const regionContext = getRegionContext(port.region, port.state);
   const ano = new Date().getFullYear();
 
+  const config = portosConfig[slug];
+  const categoria = config?.category ?? 'turismo';
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -77,6 +97,20 @@ export default async function PortPage({ params }: { params: { slug: string } })
         inLanguage: 'pt-BR',
         isPartOf: { '@id': 'https://www.mareagora.com.br/' },
       },
+      {
+        '@type': 'Dataset',
+        name: `Tábua de Marés ${port.name} ${ano}`,
+        description: `Horários de maré alta e baixa em ${port.name}, ${port.state} para o ano de ${ano}. Fonte oficial: Marinha do Brasil (CHM).`,
+        url: `https://www.mareagora.com.br/mare/${slug}`,
+        creator: {
+          '@type': 'Organization',
+          name: 'MaréAgora',
+          url: 'https://www.mareagora.com.br',
+        },
+        temporalCoverage: `${ano}-01-01/${ano}-12-31`,
+        spatialCoverage: `${port.name}, ${port.state}, Brasil`,
+        license: 'https://www.gov.br/marinha/pt-br',
+      },
     ],
   };
 
@@ -88,6 +122,9 @@ export default async function PortPage({ params }: { params: { slug: string } })
         suppressHydrationWarning
       />
       <PortPageContent slug={slug} regionContext={regionContext} />
+      <div className="container pb-16">
+        <PortoFAQ slug={slug} categoria={categoria} />
+      </div>
     </>
   );
 }

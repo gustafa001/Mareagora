@@ -6,7 +6,7 @@ export default function ContatoPage() {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText("contatos@mareagora.com.br");
+    navigator.clipboard.writeText("cantatos@mareagora.com.br");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -308,7 +308,7 @@ export default function ContatoPage() {
           <div className="email-card">
             <div className="email-card-label">📧 E-mail oficial</div>
             <div className="email-display">
-              <div className="email-address">contatos@mareagora.com.br</div>
+              <div className="email-address">cantatos@mareagora.com.br</div>
               <button className={`copy-btn ${copied ? "copied" : ""}`} onClick={handleCopy}>
                 {copied ? "✓ Copiado!" : "📋 Copiar"}
               </button>

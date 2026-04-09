@@ -49,48 +49,62 @@ export function getTodayTides(eventos: TideDay[]): TideDay | null {
 }
 
 /**
- * Calcula a idade da lua baseada na data
+ * Calcula a idade da lua baseada na data (0 a 29.53)
  */
 export function getMoonAge(date: Date): number {
-  let year = date.getFullYear();
-  let month = date.getMonth() + 1;
-  const day = date.getDate();
+  const LUNAR_MONTH = 29.530588853;
+  // Referência: Lua Nova em 2000-01-06 18:14 UTC
+  const referenceDate = new Date('2000-01-06T18:14:00Z');
+  const diffMs = date.getTime() - referenceDate.getTime();
+  const diffDays = diffMs / (1000 * 60 * 60 * 24);
+  const age = diffDays % LUNAR_MONTH;
+  return age < 0 ? age + LUNAR_MONTH : age;
+}
+
+/**
+ * Retorna o nome da fase lunar e ícone
+ */
+export function getMoonPhase(age: number): { name: string; icon: string } {
+  if (age < 1.84566) return { name: 'Lua Nova', icon: '🌑' };
+  if (age < 5.53699) return { name: 'Lua Crescente', icon: '🌒' };
+  if (age < 9.22831) return { name: 'Quarto Crescente', icon: '🌓' };
+  if (age < 12.91963) return { name: 'Gibosa Crescente', icon: '🌔' };
+  if (age < 16.61096) return { name: 'Lua Cheia', icon: '🌕' };
+  if (age < 20.30228) return { name: 'Gibosa Minguante', icon: '🌖' };
+  if (age < 23.99361) return { name: 'Quarto Minguante', icon: '🌗' };
+  if (age < 27.68493) return { name: 'Lua Minguante', icon: '🌘' };
+  return { name: 'Lua Nova', icon: '🌑' };
+}
+
+/**
+ * Calcula o coeficiente de maré (20 a 120)
+ * Baseado na proximidade com Lua Nova (age=0) ou Cheia (age=14.76)
+ */
+export function getTideCoefficient(moonAge: number): { value: number; label: string; color: string } {
+  const LUNAR_MONTH = 29.530588853;
+  // O coeficiente é máximo (120) na Lua Nova e Cheia, e mínimo (20) nos Quartos.
+  // Usamos uma função cossenoidal dupla para isso.
+  const angle = (moonAge / LUNAR_MONTH) * 2 * Math.PI * 2; // Dobro da frequência
+  const cosVal = Math.cos(angle); // 1 na Nova/Cheia, -1 nos Quartos
   
-  let c, e, jd, b;
-  if (month < 3) {
-    year--;
-    month += 12;
+  // Mapear -1..1 para 20..120
+  const value = Math.round(70 + cosVal * 50);
+  
+  let label = "Moderada";
+  let color = "text-yellow-400";
+  
+  if (value <= 40) {
+    label = "Maré Morta (Fraca)";
+    color = "text-emerald-400";
+  } else if (value >= 90) {
+    label = "Maré Viva (Forte)";
+    color = "text-rose-500";
+  } else if (value > 70) {
+    label = "Moderada Alta";
+    color = "text-orange-400";
   }
-  c = 365.25 * year;
-  e = 30.6 * month;
-  jd = c + e + day - 694039.09;
-  jd /= 29.5305882;
-  b = parseInt(jd.toString());
-  jd -= b;
-  return Math.round(jd * 29.53);
-}
-
-/**
- * Retorna o nome da fase lunar
- */
-export function getMoonPhaseName(age: number): string {
-  if (age < 1) return '🌑 Lua Nova';
-  if (age < 7) return '🌒 Crescente';
-  if (age < 8) return '🌓 Quarto Crescente';
-  if (age < 14) return '🌔 Gibosa Crescente';
-  if (age < 15) return '🌕 Lua Cheia';
-  if (age < 22) return '🌖 Gibosa Minguante';
-  if (age < 23) return '🌗 Quarto Minguante';
-  return '🌘 Minguante';
-}
-
-/**
- * Calcula o coeficiente de maré
- */
-export function getTideCoefficient(date: Date, moonAge: number): number {
-  const baseCoefficient = 95;
-  const lunarVariation = Math.cos((moonAge / 29.53) * 2 * Math.PI) * 25;
-  return Math.round(baseCoefficient + lunarVariation);
+  
+  return { value, label, color };
 }
 
 /**

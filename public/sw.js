@@ -61,3 +61,36 @@ self.addEventListener('fetch', e => {
     })
   );
 });
+
+// ═══════════════════════════════════════════════
+// Notificações Push
+// ═══════════════════════════════════════════════
+
+self.addEventListener('push', e => {
+  const data = e.data ? e.data.json() : {
+    title: 'MaréAgora',
+    body: 'Confira a tábua de marés de hoje!',
+    icon: '/icons/icon-192x192.png'
+  };
+
+  const options = {
+    body: data.body,
+    icon: data.icon || '/icons/icon-192x192.png',
+    badge: '/icons/icon-192x192.png',
+    vibrate: [100, 50, 100],
+    data: {
+      url: data.url || '/'
+    }
+  };
+
+  e.waitUntil(
+    self.registration.showNotification(data.title, options)
+  );
+});
+
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  e.waitUntil(
+    clients.openWindow(e.notification.data.url)
+  );
+});

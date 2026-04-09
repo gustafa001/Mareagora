@@ -13,7 +13,8 @@ export default function BeachConditions({ lat, lon }: BeachConditionsProps) {
 
   useEffect(() => {
     async function fetchConditions() {
-      const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&hourly=wave_height,wave_period&timezone=America%2FSao_Paulo&forecast_days=1`;
+      // Adicionado sea_surface_temperature à marine-api
+      const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&hourly=wave_height,wave_period,sea_surface_temperature&timezone=America%2FSao_Paulo&forecast_days=1`;
       const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m&timezone=America%2FSao_Paulo`;
 
       try {
@@ -26,11 +27,13 @@ export default function BeachConditions({ lat, lon }: BeachConditionsProps) {
         const hour = now.getHours();
         const waveHeight = marineRes.hourly?.wave_height[hour] || 0;
         const wavePeriod = marineRes.hourly?.wave_period[hour] || 0;
+        const waterTemp = marineRes.hourly?.sea_surface_temperature?.[hour] || 0;
         const weather = weatherRes.current;
 
         setData({
           waveHeight,
           wavePeriod,
+          waterTemp,
           temp: weather.temperature_2m,
           feelsLike: weather.apparent_temperature,
           windSpeed: weather.wind_speed_10m,
@@ -78,7 +81,12 @@ export default function BeachConditions({ lat, lon }: BeachConditionsProps) {
         <div className="flex gap-4">
           <div className="text-right">
             <div className="text-2xl font-black text-slate-800">{data.temp.toFixed(1)}°C</div>
-            <div className="text-[10px] font-bold text-slate-400 uppercase">Sensação {data.feelsLike.toFixed(0)}°C</div>
+            <div className="text-[10px] font-bold text-slate-400 uppercase">Ar ({data.feelsLike.toFixed(0)}°C)</div>
+          </div>
+          <div className="w-px h-10 bg-slate-100" />
+          <div className="text-right">
+            <div className="text-2xl font-black text-blue-600">{data.waterTemp > 0 ? `${data.waterTemp.toFixed(1)}°C` : '--'}</div>
+            <div className="text-[10px] font-bold text-slate-400 uppercase">Água 🌡️</div>
           </div>
           <div className="w-px h-10 bg-slate-100" />
           <div className="text-right">

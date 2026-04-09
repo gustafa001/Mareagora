@@ -4,6 +4,7 @@ import "./globals.css";
 import Script from "next/script";
 import MobileStickyAd from "@/components/ads/MobileStickyAd";
 import Footer from "@/components/Footer";
+import InstallPWA from "@/components/InstallPWA";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -31,6 +32,14 @@ const firaSans = Fira_Sans({
 export const metadata: Metadata = {
   title: "MaréAgora — Tábua de Marés 2026",
   description: "Horários e alturas das marés com dados oficiais da Marinha do Brasil. Previsão de ondas e vento em tempo real.",
+  manifest: "/manifest.json",
+  themeColor: "#0f172a",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "MaréAgora",
+  },
 };
 
 export default function RootLayout({
@@ -62,6 +71,19 @@ export default function RootLayout({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-LP14YCN9MZ');
+          `}
+        </Script>
+        <Script id="register-sw" strategy="afterInteractive">
+          {`
+            if ('serviceWorker' in navigator) {
+              window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                  console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                  console.log('ServiceWorker registration failed: ', err);
+                });
+              });
+            }
           `}
         </Script>
         <style>{`
@@ -100,6 +122,7 @@ export default function RootLayout({
         </div>
         {/* Mobile Sticky Ad — aparece apenas em telas < 768px */}
         <MobileStickyAd />
+        <InstallPWA />
       </body>
     </html>
   );

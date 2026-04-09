@@ -44,7 +44,14 @@ export default function TideChart({
   const mares = [...tidesArray].sort((a, b) => a.hora.localeCompare(b.hora));
 
   const generateChartData = () => {
-    const data: { x: number; y: number; label?: string; height?: number; time?: string; isEvent?: boolean }[] = [];
+    const data: { x: number; y: number; label?: string; height?: number; time?: string; isEvent?: boolean; type?: 'high' | 'low' }[] = [];
+    
+    // Adicionar ponto inicial (00:00) se necessário
+    const [hFirst, mFirst] = mares[0].hora.split(':').map(Number);
+    const tFirst = hFirst * 60 + mFirst;
+    if (tFirst > 0) {
+      data.push({ x: 0, y: mares[0].altura_m });
+    }
 
     for (let i = 0; i < mares.length - 1; i++) {
       const [h1, m1] = mares[i].hora.split(':').map(Number);
@@ -52,19 +59,23 @@ export default function TideChart({
       const t1 = h1 * 60 + m1;
       const t2 = h2 * 60 + m2;
 
+      const type = mares[i].altura_m > (mares[i+1]?.altura_m ?? 0) ? 'high' : 'low';
+
       data.push({
         x: t1,
         y: mares[i].altura_m,
         label: mares[i].hora,
         height: mares[i].altura_m,
         time: mares[i].hora,
-        isEvent: true
+        isEvent: true,
+        type
       });
 
-      const steps = 12;
+      const steps = 24; // Mais passos para suavidade
       for (let j = 1; j < steps; j++) {
         const t = t1 + ((t2 - t1) * j) / steps;
         const ratio = j / steps;
+        // Interpolação senoidal para curva de maré natural
         const eased = (1 - Math.cos(ratio * Math.PI)) / 2;
         const height = mares[i].altura_m + (mares[i + 1].altura_m - mares[i].altura_m) * eased;
         data.push({ x: t, y: height });
@@ -73,14 +84,22 @@ export default function TideChart({
 
     const [hLast, mLast] = mares[mares.length - 1].hora.split(':').map(Number);
     const tLast = hLast * 60 + mLast;
+    const lastType = mares[mares.length - 1].altura_m > (mares[mares.length - 2]?.altura_m ?? 0) ? 'high' : 'low';
+    
     data.push({
       x: tLast,
       y: mares[mares.length - 1].altura_m,
       label: mares[mares.length - 1].hora,
       height: mares[mares.length - 1].altura_m,
       time: mares[mares.length - 1].hora,
-      isEvent: true
+      isEvent: true,
+      type: lastType
     });
+
+    // Adicionar ponto final (23:59) se necessário
+    if (tLast < 1439) {
+      data.push({ x: 1439, y: mares[mares.length - 1].altura_m });
+    }
 
     return data;
   };
@@ -160,15 +179,17 @@ export default function TideChart({
             </filter>
           </defs>
 
-          {/* Grid horizontal */}
-          {[0, 0.5, 1, 1.5, 2].map((h) => (
+          {/* Grid horizontal dinâmico */}
+          {Array.from({ length: Math.ceil(graphMaxHeight * 2) + 1 }, (_, i) => i * 0.5)
+            .filter(h => h <= graphMaxHeight)
+            .map((h) => (
             <g key={`h-${h}`}>
               <line
                 x1={padding}
                 y1={scaleY(h)}
                 x2={viewBox.width - padding}
                 y2={scaleY(h)}
-                stroke="rgba(255,255,255,0.1)"
+                stroke="rgba(255,255,255,0.08)"
                 strokeWidth="0.8"
                 strokeDasharray="3,3"
               />
@@ -176,7 +197,7 @@ export default function TideChart({
                 x={padding - 8}
                 y={scaleY(h) + 4}
                 fontSize="9"
-                fill="rgba(255,255,255,0.4)"
+                fill="rgba(255,255,255,0.3)"
                 textAnchor="end"
                 fontWeight="500"
               >
@@ -217,8 +238,7 @@ export default function TideChart({
           {chartData
             .filter(d => d.isEvent)
             .map((data, idx) => {
-              const isHigh = mares[idx]?.altura_m > (mares[idx + 1]?.altura_m ?? 0) &&
-                mares[idx]?.altura_m > (mares[idx - 1]?.altura_m ?? 0);
+              const isHigh = data.type === 'high';
 
               return (
                 <g
@@ -243,27 +263,40 @@ export default function TideChart({
                     fill={isHigh ? 'rgb(6, 182, 212)' : 'rgb(234, 88, 12)'}
                     stroke="white"
                     strokeWidth="2"
-                    className="transition-all duration-200"
+                    className="transition-all duration-200 shadow-lg"
                   />
                   <text
                     x={scaleX(data.x)}
-                    y={scaleY(data.y) - 20}
+                    y={scaleY(data.y) - 22}
                     fontSize="11"
-                    fontWeight="700"
-                    fill={hoveredPoint === idx ? (isHigh ? 'rgb(34, 211, 238)' : 'rgb(251, 146, 60)') : 'rgba(255,255,255,0.7)'}
+                    fontWeight="800"
+                    fill={isHigh ? 'rgb(34, 211, 238)' : 'rgb(251, 146, 60)'}
                     textAnchor="middle"
-                    className="transition-colors duration-200"
+                    className="font-syne"
                   >
                     {data.time}
                   </text>
                   <text
                     x={scaleX(data.x)}
-                    y={scaleY(data.y) - 8}
+                    y={scaleY(data.y) - 10}
                     fontSize="10"
-                    fill="rgba(255,255,255,0.5)"
+                    fontWeight="700"
+                    fill="white"
                     textAnchor="middle"
+                    className="font-syne"
                   >
                     {data.height?.toFixed(2)}m
+                  </text>
+                  <text
+                    x={scaleX(data.x)}
+                    y={scaleY(data.y) + 18}
+                    fontSize="9"
+                    fontWeight="600"
+                    fill="rgba(255,255,255,0.4)"
+                    textAnchor="middle"
+                    className="uppercase tracking-tighter"
+                  >
+                    {isHigh ? 'Alta' : 'Baixa'}
                   </text>
                 </g>
               );

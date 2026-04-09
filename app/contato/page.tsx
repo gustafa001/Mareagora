@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import NavBar from "@/components/NavBar";
 
 export default function ContatoPage() {
   const [copied, setCopied] = useState(false);
@@ -286,6 +287,7 @@ export default function ContatoPage() {
       `}</style>
 
       <div className="contato-root">
+        <NavBar />
         {/* HERO */}
         <div className="hero">
           <div className="wave-ring" />

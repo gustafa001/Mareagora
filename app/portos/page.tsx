@@ -161,14 +161,7 @@ export default function PortosPage() {
 
         </section>
 
-        <footer className="py-12 px-4 border-t border-white/10">
-          <div className="max-w-6xl mx-auto text-center">
-            <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 inline-block">
-              <p className="text-slate-400 mb-2">2026 <span className="text-white font-semibold">MaréAgora</span></p>
-              <p className="text-sm text-slate-500">Dados oficiais da Marinha do Brasil • SHOM</p>
-            </div>
-          </div>
-        </footer>
+
       </div>
     </main>
   );

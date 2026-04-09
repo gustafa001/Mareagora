@@ -1,6 +1,7 @@
 // Tarefa 7: Política de Cookies — exigida pelo Google AdSense
 import Link from "next/link";
 import type { Metadata } from "next";
+import NavBar from "@/components/NavBar";
 
 export const metadata: Metadata = {
   title: "Política de Cookies | MaréAgora",
@@ -13,6 +14,7 @@ const ULTIMA_ATUALIZACAO = "09 de abril de 2026";
 export default function CookiesPage() {
   return (
     <main className="min-h-screen bg-[#0f172a] text-white">
+      <NavBar />
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-white/10 bg-gradient-to-b from-[#0c2044] to-[#0f172a] px-6 py-16 text-center">
         <div className="pointer-events-none absolute inset-0 opacity-10">

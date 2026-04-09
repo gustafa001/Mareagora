@@ -1,5 +1,6 @@
 
 import Link from "next/link";
+import NavBar from "@/components/NavBar";
 
 export const metadata = {
   title: "Sobre | MaréAgora",
@@ -10,6 +11,7 @@ export const metadata = {
 export default function SobrePage() {
   return (
     <main className="min-h-screen bg-[#0f172a] text-white">
+      <NavBar />
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-white/10 bg-gradient-to-b from-[#0c2044] to-[#0f172a] px-6 py-20 text-center">
         {/* decorative waves */}

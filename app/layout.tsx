@@ -3,6 +3,7 @@ import { Syne, DM_Sans, Fira_Code, Fira_Sans } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import MobileStickyAd from "@/components/ads/MobileStickyAd";
+import Footer from "@/components/Footer";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -91,7 +92,12 @@ export default function RootLayout({
             <path className="wave-path-2" d="M0,80 C200,40 400,100 600,80 C800,60 1000,110 1200,80 C1320,65 1380,85 1440,80 L1440,120 L0,120Z"/>
           </svg>
         </div>
-        {children}
+        <div className="flex flex-col min-h-screen">
+          <div className="flex-grow">
+            {children}
+          </div>
+          <Footer />
+        </div>
         {/* Mobile Sticky Ad — aparece apenas em telas < 768px */}
         <MobileStickyAd />
       </body>

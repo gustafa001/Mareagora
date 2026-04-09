@@ -28,9 +28,10 @@ export default function NavBar({ className = '' }: NavBarProps) {
 
             <div className="w-px h-6 bg-white/10 hidden sm:block" />
 
-            <Link href="/blog" className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-400 transition-colors hidden sm:flex items-center gap-2">
+            <Link href="/blog" className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-400 transition-colors flex items-center gap-2">
               <span className="text-lg">📝</span>
-              <span>Blog</span>
+              <span className="hidden sm:inline">Blog</span>
+              <span className="sm:hidden">Blog</span>
             </Link>
 
             <div className="w-px h-6 bg-white/10 hidden sm:block" />

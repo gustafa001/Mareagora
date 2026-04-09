@@ -74,49 +74,49 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon }: SummaryCar
         </div>
       </div>
 
-      {/* Coeficiente e Lua — Design Premium Dark (#0f1f3d) */}
+      {/* Coeficiente e Lua — Design Premium Dark (#0f1f3d) — Forçado Visibilidade */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="p-6 flex items-center justify-between rounded-3xl border border-white/10 shadow-2xl" style={{ background: '#0f1f3d' }}>
+        <div className="p-6 flex items-center justify-between rounded-3xl border border-white/20 shadow-2xl" style={{ background: '#0f1f3d' }}>
           <div className="flex items-center gap-5">
             <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-2xl border border-white/10">
               📊
             </div>
             <div>
-              <div className="text-[10px] font-black text-cyan-400 uppercase tracking-[0.2em] mb-1 font-syne">Coeficiente</div>
-              <div className={`text-5xl font-black font-syne leading-none ${coef.color} drop-shadow-lg`}>
+              <div className="text-[10px] font-black uppercase tracking-[0.2em] mb-1 font-syne" style={{ color: '#22d3ee' }}>Coeficiente</div>
+              <div className="text-5xl font-black font-syne leading-none drop-shadow-lg" style={{ color: coef.color.includes('emerald') ? '#34d399' : coef.color.includes('rose') ? '#f43f5e' : coef.color.includes('orange') ? '#fb923c' : '#facc15' }}>
                 {coef.value}
               </div>
-              <div className="text-xs font-bold text-white mt-2 flex items-center gap-1.5">
-                <span className={`w-2.5 h-2.5 rounded-full ${coef.color.replace('text-', 'bg-')} shadow-[0_0_8px_rgba(255,255,255,0.3)]`}></span>
+              <div className="text-xs font-bold mt-2 flex items-center gap-1.5" style={{ color: '#ffffff' }}>
+                <span className="w-2.5 h-2.5 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.3)]" style={{ backgroundColor: coef.color.includes('emerald') ? '#34d399' : coef.color.includes('rose') ? '#f43f5e' : coef.color.includes('orange') ? '#fb923c' : '#facc15' }}></span>
                 {coef.label}
               </div>
             </div>
           </div>
           <div className="hidden lg:block text-right max-w-[140px]">
-            <p className="text-[10px] leading-relaxed text-slate-300 font-medium opacity-80">
+            <p className="text-[10px] leading-relaxed font-medium opacity-80" style={{ color: '#cbd5e1' }}>
               Amplitude da maré. Valores altos indicam marés vivas.
             </p>
           </div>
         </div>
 
-        <div className="p-6 flex items-center justify-between rounded-3xl border border-white/10 shadow-2xl" style={{ background: '#0f1f3d' }}>
+        <div className="p-6 flex items-center justify-between rounded-3xl border border-white/20 shadow-2xl" style={{ background: '#0f1f3d' }}>
           <div className="flex items-center gap-5">
             <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-3xl border border-white/10">
               {moon.icon}
             </div>
             <div>
-              <div className="text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] mb-1 font-syne">Fase Lunar</div>
-              <div className="text-3xl font-black font-syne text-white leading-none drop-shadow-lg">
+              <div className="text-[10px] font-black uppercase tracking-[0.2em] mb-1 font-syne" style={{ color: '#60a5fa' }}>Fase Lunar</div>
+              <div className="text-3xl font-black font-syne leading-none drop-shadow-lg" style={{ color: '#ffffff' }}>
                 {moon.name}
               </div>
-              <div className="text-xs font-bold text-blue-300 mt-2 flex items-center gap-1.5">
+              <div className="text-xs font-bold mt-2 flex items-center gap-1.5" style={{ color: '#93c5fd' }}>
                 <span className="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.6)]"></span>
                 Ideal para Pesca
               </div>
             </div>
           </div>
           <div className="hidden lg:block text-right max-w-[140px]">
-            <p className="text-[10px] leading-relaxed text-slate-300 font-medium opacity-80">
+            <p className="text-[10px] leading-relaxed font-medium opacity-80" style={{ color: '#cbd5e1' }}>
               A lua rege a força das marés e o peixe.
             </p>
           </div>

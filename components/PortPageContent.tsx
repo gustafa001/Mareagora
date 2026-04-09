@@ -11,6 +11,7 @@ import WindWaveCharts from '@/components/WindWaveCharts';
 import SearchPorts from '@/components/SearchPorts';
 import PortStatistics from '@/components/PortStatistics';
 import ActivityRecommendations from '@/components/ActivityRecommendations';
+import BlogCard from '@/components/BlogCard';
 import { useSeaConditions } from '@/hooks/useSeaConditions';
 import { notFound } from 'next/navigation';
 
@@ -137,6 +138,8 @@ export default function PortPageContent({ slug, regionContext }: PortPageContent
                 {regionContext}
               </p>
             </section>
+
+            <BlogCard />
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Syne, DM_Sans, Fira_Code, Fira_Sans } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
@@ -33,13 +33,18 @@ export const metadata: Metadata = {
   title: "MaréAgora — Tábua de Marés 2026",
   description: "Horários e alturas das marés com dados oficiais da Marinha do Brasil. Previsão de ondas e vento em tempo real.",
   manifest: "/manifest.json",
-  themeColor: "#0f172a",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
     title: "MaréAgora",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0f172a",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({

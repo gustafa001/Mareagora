@@ -25,9 +25,16 @@ export default function NavBar({ className = '' }: NavBarProps) {
               <span className="hidden sm:inline">Todos os Portos</span>
               <span className="sm:hidden">Portos</span>
             </Link>
-            
+
             <div className="w-px h-6 bg-white/10 hidden sm:block" />
-            
+
+            <Link href="/blog" className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-400 transition-colors hidden sm:flex items-center gap-2">
+              <span className="text-lg">📝</span>
+              <span>Blog</span>
+            </Link>
+
+            <div className="w-px h-6 bg-white/10 hidden sm:block" />
+
             <Link href="/sobre" className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-colors hidden sm:block">
               Sobre
             </Link>

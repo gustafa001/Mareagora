@@ -27,6 +27,7 @@ interface Praia {
   tags: string[]
   porto: PortoMeta
   afiliado?: { label: string; url: string }
+  unsplashQuery: string
 }
 
 // ─── dados ───────────────────────────────────────────────────────────────────
@@ -43,6 +44,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Pesca', 'Amazônia', 'Maré alta'],
     porto: { slug: 'porto-de-belem', nome: 'Porto de Belém', estado: 'PA', dataFile: '10519.json' },
     afiliado: { label: '🎣 Equipamentos de Pesca', url: 'https://www.amazon.com.br/s?k=equipamentos+pesca+amazonia&tag=mareagora-20' },
+    unsplashQuery: 'belem para brazil waterfront',
   },
   {
     slug: 'ilha-do-mosqueiro',
@@ -54,6 +56,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Família', 'Água doce', 'Ilha'],
     porto: { slug: 'ilha-do-mosqueiro', nome: 'Ilha do Mosqueiro', estado: 'PA', dataFile: '10525.json' },
     afiliado: { label: '🏖️ Equipamentos de Praia', url: 'https://www.amazon.com.br/s?k=equipamentos+praia+familia&tag=mareagora-20' },
+    unsplashQuery: 'amazon island river beach brazil',
   },
   {
     slug: 'porto-de-vila-do-conde',
@@ -65,6 +68,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Pesca', 'Porto', 'Navegação'],
     porto: { slug: 'porto-de-vila-do-conde', nome: 'Porto de Vila do Conde', estado: 'PA', dataFile: '10566.json' },
     afiliado: { label: '🎣 Varas e Iscas de Pesca', url: 'https://www.amazon.com.br/s?k=vara+pesca+agua+doce&tag=mareagora-20' },
+    unsplashQuery: 'amazon river port brazil',
   },
   {
     slug: 'atracadouro-de-breves',
@@ -76,6 +80,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Amazônia', 'Rio', 'Navegação'],
     porto: { slug: 'atracadouro-de-breves', nome: 'Atracadouro de Breves', estado: 'PA', dataFile: '10571.json' },
     afiliado: { label: '🚤 Acessórios Náuticos', url: 'https://www.amazon.com.br/s?k=acessorios+nauticos+barco&tag=mareagora-20' },
+    unsplashQuery: 'amazon estuary river brazil jungle',
   },
   {
     slug: 'porto-de-santana',
@@ -87,6 +92,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Porto', 'Pesca', 'Amazônia'],
     porto: { slug: 'porto-de-santana', nome: 'Porto de Santana', estado: 'AP', dataFile: '10615.json' },
     afiliado: { label: '🎣 Kits de Pesca Esportiva', url: 'https://www.amazon.com.br/s?k=kit+pesca+esportiva&tag=mareagora-20' },
+    unsplashQuery: 'amapa brazil coastline amazon',
   },
   {
     slug: 'igarape-grande-do-curua',
@@ -98,6 +104,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Ecoturismo', 'Pesca', 'Igarapé'],
     porto: { slug: 'igarape-grande-do-curua', nome: 'Igarapé Grande do Curuá', estado: 'PA', dataFile: '10656.json' },
     afiliado: { label: '🎣 Equipamentos de Pesca', url: 'https://www.amazon.com.br/s?k=equipamentos+pesca+rio&tag=mareagora-20' },
+    unsplashQuery: 'amazon igarape canal tropical brazil',
   },
   {
     slug: 'barra-norte-arco-lamoso',
@@ -109,6 +116,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Pesca', 'Amazônia', 'Maré alta'],
     porto: { slug: 'barra-norte-arco-lamoso', nome: 'Barra Norte do Rio Amazonas', estado: 'PA', dataFile: '10657.json' },
     afiliado: { label: '🎣 Varas de Pesca Pesada', url: 'https://www.amazon.com.br/s?k=vara+pesca+pesada+mar&tag=mareagora-20' },
+    unsplashQuery: 'amazon river mouth atlantic ocean brazil',
   },
   {
     slug: 'fundeadouro-de-salinopolis',
@@ -120,6 +128,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Piscinas naturais', 'Dunas', 'Família'],
     porto: { slug: 'fundeadouro-de-salinopolis', nome: 'Fundeadouro de Salinópolis', estado: 'PA', dataFile: '20520.json' },
     afiliado: { label: '🤿 Kits de Snorkel', url: 'https://www.amazon.com.br/s?k=kit+snorkel+piscina+natural&tag=mareagora-20' },
+    unsplashQuery: 'salinopolis para white sand beach brazil',
   },
   {
     slug: 'ilha-dos-guaras',
@@ -131,6 +140,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Ecoturismo', 'Natureza', 'Aves'],
     porto: { slug: 'ilha-dos-guaras', nome: 'Ilha dos Guarás', estado: 'PA', dataFile: '20535.json' },
     afiliado: { label: '🦜 Binóculos para Observação', url: 'https://www.amazon.com.br/s?k=binoculo+observacao+aves&tag=mareagora-20' },
+    unsplashQuery: 'tropical island wildlife birds brazil',
   },
 
   // ── Região Nordeste ───────────────────────────────────────────────────────
@@ -144,6 +154,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Pesca', 'Porto', 'Maré alta'],
     porto: { slug: 'porto-de-itaqui', nome: 'Porto de Itaqui', estado: 'MA', dataFile: '30110.json' },
     afiliado: { label: '🎣 Equipamentos de Pesca', url: 'https://www.amazon.com.br/s?k=equipamentos+pesca+nordeste&tag=mareagora-20' },
+    unsplashQuery: 'sao luis maranhao beach brazil',
   },
   {
     slug: 'sao-luis',
@@ -155,6 +166,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Urbana', 'Cultura', 'Maré alta'],
     porto: { slug: 'sao-luis', nome: 'São Luís', estado: 'MA', dataFile: '30120.json' },
     afiliado: { label: '🏄 Pranchas e Acessórios Surf', url: 'https://www.amazon.com.br/s?k=acessorios+surf+prancha&tag=mareagora-20' },
+    unsplashQuery: 'sao luis maranhao praia calhau nordeste',
   },
   {
     slug: 'porto-de-tutoia',
@@ -166,6 +178,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Lençóis', 'Dunas', 'Lagoas'],
     porto: { slug: 'porto-de-tutoia', nome: 'Porto de Tutóia', estado: 'MA', dataFile: '30140.json' },
     afiliado: { label: '🎒 Mochilas e Equipamento Trekking', url: 'https://www.amazon.com.br/s?k=mochila+trekking+praia&tag=mareagora-20' },
+    unsplashQuery: 'lencois maranhenses dunes lagoon brazil',
   },
   {
     slug: 'terminal-da-ponta-da-madeira',
@@ -177,6 +190,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Porto', 'Navegação', 'Maré alta'],
     porto: { slug: 'terminal-da-ponta-da-madeira', nome: 'Terminal da Ponta da Madeira', estado: 'MA', dataFile: '30149.json' },
     afiliado: { label: '🚤 Acessórios Náuticos', url: 'https://www.amazon.com.br/s?k=acessorios+nauticos&tag=mareagora-20' },
+    unsplashQuery: 'maranhao port sea brazil',
   },
   {
     slug: 'terminal-da-alumar',
@@ -188,6 +202,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Porto', 'Maré alta', 'Navegação'],
     porto: { slug: 'terminal-da-alumar', nome: 'Terminal da Alumar', estado: 'MA', dataFile: '30156.json' },
     afiliado: { label: '🎣 Kits de Pesca Esportiva', url: 'https://www.amazon.com.br/s?k=kit+pesca+esportiva+mar&tag=mareagora-20' },
+    unsplashQuery: 'maranhao bay coast brazil',
   },
   {
     slug: 'porto-de-luis-correia',
@@ -199,6 +214,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Kitesurf', 'Dunas', 'Vento'],
     porto: { slug: 'porto-de-luis-correia', nome: 'Porto de Luís Correia', estado: 'PI', dataFile: '30225.json' },
     afiliado: { label: '🪁 Kits de Kitesurf', url: 'https://www.amazon.com.br/s?k=kitesurf+kit+iniciante&tag=mareagora-20' },
+    unsplashQuery: 'kitesurf beach dunes brazil nordeste',
   },
   {
     slug: 'terminal-portuario-do-pecem',
@@ -210,6 +226,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Kitesurf', 'Windsurf', 'Vento'],
     porto: { slug: 'terminal-portuario-do-pecem', nome: 'Terminal do Pecém', estado: 'CE', dataFile: '30337.json' },
     afiliado: { label: '🪁 Equipamentos de Windsurf', url: 'https://www.amazon.com.br/s?k=windsurf+equipamentos&tag=mareagora-20' },
+    unsplashQuery: 'ceara beach kitesurf wind brazil',
   },
   {
     slug: 'porto-de-mucuripe-fortaleza',
@@ -221,6 +238,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Urbana', 'Kitesurf', 'Infraestrutura'],
     porto: { slug: 'porto-de-mucuripe-fortaleza', nome: 'Porto de Mucuripe', estado: 'CE', dataFile: '30340.json' },
     afiliado: { label: '🪁 Kits de Kitesurf', url: 'https://www.amazon.com.br/s?k=kitesurf+iniciante&tag=mareagora-20' },
+    unsplashQuery: 'fortaleza ceara beach brazil iracema',
   },
   {
     slug: 'porto-de-areia-branca-termisa',
@@ -232,6 +250,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Mergulho', 'Dunas', 'Ecoturismo'],
     porto: { slug: 'porto-de-areia-branca-termisa', nome: 'Porto de Areia Branca', estado: 'RN', dataFile: '30407.json' },
     afiliado: { label: '🤿 Equipamentos de Mergulho', url: 'https://www.amazon.com.br/s?k=equipamentos+mergulho+snorkel&tag=mareagora-20' },
+    unsplashQuery: 'rio grande do norte dunes beach brazil',
   },
   {
     slug: 'porto-de-guamare',
@@ -243,6 +262,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Pesca', 'Natureza', 'Remoto'],
     porto: { slug: 'porto-de-guamare', nome: 'Porto de Guamaré', estado: 'RN', dataFile: '30443.json' },
     afiliado: { label: '🎣 Varas de Pesca', url: 'https://www.amazon.com.br/s?k=vara+pesca+mar&tag=mareagora-20' },
+    unsplashQuery: 'mangrove beach fishing brazil nordeste',
   },
   {
     slug: 'porto-de-macau',
@@ -254,6 +274,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Pesca', 'Ilha', 'Água morna'],
     porto: { slug: 'porto-de-macau', nome: 'Porto de Macau', estado: 'RN', dataFile: '30445.json' },
     afiliado: { label: '🎣 Kits de Pesca Artesanal', url: 'https://www.amazon.com.br/s?k=kit+pesca+artesanal&tag=mareagora-20' },
+    unsplashQuery: 'tropical beach warm water fishing brazil',
   },
   {
     slug: 'porto-de-natal',
@@ -265,6 +286,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Buggy', 'Dunas', 'Infraestrutura'],
     porto: { slug: 'porto-de-natal', nome: 'Porto de Natal', estado: 'RN', dataFile: '30462.json' },
     afiliado: { label: '🏄 Pranchas e Acessórios Surf', url: 'https://www.amazon.com.br/s?k=prancha+surf+acessorios&tag=mareagora-20' },
+    unsplashQuery: 'natal ponta negra beach dunes brazil',
   },
   {
     slug: 'porto-de-cabedelo',
@@ -276,6 +298,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Recife', 'Snorkel', 'Ecoturismo'],
     porto: { slug: 'porto-de-cabedelo', nome: 'Porto de Cabedelo', estado: 'PB', dataFile: '30540.json' },
     afiliado: { label: '🤿 Máscaras de Snorkel', url: 'https://www.amazon.com.br/s?k=mascara+snorkel+recife&tag=mareagora-20' },
+    unsplashQuery: 'paraiba beach reef snorkel brazil',
   },
   {
     slug: 'porto-do-recife',
@@ -287,6 +310,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Recife', 'Urbana', 'Cultura'],
     porto: { slug: 'porto-do-recife', nome: 'Porto do Recife', estado: 'PE', dataFile: '30645.json' },
     afiliado: { label: '🤿 Equipamentos de Mergulho', url: 'https://www.amazon.com.br/s?k=equipamentos+mergulho+recife&tag=mareagora-20' },
+    unsplashQuery: 'recife pernambuco beach coral reef brazil',
   },
   {
     slug: 'porto-de-suape',
@@ -298,6 +322,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Piscinas naturais', 'Recife', 'Família'],
     porto: { slug: 'porto-de-suape', nome: 'Porto de Suape', estado: 'PE', dataFile: '30686.json' },
     afiliado: { label: '🤿 Kits de Snorkel', url: 'https://www.amazon.com.br/s?k=kit+snorkel+piscina+natural&tag=mareagora-20' },
+    unsplashQuery: 'porto de galinhas natural pools reef brazil',
   },
   {
     slug: 'porto-de-maceio',
@@ -309,6 +334,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Piscinas naturais', 'Água cristalina', 'Família'],
     porto: { slug: 'porto-de-maceio', nome: 'Porto de Maceió', estado: 'AL', dataFile: '30725.json' },
     afiliado: { label: '🤿 Máscaras de Snorkel Full Face', url: 'https://www.amazon.com.br/s?k=mascara+snorkel+full+face&tag=mareagora-20' },
+    unsplashQuery: 'maceio alagoas emerald water natural pools brazil',
   },
   {
     slug: 'terminal-maritimo-inacio-barbosa',
@@ -320,6 +346,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Pesca', 'Mergulho', 'Tranquilo'],
     porto: { slug: 'terminal-maritimo-inacio-barbosa', nome: 'Terminal Inácio Barbosa', estado: 'SE', dataFile: '30810.json' },
     afiliado: { label: '🎣 Varas de Surf Fishing', url: 'https://www.amazon.com.br/s?k=vara+surf+fishing&tag=mareagora-20' },
+    unsplashQuery: 'sergipe beach fishing brazil atlantic',
   },
   {
     slug: 'capitania-dos-portos-de-sergipe',
@@ -331,6 +358,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Urbana', 'Família', 'Cultura'],
     porto: { slug: 'capitania-dos-portos-de-sergipe', nome: 'Capitania dos Portos de Sergipe', estado: 'SE', dataFile: '30825.json' },
     afiliado: { label: '🏖️ Equipamentos de Praia', url: 'https://www.amazon.com.br/s?k=equipamentos+praia+verao&tag=mareagora-20' },
+    unsplashQuery: 'aracaju atalaia beach sergipe brazil',
   },
   {
     slug: 'arquipelago-de-fernando-de-noronha',
@@ -342,6 +370,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Mergulho', 'Golfinhos', 'Patrimônio UNESCO'],
     porto: { slug: 'arquipelago-de-fernando-de-noronha', nome: 'Fernando de Noronha', estado: 'PE', dataFile: '30955.json' },
     afiliado: { label: '🤿 Equipamentos de Mergulho Pro', url: 'https://www.amazon.com.br/s?k=equipamento+mergulho+profissional&tag=mareagora-20' },
+    unsplashQuery: 'fernando de noronha ocean dolphins diving brazil',
   },
 
   // ── Região Sudeste ────────────────────────────────────────────────────────
@@ -355,6 +384,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Ilha', 'Pesca', 'Tranquilo'],
     porto: { slug: 'porto-de-madre-de-deus', nome: 'Porto Madre de Deus', estado: 'BA', dataFile: '40118.json' },
     afiliado: { label: '🎣 Kits de Pesca Esportiva', url: 'https://www.amazon.com.br/s?k=kit+pesca+esportiva&tag=mareagora-20' },
+    unsplashQuery: 'bahia island bay beach brazil tranquil',
   },
   {
     slug: 'porto-de-aratu',
@@ -366,6 +396,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Pesca', 'Baía', 'Navegação'],
     porto: { slug: 'porto-de-aratu', nome: 'Base de Aratu', estado: 'BA', dataFile: '40135.json' },
     afiliado: { label: '🚤 Acessórios Náuticos', url: 'https://www.amazon.com.br/s?k=acessorios+nauticos+barco&tag=mareagora-20' },
+    unsplashQuery: 'todos os santos bay bahia calm water brazil',
   },
   {
     slug: 'porto-de-salvador',
@@ -377,6 +408,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Cultura', 'Urbana', 'Mergulho'],
     porto: { slug: 'porto-de-salvador', nome: 'Porto de Salvador', estado: 'BA', dataFile: '40141.json' },
     afiliado: { label: '🤿 Equipamentos de Mergulho', url: 'https://www.amazon.com.br/s?k=equipamentos+mergulho+snorkel&tag=mareagora-20' },
+    unsplashQuery: 'salvador bahia porto da barra turquoise beach',
   },
   {
     slug: 'porto-de-ilheus',
@@ -388,6 +420,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Surf', 'Natureza', 'Cultura'],
     porto: { slug: 'porto-de-ilheus', nome: 'Porto de Ilhéus', estado: 'BA', dataFile: '40145.json' },
     afiliado: { label: '🏄 Pranchas e Acessórios Surf', url: 'https://www.amazon.com.br/s?k=prancha+surf+acessorios&tag=mareagora-20' },
+    unsplashQuery: 'ilheus bahia surf beach brazil coast',
   },
   {
     slug: 'terminal-de-barra-do-riacho',
@@ -399,6 +432,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Surf', 'Pesca', 'Natureza'],
     porto: { slug: 'terminal-de-barra-do-riacho', nome: 'Terminal de Barra do Riacho', estado: 'ES', dataFile: '40240.json' },
     afiliado: { label: '🏄 Pranchas de Surf', url: 'https://www.amazon.com.br/s?k=prancha+surf+iniciante&tag=mareagora-20' },
+    unsplashQuery: 'espirito santo coast surf beach brazil',
   },
   {
     slug: 'porto-de-tubarao',
@@ -410,6 +444,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Surf', 'Pesca', 'Urbana'],
     porto: { slug: 'porto-de-tubarao', nome: 'Porto de Tubarão', estado: 'ES', dataFile: '40255.json' },
     afiliado: { label: '🎣 Varas de Surf Fishing', url: 'https://www.amazon.com.br/s?k=vara+surf+fishing+mar&tag=mareagora-20' },
+    unsplashQuery: 'vitoria espirito santo urban beach brazil',
   },
   {
     slug: 'porto-de-vitoria',
@@ -421,6 +456,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Urbana', 'Família', 'Infraestrutura'],
     porto: { slug: 'porto-de-vitoria', nome: 'Porto de Vitória', estado: 'ES', dataFile: '40256.json' },
     afiliado: { label: '🏖️ Equipamentos de Praia', url: 'https://www.amazon.com.br/s?k=equipamentos+praia+familia&tag=mareagora-20' },
+    unsplashQuery: 'guarapari espirito santo beach brazil',
   },
   {
     slug: 'ilha-da-trindade',
@@ -432,6 +468,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Mergulho', 'Tartarugas', 'Remoto'],
     porto: { slug: 'ilha-da-trindade', nome: 'Ilha da Trindade', estado: 'ES', dataFile: '40263.json' },
     afiliado: { label: '🤿 Equipamentos de Mergulho Pro', url: 'https://www.amazon.com.br/s?k=equipamento+mergulho+profissional&tag=mareagora-20' },
+    unsplashQuery: 'remote ocean island volcanic diving sea turtle',
   },
   {
     slug: 'terminal-da-ponta-do-ubu-i',
@@ -443,6 +480,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Pesca', 'Surf', 'Tranquilo'],
     porto: { slug: 'terminal-da-ponta-do-ubu-i', nome: 'Terminal da Ponta do Ubu', estado: 'ES', dataFile: '40292.json' },
     afiliado: { label: '🎣 Equipamentos de Pesca', url: 'https://www.amazon.com.br/s?k=equipamentos+pesca+surf+fishing&tag=mareagora-20' },
+    unsplashQuery: 'anchieta espirito santo beach fishing tranquil',
   },
   {
     slug: 'terminal-maritimo-de-imbetiba',
@@ -454,6 +492,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Pesca', 'Surf', 'Norte RJ'],
     porto: { slug: 'terminal-maritimo-de-imbetiba', nome: 'Terminal de Imbetiba', estado: 'RJ', dataFile: '50116.json' },
     afiliado: { label: '🎣 Varas de Surf Fishing', url: 'https://www.amazon.com.br/s?k=vara+pesca+surf+fishing&tag=mareagora-20' },
+    unsplashQuery: 'rio de janeiro coast surf fishing beach',
   },
   {
     slug: 'rio-de-janeiro-fiscal',
@@ -465,6 +504,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Surf', 'Urbana', 'Lifestyle'],
     porto: { slug: 'rio-de-janeiro-fiscal', nome: 'Rio de Janeiro - Ilha Fiscal', estado: 'RJ', dataFile: '50140.json' },
     afiliado: { label: '🏄 Pranchas e Acessórios Surf', url: 'https://www.amazon.com.br/s?k=prancha+surf+acessorios&tag=mareagora-20' },
+    unsplashQuery: 'rio de janeiro ipanema copacabana beach',
   },
   {
     slug: 'porto-de-itaguai',
@@ -476,6 +516,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Ilha Grande', 'Mergulho', 'Natureza'],
     porto: { slug: 'porto-de-itaguai', nome: 'Porto de Itaguaí', estado: 'RJ', dataFile: '50145.json' },
     afiliado: { label: '🤿 Kits de Snorkel', url: 'https://www.amazon.com.br/s?k=kit+snorkel+mergulho&tag=mareagora-20' },
+    unsplashQuery: 'ilha grande costa verde rio de janeiro bay',
   },
   {
     slug: 'porto-do-forno',
@@ -487,6 +528,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Mergulho', 'Água cristalina', 'Surf'],
     porto: { slug: 'porto-do-forno', nome: 'Porto do Forno', estado: 'RJ', dataFile: '50156.json' },
     afiliado: { label: '🤿 Equipamentos de Mergulho', url: 'https://www.amazon.com.br/s?k=equipamentos+mergulho+profissional&tag=mareagora-20' },
+    unsplashQuery: 'arraial do cabo turquoise water crystal clear beach brazil',
   },
   {
     slug: 'terminal-da-ilha-guaiba',
@@ -498,6 +540,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Mergulho', 'Ilha', 'Natureza'],
     porto: { slug: 'terminal-da-ilha-guaiba', nome: 'Terminal da Ilha Guaíba', estado: 'RJ', dataFile: '50165.json' },
     afiliado: { label: '🤿 Kits de Snorkel', url: 'https://www.amazon.com.br/s?k=kit+snorkel+profissional&tag=mareagora-20' },
+    unsplashQuery: 'angra dos reis island tropical green water',
   },
   {
     slug: 'porto-do-acu',
@@ -509,6 +552,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Pesca', 'Natureza', 'Tranquilo'],
     porto: { slug: 'porto-do-acu', nome: 'Porto do Açu', estado: 'RJ', dataFile: '50169.json' },
     afiliado: { label: '🎣 Kits de Pesca Artesanal', url: 'https://www.amazon.com.br/s?k=kit+pesca+artesanal+mar&tag=mareagora-20' },
+    unsplashQuery: 'north rio de janeiro coast fishing beach preserved',
   },
   {
     slug: 'porto-de-angra-dos-reis',
@@ -520,6 +564,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Mergulho', 'Vela', 'Ilha'],
     porto: { slug: 'porto-de-angra-dos-reis', nome: 'Porto de Angra dos Reis', estado: 'RJ', dataFile: '50170.json' },
     afiliado: { label: '🤿 Equipamentos de Mergulho', url: 'https://www.amazon.com.br/s?k=equipamentos+mergulho+snorkel&tag=mareagora-20' },
+    unsplashQuery: 'angra dos reis islands sailing paradise brazil',
   },
   {
     slug: 'porto-de-sao-sebastiao',
@@ -531,6 +576,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Mergulho', 'Surf', 'Ilhabela'],
     porto: { slug: 'porto-de-sao-sebastiao', nome: 'Porto de São Sebastião', estado: 'SP', dataFile: '50210.json' },
     afiliado: { label: '🤿 Kits de Mergulho', url: 'https://www.amazon.com.br/s?k=kit+mergulho+snorkel+profissional&tag=mareagora-20' },
+    unsplashQuery: 'ilhabela sao paulo beach diving brazil',
   },
   {
     slug: 'porto-de-santos',
@@ -542,6 +588,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Urbana', 'Família', 'Infraestrutura'],
     porto: { slug: 'porto-de-santos', nome: 'Porto de Santos', estado: 'SP', dataFile: '50228.json' },
     afiliado: { label: '🏖️ Equipamentos de Praia', url: 'https://www.amazon.com.br/s?k=equipamentos+praia+verao+familia&tag=mareagora-20' },
+    unsplashQuery: 'santos sao paulo urban beach boardwalk brazil',
   },
   {
     slug: 'guaruja',
@@ -553,6 +600,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Surf', 'Família', 'Infraestrutura'],
     porto: { slug: 'guaruja', nome: 'Guarujá', estado: 'SP', dataFile: '50228.json' },
     afiliado: { label: '🏄 Pranchas de Surf', url: 'https://www.amazon.com.br/s?k=prancha+surf+iniciante&tag=mareagora-20' },
+    unsplashQuery: 'guaruja sao paulo surf beach waves brazil',
   },
   {
     slug: 'sao-vicente',
@@ -564,6 +612,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Família', 'Histórica', 'Tranquilo'],
     porto: { slug: 'sao-vicente', nome: 'São Vicente', estado: 'SP', dataFile: '50228.json' },
     afiliado: { label: '🏖️ Equipamentos de Praia', url: 'https://www.amazon.com.br/s?k=equipamentos+praia+familia&tag=mareagora-20' },
+    unsplashQuery: 'sao paulo coast family beach calm sea brazil',
   },
   {
     slug: 'praia-grande',
@@ -575,6 +624,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Surf', 'Família', 'Longa orla'],
     porto: { slug: 'praia-grande', nome: 'Praia Grande', estado: 'SP', dataFile: '50228.json' },
     afiliado: { label: '🏄 Pranchas e Acessórios Surf', url: 'https://www.amazon.com.br/s?k=prancha+surf+profissional&tag=mareagora-20' },
+    unsplashQuery: 'long beach sand surf volleyball sao paulo brazil',
   },
   {
     slug: 'bertioga',
@@ -586,6 +636,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Histórica', 'Natureza', 'Tranquilo'],
     porto: { slug: 'bertioga', nome: 'Bertioga', estado: 'SP', dataFile: '50228.json' },
     afiliado: { label: '🎣 Varas de Pesca Esportiva', url: 'https://www.amazon.com.br/s?k=vara+pesca+esportiva&tag=mareagora-20' },
+    unsplashQuery: 'bertioga sao paulo deserted beach nature preserved',
   },
   {
     slug: 'riviera-de-sao-lourenco',
@@ -597,6 +648,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Surf', 'Infraestrutura', 'Família'],
     porto: { slug: 'riviera-de-sao-lourenco', nome: 'Riviera de São Lourenço', estado: 'SP', dataFile: '50228.json' },
     afiliado: { label: '🏄 Pranchas de Surf', url: 'https://www.amazon.com.br/s?k=prancha+surf+acessorios&tag=mareagora-20' },
+    unsplashQuery: 'clean beach resort surf sao paulo brazil',
   },
   {
     slug: 'mongagua',
@@ -608,6 +660,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Surf', 'Família', 'Tranquilo'],
     porto: { slug: 'mongagua', nome: 'Mongaguá', estado: 'SP', dataFile: '50228.json' },
     afiliado: { label: '🏄 Acessórios de Surf', url: 'https://www.amazon.com.br/s?k=acessorios+surf+wetsuit&tag=mareagora-20' },
+    unsplashQuery: 'sao paulo lowada coast family surf waves beach',
   },
   {
     slug: 'itanhaem',
@@ -619,6 +672,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Histórica', 'Pesca', 'Natureza'],
     porto: { slug: 'itanhaem', nome: 'Itanhaém', estado: 'SP', dataFile: '50228.json' },
     afiliado: { label: '🎣 Kits de Pesca', url: 'https://www.amazon.com.br/s?k=kit+pesca+mar+completo&tag=mareagora-20' },
+    unsplashQuery: 'historic sao paulo coast river beach nature',
   },
   {
     slug: 'peruibe',
@@ -630,6 +684,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Ecoturismo', 'Pesca', 'Preservada'],
     porto: { slug: 'peruibe', nome: 'Peruíbe', estado: 'SP', dataFile: '50228.json' },
     afiliado: { label: '🎣 Varas de Pesca', url: 'https://www.amazon.com.br/s?k=vara+pesca+praia+completo&tag=mareagora-20' },
+    unsplashQuery: 'preserved beach ecotourism atlantic forest sao paulo',
   },
 
   // ── Região Sul ────────────────────────────────────────────────────────────
@@ -643,6 +698,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Pesca', 'Natureza', 'Selvagem'],
     porto: { slug: 'barra-de-paranagua-sueste', nome: 'Barra de Paranaguá', estado: 'PR', dataFile: '60130.json' },
     afiliado: { label: '🎣 Varas de Pesca Esportiva', url: 'https://www.amazon.com.br/s?k=vara+pesca+esportiva+mar&tag=mareagora-20' },
+    unsplashQuery: 'paranagua bay mangrove wild beach fishing parana',
   },
   {
     slug: 'porto-de-paranagua',
@@ -654,6 +710,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Ilha do Mel', 'Histórica', 'Natureza'],
     porto: { slug: 'porto-de-paranagua', nome: 'Porto de Paranaguá', estado: 'PR', dataFile: '60132.json' },
     afiliado: { label: '🏕️ Equipamentos de Camping', url: 'https://www.amazon.com.br/s?k=equipamentos+camping+praia&tag=mareagora-20' },
+    unsplashQuery: 'ilha do mel parana beach lighthouse nature brazil',
   },
   {
     slug: 'barra-de-paranagua-galheta',
@@ -665,6 +722,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Natureza', 'Pesca', 'Navegação'],
     porto: { slug: 'barra-de-paranagua-galheta', nome: 'Canal da Galheta', estado: 'PR', dataFile: '60135.json' },
     afiliado: { label: '🎣 Kits de Pesca', url: 'https://www.amazon.com.br/s?k=kit+pesca+completo+mar&tag=mareagora-20' },
+    unsplashQuery: 'parana coast channel nature fishing brazil south',
   },
   {
     slug: 'terminal-portuario-da-ponta-do-felix',
@@ -676,6 +734,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Histórica', 'Natureza', 'Baía'],
     porto: { slug: 'terminal-portuario-da-ponta-do-felix', nome: 'Terminal Ponta do Félix', estado: 'PR', dataFile: '60139.json' },
     afiliado: { label: '🚤 Acessórios Náuticos', url: 'https://www.amazon.com.br/s?k=acessorios+nauticos+pesca&tag=mareagora-20' },
+    unsplashQuery: 'antonina paranagua bay historic port brazil',
   },
   {
     slug: 'porto-de-sao-francisco-do-sul',
@@ -687,6 +746,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Surf', 'Histórica', 'Ilha'],
     porto: { slug: 'porto-de-sao-francisco-do-sul', nome: 'Porto de São Francisco do Sul', estado: 'SC', dataFile: '60225.json' },
     afiliado: { label: '🏄 Acessórios de Surf', url: 'https://www.amazon.com.br/s?k=acessorios+surf+prancha&tag=mareagora-20' },
+    unsplashQuery: 'santa catarina island surf beach historic brazil',
   },
   {
     slug: 'porto-de-itajai',
@@ -698,6 +758,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Surf', 'Infraestrutura', 'Família'],
     porto: { slug: 'porto-de-itajai', nome: 'Porto de Itajaí', estado: 'SC', dataFile: '60235.json' },
     afiliado: { label: '🏄 Pranchas de Surf', url: 'https://www.amazon.com.br/s?k=prancha+surf+profissional&tag=mareagora-20' },
+    unsplashQuery: 'balneario camboriu santa catarina beach brazil',
   },
   {
     slug: 'porto-de-florianopolis',
@@ -709,6 +770,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Surf', 'Família', 'Ilha'],
     porto: { slug: 'porto-de-florianopolis', nome: 'Porto de Florianópolis', estado: 'SC', dataFile: '60245.json' },
     afiliado: { label: '🏄 Pranchas e Acessórios Surf', url: 'https://www.amazon.com.br/s?k=prancha+surf+acessorios&tag=mareagora-20' },
+    unsplashQuery: 'florianopolis ilha magica beach surf joaquina brazil',
   },
   {
     slug: 'porto-de-imbituba',
@@ -720,6 +782,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Surf', 'Baleias', 'Natureza'],
     porto: { slug: 'porto-de-imbituba', nome: 'Porto de Imbituba', estado: 'SC', dataFile: '60250.json' },
     afiliado: { label: '🏄 Pranchas de Surf Pro', url: 'https://www.amazon.com.br/s?k=prancha+surf+profissional&tag=mareagora-20' },
+    unsplashQuery: 'imbituba whale watching surf beach santa catarina',
   },
   {
     slug: 'porto-do-rio-grande',
@@ -731,6 +794,7 @@ export const PRAIAS: Praia[] = [
     tags: ['Kitesurf', 'Pesca', 'Lagoa'],
     porto: { slug: 'porto-do-rio-grande', nome: 'Porto do Rio Grande', estado: 'RS', dataFile: '60380.json' },
     afiliado: { label: '🪁 Kits de Kitesurf', url: 'https://www.amazon.com.br/s?k=kitesurf+kit+completo&tag=mareagora-20' },
+    unsplashQuery: 'rio grande do sul beach kitesurf lagoon south brazil',
   },
 ]
 
@@ -795,6 +859,18 @@ export default function GuiaPraias() {
                   {praiasDaRegiao.map((praia) => (
                     <div key={praia.slug} className="gp-card-wrapper">
                       <Link href={`/guia-praias/${praia.slug}`} className="gp-card">
+                        <div className="gp-card-img">
+                          <img
+                            src={`https://source.unsplash.com/600x340/?${encodeURIComponent(praia.unsplashQuery)}`}
+                            alt={`Foto de ${praia.nome}`}
+                            loading="lazy"
+                            onError={(e) => {
+                              const t = e.target as HTMLImageElement
+                              t.src = 'https://source.unsplash.com/600x340/?beach,brazil,ocean'
+                            }}
+                          />
+                        </div>
+                        <div className="gp-card-body">
                         <div className="gp-card-header">
                           <span
                             className="gp-uf-badge"
@@ -814,6 +890,7 @@ export default function GuiaPraias() {
                         <div className="gp-card-footer">
                           <span className="gp-live-dot" /> Maré ao vivo
                           <span className="gp-arrow">→</span>
+                        </div>
                         </div>
                       </Link>
                       {praia.afiliado && (
@@ -956,10 +1033,27 @@ const styles = `
     background: rgba(14,58,110,0.25);
     border: 1px solid rgba(33,150,196,0.15);
     border-radius: 16px 16px 0 0;
-    padding: 1.5rem;
-    text-decoration: none; display: flex; flex-direction: column; gap: 0.75rem;
+    padding: 0;
+    text-decoration: none; display: flex; flex-direction: column; gap: 0;
     transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
     position: relative; overflow: hidden; flex: 1;
+  }
+
+  /* Imagem do card */
+  .gp-card-img {
+    width: 100%; height: 180px; overflow: hidden; flex-shrink: 0;
+  }
+  .gp-card-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.4s ease;
+    display: block;
+  }
+  .gp-card:hover .gp-card-img img { transform: scale(1.06); }
+
+  /* Conteúdo interno do card (abaixo da imagem) */
+  .gp-card-body {
+    padding: 1.25rem 1.5rem 1.5rem;
+    display: flex; flex-direction: column; gap: 0.75rem; flex: 1;
   }
   .gp-card::before {
     content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;

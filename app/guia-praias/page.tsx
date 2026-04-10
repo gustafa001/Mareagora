@@ -38,7 +38,7 @@ export const PRAIAS: Praia[] = [
     descricao: 'A praia mais badalada de Florianópolis, com infraestrutura completa e mar calmo ideal para famílias.',
     tags: ['Família', 'Infraestrutura', 'Mar calmo'],
     porto: { slug: 'porto-de-florianopolis', nome: 'Porto de Florianópolis', estado: 'SC', dataFile: '60245.json' },
-    afiliado: { label: 'Ver hotéis em Florianópolis', url: 'https://www.booking.com/city/br/florianopolis.html' },
+    afiliado: { label: '🏄 Equipamentos de Praia', url: 'https://www.amazon.com.br/s?k=equipamentos+praia+familia&tag=mareagora-20' },
   },
   {
     slug: 'jericoacoara-ce',
@@ -48,7 +48,7 @@ export const PRAIAS: Praia[] = [
     descricao: 'Paraíso dos kitesurfistas. Ventos constantes, dunas e pôr do sol inesquecível na Pedra Furada.',
     tags: ['Kitesurf', 'Windsurf', 'Natureza'],
     porto: { slug: 'porto-de-mucuripe-fortaleza', nome: 'Porto de Mucuripe - Fortaleza', estado: 'CE', dataFile: '30340.json' },
-    afiliado: { label: 'Ver hotéis em Jeri', url: 'https://www.booking.com/city/br/jijoca-de-jericoacoara.html' },
+    afiliado: { label: '🪁 Kits de Kitesurf', url: 'https://www.amazon.com.br/s?k=kitesurf+iniciante&tag=mareagora-20' },
   },
   {
     slug: 'praia-do-espelho-ba',
@@ -58,7 +58,7 @@ export const PRAIAS: Praia[] = [
     descricao: 'Uma das praias mais bonitas do Brasil. Piscinas naturais, falésias coloridas e águas cristalinas.',
     tags: ['Natureza intocada', 'Piscinas naturais', 'Falésia'],
     porto: { slug: 'porto-de-salvador', nome: 'Porto de Salvador', estado: 'BA', dataFile: '40141.json' },
-    afiliado: { label: 'Ver pousadas na região', url: 'https://www.booking.com/region/br/costa-do-descobrimento.html' },
+    afiliado: { label: '🤿 Kits de Snorkel', url: 'https://www.amazon.com.br/s?k=kit+snorkel+mergulho&tag=mareagora-20' },
   },
   {
     slug: 'grumari-rj',
@@ -68,7 +68,7 @@ export const PRAIAS: Praia[] = [
     descricao: 'A praia selvagem do Rio. Dentro de APA, sem comércio, com ondas fortes e natureza preservada.',
     tags: ['Surf', 'Natureza', 'Selvagem'],
     porto: { slug: 'rio-de-janeiro-fiscal', nome: 'Rio de Janeiro - Ilha Fiscal', estado: 'RJ', dataFile: '50140.json' },
-    afiliado: { label: 'Ver hotéis no Rio', url: 'https://www.booking.com/city/br/rio-de-janeiro.html' },
+    afiliado: { label: '🎣 Varas de Surf Fishing', url: 'https://www.amazon.com.br/s?k=vara+surf+fishing&tag=mareagora-20' },
   },
   {
     slug: 'morro-de-sao-paulo-ba',
@@ -78,7 +78,7 @@ export const PRAIAS: Praia[] = [
     descricao: 'Ilha sem carros, com praias enumeradas e uma atmosfera única no litoral baiano.',
     tags: ['Ilha', 'Sem carros', 'Mergulho'],
     porto: { slug: 'porto-de-salvador', nome: 'Porto de Salvador', estado: 'BA', dataFile: '40141.json' },
-    afiliado: { label: 'Ver pousadas em Morro', url: 'https://www.booking.com/city/br/morro-de-sao-paulo.html' },
+    afiliado: { label: '🤿 Equipamentos de Mergulho', url: 'https://www.amazon.com.br/s?k=equipamentos+mergulho+snorkel&tag=mareagora-20' },
   },
   {
     slug: 'bombinhas-sc',
@@ -88,7 +88,7 @@ export const PRAIAS: Praia[] = [
     descricao: 'Águas mais transparentes do Sul do Brasil. Ótima para mergulho e snorkel com rica vida marinha.',
     tags: ['Mergulho', 'Snorkel', 'Água cristalina'],
     porto: { slug: 'porto-de-florianopolis', nome: 'Porto de Florianópolis', estado: 'SC', dataFile: '60245.json' },
-    afiliado: { label: 'Ver hotéis em Bombinhas', url: 'https://www.booking.com/city/br/bombinhas.html' },
+    afiliado: { label: '🤿 Máscaras de Snorkel', url: 'https://www.amazon.com.br/s?k=mascara+snorkel+full+face&tag=mareagora-20' },
   },
 ]
 
@@ -137,28 +137,42 @@ export default function GuiaPraias() {
 
           <div className="gp-grid">
             {PRAIAS.map((praia) => (
-              <Link key={praia.slug} href={`/guia-praias/${praia.slug}`} className="gp-card">
-                <div className="gp-card-header">
-                  <span
-                    className="gp-uf-badge"
-                    style={{ background: UF_COLORS[praia.uf] ?? '#2196c4' }}
+              <div key={praia.slug} className="gp-card-wrapper">
+                <Link href={`/guia-praias/${praia.slug}`} className="gp-card">
+                  <div className="gp-card-header">
+                    <span
+                      className="gp-uf-badge"
+                      style={{ background: UF_COLORS[praia.uf] ?? '#2196c4' }}
+                    >
+                      {praia.uf}
+                    </span>
+                    <span className="gp-card-estado">{praia.estado}</span>
+                  </div>
+                  <h3 className="gp-card-nome">{praia.nome}</h3>
+                  <p className="gp-card-desc">{praia.descricao}</p>
+                  <div className="gp-tags">
+                    {praia.tags.map((tag) => (
+                      <span key={tag} className="gp-tag">{tag}</span>
+                    ))}
+                  </div>
+                  <div className="gp-card-footer">
+                    <span className="gp-live-dot" /> Maré ao vivo
+                    <span className="gp-arrow">→</span>
+                  </div>
+                </Link>
+
+                {praia.afiliado && (
+                  <a
+                    href={praia.afiliado.url}
+                    target="_blank"
+                    rel="noopener noreferrer sponsored"
+                    className="gp-amazon-btn"
                   >
-                    {praia.uf}
-                  </span>
-                  <span className="gp-card-estado">{praia.estado}</span>
-                </div>
-                <h3 className="gp-card-nome">{praia.nome}</h3>
-                <p className="gp-card-desc">{praia.descricao}</p>
-                <div className="gp-tags">
-                  {praia.tags.map((tag) => (
-                    <span key={tag} className="gp-tag">{tag}</span>
-                  ))}
-                </div>
-                <div className="gp-card-footer">
-                  <span className="gp-live-dot" /> Maré ao vivo
-                  <span className="gp-arrow">→</span>
-                </div>
-              </Link>
+                    <span>{praia.afiliado.label}</span>
+                    <span className="gp-amazon-logo">amazon</span>
+                  </a>
+                )}
+              </div>
             ))}
           </div>
         </div>
@@ -271,19 +285,28 @@ const styles = `
     font-size: clamp(1.5rem, 3vw, 2.2rem); color: #f0e6c8; font-weight: 700;
   }
 
-  /* Cards */
+  /* Card wrapper */
   .gp-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.25rem;
   }
+  .gp-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Cards */
   .gp-card {
     background: rgba(14,58,110,0.25);
     border: 1px solid rgba(33,150,196,0.15);
-    border-radius: 16px; padding: 1.5rem;
+    border-radius: 16px 16px 0 0;
+    padding: 1.5rem;
     text-decoration: none; display: flex; flex-direction: column; gap: 0.75rem;
     transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
     position: relative; overflow: hidden;
+    flex: 1;
   }
   .gp-card::before {
     content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
@@ -316,6 +339,40 @@ const styles = `
   .gp-card:hover .gp-arrow { transform: translateX(4px); }
 
   @keyframes gpPulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+  /* Amazon affiliate button */
+  .gp-amazon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    background: rgba(255, 153, 0, 0.07);
+    border: 1px solid rgba(255, 153, 0, 0.22);
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    text-decoration: none;
+    font-size: 0.75rem;
+    color: #ffaa33;
+    font-weight: 600;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .gp-amazon-btn:hover {
+    background: rgba(255, 153, 0, 0.15);
+    border-color: rgba(255, 153, 0, 0.45);
+    color: #ffbb55;
+  }
+  .gp-amazon-logo {
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    color: #ff9900;
+    text-transform: lowercase;
+    border: 1px solid rgba(255,153,0,0.5);
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
 
   /* SEO Section */
   .gp-seo-section { padding: 5rem 2rem; background: #04111f; border-top: 1px solid rgba(33,150,196,0.1); }

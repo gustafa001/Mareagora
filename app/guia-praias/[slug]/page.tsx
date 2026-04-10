@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { PRAIAS } from '../page'
 import TideCardLive from '@/components/TideCardLive'
 import BeachAffiliateCard from '@/components/BeachAffiliateCard'
+import BeachImage from '../BeachImage'
 
 // ─── SEO dinâmico por praia ───────────────────────────────────────────────────
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
@@ -80,6 +81,10 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
       {/* ── Hero ── */}
       <header className="pp-hero">
         <div className="pp-hero-bg" />
+        <div className="pp-hero-img">
+          <BeachImage query={praia.unsplashQuery} alt={`Foto de ${praia.nome}`} />
+        </div>
+        <div className="pp-hero-overlay" />
         <div className="pp-hero-content">
           <div className="pp-estado-badge">{praia.estado}</div>
           <h1>{praia.nome}</h1>
@@ -218,14 +223,24 @@ const styles = `
 
   /* Hero */
   .pp-hero {
-    position: relative; padding: 4rem 2rem 5rem; text-align: center;
-    overflow: hidden;
+    position: relative; padding: 5rem 2rem 6rem; text-align: center;
+    overflow: hidden; min-height: 420px; display: flex; align-items: center; justify-content: center;
   }
   .pp-hero-bg {
     position: absolute; inset: 0;
     background: linear-gradient(180deg, #0a2340 0%, #04111f 100%);
   }
-  .pp-hero-content { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+  .pp-hero-img {
+    position: absolute; inset: 0; z-index: 1;
+  }
+  .pp-hero-img img {
+    width: 100%; height: 100%; object-fit: cover; opacity: 0.45;
+  }
+  .pp-hero-overlay {
+    position: absolute; inset: 0; z-index: 2;
+    background: linear-gradient(180deg, rgba(4,17,31,0.3) 0%, rgba(4,17,31,0.75) 100%);
+  }
+  .pp-hero-content { position: relative; z-index: 3; max-width: 680px; margin: 0 auto; }
   .pp-estado-badge {
     display: inline-block; font-size: 0.72rem; letter-spacing: 0.15em;
     text-transform: uppercase; color: #2196c4; border: 1px solid #2196c4;

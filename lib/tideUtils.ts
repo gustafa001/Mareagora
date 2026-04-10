@@ -28,16 +28,42 @@ export interface RawPortData {
 /**
  * Retorna os dados de maré para o dia atual, ou o dia mais próximo disponível
  */
-export function getTodayTides(eventos: TideDay[]): TideDay | null {
-  if (!eventos || eventos.length === 0) return null;
+export function getTodayTides(eventos: any[]): TideDay | null {
+  if (!eventos || !Array.isArray(eventos) || eventos.length === 0) return null;
   
+  // Normaliza eventos se vierem no formato { dt, height_m }
+  const normalizedEvents: TideDay[] = [];
+  const eventsByDay: Record<string, any[]> = {};
+
+  eventos.forEach(ev => {
+    const dateStr = ev.data || (ev.dt ? ev.dt.split('T')[0] : null);
+    if (!dateStr) return;
+    if (!eventsByDay[dateStr]) eventsByDay[dateStr] = [];
+    
+    if (ev.mares || ev.eventos) {
+      normalizedEvents.push(ev);
+    } else {
+      eventsByDay[dateStr].push({
+        hora: ev.hora || (ev.dt ? ev.dt.split('T')[1].slice(0, 5) : ''),
+        altura_m: ev.altura_m || ev.height_m || 0,
+        tipo: ev.tipo
+      });
+    }
+  });
+
+  if (normalizedEvents.length === 0) {
+    Object.entries(eventsByDay).forEach(([data, mares]) => {
+      normalizedEvents.push({ data, mares });
+    });
+  }
+
   const today = new Date().toISOString().split('T')[0];
-  const todayData = eventos.find(e => e.data === today);
+  const todayData = normalizedEvents.find(e => e.data === today);
   
   if (todayData) return todayData;
   
   // Se não tem dados de hoje, procurar o dia mais próximo (passado ou futuro)
-  const sorted = [...eventos].sort((a, b) => a.data.localeCompare(b.data));
+  const sorted = [...normalizedEvents].sort((a, b) => a.data.localeCompare(b.data));
   
   // Procurar o dia mais próximo no passado
   for (let i = sorted.length - 1; i >= 0; i--) {

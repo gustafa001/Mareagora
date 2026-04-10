@@ -49,7 +49,11 @@ export default function TideCardLive({ port, data: initialData, index = 0 }: Pro
       if (!tideData) return;
       const now = new Date();
       const min = now.getHours() * 60 + now.getMinutes();
-      const today = getTodayTides(tideData);
+      
+      // Normaliza os dados: se vier o objeto completo da API, pega a lista de eventos
+      const eventos = Array.isArray(tideData) ? tideData : (tideData.eventos || tideData.events || []);
+      
+      const today = getTodayTides(eventos);
       if (!today || !today.mares || today.mares.length === 0) return;
       const tides = today.mares;
 

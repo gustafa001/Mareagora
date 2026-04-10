@@ -4,6 +4,8 @@ import type { Metadata } from 'next';
 import PortPageContent from '@/components/PortPageContent';
 import PortoFAQ from '@/components/PortoFAQ';
 import { portosConfig, categoryDefaults } from '@/data/porto-seo-config';
+import { getPostsByPort } from '@/lib/blog';
+import type { BlogPost } from '@/lib/blog';
 
 function getRegionContext(region: string, state: string): string {
   const map: Record<string, string> = {
@@ -29,7 +31,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const url = `https://www.mareagora.com.br/mare/${slug}`;
   const ogImage = `https://www.mareagora.com.br/mare/${slug}/opengraph-image`;
 
-  // Usar config específica do porto se disponível, senão usar defaults por categoria
   const suffix = config?.titleSuffix ?? categoryDefaults['turismo'].titleSuffix;
   const title = `Tábua de Maré ${port.name} — ${suffix} | MaréAgora`;
 
@@ -77,6 +78,9 @@ export default async function PortPage({ params }: { params: { slug: string } })
   const config = portosConfig[slug];
   const categoria = config?.category ?? 'turismo';
 
+  // Busca posts no servidor (fs só roda aqui)
+  const blogPosts: BlogPost[] = getPostsByPort(slug);
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -121,7 +125,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         suppressHydrationWarning
       />
-      <PortPageContent slug={slug} regionContext={regionContext} />
+      <PortPageContent slug={slug} regionContext={regionContext} blogPosts={blogPosts} />
       <div className="container pb-16">
         <PortoFAQ slug={slug} categoria={categoria} />
       </div>

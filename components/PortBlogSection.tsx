@@ -60,14 +60,14 @@ export default function PortBlogSection({ portSlug, portName, posts }: Props) {
   }
 
   return (
-    <section>
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-black font-syne text-white">
-          📝 Artigos sobre {portName}
+    <section className="mt-8">
+      <div className="flex items-center justify-between mb-6 pb-2 border-b border-white/10">
+        <h2 className="text-xl sm:text-2xl font-black font-syne text-white flex items-center gap-2">
+          <span className="text-blue-400">📝</span> Artigos sobre {portName}
         </h2>
         <Link
           href="/blog"
-          className="text-xs font-bold text-blue-400 hover:text-blue-300 transition-colors uppercase tracking-widest"
+          className="text-[10px] sm:text-xs font-black text-blue-400 hover:text-blue-300 transition-all uppercase tracking-[0.2em] bg-blue-500/10 px-3 py-1.5 rounded-full border border-blue-500/20 hover:border-blue-400/40"
         >
           Ver todos →
         </Link>

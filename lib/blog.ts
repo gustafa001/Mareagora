@@ -17,11 +17,11 @@ export interface BlogPost {
 }
 
 function getSlug(filename: string): string {
-  return filename.replace(/\.md$/, '');
+  return filename.replace(/\.mdx?$/, '');
 }
 
 export function getPosts(): BlogPost[] {
-  const files = fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith('.md'));
+  const files = fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith('.mdx'));
 
   const posts = files.map((filename) => {
     const filepath = path.join(BLOG_DIR, filename);
@@ -41,19 +41,20 @@ export function getPosts(): BlogPost[] {
     } satisfies BlogPost;
   });
 
-  // Sort by date descending
   return posts.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 }
 
 export function getPost(slug: string): BlogPost | null {
-  const filename = `${slug}.md`;
-  const filepath = path.join(BLOG_DIR, filename);
+  const candidates = [`${slug}.mdx`, `${slug}.md`];
+  const filename = candidates.find((f) =>
+    fs.existsSync(path.join(BLOG_DIR, f))
+  );
 
-  if (!fs.existsSync(filepath)) return null;
+  if (!filename) return null;
 
-  const raw = fs.readFileSync(filepath, 'utf-8');
+  const raw = fs.readFileSync(path.join(BLOG_DIR, filename), 'utf-8');
   const { data, content } = matter(raw);
   const stats = readingTime(content);
 
@@ -77,7 +78,6 @@ export function getRelatedPosts(
 ): BlogPost[] {
   const all = getPosts().filter((p) => p.slug !== currentSlug);
 
-  // Score by shared category + tags
   const scored = all.map((p) => {
     let score = 0;
     if (p.category === category) score += 2;

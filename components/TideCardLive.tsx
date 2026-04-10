@@ -5,8 +5,15 @@ import Link from 'next/link';
 import { getTodayTides, tideAtMinute, getTideStatus } from '@/lib/tideUtils';
 import { API_BASE } from '@/lib/apiConfig';
 
+interface PortoMeta {
+  slug: string
+  nome: string
+  estado: string
+  dataFile: string
+}
+
 type Props = {
-  port: { slug: string; name: string; state: string; dataFile: string };
+  port: PortoMeta;
   data?: any;
   index?: number;
 };
@@ -30,12 +37,12 @@ export default function TideCardLive({ port, data: initialData, index = 0 }: Pro
             return res.json();
           })
           .then(data => setTideData(data))
-          .catch(err => console.error(`Erro ao carregar ${port.name}:`, err));
+          .catch(err => console.error(`Erro ao carregar ${port.nome}:`, err));
       }, delay);
 
       return () => clearTimeout(timer);
     }
-  }, [port.dataFile, tideData, port.name, index]);
+  }, [port.dataFile, tideData, port.nome, index]);
 
   useEffect(() => {
     function update() {
@@ -74,9 +81,9 @@ export default function TideCardLive({ port, data: initialData, index = 0 }: Pro
         <div className="flex items-start justify-between gap-1">
           <div>
             <div className="font-syne font-bold text-sm text-[var(--white)] group-hover:text-[var(--foam)] transition-colors leading-tight">
-              {port.name}
+              {port.nome}
             </div>
-            <div className="text-[var(--muted)] text-xs mt-0.5">{port.state}</div>
+            <div className="text-[var(--muted)] text-xs mt-0.5">{port.estado}</div>
           </div>
           {!isLoading && (
             <span className={`text-[0.65rem] font-bold px-2 py-0.5 rounded-full flex-shrink-0 ${

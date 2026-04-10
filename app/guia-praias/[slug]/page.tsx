@@ -105,8 +105,8 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
             <h2 className="pp-section-title">
               <span className="pp-live-dot" /> Maré em Tempo Real
             </h2>
-            {/* TideCardLive já existe no seu projeto — só passar o porto */}
-            <TideCardLive porto={praia.portoCodigo} />
+            {/* TideCardLive já existe no seu projeto — só passar o objeto port */}
+            <TideCardLive port={praia.porto} />
           </section>
 
           {/* Sobre a praia */}
@@ -258,67 +258,60 @@ const styles = `
   /* Layout */
   .pp-layout {
     max-width: 1100px; margin: 0 auto; padding: 2rem;
-    display: grid; grid-template-columns: 1fr 320px; gap: 2rem;
+    display: grid; grid-template-columns: 1fr 320px; gap: 2.5rem;
   }
-  @media (max-width: 768px) { .pp-layout { grid-template-columns: 1fr; } }
 
   /* Sections */
-  .pp-section { margin-bottom: 2rem; }
+  .pp-section { margin-bottom: 3rem; }
   .pp-section-title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1.3rem; font-weight: 700; color: #f0e6c8;
-    margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;
+    font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #f0e6c8;
+    margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem;
   }
-  .pp-live-dot {
-    width: 8px; height: 8px; border-radius: 50%; background: #4caf80;
-    box-shadow: 0 0 8px #4caf80; animation: pulse 2s infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
-  .pp-text-section p { font-size: 0.92rem; color: #8a9aaa; line-height: 1.8; }
+  .pp-live-dot { width: 8px; height: 8px; background: #2196c4; border-radius: 50%; animation: ppPulse 1.5s infinite; }
+  @keyframes ppPulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+  .pp-text-section p { font-size: 0.95rem; line-height: 1.8; color: #8a9aaa; }
 
   /* FAQ */
   .pp-faq-item {
-    border: 1px solid rgba(33,150,196,0.15); border-radius: 10px;
-    padding: 1rem; margin-bottom: 0.5rem;
-    background: rgba(14,58,110,0.2);
+    background: rgba(14,58,110,0.2); border-radius: 10px; margin-bottom: 0.75rem;
+    border: 1px solid rgba(33,150,196,0.1);
   }
   .pp-faq-item summary {
-    cursor: pointer; font-size: 0.9rem; color: #d4c49a; font-weight: 500;
-    list-style: none;
+    padding: 1rem; font-weight: 700; cursor: pointer; color: #d4c49a;
+    font-size: 0.9rem; list-style: none; display: flex; justify-content: space-between;
   }
   .pp-faq-item summary::-webkit-details-marker { display: none; }
-  .pp-faq-item p { font-size: 0.85rem; color: #8a9aaa; margin-top: 0.75rem; line-height: 1.7; }
+  .pp-faq-item summary::after { content: '+'; color: #2196c4; }
+  .pp-faq-item[open] summary::after { content: '−'; }
+  .pp-faq-item p { padding: 0 1rem 1rem; font-size: 0.88rem; color: #8a9aaa; line-height: 1.6; }
 
   /* Sidebar */
-  .pp-sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
-
-  /* Quick links */
+  .pp-sidebar { display: flex; flex-direction: column; gap: 2rem; }
   .pp-quick-links, .pp-other-beaches {
-    background: rgba(14,58,110,0.25);
-    border: 1px solid rgba(33,150,196,0.15);
-    border-radius: 12px; padding: 1.25rem;
+    background: rgba(14,58,110,0.15); padding: 1.25rem; border-radius: 14px;
+    border: 1px solid rgba(33,150,196,0.1);
   }
-  .pp-quick-links h3, .pp-other-beaches h3 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1rem; color: #f0e6c8; margin-bottom: 0.75rem;
-  }
+  .pp-sidebar h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: #2196c4; margin-bottom: 1rem; }
+  
   .pp-affiliate-link {
-    display: block; font-size: 0.85rem; color: #7ab8d0;
-    text-decoration: none; padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(33,150,196,0.1);
-    transition: color 0.2s;
+    display: block; font-size: 0.82rem; color: #8a9aaa; text-decoration: none;
+    padding: 0.75rem; border-radius: 8px; background: rgba(0,0,0,0.2);
+    margin-bottom: 0.5rem; transition: background 0.2s, color 0.2s;
   }
-  .pp-affiliate-link:last-child { border-bottom: none; }
-  .pp-affiliate-link:hover { color: #2196c4; }
+  .pp-affiliate-link:hover { background: rgba(33,150,196,0.15); color: #f0e6c8; }
+
   .pp-other-link {
     display: flex; justify-content: space-between; align-items: center;
-    text-decoration: none; font-size: 0.85rem; color: #8a9aaa;
-    padding: 0.5rem 0; border-bottom: 1px solid rgba(33,150,196,0.08);
-    transition: color 0.2s;
+    padding: 0.6rem 0; border-bottom: 1px solid rgba(33,150,196,0.1);
+    text-decoration: none; color: #8a9aaa; font-size: 0.9rem; transition: color 0.2s;
   }
-  .pp-other-link:hover { color: #d4c49a; }
-  .pp-other-uf {
-    font-size: 0.7rem; padding: 0.15rem 0.4rem; border-radius: 4px;
-    background: rgba(33,150,196,0.15); color: #2196c4;
+  .pp-other-link:hover { color: #2196c4; }
+  .pp-other-uf { font-size: 0.7rem; font-weight: 900; background: rgba(33,150,196,0.1); padding: 0.1rem 0.4rem; border-radius: 4px; }
+
+  @media (max-width: 900px) {
+    .pp-layout { grid-template-columns: 1fr; }
+    .pp-sidebar { order: -1; }
+    .pp-hero { padding: 3rem 1.5rem 4rem; }
   }
 `

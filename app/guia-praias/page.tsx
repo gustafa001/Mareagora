@@ -10,6 +10,13 @@ export const metadata: Metadata = {
 }
 
 // ─── tipos ───────────────────────────────────────────────────────────────────
+interface PortoMeta {
+  slug: string
+  nome: string
+  estado: string
+  dataFile: string
+}
+
 interface Praia {
   slug: string
   nome: string
@@ -17,7 +24,7 @@ interface Praia {
   uf: string
   descricao: string
   tags: string[]
-  portoCodigo: string // código do porto MaréAgora para puxar maré
+  porto: PortoMeta
   afiliado?: { label: string; url: string }
 }
 
@@ -30,7 +37,7 @@ export const PRAIAS: Praia[] = [
     uf: 'SC',
     descricao: 'A praia mais badalada de Florianópolis, com infraestrutura completa e mar calmo ideal para famílias.',
     tags: ['Família', 'Infraestrutura', 'Mar calmo'],
-    portoCodigo: 'florianopolis',
+    porto: { slug: 'porto-de-florianopolis', nome: 'Porto de Florianópolis', estado: 'SC', dataFile: '60245.json' },
     afiliado: { label: 'Ver hotéis em Florianópolis', url: 'https://www.booking.com/city/br/florianopolis.html' },
   },
   {
@@ -40,7 +47,7 @@ export const PRAIAS: Praia[] = [
     uf: 'CE',
     descricao: 'Paraíso dos kitesurfistas. Ventos constantes, dunas e pôr do sol inesquecível na Pedra Furada.',
     tags: ['Kitesurf', 'Windsurf', 'Natureza'],
-    portoCodigo: 'fortaleza',
+    porto: { slug: 'porto-de-mucuripe-fortaleza', nome: 'Porto de Mucuripe - Fortaleza', estado: 'CE', dataFile: '30340.json' },
     afiliado: { label: 'Ver hotéis em Jeri', url: 'https://www.booking.com/city/br/jijoca-de-jericoacoara.html' },
   },
   {
@@ -50,7 +57,7 @@ export const PRAIAS: Praia[] = [
     uf: 'BA',
     descricao: 'Uma das praias mais bonitas do Brasil. Piscinas naturais, falésias coloridas e águas cristalinas.',
     tags: ['Natureza intocada', 'Piscinas naturais', 'Falésia'],
-    portoCodigo: 'salvador',
+    porto: { slug: 'porto-de-salvador', nome: 'Porto de Salvador', estado: 'BA', dataFile: '40141.json' },
     afiliado: { label: 'Ver pousadas na região', url: 'https://www.booking.com/region/br/costa-do-descobrimento.html' },
   },
   {
@@ -60,7 +67,7 @@ export const PRAIAS: Praia[] = [
     uf: 'RJ',
     descricao: 'A praia selvagem do Rio. Dentro de APA, sem comércio, com ondas fortes e natureza preservada.',
     tags: ['Surf', 'Natureza', 'Selvagem'],
-    portoCodigo: 'rio-de-janeiro',
+    porto: { slug: 'rio-de-janeiro-fiscal', nome: 'Rio de Janeiro - Ilha Fiscal', estado: 'RJ', dataFile: '50140.json' },
     afiliado: { label: 'Ver hotéis no Rio', url: 'https://www.booking.com/city/br/rio-de-janeiro.html' },
   },
   {
@@ -70,7 +77,7 @@ export const PRAIAS: Praia[] = [
     uf: 'BA',
     descricao: 'Ilha sem carros, com praias enumeradas e uma atmosfera única no litoral baiano.',
     tags: ['Ilha', 'Sem carros', 'Mergulho'],
-    portoCodigo: 'salvador',
+    porto: { slug: 'porto-de-salvador', nome: 'Porto de Salvador', estado: 'BA', dataFile: '40141.json' },
     afiliado: { label: 'Ver pousadas em Morro', url: 'https://www.booking.com/city/br/morro-de-sao-paulo.html' },
   },
   {
@@ -80,7 +87,7 @@ export const PRAIAS: Praia[] = [
     uf: 'SC',
     descricao: 'Águas mais transparentes do Sul do Brasil. Ótima para mergulho e snorkel com rica vida marinha.',
     tags: ['Mergulho', 'Snorkel', 'Água cristalina'],
-    portoCodigo: 'florianopolis',
+    porto: { slug: 'porto-de-florianopolis', nome: 'Porto de Florianópolis', estado: 'SC', dataFile: '60245.json' },
     afiliado: { label: 'Ver hotéis em Bombinhas', url: 'https://www.booking.com/city/br/bombinhas.html' },
   },
 ]
@@ -117,8 +124,6 @@ export default function GuiaPraias() {
 
       {/* ── AdSense topo ── */}
       <div className="gp-ad-slot">
-        {/* <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" /> */}
-        {/* <ins className="adsbygoogle" data-ad-slot="XXXXXXXX" /> */}
         <span>Publicidade</span>
       </div>
 
@@ -288,53 +293,46 @@ const styles = `
   .gp-card:hover { transform: translateY(-4px); border-color: rgba(33,150,196,0.4); box-shadow: 0 12px 40px rgba(0,0,0,0.35); }
   .gp-card:hover::before { opacity: 1; }
 
-  .gp-card-header { display: flex; align-items: center; gap: 0.5rem; }
+  .gp-card-header { display: flex; align-items: center; gap: 0.75rem; }
   .gp-uf-badge {
-    width: 28px; height: 28px; border-radius: 6px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.65rem; font-weight: 700; color: white; letter-spacing: 0.05em;
+    font-size: 0.65rem; font-weight: 900; color: white;
+    padding: 0.15rem 0.5rem; border-radius: 4px;
   }
-  .gp-card-estado { font-size: 0.78rem; color: #d4c49a; }
-  .gp-card-nome {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1.2rem; font-weight: 700; color: #f0e6c8; line-height: 1.2;
-  }
-  .gp-card-desc { font-size: 0.85rem; color: #8a9aaa; line-height: 1.6; flex: 1; }
-
+  .gp-card-estado { font-size: 0.75rem; color: #7ab8d0; text-transform: uppercase; letter-spacing: 0.05em; }
+  .gp-card-nome { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #f0e6c8; margin: 0; }
+  .gp-card-desc { font-size: 0.85rem; color: #8a9aaa; line-height: 1.5; margin: 0; }
   .gp-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
   .gp-tag {
-    font-size: 0.68rem; padding: 0.2rem 0.55rem; border-radius: 100px;
-    border: 1px solid rgba(33,150,196,0.25); color: #7ab8d0;
+    font-size: 0.65rem; padding: 0.15rem 0.5rem; border-radius: 100px;
+    background: rgba(33,150,196,0.1); color: #7ab8d0; border: 1px solid rgba(33,150,196,0.2);
   }
-
   .gp-card-footer {
+    margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(33,150,196,0.1);
     display: flex; align-items: center; gap: 0.5rem;
-    font-size: 0.78rem; color: #2196c4; margin-top: auto; padding-top: 0.5rem;
-    border-top: 1px solid rgba(33,150,196,0.1);
+    font-size: 0.7rem; font-weight: 700; color: #2196c4; text-transform: uppercase; letter-spacing: 0.1em;
   }
-  .gp-live-dot {
-    width: 6px; height: 6px; border-radius: 50%; background: #4caf80;
-    box-shadow: 0 0 6px #4caf80; animation: pulse 2s infinite;
-  }
-  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
-  .gp-arrow { margin-left: auto; }
+  .gp-live-dot { width: 6px; height: 6px; background: #2196c4; border-radius: 50%; animation: gpPulse 1.5s infinite; }
+  .gp-arrow { margin-left: auto; font-size: 1rem; transition: transform 0.2s; }
+  .gp-card:hover .gp-arrow { transform: translateX(4px); }
 
-  /* SEO section */
-  .gp-seo-section { padding: 4rem 2rem; background: rgba(10,35,64,0.3); }
-  .gp-seo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
-  @media (max-width: 650px) { .gp-seo-grid { grid-template-columns: 1fr; } }
-  .gp-seo-section h2 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1.4rem; color: #f0e6c8; margin-bottom: 1rem;
-  }
-  .gp-seo-section h3 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1.1rem; color: #f0e6c8; margin-bottom: 0.75rem;
-  }
-  .gp-seo-section p { font-size: 0.88rem; color: #8a9aaa; line-height: 1.75; margin-bottom: 1rem; }
+  @keyframes gpPulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+  /* SEO Section */
+  .gp-seo-section { padding: 5rem 2rem; background: #04111f; border-top: 1px solid rgba(33,150,196,0.1); }
+  .gp-seo-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 4rem; }
+  .gp-seo-section h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: #f0e6c8; margin-bottom: 1.5rem; }
+  .gp-seo-section h3 { font-size: 1.1rem; color: #2196c4; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.5rem; }
+  .gp-seo-section p { color: #8a9aaa; line-height: 1.8; margin-bottom: 1.2rem; }
   .gp-seo-section strong { color: #d4c49a; }
-  .gp-estados-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
-  .gp-estados-list li { font-size: 0.88rem; color: #8a9aaa; display: flex; align-items: center; gap: 0.5rem; }
-  .gp-check { color: #4caf80; font-size: 0.8rem; }
-  .gp-coming-soon { font-size: 0.78rem; color: rgba(33,150,196,0.6); margin-top: 0.75rem; }
+
+  .gp-estados-list { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 2rem; }
+  .gp-estados-list li { color: #f0e6c8; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
+  .gp-check { color: #4caf80; font-weight: bold; }
+  .gp-coming-soon { font-size: 0.75rem; color: #5a6a7a; font-style: italic; }
+
+  @media (max-width: 768px) {
+    .gp-seo-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .gp-hero { padding: 4rem 1.5rem 6rem; }
+    .gp-grid { grid-template-columns: 1fr; }
+  }
 `

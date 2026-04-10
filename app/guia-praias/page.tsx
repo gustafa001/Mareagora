@@ -1,6 +1,7 @@
 // app/guia-praias/page.tsx
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import BeachImage from './BeachImage'
 
 export const metadata: Metadata = {
   title: 'Guia de Praias do Brasil — Marés, Ondas e Dicas | MaréAgora',
@@ -860,14 +861,9 @@ export default function GuiaPraias() {
                     <div key={praia.slug} className="gp-card-wrapper">
                       <Link href={`/guia-praias/${praia.slug}`} className="gp-card">
                         <div className="gp-card-img">
-                          <img
-                            src={`https://source.unsplash.com/600x340/?${encodeURIComponent(praia.unsplashQuery)}`}
+                          <BeachImage
+                            query={praia.unsplashQuery}
                             alt={`Foto de ${praia.nome}`}
-                            loading="lazy"
-                            onError={(e) => {
-                              const t = e.target as HTMLImageElement
-                              t.src = 'https://source.unsplash.com/600x340/?beach,brazil,ocean'
-                            }}
                           />
                         </div>
                         <div className="gp-card-body">

@@ -11,16 +11,18 @@ import WindWaveCharts from '@/components/WindWaveCharts';
 import SearchPorts from '@/components/SearchPorts';
 import PortStatistics from '@/components/PortStatistics';
 import ActivityRecommendations from '@/components/ActivityRecommendations';
-import BlogCard from '@/components/BlogCard';
+import PortBlogSection from '@/components/PortBlogSection';
 import { useSeaConditions } from '@/hooks/useSeaConditions';
 import { notFound } from 'next/navigation';
+import type { BlogPost } from '@/lib/blog';
 
 interface PortPageContentProps {
   slug: string;
   regionContext: string;
+  blogPosts: BlogPost[];
 }
 
-export default function PortPageContent({ slug, regionContext }: PortPageContentProps) {
+export default function PortPageContent({ slug, regionContext, blogPosts }: PortPageContentProps) {
   const port = getPortBySlug(slug);
   if (!port) notFound();
 
@@ -37,7 +39,7 @@ export default function PortPageContent({ slug, regionContext }: PortPageContent
   const currentTimeBR = new Date().toLocaleTimeString('pt-BR', {
     hour: '2-digit',
     minute: '2-digit',
-    timeZone: 'America/Sao_Paulo'
+    timeZone: 'America/Sao_Paulo',
   });
 
   const heights = todayTides.length > 0 ? todayTides.map(t => t.altura_m) : [0];
@@ -120,12 +122,30 @@ export default function PortPageContent({ slug, regionContext }: PortPageContent
 
             <WindWaveCharts lat={port.lat} lon={port.lon} />
 
-@@ -137,9 +138,11 @@
+            <ActivityRecommendations
+              todayTides={todayTides}
+              nextHigh={nextHigh}
+              nextLow={nextLow}
+              waveHeight={waveHeight ?? undefined}
+            />
+
+            <PortStatistics
+              eventos={dataAno}
+              portName={port.name}
+            />
+
+            <section className="classic-card prose prose-slate max-w-none">
+              <h2 className="text-2xl font-bold mb-4 font-syne">Sobre as Marés em {port.name}</h2>
+              <p className="text-slate-600 leading-relaxed">
                 {regionContext}
               </p>
             </section>
 
-            <BlogCard />
+            <PortBlogSection
+              portSlug={slug}
+              portName={port.name}
+              posts={blogPosts}
+            />
           </div>
         </div>
       </div>

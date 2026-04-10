@@ -1,9 +1,10 @@
 import Link from 'next/link';
-import { getPostsByPort } from '@/lib/blog';
+import type { BlogPost } from '@/lib/blog';
 
 interface Props {
   portSlug: string;
   portName: string;
+  posts: BlogPost[];
 }
 
 function formatDate(dateStr: string): string {
@@ -15,9 +16,7 @@ function formatDate(dateStr: string): string {
   return `${months[parseInt(month)]} de ${year}`;
 }
 
-export default function PortBlogSection({ portSlug, portName }: Props) {
-  const posts = getPostsByPort(portSlug);
-
+export default function PortBlogSection({ portSlug, portName, posts }: Props) {
   if (posts.length === 0) {
     return (
       <Link href="/blog" className="block group">

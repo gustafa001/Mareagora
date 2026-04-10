@@ -9,8 +9,8 @@ export async function GET(
   const { portId } = params;
 
   try {
-    // portId é o nome do dataFile sem .json (ex: "46_-_porto_de_santos_-_148_-_150")
-    const filePath = path.join(process.cwd(), 'data', `${portId}.json`);
+    // portId é o dhnId do porto (ex: "50228" para Porto de Santos)
+    const filePath = path.join(process.cwd(), 'data', 'mare', `${portId}.json`);
     const fileContent = await fs.readFile(filePath, 'utf-8');
     const data = JSON.parse(fileContent);
 
@@ -18,11 +18,13 @@ export async function GET(
       headers: {
         // Cache de 24h no browser, 7 dias no CDN do Vercel
         'Cache-Control': 'public, s-maxage=604800, stale-while-revalidate=86400',
+        'Content-Type': 'application/json',
       },
     });
-  } catch {
+  } catch (error) {
+    console.error(`Erro ao carregar dados da maré para portId ${portId}:`, error);
     return NextResponse.json(
-      { error: 'Porto não encontrado' },
+      { error: 'Porto não encontrado', details: error instanceof Error ? error.message : 'Erro desconhecido' },
       { status: 404 }
     );
   }

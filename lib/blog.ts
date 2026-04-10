@@ -88,3 +88,33 @@ export function getRelatedPosts(
   scored.sort((a, b) => b.score - a.score);
   return scored.slice(0, limit).map((s) => s.post);
 }
+
+export function getPostsByPort(portSlug: string, limit = 3): BlogPost[] {
+  const all = getPosts();
+
+  const slugWords = portSlug
+    .replace(/-fiscal$/, '')
+    .replace(/^(porto-de-|porto-do-|terminal-|arquipelago-de-)/, '')
+    .split('-')
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+
+  const filtered = all.filter(post => {
+    const haystack = [
+      post.title.toLowerCase(),
+      ...post.tags.map(t => t.toLowerCase()),
+      post.excerpt.toLowerCase(),
+    ].join(' ');
+
+    return (
+      haystack.includes(portSlug.toLowerCase()) ||
+      haystack.includes(slugWords.toLowerCase()) ||
+      post.tags.some(tag =>
+        portSlug.toLowerCase().includes(tag.toLowerCase()) ||
+        tag.toLowerCase().includes(slugWords.toLowerCase())
+      )
+    );
+  });
+
+  return filtered.slice(0, limit);
+}

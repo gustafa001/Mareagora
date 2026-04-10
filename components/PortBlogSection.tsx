@@ -22,7 +22,7 @@ export default function PortBlogSection({ portSlug, portName, posts }: Props) {
       <Link href="/blog" className="block group">
         <div
           className="p-4 sm:p-6 flex items-center justify-between rounded-3xl border border-white/20 shadow-2xl hover:shadow-blue-500/30 hover:border-blue-400/50 transition-all duration-300"
-          style={{ background: '#0f1f3d' }}
+          style={{ background: 'rgba(15, 31, 61, 0.8)' }}
         >
           <div className="flex items-center gap-3 sm:gap-5 min-w-0">
             <div className="w-12 sm:w-14 h-12 sm:h-14 rounded-2xl bg-white/10 flex items-center justify-center text-2xl sm:text-3xl border border-white/10 group-hover:bg-blue-500/20 group-hover:border-blue-400/50 transition-all flex-shrink-0">
@@ -36,8 +36,7 @@ export default function PortBlogSection({ portSlug, portName, posts }: Props) {
                 Blog
               </div>
               <div
-                className="text-xl sm:text-3xl font-black font-syne leading-tight"
-                style={{ color: '#ffffff' }}
+                className="text-xl sm:text-3xl font-black font-syne leading-tight text-white"
               >
                 MaréAgora Blog
               </div>
@@ -81,10 +80,10 @@ export default function PortBlogSection({ portSlug, portName, posts }: Props) {
             href={`/blog/${post.slug}`}
             className="group block"
           >
-            <div
-              className="p-4 sm:p-5 rounded-2xl border border-white/10 hover:border-blue-400/40 hover:shadow-blue-500/10 hover:shadow-xl transition-all duration-300"
-              style={{ background: '#0f1f3d' }}
-            >
+          <div
+            className="p-4 sm:p-5 rounded-2xl border border-white/20 hover:border-blue-400/40 hover:shadow-blue-500/20 hover:shadow-xl transition-all duration-300"
+            style={{ background: 'rgba(15, 31, 61, 0.9)' }}
+          >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
                   <span
@@ -110,8 +109,8 @@ export default function PortBlogSection({ portSlug, portName, posts }: Props) {
               </div>
 
               <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/5">
-                <span className="text-[10px] text-slate-600">{formatDate(post.date)}</span>
-                <span className="text-[10px] text-slate-600">📖 {post.readingTime}</span>
+                <span className="text-[10px] text-slate-400">{formatDate(post.date)}</span>
+                <span className="text-[10px] text-slate-400">📖 {post.readingTime}</span>
               </div>
             </div>
           </Link>

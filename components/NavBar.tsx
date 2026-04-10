@@ -21,35 +21,32 @@ export default function NavBar({ className = '' }: NavBarProps) {
           </Link>
 
           {/* Navigation Links */}
-          <div className="flex items-center gap-3 sm:gap-4 md:gap-8">
+          <div className="flex items-center gap-2 sm:gap-4 md:gap-8">
             {/* Portos Link */}
             <Link 
               href="/portos" 
-              className="px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-black uppercase tracking-widest text-slate-200 hover:text-white bg-slate-800/40 hover:bg-blue-500/20 border border-slate-700/50 hover:border-blue-400/50 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 flex-shrink-0"
+              className="p-2 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-black uppercase tracking-widest text-slate-200 hover:text-white bg-slate-800/40 hover:bg-blue-500/20 border border-slate-700/50 hover:border-blue-400/50 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 flex-shrink-0"
+              title="Portos"
             >
               <span className="text-base sm:text-lg">⚓</span>
               <span className="hidden sm:inline">Portos</span>
             </Link>
 
-            {/* Divider */}
-            <div className="w-px h-6 bg-white/10 hidden sm:block" />
-
             {/* Guia de Praias Link */}
             <Link 
               href="/guia-praias" 
-              className="px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-black uppercase tracking-widest text-slate-200 hover:text-white bg-slate-800/40 hover:bg-blue-500/20 border border-slate-700/50 hover:border-blue-400/50 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 flex-shrink-0"
+              className="p-2 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-black uppercase tracking-widest text-slate-200 hover:text-white bg-slate-800/40 hover:bg-blue-500/20 border border-slate-700/50 hover:border-blue-400/50 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 flex-shrink-0"
+              title="Guia de Praias"
             >
               <span className="text-base sm:text-lg">🏖️</span>
               <span className="hidden sm:inline">Guia de Praias</span>
             </Link>
 
-            {/* Divider */}
-            <div className="w-px h-6 bg-white/10 hidden sm:block" />
-
             {/* Blog Link */}
             <Link 
               href="/blog" 
-              className="px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-black uppercase tracking-widest text-slate-200 hover:text-white bg-slate-800/40 hover:bg-blue-500/20 border border-slate-700/50 hover:border-blue-400/50 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 flex-shrink-0"
+              className="p-2 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-black uppercase tracking-widest text-slate-200 hover:text-white bg-slate-800/40 hover:bg-blue-500/20 border border-slate-700/50 hover:border-blue-400/50 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 flex-shrink-0"
+              title="Blog"
             >
               <span className="text-base sm:text-lg">📝</span>
               <span className="hidden sm:inline">Blog</span>

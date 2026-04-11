@@ -864,6 +864,7 @@ export default function GuiaPraias() {
                           <BeachImage
                             query={praia.unsplashQuery}
                             alt={`Foto de ${praia.nome}`}
+                            random={praia.slug}
                           />
                         </div>
                         <div className="gp-card-body">

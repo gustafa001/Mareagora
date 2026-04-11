@@ -26,6 +26,9 @@ export default function PortPageContent({ slug, regionContext, blogPosts }: Port
   const port = getPortBySlug(slug);
   if (!port) notFound();
 
+  // ✅ cityName para textos visíveis e SEO on-page
+  const seoName = port.cityName;
+
   const { waveHeight } = useSeaConditions(port.lat, port.lon);
 
   const todayStr = new Date().toLocaleDateString('en-CA');
@@ -78,11 +81,12 @@ export default function PortPageContent({ slug, regionContext, blogPosts }: Port
 
         <div className="container relative z-30 text-white text-center pt-24 md:pt-16">
           <div className="flex flex-col gap-3 items-center px-2">
+            {/* ✅ H1 com cityName — sinal principal pro Google */}
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight font-syne leading-tight max-w-4xl">
-              Tábua de Maré {port.name} — {ano}
+              Tábua de Maré {seoName} — {ano}
             </h1>
             <p className="text-sm sm:text-lg md:text-xl opacity-90 font-medium font-syne hidden sm:block">
-              {port.name} - {ano} | Estado do {port.state}
+              {seoName} - {ano} | Estado do {port.state}
             </p>
             <p className="text-sm opacity-90 font-medium font-syne sm:hidden">
               Estado do {port.state}
@@ -115,7 +119,7 @@ export default function PortPageContent({ slug, regionContext, blogPosts }: Port
 
             <MonthlyTideTable
               eventos={dataAno}
-              portName={port.name}
+              portName={seoName}
               lat={port.lat}
               lon={port.lon}
             />
@@ -131,11 +135,12 @@ export default function PortPageContent({ slug, regionContext, blogPosts }: Port
 
             <PortStatistics
               eventos={dataAno}
-              portName={port.name}
+              portName={seoName}
             />
 
             <section className="classic-card prose prose-slate max-w-none">
-              <h2 className="text-2xl font-bold mb-4 font-syne">Sobre as Marés em {port.name}</h2>
+              {/* ✅ H2 com cityName — reforça a keyword na página */}
+              <h2 className="text-2xl font-bold mb-4 font-syne">Sobre as Marés em {seoName}</h2>
               <p className="text-slate-600 leading-relaxed">
                 {regionContext}
               </p>
@@ -143,7 +148,7 @@ export default function PortPageContent({ slug, regionContext, blogPosts }: Port
 
             <PortBlogSection
               portSlug={slug}
-              portName={port.name}
+              portName={seoName}
               posts={blogPosts}
             />
           </div>

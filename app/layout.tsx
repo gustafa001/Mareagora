@@ -56,6 +56,8 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${syne.variable} ${dmSans.variable} ${firaCode.variable} ${firaSans.variable}`}>
       <head>
+        <meta charSet="utf-8" />
+        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         {/* Google AdSense */}
         <meta name="google-adsense-account" content="ca-pub-2920008879492175" />
         {/* Script AdSense */}

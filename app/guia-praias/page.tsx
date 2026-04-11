@@ -1,7 +1,7 @@
 // app/guia-praias/page.tsx
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import BeachImage from './BeachImage'
+// import BeachImage from './BeachImage' - Removido: componente de imagens não utilizado
 
 export const metadata: Metadata = {
   title: 'Guia de Praias do Brasil — Marés, Ondas e Dicas | MaréAgora',
@@ -860,13 +860,7 @@ export default function GuiaPraias() {
                   {praiasDaRegiao.map((praia) => (
                     <div key={praia.slug} className="gp-card-wrapper">
                       <Link href={`/guia-praias/${praia.slug}`} className="gp-card">
-                        <div className="gp-card-img">
-                          <BeachImage
-                            query={praia.unsplashQuery}
-                            alt={`Foto de ${praia.nome}`}
-                            random={praia.slug}
-                          />
-                        </div>
+
                         <div className="gp-card-body">
                         <div className="gp-card-header">
                           <span
@@ -1036,16 +1030,7 @@ const styles = `
     position: relative; overflow: hidden; flex: 1;
   }
 
-  /* Imagem do card */
-  .gp-card-img {
-    width: 100%; height: 180px; overflow: hidden; flex-shrink: 0;
-  }
-  .gp-card-img img {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.4s ease;
-    display: block;
-  }
-  .gp-card:hover .gp-card-img img { transform: scale(1.06); }
+  /* Imagem do card - REMOVIDO */
 
   /* Conteúdo interno do card (abaixo da imagem) */
   .gp-card-body {

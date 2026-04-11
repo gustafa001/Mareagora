@@ -10,11 +10,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const praia = PRAIAS.find((p) => p.slug === params.slug)
   if (!praia) return {}
   return {
-    title: `${praia.nome} â€” MarÃ©, Ondas e Dicas | MarÃ©Agora`,
-    description: `Confira a marÃ© em tempo real, condiÃ§Ãµes de ondas e dicas de pesca para ${praia.nome}, ${praia.estado}. Dados oficiais da Marinha do Brasil.`,
-    keywords: `${praia.nome}, marÃ© ${praia.nome}, praia ${praia.estado}, surf ${praia.nome}`,
+    title: `${praia.nome} â€” Maré, Ondas e Dicas | MaréAgora`,
+    description: `Confira a maré em tempo real, condições de ondas e dicas de pesca para ${praia.nome}, ${praia.estado}. Dados oficiais da Marinha do Brasil.`,
+    keywords: `${praia.nome}, maré ${praia.nome}, praia ${praia.estado}, surf ${praia.nome}`,
     openGraph: {
-      title: `${praia.nome} â€” MarÃ© ao vivo | MarÃ©Agora`,
+      title: `${praia.nome} â€” Maré ao vivo | MaréAgora`,
       description: praia.descricao,
       url: `https://mareagora.com.br/guia-praias/${praia.slug}`,
     },
@@ -25,37 +25,37 @@ export async function generateStaticParams() {
   return PRAIAS.map((p) => ({ slug: p.slug }))
 }
 
-// â”€â”€â”€ conteÃºdo SEO por praia (pode virar MDX futuramente) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â”€â”€â”€ conteúdo SEO por praia (pode virar MDX futuramente) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const CONTEUDO: Record<string, { sobre: string; pesca: string; melhorEpoca: string }> = {
   'jurere-sc': {
-    sobre: 'JurerÃª Internacional Ã© a praia mais famosa de FlorianÃ³polis, conhecida pelos beach clubs sofisticados, casas de alto padrÃ£o e infraestrutura completa. O mar calmo e raso Ã© ideal para famÃ­lias com crianÃ§as.',
-    pesca: 'A pesca Ã© boa nas pedras do costÃ£o leste, especialmente para robalo e tainha na marÃ© enchendo. Os melhores horÃ¡rios sÃ£o nas primeiras horas da manhÃ£, quando o fluxo de marÃ© estÃ¡ forte.',
-    melhorEpoca: 'Dezembro a marÃ§o para o verÃ£o agitado. Abril a junho para mar mais calmo e menos movimento.',
+    sobre: 'JurerÃª Internacional é a praia mais famosa de Florianópolis, conhecida pelos beach clubs sofisticados, casas de alto padrão e infraestrutura completa. O mar calmo e raso é ideal para famílias com crianças.',
+    pesca: 'A pesca é boa nas pedras do costão leste, especialmente para robalo e tainha na maré enchendo. Os melhores horários são nas primeiras horas da manhã, quando o fluxo de maré está forte.',
+    melhorEpoca: 'Dezembro a março para o verão agitado. Abril a junho para mar mais calmo e menos movimento.',
   },
   'jericoacoara-ce': {
-    sobre: 'Jericoacoara, ou "Jeri", Ã© um dos destinos mais desejados do Brasil. A vila sem ruas asfaltadas fica dentro de um Parque Nacional e oferece dunas, lagoas e o famoso pÃ´r do sol na Pedra Furada.',
-    pesca: 'A pesca artesanal Ã© forte na regiÃ£o. Na marÃ© baixa, os pescadores locais indicam os melhores pontos ao longo da praia principal. Atum e dourado sÃ£o abundantes na costa.',
+    sobre: 'Jericoacoara, ou "Jeri", é um dos destinos mais desejados do Brasil. A vila sem ruas asfaltadas fica dentro de um Parque Nacional e oferece dunas, lagoas e o famoso pÃ´r do sol na Pedra Furada.',
+    pesca: 'A pesca artesanal é forte na região. Na maré baixa, os pescadores locais indicam os melhores pontos ao longo da praia principal. Atum e dourado são abundantes na costa.',
     melhorEpoca: 'Julho a dezembro para os ventos ideais de kitesurf. Janeiro a junho para mar mais calmo.',
   },
   'praia-do-espelho-ba': {
-    sobre: 'A Praia do Espelho fica entre Trancoso e CaraÃ­va, no extremo sul da Bahia. As piscinas naturais formadas na marÃ© baixa sÃ£o o principal atrativo, junto com as falÃ©sias coloridas.',
-    pesca: 'Na marÃ© baixa as piscinas naturais ficam expostas e a pesca com anzol de mÃ£o Ã© popular entre os locais. Robalos e peixes de recife sÃ£o comuns.',
-    melhorEpoca: 'Setembro a marÃ§o. Evite julho e agosto pela marÃ© muito alta que cobre as piscinas.',
+    sobre: 'A Praia do Espelho fica entre Trancoso e Caraíva, no extremo sul da Bahia. As piscinas naturais formadas na maré baixa são o principal atrativo, junto com as falésias coloridas.',
+    pesca: 'Na maré baixa as piscinas naturais ficam expostas e a pesca com anzol de mão é popular entre os locais. Robalos e peixes de recife são comuns.',
+    melhorEpoca: 'Setembro a março. Evite julho e agosto pela maré muito alta que cobre as piscinas.',
   },
   'grumari-rj': {
-    sobre: 'Grumari Ã© a praia mais isolada do Rio de Janeiro, dentro de uma Ãrea de ProteÃ§Ã£o Ambiental. Sem quiosques permanentes, Ã© frequentada por surfistas e quem busca natureza preservada.',
-    pesca: 'Uma das melhores praias do Rio para pesca de arremesso. Anchova e corvina sÃ£o abundantes, especialmente no inverno. A marÃ© baixa Ã© essencial para acessar os melhores pontos.',
-    melhorEpoca: 'Maio a setembro para surf e pesca. VerÃ£o para banho de mar com ondas menores.',
+    sobre: 'Grumari é a praia mais isolada do Rio de Janeiro, dentro de uma Área de Proteção Ambiental. Sem quiosques permanentes, é frequentada por surfistas e quem busca natureza preservada.',
+    pesca: 'Uma das melhores praias do Rio para pesca de arremesso. Anchova e corvina são abundantes, especialmente no inverno. A maré baixa é essencial para acessar os melhores pontos.',
+    melhorEpoca: 'Maio a setembro para surf e pesca. Verão para banho de mar com ondas menores.',
   },
   'morro-de-sao-paulo-ba': {
-    sobre: 'Morro de SÃ£o Paulo fica na Ilha de TinharÃ©, sem carros. As praias sÃ£o numeradas (Primeira, Segunda, Terceira e Quarta Praia) com caracterÃ­sticas distintas â€” da mais agitada Ã  mais selvagem.',
-    pesca: 'A Quarta Praia, mais isolada, oferece Ã³tima pesca de arremesso. Os recifes de corais ao redor da ilha sÃ£o paraÃ­so para pesca subaquÃ¡tica e snorkel.',
-    melhorEpoca: 'Setembro a marÃ§o para clima seco. Julho Ã© alta temporada apesar da chuva.',
+    sobre: 'Morro de São Paulo fica na Ilha de Tinharé, sem carros. As praias são numeradas (Primeira, Segunda, Terceira e Quarta Praia) com características distintas â€” da mais agitada Ã  mais selvagem.',
+    pesca: 'A Quarta Praia, mais isolada, oferece ótima pesca de arremesso. Os recifes de corais ao redor da ilha são paraíso para pesca subaquática e snorkel.',
+    melhorEpoca: 'Setembro a março para clima seco. Julho é alta temporada apesar da chuva.',
   },
   'bombinhas-sc': {
-    sobre: 'Bombinhas Ã© considerada a cidade com as Ã¡guas mais transparentes do Sul do Brasil. A Praia de Bombas e Bombinhas formam um balneÃ¡rio completo com rica vida marinha nos costÃµes.',
-    pesca: 'Os costÃµes rochosos sÃ£o ideais para pesca de garoupa e badejo. O mergulho Ã© excelente, especialmente na Reserva BiolÃ³gica Marinha do Arvoredo.',
-    melhorEpoca: 'Dezembro a fevereiro para verÃ£o. MarÃ§o a maio para turismo sem aglomeraÃ§Ã£o.',
+    sobre: 'Bombinhas é considerada a cidade com as águas mais transparentes do Sul do Brasil. A Praia de Bombas e Bombinhas formam um balneário completo com rica vida marinha nos costões.',
+    pesca: 'Os costões rochosos são ideais para pesca de garoupa e badejo. O mergulho é excelente, especialmente na Reserva Biológica Marinha do Arvoredo.',
+    melhorEpoca: 'Dezembro a fevereiro para verão. Março a maio para turismo sem aglomeração.',
   },
 }
 
@@ -70,7 +70,7 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
     <main className="praia-page">
       {/* â”€â”€ Breadcrumb â”€â”€ */}
       <nav className="pp-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">MarÃ©Agora</a>
+        <a href="/">MaréAgora</a>
         <span>/</span>
         <a href="/guia-praias">Guia de Praias</a>
         <span>/</span>
@@ -100,12 +100,12 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
         {/* Coluna principal */}
         <div className="pp-main">
 
-          {/* Componente de marÃ© ao vivo â€” jÃ¡ existe no MarÃ©Agora! */}
+          {/* Componente de maré ao vivo â€” já existe no MaréAgora! */}
           <section className="pp-section">
             <h2 className="pp-section-title">
-              <span className="pp-live-dot" /> MarÃ© em Tempo Real
+              <span className="pp-live-dot" /> Maré em Tempo Real
             </h2>
-            {/* TideCardLive jÃ¡ existe no seu projeto â€” sÃ³ passar o objeto port */}
+            {/* TideCardLive já existe no seu projeto â€” só passar o objeto port */}
             <TideCardLive port={praia.porto} />
           </section>
 
@@ -123,7 +123,7 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
               </section>
 
               <section className="pp-section pp-text-section">
-                <h2 className="pp-section-title">ðŸ“… Melhor Ã©poca para visitar</h2>
+                <h2 className="pp-section-title">ðŸ“… Melhor época para visitar</h2>
                 <p>{conteudo.melhorEpoca}</p>
               </section>
             </>
@@ -136,16 +136,16 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
           <section className="pp-section pp-faq">
             <h2 className="pp-section-title">Perguntas frequentes</h2>
             <details className="pp-faq-item">
-              <summary>Qual Ã© a marÃ© hoje em {praia.nome}?</summary>
-              <p>VocÃª pode ver a marÃ© em tempo real no card acima, com dados oficiais da Marinha do Brasil atualizados a cada hora.</p>
+              <summary>Qual é a maré hoje em {praia.nome}?</summary>
+              <p>VocÃª pode ver a maré em tempo real no card acima, com dados oficiais da Marinha do Brasil atualizados a cada hora.</p>
             </details>
             <details className="pp-faq-item">
-              <summary>Quando Ã© o melhor horÃ¡rio para pescar em {praia.nome}?</summary>
-              <p>Os melhores horÃ¡rios sÃ£o 1 hora antes e depois da virada de marÃ© (enchente ou vazante). Consulte o grÃ¡fico de marÃ© acima para o horÃ¡rio exato de hoje.</p>
+              <summary>Quando é o melhor horário para pescar em {praia.nome}?</summary>
+              <p>Os melhores horários são 1 hora antes e depois da virada de maré (enchente ou vazante). Consulte o gráfico de maré acima para o horário exato de hoje.</p>
             </details>
             <details className="pp-faq-item">
-              <summary>As ondas estÃ£o boas em {praia.nome} hoje?</summary>
-              <p>O card de marÃ© acima mostra as condiÃ§Ãµes atuais de ondas e vento em tempo real via Open-Meteo Marine API.</p>
+              <summary>As ondas estão boas em {praia.nome} hoje?</summary>
+              <p>O card de maré acima mostra as condições atuais de ondas e vento em tempo real via Open-Meteo Marine API.</p>
             </details>
           </section>
         </div>
@@ -164,7 +164,7 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
           {/* AdSense sidebar */}
           <div className="pp-ad-slot pp-ad-sidebar"><span>Publicidade</span></div>
 
-          {/* Links rÃ¡pidos */}
+          {/* Links rápidos */}
           <div className="pp-quick-links">
             <h3>Equipamentos para {praia.nome}</h3>
             <a

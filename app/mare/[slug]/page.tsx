@@ -6,6 +6,7 @@ import PortoFAQ from '@/components/PortoFAQ';
 import { portosConfig, categoryDefaults } from '@/data/porto-seo-config';
 import { getPostsByPort } from '@/lib/blog';
 import type { BlogPost } from '@/lib/blog';
+import { getPortoDescription } from '@/lib/porto-descriptions';
 
 function getRegionContext(region: string, state: string): string {
   const map: Record<string, string> = {
@@ -31,7 +32,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const url = `https://mareagora.com.br/mare/${slug}`;
   const ogImage = `https://mareagora.com.br/mare/${slug}/opengraph-image`;
 
-  // ✅ cityName para título SEO amigável (ex: "Fortaleza" em vez de "Porto de Mucuripe - Fortaleza")
   const seoName = port.cityName;
 
   const suffix = config?.titleSuffix ?? categoryDefaults['turismo'].titleSuffix;
@@ -76,15 +76,14 @@ export default async function PortPage({ params }: { params: { slug: string } })
   if (!port) notFound();
 
   const regionContext = getRegionContext(port.region, port.state);
+  const portDescription = getPortoDescription(slug);
   const ano = new Date().getFullYear();
 
   const config = portosConfig[slug];
   const categoria = config?.category ?? 'turismo';
 
-  // Busca posts no servidor (fs só roda aqui)
   const blogPosts: BlogPost[] = getPostsByPort(slug);
 
-  // ✅ cityName para JSON-LD também
   const seoName = port.cityName;
 
   const jsonLd = {
@@ -95,7 +94,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://mareagora.com.br/' },
           { '@type': 'ListItem', position: 2, name: 'Portos', item: 'https://mareagora.com.br/portos' },
-          // ✅ breadcrumb mantém port.name (nome oficial do porto)
           { '@type': 'ListItem', position: 3, name: port.name, item: `https://mareagora.com.br/mare/${slug}` },
         ],
       },
@@ -132,7 +130,12 @@ export default async function PortPage({ params }: { params: { slug: string } })
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         suppressHydrationWarning
       />
-      <PortPageContent slug={slug} regionContext={regionContext} blogPosts={blogPosts} />
+      <PortPageContent
+        slug={slug}
+        regionContext={regionContext}
+        portDescription={portDescription}
+        blogPosts={blogPosts}
+      />
       <div className="container pb-16">
         <PortoFAQ slug={slug} categoria={categoria} />
       </div>

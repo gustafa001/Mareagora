@@ -28,8 +28,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const slug = params.slug;
   const config = portosConfig[slug];
   const ano = new Date().getFullYear();
-  const url = `https://www.mareagora.com.br/mare/${slug}`;
-  const ogImage = `https://www.mareagora.com.br/mare/${slug}/opengraph-image`;
+  const url = `https://mareagora.com.br/mare/${slug}`;
+  const ogImage = `https://mareagora.com.br/mare/${slug}/opengraph-image`;
 
   // ✅ cityName para título SEO amigável (ex: "Fortaleza" em vez de "Porto de Mucuripe - Fortaleza")
   const seoName = port.cityName;
@@ -93,30 +93,30 @@ export default async function PortPage({ params }: { params: { slug: string } })
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.mareagora.com.br/' },
-          { '@type': 'ListItem', position: 2, name: 'Portos', item: 'https://www.mareagora.com.br/portos' },
+          { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://mareagora.com.br/' },
+          { '@type': 'ListItem', position: 2, name: 'Portos', item: 'https://mareagora.com.br/portos' },
           // ✅ breadcrumb mantém port.name (nome oficial do porto)
-          { '@type': 'ListItem', position: 3, name: port.name, item: `https://www.mareagora.com.br/mare/${slug}` },
+          { '@type': 'ListItem', position: 3, name: port.name, item: `https://mareagora.com.br/mare/${slug}` },
         ],
       },
       {
         '@type': 'WebPage',
-        '@id': `https://www.mareagora.com.br/mare/${slug}`,
-        url: `https://www.mareagora.com.br/mare/${slug}`,
+        '@id': `https://mareagora.com.br/mare/${slug}`,
+        url: `https://mareagora.com.br/mare/${slug}`,
         name: `Tábua de Maré ${seoName} ${ano} — MaréAgora`,
         description: `Horários e alturas das marés em ${seoName} (${port.state}) para ${ano}.`,
         inLanguage: 'pt-BR',
-        isPartOf: { '@id': 'https://www.mareagora.com.br/' },
+        isPartOf: { '@id': 'https://mareagora.com.br/' },
       },
       {
         '@type': 'Dataset',
         name: `Tábua de Marés ${seoName} ${ano}`,
         description: `Horários de maré alta e baixa em ${seoName}, ${port.state} para o ano de ${ano}. Fonte oficial: Marinha do Brasil (CHM).`,
-        url: `https://www.mareagora.com.br/mare/${slug}`,
+        url: `https://mareagora.com.br/mare/${slug}`,
         creator: {
           '@type': 'Organization',
           name: 'MaréAgora',
-          url: 'https://www.mareagora.com.br',
+          url: 'https://mareagora.com.br',
         },
         temporalCoverage: `${ano}-01-01/${ano}-12-31`,
         spatialCoverage: `${seoName}, ${port.state}, Brasil`,

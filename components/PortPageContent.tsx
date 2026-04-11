@@ -19,14 +19,14 @@ import type { BlogPost } from '@/lib/blog';
 interface PortPageContentProps {
   slug: string;
   regionContext: string;
+  portDescription: string;
   blogPosts: BlogPost[];
 }
 
-export default function PortPageContent({ slug, regionContext, blogPosts }: PortPageContentProps) {
+export default function PortPageContent({ slug, regionContext, portDescription, blogPosts }: PortPageContentProps) {
   const port = getPortBySlug(slug);
   if (!port) notFound();
 
-  // ✅ cityName para textos visíveis e SEO on-page
   const seoName = port.cityName;
 
   const { waveHeight } = useSeaConditions(port.lat, port.lon);
@@ -81,7 +81,6 @@ export default function PortPageContent({ slug, regionContext, blogPosts }: Port
 
         <div className="container relative z-30 text-white text-center pt-24 md:pt-16">
           <div className="flex flex-col gap-3 items-center px-2">
-            {/* ✅ H1 com cityName — sinal principal pro Google */}
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight font-syne leading-tight max-w-4xl">
               Tábua de Maré {seoName} — {ano}
             </h1>
@@ -139,8 +138,14 @@ export default function PortPageContent({ slug, regionContext, blogPosts }: Port
             />
 
             <section className="classic-card prose prose-slate max-w-none">
-              {/* ✅ H2 com cityName — reforça a keyword na página */}
               <h2 className="text-2xl font-bold mb-4 font-syne">Sobre as Marés em {seoName}</h2>
+              {/* Descrição única por porto — diferencia no Google */}
+              {portDescription && (
+                <p className="text-slate-600 leading-relaxed mb-4">
+                  {portDescription}
+                </p>
+              )}
+              {/* Contexto regional genérico como complemento */}
               <p className="text-slate-600 leading-relaxed">
                 {regionContext}
               </p>

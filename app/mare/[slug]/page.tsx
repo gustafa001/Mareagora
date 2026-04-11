@@ -31,17 +31,20 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const url = `https://www.mareagora.com.br/mare/${slug}`;
   const ogImage = `https://www.mareagora.com.br/mare/${slug}/opengraph-image`;
 
+  // ✅ cityName para título SEO amigável (ex: "Fortaleza" em vez de "Porto de Mucuripe - Fortaleza")
+  const seoName = port.cityName;
+
   const suffix = config?.titleSuffix ?? categoryDefaults['turismo'].titleSuffix;
-  const title = `Tábua de Maré ${port.name} — ${suffix} | MaréAgora`;
+  const title = `Tábua de Maré ${seoName} — ${suffix} | MaréAgora`;
 
   const description = config?.description
-    ?? categoryDefaults['turismo'].descriptionTemplate(port.name, port.state);
+    ?? categoryDefaults['turismo'].descriptionTemplate(seoName, port.state);
 
   const keywords = config?.keywords
     ?? [
-      `maré ${port.name.toLowerCase()}`,
-      `tabua maré ${port.name.toLowerCase()} ${ano}`,
-      `tábua de maré ${port.name.toLowerCase()}`,
+      `maré ${seoName.toLowerCase()}`,
+      `tabua maré ${seoName.toLowerCase()} ${ano}`,
+      `tábua de maré ${seoName.toLowerCase()}`,
     ];
 
   return {
@@ -56,7 +59,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       type: 'website',
       locale: 'pt_BR',
       siteName: 'MaréAgora',
-      images: [{ url: ogImage, width: 1200, height: 630, alt: `Tábua de Maré ${port.name}` }],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: `Tábua de Maré ${seoName}` }],
     },
     twitter: {
       card: 'summary_large_image',
@@ -81,6 +84,9 @@ export default async function PortPage({ params }: { params: { slug: string } })
   // Busca posts no servidor (fs só roda aqui)
   const blogPosts: BlogPost[] = getPostsByPort(slug);
 
+  // ✅ cityName para JSON-LD também
+  const seoName = port.cityName;
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -89,6 +95,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.mareagora.com.br/' },
           { '@type': 'ListItem', position: 2, name: 'Portos', item: 'https://www.mareagora.com.br/portos' },
+          // ✅ breadcrumb mantém port.name (nome oficial do porto)
           { '@type': 'ListItem', position: 3, name: port.name, item: `https://www.mareagora.com.br/mare/${slug}` },
         ],
       },
@@ -96,15 +103,15 @@ export default async function PortPage({ params }: { params: { slug: string } })
         '@type': 'WebPage',
         '@id': `https://www.mareagora.com.br/mare/${slug}`,
         url: `https://www.mareagora.com.br/mare/${slug}`,
-        name: `Tábua de Maré ${port.name} ${ano} — MaréAgora`,
-        description: `Horários e alturas das marés em ${port.name} (${port.state}) para ${ano}.`,
+        name: `Tábua de Maré ${seoName} ${ano} — MaréAgora`,
+        description: `Horários e alturas das marés em ${seoName} (${port.state}) para ${ano}.`,
         inLanguage: 'pt-BR',
         isPartOf: { '@id': 'https://www.mareagora.com.br/' },
       },
       {
         '@type': 'Dataset',
-        name: `Tábua de Marés ${port.name} ${ano}`,
-        description: `Horários de maré alta e baixa em ${port.name}, ${port.state} para o ano de ${ano}. Fonte oficial: Marinha do Brasil (CHM).`,
+        name: `Tábua de Marés ${seoName} ${ano}`,
+        description: `Horários de maré alta e baixa em ${seoName}, ${port.state} para o ano de ${ano}. Fonte oficial: Marinha do Brasil (CHM).`,
         url: `https://www.mareagora.com.br/mare/${slug}`,
         creator: {
           '@type': 'Organization',
@@ -112,7 +119,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
           url: 'https://www.mareagora.com.br',
         },
         temporalCoverage: `${ano}-01-01/${ano}-12-31`,
-        spatialCoverage: `${port.name}, ${port.state}, Brasil`,
+        spatialCoverage: `${seoName}, ${port.state}, Brasil`,
         license: 'https://www.gov.br/marinha/pt-br',
       },
     ],

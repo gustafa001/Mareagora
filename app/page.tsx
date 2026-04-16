@@ -89,7 +89,7 @@ export default function Home() {
             <span className="text-4xl">🌊</span>
           </div>
 
-          <h1 className="text-5xl md:text-6xl font-black text-white mb-3 font-syne tracking-tighter">
+          <h1 className="text-4xl md:text-6xl font-black text-white mb-3 font-syne tracking-tighter">
             MaréAgora
           </h1>
 

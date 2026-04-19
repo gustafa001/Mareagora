@@ -1,0 +1,24 @@
+name: Cherry-pick JSON data
+on:
+  workflow_dispatch:
+jobs:
+  restore-files:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Restore files via GitHub API
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          FILES=$(curl -s -H "Authorization: token $GH_TOKEN" "https://api.github.com/repos/gustafa001/Mareagora/commits/e43075c" | python3 -c "import sys,json; [print(f['filename']) for f in json.load(sys.stdin)['files']]")
+          for FILE in $FILES; do
+            mkdir -p $(dirname $FILE)
+            curl -s -H "Authorization: token $GH_TOKEN" "https://api.github.com/repos/gustafa001/Mareagora/contents/$FILE?ref=e43075c" | python3 -c "import sys,json,base64; open('$FILE','wb').write(base64.b64decode(json.load(sys.stdin)['content'].replace('\n','')))"
+          done
+          git add .
+          git commit -m "Restore JSON data files"
+          git push origin main

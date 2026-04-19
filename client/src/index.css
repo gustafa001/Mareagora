@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Import Google Fonts for Maritime Professional Design */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap');
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -43,39 +46,42 @@
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
+  /* Maritime Professional Color Palette */
+  --primary: #1e3a5f; /* Deep Ocean Blue */
+  --primary-foreground: #ffffff;
+  --sidebar-primary: #2d5a7b; /* Petrol Blue */
+  --sidebar-primary-foreground: #ffffff;
+  --accent: #d4a574; /* Amber Gold */
+  --accent-foreground: #1e3a5f;
+  
+  --chart-1: #1e3a5f;
+  --chart-2: #2d5a7b;
+  --chart-3: #3d7a9b;
+  --chart-4: #4d9abb;
+  --chart-5: #5dbadb;
+  
+  --radius: 0.5rem;
+  --background: #fafaf8; /* Warm white */
+  --foreground: #1a1a1a; /* Dark gray */
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
+  --secondary: #e8e6e1; /* Light beige */
+  --secondary-foreground: #1a1a1a;
+  --muted: #d4d0c8; /* Muted beige */
+  --muted-foreground: #666666;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #e5e3e0; /* Subtle border */
+  --input: #f5f3f0; /* Input background */
+  --ring: #1e3a5f; /* Focus ring */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1a1a1a;
+  --sidebar-accent: #f0ebe3;
+  --sidebar-accent-foreground: #1e3a5f;
+  --sidebar-border: #e5e3e0;
+  --sidebar-ring: #1e3a5f;
 }
 
 .dark {
@@ -117,8 +123,54 @@
   * {
     @apply border-border outline-ring/50;
   }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  
+  h1 {
+    @apply text-4xl md:text-5xl font-bold;
+    color: #1e3a5f;
+  }
+  
+  h2 {
+    @apply text-3xl md:text-4xl font-bold;
+    color: #1e3a5f;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  h3 {
+    @apply text-2xl font-semibold;
+    color: #2d5a7b;
+    margin-top: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  p {
+    @apply text-base leading-relaxed;
+    color: #333333;
+    margin-bottom: 1rem;
+  }
+  
+  a {
+    @apply text-primary hover:text-accent transition-colors;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -130,6 +182,35 @@
   input[type="checkbox"]:not(:disabled),
   input[type="radio"]:not(:disabled) {
     @apply cursor-pointer;
+  }
+  
+  /* Maritime Design Enhancements */
+  button {
+    @apply transition-all duration-200;
+  }
+  
+  button:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+  
+  /* Subtle background texture */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.03) 2px,
+        rgba(255, 255, 255, 0.03) 4px
+      );
+    pointer-events: none;
+    z-index: -1;
   }
 }
 
@@ -158,6 +239,28 @@
   .flex {
     min-height: 0;
     min-width: 0;
+  }
+  
+  /* Maritime Design Components */
+  .wave-divider {
+    width: 100%;
+    height: 60px;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="M0,30 Q300,0 600,30 T1200,30 L1200,60 L0,60 Z" fill="%231e3a5f" opacity="0.1"/></svg>') repeat-x;
+    background-size: 600px 60px;
+  }
+  
+  .card-maritime {
+    @apply bg-card rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow;
+    border: 1px solid var(--border);
+  }
+  
+  .text-maritime {
+    color: #1e3a5f;
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .accent-maritime {
+    color: #d4a574;
   }
 
   @media (min-width: 640px) {

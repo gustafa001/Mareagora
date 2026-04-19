@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getPosts, getPost, getRelatedPosts } from '@/lib/blog';
 import NavBar from '@/components/NavBar';
 
@@ -61,7 +60,7 @@ function getCategoryStyle(category: string): string {
   );
 }
 
-export default function BlogPostPage({ params }: Props) {
+export default async function BlogPostPage({ params }: Props) {
   const post = getPost(params.slug);
   if (!post) notFound();
 
@@ -129,8 +128,8 @@ export default function BlogPostPage({ params }: Props) {
         </header>
 
         {/* Article body */}
-        <article className="prose-blog">
-          <MDXRemote source={post.content} />
+        <article className="prose-blog text-white whitespace-pre-wrap">
+          {post.content}
         </article>
 
         {/* Back link */}

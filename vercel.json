@@ -1,7 +1,9 @@
 {
-  "buildCommand": "pnpm build",
-  "outputDirectory": "dist",
+  "buildCommand": "pnpm install && pnpm build",
+  "outputDirectory": "dist/client",
   "framework": "vite",
+  "nodeVersion": "18.x",
+  "installCommand": "pnpm install --frozen-lockfile",
   "env": {
     "VITE_ANALYTICS_ENDPOINT": "@VITE_ANALYTICS_ENDPOINT",
     "VITE_ANALYTICS_WEBSITE_ID": "@VITE_ANALYTICS_WEBSITE_ID",

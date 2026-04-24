@@ -125,13 +125,6 @@ export default function PortPageContent({ slug, regionContext, portDescription, 
 
             <WindWaveCharts lat={port.lat} lon={port.lon} />
 
-            <ActivityRecommendations
-              todayTides={todayTides}
-              nextHigh={nextHigh}
-              nextLow={nextLow}
-              waveHeight={waveHeight ?? undefined}
-            />
-
             <PortStatistics
               eventos={dataAno}
               portName={seoName}

@@ -128,8 +128,7 @@ export default function RootLayout({
           </div>
           <Footer />
         </div>
-        {/* Mobile Sticky Ad — aparece apenas em telas < 768px */}
-        <MobileStickyAd />
+
         <InstallPWA />
       </body>
     </html>

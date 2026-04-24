@@ -1,5 +1,5 @@
 import { getPortBySlug } from '@/lib/ports';
-import { portosConfig, categoryDefaults, PortoCategory } from '@/data/porto-seo-config';
+import { PortoCategory } from '@/data/porto-seo-config';
 
 interface PortoFAQProps {
   slug: string;
@@ -11,73 +11,33 @@ export default function PortoFAQ({ slug, categoria = 'turismo' }: PortoFAQProps)
   if (!port) return null;
 
   const nome = port.cityName;
-  const isCommercial = port.name.toLowerCase().includes('porto') || port.name.toLowerCase().includes('terminal') || categoria === 'industrial';
 
-  let faqs = [];
-
-  if (isCommercial) {
-    faqs = [
-      {
-        q: `Como a maré afeta as operações de atracação em ${nome}?`,
-        a: `As operações de atracação em ${nome} dependem estritamente da tábua de marés. Navios de grande calado aguardam a preamar para manobrar com segurança no canal de acesso.`,
-      },
-      {
-        q: `O que é coeficiente de maré e como afeta navios de grande calado?`,
-        a: `O coeficiente indica a amplitude da maré. Em ${nome}, coeficientes altos significam marés de sizígia, permitindo a entrada de navios mais pesados, mas gerando correntes mais fortes.`,
-      },
-      {
-        q: `Qual é a amplitude média das marés em ${nome}?`,
-        a: `A amplitude varia conforme a fase lunar, mas em ${nome} as maiores variações ocorrem nas luas nova e cheia, exigindo planejamento rigoroso da praticagem.`,
-      },
-      {
-        q: `As marés em ${nome} são semidiurnas ou diurnas?`,
-        a: `O regime de marés na costa brasileira, incluindo ${nome}, é predominantemente semidiurno, com duas marés altas e duas marés baixas a cada dia lunar.`,
-      },
-      {
-        q: `Como verificar a tábua de marés oficial da Marinha para ${nome}?`,
-        a: `A tábua oficial pode ser consultada no site do CHM (Centro de Hidrografia da Marinha). Aqui no MaréAgora, facilitamos a leitura desses mesmos dados oficiais para ${nome}.`,
-      },
-      {
-        q: `Em que horários é mais seguro navegar pelo Canal de ${nome}?`,
-        a: `A navegação é mais segura durante o estofo da maré (momento de inversão), quando as correntes de maré em ${nome} são mínimas.`,
-      },
-      {
-        q: `Maré viva vs maré morta: qual a diferença prática para ${nome}?`,
-        a: `Marés vivas (sizígia) oferecem maior calado na maré alta, mas correntes fortes. Marés mortas (quadratura) têm menor variação, resultando em correntes mais fracas no porto de ${nome}.`,
-      },
-    ];
-  } else {
-    faqs = [
-      {
-        q: `Qual é o melhor horário de maré para surfar em ${nome}?`,
-        a: `O momento ideal varia, mas em ${nome} a meia maré (enchendo ou vazando) costuma oferecer as melhores condições e formação de ondas.`,
-      },
-      {
-        q: `Quando a maré baixa revela piscinas naturais em ${nome}?`,
-        a: `As piscinas naturais de ${nome} ficam expostas durante a baixamar, especialmente em dias de maré de sizígia (lua nova ou cheia) com coeficientes altos.`,
-      },
-      {
-        q: `Como a fase lunar influencia a maré em ${nome}?`,
-        a: `Nas fases de lua nova e cheia, a atração gravitacional é maior, gerando marés vivas com maior amplitude em ${nome}. Nas luas minguante e crescente, ocorrem as marés mortas.`,
-      },
-      {
-        q: `É seguro tomar banho na maré alta em ${nome}?`,
-        a: `Depende da praia. Na maré alta em ${nome}, as ondas podem quebrar mais perto da areia ou em bancadas mais rasas, exigindo atenção redobrada dos banhistas.`,
-      },
-      {
-        q: `Qual é a amplitude típica da maré em ${nome}?`,
-        a: `A amplitude em ${nome} segue o padrão da sua região. Marés de sizígia apresentam variação significativamente maior entre a maré alta e baixa do que marés de quadratura.`,
-      },
-      {
-        q: `Como usar a tábua de marés para planejar a pesca em ${nome}?`,
-        a: `Os melhores momentos para pesca em ${nome} são geralmente nas duas horas que antecedem e sucedem o pico da maré alta ou baixa, quando a movimentação de água ativa os peixes.`,
-      },
-      {
-        q: `O que significa coeficiente 92 na previsão de marés?`,
-        a: `Um coeficiente de 92 indica uma maré viva muito forte em ${nome}. Isso significa que a maré alta será excepcionalmente alta e a maré baixa muito mais seca que o normal.`,
-      },
-    ];
-  }
+  const faqs = [
+    {
+      q: "O que é tábua de marés?",
+      a: "É a previsão dos horários e alturas de maré alta (preamar) e maré baixa (baixamar) para um porto ou praia. Os dados do MaréAgora são oficiais da Marinha do Brasil (DHN)."
+    },
+    {
+      q: "O que significa o coeficiente de maré?",
+      a: "O coeficiente indica a intensidade da maré: valores acima de 70 indicam maré viva (forte), abaixo de 40 indicam maré morta (fraca). Marés vivas ocorrem próximas à lua cheia e lua nova."
+    },
+    {
+      q: "Como a maré afeta as praias e o banho de mar?",
+      a: "Na maré baixa a faixa de areia fica mais ampla e piscinas naturais ficam acessíveis. Na maré alta as ondas chegam mais perto da orla. Para banho seguro, prefira o período de maré baixa a moderada."
+    },
+    {
+      q: "Qual é o melhor horário de maré para pescar?",
+      a: "As 2 horas antes e depois da maré baixa são as mais produtivas para a pesca. O movimento da água na vazante ativa a alimentação dos peixes. Marés vivas potencializam esse efeito."
+    },
+    {
+      q: "As marés do litoral brasileiro são semidiurnas?",
+      a: "Na maior parte do litoral brasileiro sim — ocorrem dois ciclos completos de maré alta e baixa a cada 24 horas. Algumas regiões do Pará e Maranhão têm marés mistas com grande amplitude, podendo superar 7 metros."
+    },
+    {
+      q: "Com que frequência os dados de maré são atualizados?",
+      a: "As previsões são baseadas nos dados oficiais da Diretoria de Hidrografia e Navegação (DHN) da Marinha do Brasil, calculados astronomicamente para o ano inteiro com alta precisão."
+    }
+  ];
 
   const jsonLd = {
     '@context': 'https://schema.org',

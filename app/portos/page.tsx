@@ -1,6 +1,18 @@
 import Link from 'next/link';
 import { PORTS } from '@/lib/ports';
 import NavBar from '@/components/NavBar';
+import dynamic from 'next/dynamic';
+
+const MapaPortos = dynamic(() => import('@/components/MapaPortos'), {
+  ssr: false,
+  loading: () => (
+    <div style={{ height: 520, background: '#0f172a', borderRadius: 12,
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      color: '#94a3b8', fontSize: 14 }}>
+      Carregando mapa...
+    </div>
+  )
+});
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -42,8 +54,10 @@ export default function PortosPage() {
         <NavBar />
 
         <section className="py-16 px-4 max-w-6xl mx-auto">
-
-          {/* Norte */}
+          <section style={{ marginBottom: '2.5rem' }}>
+            <h2 className="text-3xl font-bold text-white mb-6">Mapa de Portos</h2>
+            <MapaPortos />
+          </section>          {/* Norte */}
           <div className="mb-16">
             <div className="flex items-center gap-4 mb-8">
               <div className="w-1 h-8 bg-gradient-to-b from-blue-400 to-cyan-400 rounded-full" />

@@ -822,6 +822,9 @@ export default function GuiaPraias() {
     <main className="guia-praias">
       {/* ── Hero ── */}
       <section className="gp-hero">
+        <Link href="/" className="gp-back-btn">
+          ← Voltar ao Início
+        </Link>
         <div className="gp-hero-bg" />
         <div className="gp-hero-content">
           <span className="gp-eyebrow">🌊 MaréAgora · Guia de Praias</span>
@@ -954,6 +957,15 @@ const styles = `
     align-items: center; justify-content: center;
     text-align: center; padding: 6rem 2rem 8rem; overflow: hidden;
   }
+  .gp-back-btn {
+    position: absolute; top: 1.5rem; left: 1.5rem; zIndex: 10;
+    color: #2196c4; text-decoration: none; font-size: 0.85rem; font-weight: 700;
+    display: flex; align-items: center; gap: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;
+    padding: 0.5rem 1.2rem; border: 1px solid rgba(33,150,196,0.3);
+    border-radius: 100px; background: rgba(4,17,31,0.5); backdrop-filter: blur(4px);
+    transition: all 0.2s;
+  }
+  .gp-back-btn:hover { background: rgba(33,150,196,0.15); color: #7ab8d0; border-color: rgba(33,150,196,0.6); }
   .gp-hero-bg {
     position: absolute; inset: 0;
     background: linear-gradient(180deg, #04111f 0%, #0a2340 60%, #0e3a6e 100%);

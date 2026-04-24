@@ -9,7 +9,7 @@ interface ActivityRecommendationsProps {
   waveHeight?: number;
 }
 
-function getActivities(nextHigh: TideEvent | null, nextLow: TideEvent | null, waveHeight: number) {
+function getActivities(nextHigh: TideEvent | null, nextLow: TideEvent | null, waveHeight?: number) {
   const activities = [];
 
   if (nextLow) {
@@ -22,21 +22,31 @@ function getActivities(nextHigh: TideEvent | null, nextLow: TideEvent | null, wa
     });
   }
 
-  if (waveHeight >= 1.0 && waveHeight <= 2.5) {
+  if (waveHeight !== undefined) {
+    if (waveHeight >= 1.0 && waveHeight <= 2.5) {
+      activities.push({
+        icon: '🏄',
+        name: 'Surf',
+        tip: `Ondas de ${waveHeight.toFixed(1)}m. ${nextLow ? `Maré baixa às ${nextLow.hora} para melhores tubos.` : 'Confira a maré baixa.'}`,
+        rating: waveHeight >= 1.5 ? 'Ótimo' : 'Bom',
+        color: waveHeight >= 1.5 ? 'text-green-600 bg-green-50' : 'text-blue-600 bg-blue-50',
+      });
+    } else if (waveHeight < 1.0) {
+      activities.push({
+        icon: '🏄',
+        name: 'Surf',
+        tip: `Ondas fracas (${waveHeight.toFixed(1)}m). Condições ruins para surf hoje.`,
+        rating: 'Fraco',
+        color: 'text-orange-600 bg-orange-50',
+      });
+    }
+  } else {
     activities.push({
       icon: '🏄',
       name: 'Surf',
-      tip: `Ondas de ${waveHeight.toFixed(1)}m. ${nextLow ? `Maré baixa às ${nextLow.hora} para melhores tubos.` : 'Confira a maré baixa.'}`,
-      rating: waveHeight >= 1.5 ? 'Ótimo' : 'Bom',
-      color: waveHeight >= 1.5 ? 'text-green-600 bg-green-50' : 'text-blue-600 bg-blue-50',
-    });
-  } else if (waveHeight < 1.0) {
-    activities.push({
-      icon: '🏄',
-      name: 'Surf',
-      tip: `Ondas fracas (${waveHeight.toFixed(1)}m). Condições ruins para surf hoje.`,
-      rating: 'Fraco',
-      color: 'text-orange-600 bg-orange-50',
+      tip: `Verifique as condições do mar local. ${nextLow ? `Maré baixa às ${nextLow.hora}.` : ''}`,
+      rating: 'Verificar',
+      color: 'text-gray-600 bg-gray-50',
     });
   }
 
@@ -69,19 +79,13 @@ export default function ActivityRecommendations({
   nextLow,
   waveHeight,
 }: ActivityRecommendationsProps) {
-  const activities = waveHeight !== undefined 
-    ? getActivities(nextHigh, nextLow, waveHeight)
-    : [];
+  const activities = getActivities(nextHigh, nextLow, waveHeight);
 
   return (
     <section className="classic-card">
       <h2 className="card-title">🏖️ Atividades Recomendadas</h2>
       <div className="grid sm:grid-cols-2 gap-4">
-        {waveHeight === undefined ? (
-          <div className="col-span-full py-8 text-center text-gray-400 animate-pulse">
-            Carregando recomendações...
-          </div>
-        ) : activities.map((activity) => (
+        {activities.map((activity) => (
           <div key={activity.name} className="flex gap-3 p-3 rounded-xl border border-gray-100">
             <span className="text-2xl">{activity.icon}</span>
             <div className="flex-1">

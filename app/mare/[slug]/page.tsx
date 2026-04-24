@@ -34,11 +34,27 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
   const seoName = port.cityName;
 
-  const suffix = config?.titleSuffix ?? categoryDefaults['turismo'].titleSuffix;
-  const title = `Tábua de Maré ${seoName} — ${suffix} | MaréAgora`;
+  const isCommercial = port.name.toLowerCase().includes('porto') || port.name.toLowerCase().includes('terminal') || config?.category === 'industrial';
 
-  const description = config?.description
-    ?? categoryDefaults['turismo'].descriptionTemplate(seoName, port.state);
+  let defaultSuffix = isCommercial 
+    ? 'Horários e Coeficientes Oficiais' 
+    : 'Surf, Pesca e Praia';
+  
+  let defaultDesc = isCommercial
+    ? `Tábua de marés de ${seoName}, ${port.state} para ${ano}. Previsão de maré alta e baixa, horários e coeficientes oficiais com dados da Marinha do Brasil (CHM).`
+    : `Tábua de marés de ${seoName}, ${port.state} para ${ano}. Horários de maré alta e baixa para surf, pesca e atividades na praia. Fonte: Marinha do Brasil.`;
+
+  // Use the default dynamic suffix directly, unless specifically overridden
+  const suffix = config?.titleSuffix ?? defaultSuffix;
+  
+  // Actually, the user instruction says: 
+  // Para páginas de portos COMERCIAIS: título deve ser "Tábua de Maré [Porto] — Horários e Coeficientes Oficiais"
+  // Para páginas de PRAIAS: manter "Tábua de Maré [Praia] — Surf, Pesca e Praia"
+  // So let's override it directly if it's not explicitly matching to avoid issues where config has wrong title.
+  // We'll let config override, but the fallback handles all ports/beaches correctly now.
+  const title = `Tábua de Maré ${seoName} — ${isCommercial && !config ? 'Horários e Coeficientes Oficiais' : (!isCommercial && !config ? 'Surf, Pesca e Praia' : suffix)} | MaréAgora`;
+
+  const description = config?.description ?? defaultDesc;
 
   const keywords = config?.keywords
     ?? [

@@ -32,17 +32,17 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     ],
   },
 
-  'santos': {
-    titleSuffix: 'Maré Alta e Baixa Hoje — Porto, Pesca e Praias',
-    description: 'Tábua de marés de Santos para hoje e 2026. Horários de maré alta e baixa para pesca, passeios e navegação no estuário. Referência oficial da Marinha do Brasil.',
-    keywords: ['maré santos hoje', 'tabua maré santos 2026', 'maré alta santos', 'pesca santos maré', 'horário maré santos', 'maré gonzaga', 'maré santos guarujá'],
+  'porto-de-santos': {
+    titleSuffix: 'Horários e Coeficientes Oficiais',
+    description: 'Tábua de marés do Porto de Santos para hoje e 2026. Horários de maré alta e baixa, coeficientes oficiais da Marinha do Brasil para operações portuárias, pesca e navegação no estuário.',
+    keywords: ['maré santos hoje', 'tabua maré santos 2026', 'maré alta santos', 'porto de santos maré', 'horário maré santos', 'maré gonzaga', 'maré porto santos'],
     praias: ['Gonzaga', 'José Menino', 'Embaré', 'Aparecida', 'Ponta da Praia'],
-    category: 'turismo',
+    category: 'industrial',
     portoVizinhos: ['guaruja', 'sao-vicente', 'praia-grande', 'bertioga'],
     faqs: [
-      { q: 'Santos e Guarujá têm a mesma tábua de marés?', a: 'Sim. O porto de Santos e Guarujá compartilham a mesma referência da Marinha do Brasil. Os horários são praticamente idênticos, com diferença de minutos.' },
-      { q: 'Qual o melhor horário para pescar em Santos?', a: 'Os melhores momentos são nas 2 horas ao redor da maré alta e baixa, com coeficiente acima de 50. O estuário de Santos é muito produtivo na virada da maré.' },
-      { q: 'O que é maré de sizígia em Santos?', a: 'Marés de sizígia ocorrem na lua nova e cheia, quando a amplitude é máxima. Em Santos, isso pode causar alagamentos na orla durante a preamar.' },
+      { q: 'O porto de Santos e Guarujá têm a mesma tábua de marés?', a: 'Sim. O porto de Santos e Guarujá compartilham a mesma referência da Marinha do Brasil. Os horários são praticamente idênticos, com diferença de minutos.' },
+      { q: 'Qual o melhor horário para pescar no estuário de Santos?', a: 'Os melhores momentos são nas 2 horas ao redor da maré alta e baixa, com coeficiente acima de 50. O estuário de Santos é muito produtivo na virada da maré.' },
+      { q: 'O que é maré de sizígia em Santos?', a: 'Marés de sizígia ocorrem na lua nova e cheia, quando a amplitude é máxima. Em Santos, isso pode causar correntes mais fortes no canal e alagamentos na orla.' },
     ],
   },
 

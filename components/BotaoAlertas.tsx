@@ -1,186 +1,135 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { VAPID_PUBLIC_KEY } from '@/lib/vapid';
+
+// Chave pública VAPID (fallback direto no código para evitar problemas de env)
+const VAPID_KEY = 'BIEIsoBEg4UubQNr2jyhdoUATIQFhZ_gIukjnkw85uGvLB-svLQXjaNSi-fdN9IqgNI1NTZI1kwAbvnQiTo0aGU';
 
 interface Props {
   portSlug: string;
   portName?: string;
-  variant?: 'pill' | 'inline';
 }
 
-function urlBase64ToUint8Array(base64String: string): Uint8Array {
-  try {
-    const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-    const rawData = window.atob(base64);
-    const outputArray = new Uint8Array(rawData.length);
-    for (let i = 0; i < rawData.length; i++) {
-      outputArray[i] = rawData.charCodeAt(i);
-    }
-    return outputArray;
-  } catch (e) {
-    return new Uint8Array();
-  }
-}
-
-async function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
-  let timeoutId: any;
-  const timeoutPromise = new Promise<T>((_, reject) => {
-    timeoutId = setTimeout(() => reject(new Error(`Timeout: ${label}`)), ms);
-  });
-  return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timeoutId));
-}
-
-async function getSWRegistration(): Promise<ServiceWorkerRegistration> {
-  if (typeof navigator === 'undefined' || !('serviceWorker' in navigator)) {
-    throw new Error('SW not supported');
-  }
-  const reg = await navigator.serviceWorker.getRegistration('/');
-  if (reg) return reg;
-  return await navigator.serviceWorker.register('/sw.js');
-}
-
-type Status = 'idle' | 'subscribed' | 'denied' | 'unsupported' | 'error';
-
-export default function BotaoAlertas({ portSlug, portName, variant = 'pill' }: Props) {
-  const [status, setStatus] = useState<Status>('idle');
-  const [loading, setLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+export default function BotaoAlertas({ portSlug, portName }: Props) {
   const [mounted, setMounted] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'subscribed' | 'denied' | 'unsupported' | 'error'>('idle');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setMounted(true);
     if (typeof window === 'undefined') return;
-    
+
     if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
       setStatus('unsupported');
       return;
     }
-    
-    // Check Notification support safely
-    if (!('Notification' in window)) {
-      setStatus('unsupported');
-      return;
-    }
 
-    try {
-      if (Notification.permission === 'denied') {
-        setStatus('denied');
-      } else {
-        const saved = localStorage.getItem(`push_subscribed_${portSlug}`);
-        if (saved === '1') setStatus('subscribed');
-      }
-    } catch (e) {
-      console.warn('Initial check error', e);
+    const saved = localStorage.getItem(`push_subscribed_${portSlug}`);
+    if (saved === '1') {
+      setStatus('subscribed');
     }
   }, [portSlug]);
 
   if (!mounted) return null;
 
-  const handleActivate = async () => {
+  async function handleAction() {
     if (loading) return;
     setLoading(true);
-    setErrorMsg('');
 
     try {
-      const permission = await withTimeout(Notification.requestPermission(), 30000, 'Permission');
-      if (permission !== 'granted') {
-        setStatus('denied');
-        return;
-      }
+      if (status === 'subscribed') {
+        // Desativar
+        const reg = await navigator.serviceWorker.getRegistration();
+        const sub = await reg?.pushManager.getSubscription();
+        if (sub) {
+          await fetch('/api/push/subscribe', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ endpoint: sub.endpoint }),
+          });
+          await sub.unsubscribe();
+        }
+        localStorage.removeItem(`push_subscribed_${portSlug}`);
+        setStatus('idle');
+      } else {
+        // Ativar
+        const permission = await Notification.requestPermission();
+        if (permission !== 'granted') {
+          setStatus('denied');
+          return;
+        }
 
-      const registration = await getSWRegistration();
-      const subscription = await withTimeout(
-        registration.pushManager.subscribe({
+        const reg = await navigator.serviceWorker.ready;
+        
+        // Helper to convert VAPID key
+        const padding = '='.repeat((4 - (VAPID_KEY.length % 4)) % 4);
+        const base64 = (VAPID_KEY + padding).replace(/-/g, '+').replace(/_/g, '/');
+        const rawData = window.atob(base64);
+        const outputArray = new Uint8Array(rawData.length);
+        for (let i = 0; i < rawData.length; i++) outputArray[i] = rawData.charCodeAt(i);
+
+        const sub = await reg.pushManager.subscribe({
           userVisibleOnly: true,
-          applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
-        }),
-        15000,
-        'Subscribe'
-      );
-
-      const subJson = subscription.toJSON();
-      const res = await fetch('/api/push/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ subscription: subJson, portSlug }),
-      });
-
-      if (!res.ok) throw new Error('Falha no servidor');
-
-      localStorage.setItem(`push_subscribed_${portSlug}`, '1');
-      setStatus('subscribed');
-    } catch (err: any) {
-      setErrorMsg(err.message || 'Erro desconhecido');
-      setStatus('error');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDeactivate = async () => {
-    if (loading) return;
-    setLoading(true);
-    try {
-      const registration = await getSWRegistration();
-      const sub = await registration.pushManager.getSubscription();
-      if (sub) {
-        await fetch('/api/push/subscribe', {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ endpoint: sub.endpoint }),
+          applicationServerKey: outputArray
         });
-        await sub.unsubscribe();
+
+        await fetch('/api/push/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ subscription: sub, portSlug }),
+        });
+
+        localStorage.setItem(`push_subscribed_${portSlug}`, '1');
+        setStatus('subscribed');
       }
-      localStorage.removeItem(`push_subscribed_${portSlug}`);
-      setStatus('idle');
     } catch (err) {
+      console.error(err);
       setStatus('error');
     } finally {
       setLoading(false);
     }
-  };
-
-  if (status === 'unsupported') {
-    return <span style={{ fontSize: '11px', color: '#64748b', opacity: 0.7 }}>Alertas não disponíveis neste navegador</span>;
   }
 
-  const isPill = variant === 'pill';
-  
-  const config = {
-    idle: { label: 'Ativar alertas', emoji: '🔔', color: '#0ea5e9' },
-    subscribed: { label: 'Alertas ativos', emoji: '✅', color: '#10b981' },
-    denied: { label: 'Bloqueado no browser', emoji: '🔕', color: '#ef4444' },
-    error: { label: 'Tentar novamente', emoji: '❌', color: '#f59e0b' }
+  if (status === 'unsupported') return null;
+
+  const colors = {
+    idle: '#0ea5e9',
+    subscribed: '#10b981',
+    denied: '#ef4444',
+    error: '#f59e0b'
   };
 
-  const current = config[status === 'denied' || status === 'error' || status === 'subscribed' ? status : 'idle'];
+  const labels = {
+    idle: 'Ativar alertas de maré',
+    subscribed: 'Alertas ativos ✓',
+    denied: 'Notificações bloqueadas',
+    error: 'Tentar novamente'
+  };
+
+  const color = colors[status] || colors.idle;
+  const label = labels[status] || labels.idle;
 
   return (
     <button
-      onClick={status === 'subscribed' ? handleDeactivate : handleActivate}
-      disabled={loading}
+      onClick={handleAction}
+      disabled={loading || status === 'denied'}
       style={{
         display: 'inline-flex',
         alignItems: 'center',
         gap: '8px',
-        padding: isPill ? '8px 18px' : '6px 12px',
-        borderRadius: isPill ? '100px' : '8px',
-        border: `1.5px solid ${current.color}`,
-        background: status === 'subscribed' ? `${current.color}15` : 'rgba(15, 23, 42, 0.6)',
-        color: current.color,
-        fontSize: '13px',
-        fontWeight: 700,
-        cursor: 'pointer',
+        padding: '10px 20px',
+        borderRadius: '50px',
+        border: `1.5px solid ${color}`,
+        background: status === 'subscribed' ? `${color}15` : 'rgba(15, 23, 42, 0.8)',
+        color: color,
+        fontSize: '14px',
+        fontWeight: 'bold',
+        cursor: loading ? 'wait' : 'pointer',
         transition: 'all 0.2s',
-        whiteSpace: 'nowrap',
-        opacity: loading ? 0.6 : 1,
-        backdropFilter: 'blur(8px)',
+        marginTop: '10px'
       }}
     >
-      <span>{loading ? '⏳' : current.emoji}</span>
-      {loading ? 'Processando...' : current.label}
+      {loading ? '⏳ Processando...' : label}
     </button>
   );
 }

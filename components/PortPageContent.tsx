@@ -7,7 +7,11 @@ import NavBar from '@/components/NavBar';
 const TideChart = dynamic(() => import('@/components/TideChart'), { ssr: false });
 const BotaoAlertas = dynamic(() => import('@/components/BotaoAlertas'), { 
   ssr: false,
-  loading: () => <div className="h-10 w-40 animate-pulse bg-white/10 rounded-full mx-auto" />
+  loading: () => (
+    <div className="h-10 w-44 bg-blue-500/10 border border-blue-500/20 rounded-full animate-pulse flex items-center justify-center text-[10px] text-blue-400 font-bold uppercase tracking-wider mx-auto">
+      Carregando Alertas...
+    </div>
+  )
 });
 import MonthlyTideTable from '@/components/MonthlyTideTable';
 import SummaryCards from '@/components/SummaryCards';

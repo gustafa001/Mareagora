@@ -20,72 +20,25 @@ function urlBase64ToUint8Array(base64String: string): Uint8Array {
     }
     return outputArray;
   } catch (e) {
-    console.error('Failed to convert base64 to Uint8Array', e);
     return new Uint8Array();
   }
 }
 
-/** Resolve com timeout — evita travar se SW nunca ativar */
 async function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
   let timeoutId: any;
   const timeoutPromise = new Promise<T>((_, reject) => {
-    timeoutId = setTimeout(() => reject(new Error(`Timeout: ${label} (${ms}ms)`)), ms);
+    timeoutId = setTimeout(() => reject(new Error(`Timeout: ${label}`)), ms);
   });
-
-  try {
-    const result = await Promise.race([promise, timeoutPromise]);
-    clearTimeout(timeoutId);
-    return result;
-  } catch (err) {
-    clearTimeout(timeoutId);
-    throw err;
-  }
+  return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timeoutId));
 }
 
-/** Obtém o SW registration sem depender de .ready (que pode travar) */
 async function getSWRegistration(): Promise<ServiceWorkerRegistration> {
-  if (!('serviceWorker' in navigator)) {
-    throw new Error('Service Worker not supported');
+  if (typeof navigator === 'undefined' || !('serviceWorker' in navigator)) {
+    throw new Error('SW not supported');
   }
-
-  // Tenta primeiro via getRegistration
-  try {
-    const existing = await withTimeout(
-      navigator.serviceWorker.getRegistration('/'),
-      3000,
-      'getRegistration'
-    );
-    if (existing) return existing;
-  } catch (e) {
-    console.warn('getRegistration failed, trying register', e);
-  }
-
-  // Força um novo registro se não existir
-  const reg = await withTimeout(
-    navigator.serviceWorker.register('/sw.js'),
-    10000,
-    'register'
-  );
-  
-  // Aguarda ficar ativo (max 10s)
-  await withTimeout(
-    new Promise<void>((resolve) => {
-      if (reg.active) { resolve(); return; }
-      const sw = reg.installing ?? reg.waiting;
-      if (!sw) { resolve(); return; }
-      
-      const checkState = () => {
-        if (sw.state === 'activated') {
-          sw.removeEventListener('statechange', checkState);
-          resolve();
-        }
-      };
-      sw.addEventListener('statechange', checkState);
-    }),
-    10000,
-    'activate'
-  );
-  return reg;
+  const reg = await navigator.serviceWorker.getRegistration('/');
+  if (reg) return reg;
+  return await navigator.serviceWorker.register('/sw.js');
 }
 
 type Status = 'idle' | 'subscribed' | 'denied' | 'unsupported' | 'error';
@@ -98,23 +51,29 @@ export default function BotaoAlertas({ portSlug, portName, variant = 'pill' }: P
 
   useEffect(() => {
     setMounted(true);
-    if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
+    if (typeof window === 'undefined') return;
+    
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
       setStatus('unsupported');
       return;
     }
     
-    // Check permission safely
+    // Check Notification support safely
+    if (!('Notification' in window)) {
+      setStatus('unsupported');
+      return;
+    }
+
     try {
       if (Notification.permission === 'denied') {
         setStatus('denied');
-        return;
+      } else {
+        const saved = localStorage.getItem(`push_subscribed_${portSlug}`);
+        if (saved === '1') setStatus('subscribed');
       }
     } catch (e) {
-      console.error('Notification permission check failed', e);
+      console.warn('Initial check error', e);
     }
-
-    const saved = localStorage.getItem(`push_subscribed_${portSlug}`);
-    if (saved === '1') setStatus('subscribed');
   }, [portSlug]);
 
   if (!mounted) return null;
@@ -125,59 +84,35 @@ export default function BotaoAlertas({ portSlug, portName, variant = 'pill' }: P
     setErrorMsg('');
 
     try {
-      if (!('Notification' in window)) {
-        throw new Error('Notifications not supported');
-      }
-
-      // 1. Permissão de notificação
-      const permission = await withTimeout(
-        Notification.requestPermission(),
-        20000, 
-        'requestPermission'
-      );
-      
+      const permission = await withTimeout(Notification.requestPermission(), 30000, 'Permission');
       if (permission !== 'granted') {
         setStatus('denied');
         return;
       }
 
-      // 2. Obtém SW registration sem travar
       const registration = await getSWRegistration();
-
-      // 3. Cria subscription Push
       const subscription = await withTimeout(
         registration.pushManager.subscribe({
           userVisibleOnly: true,
           applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
         }),
         15000,
-        'pushManager.subscribe'
+        'Subscribe'
       );
 
-      // 4. Envia ao servidor
-      const subJson = subscription.toJSON() as {
-        endpoint: string;
-        keys: { p256dh: string; auth: string };
-      };
+      const subJson = subscription.toJSON();
+      const res = await fetch('/api/push/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ subscription: subJson, portSlug }),
+      });
 
-      const res = await withTimeout(
-        fetch('/api/push/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ subscription: subJson, portSlug }),
-        }),
-        10000,
-        'fetch /api/push/subscribe'
-      );
-
-      if (!res.ok) throw new Error(`Server error ${res.status}`);
+      if (!res.ok) throw new Error('Falha no servidor');
 
       localStorage.setItem(`push_subscribed_${portSlug}`, '1');
       setStatus('subscribed');
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      console.error('[BotaoAlertas]', msg);
-      setErrorMsg(msg);
+    } catch (err: any) {
+      setErrorMsg(err.message || 'Erro desconhecido');
       setStatus('error');
     } finally {
       setLoading(false);
@@ -201,84 +136,51 @@ export default function BotaoAlertas({ portSlug, portName, variant = 'pill' }: P
       localStorage.removeItem(`push_subscribed_${portSlug}`);
       setStatus('idle');
     } catch (err) {
-      console.error('[BotaoAlertas deactivate]', err);
+      setStatus('error');
     } finally {
       setLoading(false);
     }
   };
 
-  if (status === 'unsupported') return null;
-
-  if (status === 'denied') {
-    return (
-      <span
-        title="Ative notificações nas configurações do seu navegador"
-        style={{
-          display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
-          fontSize: '0.75rem', color: '#ef4444', fontWeight: 700,
-          padding: '0.4rem 0.9rem', border: '1.5px solid #ef4444',
-          borderRadius: '100px', opacity: 0.8, background: 'rgba(0,0,0,0.2)',
-        }}
-      >
-        🔕 Bloqueado — ative no browser
-      </span>
-    );
+  if (status === 'unsupported') {
+    return <span style={{ fontSize: '11px', color: '#64748b', opacity: 0.7 }}>Alertas não disponíveis neste navegador</span>;
   }
 
-  const config: Record<Status, { label: string; emoji: string; color: string; action?: () => void }> = {
-    idle:        { label: 'Ativar alertas',       emoji: '🔔', color: '#0ea5e9', action: handleActivate },
-    subscribed:  { label: 'Alertas ativos',        emoji: '✅', color: '#10b981', action: handleDeactivate },
-    denied:      { label: 'Bloqueado',             emoji: '🔕', color: '#ef4444' },
-    unsupported: { label: 'Incompatível',          emoji: '⚠️', color: '#64748b' },
-    error:       { label: 'Tentar de novo',         emoji: '❌', color: '#f59e0b', action: handleActivate },
+  const isPill = variant === 'pill';
+  
+  const config = {
+    idle: { label: 'Ativar alertas', emoji: '🔔', color: '#0ea5e9' },
+    subscribed: { label: 'Alertas ativos', emoji: '✅', color: '#10b981' },
+    denied: { label: 'Bloqueado no browser', emoji: '🔕', color: '#ef4444' },
+    error: { label: 'Tentar novamente', emoji: '❌', color: '#f59e0b' }
   };
 
-  const currentConfig = config[status] || config.idle;
-  const { label, emoji, color, action } = currentConfig;
-  const isPill = variant === 'pill';
+  const current = config[status === 'denied' || status === 'error' || status === 'subscribed' ? status : 'idle'];
 
   return (
     <button
-      id={`btn-alertas-${portSlug}`}
-      onClick={action}
-      disabled={loading || !action}
-      title={
-        errorMsg
-          ? `Erro: ${errorMsg}`
-          : portName
-          ? `Alertas de maré para ${portName}`
-          : 'Alertas de maré'
-      }
+      onClick={status === 'subscribed' ? handleDeactivate : handleActivate}
+      disabled={loading}
       style={{
         display: 'inline-flex',
         alignItems: 'center',
-        gap: '0.5rem',
-        padding: isPill ? '0.55rem 1.25rem' : '0.4rem 0.9rem',
+        gap: '8px',
+        padding: isPill ? '8px 18px' : '6px 12px',
         borderRadius: isPill ? '100px' : '8px',
-        border: `1.5px solid ${color}`,
-        background: status === 'subscribed' ? `${color}22` : 'rgba(0,0,0,0.3)',
-        color,
-        fontSize: isPill ? '0.82rem' : '0.75rem',
+        border: `1.5px solid ${current.color}`,
+        background: status === 'subscribed' ? `${current.color}15` : 'rgba(15, 23, 42, 0.6)',
+        color: current.color,
+        fontSize: '13px',
         fontWeight: 700,
-        cursor: loading || !action ? 'default' : 'pointer',
+        cursor: 'pointer',
         transition: 'all 0.2s',
         whiteSpace: 'nowrap',
         opacity: loading ? 0.6 : 1,
-        letterSpacing: '0.02em',
-        backdropFilter: 'blur(4px)',
+        backdropFilter: 'blur(8px)',
       }}
     >
-      {loading ? (
-        <>
-          <span style={{ fontSize: '0.9rem' }}>⏳</span>
-          Processando...
-        </>
-      ) : (
-        <>
-          <span style={{ fontSize: '1rem' }}>{emoji}</span>
-          {label}
-        </>
-      )}
+      <span>{loading ? '⏳' : current.emoji}</span>
+      {loading ? 'Processando...' : current.label}
     </button>
   );
 }

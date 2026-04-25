@@ -3,6 +3,9 @@
 import { PORTS, getNearestPort, type Port } from '@/lib/ports';
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
+
+const BotaoAlertas = dynamic(() => import('@/components/BotaoAlertas'), { ssr: false });
 
 export default function Home() {
   const router = useRouter();
@@ -194,13 +197,27 @@ export default function Home() {
         </button>
 
         {/* Link para todos os portos (fallback) */}
-        <div className="text-center mt-8">
+        <div className="text-center mt-8 flex flex-col items-center gap-4">
           <button
             onClick={() => router.push('/portos')}
             className="text-slate-400 hover:text-cyan-400 text-xs uppercase tracking-widest font-medium transition-colors"
           >
             Ver todos os portos →
           </button>
+
+          {/* Botão de alertas de maré + link configurações */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <BotaoAlertas portSlug="porto-de-santos" portName="Porto mais próximo" />
+            <button
+              onClick={() => router.push('/configuracoes')}
+              style={{
+                color: '#64748b', fontSize: '0.75rem', background: 'none',
+                border: 'none', cursor: 'pointer', textDecoration: 'underline',
+              }}
+            >
+              ⚙️ Configurar porto favorito
+            </button>
+          </div>
         </div>
       </div>
 

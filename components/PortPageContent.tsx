@@ -5,7 +5,10 @@ import { getEventosDia, getEventosAno } from '@/lib/mare';
 import dynamic from 'next/dynamic';
 import NavBar from '@/components/NavBar';
 const TideChart = dynamic(() => import('@/components/TideChart'), { ssr: false });
-const BotaoAlertas = dynamic(() => import('@/components/BotaoAlertas'), { ssr: false });
+const BotaoAlertas = dynamic(() => import('@/components/BotaoAlertas'), { 
+  ssr: false,
+  loading: () => <div className="h-10 w-40 animate-pulse bg-white/10 rounded-full mx-auto" />
+});
 import MonthlyTideTable from '@/components/MonthlyTideTable';
 import SummaryCards from '@/components/SummaryCards';
 import WindWaveCharts from '@/components/WindWaveCharts';

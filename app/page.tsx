@@ -5,7 +5,10 @@ import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 
-const BotaoAlertas = dynamic(() => import('@/components/BotaoAlertas'), { ssr: false });
+const BotaoAlertas = dynamic(() => import('@/components/BotaoAlertas'), { 
+  ssr: false,
+  loading: () => <div className="h-10 w-40 animate-pulse bg-slate-800/50 rounded-full" />
+});
 
 export default function Home() {
   const router = useRouter();

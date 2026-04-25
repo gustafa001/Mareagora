@@ -10,53 +10,79 @@ interface Props {
 }
 
 function urlBase64ToUint8Array(base64String: string): Uint8Array {
-  const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-  const rawData = window.atob(base64);
-  const outputArray = new Uint8Array(rawData.length);
-  for (let i = 0; i < rawData.length; i++) {
-    outputArray[i] = rawData.charCodeAt(i);
+  try {
+    const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+    for (let i = 0; i < rawData.length; i++) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+  } catch (e) {
+    console.error('Failed to convert base64 to Uint8Array', e);
+    return new Uint8Array();
   }
-  return outputArray;
 }
 
 /** Resolve com timeout — evita travar se SW nunca ativar */
-function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
-  return Promise.race([
-    promise,
-    new Promise<T>((_, reject) =>
-      setTimeout(() => reject(new Error(`Timeout: ${label} (${ms}ms)`)), ms)
-    ),
-  ]);
+async function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
+  let timeoutId: any;
+  const timeoutPromise = new Promise<T>((_, reject) => {
+    timeoutId = setTimeout(() => reject(new Error(`Timeout: ${label} (${ms}ms)`)), ms);
+  });
+
+  try {
+    const result = await Promise.race([promise, timeoutPromise]);
+    clearTimeout(timeoutId);
+    return result;
+  } catch (err) {
+    clearTimeout(timeoutId);
+    throw err;
+  }
 }
 
 /** Obtém o SW registration sem depender de .ready (que pode travar) */
 async function getSWRegistration(): Promise<ServiceWorkerRegistration> {
+  if (!('serviceWorker' in navigator)) {
+    throw new Error('Service Worker not supported');
+  }
+
   // Tenta primeiro via getRegistration
-  const existing = await withTimeout(
-    navigator.serviceWorker.getRegistration('/'),
-    3000,
-    'getRegistration'
-  );
-  if (existing) return existing;
+  try {
+    const existing = await withTimeout(
+      navigator.serviceWorker.getRegistration('/'),
+      3000,
+      'getRegistration'
+    );
+    if (existing) return existing;
+  } catch (e) {
+    console.warn('getRegistration failed, trying register', e);
+  }
 
   // Força um novo registro se não existir
   const reg = await withTimeout(
     navigator.serviceWorker.register('/sw.js'),
-    5000,
+    10000,
     'register'
   );
-  // Aguarda ficar ativo (max 5s)
+  
+  // Aguarda ficar ativo (max 10s)
   await withTimeout(
     new Promise<void>((resolve) => {
       if (reg.active) { resolve(); return; }
       const sw = reg.installing ?? reg.waiting;
       if (!sw) { resolve(); return; }
-      sw.addEventListener('statechange', () => {
-        if (sw.state === 'activated') resolve();
-      });
+      
+      const checkState = () => {
+        if (sw.state === 'activated') {
+          sw.removeEventListener('statechange', checkState);
+          resolve();
+        }
+      };
+      sw.addEventListener('statechange', checkState);
     }),
-    5000,
+    10000,
     'activate'
   );
   return reg;
@@ -68,19 +94,30 @@ export default function BotaoAlertas({ portSlug, portName, variant = 'pill' }: P
   const [status, setStatus] = useState<Status>('idle');
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+    setMounted(true);
+    if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
       setStatus('unsupported');
       return;
     }
-    if (Notification.permission === 'denied') {
-      setStatus('denied');
-      return;
+    
+    // Check permission safely
+    try {
+      if (Notification.permission === 'denied') {
+        setStatus('denied');
+        return;
+      }
+    } catch (e) {
+      console.error('Notification permission check failed', e);
     }
+
     const saved = localStorage.getItem(`push_subscribed_${portSlug}`);
     if (saved === '1') setStatus('subscribed');
   }, [portSlug]);
+
+  if (!mounted) return null;
 
   const handleActivate = async () => {
     if (loading) return;
@@ -88,12 +125,17 @@ export default function BotaoAlertas({ portSlug, portName, variant = 'pill' }: P
     setErrorMsg('');
 
     try {
+      if (!('Notification' in window)) {
+        throw new Error('Notifications not supported');
+      }
+
       // 1. Permissão de notificação
       const permission = await withTimeout(
         Notification.requestPermission(),
-        15000, // aguarda até 15s o diálogo do browser
+        20000, 
         'requestPermission'
       );
+      
       if (permission !== 'granted') {
         setStatus('denied');
         return;
@@ -108,7 +150,7 @@ export default function BotaoAlertas({ portSlug, portName, variant = 'pill' }: P
           userVisibleOnly: true,
           applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
         }),
-        8000,
+        15000,
         'pushManager.subscribe'
       );
 
@@ -124,7 +166,7 @@ export default function BotaoAlertas({ portSlug, portName, variant = 'pill' }: P
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ subscription: subJson, portSlug }),
         }),
-        8000,
+        10000,
         'fetch /api/push/subscribe'
       );
 
@@ -165,17 +207,8 @@ export default function BotaoAlertas({ portSlug, portName, variant = 'pill' }: P
     }
   };
 
-  const config: Record<Status, { label: string; emoji: string; color: string; action?: () => void }> = {
-    idle:        { label: 'Ativar alertas',       emoji: '🔔', color: '#0ea5e9', action: handleActivate },
-    subscribed:  { label: 'Alertas ativos',        emoji: '✅', color: '#10b981', action: handleDeactivate },
-    denied:      { label: 'Permitir notificações', emoji: '🔕', color: '#ef4444' },
-    unsupported: { label: 'Não suportado',          emoji: '⚠️', color: '#64748b' },
-    error:       { label: 'Tentar de novo',         emoji: '❌', color: '#f59e0b', action: handleActivate },
-  };
-
   if (status === 'unsupported') return null;
 
-  // Permissão negada — orienta o usuário
   if (status === 'denied') {
     return (
       <span
@@ -184,15 +217,24 @@ export default function BotaoAlertas({ portSlug, portName, variant = 'pill' }: P
           display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
           fontSize: '0.75rem', color: '#ef4444', fontWeight: 700,
           padding: '0.4rem 0.9rem', border: '1.5px solid #ef4444',
-          borderRadius: '100px', opacity: 0.8,
+          borderRadius: '100px', opacity: 0.8, background: 'rgba(0,0,0,0.2)',
         }}
       >
-        🔕 Notificações bloqueadas — ative nas config. do browser
+        🔕 Bloqueado — ative no browser
       </span>
     );
   }
 
-  const { label, emoji, color, action } = config[status];
+  const config: Record<Status, { label: string; emoji: string; color: string; action?: () => void }> = {
+    idle:        { label: 'Ativar alertas',       emoji: '🔔', color: '#0ea5e9', action: handleActivate },
+    subscribed:  { label: 'Alertas ativos',        emoji: '✅', color: '#10b981', action: handleDeactivate },
+    denied:      { label: 'Bloqueado',             emoji: '🔕', color: '#ef4444' },
+    unsupported: { label: 'Incompatível',          emoji: '⚠️', color: '#64748b' },
+    error:       { label: 'Tentar de novo',         emoji: '❌', color: '#f59e0b', action: handleActivate },
+  };
+
+  const currentConfig = config[status] || config.idle;
+  const { label, emoji, color, action } = currentConfig;
   const isPill = variant === 'pill';
 
   return (
@@ -228,8 +270,8 @@ export default function BotaoAlertas({ portSlug, portName, variant = 'pill' }: P
     >
       {loading ? (
         <>
-          <span style={{ fontSize: '0.9rem', animation: 'spin 1s linear infinite' }}>⏳</span>
-          Aguardando permissão...
+          <span style={{ fontSize: '0.9rem' }}>⏳</span>
+          Processando...
         </>
       ) : (
         <>

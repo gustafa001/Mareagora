@@ -140,7 +140,7 @@ export default function ActivityRecommendations({
     <section className="classic-card">
       <h2 className="card-title">🏖️ Atividades Recomendadas</h2>
       <div className="grid sm:grid-cols-2 gap-4">
-        {loading && !showFallback && waveHeight === undefined ? (
+        {loading && !showFallback && (waveHeight === undefined || waveHeight === null) ? (
           <div className="col-span-full py-8 text-center text-gray-400 animate-pulse font-syne">
             Carregando recomendações...
           </div>

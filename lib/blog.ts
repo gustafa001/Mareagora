@@ -151,9 +151,15 @@ export function getPostsByPort(port: Port, limit = 3): { posts: BlogPost[], stra
     };
   }
 
-  // Fallback: 3 mais recentes
+  // Fallback: posts com algum score (mesmo baixo), ordenados por score desc
+  // Se nenhum tem score > 0, pega os mais recentes mas muda o título
+  const comAlgumScore = scored.filter(s => s.score > 0)
+    .sort((a, b) => b.score - a.score);
+
   return {
-    posts: all.slice(0, limit),
+    posts: comAlgumScore.length > 0
+      ? comAlgumScore.slice(0, limit).map(s => s.post)
+      : all.slice(0, limit),
     strategy: 'generic'
   };
 }

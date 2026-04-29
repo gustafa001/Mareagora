@@ -15,6 +15,7 @@ export interface Port {
   lon: number;
   offsetMinutes?: number;
   searchNames?: string[];
+  referencePortSlug?: string;
 }
 
 export const PORTS: Port[] = [
@@ -72,14 +73,14 @@ export const PORTS: Port[] = [
   { id: '46', name: 'Porto de Santos',                           cityName: 'Santos',                   slug: 'porto-de-santos',                      state: 'SP',  region: 'sudeste',  lat: -23.956778, lon: -46.308111, dhnId: '50228' },
 
   // Litoral de SP — referência Porto de Santos (dhnId 50228)
-  { id: '57', name: 'Guarujá',                 cityName: 'Guarujá',                 slug: 'guaruja',                   state: 'SP', region: 'sudeste', lat: -23.993056, lon: -46.257778, dhnId: '50228', offsetMinutes:  0, searchNames: ['guaruja', 'guarujá', 'enseada', 'pitangueiras'] },
-  { id: '58', name: 'São Vicente',             cityName: 'São Vicente',             slug: 'sao-vicente',               state: 'SP', region: 'sudeste', lat: -23.964444, lon: -46.391944, dhnId: '50228', offsetMinutes:  0, searchNames: ['sao vicente', 'são vicente'] },
-  { id: '59', name: 'Praia Grande',            cityName: 'Praia Grande',            slug: 'praia-grande',              state: 'SP', region: 'sudeste', lat: -24.005833, lon: -46.412222, dhnId: '50228', offsetMinutes:  5, searchNames: ['praia grande', 'aviação', 'real'] },
-  { id: '60', name: 'Bertioga',                cityName: 'Bertioga',                slug: 'bertioga',                  state: 'SP', region: 'sudeste', lat: -23.854444, lon: -46.138611, dhnId: '50228', offsetMinutes: 15, searchNames: ['bertioga'] },
-  { id: '61', name: 'Riviera de São Lourenço', cityName: 'Riviera de São Lourenço', slug: 'riviera-de-sao-lourenco',   state: 'SP', region: 'sudeste', lat: -23.833333, lon: -46.033333, dhnId: '50228', offsetMinutes: 15, searchNames: ['riviera', 'riviera de sao lourenco', 'são lourenço'] },
-  { id: '62', name: 'Mongaguá',                cityName: 'Mongaguá',                slug: 'mongagua',                  state: 'SP', region: 'sudeste', lat: -24.085278, lon: -46.622500, dhnId: '50228', offsetMinutes: 10, searchNames: ['mongagua', 'mongaguá'] },
-  { id: '63', name: 'Itanhaém',                cityName: 'Itanhaém',                slug: 'itanhaem',                  state: 'SP', region: 'sudeste', lat: -24.183333, lon: -46.783333, dhnId: '50228', offsetMinutes: 15, searchNames: ['itanhaem', 'itanhaém'] },
-  { id: '64', name: 'Peruíbe',                 cityName: 'Peruíbe',                 slug: 'peruibe',                   state: 'SP', region: 'sudeste', lat: -24.316667, lon: -47.000000, dhnId: '50228', offsetMinutes: 20, searchNames: ['peruibe', 'peruíbe'] },
+  { id: '57', name: 'Guarujá',                 cityName: 'Guarujá',                 slug: 'guaruja',                   state: 'SP', region: 'sudeste', lat: -23.993056, lon: -46.257778, dhnId: '50228', offsetMinutes:  0, searchNames: ['guaruja', 'guarujá', 'enseada', 'pitangueiras'], referencePortSlug: 'porto-de-santos' },
+  { id: '58', name: 'São Vicente',             cityName: 'São Vicente',             slug: 'sao-vicente',               state: 'SP', region: 'sudeste', lat: -23.964444, lon: -46.391944, dhnId: '50228', offsetMinutes:  0, searchNames: ['sao vicente', 'são vicente'], referencePortSlug: 'porto-de-santos' },
+  { id: '59', name: 'Praia Grande',            cityName: 'Praia Grande',            slug: 'praia-grande',              state: 'SP', region: 'sudeste', lat: -24.005833, lon: -46.412222, dhnId: '50228', offsetMinutes:  5, searchNames: ['praia grande', 'aviação', 'real'], referencePortSlug: 'porto-de-santos' },
+  { id: '60', name: 'Bertioga',                cityName: 'Bertioga',                slug: 'bertioga',                  state: 'SP', region: 'sudeste', lat: -23.854444, lon: -46.138611, dhnId: '50228', offsetMinutes: 15, searchNames: ['bertioga'], referencePortSlug: 'porto-de-santos' },
+  { id: '61', name: 'Riviera de São Lourenço', cityName: 'Riviera de São Lourenço', slug: 'riviera-de-sao-lourenco',   state: 'SP', region: 'sudeste', lat: -23.833333, lon: -46.033333, dhnId: '50228', offsetMinutes: 15, searchNames: ['riviera', 'riviera de sao lourenco', 'são lourenço'], referencePortSlug: 'porto-de-santos' },
+  { id: '62', name: 'Mongaguá',                cityName: 'Mongaguá',                slug: 'mongagua',                  state: 'SP', region: 'sudeste', lat: -24.085278, lon: -46.622500, dhnId: '50228', offsetMinutes: 10, searchNames: ['mongagua', 'mongaguá'], referencePortSlug: 'porto-de-santos' },
+  { id: '63', name: 'Itanhaém',                cityName: 'Itanhaém',                slug: 'itanhaem',                  state: 'SP', region: 'sudeste', lat: -24.183333, lon: -46.783333, dhnId: '50228', offsetMinutes: 15, searchNames: ['itanhaem', 'itanhaém'], referencePortSlug: 'porto-de-santos' },
+  { id: '64', name: 'Peruíbe',                 cityName: 'Peruíbe',                 slug: 'peruibe',                   state: 'SP', region: 'sudeste', lat: -24.316667, lon: -47.000000, dhnId: '50228', offsetMinutes: 20, searchNames: ['peruibe', 'peruíbe'], referencePortSlug: 'porto-de-santos' },
 
   // ── Região Sul ────────────────────────────────────────────────────────────
   { id: '47', name: 'Barra de Paranaguá - Canal SE',            cityName: 'Paranaguá (Barra SE)',     slug: 'barra-de-paranagua-sueste',            state: 'PR',  region: 'sul',      lat: -25.540000, lon: -48.295000, dhnId: '60130' },
@@ -151,7 +152,7 @@ export interface PortoProximo {
   estado: string;
 }
 
-function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+export function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const R = 6371; // Earth's radius in km
   const dLat = (lat2 - lat1) * Math.PI / 180;
   const dLon = (lon2 - lon1) * Math.PI / 180;

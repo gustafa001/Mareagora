@@ -112,6 +112,9 @@ export default async function PortPage({ params }: { params: { slug: string } })
         description: `Horários e alturas das marés em ${seoName} (${port.state}) para ${ano}.`,
         inLanguage: 'pt-BR',
         isPartOf: { '@id': 'https://mareagora.com.br/' },
+        ...(port.referencePortSlug && {
+          isBasedOn: `https://mareagora.com.br/mare/${port.referencePortSlug}`
+        }),
       },
       {
         '@type': 'Dataset',

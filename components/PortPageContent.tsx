@@ -1,6 +1,6 @@
 'use client';
 
-import { getPortBySlug, PORTS } from '@/lib/ports';
+import { getPortBySlug, PORTS, haversineDistance } from '@/lib/ports';
 import { getEventosDia, getEventosAno } from '@/lib/mare';
 import { portosConfig } from '@/data/porto-seo-config';
 import dynamic from 'next/dynamic';
@@ -63,6 +63,13 @@ export default function PortPageContent({ slug, portDescription, blogPosts }: Po
     const [h, m] = t.hora.split(':').map(Number);
     return (h || 0) * 60 + (m || 0) > currentMin && t.altura_m < avgH;
   }) ?? todayTides.find(t => t.altura_m < avgH) ?? null;
+
+  const referencePort = port.referencePortSlug ? getPortBySlug(port.referencePortSlug) : null;
+  const referenceData = referencePort ? {
+    name: referencePort.cityName || referencePort.name,
+    slug: referencePort.slug,
+    distanceKm: Math.round(haversineDistance(port.lat, port.lon, referencePort.lat, referencePort.lon))
+  } : undefined;
 
   return (
     <main className="min-h-screen pb-20">
@@ -130,6 +137,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts }: Po
               portName={seoName}
               lat={port.lat}
               lon={port.lon}
+              referencePort={referenceData}
             />
 
             <NotificationCTA portSlug={slug} />

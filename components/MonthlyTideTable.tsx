@@ -8,6 +8,11 @@ interface MonthlyTideTableProps {
   portName: string;
   lat: number;
   lon: number;
+  referencePort?: {
+    name: string;
+    slug: string;
+    distanceKm: number;
+  };
 }
 
 const WEEKDAYS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
@@ -115,7 +120,7 @@ function isAlta(t: { altura_m: number }, index: number, all: { altura_m: number 
   return index % 2 === 0;
 }
 
-export default function MonthlyTideTable({ eventos, portName, lat, lon }: MonthlyTideTableProps) {
+export default function MonthlyTideTable({ eventos, portName, lat, lon, referencePort }: MonthlyTideTableProps) {
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth());
 
@@ -198,6 +203,23 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon }: Monthl
           </select>
         </div>
       </div>
+
+      {referencePort && (
+        <div style={{
+          padding: "0.5rem 1.5rem",
+          background: "rgba(59,130,246,0.05)",
+          borderBottom: "1px solid rgba(255,255,255,0.04)",
+          display: "flex",
+          alignItems: "center",
+          gap: "0.5rem",
+        }}>
+          <span style={{ fontSize: "0.9rem" }}>ℹ️</span>
+          <p style={{ margin: 0, fontSize: "0.75rem", color: "#94a3b8", fontWeight: 500 }}>
+            Os dados de {portName} são referenciados pelo <a href={`/mare/${referencePort.slug}`} style={{ color: "#60a5fa", textDecoration: "underline", textUnderlineOffset: "3px" }}>{referencePort.name}</a> (~{referencePort.distanceKm} km). 
+            <span className="hidden sm:inline"> As diferenças de horário são inferiores a 2 minutos.</span>
+          </p>
+        </div>
+      )}
 
       {/* Table */}
       <div style={{ overflowX: "auto", overflowY: "auto", maxHeight: "75vh", WebkitOverflowScrolling: "touch" }}>

@@ -24,7 +24,7 @@ export default function BeachAffiliateCard({ label, url, nomePraia }: Props) {
       <a
         href={url}
         target="_blank"
-        rel="noopener noreferrer sponsored"
+        rel="nofollow sponsored"
         className="bac-btn"
       >
         {label} →

@@ -70,7 +70,12 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
 
   return (
     <main className="praia-page">
-      {/* â”€â”€ Breadcrumb â”€â”€ */}
+      {/* ── Botão Voltar ── */}
+      <a href="/guia-praias" className="pp-back-btn">
+        ← Guia de Praias
+      </a>
+
+      {/* ── Breadcrumb ── */}
       <nav className="pp-breadcrumb" aria-label="Breadcrumb">
         <a href="/">MaréAgora</a>
         <span>/</span>
@@ -176,20 +181,20 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
           <div className="pp-quick-links">
             <h3>Equipamentos para {praia.nome}</h3>
             <a
-              href={`https://www.amazon.com.br/s?k=equipamentos+praia&tag=SEU_AFILIADO`}
+              href={`https://www.amazon.com.br/s?k=equipamentos+praia&tag=mareagora-20`}
               target="_blank"
-              rel="noopener noreferrer sponsored"
+              rel="nofollow sponsored"
               className="pp-affiliate-link"
             >
-              ðŸ–ï¸ Ver equipamentos de praia na Amazon
+              🏖️ Ver equipamentos de praia na Amazon
             </a>
             <a
-              href={`https://www.amazon.com.br/s?k=vara+de+pesca&tag=SEU_AFILIADO`}
+              href={`https://www.amazon.com.br/s?k=vara+de+pesca&tag=mareagora-20`}
               target="_blank"
-              rel="noopener noreferrer sponsored"
+              rel="nofollow sponsored"
               className="pp-affiliate-link"
             >
-              ðŸŽ£ Ver equipamentos de pesca na Amazon
+              🎣 Ver equipamentos de pesca na Amazon
             </a>
           </div>
 
@@ -214,7 +219,18 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
 }
 
 const styles = `
-  .praia-page { background: #04111f; min-height: 100vh; color: #f0e6c8; }
+  .praia-page { background: #04111f; min-height: 100vh; color: #f0e6c8; position: relative; }
+
+  /* Voltar */
+  .pp-back-btn {
+    position: absolute; top: 1.5rem; left: 1.5rem; z-index: 100;
+    color: #2196c4; text-decoration: none; font-size: 0.75rem; font-weight: 700;
+    display: flex; align-items: center; gap: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;
+    padding: 0.4rem 1rem; border: 1px solid rgba(33,150,196,0.3);
+    border-radius: 100px; background: rgba(4,17,31,0.6); backdrop-filter: blur(4px);
+    transition: all 0.2s;
+  }
+  .pp-back-btn:hover { background: rgba(33,150,196,0.2); color: #7ab8d0; border-color: rgba(33,150,196,0.6); }
 
   /* Breadcrumb */
   .pp-breadcrumb {

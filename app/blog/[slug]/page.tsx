@@ -167,8 +167,7 @@ export default async function BlogPostPage({ params }: Props) {
             href="/blog"
             className="inline-flex items-center gap-2 text-sm font-bold text-blue-400 hover:text-blue-300 transition-colors"
           >
-            <span>←</span>
-            <span>Voltar ao Blog</span>
+            ← Blog
           </Link>
         </div>
 

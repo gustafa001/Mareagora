@@ -40,7 +40,7 @@ export default function ConfiguracoesPage() {
             transition: 'all 0.2s', marginBottom: '2rem',
           }}
         >
-          ← Voltar
+          ← Início
         </Link>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2.5rem' }}>

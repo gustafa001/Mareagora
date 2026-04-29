@@ -374,14 +374,12 @@ export const PRAIAS: Praia[] = [
     afiliado: { label: '🤿 Equipamentos de Mergulho Pro', url: 'https://www.amazon.com.br/s?k=equipamento+mergulho+profissional&tag=mareagora-20' },
     unsplashQuery: 'fernando de noronha ocean dolphins diving brazil',
   },
-
-  // ── Região Sudeste ────────────────────────────────────────────────────────
   {
     slug: 'porto-de-madre-de-deus',
     nome: 'Madre de Deus',
     estado: 'Bahia',
     uf: 'BA',
-    regiao: 'sudeste',
+    regiao: 'nordeste',
     descricao: 'Ilha na Baía de Todos os Santos com praias tranquilas e boa pesca. Acesso de ferry de Salvador.',
     tags: ['Ilha', 'Pesca', 'Tranquilo'],
     porto: { slug: 'porto-de-madre-de-deus', nome: 'Porto Madre de Deus', estado: 'BA', dataFile: '40118.json' },
@@ -393,7 +391,7 @@ export const PRAIAS: Praia[] = [
     nome: 'Base de Aratu',
     estado: 'Bahia',
     uf: 'BA',
-    regiao: 'sudeste',
+    regiao: 'nordeste',
     descricao: 'Baía de Todos os Santos com águas calmas e pesca abundante. Próximo a Salvador e praias da ilha.',
     tags: ['Pesca', 'Baía', 'Navegação'],
     porto: { slug: 'porto-de-aratu', nome: 'Base de Aratu', estado: 'BA', dataFile: '40135.json' },
@@ -405,7 +403,7 @@ export const PRAIAS: Praia[] = [
     nome: 'Salvador',
     estado: 'Bahia',
     uf: 'BA',
-    regiao: 'sudeste',
+    regiao: 'nordeste',
     descricao: 'Capital baiana com praias vibrantes como Porto da Barra e Ondina. Cultura rica, axé e mar azul-turquesa.',
     tags: ['Cultura', 'Urbana', 'Mergulho'],
     porto: { slug: 'porto-de-salvador', nome: 'Porto de Salvador', estado: 'BA', dataFile: '40141.json' },
@@ -417,13 +415,15 @@ export const PRAIAS: Praia[] = [
     nome: 'Ilhéus',
     estado: 'Bahia',
     uf: 'BA',
-    regiao: 'sudeste',
+    regiao: 'nordeste',
     descricao: 'Terra do cacau e de Jorge Amado. Praias selvagens como Olivença e Cururupe com ondas para surf.',
     tags: ['Surf', 'Natureza', 'Cultura'],
     porto: { slug: 'porto-de-ilheus', nome: 'Porto de Ilhéus', estado: 'BA', dataFile: '40145.json' },
     afiliado: { label: '🏄 Pranchas e Acessórios Surf', url: 'https://www.amazon.com.br/s?k=prancha+surf+acessorios&tag=mareagora-20' },
     unsplashQuery: 'ilheus bahia surf beach brazil coast',
   },
+
+  // ── Região Sudeste ────────────────────────────────────────────────────────
   {
     slug: 'terminal-de-barra-do-riacho',
     nome: 'Barra do Riacho',
@@ -824,7 +824,7 @@ export default function GuiaPraias() {
       {/* ── Hero ── */}
       <section className="gp-hero">
         <Link href="/" className="gp-back-btn">
-          ← Voltar ao Início
+          ← Início
         </Link>
         <div className="gp-hero-bg" />
         <div className="gp-hero-content">
@@ -892,7 +892,7 @@ export default function GuiaPraias() {
                         <a
                           href={praia.afiliado.url}
                           target="_blank"
-                          rel="noopener noreferrer sponsored"
+                          rel="nofollow sponsored"
                           className="gp-amazon-btn"
                         >
                           <span>{praia.afiliado.label}</span>

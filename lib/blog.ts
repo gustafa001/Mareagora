@@ -127,8 +127,9 @@ export function getPostsByPort(port: Port, limit = 3): { posts: BlogPost[], stra
     }
 
     // PRIORIDADE 2: Estado (Peso 5)
-    // Busca pelo nome completo (ex: "são paulo") ou sigla (se houver mapeamento, mas aqui usamos o campo state do objeto port)
-    if (haystack.includes(state)) {
+    // Busca pela sigla do estado com limites de palavra para evitar falsos positivos (ex: "sp" em "esporte")
+    const stateRegex = new RegExp(`\\b${state}\\b`, 'i');
+    if (stateRegex.test(haystack)) {
       score += 5;
     }
 
@@ -140,12 +141,7 @@ export function getPostsByPort(port: Port, limit = 3): { posts: BlogPost[], stra
     return { post, score };
   });
 
-  console.log(`[blog.ts] Scores para ${slug}:`, 
-    scored.map(s => ({ 
-      slug: s.post.slug, 
-      score: s.score 
-    })).sort((a,b) => b.score - a.score).slice(0, 5)
-  );
+
 
   // Filtrar apenas os que tem algum score (pelo menos regional)
   const relevantScored = scored.filter(s => s.score > 0).sort((a, b) => b.score - a.score);

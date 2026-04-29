@@ -9,7 +9,7 @@ export interface Port {
   cityName: string; // Nome amigável para <title>, <h1> e SEO
   slug: string;
   state: string;
-  region: 'norte' | 'nordeste' | 'sudeste' | 'sul';
+  region: 'norte' | 'nordeste' | 'sudeste' | 'sul' | 'especial';
   dhnId: string;
   lat: number;
   lon: number;
@@ -50,17 +50,16 @@ export const PORTS: Port[] = [
   { id: '25', name: 'Porto de Maceió',                           cityName: 'Maceió',                   slug: 'porto-de-maceio',                      state: 'AL',  region: 'nordeste', lat: -9.683167,  lon: -35.725111, dhnId: '30725' },
   { id: '26', name: 'Terminal Marítimo Inácio Barbosa',          cityName: 'Barra dos Coqueiros',      slug: 'terminal-maritimo-inacio-barbosa',     state: 'SE',  region: 'nordeste', lat: -10.842778, lon: -36.917944, dhnId: '30810' },
   { id: '27', name: 'Capitania dos Portos de Sergipe',           cityName: 'Aracaju',                  slug: 'capitania-dos-portos-de-sergipe',      state: 'SE',  region: 'nordeste', lat: -10.920000, lon: -37.045889, dhnId: '30825' },
-  { id: '28', name: 'Fernando de Noronha',                       cityName: 'Fernando de Noronha',      slug: 'arquipelago-de-fernando-de-noronha',   state: 'PE',  region: 'nordeste', lat: -3.833333,  lon: -32.403333, dhnId: '30955' },
+  { id: '29', name: 'Porto Madre de Deus',                       cityName: 'Madre de Deus',            slug: 'porto-de-madre-de-deus',               state: 'BA',  region: 'nordeste', lat: -12.749778, lon: -38.623694, dhnId: '40118' },
+  { id: '30', name: 'Base de Aratu',                             cityName: 'Aratu',                    slug: 'porto-de-aratu',                       state: 'BA',  region: 'nordeste', lat: -12.794611, lon: -38.494194, dhnId: '40135' },
+  { id: '31', name: 'Porto de Salvador',                         cityName: 'Salvador',                 slug: 'porto-de-salvador',                    state: 'BA',  region: 'nordeste', lat: -12.973750, lon: -38.517222, dhnId: '40141' },
+  { id: '32', name: 'Porto de Ilhéus',                           cityName: 'Ilhéus',                   slug: 'porto-de-ilheus',                      state: 'BA',  region: 'nordeste', lat: -14.780361, lon: -39.026833, dhnId: '40145' },
 
   // ── Região Sudeste ────────────────────────────────────────────────────────
-  { id: '29', name: 'Porto Madre de Deus',                       cityName: 'Madre de Deus',            slug: 'porto-de-madre-de-deus',               state: 'BA',  region: 'sudeste',  lat: -12.749778, lon: -38.623694, dhnId: '40118' },
-  { id: '30', name: 'Base de Aratu',                             cityName: 'Aratu',                    slug: 'porto-de-aratu',                       state: 'BA',  region: 'sudeste',  lat: -12.794611, lon: -38.494194, dhnId: '40135' },
-  { id: '31', name: 'Porto de Salvador',                         cityName: 'Salvador',                 slug: 'porto-de-salvador',                    state: 'BA',  region: 'sudeste',  lat: -12.973750, lon: -38.517222, dhnId: '40141' },
-  { id: '32', name: 'Porto de Ilhéus',                           cityName: 'Ilhéus',                   slug: 'porto-de-ilheus',                      state: 'BA',  region: 'sudeste',  lat: -14.780361, lon: -39.026833, dhnId: '40145' },
+  { id: '28', name: 'Fernando de Noronha',                       cityName: 'Fernando de Noronha',      slug: 'arquipelago-de-fernando-de-noronha',   state: 'PE',  region: 'especial', lat: -3.833333,  lon: -32.403333, dhnId: '30955' },
   { id: '33', name: 'Terminal da Barra do Riacho',               cityName: 'Aracruz',                  slug: 'terminal-de-barra-do-riacho',          state: 'ES',  region: 'sudeste',  lat: -19.838639, lon: -40.059722, dhnId: '40240' },
   { id: '34', name: 'Porto de Tubarão',                          cityName: 'Vitória (Tubarão)',        slug: 'porto-de-tubarao',                     state: 'ES',  region: 'sudeste',  lat: -20.288778, lon: -40.243694, dhnId: '40255' },
   { id: '35', name: 'Porto de Vitória',                          cityName: 'Vitória',                  slug: 'porto-de-vitoria',                     state: 'ES',  region: 'sudeste',  lat: -20.321667, lon: -40.335944, dhnId: '40256' },
-  { id: '36', name: 'Ilha da Trindade',                          cityName: 'Ilha da Trindade',         slug: 'ilha-da-trindade',                     state: 'ES',  region: 'sudeste',  lat: -20.508333, lon: -29.310000, dhnId: '40263' },
   { id: '37', name: 'Terminal da Ponta do Ubu',                  cityName: 'Anchieta',                 slug: 'terminal-da-ponta-do-ubu-i',           state: 'ES',  region: 'sudeste',  lat: -20.787833, lon: -40.570389, dhnId: '40292' },
   { id: '38', name: 'Terminal de Imbetiba',                      cityName: 'Macaé',                    slug: 'terminal-maritimo-de-imbetiba',        state: 'RJ',  region: 'sudeste',  lat: -22.385000, lon: -41.770000, dhnId: '50116' },
   { id: '39', name: 'Rio de Janeiro - Ilha Fiscal',              cityName: 'Rio de Janeiro',           slug: 'rio-de-janeiro-fiscal',                state: 'RJ',  region: 'sudeste',  lat: -22.896694, lon: -43.166000, dhnId: '50140' },
@@ -92,7 +91,11 @@ export const PORTS: Port[] = [
   { id: '53', name: 'Porto de Florianópolis',                   cityName: 'Florianópolis',            slug: 'porto-de-florianopolis',               state: 'SC',  region: 'sul',      lat: -27.587778, lon: -48.556944, dhnId: '60245' },
   { id: '54', name: 'Porto de Imbituba',                        cityName: 'Imbituba',                 slug: 'porto-de-imbituba',                    state: 'SC',  region: 'sul',      lat: -28.233333, lon: -48.650000, dhnId: '60250' },
   { id: '55', name: 'Porto do Rio Grande',                      cityName: 'Rio Grande',               slug: 'porto-do-rio-grande',                  state: 'RS',  region: 'sul',      lat: -32.138611, lon: -52.103611, dhnId: '60380' },
-  { id: '56', name: 'Base Comandante Ferraz (Antártida)',        cityName: 'Base Ferraz (Antártida)',  slug: 'base-comandante-ferraz',               state: 'ANT', region: 'sul',      lat: -62.085000, lon: -58.395000, dhnId: '60900' },
+
+  // ── Especial (Antártida, ilhas oceânicas) ──────────────────────────────────
+  { id: '28', name: 'Fernando de Noronha',                       cityName: 'Fernando de Noronha',      slug: 'arquipelago-de-fernando-de-noronha',   state: 'PE',  region: 'especial', lat: -3.833333,  lon: -32.403333, dhnId: '30955' },
+  { id: '36', name: 'Ilha da Trindade',                          cityName: 'Ilha da Trindade',         slug: 'ilha-da-trindade',                     state: 'ES',  region: 'especial', lat: -20.508333, lon: -29.310000, dhnId: '40263' },
+  { id: '56', name: 'Base Comandante Ferraz (Antártida)',        cityName: 'Base Ferraz (Antártida)',  slug: 'base-comandante-ferraz',               state: 'ANT', region: 'especial', lat: -62.085000, lon: -58.395000, dhnId: '60900' },
 
 ];
 
@@ -132,6 +135,7 @@ export function getAllRegions(): { id: Port['region']; name: string }[] {
     { id: 'nordeste', name: 'Região Nordeste' },
     { id: 'sudeste',  name: 'Região Sudeste'  },
     { id: 'sul',      name: 'Região Sul'      },
+    { id: 'especial', name: 'Especial (Antártida, ilhas oceânicas)' },
   ];
 }
 

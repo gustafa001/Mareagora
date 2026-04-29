@@ -561,3 +561,14 @@ body {
   font-variant-numeric: tabular-nums;
   letter-spacing: .3px;
 }
+
+/* ── ADSENSE PROTECTION ── */
+/* Esconde o container do anúncio caso o AdSense não retorne nenhum conteúdo (unfilled) */
+.ad-slot-container:has(ins[data-ad-status='unfilled']),
+.ad-container:has(ins[data-ad-status='unfilled']),
+.adsbygoogle[data-ad-status='unfilled'] {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}

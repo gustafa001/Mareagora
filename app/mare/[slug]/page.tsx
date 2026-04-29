@@ -6,6 +6,8 @@ import PortoFAQ from '@/components/PortoFAQ';
 import PortosProximos from '@/components/PortosProximos';
 import ExploreCTA from '@/components/ExploreCTA';
 import { portosConfig, categoryDefaults } from '@/data/porto-seo-config';
+import { AD_SLOTS } from '@/lib/adConfig';
+import AdSlot from '@/components/ads/AdSlot';
 import { getPostsByPort } from '@/lib/blog';
 import type { BlogPost } from '@/lib/blog';
 import { getPortoDescription } from '@/lib/porto-descriptions';
@@ -149,6 +151,11 @@ export default async function PortPage({ params }: { params: { slug: string } })
         <PortoFAQ slug={slug} categoria={categoria} />
         <PortosProximos slug={slug} />
         <ExploreCTA />
+        
+        {/* AdSense Rodapé */}
+        <div className="mt-12 flex justify-center">
+          <AdSlot slotId={AD_SLOTS.PREFOOTER} format="horizontal" />
+        </div>
       </div>
     </>
   );

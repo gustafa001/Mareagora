@@ -3,6 +3,8 @@
 import { getPortBySlug, PORTS, haversineDistance } from '@/lib/ports';
 import { getEventosDia, getEventosAno } from '@/lib/mare';
 import { portosConfig } from '@/data/porto-seo-config';
+import { AD_SLOTS } from '@/lib/adConfig';
+import AdSlot from '@/components/ads/AdSlot';
 import dynamic from 'next/dynamic';
 import NavBar from '@/components/NavBar';
 const TideChart = dynamic(() => import('@/components/TideChart'), { ssr: false });
@@ -141,6 +143,11 @@ export default function PortPageContent({ slug, portDescription, blogPosts }: Po
             />
 
             <NotificationCTA portSlug={slug} />
+
+            {/* AdSense In-Content */}
+            <div className="my-8 flex justify-center">
+              <AdSlot slotId={AD_SLOTS.INCONTENT_RECT} format="auto" />
+            </div>
 
             <WindWaveCharts lat={port.lat} lon={port.lon} />
 

@@ -1,7 +1,8 @@
 // app/guia-praias/page.tsx
 import Link from 'next/link'
 import type { Metadata } from 'next'
-// import BeachImage from './BeachImage' - Removido: componente de imagens não utilizado
+import { AD_SLOTS } from '@/lib/adConfig'
+import AdSlot from '@/components/ads/AdSlot'
 
 export const metadata: Metadata = {
   title: 'Guia de Praias do Brasil — Marés, Ondas e Dicas | MaréAgora',
@@ -845,7 +846,7 @@ export default function GuiaPraias() {
 
       {/* ── AdSense topo ── */}
       <div className="gp-ad-slot">
-        <span>Publicidade</span>
+        <AdSlot slotId={AD_SLOTS.LEADERBOARD_NAV} format="horizontal" />
       </div>
 
       {/* ── Grid por região ── */}
@@ -909,7 +910,7 @@ export default function GuiaPraias() {
 
       {/* ── AdSense meio ── */}
       <div className="gp-ad-slot gp-ad-wide">
-        <span>Publicidade</span>
+        <AdSlot slotId={AD_SLOTS.INCONTENT_RECT} format="auto" />
       </div>
 
       {/* ── SEO text block ── */}

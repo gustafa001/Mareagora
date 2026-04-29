@@ -1,7 +1,9 @@
-import Link from 'next/link';
-import { PORTS } from '@/lib/ports';
+import { PORTS, getAllRegions } from '@/lib/ports';
+import { AD_SLOTS } from '@/lib/adConfig';
+import AdSlot from '@/components/ads/AdSlot';
 import NavBar from '@/components/NavBar';
 import dynamic from 'next/dynamic';
+import PortosListClient from '@/components/PortosListClient';
 
 const MapaPortos = dynamic(() => import('@/components/MapaPortos'), {
   ssr: false,
@@ -15,31 +17,42 @@ const MapaPortos = dynamic(() => import('@/components/MapaPortos'), {
 });
 import type { Metadata } from 'next';
 
+const PORT_COUNT = PORTS.length;
+
 export const metadata: Metadata = {
-  title: 'Tábua de Marés de Todos os Portos e Praias do Brasil 2026 | MaréAgora',
-  description: 'Consulte a tábua de marés para 122 portos e praias do Brasil em 2026. Do Pará à Antártida, dados oficiais da Marinha do Brasil para surf, pesca, mergulho e navegação.',
-  keywords: [
-    'tabua de mares brasil',
-    'tabua de mares 2026',
-    'maré brasil portos',
-    'tábua de maré todas praias brasil',
-    'tábua de maré litoral brasileiro',
-    'previsão maré brasil',
-  ],
+  title: 'Todos os Portos — Tábua de Marés Brasil | MaréAgora',
+  description: `Previsão de marés para ${PORT_COUNT} portos brasileiros. Dados oficiais da Marinha do Brasil. Encontre maré alta, baixa e coeficientes para qualquer porto do litoral brasileiro.`,
   alternates: {
     canonical: 'https://www.mareagora.com.br/portos',
-  },
-  openGraph: {
-    title: 'Tábua de Marés — 122 Portos do Brasil 2026 | MaréAgora',
-    description: 'Consulte a tábua de marés para 122 portos e praias do Brasil em 2026. Dados oficiais da Marinha do Brasil.',
-    url: 'https://www.mareagora.com.br/portos',
-    type: 'website',
   },
 };
 
 export default function PortosPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.mareagora.com.br/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Portos",
+        "item": "https://www.mareagora.com.br/portos"
+      }
+    ]
+  };
+
   return (
     <main className="min-h-screen relative">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div
         className="fixed inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url('https://images.unsplash.com/photo-1519046904884-53103b34b206?w=1920&q=80')` }}
@@ -54,128 +67,35 @@ export default function PortosPage() {
         <NavBar />
 
         <section className="py-16 px-4 max-w-6xl mx-auto">
-          <section style={{ marginBottom: '2.5rem' }}>
-            <h2 className="text-3xl font-bold text-white mb-6">Mapa de Portos</h2>
+          <div className="text-center mb-16">
+            <h1 className="text-4xl md:text-6xl font-black text-white mb-6 font-syne tracking-tighter">
+              Tábua de Marés — Todos os Portos do Brasil
+            </h1>
+            <p className="text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
+              O MaréAgora reúne a tábua de marés completa de {PORT_COUNT} portos e estações
+              costeiras do Brasil, com dados oficiais da Diretoria de Hidrografia e
+              Navegação (DHN) da Marinha do Brasil. Navegue por região para encontrar
+              a previsão de marés alta e baixa, coeficientes, horários de nascer e
+              pôr do sol e condições de vento e ondas para o seu porto mais próximo.
+            </p>
+          </div>
+
+          <section style={{ marginBottom: '4rem' }}>
+            <h2 className="text-2xl font-bold text-white mb-6 font-syne">Mapa Interativo</h2>
             <MapaPortos />
-          </section>          {/* Norte */}
-          <div className="mb-16">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-1 h-8 bg-gradient-to-b from-blue-400 to-cyan-400 rounded-full" />
-              <h2 className="text-3xl font-bold text-white">Região Norte</h2>
-              <div className="flex-1 h-px bg-gradient-to-r from-white/20 to-transparent" />
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {PORTS.filter(p => p.region === 'norte').map((port) => (
-                <Link key={port.slug} href={`/mare/${port.slug}`}
-                  className="group backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 hover:border-blue-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 hover:-translate-y-1">
-                  <div className="flex items-start justify-between mb-3">
-                    <h4 className="font-semibold text-white group-hover:text-blue-300 transition-colors">{port.name}</h4>
-                    <svg className="w-5 h-5 text-slate-500 group-hover:text-blue-400 transition-all group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
-                  <p className="text-sm text-slate-400">{port.state}</p>
-                  <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                    Ver previsão
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
+          </section>
 
-          {/* Nordeste */}
-          <div className="mb-16">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-1 h-8 bg-gradient-to-b from-cyan-400 to-teal-400 rounded-full" />
-              <h2 className="text-3xl font-bold text-white">Região Nordeste</h2>
-              <div className="flex-1 h-px bg-gradient-to-r from-white/20 to-transparent" />
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {PORTS.filter(p => p.region === 'nordeste').map((port) => (
-                <Link key={port.slug} href={`/mare/${port.slug}`}
-                  className="group backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10 hover:-translate-y-1">
-                  <div className="flex items-start justify-between mb-3">
-                    <h4 className="font-semibold text-white group-hover:text-cyan-300 transition-colors">{port.name}</h4>
-                    <svg className="w-5 h-5 text-slate-500 group-hover:text-cyan-400 transition-all group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
-                  <p className="text-sm text-slate-400">{port.state}</p>
-                  <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                    Ver previsão
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
+          {/* Componente de Busca e Listagem Client-side */}
+          <PortosListClient 
+            initialRegions={getAllRegions()} 
+            allPorts={PORTS} 
+          />
 
-          {/* Sudeste */}
-          <div className="mb-16">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-1 h-8 bg-gradient-to-b from-teal-400 to-emerald-400 rounded-full" />
-              <h2 className="text-3xl font-bold text-white">Região Sudeste</h2>
-              <div className="flex-1 h-px bg-gradient-to-r from-white/20 to-transparent" />
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {PORTS.filter(p => p.region === 'sudeste').map((port) => (
-                <Link key={port.slug} href={`/mare/${port.slug}`}
-                  className="group backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 hover:border-teal-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/10 hover:-translate-y-1">
-                  <div className="flex items-start justify-between mb-3">
-                    <h4 className="font-semibold text-white group-hover:text-teal-300 transition-colors">{port.name}</h4>
-                    <svg className="w-5 h-5 text-slate-500 group-hover:text-teal-400 transition-all group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
-                  <p className="text-sm text-slate-400">{port.state}</p>
-                  <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                    Ver previsão
-                  </div>
-                </Link>
-              ))}
-            </div>
+          {/* AdSense Rodapé */}
+          <div className="mt-20 flex justify-center border-t border-white/10 pt-12">
+            <AdSlot slotId={AD_SLOTS.PREFOOTER} format="horizontal" />
           </div>
-
-          {/* Sul */}
-          <div className="mb-16">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-1 h-8 bg-gradient-to-b from-emerald-400 to-green-400 rounded-full" />
-              <h2 className="text-3xl font-bold text-white">Região Sul</h2>
-              <div className="flex-1 h-px bg-gradient-to-r from-white/20 to-transparent" />
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {PORTS.filter(p => p.region === 'sul').map((port) => (
-                <Link key={port.slug} href={`/mare/${port.slug}`}
-                  className="group backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 hover:border-emerald-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 hover:-translate-y-1">
-                  <div className="flex items-start justify-between mb-3">
-                    <h4 className="font-semibold text-white group-hover:text-emerald-300 transition-colors">{port.name}</h4>
-                    <svg className="w-5 h-5 text-slate-500 group-hover:text-emerald-400 transition-all group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
-                  <p className="text-sm text-slate-400">{port.state}</p>
-                  <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                    Ver previsão
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-
         </section>
-
-
       </div>
     </main>
   );

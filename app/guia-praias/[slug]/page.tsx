@@ -4,6 +4,8 @@ import type { Metadata } from 'next'
 import { PRAIAS } from '../page'
 import TideCardLive from '@/components/TideCardLive'
 import BeachAffiliateCard from '@/components/BeachAffiliateCard'
+import { AD_SLOTS } from '@/lib/adConfig'
+import AdSlot from '@/components/ads/AdSlot'
 
 // â”€â”€â”€ SEO dinÃ¢mico por praia â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
@@ -92,8 +94,10 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
         </div>
       </header>
 
-      {/* â”€â”€ AdSense topo â”€â”€ */}
-      <div className="pp-ad-slot"><span>Publicidade</span></div>
+      {/* ── AdSense topo ── */}
+      <div className="pp-ad-slot">
+        <AdSlot slotId={AD_SLOTS.LEADERBOARD_NAV} format="horizontal" />
+      </div>
 
       {/* â”€â”€ Layout principal â”€â”€ */}
       <div className="pp-layout">
@@ -130,7 +134,9 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
           )}
 
           {/* AdSense meio */}
-          <div className="pp-ad-slot pp-ad-rect"><span>Publicidade</span></div>
+          <div className="pp-ad-slot pp-ad-rect">
+            <AdSlot slotId={AD_SLOTS.INCONTENT_RECT} format="rectangle" />
+          </div>
 
           {/* FAQ â€” SEO */}
           <section className="pp-section pp-faq">
@@ -162,7 +168,9 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
           )}
 
           {/* AdSense sidebar */}
-          <div className="pp-ad-slot pp-ad-sidebar"><span>Publicidade</span></div>
+          <div className="pp-ad-slot pp-ad-sidebar">
+            <AdSlot slotId={AD_SLOTS.SIDEBAR_STICKY} format="vertical" />
+          </div>
 
           {/* Links rápidos */}
           <div className="pp-quick-links">

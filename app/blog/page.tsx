@@ -6,11 +6,11 @@ import NavBar from '@/components/NavBar';
 export const metadata: Metadata = {
   title: 'Blog — MaréAgora',
   description:
-    'Artigos sobre tábua de marés, surf, pesca, mergulho e atividades no litoral de Guarujá. Conteúdo baseado em dados oficiais da Marinha do Brasil.',
+    'Guias, dicas e previsões de marés para todo o litoral do Brasil. Surf, pesca, mergulho e navegação com dados da Marinha do Brasil.',
   openGraph: {
     title: 'Blog — MaréAgora',
     description:
-      'Artigos sobre tábua de marés, surf, pesca, mergulho e atividades no litoral de Guarujá.',
+      'Guias, dicas e previsões de marés para todo o litoral do Brasil. Surf, pesca, mergulho e navegação com dados da Marinha do Brasil.',
     url: 'https://mareagora.com.br/blog',
     type: 'website',
   },
@@ -83,9 +83,7 @@ export default function BlogPage() {
               Guias e Artigos
             </h1>
             <p className="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
-              Tudo sobre marés, surf, pesca, mergulho e atividades no litoral de Guarujá.
-              Conteúdo baseado em dados oficiais da{' '}
-              <span className="text-blue-400 font-semibold">Marinha do Brasil</span>.
+              Tudo sobre marés, surf, pesca, mergulho e atividades no litoral brasileiro. Conteúdo baseado em dados oficiais da <span className="text-blue-400 font-semibold">Marinha do Brasil</span>.
             </p>
           </div>
         </div>

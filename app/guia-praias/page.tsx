@@ -959,7 +959,7 @@ const styles = `
     text-align: center; padding: 6rem 2rem 8rem; overflow: hidden;
   }
   .gp-back-btn {
-    position: absolute; top: 1.5rem; left: 1.5rem; zIndex: 10;
+    position: absolute; top: 1.5rem; left: 1.5rem; z-index: 100;
     color: #2196c4; text-decoration: none; font-size: 0.85rem; font-weight: 700;
     display: flex; align-items: center; gap: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;
     padding: 0.5rem 1.2rem; border: 1px solid rgba(33,150,196,0.3);

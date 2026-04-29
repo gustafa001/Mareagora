@@ -40,9 +40,12 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     category: 'industrial',
     portoVizinhos: ['guaruja', 'sao-vicente', 'praia-grande', 'bertioga'],
     faqs: [
-      { q: 'O porto de Santos e Guarujá têm a mesma tábua de marés?', a: 'Sim. O porto de Santos e Guarujá compartilham a mesma referência da Marinha do Brasil. Os horários são praticamente idênticos, com diferença de minutos.' },
       { q: 'Qual o melhor horário para pescar no estuário de Santos?', a: 'Os melhores momentos são nas 2 horas ao redor da maré alta e baixa, com coeficiente acima de 50. O estuário de Santos é muito produtivo na virada da maré.' },
       { q: 'O que é maré de sizígia em Santos?', a: 'Marés de sizígia ocorrem na lua nova e cheia, quando a amplitude é máxima. Em Santos, isso pode causar correntes mais fortes no canal e alagamentos na orla.' },
+      { q: 'Qual o melhor horário de maré para visitar as praias de Santos?', a: 'Para banho e recreação, a maré baixa a moderada é ideal — a faixa de areia fica mais extensa e o mar mais calmo. Evite a maré alta em dias de ressaca, pois as ondas chegam próximo à orla histórica. O horário exato varia diariamente — consulte a tábua acima.' },
+      { q: 'Como a maré afeta o Porto de Santos e as operações portuárias?', a: 'O Porto de Santos é o maior da América Latina e suas operações de atracação dependem diretamente das marés. Navios de grande calado aguardam a maré alta para navegar no Canal de Santos com segurança. A profundidade do canal varia com a maré, tornando a tábua de marés uma ferramenta essencial para pilotos e práticos de navegação.' },
+      { q: 'As marés de Santos são iguais às do Guarujá?', a: 'Sim, praticamente idênticas. O Guarujá está a apenas ~5 km de Santos e usa o Porto de Santos como estação de referência para o cálculo das marés. As diferenças de horário são inferiores a 2 minutos e as alturas são equivalentes.' },
+      { q: 'Com que antecedência posso confiar nas previsões de maré?', a: 'As previsões de maré são calculadas astronomicamente e têm alta precisão para meses ou até anos à frente — ao contrário da previsão do tempo. Os dados do MaréAgora são baseados nas publicações anuais da Marinha do Brasil (DHN) e são confiáveis para planejamento de atividades náuticas, pesca e turismo.' },
     ],
   },
 
@@ -186,6 +189,10 @@ export const categoryDefaults: Record<PortoCategory, {
     faqs: [
       { q: 'Como usar a tábua de marés para surf?', a: 'A maré baixa a média geralmente favorece as ondas com mais forma. Verifique o horário da baixamar e planeje a sessão nas 2 horas ao redor desse momento.' },
       { q: 'O que é coeficiente de maré?', a: 'Número de 20 a 120 que indica a intensidade da maré. Acima de 70 são marés vivas; abaixo de 45 são marés mortas.' },
+      { q: 'A tábua de marés tem influência no tamanho das ondas?', a: 'Indiretamente sim. A maré não cria ondas, mas afeta como elas quebram ao atingir as bancadas de areia ou recifes.' },
+      { q: 'O que são marés semidiurnas?', a: 'São marés que apresentam duas preamares (alta) e duas baixamares (baixa) a cada 24 horas. É o padrão em quase todo o litoral brasileiro.' },
+      { q: 'Os dados do MaréAgora são confiáveis?', a: 'Sim, baseamos nossas informações nas tábuas publicadas anualmente pela Marinha do Brasil.' },
+      { q: 'Qual a diferença entre maré de sizígia e de quadratura?', a: 'Sizígia ocorre nas luas nova e cheia (maior variação). Quadratura ocorre nas luas minguante e crescente (menor variação).' },
     ],
   },
   pesca: {
@@ -195,6 +202,10 @@ export const categoryDefaults: Record<PortoCategory, {
     faqs: [
       { q: 'Qual a melhor maré para pescar?', a: 'Os melhores momentos são nas 2 horas ao redor da maré alta e da maré baixa, quando os peixes se movimentam. Coeficiente acima de 60 indica marés mais produtivas.' },
       { q: 'O que é maré de sizígia?', a: 'Maré de sizígia ocorre na lua nova e cheia, quando a amplitude é máxima. É geralmente o melhor período para a pesca por causa das correntes mais intensas.' },
+      { q: 'Como o coeficiente afeta a pesca?', a: 'Coeficientes altos aumentam o volume de água que se move, levantando nutrientes e ativando a cadeia alimentar marinha.' },
+      { q: 'O que é o estofo da maré?', a: 'É o momento em que a maré para de encher ou de vazar, pouco antes de inverter a direção. Neste período as correntes são mínimas.' },
+      { q: 'Posso usar a tábua de marés para prever o clima?', a: 'Não. A tábua de marés é puramente astronômica e não prevê chuva, ventos ou ressacas provocadas por frentes frias.' },
+      { q: 'A pressão atmosférica afeta a maré?', a: 'Sim. A tábua mostra a maré astronômica, mas ventos fortes e baixa pressão podem causar "marés meteorológicas", elevando o nível real do mar.' },
     ],
   },
   turismo: {
@@ -204,6 +215,10 @@ export const categoryDefaults: Record<PortoCategory, {
     faqs: [
       { q: 'Como a maré afeta as praias turísticas?', a: 'Na maré baixa, a faixa de areia fica mais ampla e as piscinas naturais ficam acessíveis. Na maré alta, as ondas chegam mais perto da orla.' },
       { q: 'O que é tábua de marés?', a: 'É a previsão dos horários e alturas de maré alta (preamar) e maré baixa (baixamar) para um porto ou praia específicos.' },
+      { q: 'Qual a melhor fase da lua para ver piscinas naturais?', a: 'As luas cheia e nova (marés de sizígia) oferecem as marés mais secas, excelentes para visualizar recifes e piscinas naturais.' },
+      { q: 'O que significa preamar e baixamar?', a: 'Preamar é o nível máximo alcançado pela água na maré alta. Baixamar é o nível mínimo na maré baixa.' },
+      { q: 'A maré alta é perigosa?', a: 'Pode ser, dependendo da praia. Praias de tombo ficam com o repuxo mais forte, exigindo cuidado extra de crianças e banhistas.' },
+      { q: 'Por que a maré muda de horário todo dia?', a: 'A maré segue o dia lunar, que dura 24 horas e 50 minutos. Por isso, os horários atrasam cerca de 50 minutos a cada dia.' },
     ],
   },
   industrial: {
@@ -213,6 +228,10 @@ export const categoryDefaults: Record<PortoCategory, {
     faqs: [
       { q: 'Os dados são válidos para navegação comercial?', a: 'Não. Os dados do MaréAgora são de referência para atividades recreativas. Para navegação de calado considerável, use as tábuas oficiais publicadas pela Marinha do Brasil.' },
       { q: 'O que é coeficiente de maré?', a: 'Número de 20 a 120 que indica a intensidade da maré. Acima de 70 são marés vivas com grande variação de nível.' },
+      { q: 'Qual é o sistema de referência usado?', a: 'As alturas são dadas em metros em relação ao Nível de Redução (NR) do respectivo porto, estabelecido pela Marinha do Brasil.' },
+      { q: 'Como o assoreamento afeta a leitura da tábua?', a: 'A tábua reflete o nível da água, mas não a profundidade do leito. Áreas assoreadas podem ficar mais rasas do que a carta náutica indica, mesmo em maré alta.' },
+      { q: 'O que é maré meteorológica?', a: 'São elevações ou reduções atípicas causadas pelo vento e pressão atmosférica, somando-se à maré astronômica (prevista).' },
+      { q: 'Os fusos horários já estão ajustados?', a: 'Sim. Os horários exibidos já consideram o fuso horário local e horário de verão, quando aplicável.' },
     ],
   },
   nautica: {
@@ -222,6 +241,10 @@ export const categoryDefaults: Record<PortoCategory, {
     faqs: [
       { q: 'Como interpretar o coeficiente de maré?', a: 'Valores acima de 70 indicam marés vivas com grande variação. Abaixo de 45 são marés mortas com pouca variação de nível.' },
       { q: 'A tábua serve para navegação?', a: 'Não para navegação profissional. Para embarcações de calado considerável, use sempre as publicações oficiais da Marinha do Brasil.' },
+      { q: 'Quando a correnteza é mais forte?', a: 'As correntes são mais intensas no meio do ciclo (meia maré), seja na enchente ou vazante, especialmente em luas nova/cheia.' },
+      { q: 'Qual é o melhor momento para manobras de atracação?', a: 'Tradicionalmente, manobras são favorecidas no estofo da maré, momento breve onde não há variação vertical nem correntes horizontais.' },
+      { q: 'As chuvas afetam o nível da maré no estuário?', a: 'Sim. Muita chuva no continente aumenta a vazão dos rios que chegam ao mar, podendo elevar o nível da água acima do previsto pela maré astronômica.' },
+      { q: 'A hora exibida está em UTC?', a: 'Não, os horários já estão no tempo local (ex: UTC-3 para o horário oficial de Brasília).' },
     ],
   },
 };

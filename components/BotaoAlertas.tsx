@@ -2,12 +2,20 @@
 
 import { useEffect, useState } from 'react';
 
-// Chave pública VAPID (fallback direto no código para evitar problemas de env)
 const VAPID_KEY = 'BIEIsoBEg4UubQNr2jyhdoUATIQFhZ_gIukjnkw85uGvLB-svLQXjaNSi-fdN9IqgNI1NTZI1kwAbvnQiTo0aGU';
 
 interface Props {
   portSlug: string;
   portName?: string;
+}
+
+function urlBase64ToUint8Array(base64String: string) {
+  const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+  for (let i = 0; i < rawData.length; i++) outputArray[i] = rawData.charCodeAt(i);
+  return outputArray;
 }
 
 export default function BotaoAlertas({ portSlug, portName }: Props) {
@@ -25,9 +33,7 @@ export default function BotaoAlertas({ portSlug, portName }: Props) {
     }
 
     const saved = localStorage.getItem(`push_subscribed_${portSlug}`);
-    if (saved === '1') {
-      setStatus('subscribed');
-    }
+    if (saved === '1') setStatus('subscribed');
   }, [portSlug]);
 
   if (!mounted) return null;
@@ -38,7 +44,7 @@ export default function BotaoAlertas({ portSlug, portName }: Props) {
 
     try {
       if (status === 'subscribed') {
-        // Desativar
+        // --- DESATIVAR ---
         const reg = await navigator.serviceWorker.getRegistration();
         const sub = await reg?.pushManager.getSubscription();
         if (sub) {
@@ -51,26 +57,27 @@ export default function BotaoAlertas({ portSlug, portName }: Props) {
         }
         localStorage.removeItem(`push_subscribed_${portSlug}`);
         setStatus('idle');
+
       } else {
-        // Ativar
+        // --- ATIVAR ---
         const permission = await Notification.requestPermission();
         if (permission !== 'granted') {
           setStatus('denied');
           return;
         }
 
-        const reg = await navigator.serviceWorker.ready;
-        
-        // Helper to convert VAPID key
-        const padding = '='.repeat((4 - (VAPID_KEY.length % 4)) % 4);
-        const base64 = (VAPID_KEY + padding).replace(/-/g, '+').replace(/_/g, '/');
-        const rawData = window.atob(base64);
-        const outputArray = new Uint8Array(rawData.length);
-        for (let i = 0; i < rawData.length; i++) outputArray[i] = rawData.charCodeAt(i);
+        // Aguarda SW ativo com timeout de 10s
+        // NÃO chama register() aqui — o Next.js/next-pwa já registra
+        const reg = await Promise.race([
+          navigator.serviceWorker.ready,
+          new Promise<never>((_, reject) =>
+            setTimeout(() => reject(new Error('Service Worker demorou demais para ficar pronto')), 10_000)
+          ),
+        ]);
 
         const sub = await reg.pushManager.subscribe({
           userVisibleOnly: true,
-          applicationServerKey: outputArray
+          applicationServerKey: urlBase64ToUint8Array(VAPID_KEY),
         });
 
         await fetch('/api/push/subscribe', {
@@ -83,7 +90,7 @@ export default function BotaoAlertas({ portSlug, portName }: Props) {
         setStatus('subscribed');
       }
     } catch (err) {
-      console.error(err);
+      console.error('[BotaoAlertas]', err);
       setStatus('error');
     } finally {
       setLoading(false);
@@ -96,18 +103,18 @@ export default function BotaoAlertas({ portSlug, portName }: Props) {
     idle: '#0ea5e9',
     subscribed: '#10b981',
     denied: '#ef4444',
-    error: '#f59e0b'
+    error: '#f59e0b',
   };
 
   const labels = {
     idle: 'Ativar alertas de maré',
     subscribed: 'Alertas ativos ✓',
     denied: 'Notificações bloqueadas',
-    error: 'Tentar novamente'
+    error: 'Tentar novamente',
   };
 
-  const color = colors[status] || colors.idle;
-  const label = labels[status] || labels.idle;
+  const color = colors[status] ?? colors.idle;
+  const label = labels[status] ?? labels.idle;
 
   return (
     <button
@@ -126,7 +133,7 @@ export default function BotaoAlertas({ portSlug, portName }: Props) {
         fontWeight: 'bold',
         cursor: loading ? 'wait' : 'pointer',
         transition: 'all 0.2s',
-        marginTop: '10px'
+        marginTop: '10px',
       }}
     >
       {loading ? '⏳ Processando...' : label}

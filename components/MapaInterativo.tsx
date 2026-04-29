@@ -2,7 +2,7 @@
 import { useEffect, useRef } from 'react'
 import { PORTS } from '@/lib/ports'
 
-export default function MapaPortos() {
+export default function MapaInterativo() {
   const mapaRef = useRef<any>(null)
 
   useEffect(() => {
@@ -14,12 +14,10 @@ export default function MapaPortos() {
     link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
     document.head.appendChild(link)
 
-    // JS do Leaflet via CDN
-    const script = document.createElement('script')
-    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet-src.min.js'
-    script.onload = () => {
+    const initMap = () => {
       // @ts-ignore
       const L = (window as any).L
+      if (!L || mapaRef.current) return
 
       const mapa = L.map('mapa-portos').setView([-15.0, -47.5], 4)
       mapaRef.current = mapa
@@ -75,7 +73,16 @@ export default function MapaPortos() {
           `)
       })
     }
-    document.head.appendChild(script)
+
+    // JS do Leaflet via CDN
+    if (!(window as any).L) {
+      const script = document.createElement('script')
+      script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet-src.min.js'
+      script.onload = initMap
+      document.head.appendChild(script)
+    } else {
+      initMap()
+    }
 
     return () => {
       if (mapaRef.current) {

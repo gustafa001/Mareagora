@@ -13,6 +13,7 @@ import SearchPorts from '@/components/SearchPorts';
 import PortStatistics from '@/components/PortStatistics';
 import ActivityRecommendations from '@/components/ActivityRecommendations';
 import PortBlogSection from '@/components/PortBlogSection';
+import NotificationCTA from '@/components/NotificationCTA';
 import { useSeaConditions } from '@/hooks/useSeaConditions';
 import { notFound } from 'next/navigation';
 import type { BlogPost } from '@/lib/blog';
@@ -127,6 +128,8 @@ export default function PortPageContent({ slug, portDescription, blogPosts }: Po
               lat={port.lat}
               lon={port.lon}
             />
+
+            <NotificationCTA portSlug={slug} />
 
             <WindWaveCharts lat={port.lat} lon={port.lon} />
 

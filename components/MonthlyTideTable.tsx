@@ -200,11 +200,11 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon }: Monthl
       </div>
 
       {/* Table */}
-      <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+      <div style={{ overflowX: "auto", overflowY: "auto", maxHeight: "75vh", WebkitOverflowScrolling: "touch" }}>
         <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "520px" }}>
-          <thead>
-            <tr style={{ background: "rgba(255,255,255,0.03)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-              <th style={{ padding: "0.65rem 1rem", textAlign: "left", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "1.5px", color: "#64748b", textTransform: "uppercase", position: "sticky", left: 0, background: "#0f172a", zIndex: 1, minWidth: "64px" }}>DIA</th>
+          <thead style={{ position: "sticky", top: 0, zIndex: 10, background: "#0f172a", boxShadow: "0 2px 4px rgba(0,0,0,0.5)" }}>
+            <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+              <th style={{ padding: "0.65rem 1rem", textAlign: "left", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "1.5px", color: "#64748b", textTransform: "uppercase", position: "sticky", left: 0, background: "#0f172a", zIndex: 11, minWidth: "64px" }}>DIA</th>
               {["1ª MARÉ","2ª MARÉ","3ª MARÉ","4ª MARÉ"].map(h => (
                 <th key={h} style={{ padding: "0.65rem 0.5rem", textAlign: "center", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "1.5px", color: "#64748b", textTransform: "uppercase", minWidth: "90px" }}>{h}</th>
               ))}

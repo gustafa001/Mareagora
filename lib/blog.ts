@@ -140,6 +140,13 @@ export function getPostsByPort(port: Port, limit = 3): { posts: BlogPost[], stra
     return { post, score };
   });
 
+  console.log(`[blog.ts] Scores para ${slug}:`, 
+    scored.map(s => ({ 
+      slug: s.post.slug, 
+      score: s.score 
+    })).sort((a,b) => b.score - a.score).slice(0, 5)
+  );
+
   // Filtrar apenas os que tem algum score (pelo menos regional)
   const relevantScored = scored.filter(s => s.score > 0).sort((a, b) => b.score - a.score);
 

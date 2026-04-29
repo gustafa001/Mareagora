@@ -10,11 +10,15 @@ export function useSeaConditions(lat: number, lon: number) {
       const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&hourly=wave_height&timezone=America%2FSao_Paulo&forecast_days=1`;
       const windUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_speed_10m&wind_speed_unit=kmh&timezone=America%2FSao_Paulo`;
       
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 4000);
+      
       try {
         const [resWave, resWind] = await Promise.all([
-          fetch(url),
-          fetch(windUrl)
+          fetch(url, { signal: controller.signal }),
+          fetch(windUrl, { signal: controller.signal })
         ]);
+        clearTimeout(timeoutId);
         
         const jsonWave = await resWave.json();
         const jsonWind = await resWind.json();
@@ -32,6 +36,7 @@ export function useSeaConditions(lat: number, lon: number) {
         setWaveHeight(h.wave_height[i]);
         setWindSpeed(jsonWind.current?.wind_speed_10m);
       } catch (e) {
+        clearTimeout(timeoutId);
         console.error("Erro ao buscar condições do mar:", e);
       } finally {
         setLoading(false);

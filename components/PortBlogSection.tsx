@@ -5,6 +5,7 @@ interface Props {
   portSlug: string;
   portName: string;
   posts: BlogPost[];
+  strategy?: 'specific' | 'generic';
 }
 
 function formatDate(dateStr: string): string {
@@ -16,7 +17,8 @@ function formatDate(dateStr: string): string {
   return `${months[parseInt(month)]} de ${year}`;
 }
 
-export default function PortBlogSection({ portSlug, portName, posts }: Props) {
+export default function PortBlogSection({ portSlug, portName, posts, strategy = 'specific' }: Props) {
+  const isSpecific = strategy === 'specific';
   if (posts.length === 0) {
     return (
       <Link href="/blog" className="block group">
@@ -67,7 +69,7 @@ export default function PortBlogSection({ portSlug, portName, posts }: Props) {
       >
         <h2 className="text-lg sm:text-xl font-bold font-syne text-white flex items-center gap-3">
           <span className="text-blue-400">📝</span> 
-          <span className="tracking-tight">Artigos sobre {portName}</span>
+          <span className="tracking-tight">{isSpecific ? `Artigos sobre ${portName}` : 'Artigos Recentes'}</span>
         </h2>
         <Link
           href="/blog"

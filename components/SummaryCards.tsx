@@ -16,11 +16,25 @@ import { getMoonAge, getMoonPhase, getTideCoefficient } from "@/lib/tideUtils";
 export default function SummaryCards({ nextHigh, nextLow, lat, lon }: SummaryCardsProps) {
   const { waveHeight, windSpeed, loading } = useSeaConditions(lat, lon);
   
-  const now = new Date();
-  const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  const [timeStr, setTimeStr] = useState('--:--');
+  
+  useEffect(() => {
+    const updateTime = () => {
+      setTimeStr(new Date().toLocaleTimeString('pt-BR', {
+        timeZone: 'America/Sao_Paulo',
+        hour: '2-digit',
+        minute: '2-digit'
+      }));
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 60000);
+    return () => clearInterval(interval);
+  }, []);
+
   const wavesStr = waveHeight !== null ? `${waveHeight.toFixed(1)} m` : "--";
   const windStr = windSpeed !== null ? `${windSpeed.toFixed(0)} km/h` : "--";
 
+  const now = new Date();
   const moonAge = getMoonAge(now);
   const moon = getMoonPhase(moonAge);
   const coef = getTideCoefficient(moonAge);

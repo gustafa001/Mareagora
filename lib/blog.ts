@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import readingTime from 'reading-time';
+import { Port } from './ports';
 
 const BLOG_DIR = path.join(process.cwd(), 'content', 'blog');
 
@@ -99,39 +100,60 @@ export function getRelatedPosts(
   return scored.slice(0, limit).map((s) => s.post);
 }
 
-export function getPostsByPort(portSlug: string, limit = 3): BlogPost[] {
+export function getPostsByPort(port: Port, limit = 3): { posts: BlogPost[], strategy: 'specific' | 'generic' } {
   const all = getPosts();
+  const slug = port.slug;
+  const state = port.state.toLowerCase();
+  const region = port.region;
 
-  const slugWords = portSlug
+  const slugWords = slug
     .replace(/-fiscal$/, '')
     .replace(/^(porto-de-|porto-do-|terminal-|arquipelago-de-)/, '')
     .split('-')
     .map(w => w.charAt(0).toUpperCase() + w.slice(1))
     .join(' ');
 
-  const filtered = all.filter(post => {
-    const safeTitle = String(post.title || '').toLowerCase();
-    const safeExcerpt = String(post.excerpt || '').toLowerCase();
-    const safeTags = (post.tags || []).filter(t => typeof t === 'string').map(t => t.toLowerCase());
-
+  const scored = all.map(post => {
+    let score = 0;
     const haystack = [
-      safeTitle,
-      ...safeTags,
-      safeExcerpt,
+      String(post.title || '').toLowerCase(),
+      ...(post.tags || []).filter(t => typeof t === 'string').map(t => t.toLowerCase()),
+      String(post.excerpt || '').toLowerCase(),
     ].join(' ');
 
-    const safePortSlug = String(portSlug || '').toLowerCase();
-    const safeSlugWords = String(slugWords || '').toLowerCase();
+    // PRIORIDADE 1: Nome do Porto ou Slug (Peso 10)
+    if (haystack.includes(slug.toLowerCase()) || haystack.includes(slugWords.toLowerCase())) {
+      score += 10;
+    }
 
-    return (
-      haystack.includes(safePortSlug) ||
-      haystack.includes(safeSlugWords) ||
-      safeTags.some(tag =>
-        safePortSlug.includes(tag) ||
-        tag.includes(safeSlugWords)
-      )
-    );
+    // PRIORIDADE 2: Estado (Peso 5)
+    // Busca pelo nome completo (ex: "são paulo") ou sigla (se houver mapeamento, mas aqui usamos o campo state do objeto port)
+    if (haystack.includes(state)) {
+      score += 5;
+    }
+
+    // PRIORIDADE 3: Região (Peso 2)
+    if (haystack.includes(region.toLowerCase())) {
+      score += 2;
+    }
+
+    return { post, score };
   });
 
-  return filtered.slice(0, limit);
+  // Filtrar apenas os que tem algum score (pelo menos regional)
+  const relevantScored = scored.filter(s => s.score > 0).sort((a, b) => b.score - a.score);
+
+  if (relevantScored.length > 0 && relevantScored[0].score >= 5) {
+    // Temos pelo menos match de Estado ou Porto
+    return {
+      posts: relevantScored.slice(0, limit).map(s => s.post),
+      strategy: 'specific'
+    };
+  }
+
+  // Fallback: 3 mais recentes
+  return {
+    posts: all.slice(0, limit),
+    strategy: 'generic'
+  };
 }

@@ -25,9 +25,10 @@ interface PortPageContentProps {
   slug: string;
   portDescription: string;
   blogPosts: BlogPost[];
+  blogStrategy: 'specific' | 'generic';
 }
 
-export default function PortPageContent({ slug, portDescription, blogPosts }: PortPageContentProps) {
+export default function PortPageContent({ slug, portDescription, blogPosts, blogStrategy }: PortPageContentProps) {
   const port = getPortBySlug(slug);
   if (!port) notFound();
 
@@ -179,6 +180,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts }: Po
               portSlug={slug}
               portName={seoName}
               posts={blogPosts}
+              strategy={blogStrategy}
             />
           </div>
         </div>

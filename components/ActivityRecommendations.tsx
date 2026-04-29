@@ -13,6 +13,35 @@ interface ActivityRecommendationsProps {
   categoria: string;
 }
 
+const FALLBACK_DATA: Record<string, any[]> = {
+  'porto-de-santos': [
+    { icon: '🎣', name: 'Pesca', tip: 'Melhor na virada da maré. Peixes concentram-se no estuário.', rating: 'Ótimo', color: 'text-green-600 bg-green-50' },
+    { icon: '🏊', name: 'Banho', tip: 'Prefira maré baixa a moderada para praias seguras.', rating: 'Bom', color: 'text-blue-600 bg-blue-50' },
+    { icon: '⛵', name: 'Passeio de barco', tip: 'Verifique sempre a maré e o boletim náutico da Marinha.', rating: 'Moderado', color: 'text-yellow-600 bg-yellow-50' },
+    { icon: '🚶', name: 'Caminhada na orla', tip: 'Qualquer maré. Evite apenas maré alta durante ressacas.', rating: 'Bom', color: 'text-gray-600 bg-gray-50' }
+  ],
+  'industrial': [
+    { icon: '🚢', name: 'Navegação local', tip: 'Cuidado com correntes intensas na troca de marés.', rating: 'Atenção', color: 'text-orange-600 bg-orange-50' },
+    { icon: '🎣', name: 'Pesca', tip: 'Sempre melhor próxima da virada de maré.', rating: 'Bom', color: 'text-blue-600 bg-blue-50' },
+    { icon: '⛵', name: 'Vela / Barco', tip: 'Planeje travessias para coincidir com corrente a favor.', rating: 'Moderado', color: 'text-yellow-600 bg-yellow-50' },
+  ],
+  'pesca': [
+    { icon: '🎣', name: 'Pesca de fundo', tip: 'Maré baixa facilita chegar aos pontos mais profundos.', rating: 'Ótimo', color: 'text-green-600 bg-green-50' },
+    { icon: '🦀', name: 'Coleta / Marisco', tip: 'Aproveite o período de maré mais baixa do dia.', rating: 'Excelente', color: 'text-green-600 bg-green-50' },
+    { icon: '🚣', name: 'Barco miúdo', tip: 'Evite navegar em preamares de sizígia se houver ressacas.', rating: 'Verificar', color: 'text-yellow-600 bg-yellow-50' }
+  ],
+  'surf': [
+    { icon: '🏄', name: 'Surf', tip: 'As melhores ondas costumam alinhar durante a maré vazante.', rating: 'Ótimo', color: 'text-blue-600 bg-blue-50' },
+    { icon: '🏊', name: 'Banho', tip: 'Atenção com correntes de retorno em marés vazantes.', rating: 'Atenção', color: 'text-orange-600 bg-orange-50' },
+    { icon: '🏖️', name: 'Caminhada', tip: 'Na maré baixa a faixa de areia fica excelente.', rating: 'Livre', color: 'text-green-600 bg-green-50' }
+  ],
+  'turismo': [
+    { icon: '🏊', name: 'Banho de Mar', tip: 'Na maré baixa as águas costumam ficar mais calmas.', rating: 'Ótimo', color: 'text-blue-600 bg-blue-50' },
+    { icon: '📸', name: 'Piscinas Naturais', tip: 'Acesse apenas nas 2 horas próximas da maré mais baixa.', rating: 'Excelente', color: 'text-green-600 bg-green-50' },
+    { icon: '⛵', name: 'Passeios Náuticos', tip: 'Consulte o marinheiro responsável sobre as condições.', rating: 'Bom', color: 'text-blue-600 bg-blue-50' },
+  ]
+};
+
 function getActivities(nextHigh: TideEvent | null, nextLow: TideEvent | null, waveHeight?: number) {
   const activities = [];
 
@@ -26,7 +55,7 @@ function getActivities(nextHigh: TideEvent | null, nextLow: TideEvent | null, wa
     });
   }
 
-  if (waveHeight !== undefined) {
+  if (waveHeight !== undefined && waveHeight !== null) {
     if (waveHeight >= 1.0 && waveHeight <= 2.5) {
       activities.push({
         icon: '🏄',
@@ -77,47 +106,6 @@ function getActivities(nextHigh: TideEvent | null, nextLow: TideEvent | null, wa
   return activities;
 }
 
-function getFallbackActivities(slug: string, categoria: string) {
-  if (slug === 'porto-de-santos') {
-    return [
-      { icon: '🎣', name: 'Pesca esportiva', tip: 'Melhor na virada da maré. Peixes concentram-se no estuário.', rating: 'Ótimo', color: 'text-green-600 bg-green-50' },
-      { icon: '🏊', name: 'Banho nas praias', tip: 'Preferir maré baixa a moderada para praias seguras.', rating: 'Bom', color: 'text-blue-600 bg-blue-50' },
-      { icon: '⛵', name: 'Passeios de barco', tip: 'Verifique sempre a maré e o boletim náutico da Marinha.', rating: 'Verificar', color: 'text-yellow-600 bg-yellow-50' },
-      { icon: '🚶', name: 'Caminhada na orla', tip: 'Qualquer maré. Evite apenas maré alta durante ressacas.', rating: 'Livre', color: 'text-gray-600 bg-gray-50' }
-    ];
-  }
-
-  switch (categoria) {
-    case 'industrial':
-    case 'nautica':
-      return [
-        { icon: '🚢', name: 'Navegação local', tip: 'Cuidado com correntes intensas na troca de marés.', rating: 'Atenção', color: 'text-orange-600 bg-orange-50' },
-        { icon: '🎣', name: 'Pesca', tip: 'Sempre melhor próxima da virada de maré e em estruturas do canal.', rating: 'Bom', color: 'text-blue-600 bg-blue-50' },
-        { icon: '⛵', name: 'Vela / Barco', tip: 'Planeje travessias para coincidir com corrente a favor.', rating: 'Moderado', color: 'text-yellow-600 bg-yellow-50' },
-      ];
-    case 'pesca':
-      return [
-        { icon: '🎣', name: 'Pesca de fundo', tip: 'Maré baixa facilita chegar aos pontos mais profundos.', rating: 'Ótimo', color: 'text-green-600 bg-green-50' },
-        { icon: '🦀', name: 'Coleta / Marisco', tip: 'Aproveite o período de maré mais baixa (vazante) do dia.', rating: 'Excelente', color: 'text-green-600 bg-green-50' },
-        { icon: '🚣', name: 'Barco miúdo', tip: 'Evite navegar em preamares de sizígia se houver ressacas.', rating: 'Verificar', color: 'text-yellow-600 bg-yellow-50' }
-      ];
-    case 'surf':
-      return [
-        { icon: '🏄', name: 'Surf', tip: 'As melhores ondas costumam alinhar durante a maré vazante ou enchente.', rating: 'Ótimo', color: 'text-blue-600 bg-blue-50' },
-        { icon: '🏊', name: 'Banho', tip: 'Atenção com correntes de retorno (repuxo) em marés vazantes.', rating: 'Atenção', color: 'text-orange-600 bg-orange-50' },
-        { icon: '🏖️', name: 'Caminhada', tip: 'Na maré baixa a faixa de areia fica firme e excelente.', rating: 'Livre', color: 'text-green-600 bg-green-50' }
-      ];
-    case 'turismo':
-    default:
-      return [
-        { icon: '🏊', name: 'Banho de Mar', tip: 'Na maré baixa as águas costumam ficar mais calmas e seguras.', rating: 'Ótimo', color: 'text-blue-600 bg-blue-50' },
-        { icon: '📸', name: 'Piscinas Naturais', tip: 'Acesse apenas nas 2 horas próximas da maré mais baixa.', rating: 'Excelente', color: 'text-green-600 bg-green-50' },
-        { icon: '⛵', name: 'Passeios Náuticos', tip: 'Consulte o marinheiro responsável sobre as condições locais.', rating: 'Bom', color: 'text-blue-600 bg-blue-50' },
-        { icon: '🏖️', name: 'Praia', tip: 'Cuidado extra com pertences próximos à água quando a maré estiver enchendo.', rating: 'Verificar', color: 'text-yellow-600 bg-yellow-50' }
-      ];
-  }
-}
-
 export default function ActivityRecommendations({
   todayTides,
   nextHigh,
@@ -133,20 +121,20 @@ export default function ActivityRecommendations({
     let timer: NodeJS.Timeout;
     if (loading) {
       timer = setTimeout(() => {
-        console.error('[AtividadesRecomendadas] Falha ao carregar ou timeout excedido: ativando fallback estático.');
+        console.error('[AtividadesRecomendadas] Timeout de 4s excedido: ativando fallback.');
         setShowFallback(true);
-      }, 5000);
+      }, 4000);
     }
     return () => {
       if (timer) clearTimeout(timer);
     };
   }, [loading]);
 
-  const isFallbackNeeded = showFallback || (!loading && waveHeight === undefined);
+  const isFallbackNeeded = showFallback || (!loading && (waveHeight === undefined || waveHeight === null));
   
   const activities = isFallbackNeeded 
-    ? getFallbackActivities(slug, categoria)
-    : getActivities(nextHigh, nextLow, waveHeight);
+    ? (FALLBACK_DATA[slug] || FALLBACK_DATA[categoria] || FALLBACK_DATA['turismo'])
+    : getActivities(nextHigh, nextLow, waveHeight ?? undefined);
 
   return (
     <section className="classic-card">

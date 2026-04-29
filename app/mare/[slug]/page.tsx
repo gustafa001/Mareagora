@@ -91,7 +91,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
   const config = portosConfig[slug];
   const categoria = config?.category ?? 'turismo';
 
-  const blogPosts: BlogPost[] = getPostsByPort(slug);
+  const { posts: blogPosts, strategy: blogStrategy } = getPostsByPort(port);
 
   const seoName = port.cityName;
 
@@ -146,6 +146,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
         slug={slug}
         portDescription={portDescription}
         blogPosts={blogPosts}
+        blogStrategy={blogStrategy}
       />
       <div className="container pb-16">
         <PortoFAQ slug={slug} categoria={categoria} />

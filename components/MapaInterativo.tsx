@@ -99,6 +99,7 @@ export default function MapaInterativo() {
         width: '100%',
         borderRadius: '12px',
         zIndex: 0,
+        background: '#0f172a',
       }} />
       {/* Legenda de regiões */}
       <div style={{

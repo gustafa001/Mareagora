@@ -2,6 +2,7 @@
 
 import { getPortBySlug, PORTS } from '@/lib/ports';
 import { getEventosDia, getEventosAno } from '@/lib/mare';
+import { portosConfig } from '@/data/porto-seo-config';
 import dynamic from 'next/dynamic';
 import NavBar from '@/components/NavBar';
 const TideChart = dynamic(() => import('@/components/TideChart'), { ssr: false });
@@ -30,7 +31,9 @@ export default function PortPageContent({ slug, portDescription, blogPosts }: Po
 
   const seoName = port.cityName;
 
-  const { waveHeight } = useSeaConditions(port.lat, port.lon);
+  const { waveHeight, loading: seaLoading } = useSeaConditions(port.lat, port.lon);
+  const config = portosConfig[slug];
+  const categoria = config?.category ?? 'turismo';
 
   const todayStr = new Date().toLocaleDateString('en-CA');
   const todayTides = getEventosDia(port, todayStr);
@@ -132,6 +135,16 @@ export default function PortPageContent({ slug, portDescription, blogPosts }: Po
             <NotificationCTA portSlug={slug} />
 
             <WindWaveCharts lat={port.lat} lon={port.lon} />
+
+            <ActivityRecommendations
+              todayTides={todayTides}
+              nextHigh={nextHigh}
+              nextLow={nextLow}
+              waveHeight={waveHeight ?? undefined}
+              loading={seaLoading}
+              slug={slug}
+              categoria={categoria}
+            />
 
             <PortStatistics
               eventos={dataAno}

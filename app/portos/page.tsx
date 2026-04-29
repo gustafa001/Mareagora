@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { PORTS, getAllRegions } from '@/lib/ports';
 import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';

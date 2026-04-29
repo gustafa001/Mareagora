@@ -110,18 +110,25 @@ export function getPostsByPort(portSlug: string, limit = 3): BlogPost[] {
     .join(' ');
 
   const filtered = all.filter(post => {
+    const safeTitle = String(post.title || '').toLowerCase();
+    const safeExcerpt = String(post.excerpt || '').toLowerCase();
+    const safeTags = (post.tags || []).filter(t => typeof t === 'string').map(t => t.toLowerCase());
+
     const haystack = [
-      post.title.toLowerCase(),
-      ...post.tags.map(t => t.toLowerCase()),
-      post.excerpt.toLowerCase(),
+      safeTitle,
+      ...safeTags,
+      safeExcerpt,
     ].join(' ');
 
+    const safePortSlug = String(portSlug || '').toLowerCase();
+    const safeSlugWords = String(slugWords || '').toLowerCase();
+
     return (
-      haystack.includes(portSlug.toLowerCase()) ||
-      haystack.includes(slugWords.toLowerCase()) ||
-      post.tags.some(tag =>
-        portSlug.toLowerCase().includes(tag.toLowerCase()) ||
-        tag.toLowerCase().includes(slugWords.toLowerCase())
+      haystack.includes(safePortSlug) ||
+      haystack.includes(safeSlugWords) ||
+      safeTags.some(tag =>
+        safePortSlug.includes(tag) ||
+        tag.includes(safeSlugWords)
       )
     );
   });

@@ -129,7 +129,12 @@ export function getNearbySlugs(port: Port, limit: number = 4): Port[] {
   return withDist.slice(0, limit).map(x => x.port);
 }
 
-export function getAllRegions(): { id: Port['region']; name: string }[] {
+export interface Region {
+  id: Port['region'];
+  name: string;
+}
+
+export function getAllRegions(): Region[] {
   return [
     { id: 'norte',    name: 'Região Norte'    },
     { id: 'nordeste', name: 'Região Nordeste' },

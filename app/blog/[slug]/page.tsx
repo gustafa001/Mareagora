@@ -20,6 +20,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${post.title} — MaréAgora Blog`,
     description: post.excerpt,
+    other: {
+      'article:modified_time': post.updatedAt,
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt,
@@ -67,9 +70,27 @@ export default async function BlogPostPage({ params }: Props) {
   const related = getRelatedPosts(post.slug, post.category, post.tags, 3);
   const catStyle = getCategoryStyle(post.category);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.excerpt,
+    "datePublished": post.date,
+    "dateModified": post.updatedAt,
+    "author": {
+      "@type": "Person",
+      "name": post.author,
+      "url": "https://www.mareagora.com.br/sobre"
+    }
+  };
+
   return (
     <div className="min-h-screen" style={{ background: 'var(--ocean)' }}>
       <NavBar />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
       <div className="max-w-4xl mx-auto px-4 py-12">
         {/* Breadcrumb */}
@@ -102,10 +123,18 @@ export default async function BlogPostPage({ params }: Props) {
             {post.title}
           </h1>
 
-          <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500">
+          <div className="flex flex-wrap items-center gap-6 text-sm text-slate-500">
+            <div className="flex items-center gap-2">
+              <span className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 border border-blue-500/30">🌊</span>
+              <span>Por <strong>{post.author}</strong></span>
+            </div>
             <span className="flex items-center gap-1.5">
               <span>📅</span>
-              <span>{formatDate(post.date)}</span>
+              <span>Publicado em {formatDate(post.date)}</span>
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span>🔄</span>
+              <span>Atualizado em {formatDate(post.updatedAt)}</span>
             </span>
             <span className="flex items-center gap-1.5">
               <span>📖</span>

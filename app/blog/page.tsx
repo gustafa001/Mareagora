@@ -45,8 +45,18 @@ function formatDate(dateStr: string): string {
   return `${months[parseInt(month)]} de ${year}`;
 }
 
-export default function BlogPage() {
-  const posts = getPosts();
+export default function BlogPage({ searchParams }: { searchParams: { page?: string } }) {
+  const allPosts = getPosts();
+  const page = parseInt(searchParams.page ?? '1');
+  const limit = 12;
+  const totalPages = Math.ceil(allPosts.length / limit);
+  
+  // Featured post is always the very first one in the sorted list
+  const featuredPost = allPosts[0];
+  
+  // To avoid duplication on page 1, we skip the first post in the grid
+  const startIndex = (page - 1) * limit + (page === 1 ? 1 : 0);
+  const posts = allPosts.slice(startIndex, page * limit + (page === 1 ? 1 : 0));
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--ocean)' }}>
@@ -89,8 +99,49 @@ export default function BlogPage() {
         </div>
       </section>
 
+      {/* Featured Post (Only on page 1) */}
+      {page === 1 && featuredPost && (
+        <section className="max-w-7xl mx-auto px-4 mb-16">
+          <Link href={`/blog/${featuredPost.slug}`} className="group block">
+            <div 
+              className="glass-card rounded-3xl p-8 md:p-12 border border-blue-400/20 transition-all duration-500 hover:border-blue-400/50 hover:shadow-2xl hover:shadow-blue-500/10 flex flex-col md:flex-row gap-8 items-center"
+              style={{
+                background: 'linear-gradient(135deg, rgba(13,34,64,0.9) 0%, rgba(6,16,30,0.95) 100%)',
+              }}
+            >
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="bg-blue-500 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
+                    Destaque
+                  </span>
+                  <span className={`text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border bg-gradient-to-r ${getCategoryStyle(featuredPost.category)}`}>
+                    {featuredPost.category}
+                  </span>
+                </div>
+                <h2 className="text-3xl md:text-5xl font-black text-white mb-6 group-hover:text-blue-300 transition-colors" style={{ fontFamily: 'var(--font-syne)' }}>
+                  {featuredPost.title}
+                </h2>
+                <p className="text-slate-400 text-lg leading-relaxed mb-8 max-w-2xl">
+                  {featuredPost.excerpt}
+                </p>
+                <div className="flex items-center gap-6 text-sm text-slate-500">
+                   <div className="flex items-center gap-2">
+                     <span className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 border border-blue-500/30">🌊</span>
+                     <span>Por <strong>{featuredPost.author}</strong></span>
+                   </div>
+                   <span>•</span>
+                   <span>Atualizado em {formatDate(featuredPost.updatedAt)}</span>
+                   <span>•</span>
+                   <span>📖 {featuredPost.readingTime}</span>
+                </div>
+              </div>
+            </div>
+          </Link>
+        </section>
+      )}
+
       {/* Posts grid */}
-      <section className="max-w-7xl mx-auto px-4 pb-20">
+      <section className="max-w-7xl mx-auto px-4 pb-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post) => {
             const catStyle = getCategoryStyle(post.category);
@@ -108,12 +159,15 @@ export default function BlogPage() {
                   }}
                 >
                   {/* Category badge */}
-                  <div className="mb-4">
+                  <div className="mb-4 flex items-center justify-between">
                     <span
                       className={`inline-block text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border bg-gradient-to-r ${catStyle}`}
                     >
                       {post.category}
                     </span>
+                    {allPosts[0].slug === post.slug && (
+                       <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Novo</span>
+                    )}
                   </div>
 
                   {/* Title */}
@@ -128,6 +182,12 @@ export default function BlogPage() {
                   <p className="text-slate-400 text-sm leading-relaxed flex-grow mb-4">
                     {post.excerpt}
                   </p>
+
+                  <div className="text-[11px] text-slate-500 mb-4 flex items-center gap-2">
+                    <span>Por {post.author}</span>
+                    <span>•</span>
+                    <span>Atualizado em {formatDate(post.updatedAt)}</span>
+                  </div>
 
                   {/* Tags */}
                   {post.tags.length > 0 && (
@@ -157,6 +217,41 @@ export default function BlogPage() {
           })}
         </div>
       </section>
+
+      {/* Pagination Navigation */}
+      {totalPages > 1 && (
+        <section className="max-w-7xl mx-auto px-4 pb-20 flex justify-center">
+          <nav className="flex items-center gap-8 bg-slate-900/50 backdrop-blur-md border border-white/5 rounded-2xl px-6 py-3">
+            {page > 1 ? (
+              <Link 
+                href={page === 2 ? '/blog' : `/blog?page=${page - 1}`}
+                rel="prev"
+                className="text-sm font-bold text-blue-400 hover:text-blue-300 transition-colors"
+              >
+                ← Anterior
+              </Link>
+            ) : (
+              <span className="text-sm font-bold text-slate-600 cursor-not-allowed">← Anterior</span>
+            )}
+
+            <span className="text-sm font-medium text-slate-400">
+              Página <span className="text-white">{page}</span> de <span className="text-white">{totalPages}</span>
+            </span>
+
+            {page < totalPages ? (
+              <Link 
+                href={`/blog?page=${page + 1}`}
+                rel="next"
+                className="text-sm font-bold text-blue-400 hover:text-blue-300 transition-colors"
+              >
+                Próxima →
+              </Link>
+            ) : (
+              <span className="text-sm font-bold text-slate-600 cursor-not-allowed">Próxima →</span>
+            )}
+          </nav>
+        </section>
+      )}
     </div>
   );
 }

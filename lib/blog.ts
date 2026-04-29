@@ -9,6 +9,8 @@ export interface BlogPost {
   slug: string;
   title: string;
   date: string;
+  updatedAt: string;
+  author: string;
   category: string;
   tags: string[];
   excerpt: string;
@@ -21,7 +23,7 @@ function getSlug(filename: string): string {
 }
 
 export function getPosts(): BlogPost[] {
-  const files = fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith('.mdx'));
+  const files = fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith('.mdx') || f.endsWith('.md'));
 
   const posts = files.map((filename) => {
     const filepath = path.join(BLOG_DIR, filename);
@@ -29,10 +31,14 @@ export function getPosts(): BlogPost[] {
     const { data, content } = matter(raw);
     const stats = readingTime(content);
 
+    const date = (data.date as string) ?? '2026-01-01';
+
     return {
       slug: getSlug(filename),
       title: (data.title as string) ?? filename,
-      date: (data.date as string) ?? '2026-01-01',
+      date: date,
+      updatedAt: (data.updatedAt as string) ?? date,
+      author: (data.author as string) ?? 'Equipe MaréAgora',
       category: (data.category as string) ?? 'Geral',
       tags: Array.isArray(data.tags) ? (data.tags as string[]) : [],
       excerpt: (data.excerpt as string) ?? '',
@@ -58,10 +64,14 @@ export function getPost(slug: string): BlogPost | null {
   const { data, content } = matter(raw);
   const stats = readingTime(content);
 
+  const date = (data.date as string) ?? '2026-01-01';
+
   return {
     slug,
     title: (data.title as string) ?? slug,
-    date: (data.date as string) ?? '2026-01-01',
+    date: date,
+    updatedAt: (data.updatedAt as string) ?? date,
+    author: (data.author as string) ?? 'Equipe MaréAgora',
     category: (data.category as string) ?? 'Geral',
     tags: Array.isArray(data.tags) ? (data.tags as string[]) : [],
     excerpt: (data.excerpt as string) ?? '',

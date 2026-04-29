@@ -8,16 +8,6 @@ import { getPostsByPort } from '@/lib/blog';
 import type { BlogPost } from '@/lib/blog';
 import { getPortoDescription } from '@/lib/porto-descriptions';
 
-function getRegionContext(region: string, state: string): string {
-  const map: Record<string, string> = {
-    norte: `O litoral da região Norte, que abrange estados como ${state}, é marcado por uma das maiores amplitudes de maré do Brasil. As marés amazônicas são influenciadas diretamente pela morfologia dos estuários e pela descarga dos grandes rios, podendo variar vários metros entre a preamar e a baixamar. Esse comportamento extremo exige atenção redobrada de pescadores, navegadores e moradores ribeirinhos.`,
-    nordeste: `O litoral do Nordeste brasileiro, onde ${state} está inserido, apresenta características únicas de maré devido à posição geográfica próxima à linha do Equador. As variações de maré são moderadas, com influência direta dos ventos alísios e das correntes do Atlântico Sul. A região é famosa por praias de águas mornas, recifes de coral e condições favoráveis para mergulho e kitesurf em determinados períodos do ano.`,
-    sudeste: `O litoral do Sudeste, região onde ${state} se localiza, é um dos mais movimentados do Brasil — tanto em termos de tráfego marítimo quanto em atividades recreativas. As marés dessa região são do tipo semidiurno, com dois ciclos completos de preamar e baixamar a cada 24 horas. A variação costuma ser moderada, mas pode ser amplificada em baías e enseadas fechadas, como ocorre em Angra dos Reis e na Baía de Guanabara.`,
-    sul: `O litoral Sul do Brasil, onde ${state} está situado, possui marés com características bem definidas e influência marcante dos sistemas de frentes frias vindas do sul do continente. As ondas de tempestade (ressacas) são frequentes no inverno e podem elevar temporariamente o nível do mar acima do previsto na tábua oficial. Surfe, pesca embarcada e navegação costeira são atividades muito praticadas na região.`,
-  };
-  return map[region] ?? `O litoral de ${state} apresenta condições de maré características da costa brasileira, com variações influenciadas pela posição geográfica e pela morfologia costeira local.`;
-}
-
 export async function generateStaticParams() {
   return getAllSlugs().map(slug => ({ slug }));
 }
@@ -91,7 +81,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
   const port = getPortBySlug(slug);
   if (!port) notFound();
 
-  const regionContext = getRegionContext(port.region, port.state);
   const portDescription = getPortoDescription(slug);
   const ano = new Date().getFullYear();
 
@@ -148,7 +137,6 @@ export default async function PortPage({ params }: { params: { slug: string } })
       />
       <PortPageContent
         slug={slug}
-        regionContext={regionContext}
         portDescription={portDescription}
         blogPosts={blogPosts}
       />

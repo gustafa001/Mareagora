@@ -19,12 +19,11 @@ import type { BlogPost } from '@/lib/blog';
 
 interface PortPageContentProps {
   slug: string;
-  regionContext: string;
   portDescription: string;
   blogPosts: BlogPost[];
 }
 
-export default function PortPageContent({ slug, regionContext, portDescription, blogPosts }: PortPageContentProps) {
+export default function PortPageContent({ slug, portDescription, blogPosts }: PortPageContentProps) {
   const port = getPortBySlug(slug);
   if (!port) notFound();
 
@@ -138,16 +137,11 @@ export default function PortPageContent({ slug, regionContext, portDescription, 
 
             <section className="classic-card prose prose-slate max-w-none">
               <h2 className="text-2xl font-bold mb-4 font-syne">Sobre as Marés em {seoName}</h2>
-              {/* Descrição única por porto — diferencia no Google */}
-              {portDescription && (
-                <p className="text-slate-600 leading-relaxed mb-4">
-                  {portDescription}
+              {portDescription.split('\n\n').map((paragraph, index) => (
+                <p key={index} className="text-slate-600 leading-relaxed mb-4">
+                  {paragraph}
                 </p>
-              )}
-              {/* Contexto regional genérico como complemento */}
-              <p className="text-slate-600 leading-relaxed">
-                {regionContext}
-              </p>
+              ))}
             </section>
 
             <PortBlogSection

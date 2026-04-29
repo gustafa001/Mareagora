@@ -18,6 +18,9 @@ export const AD_SLOTS = {
   
   // Leaderboard (728x90) - Before footer
   PREFOOTER: "5678901234",
+  
+  // Mobile Sticky (320x50) - Bottom fixed
+  MOBILE_STICKY: "6789012345",
 };
 
-export const ADSENSE_CLIENT_ID = "ca-pub-XXXXXXXXXXXXXXXX";
+export const ADSENSE_CLIENT_ID = "ca-pub-2920008879492175";

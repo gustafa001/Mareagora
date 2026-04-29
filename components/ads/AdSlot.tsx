@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from 'react';
+import { ADSENSE_CLIENT_ID } from '@/lib/adConfig';
 
 interface AdSlotProps {
   slotId: string;
@@ -41,7 +42,7 @@ export default function AdSlot({
           ...(fullWidthResponsive && { width: "100%" }),
           ...style,
         }}
-        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" // Replace with your AdSense ID
+        data-ad-client={ADSENSE_CLIENT_ID}
         data-ad-slot={slotId}
         data-ad-format={format}
         data-full-width-responsive={fullWidthResponsive ? "true" : "false"}

@@ -3,6 +3,7 @@ import { getPortBySlug, getAllSlugs } from '@/lib/ports';
 import type { Metadata } from 'next';
 import PortPageContent from '@/components/PortPageContent';
 import PortoFAQ from '@/components/PortoFAQ';
+import PortosProximos from '@/components/PortosProximos';
 import { portosConfig, categoryDefaults } from '@/data/porto-seo-config';
 import { getPostsByPort } from '@/lib/blog';
 import type { BlogPost } from '@/lib/blog';
@@ -142,6 +143,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
       />
       <div className="container pb-16">
         <PortoFAQ slug={slug} categoria={categoria} />
+        <PortosProximos slug={slug} />
       </div>
     </>
   );

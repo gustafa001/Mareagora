@@ -143,3 +143,39 @@ export function getNearestPort(lat: number, lon: number): Port {
   }
   return nearest;
 }
+
+export interface PortoProximo {
+  nome: string;
+  slug: string;
+  distanciaKm: number;
+  estado: string;
+}
+
+function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  const R = 6371; // Earth's radius in km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+export function getPortosProximos(portoSlug: string, limit: number = 4): PortoProximo[] {
+  const currentPort = getPortBySlug(portoSlug);
+  if (!currentPort) return [];
+
+  const others = PORTS.filter(p => p.id !== currentPort.id);
+
+  const withDist = others.map(p => ({
+    nome: p.cityName || p.name,
+    slug: p.slug,
+    estado: p.state,
+    distanciaKm: Math.round(haversineDistance(currentPort.lat, currentPort.lon, p.lat, p.lon)),
+  }));
+
+  withDist.sort((a, b) => a.distanciaKm - b.distanciaKm);
+
+  return withDist.slice(0, limit);
+}

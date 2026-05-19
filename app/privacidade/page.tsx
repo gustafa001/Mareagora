@@ -53,10 +53,10 @@ export default function PrivacidadePage() {
             brasileiro. Para dúvidas ou solicitações relacionadas a esta
             política, entre em contato pelo e-mail:{" "}
             <a
-              href="mailto:cantatos@mareagora.com.br"
+              href="mailto:contatos@mareagora.com.br"
               className="text-blue-400 underline"
             >
-              cantatos@mareagora.com.br
+              contatos@mareagora.com.br
             </a>
           </Block>
 
@@ -240,10 +240,10 @@ export default function PrivacidadePage() {
             <p className="mt-3">
               Para exercer esses direitos, entre em contato:{" "}
               <a
-                href="mailto:cantatos@mareagora.com.br"
+                href="mailto:contatos@mareagora.com.br"
                 className="text-blue-400 underline"
               >
-                cantatos@mareagora.com.br
+                contatos@mareagora.com.br
               </a>
             </p>
           </Block>
@@ -274,10 +274,10 @@ export default function PrivacidadePage() {
             <p className="mt-2 text-slate-300">
               📧{" "}
               <a
-                href="mailto:cantatos@mareagora.com.br"
+                href="mailto:contatos@mareagora.com.br"
                 className="text-blue-400 underline"
               >
-                cantatos@mareagora.com.br
+                contatos@mareagora.com.br
               </a>
             </p>
           </Block>

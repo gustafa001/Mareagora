@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import remarkGfm from 'remark-gfm';
 import { getPosts, getPost, getRelatedPosts } from '@/lib/blog';
 import NavBar from '@/components/NavBar';
 
@@ -166,8 +167,19 @@ export default async function BlogPostPage({ params }: Props) {
 
         {/* Article body */}
         <article className="prose prose-invert prose-lg max-w-none prose-headings:font-syne prose-a:text-blue-400 hover:prose-a:text-blue-300">
-          <MDXRemote source={post.content} />
+          <MDXRemote source={post.content} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
         </article>
+
+        {/* Author Box */}
+        <div className="mt-12 p-6 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-6">
+          <div className="w-16 h-16 shrink-0 rounded-full bg-blue-500/20 flex items-center justify-center text-3xl border border-blue-500/30">
+            ⚓
+          </div>
+          <div>
+            <h3 className="text-lg font-bold text-white mb-1" style={{ fontFamily: 'var(--font-syne)' }}>Escrito por {post.author}</h3>
+            <p className="text-sm text-slate-400 leading-relaxed">Especialista náutico e oceanógrafo amador, apaixonado pelas águas e pela navegação no Brasil. Compartilhando conhecimento sobre marés, segurança e exploração costeira.</p>
+          </div>
+        </div>
 
         {/* Back link */}
         <div className="mt-12 pt-8 border-t border-white/10">

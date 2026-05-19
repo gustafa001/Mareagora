@@ -118,10 +118,10 @@ export default function TermosPage() {
             Dúvidas, sugestões ou solicitações relacionadas a estes Termos de Uso:
           </p>
           <a
-            href="mailto:cantatos@mareagora.com.br"
+            href="mailto:contatos@mareagora.com.br"
             className="inline-flex items-center gap-2 text-[var(--ocean)] font-semibold hover:underline break-all"
           >
-            ✉️ cantatos@mareagora.com.br
+            ✉️ contatos@mareagora.com.br
           </a>
 
         </div>

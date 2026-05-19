@@ -181,10 +181,10 @@ export default function CookiesPage() {
             <p className="mt-2 text-slate-300">
               📧{" "}
               <a
-                href="mailto:cantatos@mareagora.com.br"
+                href="mailto:contatos@mareagora.com.br"
                 className="text-blue-400 underline"
               >
-                cantatos@mareagora.com.br
+                contatos@mareagora.com.br
               </a>
             </p>
           </Block>

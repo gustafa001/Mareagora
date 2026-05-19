@@ -61,6 +61,36 @@ const CONTEUDO: Record<string, { sobre: string; pesca: string; melhorEpoca: stri
     pesca: 'Os costões rochosos são ideais para pesca de garoupa e badejo. O mergulho é excelente, especialmente na Reserva Biológica Marinha do Arvoredo.',
     melhorEpoca: 'Dezembro a fevereiro para verão. Março a maio para turismo sem aglomeração.',
   },
+  'praia-grande': {
+    sobre: 'A Praia Grande possui uma das orlas mais extensas e urbanizadas de São Paulo. Com 22 km de extensão ininterrupta, é famosa por seus quiosques modernos, ciclovia de ponta a ponta e calçadão movimentado. É um destino extremamente popular para famílias da capital.',
+    pesca: 'A pesca de arremesso é excelente nas primeiras horas da manhã. O fluxo da maré traz cardumes de pequenos peixes para a zona de arrebentação, tornando-se um local ideal para pesca de corvina e pescada.',
+    melhorEpoca: 'O verão atrai multidões, mas a primavera e o outono oferecem clima agradável e praias mais tranquilas para aproveitar a orla.',
+  },
+  'sao-luis': {
+    sobre: 'A capital maranhense é famosa não apenas por sua rica herança histórica e arquitetura colonial, mas também por abrigar algumas das maiores variações de maré do Brasil. As praias urbanas mudam completamente de paisagem em poucas horas.',
+    pesca: 'A pesca costeira é influenciada diretamente pela grande amplitude de maré. Pescadores locais aproveitam o estuário para pescar durante a maré vazante, capturando peixes adaptados às correntes fortes.',
+    melhorEpoca: 'Entre julho e dezembro o clima é mais firme, ideal para visitar as praias e passear pelo centro histórico sem chuvas repentinas.',
+  },
+  'porto-de-natal': {
+    sobre: 'Natal, a Cidade do Sol, é famosa por suas praias de águas quentes e dunas exuberantes. A região oferece desde lagoas tranquilas até mar aberto propício para esportes aquáticos, sempre sob o sol nordestino.',
+    pesca: 'Com o mar calmo na maior parte do ano, a pesca embarcada e de costão são bastante praticadas. A variação da maré é crucial para acessar recifes e canais de pesca.',
+    melhorEpoca: 'O ano todo é propício para visitas. O verão é vibrante, mas os meses de setembro a novembro oferecem ventos perfeitos para kitesurf e praias menos cheias.',
+  },
+  'porto-de-maceio': {
+    sobre: 'Maceió abriga algumas das águas mais belas e cristalinas do litoral brasileiro, comparadas frequentemente ao Caribe. Suas piscinas naturais formadas em meio aos arrecifes são o cartão-postal do estado.',
+    pesca: 'Nas áreas onde a pesca é permitida, pescadores locais aproveitam a rica biodiversidade dos recifes de coral, especialmente nas marés de sizígia, quando mais recifes ficam expostos.',
+    melhorEpoca: 'De outubro a março as águas ficam mais cristalinas e quentes. É imprescindível visitar nas luas nova ou cheia para pegar a maré mais baixa e ver as piscinas naturais.',
+  },
+  'porto-de-santos': {
+    sobre: 'Santos mistura sua importância histórica portuária com belíssimas praias urbanas contornadas pelo maior jardim de orla do mundo. O mar costuma ser tranquilo, excelente para esportes como stand-up paddle e canoa havaiana.',
+    pesca: 'Os molhes e canais são locais tradicionais de pesca. A troca de marés movimenta os cardumes e a pesca noturna costuma trazer ótimos resultados para robalos.',
+    melhorEpoca: 'Qualquer época do ano é boa. No inverno, o clima convida a visitar o centro histórico e museus além da praia.',
+  },
+  'guaruja': {
+    sobre: 'O Guarujá, conhecido como a Pérola do Atlântico, oferece desde praias altamente badaladas como Enseada e Pitangueiras, até joias escondidas e preservadas, acessíveis apenas por trilha ou mar.',
+    pesca: 'Com diversos costões rochosos e praias de tombo, a pesca costeira é um grande atrativo. A pesca de costão rende peixes maiores em dias de mar agitado e maré subindo.',
+    melhorEpoca: 'Dezembro a março para aproveitar o verão e a vida noturna. Abril a junho para curtir surf e praias tranquilas com ótimo clima.',
+  },
 }
 
 // â”€â”€â”€ componente â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getPosts, getPost, getRelatedPosts } from '@/lib/blog';
 import NavBar from '@/components/NavBar';
 
@@ -20,6 +21,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${post.title} — MaréAgora Blog`,
     description: post.excerpt,
+    alternates: {
+      canonical: `https://mareagora.com.br/blog/${post.slug}`,
+    },
+    robots: {
+      index: !post.noindex,
+      follow: !post.noindex,
+    },
     other: {
       'article:modified_time': post.updatedAt,
     },
@@ -157,8 +165,8 @@ export default async function BlogPostPage({ params }: Props) {
         </header>
 
         {/* Article body */}
-        <article className="prose-blog text-white whitespace-pre-wrap">
-          {post.content}
+        <article className="prose prose-invert prose-lg max-w-none prose-headings:font-syne prose-a:text-blue-400 hover:prose-a:text-blue-300">
+          <MDXRemote source={post.content} />
         </article>
 
         {/* Back link */}

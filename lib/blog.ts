@@ -17,6 +17,7 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   readingTime: string;
+  noindex?: boolean;
 }
 
 function getSlug(filename: string): string {
@@ -45,6 +46,7 @@ export function getPosts(): BlogPost[] {
       excerpt: (data.excerpt as string) ?? '',
       content,
       readingTime: stats.text,
+      noindex: data.noindex === true,
     } satisfies BlogPost;
   });
 
@@ -78,6 +80,7 @@ export function getPost(slug: string): BlogPost | null {
     excerpt: (data.excerpt as string) ?? '',
     content,
     readingTime: stats.text,
+    noindex: data.noindex === true,
   };
 }
 

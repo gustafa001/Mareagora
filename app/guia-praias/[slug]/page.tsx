@@ -11,10 +11,12 @@ import AdSlot from '@/components/ads/AdSlot'
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const praia = PRAIAS.find((p) => p.slug === params.slug)
   if (!praia) return {}
+  const hasConteudo = !!CONTEUDO[praia.slug];
   return {
     title: `${praia.nome} â€” Maré, Ondas e Dicas | MaréAgora`,
     description: `Confira a maré em tempo real, condições de ondas e dicas de pesca para ${praia.nome}, ${praia.estado}. Dados oficiais da Marinha do Brasil.`,
     keywords: `${praia.nome}, maré ${praia.nome}, praia ${praia.estado}, surf ${praia.nome}`,
+    robots: hasConteudo ? { index: true, follow: true } : { index: false, follow: false },
     openGraph: {
       title: `${praia.nome} â€” Maré ao vivo | MaréAgora`,
       description: praia.descricao,

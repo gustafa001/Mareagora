@@ -25,11 +25,11 @@ export const beachCameras: BeachCamera[] = [
     state: 'SP',
     region: 'Baixada Santista',
     source: 'youtube',
-    embedId: 'SUBSTITUIR_VIDEO_ID', // buscar o video ID atual do canal "Santos ao vivo 24h"
+    embedId: '_0cC9iaQS_Y', // buscar o video ID atual do canal "Santos ao vivo 24h"
     description: 'Vista da orla da praia de Santos, divisa com São Vicente e Av. Ana Costa',
     credit: 'Canal Santos ao vivo 24h (YouTube)',
     creditUrl: 'https://www.youtube.com/watch?v=_0cC9iaQS_Y',
-    status: 'testing',
+    status: 'active',
   },
   {
     id: 'bertioga-morada-da-praia',
@@ -38,11 +38,11 @@ export const beachCameras: BeachCamera[] = [
     state: 'SP',
     region: 'Baixada Santista',
     source: 'twitch',
-    embedId: 'SUBSTITUIR_CANAL_TWITCH', // identificar o canal da Twitch do Condomínio Morada da Praia
+    embedId: '', // identificar o canal da Twitch do Condomínio Morada da Praia
     description: 'Vista da praia e mar em Bertioga, transmitida pelo Condomínio Morada da Praia',
     credit: 'Condomínio Morada da Praia (Twitch)',
     creditUrl: '',
-    status: 'testing',
+    status: 'inactive',
   },
   {
     id: 'guaruja-pitangueiras',
@@ -51,11 +51,11 @@ export const beachCameras: BeachCamera[] = [
     state: 'SP',
     region: 'Baixada Santista',
     source: 'youtube',
-    embedId: 'SUBSTITUIR_VIDEO_ID', // verificar se existe stream YouTube equivalente
+    embedId: '', // verificar se existe stream YouTube equivalente
     description: 'Uma das praias mais movimentadas do Guarujá, vista do Oceano Atlântico',
     credit: 'A confirmar',
     creditUrl: '',
-    status: 'testing',
+    status: 'inactive',
   },
 
   // ===== LITORAL NORTE SP =====
@@ -66,11 +66,11 @@ export const beachCameras: BeachCamera[] = [
     state: 'SP',
     region: 'Litoral Norte SP',
     source: 'youtube',
-    embedId: 'SUBSTITUIR_VIDEO_ID', // verificar canal @ubacam6924 no YouTube
+    embedId: '', // verificar canal @ubacam6924 no YouTube
     description: 'Uma das praias mais populares de Ubatuba, lado conhecido como Baguari',
     credit: 'UBACAM',
     creditUrl: 'https://www.youtube.com/@ubacam6924',
-    status: 'testing',
+    status: 'inactive',
   },
 
   // ===== RIO DE JANEIRO =====
@@ -81,11 +81,11 @@ export const beachCameras: BeachCamera[] = [
     state: 'RJ',
     region: 'Rio de Janeiro',
     source: 'youtube',
-    embedId: 'SUBSTITUIR_VIDEO_ID', // verificar live atual do canal EarthCam para Copacabana
+    embedId: '', // verificar live atual do canal EarthCam para Copacabana
     description: 'Vista panorâmica da praia mais famosa do Rio, com o Pão de Açúcar ao fundo',
     credit: 'EarthCam',
     creditUrl: 'https://www.earthcam.com/brazil/riodejaneiro/',
-    status: 'testing',
+    status: 'inactive',
   },
 ];
 

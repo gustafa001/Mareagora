@@ -1,13 +1,13 @@
 'use client';
 
 import { getPortBySlug, PORTS, haversineDistance } from '@/lib/ports';
-import { getEventosDia, getEventosAno } from '@/lib/mare';
+import { getEventosDia, getEventosAno, getEventosRange } from '@/lib/mare';
 import { portosConfig } from '@/data/porto-seo-config';
 import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
 import dynamic from 'next/dynamic';
 import NavBar from '@/components/NavBar';
-const TideChart = dynamic(() => import('@/components/TideChart'), { ssr: false });
+const TideWeekCard = dynamic(() => import('@/components/TideWeekCard'), { ssr: false });
 const BotaoAlertas = dynamic(() => import('@/components/BotaoAlertas'), { ssr: false });
 import MonthlyTideTable from '@/components/MonthlyTideTable';
 import SummaryCards from '@/components/SummaryCards';
@@ -40,6 +40,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
 
   const todayStr = new Date().toLocaleDateString('en-CA');
   const todayTides = getEventosDia(port, todayStr);
+  const weekTides = getEventosRange(port, todayStr, 7);
   const ano = new Date().getFullYear();
   const dataAno = getEventosAno(port, ano);
 
@@ -141,9 +142,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
 
         <div className="mt-12 flex flex-col lg:grid lg:grid-cols-[1fr_350px] gap-8">
           <div className="flex flex-col gap-8">
-            <div className="classic-card">
-              <TideChart tides={todayTides} />
-            </div>
+            <TideWeekCard days={weekTides} />
 
             <MonthlyTideTable
               eventos={dataAno}

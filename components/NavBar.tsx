@@ -40,16 +40,6 @@ export default function NavBar({ className = '' }: NavBarProps) {
               <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wide leading-none whitespace-nowrap">Praias</span>
             </Link>
 
-            {/* Câmeras Link */}
-            <Link 
-              href="/cameras" 
-              className="p-1.5 sm:px-3 sm:py-2 rounded-lg sm:rounded-xl text-slate-200 hover:text-white bg-slate-800/40 hover:bg-blue-500/20 border border-slate-700/50 hover:border-blue-400/50 transition-all duration-300 flex flex-col items-center justify-center gap-1.5 flex-shrink-0"
-              title="Praias ao Vivo"
-            >
-              <span className="text-sm sm:text-lg leading-none">📹</span>
-              <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wide leading-none whitespace-nowrap">Câmeras</span>
-            </Link>
-
             {/* Blog Link */}
             <Link 
               href="/blog" 

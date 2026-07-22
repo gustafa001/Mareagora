@@ -59,6 +59,16 @@ export default function NavBar({ className = '' }: NavBarProps) {
               <span className="text-base sm:text-lg">📝</span>
               <span className="hidden sm:inline">Blog</span>
             </Link>
+
+            {/* Operações Portuárias Link */}
+            <Link 
+              href="/operacoes-portuarias" 
+              className="p-2 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-black uppercase tracking-widest text-slate-200 hover:text-white bg-slate-800/40 hover:bg-blue-500/20 border border-slate-700/50 hover:border-blue-400/50 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 flex-shrink-0"
+              title="Operações Portuárias"
+            >
+              <span className="text-base sm:text-lg">🏗️</span>
+              <span className="hidden sm:inline">Operações</span>
+            </Link>
           </div>
         </div>
       </div>

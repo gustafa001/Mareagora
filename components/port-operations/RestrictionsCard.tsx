@@ -30,6 +30,24 @@ export default function RestrictionsCard({ config, currentTide }: RestrictionsCa
           </div>
         ))}
       </div>
+
+      {config.verified === false ? (
+        <p className="mt-3 text-[11px] text-amber-300/90 leading-snug">
+          ⚠️ Calado não confirmado em fonte oficial atual — valor estimado. Consulte a Praticagem/Capitania dos Portos antes de usar operacionalmente.
+        </p>
+      ) : config.sourceUrl ? (
+        <p className="mt-3 text-[11px] text-slate-500 leading-snug">
+          Dados oficiais verificados em {config.lastVerified ? new Date(config.lastVerified + 'T00:00:00').toLocaleDateString('pt-BR') : '—'} —{' '}
+          <a
+            href={config.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-slate-300 transition-colors"
+          >
+            ver fonte oficial
+          </a>
+        </p>
+      ) : null}
     </OpsCard>
   );
 }

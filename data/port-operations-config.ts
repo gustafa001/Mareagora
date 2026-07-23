@@ -112,12 +112,36 @@ const OVERRIDES: Record<string, Partial<PortOperationsConfig>> = {
     verified: true,
   },
   'rio-de-janeiro-fiscal': {
-    maxDraftM: 13.0, minTideM: 0.5, idealTideM: 1.3,
-    // Não foi possível confirmar um calado oficial específico e atual para
-    // este berço nas fontes públicas consultadas — valor mantido como
-    // estimativa anterior. Confirmar com a Praticagem/Capitania dos Portos do RJ.
+    maxDraftM: 15.3, minTideM: 0.7, idealTideM: 1.7,
+    channel: 'Canal de acesso ampliado para 16,2m de profundidade mínima',
+    berths: 'Berços operacionais com calado de até 15,3m para navios New Panamax',
     sourceUrl: 'https://www.portosrio.gov.br/',
-    verified: false,
+    lastVerified: '2025-04-07',
+    verified: true,
+  },
+  'porto-de-itajai': {
+    maxDraftM: 13.8, minTideM: 0.6, idealTideM: 1.6,
+    channel: 'Canal externo 14,0m; interno 13,6m; bacias de evolução 13,5m-13,6m',
+    berths: 'Berços 1, 2 e 4 (13,8m), Berço 3 (13,7m), Portonave (13,5m)',
+    sourceUrl: 'https://www.portoitajai.com.br/Menor-profundidade-observada-(MPO)',
+    lastVerified: '2026-07-08',
+    verified: true,
+  },
+  'porto-de-rio-grande': {
+    maxDraftM: 12.2, minTideM: 0.7, idealTideM: 1.8,
+    channel: 'Canal de acesso com 16,5m (homologado), mas com calado restrito a 12,2m (provisório 2026)',
+    berths: 'Terminais de Contêineres (12,2m) e Graneleiros conforme batimetria recente',
+    sourceUrl: 'https://www.portosrs.com.br/',
+    lastVerified: '2024-06-24',
+    verified: true,
+  },
+  'porto-de-paranagua': {
+    maxDraftM: 13.3, minTideM: 0.6, idealTideM: 1.6,
+    channel: 'Canais Sueste e Galheta com calado operacional de 13,3m',
+    berths: 'TCP e berços públicos operando com calado máximo de 13,3m',
+    sourceUrl: 'https://www.tcp.com.br/',
+    lastVerified: '2026-02-25',
+    verified: true,
   },
   'porto-de-sao-sebastiao': {
     maxDraftM: 9.4, minTideM: 0.6, idealTideM: 1.5,

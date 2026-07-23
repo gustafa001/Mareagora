@@ -10,23 +10,14 @@ export default function RestrictionsCard({ config, currentTide }: RestrictionsCa
   const isVerified = config.verified === true;
   const availableDraft = currentTide != null ? config.maxDraftM + currentTide : config.maxDraftM;
 
-  const items = isVerified
-    ? [
-        { label: 'Calado disponível', value: `${availableDraft.toFixed(1)}m`, icon: '⚓' },
-        { label: 'Calado máx. autorizado', value: `${config.maxDraftM.toFixed(1)}m`, icon: '📏' },
-        { label: 'Canal', value: config.channel, icon: '🧭' },
-        { label: 'Berços', value: config.berths, icon: '🏗️' },
-        { label: 'Praticagem', value: config.pilotage, icon: '🧑‍✈️' },
-        { label: 'Rebocadores', value: config.tugboats, icon: '🚢' },
-      ]
-    : [
-        { label: 'Calado disponível', value: 'Não disponível', icon: '⚓' },
-        { label: 'Calado máx. autorizado', value: 'Não disponível', icon: '📏' },
-        { label: 'Canal', value: 'Consulte a Autoridade Portuária local', icon: '🧭' },
-        { label: 'Berços', value: 'Consulte a Autoridade Portuária local', icon: '🏗️' },
-        { label: 'Praticagem', value: config.pilotage, icon: '🧑‍✈️' },
-        { label: 'Rebocadores', value: 'Consulte a Autoridade Portuária local', icon: '🚢' },
-      ];
+  const items = [
+    { label: 'Calado disponível', value: `${availableDraft.toFixed(1)}m`, icon: '⚓' },
+    { label: 'Calado máx. autorizado', value: `${config.maxDraftM.toFixed(1)}m`, icon: '📏' },
+    { label: 'Canal', value: config.channel, icon: '🧭' },
+    { label: 'Berços', value: config.berths, icon: '🏗️' },
+    { label: 'Praticagem', value: config.pilotage, icon: '🧑‍✈️' },
+    { label: 'Rebocadores', value: config.tugboats, icon: '🚢' },
+  ];
 
   return (
     <OpsCard title="Restrições Operacionais" icon="🚧">
@@ -36,7 +27,7 @@ export default function RestrictionsCard({ config, currentTide }: RestrictionsCa
             <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold flex items-center gap-1.5">
               <span>{item.icon}</span>{item.label}
             </p>
-            <p className={`text-sm font-bold mt-1 leading-snug ${isVerified ? 'text-slate-200' : 'text-slate-500 italic'}`}>
+            <p className={`text-sm font-bold mt-1 leading-snug ${isVerified ? 'text-slate-200' : 'text-slate-400'}`}>
               {item.value}
             </p>
           </div>

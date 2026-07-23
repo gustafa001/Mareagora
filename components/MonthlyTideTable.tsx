@@ -1,4 +1,6 @@
 "use client";
+import { getStateSlug } from "@/lib/states";
+import { PORTS } from "@/lib/ports";
 
 import { useMemo, useState } from "react";
 import { TideDay } from "@/lib/tideUtils";
@@ -215,7 +217,7 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, referenc
         }}>
           <span style={{ fontSize: "0.9rem" }}>ℹ️</span>
           <p style={{ margin: 0, fontSize: "0.75rem", color: "#94a3b8", fontWeight: 500 }}>
-            Os dados de {portName} são referenciados pelo <a href={`/mare/${referencePort.slug}`} style={{ color: "#60a5fa", textDecoration: "underline", textUnderlineOffset: "3px" }}>{referencePort.name}</a> (~{referencePort.distanceKm} km). 
+            Os dados de {portName} são referenciados pelo <a href={`/mare/${getStateSlug(PORTS.find(p => p.slug === referencePort.slug)?.state || "sp")}/${referencePort.slug}`} style={{ color: "#60a5fa", textDecoration: "underline", textUnderlineOffset: "3px" }}>{referencePort.name}</a> (~{referencePort.distanceKm} km). 
             <span className="hidden sm:inline"> As diferenças de horário são inferiores a 2 minutos.</span>
           </p>
         </div>

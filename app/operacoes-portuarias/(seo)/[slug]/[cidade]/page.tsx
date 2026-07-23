@@ -21,16 +21,17 @@ function isCommercialPort(slug: string): boolean {
 
 export async function generateStaticParams() {
   return PORTS.filter(p => isCommercialPort(p.slug)).map(port => ({
-    estado: getStateSlug(port.state),
-    slug: port.slug,
+    slug: getStateSlug(port.state),
+    cidade: port.slug,
   }));
 }
 
-export async function generateMetadata({ params }: { params: { estado: string, slug: string } }): Promise<Metadata> {
-  const port = getPortBySlug(params.slug);
-  if (!port || getStateSlug(port.state) !== params.estado) return { title: 'Local não encontrado' };
+export async function generateMetadata({ params }: { params: { slug: string, cidade: string } }): Promise<Metadata> {
+  const estado = params.slug;
+  const slug = params.cidade;
+  const port = getPortBySlug(slug);
+  if (!port || getStateSlug(port.state) !== estado) return { title: 'Local não encontrado' };
 
-  const { estado, slug } = params;
   const title = `Operações Portuárias — ${port.name} | MaréAgora`;
   const description = `Painel operacional em tempo real de ${port.name} (${port.state}): janela operacional, maré, clima, condições do mar, restrições e alertas.`;
   const url = `https://mareagora.com.br/operacoes-portuarias/${estado}/${slug}`;
@@ -44,8 +45,9 @@ export async function generateMetadata({ params }: { params: { estado: string, s
   };
 }
 
-export default function Page({ params }: { params: { estado: string, slug: string } }) {
-  const { estado, slug } = params;
+export default function Page({ params }: { params: { slug: string, cidade: string } }) {
+  const estado = params.slug;
+  const slug = params.cidade;
   const port = getPortBySlug(slug);
   if (!port || !isCommercialPort(slug) || getStateSlug(port.state) !== estado) notFound();
 

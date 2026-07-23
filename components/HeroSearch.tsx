@@ -1,4 +1,5 @@
 "use client";
+import { getStateSlug } from "@/lib/states";
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -52,7 +53,7 @@ export default function HeroSearch() {
   const goToPort = (port: Port) => {
     setSearch("");
     setShowSuggestions(false);
-    router.push(`/mare/${port.slug}`);
+    router.push(`/mare/${getStateSlug(port.state)}/${port.slug}`);
   };
 
   return (

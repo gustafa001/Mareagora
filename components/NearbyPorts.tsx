@@ -1,3 +1,4 @@
+import { getStateSlug } from "@/lib/states";
 import Link from "next/link";
 import { Port } from "@/lib/ports";
 
@@ -15,7 +16,7 @@ export default function NearbyPorts({ ports }: NearbyPortsProps) {
         {ports.map((p) => (
           <Link 
             key={p.slug} 
-            href={`/mare/${p.slug}`}
+            href={`/mare/${getStateSlug(p.state)}/${p.slug}`}
             className="block bg-[rgba(13,34,64,0.6)] border border-[rgba(56,201,240,0.1)] rounded-2xl p-4.5 hover:border-[rgba(56,201,240,0.35)] hover:bg-[rgba(14,127,190,0.15)] hover:-translate-y-0.5 transition-all"
           >
             <div className="font-syne font-bold text-[0.9rem] text-[var(--white)]">{p.name}</div>

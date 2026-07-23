@@ -1,4 +1,5 @@
 'use client';
+import { getStateSlug } from "@/lib/states";
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -75,7 +76,7 @@ export default function PortosListClient({ initialRegions, allPorts }: PortosLis
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                   {regionPorts.map((port) => (
-                    <Link key={port.slug} href={`/mare/${port.slug}`}
+                    <Link key={port.slug} href={`/mare/${getStateSlug(port.state)}/${port.slug}`}
                       className="group backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 hover:border-blue-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 hover:-translate-y-1">
                       <div className="flex items-start justify-between mb-3">
                         <h4 className="font-semibold text-white group-hover:text-blue-300 transition-colors">{port.name}</h4>

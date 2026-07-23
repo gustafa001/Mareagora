@@ -1,4 +1,5 @@
 'use client';
+import { getStateSlug } from "@/lib/states";
 
 import { PORTS, getNearestPort, type Port } from '@/lib/ports';
 import { useEffect, useState, useRef } from 'react';
@@ -53,7 +54,9 @@ export default function HomeHero() {
   };
 
   const handleSelectPort = (slug: string) => {
-    router.push(`/mare/${slug}`);
+    const port = PORTS.find(p => p.slug === slug);
+    if (!port) return;
+    router.push(`/mare/${getStateSlug(port.state)}/${slug}`);
     setShowSuggestions(false);
   };
 
@@ -68,7 +71,7 @@ export default function HomeHero() {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const nearest = getNearestPort(pos.coords.latitude, pos.coords.longitude);
-        router.push(`/mare/${nearest.slug}`);
+        router.push(`/mare/${getStateSlug(nearest.state)}/${nearest.slug}`);
       },
       (error) => {
         console.error('Geolocation error:', error);

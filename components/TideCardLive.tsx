@@ -1,4 +1,5 @@
 'use client';
+import { getStateSlug } from "@/lib/states";
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -73,7 +74,7 @@ export default function TideCardLive({ port, data: initialData, index = 0 }: Pro
 
   return (
     <Link
-      href={`/mare/${port.slug}`}
+      href={`/mare/${getStateSlug(port.estado)}/${port.slug}`}
       className="group relative bg-[rgba(13,34,64,0.75)] border border-[rgba(56,201,240,0.1)] rounded-2xl p-4 hover:bg-[rgba(14,127,190,0.12)] hover:border-[rgba(56,201,240,0.35)] hover:-translate-y-1 transition-all duration-200 backdrop-blur-sm overflow-hidden flex flex-col gap-2"
     >
       {/* Glow */}

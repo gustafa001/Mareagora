@@ -1,3 +1,4 @@
+import { getStateSlug } from "@/lib/states";
 'use client'
 import { useEffect, useRef } from 'react'
 import { PORTS } from '@/lib/ports'
@@ -63,7 +64,7 @@ export default function MapaInterativo() {
               <div style="font-size:11px;color:#888;margin-bottom:10px">
                 ${porto.state} · ${porto.region.charAt(0).toUpperCase() + porto.region.slice(1)}
               </div>
-              <a href="/mare/${porto.slug}"
+              <a href="/mare/${getStateSlug(porto.state)}/${porto.slug}"
                 style="display:inline-block;padding:5px 14px;
                 background:#0ea5e9;color:white;border-radius:6px;
                 font-size:12px;text-decoration:none;font-weight:500">

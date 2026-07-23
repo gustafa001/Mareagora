@@ -17,16 +17,17 @@ import { generateSEOContent } from '@/lib/seo/content-generator';
 
 export async function generateStaticParams() {
   return PORTS.map(port => ({
-    estado: getStateSlug(port.state),
-    slug: port.slug,
+    slug: getStateSlug(port.state),
+    cidade: port.slug,
   }));
 }
 
-export async function generateMetadata({ params }: { params: { estado: string, slug: string } }): Promise<Metadata> {
-  const port = getPortBySlug(params.slug);
-  if (!port || getStateSlug(port.state) !== params.estado) return { title: 'Local não encontrado' };
+export async function generateMetadata({ params }: { params: { slug: string, cidade: string } }): Promise<Metadata> {
+  const estado = params.slug;
+  const slug = params.cidade;
+  const port = getPortBySlug(slug);
+  if (!port || getStateSlug(port.state) !== estado) return { title: 'Local não encontrado' };
 
-  const { estado, slug } = params;
   const config = portosConfig[slug];
   const ano = new Date().getFullYear();
   const url = `https://mareagora.com.br/mare/${estado}/${slug}`;
@@ -86,8 +87,9 @@ export async function generateMetadata({ params }: { params: { estado: string, s
   };
 }
 
-export default async function PortPage({ params }: { params: { estado: string, slug: string } }) {
-  const { estado, slug } = params;
+export default async function PortPage({ params }: { params: { slug: string, cidade: string } }) {
+  const estado = params.slug;
+  const slug = params.cidade;
   const port = getPortBySlug(slug);
   if (!port || getStateSlug(port.state) !== estado) notFound();
 

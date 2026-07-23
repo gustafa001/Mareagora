@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { getPortBySlug, getAllSlugs } from '@/lib/ports';
+import { getStateSlug } from '@/lib/states';
 import { portosConfig } from '@/data/porto-seo-config';
 import PortOperationsPage from '@/components/port-operations/PortOperationsPage';
 
@@ -21,25 +22,28 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const port = getPortBySlug(params.slug);
+  const slug = params.slug;
+  const port = getPortBySlug(slug);
   if (!port) return { title: 'Porto não encontrado' };
 
+  const estadoSlug = getStateSlug(port.state);
   const title = `Operações Portuárias — ${port.name} | MaréAgora`;
   const description = `Painel operacional em tempo real de ${port.name} (${port.state}): janela operacional, maré, clima, condições do mar, restrições e alertas.`;
-  const url = `https://mareagora.com.br/operacoes-portuarias/${params.slug}`;
+  const seoUrl = `https://mareagora.com.br/operacoes-portuarias/${estadoSlug}/${slug}`;
 
   return {
     title,
     description,
-    alternates: { canonical: url },
-    openGraph: { title, description, url, type: 'website', locale: 'pt_BR', siteName: 'MaréAgora' },
+    alternates: { canonical: seoUrl },
+    openGraph: { title, description, url: seoUrl, type: 'website', locale: 'pt_BR', siteName: 'MaréAgora' },
     twitter: { card: 'summary_large_image', title, description },
   };
 }
 
 export default function Page({ params }: { params: { slug: string } }) {
-  const port = getPortBySlug(params.slug);
-  if (!port || !isCommercialPort(params.slug)) notFound();
+  const slug = params.slug;
+  const port = getPortBySlug(slug);
+  if (!port || !isCommercialPort(slug)) notFound();
 
-  return <PortOperationsPage slug={params.slug} />;
+  return <PortOperationsPage slug={slug} />;
 }

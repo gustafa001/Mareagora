@@ -1,3 +1,4 @@
+import { getStateSlug } from "@/lib/states";
 import Link from 'next/link';
 import { getPortBySlug } from '@/lib/ports';
 import { getEventosDia } from '@/lib/mare';
@@ -50,7 +51,7 @@ export default function FeaturedPorts() {
           return (
             <Link 
               key={port.slug} 
-              href={`/mare/${port.slug}`}
+              href={`/mare/${getStateSlug(port.state)}/${port.slug}`}
               className="group bg-slate-900/40 border border-white/5 rounded-2xl p-5 hover:bg-slate-800/60 transition-all hover:border-blue-500/30"
             >
               <div className="flex justify-between items-start mb-4">

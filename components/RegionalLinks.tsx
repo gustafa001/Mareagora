@@ -1,3 +1,4 @@
+import { getStateSlug } from "@/lib/states";
 import Link from 'next/link';
 import { PORTS, getAllRegions } from '@/lib/ports';
 
@@ -32,7 +33,7 @@ export default function RegionalLinks() {
                   regionPorts.map(port => (
                     <li key={port.slug}>
                       <Link 
-                        href={`/mare/${port.slug}`}
+                        href={`/mare/${getStateSlug(port.state)}/${port.slug}`}
                         className="text-slate-400 hover:text-white transition-colors text-sm"
                       >
                         Maré {port.cityName || port.name}

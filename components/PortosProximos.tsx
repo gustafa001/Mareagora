@@ -1,3 +1,4 @@
+import { getStateSlug } from "@/lib/states";
 import Link from 'next/link';
 import { getPortosProximos } from '@/lib/ports';
 import { MapPin } from 'lucide-react';
@@ -21,7 +22,7 @@ export default function PortosProximos({ slug }: PortosProximosProps) {
         {portos.map((porto) => (
           <Link
             key={porto.slug}
-            href={`/mare/${porto.slug}`}
+            href={`/mare/${getStateSlug(porto.estado)}/${porto.slug}`}
             className="flex-shrink-0 w-[240px] md:w-auto bg-white border border-slate-200 rounded-xl p-4 hover:shadow-md transition-all hover:border-blue-300 snap-start flex flex-col group"
             aria-label={`Ver tábua de marés para ${porto.nome}, a ${porto.distanciaKm} km de distância`}
           >

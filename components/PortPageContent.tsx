@@ -8,7 +8,6 @@ import AdSlot from '@/components/ads/AdSlot';
 import dynamic from 'next/dynamic';
 import NavBar from '@/components/NavBar';
 const TideWeekCard = dynamic(() => import('@/components/TideWeekCard'), { ssr: false });
-const BotaoAlertas = dynamic(() => import('@/components/BotaoAlertas'), { ssr: false });
 import MonthlyTideTable from '@/components/MonthlyTideTable';
 import SummaryCards from '@/components/SummaryCards';
 import WindWaveCharts from '@/components/WindWaveCharts';
@@ -125,11 +124,6 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
             <p className="mt-4 text-xs opacity-70" suppressHydrationWarning>
               Horário local: {currentTimeBR}
             </p>
-
-            {/* Botão de alertas de maré baixa */}
-            <div style={{ marginTop: '0.75rem' }}>
-              <BotaoAlertas portSlug={slug} portName={seoName} />
-            </div>
           </div>
         </div>
       </section>

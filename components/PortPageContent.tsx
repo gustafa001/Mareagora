@@ -146,6 +146,10 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
           <div className="flex flex-col gap-8">
             <TideWeekCard days={weekTides} />
 
+            <div className="my-8">
+              <WeatherRadarCard lat={port.lat} lon={port.lon} />
+            </div>
+
             <MonthlyTideTable
               eventos={dataAno}
               portName={seoName}
@@ -154,18 +158,12 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               referencePort={referenceData}
             />
 
-            <NotificationCTA portSlug={slug} />
-
             {/* AdSense In-Content */}
             <div className="my-8 flex justify-center">
               <AdSlot slotId={AD_SLOTS.INCONTENT_RECT} format="auto" />
             </div>
 
             <WindWaveCharts lat={port.lat} lon={port.lon} />
-
-            <div className="my-8">
-              <WeatherRadarCard lat={port.lat} lon={port.lon} />
-            </div>
 
             <ActivityRecommendations
               todayTides={todayTides}

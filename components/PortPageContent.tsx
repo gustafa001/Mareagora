@@ -15,6 +15,7 @@ import WindWaveCharts from '@/components/WindWaveCharts';
 import SearchPorts from '@/components/SearchPorts';
 import PortStatistics from '@/components/PortStatistics';
 import ActivityRecommendations from '@/components/ActivityRecommendations';
+import SolunarTable from '@/components/SolunarTable';
 import PortBlogSection from '@/components/PortBlogSection';
 import NotificationCTA from '@/components/NotificationCTA';
 import { useSeaConditions } from '@/hooks/useSeaConditions';
@@ -169,6 +170,13 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               loading={seaLoading}
               slug={slug}
               categoria={categoria}
+            />
+
+            <SolunarTable
+              lat={port.lat}
+              lon={port.lon}
+              offsetMinutes={port.offsetMinutes}
+              weekTides={weekTides}
             />
 
             <PortStatistics

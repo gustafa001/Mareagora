@@ -197,6 +197,19 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               posts={blogPosts}
               strategy={blogStrategy}
             />
+
+            {/* Aviso Legal de Isenção de Responsabilidade Náutica */}
+            <div className="mt-8 p-6 bg-red-50 border border-red-100 rounded-xl">
+              <h3 className="flex items-center gap-2 text-red-800 font-bold mb-2">
+                <span className="text-xl">⚠️</span> Aviso Importante de Navegação
+              </h3>
+              <p className="text-red-700/90 text-sm leading-relaxed">
+                As previsões de marés, ventos e ondas exibidas no MaréAgora têm finalidade exclusivamente <strong>informativa e recreativa</strong>. 
+                Nossos dados são baseados em fontes públicas e modelos matemáticos. 
+                <br className="mb-1" />
+                <strong>Em nenhuma hipótese</strong> estas informações devem ser utilizadas para navegação, planejamento de operações portuárias oficiais ou qualquer atividade que envolva risco de vida ou de patrimônio. Para tais fins, consulte <strong>sempre</strong> as Tábuas das Marés oficiais e cartas náuticas certificadas pela Diretoria de Hidrografia e Navegação (DHN) da Marinha do Brasil.
+              </p>
+            </div>
           </div>
         </div>
       </div>

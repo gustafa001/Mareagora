@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import WaveChart from "@/components/WaveChart";
 import WindChart from "@/components/WindChart";
+import WindRadarCard from "@/components/WindRadarCard";
 
 interface WindWaveChartsProps {
   lat: number;
@@ -117,27 +118,8 @@ export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
           <WaveChart data={waveData} />
         </div>
 
-        {/* Gráfico de Vento */}
-        <div className="bg-[#0d1526] border border-white/5 rounded-[2.5rem] p-8 shadow-2xl overflow-hidden relative">
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-          
-          <div className="flex justify-between items-center mb-8">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20">
-                <span className="text-xl">💨</span>
-              </div>
-              <div>
-                <h3 className="text-white font-bold text-lg leading-none">Velocidade do Vento</h3>
-                <p className="text-slate-500 text-xs mt-1 font-medium uppercase tracking-widest">Próximos 14 dias</p>
-              </div>
-            </div>
-            <div className="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-[10px] font-black text-cyan-400 uppercase tracking-tighter">
-              Km/h
-            </div>
-          </div>
-          
-          <WindChart hourly={windHourly} days={14} />
-        </div>
+        {/* Radar de Vento Animado */}
+        <WindRadarCard lat={lat} lon={lon} />
       </div>
     </section>
   );

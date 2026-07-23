@@ -25,7 +25,7 @@ export default function NavBar({ className = '' }: NavBarProps) {
           <Link href="/" className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-all group flex-shrink-0">
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform flex-shrink-0">
               <img
-                src="/icons/icon-192x192.png"
+                src="/logo-mark.png"
                 alt="MaréAgora"
                 width={40}
                 height={40}

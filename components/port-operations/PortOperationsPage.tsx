@@ -29,6 +29,7 @@ import OperationalIndexGauge from './OperationalIndexGauge';
 import HistoryCard, { type HistoryLogEntry } from './HistoryCard';
 import PortInfoCard from './PortInfoCard';
 import DashboardGrid, { type DashboardGridItem } from './DashboardGrid';
+import DraftCalculator from './DraftCalculator';
 
 const DAY_LABELS = ['Hoje', 'Amanhã', 'Dia +2', 'Dia +3'];
 
@@ -132,6 +133,7 @@ export default function PortOperationsPage({ slug }: PortOperationsPageProps) {
     { id: 'sea', span: 1, node: <SeaConditionsCard sea={sea} loading={loading && !lastUpdated} /> },
     { id: 'restrictions', span: 2, node: <RestrictionsCard config={config} currentTide={currentTideHeight} /> },
     { id: 'alerts', span: 1, node: <AlertsCard alerts={alerts} /> },
+    { id: 'draft', span: 1, node: <DraftCalculator todayTides={todayTides as unknown as TideEvent[]} baseDepth={config.maxDraftM} /> },
     { id: 'info', span: 1, node: <PortInfoCard port={port} /> },
     { id: 'forecast', span: 2, node: <ForecastCard days={forecastDays} /> },
     { id: 'history', span: 2, node: <HistoryCard yesterdayTides={yesterdayTides} alertLog={alertLog} eventLog={eventLog} /> },

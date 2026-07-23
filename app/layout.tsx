@@ -39,6 +39,11 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "MaréAgora",
   },
+  alternates: {
+    languages: {
+      'pt-BR': 'https://mareagora.com.br',
+    },
+  },
 };
 
 export const viewport: Viewport = {
@@ -58,6 +63,15 @@ export default function RootLayout({
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        {/* Performance Preconnects */}
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
         {/* Google AdSense */}
         <meta name="google-adsense-account" content="ca-pub-2920008879492175" />
         {/* Script AdSense */}

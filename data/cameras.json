@@ -1,0 +1,24 @@
+[
+  {
+    "id": "santos-ponta-da-praia",
+    "slug": "santos-ponta-da-praia",
+    "name": "Ponta da Praia - Santos",
+    "state": "SP",
+    "city": "Santos",
+    "type": "youtube",
+    "url": "https://www.youtube.com/embed/live_stream?channel=UC4g1...",
+    "lat": -23.987,
+    "lon": -46.301
+  },
+  {
+    "id": "guaruja-pitangueiras",
+    "slug": "guaruja-pitangueiras",
+    "name": "Praia das Pitangueiras - Guarujá",
+    "state": "SP",
+    "city": "Guarujá",
+    "type": "iframe",
+    "url": "https://camera.example.com/embed/123",
+    "lat": -23.996,
+    "lon": -46.257
+  }
+]

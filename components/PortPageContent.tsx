@@ -8,6 +8,7 @@ import AdSlot from '@/components/ads/AdSlot';
 import dynamic from 'next/dynamic';
 import NavBar from '@/components/NavBar';
 const TideWeekCard = dynamic(() => import('@/components/TideWeekCard'), { ssr: false });
+
 import MonthlyTideTable from '@/components/MonthlyTideTable';
 import SummaryCards from '@/components/SummaryCards';
 import WindWaveCharts from '@/components/WindWaveCharts';

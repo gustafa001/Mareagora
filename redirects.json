@@ -1,0 +1,652 @@
+[
+  {
+    "source": "/mare/porto-de-belem",
+    "destination": "/mare/para/porto-de-belem",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-belem",
+    "destination": "/operacoes-portuarias/para/porto-de-belem",
+    "permanent": true
+  },
+  {
+    "source": "/mare/ilha-do-mosqueiro",
+    "destination": "/mare/para/ilha-do-mosqueiro",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/ilha-do-mosqueiro",
+    "destination": "/operacoes-portuarias/para/ilha-do-mosqueiro",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-vila-do-conde",
+    "destination": "/mare/para/porto-de-vila-do-conde",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-vila-do-conde",
+    "destination": "/operacoes-portuarias/para/porto-de-vila-do-conde",
+    "permanent": true
+  },
+  {
+    "source": "/mare/atracadouro-de-breves",
+    "destination": "/mare/para/atracadouro-de-breves",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/atracadouro-de-breves",
+    "destination": "/operacoes-portuarias/para/atracadouro-de-breves",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-santana",
+    "destination": "/mare/amapa/porto-de-santana",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-santana",
+    "destination": "/operacoes-portuarias/amapa/porto-de-santana",
+    "permanent": true
+  },
+  {
+    "source": "/mare/igarape-grande-do-curua",
+    "destination": "/mare/para/igarape-grande-do-curua",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/igarape-grande-do-curua",
+    "destination": "/operacoes-portuarias/para/igarape-grande-do-curua",
+    "permanent": true
+  },
+  {
+    "source": "/mare/barra-norte-arco-lamoso",
+    "destination": "/mare/para/barra-norte-arco-lamoso",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/barra-norte-arco-lamoso",
+    "destination": "/operacoes-portuarias/para/barra-norte-arco-lamoso",
+    "permanent": true
+  },
+  {
+    "source": "/mare/fundeadouro-de-salinopolis",
+    "destination": "/mare/para/fundeadouro-de-salinopolis",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/fundeadouro-de-salinopolis",
+    "destination": "/operacoes-portuarias/para/fundeadouro-de-salinopolis",
+    "permanent": true
+  },
+  {
+    "source": "/mare/ilha-dos-guaras",
+    "destination": "/mare/para/ilha-dos-guaras",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/ilha-dos-guaras",
+    "destination": "/operacoes-portuarias/para/ilha-dos-guaras",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-itaqui",
+    "destination": "/mare/maranhao/porto-de-itaqui",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-itaqui",
+    "destination": "/operacoes-portuarias/maranhao/porto-de-itaqui",
+    "permanent": true
+  },
+  {
+    "source": "/mare/sao-luis",
+    "destination": "/mare/maranhao/sao-luis",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/sao-luis",
+    "destination": "/operacoes-portuarias/maranhao/sao-luis",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-tutoia",
+    "destination": "/mare/maranhao/porto-de-tutoia",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-tutoia",
+    "destination": "/operacoes-portuarias/maranhao/porto-de-tutoia",
+    "permanent": true
+  },
+  {
+    "source": "/mare/terminal-da-ponta-da-madeira",
+    "destination": "/mare/maranhao/terminal-da-ponta-da-madeira",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/terminal-da-ponta-da-madeira",
+    "destination": "/operacoes-portuarias/maranhao/terminal-da-ponta-da-madeira",
+    "permanent": true
+  },
+  {
+    "source": "/mare/terminal-da-alumar",
+    "destination": "/mare/maranhao/terminal-da-alumar",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/terminal-da-alumar",
+    "destination": "/operacoes-portuarias/maranhao/terminal-da-alumar",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-luis-correia",
+    "destination": "/mare/piaui/porto-de-luis-correia",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-luis-correia",
+    "destination": "/operacoes-portuarias/piaui/porto-de-luis-correia",
+    "permanent": true
+  },
+  {
+    "source": "/mare/terminal-portuario-do-pecem",
+    "destination": "/mare/ceara/terminal-portuario-do-pecem",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/terminal-portuario-do-pecem",
+    "destination": "/operacoes-portuarias/ceara/terminal-portuario-do-pecem",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-mucuripe-fortaleza",
+    "destination": "/mare/ceara/porto-de-mucuripe-fortaleza",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-mucuripe-fortaleza",
+    "destination": "/operacoes-portuarias/ceara/porto-de-mucuripe-fortaleza",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-areia-branca-termisa",
+    "destination": "/mare/rio-grande-do-norte/porto-de-areia-branca-termisa",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-areia-branca-termisa",
+    "destination": "/operacoes-portuarias/rio-grande-do-norte/porto-de-areia-branca-termisa",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-guamare",
+    "destination": "/mare/rio-grande-do-norte/porto-de-guamare",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-guamare",
+    "destination": "/operacoes-portuarias/rio-grande-do-norte/porto-de-guamare",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-macau",
+    "destination": "/mare/rio-grande-do-norte/porto-de-macau",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-macau",
+    "destination": "/operacoes-portuarias/rio-grande-do-norte/porto-de-macau",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-natal",
+    "destination": "/mare/rio-grande-do-norte/porto-de-natal",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-natal",
+    "destination": "/operacoes-portuarias/rio-grande-do-norte/porto-de-natal",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-cabedelo",
+    "destination": "/mare/paraiba/porto-de-cabedelo",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-cabedelo",
+    "destination": "/operacoes-portuarias/paraiba/porto-de-cabedelo",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-do-recife",
+    "destination": "/mare/pernambuco/porto-do-recife",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-do-recife",
+    "destination": "/operacoes-portuarias/pernambuco/porto-do-recife",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-suape",
+    "destination": "/mare/pernambuco/porto-de-suape",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-suape",
+    "destination": "/operacoes-portuarias/pernambuco/porto-de-suape",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-maceio",
+    "destination": "/mare/alagoas/porto-de-maceio",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-maceio",
+    "destination": "/operacoes-portuarias/alagoas/porto-de-maceio",
+    "permanent": true
+  },
+  {
+    "source": "/mare/terminal-maritimo-inacio-barbosa",
+    "destination": "/mare/sergipe/terminal-maritimo-inacio-barbosa",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/terminal-maritimo-inacio-barbosa",
+    "destination": "/operacoes-portuarias/sergipe/terminal-maritimo-inacio-barbosa",
+    "permanent": true
+  },
+  {
+    "source": "/mare/capitania-dos-portos-de-sergipe",
+    "destination": "/mare/sergipe/capitania-dos-portos-de-sergipe",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/capitania-dos-portos-de-sergipe",
+    "destination": "/operacoes-portuarias/sergipe/capitania-dos-portos-de-sergipe",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-madre-de-deus",
+    "destination": "/mare/bahia/porto-de-madre-de-deus",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-madre-de-deus",
+    "destination": "/operacoes-portuarias/bahia/porto-de-madre-de-deus",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-aratu",
+    "destination": "/mare/bahia/porto-de-aratu",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-aratu",
+    "destination": "/operacoes-portuarias/bahia/porto-de-aratu",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-salvador",
+    "destination": "/mare/bahia/porto-de-salvador",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-salvador",
+    "destination": "/operacoes-portuarias/bahia/porto-de-salvador",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-ilheus",
+    "destination": "/mare/bahia/porto-de-ilheus",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-ilheus",
+    "destination": "/operacoes-portuarias/bahia/porto-de-ilheus",
+    "permanent": true
+  },
+  {
+    "source": "/mare/arquipelago-de-fernando-de-noronha",
+    "destination": "/mare/pernambuco/arquipelago-de-fernando-de-noronha",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/arquipelago-de-fernando-de-noronha",
+    "destination": "/operacoes-portuarias/pernambuco/arquipelago-de-fernando-de-noronha",
+    "permanent": true
+  },
+  {
+    "source": "/mare/terminal-de-barra-do-riacho",
+    "destination": "/mare/espirito-santo/terminal-de-barra-do-riacho",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/terminal-de-barra-do-riacho",
+    "destination": "/operacoes-portuarias/espirito-santo/terminal-de-barra-do-riacho",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-tubarao",
+    "destination": "/mare/espirito-santo/porto-de-tubarao",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-tubarao",
+    "destination": "/operacoes-portuarias/espirito-santo/porto-de-tubarao",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-vitoria",
+    "destination": "/mare/espirito-santo/porto-de-vitoria",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-vitoria",
+    "destination": "/operacoes-portuarias/espirito-santo/porto-de-vitoria",
+    "permanent": true
+  },
+  {
+    "source": "/mare/terminal-da-ponta-do-ubu-i",
+    "destination": "/mare/espirito-santo/terminal-da-ponta-do-ubu-i",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/terminal-da-ponta-do-ubu-i",
+    "destination": "/operacoes-portuarias/espirito-santo/terminal-da-ponta-do-ubu-i",
+    "permanent": true
+  },
+  {
+    "source": "/mare/terminal-maritimo-de-imbetiba",
+    "destination": "/mare/rio-de-janeiro/terminal-maritimo-de-imbetiba",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/terminal-maritimo-de-imbetiba",
+    "destination": "/operacoes-portuarias/rio-de-janeiro/terminal-maritimo-de-imbetiba",
+    "permanent": true
+  },
+  {
+    "source": "/mare/rio-de-janeiro-fiscal",
+    "destination": "/mare/rio-de-janeiro/rio-de-janeiro-fiscal",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/rio-de-janeiro-fiscal",
+    "destination": "/operacoes-portuarias/rio-de-janeiro/rio-de-janeiro-fiscal",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-itaguai",
+    "destination": "/mare/rio-de-janeiro/porto-de-itaguai",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-itaguai",
+    "destination": "/operacoes-portuarias/rio-de-janeiro/porto-de-itaguai",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-do-forno",
+    "destination": "/mare/rio-de-janeiro/porto-do-forno",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-do-forno",
+    "destination": "/operacoes-portuarias/rio-de-janeiro/porto-do-forno",
+    "permanent": true
+  },
+  {
+    "source": "/mare/terminal-da-ilha-guaiba",
+    "destination": "/mare/rio-de-janeiro/terminal-da-ilha-guaiba",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/terminal-da-ilha-guaiba",
+    "destination": "/operacoes-portuarias/rio-de-janeiro/terminal-da-ilha-guaiba",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-do-acu",
+    "destination": "/mare/rio-de-janeiro/porto-do-acu",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-do-acu",
+    "destination": "/operacoes-portuarias/rio-de-janeiro/porto-do-acu",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-angra-dos-reis",
+    "destination": "/mare/rio-de-janeiro/porto-de-angra-dos-reis",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-angra-dos-reis",
+    "destination": "/operacoes-portuarias/rio-de-janeiro/porto-de-angra-dos-reis",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-sao-sebastiao",
+    "destination": "/mare/sao-paulo/porto-de-sao-sebastiao",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-sao-sebastiao",
+    "destination": "/operacoes-portuarias/sao-paulo/porto-de-sao-sebastiao",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-santos",
+    "destination": "/mare/sao-paulo/porto-de-santos",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-santos",
+    "destination": "/operacoes-portuarias/sao-paulo/porto-de-santos",
+    "permanent": true
+  },
+  {
+    "source": "/mare/guaruja",
+    "destination": "/mare/sao-paulo/guaruja",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/guaruja",
+    "destination": "/operacoes-portuarias/sao-paulo/guaruja",
+    "permanent": true
+  },
+  {
+    "source": "/mare/sao-vicente",
+    "destination": "/mare/sao-paulo/sao-vicente",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/sao-vicente",
+    "destination": "/operacoes-portuarias/sao-paulo/sao-vicente",
+    "permanent": true
+  },
+  {
+    "source": "/mare/praia-grande",
+    "destination": "/mare/sao-paulo/praia-grande",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/praia-grande",
+    "destination": "/operacoes-portuarias/sao-paulo/praia-grande",
+    "permanent": true
+  },
+  {
+    "source": "/mare/bertioga",
+    "destination": "/mare/sao-paulo/bertioga",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/bertioga",
+    "destination": "/operacoes-portuarias/sao-paulo/bertioga",
+    "permanent": true
+  },
+  {
+    "source": "/mare/riviera-de-sao-lourenco",
+    "destination": "/mare/sao-paulo/riviera-de-sao-lourenco",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/riviera-de-sao-lourenco",
+    "destination": "/operacoes-portuarias/sao-paulo/riviera-de-sao-lourenco",
+    "permanent": true
+  },
+  {
+    "source": "/mare/mongagua",
+    "destination": "/mare/sao-paulo/mongagua",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/mongagua",
+    "destination": "/operacoes-portuarias/sao-paulo/mongagua",
+    "permanent": true
+  },
+  {
+    "source": "/mare/itanhaem",
+    "destination": "/mare/sao-paulo/itanhaem",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/itanhaem",
+    "destination": "/operacoes-portuarias/sao-paulo/itanhaem",
+    "permanent": true
+  },
+  {
+    "source": "/mare/peruibe",
+    "destination": "/mare/sao-paulo/peruibe",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/peruibe",
+    "destination": "/operacoes-portuarias/sao-paulo/peruibe",
+    "permanent": true
+  },
+  {
+    "source": "/mare/barra-de-paranagua-sueste",
+    "destination": "/mare/parana/barra-de-paranagua-sueste",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/barra-de-paranagua-sueste",
+    "destination": "/operacoes-portuarias/parana/barra-de-paranagua-sueste",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-paranagua",
+    "destination": "/mare/parana/porto-de-paranagua",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-paranagua",
+    "destination": "/operacoes-portuarias/parana/porto-de-paranagua",
+    "permanent": true
+  },
+  {
+    "source": "/mare/barra-de-paranagua-galheta",
+    "destination": "/mare/parana/barra-de-paranagua-galheta",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/barra-de-paranagua-galheta",
+    "destination": "/operacoes-portuarias/parana/barra-de-paranagua-galheta",
+    "permanent": true
+  },
+  {
+    "source": "/mare/terminal-portuario-da-ponta-do-felix",
+    "destination": "/mare/parana/terminal-portuario-da-ponta-do-felix",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/terminal-portuario-da-ponta-do-felix",
+    "destination": "/operacoes-portuarias/parana/terminal-portuario-da-ponta-do-felix",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-sao-francisco-do-sul",
+    "destination": "/mare/santa-catarina/porto-de-sao-francisco-do-sul",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-sao-francisco-do-sul",
+    "destination": "/operacoes-portuarias/santa-catarina/porto-de-sao-francisco-do-sul",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-itajai",
+    "destination": "/mare/santa-catarina/porto-de-itajai",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-itajai",
+    "destination": "/operacoes-portuarias/santa-catarina/porto-de-itajai",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-florianopolis",
+    "destination": "/mare/santa-catarina/porto-de-florianopolis",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-florianopolis",
+    "destination": "/operacoes-portuarias/santa-catarina/porto-de-florianopolis",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-imbituba",
+    "destination": "/mare/santa-catarina/porto-de-imbituba",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-imbituba",
+    "destination": "/operacoes-portuarias/santa-catarina/porto-de-imbituba",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-do-rio-grande",
+    "destination": "/mare/rio-grande-do-sul/porto-do-rio-grande",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-do-rio-grande",
+    "destination": "/operacoes-portuarias/rio-grande-do-sul/porto-do-rio-grande",
+    "permanent": true
+  },
+  {
+    "source": "/mare/arquipelago-de-fernando-de-noronha",
+    "destination": "/mare/pernambuco/arquipelago-de-fernando-de-noronha",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/arquipelago-de-fernando-de-noronha",
+    "destination": "/operacoes-portuarias/pernambuco/arquipelago-de-fernando-de-noronha",
+    "permanent": true
+  },
+  {
+    "source": "/mare/ilha-da-trindade",
+    "destination": "/mare/espirito-santo/ilha-da-trindade",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/ilha-da-trindade",
+    "destination": "/operacoes-portuarias/espirito-santo/ilha-da-trindade",
+    "permanent": true
+  },
+  {
+    "source": "/mare/base-comandante-ferraz",
+    "destination": "/mare/antartida/base-comandante-ferraz",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/base-comandante-ferraz",
+    "destination": "/operacoes-portuarias/antartida/base-comandante-ferraz",
+    "permanent": true
+  }
+]

@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
-import { getPortBySlug, getAllSlugs } from '@/lib/ports';
+import { getPortBySlug, getAllSlugs, PORTS } from '@/lib/ports';
+import { getStateSlug, getStateName } from '@/lib/states';
 import type { Metadata } from 'next';
 import PortPageContent from '@/components/PortPageContent';
 import PortoFAQ from '@/components/PortoFAQ';
@@ -11,20 +12,25 @@ import AdSlot from '@/components/ads/AdSlot';
 import { getPostsByPort } from '@/lib/blog';
 import type { BlogPost } from '@/lib/blog';
 import { getPortoDescription } from '@/lib/porto-descriptions';
+import SchemaGenerator from '@/components/seo/SchemaGenerator';
+import { generateSEOContent } from '@/lib/seo/content-generator';
 
 export async function generateStaticParams() {
-  return getAllSlugs().map(slug => ({ slug }));
+  return PORTS.map(port => ({
+    estado: getStateSlug(port.state),
+    slug: port.slug,
+  }));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { estado: string, slug: string } }): Promise<Metadata> {
   const port = getPortBySlug(params.slug);
-  if (!port) return { title: 'Porto não encontrado' };
+  if (!port || getStateSlug(port.state) !== params.estado) return { title: 'Local não encontrado' };
 
-  const slug = params.slug;
+  const { estado, slug } = params;
   const config = portosConfig[slug];
   const ano = new Date().getFullYear();
-  const url = `https://mareagora.com.br/mare/${slug}`;
-  const ogImage = `https://mareagora.com.br/mare/${slug}/opengraph-image`;
+  const url = `https://mareagora.com.br/mare/${estado}/${slug}`;
+  const ogImage = `https://mareagora.com.br/mare/${estado}/${slug}/opengraph-image`;
 
   const seoName = port.cityName;
 
@@ -80,10 +86,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function PortPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function PortPage({ params }: { params: { estado: string, slug: string } }) {
+  const { estado, slug } = params;
   const port = getPortBySlug(slug);
-  if (!port) notFound();
+  if (!port || getStateSlug(port.state) !== estado) notFound();
 
   const portDescription = getPortoDescription(slug);
   const ano = new Date().getFullYear();
@@ -94,54 +100,31 @@ export default async function PortPage({ params }: { params: { slug: string } })
   const { posts: blogPosts, strategy: blogStrategy } = getPostsByPort(port);
 
   const seoName = port.cityName;
-
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://mareagora.com.br/' },
-          { '@type': 'ListItem', position: 2, name: 'Portos', item: 'https://mareagora.com.br/portos' },
-          { '@type': 'ListItem', position: 3, name: port.name, item: `https://mareagora.com.br/mare/${slug}` },
-        ],
-      },
-      {
-        '@type': 'WebPage',
-        '@id': `https://mareagora.com.br/mare/${slug}`,
-        url: `https://mareagora.com.br/mare/${slug}`,
-        name: `Tábua de Maré ${seoName} ${ano} — MaréAgora`,
-        description: `Horários e alturas das marés em ${seoName} (${port.state}) para ${ano}.`,
-        inLanguage: 'pt-BR',
-        isPartOf: { '@id': 'https://mareagora.com.br/' },
-        ...(port.referencePortSlug && {
-          isBasedOn: `https://mareagora.com.br/mare/${port.referencePortSlug}`
-        }),
-      },
-      {
-        '@type': 'Dataset',
-        name: `Tábua de Marés ${seoName} ${ano}`,
-        description: `Horários de maré alta e baixa em ${seoName}, ${port.state} para o ano de ${ano}. Fonte oficial: Marinha do Brasil (CHM).`,
-        url: `https://mareagora.com.br/mare/${slug}`,
-        creator: {
-          '@type': 'Organization',
-          name: 'MaréAgora',
-          url: 'https://mareagora.com.br',
-        },
-        temporalCoverage: `${ano}-01-01/${ano}-12-31`,
-        spatialCoverage: `${seoName}, ${port.state}, Brasil`,
-        license: 'https://www.gov.br/marinha/pt-br',
-      },
-    ],
-  };
+  
+  // Data de hoje (para AI Overview, SEO)
+  const dataHoje = new Date().toISOString().split('T')[0];
+  const { text: seoText, faq: seoFaq } = generateSEOContent(port, dataHoje);
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        suppressHydrationWarning
+      <SchemaGenerator 
+        port={port} 
+        type={categoria === 'industrial' || port.name.toLowerCase().includes('porto') ? 'Port' : 'Beach'} 
+        url={`https://mareagora.com.br/mare/${estado}/${slug}`} 
+        title={`Tábua de Maré ${seoName} ${ano} — MaréAgora`}
+        description={`Horários e alturas das marés em ${seoName} (${port.state}) para ${ano}.`}
+        faq={seoFaq}
       />
+      
+      {/* Resumo Gerado (AI Overview Target) */}
+      <div className="bg-slate-900/50 border-b border-slate-800 py-6">
+        <div className="container">
+          <h2 className="text-xl font-bold text-white mb-2">Visão Geral Hoje ({dataHoje.split('-').reverse().join('/')})</h2>
+          <p className="text-slate-300 leading-relaxed text-sm md:text-base">
+            {seoText}
+          </p>
+        </div>
+      </div>
       <PortPageContent
         slug={slug}
         portDescription={portDescription}

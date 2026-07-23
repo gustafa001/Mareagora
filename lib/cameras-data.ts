@@ -53,8 +53,8 @@ export const beachCameras: BeachCamera[] = [
     source: 'youtube',
     embedId: '', // verificar se existe stream YouTube equivalente
     description: 'Uma das praias mais movimentadas do Guarujá, vista do Oceano Atlântico',
-    credit: 'Janelas TV / SkylineWebcams',
-    creditUrl: 'https://www.skylinewebcams.com/en/webcam/brasil/sao-paulo/guaruja/beach.html',
+    credit: 'A confirmar',
+    creditUrl: '',
     status: 'inactive',
   },
 
@@ -66,11 +66,11 @@ export const beachCameras: BeachCamera[] = [
     state: 'SP',
     region: 'Litoral Norte SP',
     source: 'youtube',
-    embedId: 'CF-1m0KZQuM', // verificar canal @ubacam6924 no YouTube
+    embedId: '', // verificar canal @ubacam6924 no YouTube
     description: 'Uma das praias mais populares de Ubatuba, lado conhecido como Baguari',
     credit: 'UBACAM',
     creditUrl: 'https://www.youtube.com/@ubacam6924',
-    status: 'active',
+    status: 'inactive',
   },
 
   // ===== RIO DE JANEIRO =====
@@ -81,11 +81,11 @@ export const beachCameras: BeachCamera[] = [
     state: 'RJ',
     region: 'Rio de Janeiro',
     source: 'youtube',
-    embedId: 'dewjz2PLynM', // verificar live atual do canal EarthCam para Copacabana
+    embedId: '', // verificar live atual do canal EarthCam para Copacabana
     description: 'Vista panorâmica da praia mais famosa do Rio, com o Pão de Açúcar ao fundo',
     credit: 'EarthCam',
     creditUrl: 'https://www.earthcam.com/brazil/riodejaneiro/',
-    status: 'active',
+    status: 'inactive',
   },
 ];
 

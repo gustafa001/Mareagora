@@ -63,6 +63,26 @@ export default function CameraPlayer({ camera }: CameraPlayerProps) {
           <span>Fonte: {camera.credit}</span>
         )}
       </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'VideoObject',
+            name: `Câmera ao vivo - ${camera.name}`,
+            description: camera.description,
+            thumbnailUrl: `https://mareagora.com.br/icon-512x512.png`,
+            uploadDate: new Date().toISOString(),
+            embedUrl: embedUrl,
+            publisher: {
+              '@type': 'Organization',
+              name: camera.credit,
+              url: camera.creditUrl || 'https://mareagora.com.br'
+            }
+          })
+        }}
+        suppressHydrationWarning
+      />
     </div>
   );
 }

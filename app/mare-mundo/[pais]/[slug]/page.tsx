@@ -8,6 +8,7 @@ import { getGlobalPreferences, t, formatHeight, formatHour } from '@/lib/globalP
 import TideWeekCard from '@/components/TideWeekCard';
 import TideTable from '@/components/TideTable';
 import WavesCard from '@/components/WavesCard';
+import WeatherRadarCard from '@/components/port-operations/WeatherRadarCard';
 import Link from 'next/link';
 import type { TideEvent } from '@/lib/tideUtils';
 
@@ -53,6 +54,15 @@ export default async function MareMundoLocalPage({ params }: Props) {
 
   return (
     <main className="max-w-3xl mx-auto px-4 py-12">
+      <div className="mb-6">
+        <Link 
+          href="/mare-mundo" 
+          className="inline-flex items-center gap-2 text-[10px] font-bold text-blue-600 hover:text-white transition-all uppercase tracking-widest bg-blue-50/50 hover:bg-blue-500 px-4 py-2 rounded-xl border border-blue-100 hover:border-blue-500"
+        >
+          ← Voltar ao Mapa Global
+        </Link>
+      </div>
+
       <h1 className="font-syne text-3xl mb-1">{strings.tideTitle} {place.name}</h1>
       <p className="text-gray-400 text-sm mb-6">{place.countryName}</p>
 
@@ -73,6 +83,10 @@ export default async function MareMundoLocalPage({ params }: Props) {
             <>Ex.: {formatHour(dias[0].mares[0].hora, prefs.hourFormat)} — {formatHeight(dias[0].mares[0].altura_m, prefs.unit)}</>
           )}
         </p>
+      </div>
+
+      <div className="mt-8">
+        <WeatherRadarCard lat={place.lat} lon={place.lon} />
       </div>
 
       <div className="mt-8">

@@ -14,6 +14,15 @@ export default function MareMundoPage() {
 
   return (
     <main className="max-w-2xl mx-auto px-4 py-12">
+      <div className="mb-6">
+        <Link 
+          href="/" 
+          className="inline-flex items-center gap-2 text-[10px] font-bold text-blue-600 hover:text-white transition-all uppercase tracking-widest bg-blue-50/50 hover:bg-blue-500 px-4 py-2 rounded-xl border border-blue-100 hover:border-blue-500"
+        >
+          ← Voltar à Página Inicial
+        </Link>
+      </div>
+
       <h1 className="font-syne text-3xl mb-2">Maré no mundo</h1>
       <p className="text-gray-500 mb-8">
         Maré calculada por modelo harmônico pra praias e portos internacionais selecionados.

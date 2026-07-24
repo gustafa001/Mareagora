@@ -23,6 +23,7 @@ import WavesCard from '@/components/WavesCard';
 const DailyScoreCard = dynamic(() => import('@/components/DailyScoreCard'), { ssr: false });
 import TideSchemaMarkup from '@/components/TideSchemaMarkup';
 import ShareButton from '@/components/ShareButton';
+import { generateTideDescription } from '@/lib/tideDescription';
 
 interface Props {
   params: { pais: string; slug: string };
@@ -272,6 +273,16 @@ export default async function MareMundoLocalPage({ params }: Props) {
                 </ul>
               </section>
             )}
+
+            {/* Seção Editorial / Sobre as Marés do Local */}
+            <section className="rounded-2xl border border-white/10 bg-[#0d1526]/90 backdrop-blur-xl p-6 shadow-lg">
+              <h2 className="text-lg font-bold text-slate-200 font-syne mb-3 flex items-center gap-2">
+                <span>📘</span> Sobre a Tábua de Marés de {place.name}
+              </h2>
+              <p className="text-sm text-slate-400 leading-relaxed">
+                {generateTideDescription(place.name, place.countryName, place.countryCode, place.lat, place.lon, 'pt')}
+              </p>
+            </section>
 
             {/* Aviso legal */}
             <div className="mt-2 p-6 bg-red-50 border border-red-100 rounded-xl">

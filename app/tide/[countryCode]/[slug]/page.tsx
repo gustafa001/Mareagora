@@ -20,6 +20,7 @@ import WeatherRadarCard from '@/components/port-operations/WeatherRadarCard';
 const DailyScoreCard = dynamic(() => import('@/components/DailyScoreCard'), { ssr: false });
 import TideSchemaMarkup from '@/components/TideSchemaMarkup';
 import ShareButton from '@/components/ShareButton';
+import { generateTideDescription } from '@/lib/tideDescription';
 
 const BASE = 'https://mareagora.com.br';
 const en = t('en');
@@ -247,6 +248,16 @@ export default async function TideLocalPage({ params }: Props) {
               </ul>
             </section>
           )}
+
+          {/* Editorial section / About the tides */}
+          <section className="rounded-2xl border border-white/10 bg-[#0d1526]/90 backdrop-blur-xl p-6 shadow-lg">
+            <h2 className="text-lg font-bold text-slate-200 font-syne mb-3 flex items-center gap-2">
+              <span>📘</span> About {place.name} Tide Forecast
+            </h2>
+            <p className="text-sm text-slate-400 leading-relaxed">
+              {generateTideDescription(place.name, place.countryName, place.countryCode, place.lat, place.lon, 'en')}
+            </p>
+          </section>
 
           {/* Legal disclaimer */}
           <div className="mt-2 p-6 bg-amber-50 border border-amber-100 rounded-xl">

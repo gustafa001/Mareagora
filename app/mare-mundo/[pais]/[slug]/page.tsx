@@ -7,7 +7,7 @@ import { getTideForLocation } from '@/lib/tideRouter';
 import { getGlobalPreferences, t, formatHeight, formatHour } from '@/lib/globalPreferences';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import type { TideEvent } from '@/lib/tideUtils';
+import { getNextHighAndLow, type TideEvent } from '@/lib/tideUtils';
 import type { MareDia } from '@/lib/mare';
 
 // Componentes idênticos ao das páginas BR
@@ -88,23 +88,12 @@ export default async function MareMundoLocalPage({ params }: Props) {
   }
 
   const now = new Date();
-  const currentMin = now.getHours() * 60 + now.getMinutes();
+  const utcOffsetMin = place.utcOffsetMin ?? 0;
+  const placeDate = new Date(now.getTime() + utcOffsetMin * 60 * 1000);
+  const currentMin = placeDate.getUTCHours() * 60 + placeDate.getUTCMinutes();
   const todayTides = weekDias[0]?.mares ?? [];
 
-  const heights = todayTides.length > 0 ? todayTides.map(t => t.altura_m) : [0];
-  const maxH = Math.max(...heights);
-  const minH = Math.min(...heights);
-  const avgH = (maxH + minH) / 2;
-
-  const nextHigh = todayTides.find(t => {
-    const [h, m] = t.hora.split(':').map(Number);
-    return (h || 0) * 60 + (m || 0) > currentMin && t.altura_m >= avgH;
-  }) ?? todayTides.find(t => t.altura_m >= avgH) ?? null;
-
-  const nextLow = todayTides.find(t => {
-    const [h, m] = t.hora.split(':').map(Number);
-    return (h || 0) * 60 + (m || 0) > currentMin && t.altura_m < avgH;
-  }) ?? todayTides.find(t => t.altura_m < avgH) ?? null;
+  const { nextHigh, nextLow } = getNextHighAndLow(todayTides as TideEvent[], currentMin);
 
   const nearby = getNearbyGlobalPlaces(place);
 
@@ -124,31 +113,16 @@ export default async function MareMundoLocalPage({ params }: Props) {
       />
       <NavBar />
 
-      {/* Hero Section — mesma estrutura BR mas com gradiente em vez de vídeo */}
-      <section className="hero-section relative overflow-hidden">
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            background: 'linear-gradient(135deg, #020917 0%, #051835 40%, #082952 70%, #0a3a6b 100%)',
-          }}
-        />
-        {/* Animated ocean overlay */}
-        <div className="absolute inset-0 z-0 opacity-20"
-          style={{
-            backgroundImage: 'radial-gradient(ellipse at 20% 50%, #1d4ed8 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, #0891b2 0%, transparent 50%)',
-          }}
-        />
-        <div className="absolute inset-0 bg-black/30 z-10" />
-        <div className="hero-overlay" />
+      <section className="relative overflow-hidden bg-gradient-to-b from-slate-900 via-slate-900/90 to-slate-950 pt-24 pb-16 border-b border-white/5">
+        <div className="container relative z-10">
 
-        <div className="container relative z-30 text-white text-center pt-24 md:pt-16">
           {/* Botão Voltar */}
           <div className="absolute top-0 left-4 md:left-0 pt-4 md:pt-0">
             <Link
               href="/mare-mundo"
               className="inline-flex items-center gap-2 text-[10px] font-bold text-blue-400 hover:text-white transition-all uppercase tracking-widest bg-white/5 hover:bg-blue-500/20 px-4 py-2 rounded-xl border border-white/10 hover:border-blue-400/50 backdrop-blur-md"
             >
-              ← Maré no Mundo
+              ← Locais Globais
             </Link>
           </div>
 
@@ -163,7 +137,7 @@ export default async function MareMundoLocalPage({ params }: Props) {
             </Link>
           </div>
 
-          <div className="flex flex-col gap-3 items-center px-2">
+          <div className="flex flex-col gap-3 items-center px-2 text-center">
             <p className="text-xs font-bold uppercase tracking-widest text-blue-400 opacity-80">
               {place.countryName} · Previsão Global
             </p>
@@ -203,6 +177,7 @@ export default async function MareMundoLocalPage({ params }: Props) {
           nextLow={nextLow as TideEvent | null}
           lat={place.lat}
           lon={place.lon}
+          todayTides={todayTides as TideEvent[]}
         />
 
         <div className="mt-12 flex flex-col lg:grid lg:grid-cols-[1fr_350px] gap-8">

@@ -88,9 +88,10 @@ export function getMoonAge(date: Date): number {
 }
 
 /**
- * Retorna o nome da fase lunar e ícone
+ * Retorna o nome da fase lunar e ícone (aceita idade da lua em dias ou um objeto Date)
  */
-export function getMoonPhase(age: number): { name: string; icon: string } {
+export function getMoonPhase(ageOrDate: number | Date): { name: string; icon: string } {
+  const age = typeof ageOrDate === 'number' ? ageOrDate : getMoonAge(ageOrDate);
   if (age < 1.84566) return { name: 'Lua Nova', icon: '🌑' };
   if (age < 5.53699) return { name: 'Lua Crescente', icon: '🌒' };
   if (age < 9.22831) return { name: 'Quarto Crescente', icon: '🌓' };
@@ -103,22 +104,75 @@ export function getMoonPhase(age: number): { name: string; icon: string } {
 }
 
 /**
- * Calcula o coeficiente de maré (20 a 120)
- * Baseado na proximidade com Lua Nova (age=0) ou Cheia (age=14.76)
+ * Calcula a próxima maré alta e a próxima maré baixa a partir da hora atual (em minutos).
+ * Mostra SEMPRE a maré mais próxima no futuro, sem filtros de janela mínima ou de amplitude média.
  */
-export function getTideCoefficient(moonAge: number): { value: number; label: string; color: string } {
-  const LUNAR_MONTH = 29.530588853;
-  // O coeficiente é máximo (120) na Lua Nova e Cheia, e mínimo (20) nos Quartos.
-  // Usamos uma função cossenoidal dupla para isso.
-  const angle = (moonAge / LUNAR_MONTH) * 2 * Math.PI * 2; // Dobro da frequência
-  const cosVal = Math.cos(angle); // 1 na Nova/Cheia, -1 nos Quartos
-  
-  // Mapear -1..1 para 20..120
-  const value = Math.round(70 + cosVal * 50);
-  
+export function getNextHighAndLow(
+  todayTides: TideEvent[],
+  currentMinute: number,
+  nextDayTides?: TideEvent[]
+): { nextHigh: TideEvent | null; nextLow: TideEvent | null } {
+  const timeToMin = (hStr: string) => {
+    const [h, m] = hStr.split(':').map(Number);
+    return (h || 0) * 60 + (m || 0);
+  };
+
+  const classifiedToday = classifyTideEvents(todayTides);
+  const classifiedNext = nextDayTides ? classifyTideEvents(nextDayTides) : undefined;
+
+  let nextHigh = classifiedToday.find(
+    t => t.tipo === 'high' && timeToMin(t.hora) > currentMinute
+  ) ?? null;
+
+  if (!nextHigh && classifiedNext) {
+    nextHigh = classifiedNext.find(t => t.tipo === 'high') ?? null;
+  }
+  if (!nextHigh) {
+    nextHigh = classifiedToday.find(t => t.tipo === 'high') ?? null;
+  }
+
+  let nextLow = classifiedToday.find(
+    t => t.tipo === 'low' && timeToMin(t.hora) > currentMinute
+  ) ?? null;
+
+  if (!nextLow && classifiedNext) {
+    nextLow = classifiedNext.find(t => t.tipo === 'low') ?? null;
+  }
+  if (!nextLow) {
+    nextLow = classifiedToday.find(t => t.tipo === 'low') ?? null;
+  }
+
+  return { nextHigh, nextLow };
+}
+
+/**
+ * Calcula o coeficiente de maré (20 a 120)
+ * Se eventos de maré forem fornecidos, calcula com base na amplitude real da maré (range * 55).
+ * Caso contrário, utiliza a fórmula astronômica baseada na idade da lua.
+ */
+export function getTideCoefficient(
+  moonAgeOrDate: number | Date,
+  todayTides?: TideEvent[]
+): { value: number; label: string; color: string } {
+  let value: number;
+
+  if (todayTides && todayTides.length >= 2) {
+    const heights = todayTides.map(m => m.altura_m);
+    const range = Math.max(...heights) - Math.min(...heights);
+    value = Math.min(120, Math.max(5, Math.round(range * 55)));
+  } else {
+    const age = typeof moonAgeOrDate === 'number'
+      ? moonAgeOrDate
+      : getMoonAge(moonAgeOrDate);
+    const LUNAR_MONTH = 29.530588853;
+    const angle = (age / LUNAR_MONTH) * 2 * Math.PI * 2;
+    const cosVal = Math.cos(angle);
+    value = Math.round(70 + cosVal * 50);
+  }
+
   let label = "Moderada";
   let color = "text-yellow-400";
-  
+
   if (value <= 40) {
     label = "Maré Morta (Fraca)";
     color = "text-emerald-400";
@@ -129,7 +183,7 @@ export function getTideCoefficient(moonAge: number): { value: number; label: str
     label = "Moderada Alta";
     color = "text-orange-400";
   }
-  
+
   return { value, label, color };
 }
 

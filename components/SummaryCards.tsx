@@ -8,12 +8,13 @@ interface SummaryCardsProps {
   nextLow: TideEvent | null;
   lat: number;
   lon: number;
+  todayTides?: TideEvent[];
 }
 
 import { useSeaConditions } from "@/hooks/useSeaConditions";
 import { getMoonAge, getMoonPhase, getTideCoefficient } from "@/lib/tideUtils";
 
-export default function SummaryCards({ nextHigh, nextLow, lat, lon }: SummaryCardsProps) {
+export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides }: SummaryCardsProps) {
   const { waveHeight, windSpeed, loading } = useSeaConditions(lat, lon);
   
   const [timeStr, setTimeStr] = useState('--:--');
@@ -37,7 +38,7 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon }: SummaryCar
   const now = new Date();
   const moonAge = getMoonAge(now);
   const moon = getMoonPhase(moonAge);
-  const coef = getTideCoefficient(moonAge);
+  const coef = getTideCoefficient(moonAge, todayTides);
 
   let colorClass = "card-mar-calmo";
   if (waveHeight !== null) {

@@ -6,7 +6,7 @@ import { getTideForLocation } from '@/lib/tideRouter';
 import { t } from '@/lib/globalPreferences';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import type { TideEvent } from '@/lib/tideUtils';
+import { getNextHighAndLow, type TideEvent } from '@/lib/tideUtils';
 import type { MareDia } from '@/lib/mare';
 
 import NavBar from '@/components/NavBar';
@@ -80,23 +80,12 @@ export default async function TideLocalPage({ params }: Props) {
   }
 
   const now = new Date();
-  const currentMin = now.getHours() * 60 + now.getMinutes();
+  const utcOffsetMin = place.utcOffsetMin ?? 0;
+  const placeDate = new Date(now.getTime() + utcOffsetMin * 60 * 1000);
+  const currentMin = placeDate.getUTCHours() * 60 + placeDate.getUTCMinutes();
   const todayTides = weekDias[0]?.mares ?? [];
 
-  const heights = todayTides.length > 0 ? todayTides.map(t => t.altura_m) : [0];
-  const maxH = Math.max(...heights);
-  const minH = Math.min(...heights);
-  const avgH = (maxH + minH) / 2;
-
-  const nextHigh = todayTides.find(t => {
-    const [h, m] = t.hora.split(':').map(Number);
-    return (h || 0) * 60 + (m || 0) > currentMin && t.altura_m >= avgH;
-  }) ?? todayTides.find(t => t.altura_m >= avgH) ?? null;
-
-  const nextLow = todayTides.find(t => {
-    const [h, m] = t.hora.split(':').map(Number);
-    return (h || 0) * 60 + (m || 0) > currentMin && t.altura_m < avgH;
-  }) ?? todayTides.find(t => t.altura_m < avgH) ?? null;
+  const { nextHigh, nextLow } = getNextHighAndLow(todayTides as TideEvent[], currentMin);
 
   const nearby = getNearbyGlobalPlaces(place);
 
@@ -116,19 +105,9 @@ export default async function TideLocalPage({ params }: Props) {
       />
       <NavBar />
 
-      {/* Hero */}
-      <section className="hero-section relative overflow-hidden">
-        <div
-          className="absolute inset-0 z-0"
-          style={{ background: 'linear-gradient(135deg, #020917 0%, #051835 40%, #082952 70%, #0a3a6b 100%)' }}
-        />
-        <div className="absolute inset-0 z-0 opacity-20"
-          style={{ backgroundImage: 'radial-gradient(ellipse at 20% 50%, #1d4ed8 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, #0891b2 0%, transparent 50%)' }}
-        />
-        <div className="absolute inset-0 bg-black/30 z-10" />
-        <div className="hero-overlay" />
+      <section className="relative overflow-hidden bg-gradient-to-b from-slate-900 via-slate-900/90 to-slate-950 pt-24 pb-16 border-b border-white/5">
+        <div className="container relative z-10">
 
-        <div className="container relative z-30 text-white text-center pt-24 md:pt-16">
           {/* Back button */}
           <div className="absolute top-0 left-4 md:left-0 pt-4 md:pt-0">
             <Link
@@ -150,7 +129,7 @@ export default async function TideLocalPage({ params }: Props) {
             </Link>
           </div>
 
-          <div className="flex flex-col gap-3 items-center px-2">
+          <div className="flex flex-col gap-3 items-center px-2 text-center">
             <p className="text-xs font-bold uppercase tracking-widest text-blue-400 opacity-80">
               {place.countryName} · Harmonic Tide Model
             </p>
@@ -187,6 +166,7 @@ export default async function TideLocalPage({ params }: Props) {
           nextLow={nextLow as TideEvent | null}
           lat={place.lat}
           lon={place.lon}
+          todayTides={todayTides as TideEvent[]}
         />
 
         <div className="mt-12 flex flex-col gap-8">

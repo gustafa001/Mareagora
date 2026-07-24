@@ -24,6 +24,7 @@ import TideSchemaMarkup from '@/components/TideSchemaMarkup';
 import { getStateSlug } from '@/lib/states';
 import ShareButton from '@/components/ShareButton';
 import { useSeaConditions } from '@/hooks/useSeaConditions';
+import { getNextHighAndLow } from '@/lib/tideUtils';
 import { notFound } from 'next/navigation';
 import type { BlogPost } from '@/lib/blog';
 
@@ -51,7 +52,6 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
   const dataAno = getEventosAno(port, ano);
 
   const now = new Date();
-  const currentMin = now.getHours() * 60 + now.getMinutes();
 
   const currentTimeBR = new Date().toLocaleTimeString('pt-BR', {
     hour: '2-digit',
@@ -59,20 +59,10 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
     timeZone: 'America/Sao_Paulo',
   });
 
-  const heights = todayTides.length > 0 ? todayTides.map(t => t.altura_m) : [0];
-  const maxH = Math.max(...heights);
-  const minH = Math.min(...heights);
-  const avgH = (maxH + minH) / 2;
+  const [brH, brM] = currentTimeBR.split(':').map(Number);
+  const currentMin = (brH || 0) * 60 + (brM || 0);
 
-  const nextHigh = todayTides.find(t => {
-    const [h, m] = t.hora.split(':').map(Number);
-    return (h || 0) * 60 + (m || 0) > currentMin && t.altura_m >= avgH;
-  }) ?? todayTides.find(t => t.altura_m >= avgH) ?? null;
-
-  const nextLow = todayTides.find(t => {
-    const [h, m] = t.hora.split(':').map(Number);
-    return (h || 0) * 60 + (m || 0) > currentMin && t.altura_m < avgH;
-  }) ?? todayTides.find(t => t.altura_m < avgH) ?? null;
+  const { nextHigh, nextLow } = getNextHighAndLow(todayTides, currentMin);
 
   const referencePort = port.referencePortSlug ? getPortBySlug(port.referencePortSlug) : null;
   const referenceData = referencePort ? {
@@ -97,22 +87,9 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
       />
       <NavBar />
 
-      <section className="hero-section relative overflow-hidden">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1200&q=80"
-          className="absolute inset-0 w-full h-full object-cover z-0"
-        >
-          <source src="https://res.cloudinary.com/dhnzzduzc/video/upload/lc5nufwye2fh6zpb2df0.mp4" type="video/mp4" />
-        </video>
+      <section className="relative overflow-hidden bg-gradient-to-b from-slate-900 via-slate-900/90 to-slate-950 pt-24 pb-16 border-b border-white/5">
+        <div className="container relative z-10">
 
-        <div className="absolute inset-0 bg-black/55 z-10" />
-        <div className="hero-overlay" />
-
-        <div className="container relative z-30 text-white text-center pt-24 md:pt-16">
           {/* Botão Voltar */}
           <div className="absolute top-0 left-4 md:left-0 pt-4 md:pt-0">
             <a 
@@ -123,7 +100,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
             </a>
           </div>
 
-          <div className="flex flex-col gap-3 items-center px-2">
+          <div className="flex flex-col gap-3 items-center px-2 text-center">
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight font-syne leading-tight max-w-4xl">
               Tábua de Maré {seoName} — {ano}
             </h1>
@@ -156,6 +133,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
           nextLow={nextLow}
           lat={port.lat}
           lon={port.lon}
+          todayTides={todayTides}
         />
 
         {/* Score do Dia */}

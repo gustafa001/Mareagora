@@ -1,6 +1,6 @@
 import { Port } from '@/lib/ports';
 import { getEventosDia, MareDia, MareEvento } from '@/lib/mare';
-import * as Astronomy from 'astronomy-engine';
+import { getMoonAge, getMoonPhase } from '@/lib/tideUtils';
 
 export interface SEOContent {
   text: string;
@@ -12,7 +12,7 @@ export function generateSEOContent(port: Port, date: string): SEOContent {
   const dateObj = new Date(`${date}T12:00:00Z`);
 
   const season = getSeason(dateObj);
-  const { phase: moonPhaseName } = getMoonPhase(dateObj);
+  const moonPhaseName = getMoonPhase(dateObj).name;
   
   const amplitude = getAmplitude(eventos);
   const isViva = amplitude > 2.0; // Simplification
@@ -28,17 +28,6 @@ function getSeason(date: Date) {
   if (month >= 6 && month <= 8) return 'Inverno';
   if (month >= 9 && month <= 11) return 'Primavera';
   return 'Verão';
-}
-
-function getMoonPhase(date: Date) {
-  // Mock logic since Astronomy Engine is complex to call synchronously without properly importing. 
-  // Normally: Astronomy.MoonPhase(date) returns 0-360.
-  // We'll approximate:
-  const day = date.getDate();
-  if (day < 7) return { phase: 'Nova' };
-  if (day < 14) return { phase: 'Crescente' };
-  if (day < 21) return { phase: 'Cheia' };
-  return { phase: 'Minguante' };
 }
 
 function getAmplitude(eventos: MareEvento[]) {

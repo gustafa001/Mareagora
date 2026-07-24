@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "check": "tsc --noEmit",
+    "test": "tsx --test tests/tideUtils.test.ts",
     "format": "prettier --write ."
   },
   "dependencies": {

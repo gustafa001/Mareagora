@@ -13,6 +13,7 @@ export async function generateSitemaps() {
     { id: 'estados' },
     { id: 'blog' },
     { id: 'mundo' },
+    { id: 'tide-en' },
   ];
 }
 
@@ -60,6 +61,19 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
       { url: `${base}/mare-mundo`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.6 },
       ...GLOBAL_PLACES.map(p => ({
         url: `${base}/mare-mundo/${p.countryCode}/${p.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'daily' as const,
+        priority: 0.5,
+      }))
+    ];
+  }
+
+  if (id === 'tide-en') {
+    const { GLOBAL_PLACES } = await import('@/lib/globalPlaces');
+    return [
+      { url: `${base}/tide`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.6 },
+      ...GLOBAL_PLACES.map(p => ({
+        url: `${base}/tide/${p.countryCode}/${p.slug}`,
         lastModified: new Date(),
         changeFrequency: 'daily' as const,
         priority: 0.5,

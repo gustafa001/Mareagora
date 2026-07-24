@@ -25,6 +25,8 @@ interface Props {
   params: { pais: string; slug: string };
 }
 
+const BASE = 'https://mareagora.com.br';
+
 export async function generateMetadata({ params }: Props) {
   const place = getGlobalPlace(params.pais, params.slug);
   if (!place) return { title: 'Maré no Mundo | MaréAgora' };
@@ -33,6 +35,14 @@ export async function generateMetadata({ params }: Props) {
     title: `Tábua de Maré ${place.name} ${ano} | MaréAgora`,
     description: `Previsão completa de maré, ondas, vento e condições do mar em ${place.name}, ${place.countryName}. Tábua de marés ${ano} atualizada.`,
     robots: { index: true, follow: true },
+    alternates: {
+      canonical: `${BASE}/mare-mundo/${params.pais}/${params.slug}`,
+      languages: {
+        'pt': `${BASE}/mare-mundo/${params.pais}/${params.slug}`,
+        'en': `${BASE}/tide/${params.pais}/${params.slug}`,
+        'x-default': `${BASE}/mare-mundo/${params.pais}/${params.slug}`,
+      },
+    },
   };
 }
 
@@ -123,6 +133,17 @@ export default async function MareMundoLocalPage({ params }: Props) {
               className="inline-flex items-center gap-2 text-[10px] font-bold text-blue-400 hover:text-white transition-all uppercase tracking-widest bg-white/5 hover:bg-blue-500/20 px-4 py-2 rounded-xl border border-white/10 hover:border-blue-400/50 backdrop-blur-md"
             >
               ← Maré no Mundo
+            </Link>
+          </div>
+
+          {/* Trocar Idioma — EN */}
+          <div className="absolute top-0 right-4 md:right-0 pt-4 md:pt-0">
+            <Link
+              href={`/tide/${params.pais}/${params.slug}`}
+              className="inline-flex items-center gap-2 text-[10px] font-bold text-slate-400 hover:text-white transition-all uppercase tracking-widest bg-white/5 hover:bg-white/10 px-4 py-2 rounded-xl border border-white/10 backdrop-blur-md"
+              aria-label="View in English"
+            >
+              🇺🇸 EN
             </Link>
           </div>
 

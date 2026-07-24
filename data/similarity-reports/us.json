@@ -1,0 +1,59 @@
+{
+  "countryCode": "us",
+  "analyzedAt": "2026-07-24T04:14:28.248Z",
+  "placeCount": 131,
+  "pairCount": 8515,
+  "stats": {
+    "avg": 25.83,
+    "min": 13.5,
+    "max": 71.17,
+    "p50": 24.09,
+    "p75": 29.63,
+    "p90": 34.81,
+    "p95": 39.1
+  },
+  "highPairs": [],
+  "warnPairs": [
+    {
+      "a": "charleston",
+      "b": "saipan",
+      "score": 0.6513761467889908
+    },
+    {
+      "a": "wake",
+      "b": "keasbey",
+      "score": 0.6226415094339622
+    },
+    {
+      "a": "dulac-us",
+      "b": "rockport-us",
+      "score": 0.6666666666666666
+    },
+    {
+      "a": "lydia-us",
+      "b": "cameron-us",
+      "score": 0.6320754716981132
+    },
+    {
+      "a": "bourg",
+      "b": "nikolski",
+      "score": 0.6216216216216216
+    },
+    {
+      "a": "welaka",
+      "b": "kivalina",
+      "score": 0.7117117117117117
+    },
+    {
+      "a": "poydras-us",
+      "b": "choctaw",
+      "score": 0.6106194690265486
+    },
+    {
+      "a": "wickford",
+      "b": "tin-city",
+      "score": 0.672566371681416
+    }
+  ],
+  "approved": true
+}

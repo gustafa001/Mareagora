@@ -1,123 +1,83 @@
 {
   "lisboa": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "porto": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "faro": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "setubal": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "viana-do-castelo": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "funchal": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "ponta-delgada": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "barcelona": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "valencia": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "malaga": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "cadiz": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "vigo": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "bilbao": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "palma-de-mallorca": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "las-palmas": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "marseille": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "nice": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "bordeaux": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "brest": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "la-rochelle": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "genova": {
     "approved": false,
@@ -140,58 +100,40 @@
     "countryCode": "it"
   },
   "london": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "dover": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "liverpool": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "portsmouth": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "southampton": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "glasgow": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "aberdeen": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "dublin": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "cork": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "amsterdam": {
     "approved": false,
@@ -210,16 +152,12 @@
     "countryCode": "de"
   },
   "bergen": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "oslo": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "copenhague": {
     "approved": false,
@@ -262,28 +200,20 @@
     "countryCode": "hr"
   },
   "casablanca": {
-    "approved": true,
-    "countryCode": "ma",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ma"
   },
   "tanger": {
-    "approved": true,
-    "countryCode": "ma",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ma"
   },
   "agadir": {
-    "approved": true,
-    "countryCode": "ma",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ma"
   },
   "dakar": {
-    "approved": true,
-    "countryCode": "sn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "sn"
   },
   "lagos": {
     "approved": false,
@@ -306,16 +236,12 @@
     "countryCode": "tz"
   },
   "cape-town": {
-    "approved": true,
-    "countryCode": "za",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "za"
   },
   "durban": {
-    "approved": true,
-    "countryCode": "za",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "za"
   },
   "alexandria": {
     "approved": false,
@@ -342,34 +268,24 @@
     "countryCode": "om"
   },
   "mumbai": {
-    "approved": true,
-    "countryCode": "in",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "in"
   },
   "chennai": {
-    "approved": true,
-    "countryCode": "in",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "in"
   },
   "kochi": {
-    "approved": true,
-    "countryCode": "in",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "in"
   },
   "kolkata": {
-    "approved": true,
-    "countryCode": "in",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "in"
   },
   "goa": {
-    "approved": true,
-    "countryCode": "in",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "in"
   },
   "colombo": {
     "approved": false,
@@ -404,98 +320,68 @@
     "countryCode": "sg"
   },
   "jakarta": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "bali": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "surabaya": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "manila": {
-    "approved": true,
-    "countryCode": "ph",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ph"
   },
   "cebu": {
-    "approved": true,
-    "countryCode": "ph",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ph"
   },
   "shanghai": {
-    "approved": true,
-    "countryCode": "cn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cn"
   },
   "guangzhou": {
-    "approved": true,
-    "countryCode": "cn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cn"
   },
   "hong-kong": {
-    "approved": true,
-    "countryCode": "cn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cn"
   },
   "tianjin": {
-    "approved": true,
-    "countryCode": "cn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cn"
   },
   "qingdao": {
-    "approved": true,
-    "countryCode": "cn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cn"
   },
   "kaohsiung": {
     "approved": false,
     "countryCode": "tw"
   },
   "tokyo": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "osaka": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "yokohama": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "nagasaki": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "kobe": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "busan": {
     "approved": false,
@@ -506,190 +392,150 @@
     "countryCode": "kr"
   },
   "bondi-beach": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "sydney": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "melbourne": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "brisbane": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "perth": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "adelaide": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "darwin": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "cairns": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "hobart": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "auckland": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "wellington": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "christchurch": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "miami": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "nova-york": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "los-angeles": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "san-francisco": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "seattle": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "boston": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "new-orleans": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "honolulu": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "san-diego": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "charleston": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "anchorage": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "vancouver": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "victoria": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "halifax": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "st-johns": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "cancun": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "acapulco": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "veracruz": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "mazatlan": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "havana": {
     "approved": false,
@@ -704,16 +550,12 @@
     "countryCode": "jm"
   },
   "cartagena": {
-    "approved": true,
-    "countryCode": "co",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "co"
   },
   "barranquilla": {
-    "approved": true,
-    "countryCode": "co",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "co"
   },
   "la-guaira": {
     "approved": false,
@@ -728,40 +570,28 @@
     "countryCode": "pe"
   },
   "valparaiso": {
-    "approved": true,
-    "countryCode": "cl",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cl"
   },
   "antofagasta": {
-    "approved": true,
-    "countryCode": "cl",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cl"
   },
   "punta-arenas": {
-    "approved": true,
-    "countryCode": "cl",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cl"
   },
   "buenos-aires": {
-    "approved": true,
-    "countryCode": "ar",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ar"
   },
   "mar-del-plata": {
-    "approved": true,
-    "countryCode": "ar",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ar"
   },
   "ushuaia": {
-    "approved": true,
-    "countryCode": "ar",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ar"
   },
   "montevideo": {
     "approved": false,
@@ -771,721 +601,721 @@
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "bath": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "nome": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "guam": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "ibis": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "wake": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "essex": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "samoa": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "wauna": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "union": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "sitka": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "buras": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "buras-us": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "dulac": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "dulac-us": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "lydia": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "lydia-us": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "hayes": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "hayes-us": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "bourg": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "norco": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "heeia": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "keehi": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "wcoco": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "bangor": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "boston-us": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "orient": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "albany": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "vienna": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "welaka": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "ankona": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "biloxi": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "juneau": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "guguak": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "bethel": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "alawai": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "empire": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "empire-us": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "amelia": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "amelia-us": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "violet": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "violet-us": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "midway": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "saipan": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "kahului": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "walpole": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "newport": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "keasbey": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "cainhoy": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "palatka": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "bayport": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "sw-pass": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "alameda": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "antioch": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "everett": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "tulalip": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "cordova": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "nikiski": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "lomavik": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "deering": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "poydras": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "poydras-us": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "lafitte": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "estelle": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "choctaw": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "lafitte-us": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "mathews": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "baldwin": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "baldwin-us": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "gueydan": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "gueydan-us": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "cameron": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "cameron-us": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "lacombe": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "killian": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "killian-us": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "haleiwa": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "volanti": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "waianae": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "kawaihae": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "eastport": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "rockland": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "gardiner": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "richmond": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "portland": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "rockport": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "plymouth": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "sakonnet": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "wickford": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "stamford": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "crumpton": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "scotland": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "beaufort": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "crandall": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "key-west": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "coon-key": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "wolf-bay": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "waveland": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "seadrift": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "rockport-us": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "berkeley": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "crockett": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "longview": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "aberdeen-us": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "neah-bay": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "cold-bay": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "nikolski": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "unalaska": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "platinum": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "levelock": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "savoonga": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "tin-city": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "kotzebue": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "kivalina": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "catalina": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "waveland-us": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "montegut": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "franklin": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "franklin-us": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "lockport": {
     "approved": true,
     "countryCode": "us",
     "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approvedBy": "similarity-check"
   },
   "pago-bay-guam": {
     "approved": false,
@@ -1684,856 +1514,572 @@
     "countryCode": "fj"
   },
   "pari": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "ambon": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "bajor": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "benoa": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "prigi": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "bitung": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "lembar": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "meneng": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "padang": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "sabang": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "sadeng": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "cilacap": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "jakarta-id": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "sibolga": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "waikelo": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "meulaboh": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "saumlaki": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "surabaya-id": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "telukdalam": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "lungsurannaga": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "djakarta-java": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "tanjung-lesung": {
-    "approved": true,
-    "countryCode": "id",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "id"
   },
   "nain": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "alert": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "digby": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "lauzon": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "pictou": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "tofino": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "arichat": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "halifax-ca": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "iqaluit": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "lund-bc": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "rustico": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "argentia": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "bamfield": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "batiscan": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "comox-bc": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "evandale": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "hopedale": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "hubbards": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "inukjuak": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "kimmirut": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "neuville": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "portneuf": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "resolute": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "rimouski": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "sooke-bc": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "st-johns-ca": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "taloyoak": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "tasiujaq": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "yarmouth": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "jim-creek": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "becancour": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "belledune": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "bonavista": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "champlain": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "churchill": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "churchill-ca": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "dalhousie": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "ganges-bc": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "grondines": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "kitsilano": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "kugluktuk": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "liverpool-ca": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "masset-bc": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "mill-cove": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "oak-point": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "owls-head": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "paspebiac": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "rea-point": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "sept-iles": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "sidney-bc": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "tadoussac": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "tahsis-bc": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "aulds-cove": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "cape-parry": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "chicoutimi": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "crofton-bc": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "gibsons-bc": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "hall-beach": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "indiantown": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "kitimat-bc": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "oak-bay-bc": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "port-elgin": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "saint-john": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "stewart-bc": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "ulukhaktok": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "wadhams-bc": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "west-point": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "acadia-cove": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "baie-comeau": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "forestville": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "forteau-bay": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "hope-bay-bc": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "ile-dentree": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "louiseville": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "owen-bay-bc": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "port-alfred": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "savage-cove": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "shediac-bay": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "squamish-bc": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "st-lawrence": {
-    "approved": true,
-    "countryCode": "ca",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ca"
   },
   "sisal": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "cedros": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "la-paz": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "loreto": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "tuxpan": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "guaymas": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "guaymas-mx": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "yavaros": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "acapulco-mx": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "alvarado": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "celestun": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "huatulco": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "mazatlan-mx": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "progreso": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "vallarta": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "veracruz-mx": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "guadalupe": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "manzanillo": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "san-carlos": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "san-felipe": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "sian-ka-an": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "salina-cruz": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "isla-cedros": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "salina-cruz-mx": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "san-quintin": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "topolobampo": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "isla-socorro": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "puerto-angel": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "coatzacoalcos": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "puerto-madero": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "cabo-san-lucas": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "frontera-radar": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "puerto-moreles": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "la-paz-flotador": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "lazaro-cardenas": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "zihuatenajo-gro": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "telchac-flotador": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "bahia-los-angeles": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "campeche-flotador": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "ciudad-del-carmen": {
-    "approved": true,
-    "countryCode": "mx",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "mx"
   },
   "acajutla": {
     "approved": false,
@@ -3028,70 +2574,48 @@
     "countryCode": "gt"
   },
   "arica": {
-    "approved": true,
-    "countryCode": "cl",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cl"
   },
   "easter": {
-    "approved": true,
-    "countryCode": "cl",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cl"
   },
   "caldera": {
-    "approved": true,
-    "countryCode": "cl",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cl"
   },
   "base-prat": {
-    "approved": true,
-    "countryCode": "cl",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cl"
   },
   "san-felix": {
-    "approved": true,
-    "countryCode": "cl",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cl"
   },
   "valparaiso-cl": {
-    "approved": true,
-    "countryCode": "cl",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cl"
   },
   "antofagasta-cl": {
-    "approved": true,
-    "countryCode": "cl",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cl"
   },
   "puerto-montt": {
-    "approved": true,
-    "countryCode": "cl",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cl"
   },
   "diego-ramirez": {
-    "approved": true,
-    "countryCode": "cl",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cl"
   },
   "juan-fernandez": {
-    "approved": true,
-    "countryCode": "cl",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cl"
   },
   "puerto-williams": {
-    "approved": true,
-    "countryCode": "cl",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cl"
   },
   "makemo": {
     "approved": false,
@@ -3394,916 +2918,612 @@
     "countryCode": "nl"
   },
   "ito": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "oga": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "ogi": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "uno": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "aoki": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "gobo": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "hofu": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "kobe-jp": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "kogo": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "kure": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "kure-jp": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "mera": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "moji": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "naha": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "naze": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "noto": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "oita": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "oura": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "sado": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "soma": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "susa": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "tago": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "toba": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "akita": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "akune": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "amami": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "beppu": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "chiba": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "chofu": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "fukue": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "kochi-jp": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "okada": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "osaka-jp": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "otaru": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "owase": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "saeki": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "saigo": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "sakai": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "tappi": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "tokyo-jp": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "ubeko": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "yaizu": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "aohama": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "hakata": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "hamada": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "kainan": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "karita": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "kariya": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "kujiko": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "kumano": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "mikawa": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "mikuni": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "misumi": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "miyako": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "moriko": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "nagoya": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "oshoro": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "sasebo": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "sumoto": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "tajiri": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "toyama": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "wajima": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "akabane": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "awayuki": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "ayukawa": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "fukaura": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "gonoura": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "hiagari": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "honmoku": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "iwasaki": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "izuhara": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "karatsu": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "kushiro": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "kushiro-jp": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "maisaka": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "maizuru": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "maizuru-jp": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "muroran": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "nanaoko": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "odawara": {
-    "approved": true,
-    "countryCode": "jp",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "jp"
   },
   "wick": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "dover-gb": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "leith": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "bangor-gb": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "cromer": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "newlyn": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "whitby": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "exmouth": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "harwich": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "heysham": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "lerwick": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "milford": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "mumbles": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "newport-gb": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "penarth": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "rothera": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "stanley": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "aberdeen-gb": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "barmouth": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "brighton": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "holyhead": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "millport": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "newhaven": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "portbury": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "portrush": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "st-marys": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "ullapool": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "weymouth": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "ascension": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "avonmouth": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "deal-pier": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "devonport": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "fishguard": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "gibraltar": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "herne-bay": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "immingham": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "llandudno": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "lowestoft": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "lymington": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "sheerness": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "st-helena": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "stornoway": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "tobermory": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "felixstowe": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "ilfracombe": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "portsmouth-gb": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "port-isaac": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "workington": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "bournemouth": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "moray-firth": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "portpatrick": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "southampton-gb": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "scarborough": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "diego-garcia": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "port-stanley": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "sandown-pier": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "swanage-pier": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "arun-platform": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "hinkley-point": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "kinlochbervie": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "north-shields": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "severn-bridge": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "hastings-pier": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "teignmouth-pier": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "north-cormorant-gb": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "port-ellen-islay": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "west-bay-harbour": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "st-helier-jersey": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "tristan-da-cunha": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "king-edward-point": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "port-eri-isle-of-man": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "liverpool-gladstone-dock": {
-    "approved": true,
-    "countryCode": "gb",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "gb"
   },
   "aden": {
     "approved": false,
@@ -4370,1480 +3590,988 @@
     "countryCode": "gr"
   },
   "mare": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "nice-fr": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "sete": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "thio": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "ambes": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "brest-fr": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "leava": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "lifou": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "ouvea": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "royan": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "calais": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "crozet": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "dieppe": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "donges": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "galets": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "lamena": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "makemo-fr": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "noumea": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "ouinne": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "toulon": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "tubuai": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "ua-pou": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "vairao": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "bassens": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "cayenne": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "centuri": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "ciboure": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "hiva-oa": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "huahine": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "matavai": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "mimizan": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "papeete": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "papeete-fr": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "richard": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "rikitea": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "roscoff": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "bordeaux-fr": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "deshaies": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "dielette": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "dzaoudzi": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "la-capte": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "le-havre": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "le-brusc": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "mata-utu": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "pauillac": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "rangiroa": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "cherbourg": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "cordemais": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "dunkerque": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "hienghene": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "ile-daix": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "kerguelen": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "le-robert": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "marseille-fr": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "nuku-hiva": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "paimboeuf": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "pariacabo": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "port-bloc": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "port-tudy": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "port-cros": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "rochefort": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "solenzara": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "clipperton": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "concarneau": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "fort-medoc": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "ile-rousse": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "ile-royale": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "la-palmyre": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "le-conquet": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "le-marquis": {
-    "approved": true,
-    "countryCode": "fr",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "fr"
   },
   "eden": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "bowen": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "casey": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "cocos": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "davis": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "derby": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "lorne": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "yamba": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "albany-au": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "broome": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "burnie": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "cairns-au": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "darwin-au": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "harvey": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "hobart-au": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "mawson": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "bunbury": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "exmouth-au": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "forster": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "geelong": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "karumba": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "patonga": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "urangan": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "whyalla": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "wyndham": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "bermagui": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "brisbane-au": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "caddadup": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "cardwell": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "cooktown": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "hillarys": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "low-head": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "portland-au": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "wallaroo": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "bundaberg": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "carnarvon": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "carnarvon-au": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "christmas-au": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "devonport-au": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "esperance": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "fremantle": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "geraldton": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "gladstone": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "hay-point": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "lord-howe": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "newcastle": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "port-alma": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "thevenard": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "ulladulla": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "botany-bay": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "bremer-bay": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "georgetown": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "ince-point": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "jervis-bay": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "jurien-bay": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "mooloolaba": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "peel-inlet": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "port-giles": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "port-pirie": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "spring-bay": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "townsville": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "cape-jervis": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "clump-point": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "hovell-pile": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "port-kembla": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "queenscliff": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "rosslyn-bay": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "south-trees": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "turtle-head": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "booby-island": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "fort-denison": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "goods-island": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "macquarie-is": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "port-douglas": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "port-hedland": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "port-lincoln": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "port-stanvac": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "cape-ferguson": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "cape-ferguson-au": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "coffs-harbour": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "shute-harbour": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "victor-harbor": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "norfolk-island": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "point-lonsdale": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "port-macquarie": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "brunswick-heads": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "nardana-patches": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "thursday-island": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "thursday-island-au": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "crookhaven-heads": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "lord-howe-island": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "lucinda-offshore": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "mornington-island": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "mourilyan-harbour": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "west-channel-pile": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "fishermans-landing": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "weipa-humbug-point": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "onslow-beadon-creek": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "port-welshpool-pier": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "gold-coast-southport": {
-    "approved": true,
-    "countryCode": "au",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "au"
   },
   "cruz": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "vigo-es": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "cadiz-es": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "ceuta": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "gijon": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "ibiza": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "mahon": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "marin": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "palma": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "aviles": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "bilbao-es": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "coruna": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "ferrol": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "ferrol-es": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "gandia": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "gomera": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "huelva": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "malaga-es": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "motril": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "pasaia": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "tarifa": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "alboran": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "alcudia": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "almeria": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "bonanza": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "melilla": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "sagunto": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "sevilla": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "arrecife": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "la-palma": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "pollensa": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "tenerife": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "tenerife-es": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "valencia-es": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "algeciras": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "algeciras-es": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "barcelona-es": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "cartagena-es": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "el-hierro": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "santander": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "tarragona": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "alicante-i": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "carboneras": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "formentera": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "las-palmas-es": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "san-cibrao": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "langosteira": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "villagarcia": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "fuerteventura": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "colonia-sant-pere": {
-    "approved": true,
-    "countryCode": "es",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "es"
   },
   "bodo": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "maloy": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "vardo": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "vardo-no": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "bergen-no": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "narvik": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "rorvik": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "tregde": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "tromso": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "alesund": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "andenes": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "andenes-no": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "harstad": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "heimsjo": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "leirvik": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "mausund": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "sandnes": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "sirevag": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "bruravik": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "kabelvag": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "nylesund": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "stavanger": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "trondheim": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "hammerfest": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "honningsvag": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "kristiansund": {
-    "approved": true,
-    "countryCode": "no",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "no"
   },
   "alexandria-eg": {
     "approved": false,
@@ -6526,214 +5254,144 @@
     "countryCode": "it"
   },
   "macau": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "sines": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "nazare": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "cascais": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "funchal-pt": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "leixoes": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "peniche": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "flores-lajes": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "horta-azores": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "porto-grande": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "lagos-algarve": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "ponta-delgada-pt": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "angra-heroismo": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "viana-do-castelo-pt": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "flores-santa-cruz": {
-    "approved": true,
-    "countryCode": "pt",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "pt"
   },
   "fenit": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "howth": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "sligo": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "dundalk": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "rosslare": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "inishmore": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "ballyglass": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "malin-head": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "port-oriel": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "dublin-port": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "galway-port": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "river-tolka": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "roonagh-pier": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "kilrush-lough": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "arklow-harbour": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "castletownbere": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "dingle-harbour": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "killybegs-port": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "rossaveel-pier": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "wexford-harbour": {
-    "approved": true,
-    "countryCode": "ie",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ie"
   },
   "arko": {
     "approved": false,
@@ -6976,190 +5634,128 @@
     "countryCode": "se"
   },
   "bluff": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "napier": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "nelson": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "owenga": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "sumner": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "timaru": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "chatham": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "jackson": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "manukau": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "auckland-nz": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "gisborne": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "gisborne-nz": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "kaikoura": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "taranaki": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "tauranga": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "wanganui": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "boat-cove": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "lyttelton": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "west-port": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "charleston-nz": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "scott-base": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "wellington-nz": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "jackson-bay": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "cape-roberts": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "fishing-rock": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "lottin-point": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "marsden-point": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "port-chalmers": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "puysegur-point": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "north-cape-otou": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "new-brighton-pier": {
-    "approved": true,
-    "countryCode": "nz",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "nz"
   },
   "bakar": {
     "approved": false,
@@ -7186,88 +5782,60 @@
     "countryCode": "bg"
   },
   "lusi": {
-    "approved": true,
-    "countryCode": "cn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cn"
   },
   "zhapo": {
-    "approved": true,
-    "countryCode": "cn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cn"
   },
   "beihai": {
-    "approved": true,
-    "countryCode": "cn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cn"
   },
   "dalian": {
-    "approved": true,
-    "countryCode": "cn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cn"
   },
   "haikou": {
-    "approved": true,
-    "countryCode": "cn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cn"
   },
   "kanmen": {
-    "approved": true,
-    "countryCode": "cn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cn"
   },
   "xiamen": {
-    "approved": true,
-    "countryCode": "cn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cn"
   },
   "keelung": {
-    "approved": true,
-    "countryCode": "cn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cn"
   },
   "shanwei": {
-    "approved": true,
-    "countryCode": "cn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cn"
   },
   "dongfang": {
-    "approved": true,
-    "countryCode": "cn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cn"
   },
   "laohutan": {
-    "approved": true,
-    "countryCode": "cn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cn"
   },
   "kaohsiung-cn": {
-    "approved": true,
-    "countryCode": "cn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cn"
   },
   "shijiusuo": {
-    "approved": true,
-    "countryCode": "cn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cn"
   },
   "lianyungang": {
-    "approved": true,
-    "countryCode": "cn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "cn"
   },
   "macae": {
     "approved": false,
@@ -7446,82 +6014,56 @@
     "countryCode": "bb"
   },
   "tumaco": {
-    "approved": true,
-    "countryCode": "co",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "co"
   },
   "cartagena-co": {
-    "approved": true,
-    "countryCode": "co",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "co"
   },
   "san-andres": {
-    "approved": true,
-    "countryCode": "co",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "co"
   },
   "santa-marta": {
-    "approved": true,
-    "countryCode": "co",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "co"
   },
   "buenaventura": {
-    "approved": true,
-    "countryCode": "co",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "co"
   },
   "ushuaia-ar": {
-    "approved": true,
-    "countryCode": "ar",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ar"
   },
   "dallmann": {
-    "approved": true,
-    "countryCode": "ar",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ar"
   },
   "esperanza": {
-    "approved": true,
-    "countryCode": "ar",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ar"
   },
   "san-martin": {
-    "approved": true,
-    "countryCode": "ar",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ar"
   },
   "buenos-aires-ar": {
-    "approved": true,
-    "countryCode": "ar",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ar"
   },
   "mar-del-plata-ar": {
-    "approved": true,
-    "countryCode": "ar",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ar"
   },
   "puerto-madryn": {
-    "approved": true,
-    "countryCode": "ar",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ar"
   },
   "puerto-deseado": {
-    "approved": true,
-    "countryCode": "ar",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ar"
   },
   "paita": {
     "approved": false,
@@ -7552,130 +6094,88 @@
     "countryCode": "pe"
   },
   "durban-za": {
-    "approved": true,
-    "countryCode": "za",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "za"
   },
   "knysna": {
-    "approved": true,
-    "countryCode": "za",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "za"
   },
   "luderitz": {
-    "approved": true,
-    "countryCode": "za",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "za"
   },
   "cape-town-za": {
-    "approved": true,
-    "countryCode": "za",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "za"
   },
   "mossel-bay": {
-    "approved": true,
-    "countryCode": "za",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "za"
   },
   "east-london": {
-    "approved": true,
-    "countryCode": "za",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "za"
   },
   "simons-town": {
-    "approved": true,
-    "countryCode": "za",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "za"
   },
   "port-nolloth": {
-    "approved": true,
-    "countryCode": "za",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "za"
   },
   "richards-bay": {
-    "approved": true,
-    "countryCode": "za",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "za"
   },
   "saldahna-bay": {
-    "approved": true,
-    "countryCode": "za",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "za"
   },
   "marion-island": {
-    "approved": true,
-    "countryCode": "za",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "za"
   },
   "port-elizabeth": {
-    "approved": true,
-    "countryCode": "za",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "za"
   },
   "cebu-ph": {
-    "approved": true,
-    "countryCode": "ph",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ph"
   },
   "jolo": {
-    "approved": true,
-    "countryCode": "ph",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ph"
   },
   "davao": {
-    "approved": true,
-    "countryCode": "ph",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ph"
   },
   "lubang": {
-    "approved": true,
-    "countryCode": "ph",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ph"
   },
   "manila-ph": {
-    "approved": true,
-    "countryCode": "ph",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ph"
   },
   "legaspi": {
-    "approved": true,
-    "countryCode": "ph",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ph"
   },
   "currimao": {
-    "approved": true,
-    "countryCode": "ph",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ph"
   },
   "subic-bay": {
-    "approved": true,
-    "countryCode": "ph",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ph"
   },
   "puerto-princesa": {
-    "approved": true,
-    "countryCode": "ph",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "ph"
   },
   "jask": {
     "approved": false,
@@ -7714,38 +6214,28 @@
     "countryCode": "bd"
   },
   "cochin": {
-    "approved": true,
-    "countryCode": "in",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "in"
   },
   "minicoy": {
-    "approved": true,
-    "countryCode": "in",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "in"
   },
   "port-blair": {
-    "approved": true,
-    "countryCode": "in",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "in"
   },
   "vishakhapatnam": {
-    "approved": true,
-    "countryCode": "in",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "in"
   },
   "colombo-lk": {
     "approved": false,
     "countryCode": "lk"
   },
   "dakar-sn": {
-    "approved": true,
-    "countryCode": "sn",
-    "approvedAt": "2026-07-24",
-    "approvedBy": "pre-approved"
+    "approved": false,
+    "countryCode": "sn"
   },
   "zanzibar": {
     "approved": false,

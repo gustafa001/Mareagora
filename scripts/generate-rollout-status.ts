@@ -17,8 +17,10 @@ import fs from 'fs';
 import path from 'path';
 import { GLOBAL_PLACES } from '../lib/globalPlaces';
 
-// Países pré-aprovados — já tinham texto específico por país em TIDE_CHARACTERISTICS
-const PRE_APPROVED_COUNTRIES = new Set([
+// Países que HISTORICAMENTE tinham texto por país (TIDE_CHARACTERISTICS).
+// Mantido como referência para priorizar esses lotes primeiro no pipeline,
+// mas NÃO são pré-aprovados automaticamente — precisam passar por check-content-similarity.
+export const HISTORICALLY_COVERED_COUNTRIES = new Set([
   'gb', 'fr', 'pt', 'es', 'us', 'ca', 'ie', 'no',
   'ar', 'mx', 'co', 'cl',
   'jp', 'au', 'nz', 'id', 'ph', 'cn', 'in',
@@ -27,22 +29,21 @@ const PRE_APPROVED_COUNTRIES = new Set([
 
 export interface RolloutEntry {
   approved: boolean;
-  approvedAt?: string;         // data de aprovação no formato YYYY-MM-DD
+  approvedAt?: string;
   approvedBy?: 'pre-approved' | 'manual' | 'similarity-check';
   countryCode: string;
 }
 
 function buildRolloutStatus(): Record<string, RolloutEntry> {
-  const today = new Date().toISOString().slice(0, 10);
   const status: Record<string, RolloutEntry> = {};
 
   for (const place of GLOBAL_PLACES) {
     const cc = place.countryCode.toLowerCase();
-    const isPreApproved = PRE_APPROVED_COUNTRIES.has(cc);
+    // TODOS começam como não aprovados — aprovação só ocorre via approve-batch.ts
+    // após verificação de similaridade em check-content-similarity.ts
     status[place.slug] = {
-      approved: isPreApproved,
+      approved: false,
       countryCode: cc,
-      ...(isPreApproved ? { approvedAt: today, approvedBy: 'pre-approved' } : {}),
     };
   }
 

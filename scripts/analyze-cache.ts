@@ -1,0 +1,10 @@
+import cacheRaw from '../data/tide-regime-cache.json';
+const d = cacheRaw as Record<string, { regime: string; amplitudeMedia: number; amplitudeMax: number }>;
+const entries = Object.entries(d);
+const regimes: Record<string, number> = {};
+entries.forEach(([, v]) => { regimes[v.regime] = (regimes[v.regime] ?? 0) + 1; });
+console.log('Regime distribution:', JSON.stringify(regimes));
+const amps = entries.map(([, v]) => v.amplitudeMedia);
+console.log('Amplitude range:', Math.min(...amps).toFixed(1), '-', Math.max(...amps).toFixed(1));
+const combos = new Set(entries.map(([, v]) => `${v.regime}|${v.amplitudeMedia}|${v.amplitudeMax}`));
+console.log('Unique (regime+amp) combos:', combos.size, 'out of', entries.length);

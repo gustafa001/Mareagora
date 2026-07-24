@@ -1,7 +1,7 @@
 'use client';
 import { getStateSlug } from "@/lib/states";
 import { PORTS, getNearestPort, type Port } from '@/lib/ports';
-import { GLOBAL_PLACES, type GlobalPlace } from '@/lib/globalPlaces';
+import type { GlobalPlace } from '@/lib/globalPlaces';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
@@ -37,12 +37,21 @@ export default function HomeHero() {
   const [isGeolocationLoading, setIsGeolocationLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const globalPlacesRef = useRef<GlobalPlace[] | null>(null);
+
+  const loadGlobalPlaces = useCallback(async () => {
+    if (!globalPlacesRef.current) {
+      const mod = await import('@/lib/globalPlaces');
+      globalPlacesRef.current = mod.GLOBAL_PLACES;
+    }
+    return globalPlacesRef.current;
+  }, []);
 
   const popularPorts = PORTS.filter(port =>
     ['porto-de-belem', 'porto-de-itaqui', 'porto-de-mucuripe-fortaleza', 'porto-do-recife', 'porto-de-salvador', 'porto-de-santos'].includes(port.slug)
   );
 
-  const handleSearch = useCallback((query: string) => {
+  const handleSearch = useCallback(async (query: string) => {
     setSearchQuery(query);
     if (query.length < 2) {
       setShowSuggestions(false);
@@ -64,8 +73,9 @@ export default function HomeHero() {
       .slice(0, 6)
       .map(port => ({ type: 'br' as const, port }));
 
-    // Global places
-    const globalResults: SearchResult[] = GLOBAL_PLACES.filter(place => {
+    // Global places (carregado dinamicamente sob demanda)
+    const globalPlaces = await loadGlobalPlaces();
+    const globalResults: SearchResult[] = globalPlaces.filter(place => {
       return (
         normalize(place.name).includes(q) ||
         normalize(place.countryName).includes(q)
@@ -76,7 +86,7 @@ export default function HomeHero() {
 
     setResults([...brResults, ...globalResults].slice(0, 12));
     setShowSuggestions(true);
-  }, []);
+  }, [loadGlobalPlaces]);
 
   const handleSelect = (result: SearchResult) => {
     setShowSuggestions(false);
@@ -140,7 +150,10 @@ export default function HomeHero() {
               placeholder="Buscar porto, praia ou cidade no mundo..."
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
-              onFocus={() => searchQuery.length >= 2 && setShowSuggestions(true)}
+              onFocus={() => {
+                loadGlobalPlaces();
+                if (searchQuery.length >= 2) setShowSuggestions(true);
+              }}
               onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
               className="w-full px-6 py-4 rounded-2xl bg-slate-900/80 border border-blue-500/30 text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all backdrop-blur-sm"
             />

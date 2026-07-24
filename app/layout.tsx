@@ -11,23 +11,27 @@ const syne = Syne({
   subsets: ["latin"],
   variable: "--font-syne",
   weight: ["400", "600", "700", "800"],
+  display: "swap",
 });
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-dm-sans",
   weight: ["300", "400", "500"],
+  display: "swap",
 });
 
 const firaCode = Fira_Code({
   subsets: ["latin"],
   variable: "--font-fira-code",
+  display: "swap",
 });
 
 const firaSans = Fira_Sans({
   subsets: ["latin"],
   variable: "--font-fira-sans",
   weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -79,15 +83,15 @@ export default function RootLayout({
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2920008879492175"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
         {/* Google Analytics GA4 — G-LP14YCN9MZ */}
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-LP14YCN9MZ"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="ga4-init" strategy="afterInteractive">
+        <Script id="ga4-init" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}

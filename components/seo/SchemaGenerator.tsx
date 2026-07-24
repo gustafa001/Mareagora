@@ -53,11 +53,6 @@ export default function SchemaGenerator({
     name: 'MaréAgora',
     description: 'A tábua de marés mais completa do Brasil',
     publisher: { '@id': `${base}/#organization` },
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: `${base}/search?q={search_term_string}`,
-      'query-input': 'required name=search_term_string',
-    },
   });
 
   // 2. WebPage

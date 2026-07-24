@@ -4,6 +4,7 @@ import RegionalLinks from '@/components/RegionalLinks';
 import RecentBlogPosts from '@/components/RecentBlogPosts';
 import AdSlot from '@/components/ads/AdSlot';
 import { AD_SLOTS } from '@/lib/adConfig';
+import SchemaGenerator from '@/components/seo/SchemaGenerator';
 
 export const metadata = {
   title: 'MaréAgora — Tábua de Marés do Brasil em Tempo Real',
@@ -13,6 +14,13 @@ export const metadata = {
 export default function Home() {
   return (
     <main className="min-h-screen flex flex-col bg-slate-950 relative overflow-hidden">
+      <SchemaGenerator
+        type="Home"
+        url="https://mareagora.com.br"
+        title="MaréAgora — Tábua de Marés do Brasil em Tempo Real"
+        description="Consulte a tábua de marés oficial da Marinha do Brasil para todos os portos. Previsão de maré alta e baixa, ondas e vento para pesca, surf e navegação."
+      />
+
       {/* SEÇÃO HERO (Mantendo busca e funcionalidades originais) */}
       <HomeHero />
 

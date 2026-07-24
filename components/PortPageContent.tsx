@@ -20,6 +20,8 @@ import PortBlogSection from '@/components/PortBlogSection';
 import NotificationCTA from '@/components/NotificationCTA';
 import WeatherRadarCard from '@/components/port-operations/WeatherRadarCard';
 const DailyScoreCard = dynamic(() => import('@/components/DailyScoreCard'), { ssr: false });
+import TideSchemaMarkup from '@/components/TideSchemaMarkup';
+import { getStateSlug } from '@/lib/states';
 import { useSeaConditions } from '@/hooks/useSeaConditions';
 import { notFound } from 'next/navigation';
 import type { BlogPost } from '@/lib/blog';
@@ -80,6 +82,18 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
 
   return (
     <main className="min-h-screen pb-20">
+      <TideSchemaMarkup
+        locationName={seoName || port.name}
+        countryOrStateName={port.state}
+        lat={port.lat}
+        lon={port.lon}
+        nextHigh={nextHigh ? { hora: nextHigh.hora, altura_m: nextHigh.altura_m } : null}
+        nextLow={nextLow ? { hora: nextLow.hora, altura_m: nextLow.altura_m } : null}
+        pageUrl={`https://mareagora.com.br/mare/${getStateSlug(port.state)}/${port.slug}`}
+        parentUrl="https://mareagora.com.br/estados"
+        parentName={port.state}
+        locale="pt"
+      />
       <NavBar />
 
       <section className="hero-section relative overflow-hidden">

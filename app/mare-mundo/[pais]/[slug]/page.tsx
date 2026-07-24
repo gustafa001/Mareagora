@@ -21,6 +21,7 @@ import SolunarTable from '@/components/SolunarTable';
 import WeatherRadarCard from '@/components/port-operations/WeatherRadarCard';
 import WavesCard from '@/components/WavesCard';
 const DailyScoreCard = dynamic(() => import('@/components/DailyScoreCard'), { ssr: false });
+import TideSchemaMarkup from '@/components/TideSchemaMarkup';
 
 interface Props {
   params: { pais: string; slug: string };
@@ -107,6 +108,18 @@ export default async function MareMundoLocalPage({ params }: Props) {
 
   return (
     <main className="min-h-screen pb-20">
+      <TideSchemaMarkup
+        locationName={place.name}
+        countryOrStateName={place.countryName}
+        lat={place.lat}
+        lon={place.lon}
+        nextHigh={nextHigh ? { hora: nextHigh.hora, altura_m: nextHigh.altura_m } : null}
+        nextLow={nextLow ? { hora: nextLow.hora, altura_m: nextLow.altura_m } : null}
+        pageUrl={`${BASE}/mare-mundo/${params.pais}/${params.slug}`}
+        parentUrl={`${BASE}/mare-mundo`}
+        parentName={place.countryName}
+        locale="pt"
+      />
       <NavBar />
 
       {/* Hero Section — mesma estrutura BR mas com gradiente em vez de vídeo */}

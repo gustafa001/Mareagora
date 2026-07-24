@@ -18,6 +18,7 @@ import ActivityRecommendations from '@/components/ActivityRecommendations';
 import SolunarTable from '@/components/SolunarTable';
 import WeatherRadarCard from '@/components/port-operations/WeatherRadarCard';
 const DailyScoreCard = dynamic(() => import('@/components/DailyScoreCard'), { ssr: false });
+import TideSchemaMarkup from '@/components/TideSchemaMarkup';
 
 const BASE = 'https://mareagora.com.br';
 const en = t('en');
@@ -99,6 +100,18 @@ export default async function TideLocalPage({ params }: Props) {
 
   return (
     <main className="min-h-screen pb-20">
+      <TideSchemaMarkup
+        locationName={place.name}
+        countryOrStateName={place.countryName}
+        lat={place.lat}
+        lon={place.lon}
+        nextHigh={nextHigh ? { hora: nextHigh.hora, altura_m: nextHigh.altura_m } : null}
+        nextLow={nextLow ? { hora: nextLow.hora, altura_m: nextLow.altura_m } : null}
+        pageUrl={`${BASE}/tide/${params.countryCode}/${params.slug}`}
+        parentUrl={`${BASE}/tide`}
+        parentName={place.countryName}
+        locale="en"
+      />
       <NavBar />
 
       {/* Hero */}

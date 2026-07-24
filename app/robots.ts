@@ -7,6 +7,13 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/admin/'],
     },
-    sitemap: 'https://mareagora.com.br/sitemap-index.xml',
+    sitemap: [
+      'https://mareagora.com.br/sitemap/index.xml',
+      'https://mareagora.com.br/sitemap/praias.xml',
+      'https://mareagora.com.br/sitemap/portos.xml',
+      'https://mareagora.com.br/sitemap/estados.xml',
+      'https://mareagora.com.br/sitemap/blog.xml',
+      'https://mareagora.com.br/sitemap/mundo.xml',
+    ],
   };
 }

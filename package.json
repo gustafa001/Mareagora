@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
+    "@neaps/tide-database": "^0.8.20260722",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
     "@radix-ui/react-aspect-ratio": "^1.1.7",
@@ -51,6 +52,7 @@
     "input-otp": "^1.4.2",
     "lucide-react": "^0.453.0",
     "nanoid": "^5.1.5",
+    "neaps": "^0.7.0",
     "next": "^14.0.0",
     "next-mdx-remote": "^6.0.0",
     "next-themes": "^0.4.6",

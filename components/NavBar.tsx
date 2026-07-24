@@ -12,6 +12,7 @@ const NAV_LINKS = [
   { href: '/guia-praias', icon: '🏖️', label: 'Praias' },
   { href: '/blog', icon: '📝', label: 'Blog' },
   { href: '/operacoes-portuarias', icon: '🏗️', label: 'Operação Portuária' },
+  { href: '/mare-mundo', icon: '🌍', label: 'Mundo' },
 ];
 
 export default function NavBar({ className = '' }: NavBarProps) {

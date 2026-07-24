@@ -12,10 +12,11 @@ export async function generateSitemaps() {
     { id: 'portos' },
     { id: 'estados' },
     { id: 'blog' },
+    { id: 'mundo' },
   ];
 }
 
-export default function sitemap({ id }: { id: string }): MetadataRoute.Sitemap {
+export default async function sitemap({ id }: { id: string }): Promise<MetadataRoute.Sitemap> {
   if (id === 'praias') {
     return PORTS.filter(p => !p.name.toLowerCase().includes('porto') && !p.name.toLowerCase().includes('terminal')).map(p => ({
       url: `${base}/mare/${getStateSlug(p.state)}/${p.slug}`,
@@ -51,6 +52,19 @@ export default function sitemap({ id }: { id: string }): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     }));
+  }
+
+  if (id === 'mundo') {
+    const { GLOBAL_PLACES } = await import('@/lib/globalPlaces');
+    return [
+      { url: `${base}/mare-mundo`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.6 },
+      ...GLOBAL_PLACES.map(p => ({
+        url: `${base}/mare-mundo/${p.countryCode}/${p.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'daily' as const,
+        priority: 0.5,
+      }))
+    ];
   }
 
   // id === 'index' (Base generic routes)

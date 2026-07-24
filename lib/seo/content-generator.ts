@@ -13,10 +13,14 @@ export function generateSEOContent(port: Port, date: string): SEOContent {
 
   const season = getSeason(dateObj);
   const moonPhaseName = getMoonPhase(dateObj).name;
-  
+
   const amplitude = getAmplitude(eventos);
   const isViva = amplitude > 2.0; // Simplification
-  const text = generateSpintaxText(port, date, eventos, season, moonPhaseName, amplitude, isViva);
+
+  // Horário atual no fuso de São Paulo, para saber quais marés já passaram.
+  const nowMinutes = getNowMinutesBR(date);
+
+  const text = generateSpintaxText(port, date, eventos, season, moonPhaseName, amplitude, isViva, nowMinutes);
   const faq = generateFAQ(port, date, eventos, moonPhaseName, isViva);
 
   return { text, faq };
@@ -41,38 +45,77 @@ function getAmplitude(eventos: MareEvento[]) {
   return max - min;
 }
 
+/**
+ * Minutos desde 00:00 no horário de São Paulo, para a data informada.
+ * Se `date` não for hoje (ex: página gerada estaticamente com antecedência),
+ * cai para 0 e o texto usa a primeira maré do dia normalmente.
+ */
+function getNowMinutesBR(date: string): number {
+  const todayBR = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
+  if (todayBR !== date) return -1; // data não é "hoje": não filtra por horário atual
+
+  const timeStr = new Date().toLocaleTimeString('pt-BR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: 'America/Sao_Paulo',
+  });
+  const [h, m] = timeStr.split(':').map(Number);
+  return (h || 0) * 60 + (m || 0);
+}
+
+function timeToMin(hora: string): number {
+  const [h, m] = hora.split(':').map(Number);
+  return (h || 0) * 60 + (m || 0);
+}
+
+/**
+ * Retorna a próxima maré (do tipo pedido) a partir do horário atual.
+ * Se todas já passaram (ou não sabemos o horário atual), cai para a primeira do dia.
+ */
+function proximoEvento(eventos: MareEvento[], nowMinutes: number): MareEvento | undefined {
+  if (nowMinutes >= 0) {
+    const proximo = eventos.find(e => timeToMin(e.hora) > nowMinutes);
+    if (proximo) return proximo;
+  }
+  return eventos[0];
+}
+
 function generateSpintaxText(
-  port: Port, 
-  date: string, 
-  eventos: MareEvento[], 
-  season: string, 
+  port: Port,
+  date: string,
+  eventos: MareEvento[],
+  season: string,
   moonPhase: string,
   amplitude: number,
-  isViva: boolean
+  isViva: boolean,
+  nowMinutes: number
 ) {
   const isCommercial = port.name.toLowerCase().includes('porto') || port.name.toLowerCase().includes('terminal');
-  
+
   const highTides = eventos.filter(e => e.tipo === 'high');
   const lowTides = eventos.filter(e => e.tipo === 'low');
-  
-  const highInfo = highTides.length > 0 ? `A primeira maré alta ocorre às ${highTides[0].hora} com ${highTides[0].altura_m}m.` : '';
-  const lowInfo = lowTides.length > 0 ? `Já a maré baixa principal é registrada às ${lowTides[0].hora} atingindo ${lowTides[0].altura_m}m.` : '';
-  
+
+  const nextHigh = proximoEvento(highTides, nowMinutes);
+  const nextLow = proximoEvento(lowTides, nowMinutes);
+
+  const highInfo = nextHigh ? `A próxima maré alta ocorre às ${nextHigh.hora} com ${nextHigh.altura_m}m.` : '';
+  const lowInfo = nextLow ? `Já a próxima maré baixa é registrada às ${nextLow.hora} atingindo ${nextLow.altura_m}m.` : '';
+
   let baseText = '';
-  
+
   if (isCommercial) {
     baseText = `As condições de maré em ${port.name}, ${port.state} para a data atual apresentam uma amplitude de ${amplitude.toFixed(2)}m sob a influência da lua ${moonPhase}. ${highInfo} ${lowInfo} Este cenário de ${season} é característico da região, ${isViva ? 'indicando marés vivas (sizígia) que exigem atenção nas manobras portuárias.' : 'caracterizando marés de quadratura, com variações mais suaves no calado dinâmico.'}`;
   } else {
     baseText = `Confira as condições para a praia de ${port.name} (${port.state}) durante o ${season}. Hoje, com a lua ${moonPhase}, a amplitude da maré é de ${amplitude.toFixed(2)} metros. ${highInfo} ${lowInfo} ${isViva ? 'Com a maré viva, o mar recua bastante na baixamar, excelente para pesca na beira e encontrar piscinas naturais.' : 'Sendo maré morta, a variação é menor, proporcionando águas mais estáveis para banhistas e navegação leve.'} As ondas e os ventos na região costeira podem sofrer leves alterações dependendo do horário.`;
   }
-  
+
   return baseText;
 }
 
 function generateFAQ(
-  port: Port, 
-  date: string, 
-  eventos: MareEvento[], 
+  port: Port,
+  date: string,
+  eventos: MareEvento[],
   moonPhase: string,
   isViva: boolean
 ) {
@@ -99,8 +142,8 @@ function generateFAQ(
   // Q3
   faq.push({
     question: `A maré está boa para pesca em ${port.cityName}?`,
-    answer: isViva 
-      ? 'Sim! A atual maré viva (sizígia) aumenta a movimentação das correntes e dos nutrientes, o que costuma ativar a alimentação dos peixes.' 
+    answer: isViva
+      ? 'Sim! A atual maré viva (sizígia) aumenta a movimentação das correntes e dos nutrientes, o que costuma ativar a alimentação dos peixes.'
       : 'A maré de quadratura (morta) apresenta pouca correnteza. É ideal para pesca de fundo ou em locais de maior calado, embora os peixes possam estar menos ativos.'
   });
 

@@ -255,7 +255,7 @@ export default async function MareMundoLocalPage({ params }: Props) {
                 <span>📘</span> Sobre a Tábua de Marés de {place.name}
               </h2>
               <p className="text-sm text-slate-400 leading-relaxed">
-                {generateTideDescription(place.name, place.countryName, place.countryCode, place.lat, place.lon, 'pt')}
+                {generateTideDescription(place.name, place.countryName, place.countryCode, place.lat, place.lon, 'pt', place.slug)}
               </p>
             </section>
 

@@ -235,7 +235,7 @@ export default async function TideLocalPage({ params }: Props) {
               <span>📘</span> About {place.name} Tide Forecast
             </h2>
             <p className="text-sm text-slate-400 leading-relaxed">
-              {generateTideDescription(place.name, place.countryName, place.countryCode, place.lat, place.lon, 'en')}
+              {generateTideDescription(place.name, place.countryName, place.countryCode, place.lat, place.lon, 'en', place.slug)}
             </p>
           </section>
 

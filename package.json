@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:tide-regime-cache": "tsx scripts/build-tide-regime-cache.ts",
     "start": "next start",
     "lint": "next lint",
     "check": "tsc --noEmit",

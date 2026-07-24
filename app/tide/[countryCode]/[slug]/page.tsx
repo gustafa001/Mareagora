@@ -8,6 +8,12 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { getNextHighAndLow, type TideEvent } from '@/lib/tideUtils';
 import type { MareDia } from '@/lib/mare';
+import rolloutStatus from '@/data/content-rollout-status.json';
+
+const _rollout = rolloutStatus as Record<string, { approved: boolean }>;
+function isApproved(slug: string): boolean {
+  return _rollout[slug]?.approved === true;
+}
 
 import NavBar from '@/components/NavBar';
 const TideWeekCard = dynamic(() => import('@/components/TideWeekCard'), { ssr: false });
@@ -36,7 +42,7 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `Tide Table ${place.name} ${year} | MaréAgora`,
     description: `${place.name} tide table ${year}. Real-time waves, wind, rain radar and full monthly tide schedule for ${place.name}, ${place.countryName}.`,
-    robots: { index: true, follow: true },
+    robots: isApproved(params.slug) ? { index: true, follow: true } : { index: false, follow: true },
     alternates: {
       canonical: `${BASE}/tide/${params.countryCode}/${params.slug}`,
       languages: {

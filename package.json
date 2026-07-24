@@ -7,10 +7,12 @@
     "dev": "next dev",
     "build": "next build",
     "build:tide-regime-cache": "tsx scripts/build-tide-regime-cache.ts",
+    "build:rollout-status": "tsx scripts/generate-rollout-status.ts",
+    "content:prioritize": "tsx scripts/prioritize-global-content.ts",
     "start": "next start",
     "lint": "next lint",
     "check": "tsc --noEmit",
-    "test": "tsx --test tests/tideUtils.test.ts",
+    "test": "tsx --test tests/tideUtils.test.ts && tsx --test tests/tideRegimeClassifier.test.ts",
     "format": "prettier --write ."
   },
   "dependencies": {

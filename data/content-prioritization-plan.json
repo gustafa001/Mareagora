@@ -1,0 +1,1223 @@
+[
+  {
+    "countryCode": "de",
+    "countryName": "Alemanha",
+    "places": [
+      "hamburg",
+      "bremerhaven",
+      "bsum",
+      "over",
+      "bakea",
+      "belum",
+      "brake",
+      "cranz",
+      "farge",
+      "hrnum",
+      "husum",
+      "knock",
+      "lhort",
+      "pogum",
+      "ruden",
+      "anklam",
+      "barhft",
+      "emshrn",
+      "ltkiel",
+      "tnning",
+      "weener",
+      "wismar",
+      "wittdn",
+      "dagebll",
+      "dukegat",
+      "grnhude",
+      "kappeln",
+      "kloster",
+      "kollmar",
+      "koserow",
+      "leerort",
+      "luebeck",
+      "rostock",
+      "schulau",
+      "terborg",
+      "wolgast",
+      "borgfeld",
+      "brokdorf",
+      "cuxhaven",
+      "dwarsgat",
+      "elsfleth",
+      "langeoog",
+      "neustadt",
+      "reithrne",
+      "sassnitz",
+      "scharhrn",
+      "schillig",
+      "st-pauli",
+      "thiessow",
+      "uetersen",
+      "vegesack",
+      "buxtehude",
+      "flensburg",
+      "glckstadt",
+      "hetlingen",
+      "horneburg",
+      "huntebrck",
+      "kalkgrund",
+      "nordenham",
+      "papenburg",
+      "schleswig",
+      "stralsund",
+      "travemnde",
+      "warnemnde",
+      "altengamme",
+      "eckernfrde",
+      "greifswald",
+      "hollersiel",
+      "karlshagen",
+      "lauterbach",
+      "ritterhude",
+      "spiekeroog"
+    ]
+  },
+  {
+    "countryCode": "nl",
+    "countryName": "Países Baixos",
+    "places": [
+      "amsterdam",
+      "rotterdam",
+      "j61",
+      "nes",
+      "a121",
+      "d151",
+      "k141",
+      "vuren",
+      "kampen",
+      "lemmer",
+      "cadzand",
+      "yerseke",
+      "delfzijl",
+      "kadoelen",
+      "moerdijk",
+      "dordrecht",
+      "eemshaven",
+      "geulhaven",
+      "harlingen",
+      "parksluis",
+      "rotterdam-nl",
+      "terneuzen",
+      "den-helder",
+      "f3platform",
+      "gouda-brug",
+      "huibertgat",
+      "lauwersoog",
+      "marollegat",
+      "oudeschild",
+      "stavenisse",
+      "vlissingen",
+      "walsoorden",
+      "zwartsluis",
+      "amaliahaven",
+      "keizersveer",
+      "l9-platform",
+      "petten-zuid",
+      "schoonhoven",
+      "spijkenisse",
+      "westkapelle",
+      "scheveningen",
+      "eems-meetpaal",
+      "euro-platform",
+      "haringvliet10",
+      "k13a-platform",
+      "spooldersluis",
+      "goidschalxoord",
+      "hollandse-brug",
+      "kornwerderzand",
+      "krimpen-ad-lek",
+      "mond-der-vecht",
+      "platform-d15-a",
+      "platform-f16-a",
+      "roompot-buiten",
+      "schellingwoude",
+      "texel-noordzee",
+      "vlakte-vd-raan",
+      "vlieland-haven",
+      "north-cormorant",
+      "schiermonnikoog",
+      "wierumergronden",
+      "den-oever-buiten"
+    ]
+  },
+  {
+    "countryCode": "se",
+    "countryName": "Sweden",
+    "places": [
+      "arko",
+      "bonan",
+      "juten",
+      "lunde",
+      "malmo",
+      "viken",
+      "visby",
+      "ystad",
+      "norvik",
+      "onsala",
+      "skanor",
+      "varberg",
+      "forsmark",
+      "holmsund",
+      "landsort",
+      "marviken",
+      "ringhals",
+      "spikarna",
+      "barseback",
+      "haparanda",
+      "klagshamn",
+      "skagsudde",
+      "stockholm",
+      "uddevalla",
+      "bonan-sjov",
+      "brofjorden",
+      "draghallan",
+      "furuogrund",
+      "juten-sjov",
+      "malmo-hamn",
+      "oskarshamn",
+      "simrishamn",
+      "vinga-sjov",
+      "ystad-sjov",
+      "helsingborg",
+      "kalmar-sjov",
+      "ljusne-sjov",
+      "stenungsund",
+      "e4-bron-sjov",
+      "goteborgorsh",
+      "kalix-storon",
+      "kristineberg",
+      "loudden-sjov",
+      "varberg-sjov",
+      "flinten7-sjov",
+      "halmstad-sjov",
+      "holmsund-sjov",
+      "flinten16-sjov",
+      "karlshamn-sjov",
+      "kungsholmsfort",
+      "marstrand-sjov",
+      "simpevarp-sjov",
+      "stromoren-sjov",
+      "tangudden-sjov",
+      "vastervik-sjov",
+      "nynas-fiskehamn",
+      "goteborg-klippan",
+      "falkenberg-2-sjov",
+      "goteborg-agnesberg",
+      "goteborg-larjeholm"
+    ]
+  },
+  {
+    "countryCode": "dk",
+    "countryName": "Dinamarca",
+    "places": [
+      "copenhague",
+      "ribe",
+      "tejn",
+      "brons",
+      "hobro",
+      "koege",
+      "mando",
+      "ronne",
+      "vidaa",
+      "assens",
+      "ballum",
+      "dragor",
+      "gedser",
+      "korsor",
+      "rodvig",
+      "skagen",
+      "drogden",
+      "esbjerg",
+      "faaborg",
+      "ferring",
+      "fynshav",
+      "havneby",
+      "hesnaes",
+      "holbaek",
+      "randers",
+      "vedbaek",
+      "bagenkop",
+      "bandholm",
+      "hornbaek",
+      "qaqortoq",
+      "roskilde",
+      "sisimiut",
+      "udbyhoej",
+      "ilulissat",
+      "kalvehave",
+      "kobenhavn",
+      "slipshavn",
+      "ammassalik",
+      "fredericia",
+      "sonderborg",
+      "spodsbjerg",
+      "nordre-rose",
+      "frederikshavn",
+      "nuuk-godthaab",
+      "thyboron-kyst",
+      "thule-pituffik",
+      "torsminde-kyst",
+      "karrebaeksminde",
+      "sjaellands-odde",
+      "hvide-sande-kyst",
+      "ittoqqortoormiit"
+    ]
+  },
+  {
+    "countryCode": "it",
+    "countryName": "Itália",
+    "places": [
+      "genova",
+      "napoli",
+      "venezia",
+      "palermo",
+      "bari",
+      "bari-it",
+      "anzio",
+      "gaeta",
+      "ponza",
+      "ancona",
+      "genova-it",
+      "napoli-it",
+      "ortona",
+      "vieste",
+      "catania",
+      "crotone",
+      "imperia",
+      "livorno",
+      "messina",
+      "palermo-it",
+      "ravenna",
+      "otranto",
+      "sciacca",
+      "salerno",
+      "sciacca-it",
+      "taranto",
+      "trieste",
+      "venezia-it",
+      "cagliari",
+      "ginostra",
+      "palinuro",
+      "lampedusa",
+      "la-spezia",
+      "carloforte",
+      "porto-torres",
+      "civitavecchia",
+      "isole-tremiti",
+      "strombolicchio",
+      "marina-di-campo",
+      "porto-empedocle",
+      "reggio-calabria",
+      "san-benedetto-del-tronto"
+    ]
+  },
+  {
+    "countryCode": "cu",
+    "countryName": "Cuba",
+    "places": [
+      "havana",
+      "guantanamo-bay",
+      "havana-cu",
+      "baracoa",
+      "casilda",
+      "matanzas",
+      "cardenas",
+      "la-coloma",
+      "la-isabela",
+      "cienfuegos",
+      "punta-maisi",
+      "bahia-honda-cu",
+      "guinchos-cay",
+      "puerto-padre",
+      "puerto-de-pilon",
+      "puerto-de-gibara",
+      "cabo-san-antonio",
+      "punta-pasacaballos",
+      "bahia-de-nipe-entrance",
+      "antilla-bahia-de-nipe",
+      "bahia-de-levisa-entrance"
+    ]
+  },
+  {
+    "countryCode": "br",
+    "countryName": "Brazil",
+    "places": [
+      "macae",
+      "natal",
+      "suape",
+      "madeira",
+      "santana",
+      "termisa",
+      "ubatuba",
+      "cananeia",
+      "imbituba",
+      "salvador",
+      "fortaleza",
+      "rio-grande",
+      "belem-uscgs",
+      "luis-correia",
+      "recife-uscgs",
+      "fer-de-noronha",
+      "ilha-fiscal-rj",
+      "fortaleza-uscgs",
+      "canavieiras-uscgs",
+      "rio-de-janeiro-cg",
+      "peter-and-paul-rocks"
+    ]
+  },
+  {
+    "countryCode": "pr",
+    "countryName": "Puerto Rico",
+    "places": [
+      "ponce",
+      "joyuda",
+      "culebra",
+      "fajardo",
+      "naguabo",
+      "arecibo",
+      "guanica",
+      "luquillo",
+      "san-juan",
+      "boqueron",
+      "mayaguez",
+      "culebrita",
+      "aguadilla",
+      "las-mareas",
+      "puerto-real",
+      "penuelas-pr",
+      "santa-isabel",
+      "bahia-salinas",
+      "isla-palominos",
+      "palmas-del-mar"
+    ]
+  },
+  {
+    "countryCode": "my",
+    "countryName": "Malásia",
+    "places": [
+      "kuala-lumpur",
+      "penang",
+      "miri",
+      "kukup",
+      "lumut",
+      "tawau",
+      "geting",
+      "kelang",
+      "keling",
+      "penang-my",
+      "sedili",
+      "tioman",
+      "bintulu",
+      "kuantan",
+      "langkawi",
+      "sandakan",
+      "cendering",
+      "johor-baharu",
+      "kota-kinabalu"
+    ]
+  },
+  {
+    "countryCode": "ec",
+    "countryName": "Equador",
+    "places": [
+      "guayaquil",
+      "manta",
+      "baltra",
+      "guayaquil-ec",
+      "esmeraldas",
+      "santa-cruz",
+      "la-libertad",
+      "san-cristobal-galapagos-islands",
+      "puna",
+      "rio-chone",
+      "bahia-manta",
+      "cabo-pasado",
+      "rio-santiago",
+      "puerto-bolivar",
+      "puerto-de-cayo",
+      "isla-santa-maria",
+      "caleta-tagus-isla-isabel",
+      "bahia-isabela-isla-isabela",
+      "bahia-de-perry-isla-isabela"
+    ]
+  },
+  {
+    "countryCode": "ee",
+    "countryName": "Estonia",
+    "places": [
+      "soru",
+      "eisma",
+      "muuga",
+      "parnu",
+      "lehtma",
+      "triigi",
+      "virtsu",
+      "kelnase",
+      "kuivastu",
+      "munalaiu",
+      "paldiski",
+      "rohukula",
+      "sillamae",
+      "heltermaa",
+      "leppneeme",
+      "vahemadal",
+      "miinisadam",
+      "narva-joesuu",
+      "tallinnamadal"
+    ]
+  },
+  {
+    "countryCode": "gr",
+    "countryName": "Grécia",
+    "places": [
+      "atenas",
+      "thessaloniki",
+      "heraklion",
+      "itea",
+      "aigio",
+      "kasos",
+      "koroni",
+      "kapsali",
+      "kerkyra",
+      "hrakleio",
+      "skopelos",
+      "ierapetra",
+      "zakynthos",
+      "paleochora",
+      "samothraki",
+      "palea-fokea",
+      "rhodes-port",
+      "thessaloniki-gr"
+    ]
+  },
+  {
+    "countryCode": "mh",
+    "countryName": "Marshall Islands",
+    "places": [
+      "majuro",
+      "enewetok",
+      "kwajalein-atoll-kwajalein-i",
+      "ujae-atoll",
+      "arno-atoll",
+      "ailuk-atoll",
+      "wotje-atoll",
+      "likiep-atoll",
+      "erikub-atoll",
+      "rongerik-atoll",
+      "maloelap-atoll",
+      "ailinglapalap-atoll",
+      "ebon-boston-atoll",
+      "port-rhin-mili-atoll",
+      "jaluit-atoll-se-pass",
+      "kwajalein-atoll-namur-island",
+      "rongelap-island-rongelap-atoll"
+    ]
+  },
+  {
+    "countryCode": "pa",
+    "countryName": "Panama",
+    "places": [
+      "balboa",
+      "cristobal",
+      "el-porvenir",
+      "puerto-armuelles",
+      "taboga",
+      "rio-chepo",
+      "bahia-pina",
+      "punta-mala",
+      "naos-island",
+      "isla-cebaco",
+      "bahia-honda",
+      "isla-parida",
+      "isla-del-rey",
+      "bahia-de-chame",
+      "punta-garachine",
+      "bahia-de-caledonia",
+      "boca-del-toro-almirante-bay"
+    ]
+  },
+  {
+    "countryCode": "fi",
+    "countryName": "Finland",
+    "places": [
+      "porvoo",
+      "kaskinen",
+      "kemi-ajos",
+      "oulu-toppila",
+      "foglo-degerby",
+      "raahe-lapaluoto",
+      "vaasa-vaskiluoto",
+      "rauma-ulko-petajas",
+      "hamina-pitajansaari",
+      "helsinki-kaivopuisto",
+      "hanko-pikku-kolalahti",
+      "pori-mantyluoto-kallo",
+      "pietarsaari-leppaluoto",
+      "turku-ruissalo-saaronniemi"
+    ]
+  },
+  {
+    "countryCode": "pg",
+    "countryName": "Papua New Guinea",
+    "places": [
+      "lae",
+      "manus",
+      "wewak",
+      "alotau",
+      "madang",
+      "rabaul",
+      "kavieng",
+      "lombrum",
+      "lombrum-pg",
+      "anewa-bay",
+      "port-moresby"
+    ]
+  },
+  {
+    "countryCode": "ki",
+    "countryName": "Kiribati",
+    "places": [
+      "kanton",
+      "fanning",
+      "christmas",
+      "tarawa-bairiki",
+      "makin-atoll",
+      "abemama-atoll",
+      "nonouti-atoll",
+      "fanning-island",
+      "christmas-island"
+    ]
+  },
+  {
+    "countryCode": "fj",
+    "countryName": "Fiji",
+    "places": [
+      "lautoka",
+      "suva-harbor-viti-levu-island",
+      "ngau-island",
+      "moala-island",
+      "nairai-island",
+      "levuka-ovalau-island",
+      "nandi-vanua-levu-island",
+      "tailevu-viti-levu-island",
+      "ngaloa-harbor-kandavu-island"
+    ]
+  },
+  {
+    "countryCode": "cr",
+    "countryName": "Costa Rica",
+    "places": [
+      "limon",
+      "quepos",
+      "puntarenas",
+      "cocos-island",
+      "bahia-uvita",
+      "golfo-elena",
+      "puerto-herradura",
+      "bahia-de-culebra",
+      "golfito-golfo-dulce"
+    ]
+  },
+  {
+    "countryCode": "lv",
+    "countryName": "Latvia",
+    "places": [
+      "roja",
+      "kolka",
+      "skulte",
+      "lielupe",
+      "liepaja",
+      "mersrags",
+      "ventspils",
+      "salacgriva",
+      "daugavgriva"
+    ]
+  },
+  {
+    "countryCode": "do",
+    "countryName": "República Dominicana",
+    "places": [
+      "santo-domingo",
+      "punta-cana",
+      "mona-island",
+      "puerto-plata",
+      "sanchez",
+      "santo-domingo-do",
+      "santa-barbara-de-samana",
+      "massacre-riviere-du-entrance"
+    ]
+  },
+  {
+    "countryCode": "pe",
+    "countryName": "Peru",
+    "places": [
+      "callao",
+      "paita",
+      "pisco",
+      "callao-pe",
+      "talara",
+      "matarani",
+      "san-juan-pe",
+      "lobos-de-afuera"
+    ]
+  },
+  {
+    "countryCode": "hn",
+    "countryName": "Honduras",
+    "places": [
+      "puerto-cortes",
+      "cochino-pequeno",
+      "puerto-castilla",
+      "amapala",
+      "puerto-cortes-hn",
+      "isla-de-guanaja",
+      "cabo-gracias-a-dios",
+      "port-royal-isla-de-roatan"
+    ]
+  },
+  {
+    "countryCode": "ni",
+    "countryName": "Nicaragua",
+    "places": [
+      "puerto-somoza",
+      "puerto-cabezas",
+      "san-juan-del-sur",
+      "isla-del-maiz-grande",
+      "corinto-isla-cardon",
+      "bluefields-lagoon-entrance",
+      "san-juan-del-norte-greytown"
+    ]
+  },
+  {
+    "countryCode": "pf",
+    "countryName": "French Polynesia",
+    "places": [
+      "makemo",
+      "tubuai-island",
+      "mangareva-island",
+      "vai-tahu-tahu-ata-island",
+      "rahiroa-rangiroa-island",
+      "hao-bow-or-la-harpe-island",
+      "taio-hae-bay-nuku-hiva-island"
+    ]
+  },
+  {
+    "countryCode": "bd",
+    "countryName": "Bangladesh",
+    "places": [
+      "teknaf",
+      "khepupara",
+      "charchanga",
+      "chittagong",
+      "chattogram",
+      "coxs-bazaar",
+      "hiron-point"
+    ]
+  },
+  {
+    "countryCode": "be",
+    "countryName": "Bélgica",
+    "places": [
+      "antuérpia",
+      "oostende",
+      "zeebrugge",
+      "nieuwpoort",
+      "blankenberge",
+      "bol-van-heist"
+    ]
+  },
+  {
+    "countryCode": "jm",
+    "countryName": "Jamaica",
+    "places": [
+      "kingston",
+      "port-royal",
+      "port-morant",
+      "montego-bay",
+      "st-anns-bay",
+      "south-negril-point"
+    ]
+  },
+  {
+    "countryCode": "as",
+    "countryName": "American Samoa",
+    "places": [
+      "ofu",
+      "tau",
+      "auasi",
+      "aunuu",
+      "pago-pago",
+      "tau-island-manua-islands"
+    ]
+  },
+  {
+    "countryCode": "vn",
+    "countryName": "Vietnã",
+    "places": [
+      "ho-chi-minh",
+      "da-nang",
+      "hon-dau",
+      "qui-nhon",
+      "vung-tau"
+    ]
+  },
+  {
+    "countryCode": "gt",
+    "countryName": "Guatemala",
+    "places": [
+      "san-jose",
+      "champerico",
+      "puerto-quetza",
+      "champerico-gt",
+      "rio-dulce-entrance"
+    ]
+  },
+  {
+    "countryCode": "hr",
+    "countryName": "Croácia",
+    "places": [
+      "dubrovnik",
+      "split",
+      "bakar",
+      "split-hr"
+    ]
+  },
+  {
+    "countryCode": "ao",
+    "countryName": "Angola",
+    "places": [
+      "luanda",
+      "lobito",
+      "luanda-ao",
+      "mocamedes"
+    ]
+  },
+  {
+    "countryCode": "mz",
+    "countryName": "Moçambique",
+    "places": [
+      "maputo",
+      "pemba",
+      "maputo-mz",
+      "inhambane"
+    ]
+  },
+  {
+    "countryCode": "om",
+    "countryName": "Omã",
+    "places": [
+      "muscat",
+      "muscat-om",
+      "masirah",
+      "salalah"
+    ]
+  },
+  {
+    "countryCode": "th",
+    "countryName": "Tailândia",
+    "places": [
+      "bangkok",
+      "phuket",
+      "ko-lak",
+      "ko-taphao-noi"
+    ]
+  },
+  {
+    "countryCode": "pw",
+    "countryName": "Palau",
+    "places": [
+      "malakal",
+      "koror",
+      "west-passage",
+      "shonian-harbor"
+    ]
+  },
+  {
+    "countryCode": "bg",
+    "countryName": "Bulgaria",
+    "places": [
+      "varna",
+      "burgas",
+      "balchik",
+      "pomorie"
+    ]
+  },
+  {
+    "countryCode": "pl",
+    "countryName": "Poland",
+    "places": [
+      "ustka",
+      "gdansk",
+      "darlowo",
+      "wladyslawowo"
+    ]
+  },
+  {
+    "countryCode": "tr",
+    "countryName": "Turquia",
+    "places": [
+      "istanbul",
+      "izmir",
+      "antalya"
+    ]
+  },
+  {
+    "countryCode": "ke",
+    "countryName": "Quênia",
+    "places": [
+      "mombasa",
+      "lamu",
+      "mombasa-ke"
+    ]
+  },
+  {
+    "countryCode": "tz",
+    "countryName": "Tanzânia",
+    "places": [
+      "dar-es-salaam",
+      "zanzibar",
+      "dar-es-salaam-tz"
+    ]
+  },
+  {
+    "countryCode": "sg",
+    "countryName": "Singapura",
+    "places": [
+      "singapore",
+      "tanjong-pagar",
+      "victoria-dock"
+    ]
+  },
+  {
+    "countryCode": "mp",
+    "countryName": "Northern Mariana Islands",
+    "places": [
+      "tinian",
+      "rota-island",
+      "saipan-harbor-saipan-island"
+    ]
+  },
+  {
+    "countryCode": "ht",
+    "countryName": "Haiti",
+    "places": [
+      "portu-prince",
+      "st-louis-du-sud",
+      "jacmel"
+    ]
+  },
+  {
+    "countryCode": "ck",
+    "countryName": "Cook Islands",
+    "places": [
+      "penrhyn",
+      "rarotonga",
+      "rarotonga-avarua-harbour"
+    ]
+  },
+  {
+    "countryCode": "to",
+    "countryName": "Tonga",
+    "places": [
+      "nukualofa",
+      "nukualofa-to",
+      "lifuka-island"
+    ]
+  },
+  {
+    "countryCode": "ru",
+    "countryName": "Russia",
+    "places": [
+      "kronstadt",
+      "providenya",
+      "st-petersburg"
+    ]
+  },
+  {
+    "countryCode": "sc",
+    "countryName": "Seychelles",
+    "places": [
+      "praslin",
+      "pt-la-rue",
+      "port-victoria"
+    ]
+  },
+  {
+    "countryCode": "ng",
+    "countryName": "Nigéria",
+    "places": [
+      "lagos",
+      "lagos-ng"
+    ]
+  },
+  {
+    "countryCode": "eg",
+    "countryName": "Egito",
+    "places": [
+      "alexandria",
+      "alexandria-eg"
+    ]
+  },
+  {
+    "countryCode": "ae",
+    "countryName": "Emirados Árabes",
+    "places": [
+      "dubai",
+      "abu-dhabi"
+    ]
+  },
+  {
+    "countryCode": "lk",
+    "countryName": "Sri Lanka",
+    "places": [
+      "colombo",
+      "colombo-lk"
+    ]
+  },
+  {
+    "countryCode": "kr",
+    "countryName": "Coreia do Sul",
+    "places": [
+      "busan",
+      "incheon"
+    ]
+  },
+  {
+    "countryCode": "ve",
+    "countryName": "Venezuela",
+    "places": [
+      "la-guaira",
+      "la-guaira-ve"
+    ]
+  },
+  {
+    "countryCode": "sv",
+    "countryName": "El Salvador",
+    "places": [
+      "acajutla",
+      "la-union"
+    ]
+  },
+  {
+    "countryCode": "bz",
+    "countryName": "Belize",
+    "places": [
+      "belize-city",
+      "punta-gorda"
+    ]
+  },
+  {
+    "countryCode": "vu",
+    "countryName": "Vanuatu",
+    "places": [
+      "port-vila",
+      "niue-island-nz"
+    ]
+  },
+  {
+    "countryCode": "ir",
+    "countryName": "Iran",
+    "places": [
+      "jask",
+      "chabahar"
+    ]
+  },
+  {
+    "countryCode": "ro",
+    "countryName": "Romania",
+    "places": [
+      "csta",
+      "mang"
+    ]
+  },
+  {
+    "countryCode": "cv",
+    "countryName": "Cape Verde",
+    "places": [
+      "palmeira",
+      "praia-cape-verde"
+    ]
+  },
+  {
+    "countryCode": "tt",
+    "countryName": "Trinidad and Tobago",
+    "places": [
+      "portf-spain",
+      "point-fortin"
+    ]
+  },
+  {
+    "countryCode": "mu",
+    "countryName": "Mauritius",
+    "places": [
+      "rodrigues",
+      "port-louis"
+    ]
+  },
+  {
+    "countryCode": "sa",
+    "countryName": "Arábia Saudita",
+    "places": [
+      "jeddah"
+    ]
+  },
+  {
+    "countryCode": "qa",
+    "countryName": "Catar",
+    "places": [
+      "doha"
+    ]
+  },
+  {
+    "countryCode": "tw",
+    "countryName": "Taiwan",
+    "places": [
+      "kaohsiung"
+    ]
+  },
+  {
+    "countryCode": "uy",
+    "countryName": "Uruguai",
+    "places": [
+      "montevideo"
+    ]
+  },
+  {
+    "countryCode": "gu",
+    "countryName": "Guam",
+    "places": [
+      "pago-bay-guam"
+    ]
+  },
+  {
+    "countryCode": "ye",
+    "countryName": "Yemen",
+    "places": [
+      "aden"
+    ]
+  },
+  {
+    "countryCode": "nu",
+    "countryName": "Niue",
+    "places": [
+      "alofi"
+    ]
+  },
+  {
+    "countryCode": "bb",
+    "countryName": "Barbados",
+    "places": [
+      "bridgetown"
+    ]
+  },
+  {
+    "countryCode": "dj",
+    "countryName": "Djibouti",
+    "places": [
+      "djibouti"
+    ]
+  },
+  {
+    "countryCode": "tv",
+    "countryName": "Tuvalu",
+    "places": [
+      "funafuti"
+    ]
+  },
+  {
+    "countryCode": "hk",
+    "countryName": "Hong Kong",
+    "places": [
+      "hong-kong-hk"
+    ]
+  },
+  {
+    "countryCode": "sb",
+    "countryName": "Solomon Islands",
+    "places": [
+      "honiara"
+    ]
+  },
+  {
+    "countryCode": "pk",
+    "countryName": "Pakistan",
+    "places": [
+      "karachi"
+    ]
+  },
+  {
+    "countryCode": "lt",
+    "countryName": "Lithuania",
+    "places": [
+      "klaipeda"
+    ]
+  },
+  {
+    "countryCode": "si",
+    "countryName": "Slovenia",
+    "places": [
+      "koper"
+    ]
+  },
+  {
+    "countryCode": "bh",
+    "countryName": "Bahrain",
+    "places": [
+      "mina-sulman"
+    ]
+  },
+  {
+    "countryCode": "nr",
+    "countryName": "Nauru",
+    "places": [
+      "nauru"
+    ]
+  },
+  {
+    "countryCode": "mg",
+    "countryName": "Madagascar",
+    "places": [
+      "nosy-be"
+    ]
+  },
+  {
+    "countryCode": "cm",
+    "countryName": "Cameroon",
+    "places": [
+      "port-sonara"
+    ]
+  },
+  {
+    "countryCode": "is",
+    "countryName": "Iceland",
+    "places": [
+      "reykjavik"
+    ]
+  },
+  {
+    "countryCode": "st",
+    "countryName": "Sao Tome and Principe",
+    "places": [
+      "sao-tome"
+    ]
+  },
+  {
+    "countryCode": "gh",
+    "countryName": "Ghana",
+    "places": [
+      "takoradi"
+    ]
+  },
+  {
+    "countryCode": "na",
+    "countryName": "Namibia",
+    "places": [
+      "walvis-bay"
+    ]
+  }
+]

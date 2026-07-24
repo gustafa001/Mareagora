@@ -9,6 +9,12 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { getNextHighAndLow, type TideEvent } from '@/lib/tideUtils';
 import type { MareDia } from '@/lib/mare';
+import rolloutStatus from '@/data/content-rollout-status.json';
+
+const _rollout = rolloutStatus as Record<string, { approved: boolean }>;
+function isApproved(slug: string): boolean {
+  return _rollout[slug]?.approved === true;
+}
 
 // Componentes idênticos ao das páginas BR
 import NavBar from '@/components/NavBar';
@@ -38,7 +44,7 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `Tábua de Maré ${place.name} ${ano} | MaréAgora`,
     description: `Previsão completa de maré, ondas, vento e condições do mar em ${place.name}, ${place.countryName}. Tábua de marés ${ano} atualizada.`,
-    robots: { index: true, follow: true },
+    robots: isApproved(params.slug) ? { index: true, follow: true } : { index: false, follow: true },
     alternates: {
       canonical: `${BASE}/mare-mundo/${params.pais}/${params.slug}`,
       languages: {

@@ -136,6 +136,11 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
           todayTides={todayTides}
         />
 
+        {/* AdSense Leaderboard — abaixo do resumo, acima da dobra */}
+        <div className="mt-8 flex justify-center">
+          <AdSlot slotId={AD_SLOTS.LEADERBOARD_NAV} format="horizontal" />
+        </div>
+
         {/* Score do Dia */}
         <div className="mt-8">
           <DailyScoreCard
@@ -225,6 +230,13 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               </p>
             </div>
           </div>
+
+          {/* Sidebar — coluna reservada pelo grid, antes sem conteúdo */}
+          <aside className="hidden lg:block">
+            <div className="sticky top-24">
+              <AdSlot slotId={AD_SLOTS.SIDEBAR_STICKY} format="vertical" style={{ minHeight: 600 }} />
+            </div>
+          </aside>
         </div>
       </div>
     </main>

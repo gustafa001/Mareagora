@@ -40,10 +40,6 @@ export default function SchemaGenerator({
       '@type': 'ImageObject',
       url: logo,
     },
-    sameAs: [
-      'https://twitter.com/mareagora',
-      'https://instagram.com/mareagora',
-    ],
   });
 
   schemas.push({

@@ -5,15 +5,16 @@ export interface GlobalPlace {
   countryName: string;
   lat: number;
   lon: number;
+  utcOffsetMin: number; // offset UTC em minutos — ex: 0 para WET, -180 para BRT, 600 para AEST
 }
 
 export const GLOBAL_PLACES: GlobalPlace[] = [
-  { slug: 'lisboa',      name: 'Lisboa',      countryCode: 'pt', countryName: 'Portugal',        lat: 38.7223,  lon: -9.1393 },
-  { slug: 'porto',       name: 'Porto',       countryCode: 'pt', countryName: 'Portugal',        lat: 41.1579,  lon: -8.6291 },
-  { slug: 'faro',        name: 'Faro',        countryCode: 'pt', countryName: 'Portugal',        lat: 37.0194,  lon: -7.9322 },
-  { slug: 'miami',       name: 'Miami',       countryCode: 'us', countryName: 'Estados Unidos',  lat: 25.7617,  lon: -80.1918 },
-  { slug: 'bondi-beach', name: 'Bondi Beach', countryCode: 'au', countryName: 'Austrália',        lat: -33.8908, lon: 151.2743 },
-  { slug: 'nova-york',   name: 'Nova York',   countryCode: 'us', countryName: 'Estados Unidos',  lat: 40.7128,  lon: -74.0060 },
+  { slug: 'lisboa',      name: 'Lisboa',      countryCode: 'pt', countryName: 'Portugal',        lat: 38.7223,  lon: -9.1393,    utcOffsetMin: 60  },
+  { slug: 'porto',       name: 'Porto',       countryCode: 'pt', countryName: 'Portugal',        lat: 41.1579,  lon: -8.6291,    utcOffsetMin: 60  },
+  { slug: 'faro',        name: 'Faro',        countryCode: 'pt', countryName: 'Portugal',        lat: 37.0194,  lon: -7.9322,    utcOffsetMin: 60  },
+  { slug: 'miami',       name: 'Miami',       countryCode: 'us', countryName: 'Estados Unidos',  lat: 25.7617,  lon: -80.1918,   utcOffsetMin: -240 },
+  { slug: 'bondi-beach', name: 'Bondi Beach', countryCode: 'au', countryName: 'Austrália',        lat: -33.8908, lon: 151.2743,   utcOffsetMin: 600 },
+  { slug: 'nova-york',   name: 'Nova York',   countryCode: 'us', countryName: 'Estados Unidos',  lat: 40.7128,  lon: -74.0060,   utcOffsetMin: -240 },
 ];
 
 export function getGlobalPlace(countryCode: string, slug: string): GlobalPlace | undefined {

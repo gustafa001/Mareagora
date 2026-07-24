@@ -144,6 +144,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
             lat={port.lat}
             lon={port.lon}
             todayTides={todayTides}
+            utcOffsetMin={-180}
           />
         </div>
 

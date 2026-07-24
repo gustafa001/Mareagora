@@ -41,9 +41,18 @@ function getScoreColor(score: number): string {
   return '#ef4444';                 // red
 }
 
-function calcSolunarBonus(tides: TideEvent[]): number {
-  const now = new Date();
-  const nowMin = now.getHours() * 60 + now.getMinutes();
+/** Calcula a hora local no local consultado (não no navegador do usuário) */
+function localNow(utcOffsetMin: number): { h: number; m: number; totalMin: number } {
+  const utcMs = Date.now();
+  const localMs = utcMs + utcOffsetMin * 60 * 1000;
+  const d = new Date(localMs);
+  const h = d.getUTCHours();
+  const m = d.getUTCMinutes();
+  return { h, m, totalMin: h * 60 + m };
+}
+
+function calcSolunarBonus(tides: TideEvent[], utcOffsetMin: number): number {
+  const { totalMin: nowMin } = localNow(utcOffsetMin);
   // Major solunar period = 1h around high/low tides
   for (const t of tides) {
     const [h, m] = (t.hora || '00:00').split(':').map(Number);
@@ -60,9 +69,8 @@ function calcTidalRange(tides: TideEvent[]): number {
   return Math.max(...heights) - Math.min(...heights);
 }
 
-function isTideRising(tides: TideEvent[]): boolean | null {
-  const now = new Date();
-  const nowMin = now.getHours() * 60 + now.getMinutes();
+function isTideRising(tides: TideEvent[], utcOffsetMin: number): boolean | null {
+  const { totalMin: nowMin } = localNow(utcOffsetMin);
   const sorted = [...tides].sort((a, b) => {
     const [ah, am] = (a.hora || '0:0').split(':').map(Number);
     const [bh, bm] = (b.hora || '0:0').split(':').map(Number);
@@ -80,9 +88,8 @@ function isTideRising(tides: TideEvent[]): boolean | null {
   return null;
 }
 
-function currentTideHeight(tides: TideEvent[]): number {
-  const now = new Date();
-  const nowMin = now.getHours() * 60 + now.getMinutes();
+function currentTideHeight(tides: TideEvent[], utcOffsetMin: number): number {
+  const { totalMin: nowMin } = localNow(utcOffsetMin);
   const sorted = [...tides].sort((a, b) => {
     const [ah, am] = (a.hora || '0:0').split(':').map(Number);
     const [bh, bm] = (b.hora || '0:0').split(':').map(Number);
@@ -101,11 +108,11 @@ function currentTideHeight(tides: TideEvent[]): number {
   return sorted[sorted.length - 1]?.altura_m ?? 0;
 }
 
-function computeScores(tides: TideEvent[], marine: MarineData | null): ActivityScore[] {
+function computeScores(tides: TideEvent[], marine: MarineData | null, utcOffsetMin: number): ActivityScore[] {
   const range = calcTidalRange(tides);
-  const rising = isTideRising(tides);
-  const curH = currentTideHeight(tides);
-  const solunar = calcSolunarBonus(tides);
+  const rising = isTideRising(tides, utcOffsetMin);
+  const curH = currentTideHeight(tides, utcOffsetMin);
+  const solunar = calcSolunarBonus(tides, utcOffsetMin);
 
   const heights = tides.map(t => t.altura_m ?? 0);
   const maxH = Math.max(...heights) || 1;
@@ -208,11 +215,11 @@ function computeScores(tides: TideEvent[], marine: MarineData | null): ActivityS
   const mergulhoReasons: string[] = [];
 
   // Slack tide (around high or low) = best visibility
+  const { totalMin: nowMinMerg } = localNow(utcOffsetMin);
   const nearSlack = tides.some(t => {
     const [h2, m2] = (t.hora || '0:0').split(':').map(Number);
     const tMin = h2 * 60 + m2;
-    const nowMin2 = new Date().getHours() * 60 + new Date().getMinutes();
-    return Math.abs(tMin - nowMin2) <= 45;
+    return Math.abs(tMin - nowMinMerg) <= 45;
   });
   if (nearSlack) { mergulhoScore += 2; mergulhoReasons.push('Próximo de maré parada (melhor visibilidade)'); }
 
@@ -236,7 +243,7 @@ function computeScores(tides: TideEvent[], marine: MarineData | null): ActivityS
     { name: 'Pesca', emoji: '🎣', score: pescaScore, label: getScoreLabel(pescaScore), color: getScoreColor(pescaScore), reasons: pescaReasons },
     { name: 'Praia', emoji: '🏖️', score: praiaScore, label: getScoreLabel(praiaScore), color: getScoreColor(praiaScore), reasons: praiaReasons },
     { name: 'Mergulho', emoji: '🤿', score: mergulhoScore, label: getScoreLabel(mergulhoScore), color: getScoreColor(mergulhoScore), reasons: mergulhoReasons },
-  ];
+  ] as ActivityScore[];
 }
 
 export default function DailyScoreCard({ lat, lon, todayTides, utcOffsetMin = 0 }: Props) {
@@ -246,28 +253,30 @@ export default function DailyScoreCard({ lat, lon, todayTides, utcOffsetMin = 0 
 
   useEffect(() => {
     setLoading(true);
-    const tz = 'America%2FSao_Paulo';
+    // Usar timezone=auto para a Open-Meteo detectar pelo lat/lon
+    // e buscar o índice da hora LOCAL do lugar, não do navegador
     const marineUrl =
       `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}` +
-      `&hourly=wave_height,wave_period&forecast_days=1&timezone=${tz}`;
+      `&hourly=wave_height,wave_period&forecast_days=1&timezone=auto`;
     const windUrl =
       `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
-      `&hourly=windspeed_10m,winddirection_10m&wind_speed_unit=kmh&forecast_days=1&timezone=${tz}`;
+      `&hourly=windspeed_10m,winddirection_10m&wind_speed_unit=kmh&forecast_days=1&timezone=auto`;
 
     Promise.all([
       fetch(marineUrl).then(r => r.json()).catch(() => null),
       fetch(windUrl).then(r => r.json()).catch(() => null),
     ]).then(([marineData, windData]) => {
-      const nowH = new Date().getHours();
-      const wh = marineData?.hourly?.wave_height?.[nowH] ?? 0;
-      const wp = marineData?.hourly?.wave_period?.[nowH] ?? 0;
-      const ws = windData?.hourly?.windspeed_10m?.[nowH] ?? 0;
-      const wd = windData?.hourly?.winddirection_10m?.[nowH] ?? 0;
+      // Hora local do lugar (não do navegador)
+      const { h: localH } = localNow(utcOffsetMin);
+      const wh = marineData?.hourly?.wave_height?.[localH] ?? 0;
+      const wp = marineData?.hourly?.wave_period?.[localH] ?? 0;
+      const ws = windData?.hourly?.windspeed_10m?.[localH] ?? 0;
+      const wd = windData?.hourly?.winddirection_10m?.[localH] ?? 0;
       setMarine({ waveHeight: wh, wavePeriod: wp, windSpeed: ws, windDir: wd });
     }).finally(() => setLoading(false));
-  }, [lat, lon]);
+  }, [lat, lon, utcOffsetMin]);
 
-  const scores = computeScores(todayTides, loading ? null : marine);
+  const scores = computeScores(todayTides, loading ? null : marine, utcOffsetMin);
   const overall = Math.round(scores.reduce((s, a) => s + a.score, 0) / scores.length);
 
   return (

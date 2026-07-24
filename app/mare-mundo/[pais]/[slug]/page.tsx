@@ -20,6 +20,7 @@ import ActivityRecommendations from '@/components/ActivityRecommendations';
 import SolunarTable from '@/components/SolunarTable';
 import WeatherRadarCard from '@/components/port-operations/WeatherRadarCard';
 import WavesCard from '@/components/WavesCard';
+const DailyScoreCard = dynamic(() => import('@/components/DailyScoreCard'), { ssr: false });
 
 interface Props {
   params: { pais: string; slug: string };
@@ -199,6 +200,14 @@ export default async function MareMundoLocalPage({ params }: Props) {
               portName={place.name}
               lat={place.lat}
               lon={place.lon}
+            />
+
+            {/* Score do Dia */}
+            <DailyScoreCard
+              lat={place.lat}
+              lon={place.lon}
+              todayTides={todayTides as TideEvent[]}
+              utcOffsetMin={place.utcOffsetMin ?? 0}
             />
 
             {/* Gráficos de ondas e vento */}

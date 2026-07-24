@@ -17,6 +17,7 @@ import WindWaveCharts from '@/components/WindWaveCharts';
 import ActivityRecommendations from '@/components/ActivityRecommendations';
 import SolunarTable from '@/components/SolunarTable';
 import WeatherRadarCard from '@/components/port-operations/WeatherRadarCard';
+const DailyScoreCard = dynamic(() => import('@/components/DailyScoreCard'), { ssr: false });
 
 const BASE = 'https://mareagora.com.br';
 const en = t('en');
@@ -177,6 +178,14 @@ export default async function TideLocalPage({ params }: Props) {
             portName={place.name}
             lat={place.lat}
             lon={place.lon}
+          />
+
+          {/* Daily Score */}
+          <DailyScoreCard
+            lat={place.lat}
+            lon={place.lon}
+            todayTides={todayTides as TideEvent[]}
+            utcOffsetMin={place.utcOffsetMin ?? 0}
           />
 
           <WindWaveCharts lat={place.lat} lon={place.lon} />

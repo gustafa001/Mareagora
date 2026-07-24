@@ -19,6 +19,7 @@ import SolunarTable from '@/components/SolunarTable';
 import PortBlogSection from '@/components/PortBlogSection';
 import NotificationCTA from '@/components/NotificationCTA';
 import WeatherRadarCard from '@/components/port-operations/WeatherRadarCard';
+const DailyScoreCard = dynamic(() => import('@/components/DailyScoreCard'), { ssr: false });
 import { useSeaConditions } from '@/hooks/useSeaConditions';
 import { notFound } from 'next/navigation';
 import type { BlogPost } from '@/lib/blog';
@@ -136,6 +137,15 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
           lat={port.lat}
           lon={port.lon}
         />
+
+        {/* Score do Dia */}
+        <div className="mt-8">
+          <DailyScoreCard
+            lat={port.lat}
+            lon={port.lon}
+            todayTides={todayTides}
+          />
+        </div>
 
         <div className="mt-12 flex flex-col lg:grid lg:grid-cols-[1fr_350px] gap-8">
           <div className="flex flex-col gap-8">

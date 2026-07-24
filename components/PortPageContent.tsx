@@ -22,6 +22,7 @@ import WeatherRadarCard from '@/components/port-operations/WeatherRadarCard';
 const DailyScoreCard = dynamic(() => import('@/components/DailyScoreCard'), { ssr: false });
 import TideSchemaMarkup from '@/components/TideSchemaMarkup';
 import { getStateSlug } from '@/lib/states';
+import ShareButton from '@/components/ShareButton';
 import { useSeaConditions } from '@/hooks/useSeaConditions';
 import { notFound } from 'next/navigation';
 import type { BlogPost } from '@/lib/blog';
@@ -133,11 +134,16 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               Estado do {port.state}
             </p>
 
-            <div className="mt-6 mb-24 w-full max-w-md static z-40">
+            <div className="mt-6 mb-6 w-full max-w-md static z-40">
               <SearchPorts ports={PORTS} />
             </div>
 
-            <p className="mt-4 text-xs opacity-70" suppressHydrationWarning>
+            <ShareButton
+              title={`Tábua de Maré ${seoName} ${ano} | MaréAgora`}
+              text={`🌊 Confira a previsão de marés em ${seoName} — MaréAgora`}
+            />
+
+            <p className="mt-4 mb-20 text-xs opacity-70" suppressHydrationWarning>
               Horário local: {currentTimeBR}
             </p>
           </div>

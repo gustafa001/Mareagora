@@ -22,6 +22,7 @@ import WeatherRadarCard from '@/components/port-operations/WeatherRadarCard';
 import WavesCard from '@/components/WavesCard';
 const DailyScoreCard = dynamic(() => import('@/components/DailyScoreCard'), { ssr: false });
 import TideSchemaMarkup from '@/components/TideSchemaMarkup';
+import ShareButton from '@/components/ShareButton';
 
 interface Props {
   params: { pais: string; slug: string };
@@ -178,11 +179,18 @@ export default async function MareMundoLocalPage({ params }: Props) {
               </div>
             )}
 
-            <div className="mt-4 mb-24">
+            <div className="mt-4 mb-6">
               <p className="text-xs opacity-60">
                 📍 Lat {place.lat.toFixed(4)}, Lon {place.lon.toFixed(4)}
               </p>
             </div>
+
+            <ShareButton
+              title={`Tábua de Maré ${place.name} ${ano} | MaréAgora`}
+              text={`🌊 Confira a previsão de marés em ${place.name}, ${place.countryName} — MaréAgora`}
+            />
+
+            <div className="mb-20" />
           </div>
         </div>
       </section>

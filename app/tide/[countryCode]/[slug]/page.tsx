@@ -19,6 +19,7 @@ import SolunarTable from '@/components/SolunarTable';
 import WeatherRadarCard from '@/components/port-operations/WeatherRadarCard';
 const DailyScoreCard = dynamic(() => import('@/components/DailyScoreCard'), { ssr: false });
 import TideSchemaMarkup from '@/components/TideSchemaMarkup';
+import ShareButton from '@/components/ShareButton';
 
 const BASE = 'https://mareagora.com.br';
 const en = t('en');
@@ -165,9 +166,16 @@ export default async function TideLocalPage({ params }: Props) {
               </div>
             )}
 
-            <div className="mt-4 mb-24">
+            <div className="mt-4 mb-6">
               <p className="text-xs opacity-60">📍 Lat {place.lat.toFixed(4)}, Lon {place.lon.toFixed(4)}</p>
             </div>
+
+            <ShareButton
+              title={`Tide Table ${place.name} ${year} | MaréAgora`}
+              text={`🌊 Check the tide forecast for ${place.name}, ${place.countryName} — MaréAgora`}
+            />
+
+            <div className="mb-20" />
           </div>
         </div>
       </section>

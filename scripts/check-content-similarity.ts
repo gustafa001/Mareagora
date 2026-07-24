@@ -55,9 +55,12 @@ function tokenize(text: string): Set<string> {
 
 function jaccardSimilarity(a: Set<string>, b: Set<string>): number {
   if (a.size === 0 && b.size === 0) return 1;
-  const intersection = new Set([...a].filter((x) => b.has(x)));
-  const union = new Set([...a, ...b]);
-  return intersection.size / union.size;
+  let intersectionCount = 0;
+  a.forEach((x) => {
+    if (b.has(x)) intersectionCount++;
+  });
+  const unionSize = a.size + b.size - intersectionCount;
+  return unionSize === 0 ? 1 : intersectionCount / unionSize;
 }
 
 // ── Geração de conteúdo ───────────────────────────────────────────────────────

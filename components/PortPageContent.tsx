@@ -162,6 +162,11 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               referencePort={referenceData}
             />
 
+            {/* AdSense Pós-Tabela */}
+            <div className="my-8 flex justify-center">
+              <AdSlot slotId={AD_SLOTS.POS_TABELA} format="auto" />
+            </div>
+
             {/* AdSense In-Content */}
             <div className="my-8 flex justify-center">
               <AdSlot slotId={AD_SLOTS.INCONTENT_RECT} format="auto" />

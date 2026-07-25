@@ -12,6 +12,7 @@ const TideWeekCard = dynamic(() => import('@/components/TideWeekCard'), { ssr: f
 import MonthlyTideTable from '@/components/MonthlyTideTable';
 import SummaryCards from '@/components/SummaryCards';
 import WindWaveCharts from '@/components/WindWaveCharts';
+import LiveCameraEmbed from '@/components/LiveCameraEmbed';
 import SearchPorts from '@/components/SearchPorts';
 import PortStatistics from '@/components/PortStatistics';
 import ActivityRecommendations from '@/components/ActivityRecommendations';
@@ -167,6 +168,24 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               state={port.state}
               referencePort={referenceData}
             />
+
+            {port.cameras && port.cameras.length > 0 && (
+              <div className="my-8 flex flex-col gap-6">
+                <h2 className="text-2xl font-bold font-syne text-slate-800">Câmeras ao Vivo em {seoName}</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {port.cameras.map((cam, idx) => (
+                    <LiveCameraEmbed
+                      key={idx}
+                      title={cam.title}
+                      sourceName={cam.sourceName}
+                      sourceUrl={cam.sourceUrl}
+                      videoId={cam.videoId}
+                      channelId={cam.channelId}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* AdSense Pós-Tabela */}
             <div className="my-8 flex justify-center">

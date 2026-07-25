@@ -71,6 +71,10 @@ export const PORTS: Port[] = [
   { id: '45', name: 'Porto de São Sebastião',                    cityName: 'São Sebastião',            slug: 'porto-de-sao-sebastiao',               state: 'SP',  region: 'sudeste',  lat: -23.810000, lon: -45.398333, dhnId: '50210' },
   { id: '46', name: 'Porto de Santos',                           cityName: 'Santos',                   slug: 'porto-de-santos',                      state: 'SP',  region: 'sudeste',  lat: -23.956778, lon: -46.308111, dhnId: '50228' },
 
+  // Litoral Norte de SP — referência São Sebastião (dhnId 50210)
+  // ATENÇÃO: offsetMinutes abaixo é um placeholder (0) — não verificado contra tábua oficial da Marinha.
+  { id: '65', name: 'Ubatuba', cityName: 'Ubatuba', slug: 'ubatuba', state: 'SP', region: 'sudeste', lat: -23.433611, lon: -45.083889, dhnId: '50210', offsetMinutes: 0, searchNames: ['ubatuba', 'itamambuca', 'prumirim', 'vermelha do norte'], referencePortSlug: 'porto-de-sao-sebastiao' },
+
   // Litoral de SP — referência Porto de Santos (dhnId 50228)
   { id: '57', name: 'Guarujá',                 cityName: 'Guarujá',                 slug: 'guaruja',                   state: 'SP', region: 'sudeste', lat: -23.993056, lon: -46.257778, dhnId: '50228', offsetMinutes:  0, searchNames: ['guaruja', 'guarujá', 'enseada', 'pitangueiras'], referencePortSlug: 'porto-de-santos' },
   { id: '58', name: 'São Vicente',             cityName: 'São Vicente',             slug: 'sao-vicente',               state: 'SP', region: 'sudeste', lat: -23.964444, lon: -46.391944, dhnId: '50228', offsetMinutes:  0, searchNames: ['sao vicente', 'são vicente'], referencePortSlug: 'porto-de-santos' },

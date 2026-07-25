@@ -39,7 +39,7 @@ const MapaInterativo = dynamic(() => import('@/components/MapaInterativo'), {
       <div style={{ color: '#cbd5e1', fontSize: 13, letterSpacing: 0.5 }}>
         Carregando mapa interativo...
       </div>
-      <style jsx>{`
+      <style>{`
         @keyframes spin {
           to {
             transform: rotate(360deg);

@@ -190,6 +190,20 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     ],
   },
 
+  'terminal-de-barra-do-riacho': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Surf em Regência e Barra do Riacho',
+    description: 'Tábua de marés de Barra do Riacho e Regência (ES) para hoje e 2026. Horários ideais para o point break de Regência, pesca e operações no terminal. Fonte: Marinha do Brasil.',
+    keywords: ['maré barra do riacho hoje', 'maré regência es', 'tabua maré barra do riacho 2026', 'surf regência maré', 'maré aracruz es', 'point break regência', 'pesca barra do riacho maré'],
+    praias: ['Barra do Riacho', 'Regência', 'Povoação'],
+    category: 'surf',
+    portoVizinhos: ['porto-de-vitoria', 'guarapari', 'linhares'],
+    faqs: [
+      { q: 'Qual o melhor horário de maré para surfar em Regência?', a: 'Regência tem um dos point breaks mais longos do Brasil, na foz do Rio Doce. A maré média a baixa costuma alinhar melhor a onda ao longo do banco; evite a maré cheia, que tende a fechar a formação da onda.' },
+      { q: 'A maré de Barra do Riacho é a mesma de Regência?', a: 'Sim, praticamente idêntica — as duas praias ficam a poucos quilômetros uma da outra, na mesma foz, e usam a mesma referência de estação de maré.' },
+      { q: 'Como a maré afeta o Terminal de Barra do Riacho?', a: 'O terminal opera embarques de celulose e depende da maré alta para navios de grande calado acessarem o canal com segurança, assim como outros portos da região Sudeste.' },
+    ],
+  },
+
 };
 
 // Templates de fallback por categoria (para portos sem config específica)

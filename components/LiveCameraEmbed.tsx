@@ -10,10 +10,10 @@ interface LiveCameraEmbedProps {
 
 export default function LiveCameraEmbed({ title, sourceName, sourceUrl, videoId, channelId }: LiveCameraEmbedProps) {
   let embedUrl = '';
-  if (videoId) {
-    embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
-  } else if (channelId) {
+  if (channelId) {
     embedUrl = `https://www.youtube.com/embed/live_stream?channel=${channelId}&autoplay=1&mute=1`;
+  } else if (videoId) {
+    embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
   } else {
     return null;
   }

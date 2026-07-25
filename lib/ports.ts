@@ -81,8 +81,7 @@ export const PORTS: Port[] = [
   { 
     id: '46', name: 'Porto de Santos', cityName: 'Santos', slug: 'porto-de-santos', state: 'SP', region: 'sudeste', lat: -23.956778, lon: -46.308111, dhnId: '50228',
     cameras: [
-      { title: 'Santos ao vivo 24h', sourceName: 'Santos ao vivo 24h', sourceUrl: 'https://www.youtube.com/watch?v=c5igiMKglOw', videoId: 'c5igiMKglOw' },
-      { title: 'Porto ao Vivo', sourceName: 'Porto ao Vivo', sourceUrl: 'https://www.youtube.com/watch?v=tMYtrEBNVAU', videoId: 'tMYtrEBNVAU' }
+      { title: 'Porto de Santos', sourceName: 'Praticagem de São Paulo', sourceUrl: 'https://www.youtube.com/@praticagemdesaopaulo6975', channelId: 'UCefnILJtDR_L6DB6ud-ST6Q' }
     ]
   },
 
@@ -94,10 +93,7 @@ export const PORTS: Port[] = [
   { 
     id: '57', name: 'Guarujá', cityName: 'Guarujá', slug: 'guaruja', state: 'SP', region: 'sudeste', lat: -23.993056, lon: -46.257778, dhnId: '50228', offsetMinutes:  0, searchNames: ['guaruja', 'guarujá', 'enseada', 'pitangueiras'], referencePortSlug: 'porto-de-santos',
     cameras: [
-      { title: 'Praia do Tombo', sourceName: 'Surfistafotografo', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: 'kOTmUSthCgE' },
-      { title: 'Praia da Enseada', sourceName: 'Surfistafotografo', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: '9mw3oXZUqiY' },
-      { title: 'Praia das Pitangueiras / Astúrias', sourceName: 'Surfistafotografo', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: '9JdubZJg020' },
-      { title: 'Câmera no Maluf (Pitangueiras)', sourceName: 'Surfistafotografo', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: '53CDZ8kfq10' }
+      { title: 'Praia da Enseada', sourceName: 'Surfistafotografo (Fábio Paulista)', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: 'v5Y6WsD577M' }
     ]
   },
   { id: '58', name: 'São Vicente',             cityName: 'São Vicente',             slug: 'sao-vicente',               state: 'SP', region: 'sudeste', lat: -23.964444, lon: -46.391944, dhnId: '50228', offsetMinutes:  0, searchNames: ['sao vicente', 'são vicente'], referencePortSlug: 'porto-de-santos' },

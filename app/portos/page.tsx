@@ -6,49 +6,9 @@ import NavBar from '@/components/NavBar';
 import dynamic from 'next/dynamic';
 import PortosListClient from '@/components/PortosListClient';
 
-import type { Metadata } from 'next';
+const MapaInterativo = dynamic(() => import('@/components/MapaInterativo'), { ssr: false });
 
-const MapaInterativo = dynamic(() => import('@/components/MapaInterativo'), {
-  ssr: false,
-  loading: () => (
-    <div
-      style={{
-        height: 520,
-        width: '100%',
-        borderRadius: 16,
-        background:
-          'linear-gradient(135deg, rgba(15,23,42,0.95), rgba(30,58,95,0.9))',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        gap: 14,
-        border: '1px solid rgba(255,255,255,0.08)',
-      }}
-    >
-      <div
-        style={{
-          width: 44,
-          height: 44,
-          borderRadius: '50%',
-          border: '3px solid rgba(255,255,255,0.15)',
-          borderTopColor: '#22d3ee',
-          animation: 'spin 1s linear infinite',
-        }}
-      />
-      <div style={{ color: '#cbd5e1', fontSize: 13, letterSpacing: 0.5 }}>
-        Carregando mapa interativo...
-      </div>
-      <style>{`
-        @keyframes spin {
-          to {
-            transform: rotate(360deg);
-          }
-        }
-      `}</style>
-    </div>
-  ),
-});
+import type { Metadata } from 'next';
 
 const PORT_COUNT = PORTS.length;
 
@@ -123,7 +83,6 @@ export default function PortosPage() {
             </p>
           </div>
 
-          {/* Mapa Interativo dos Portos Brasileiros */}
           <div className="mb-10">
             <MapaInterativo />
           </div>

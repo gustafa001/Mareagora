@@ -1,5 +1,5 @@
-import { getStateSlug } from "@/lib/states";
 'use client'
+import { getStateSlug } from "@/lib/states";
 import { useEffect, useRef } from 'react'
 import { PORTS } from '@/lib/ports'
 

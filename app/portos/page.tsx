@@ -6,6 +6,8 @@ import NavBar from '@/components/NavBar';
 import dynamic from 'next/dynamic';
 import PortosListClient from '@/components/PortosListClient';
 
+const MapaInterativo = dynamic(() => import('@/components/MapaInterativo'), { ssr: false });
+
 import type { Metadata } from 'next';
 
 const PORT_COUNT = PORTS.length;
@@ -81,7 +83,9 @@ export default function PortosPage() {
             </p>
           </div>
 
-          {/* Mapa Interativo removido temporariamente devido a erro de renderização */}
+          <div className="mb-10">
+            <MapaInterativo />
+          </div>
 
           {/* Componente de Busca e Listagem Client-side */}
           <PortosListClient 

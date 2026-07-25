@@ -113,6 +113,22 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     ],
   },
 
+  'porto-de-itajai': {
+    titleSuffix: 'Horários e Coeficientes Oficiais',
+    description: 'Tábua de marés do Porto de Itajaí (SC) para hoje e 2026. Horários de maré alta e baixa, coeficientes oficiais da Marinha do Brasil para operações portuárias, pesca e surf na Praia Brava. Fonte: Marinha do Brasil.',
+    keywords: ['maré itajaí hoje', 'tabua maré itajaí 2026', 'maré alta itajaí', 'porto de itajaí maré', 'maré praia brava itajaí', 'maré balneário camboriú', 'maré navegantes sc', 'horário maré itajaí amanhã'],
+    praias: ['Praia Brava', 'Cabeçudas', 'Geremias', 'Atalaia'],
+    category: 'industrial',
+    portoVizinhos: ['porto-de-sao-francisco-do-sul', 'porto-de-florianopolis', 'porto-de-imbituba'],
+    faqs: [
+      { q: 'Por que o Porto de Itajaí é sensível às chuvas no Vale do Itajaí?', a: 'O porto fica na foz do Rio Itajaí-Açu, então o volume de chuva na bacia se soma à maré astronômica. Em períodos de cheia, a corrente de vazante pode ficar forte o suficiente para exigir paralisação de manobras na barra por segurança.' },
+      { q: 'Qual o melhor horário para surfar na Praia Brava (Itajaí)?', a: 'A maré baixa a média costuma estabilizar os bancos de areia e favorecer picos mais tubulares. Prefira as 2 horas ao redor da baixamar, especialmente com swell de quadrante sul.' },
+      { q: 'Como a maré afeta as operações de contêineres no porto?', a: 'Itajaí é um dos maiores portos de contêineres da América do Sul, e navios de grande calado dependem da maré alta para navegar com segurança no canal de acesso, formado pelo encontro do rio com o mar.' },
+      { q: 'Os dados servem para navegação comercial no porto?', a: 'Não. Os dados do MaréAgora são referência para atividades recreativas. Para navegação de calado considerável, use sempre as tábuas oficiais publicadas pela Marinha do Brasil (CHM).' },
+      { q: 'A maré de Itajaí é igual à de Balneário Camboriú e Navegantes?', a: 'É muito próxima — as três cidades ficam na mesma foz e usam Itajaí como referência. As diferenças de horário costumam ser de poucos minutos, mas a correnteza do rio afeta mais diretamente a região central de Itajaí.' },
+    ],
+  },
+
   'salvador': {
     titleSuffix: 'Maré Alta e Baixa Hoje — Praias e Náutica',
     description: 'Tábua de marés de Salvador (BA) para hoje e 2026. Horários de maré para as praias da orla, pesca e navegação na Baía de Todos os Santos. Fonte: Marinha do Brasil.',

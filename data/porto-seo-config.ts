@@ -74,7 +74,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     ],
   },
 
-  'fernando-de-noronha': {
+  'arquipelago-de-fernando-de-noronha': {
     titleSuffix: 'Maré Alta e Baixa — Mergulho e Snorkel',
     description: 'Tábua de marés de Fernando de Noronha para hoje e 2026. Horários ideais para mergulho, snorkel e acesso às praias. Dados oficiais da Marinha do Brasil.',
     keywords: ['maré fernando de noronha', 'mergulho noronha maré', 'snorkel noronha horário', 'maré baixa noronha praias', 'tabua maré noronha 2026', 'maré baía do sancho', 'piscinas noronha maré'],
@@ -88,7 +88,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     ],
   },
 
-  'angra-dos-reis': {
+  'porto-de-angra-dos-reis': {
     titleSuffix: 'Maré Alta e Baixa Hoje — Ilhas e Passeios de Barco',
     description: 'Tábua de marés de Angra dos Reis para hoje e 2026. Horários para passeios de barco, mergulho e pesca nas mais de 360 ilhas da baía. Fonte: Marinha do Brasil.',
     keywords: ['maré angra dos reis hoje', 'tabua maré angra 2026', 'passeio barco angra maré', 'mergulho angra maré', 'pesca angra dos reis maré', 'maré ilha grande angra'],
@@ -100,7 +100,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     ],
   },
 
-  'florianopolis': {
+  'porto-de-florianopolis': {
     titleSuffix: 'Maré Alta e Baixa Hoje — Surf e Turismo',
     description: 'Tábua de marés de Florianópolis para hoje e 2026. Horários de maré para surf em Joaquina e Campeche, pesca e passeios. Fonte: Marinha do Brasil.',
     keywords: ['maré florianópolis hoje', 'maré floripa', 'tabua maré florianópolis 2026', 'surf joaquina maré', 'maré campeche floripa', 'maré jurerê florianópolis', 'maré ingleses floripa'],
@@ -129,7 +129,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     ],
   },
 
-  'salvador': {
+  'porto-de-salvador': {
     titleSuffix: 'Maré Alta e Baixa Hoje — Praias e Náutica',
     description: 'Tábua de marés de Salvador (BA) para hoje e 2026. Horários de maré para as praias da orla, pesca e navegação na Baía de Todos os Santos. Fonte: Marinha do Brasil.',
     keywords: ['maré salvador hoje', 'tabua maré salvador 2026', 'maré barra salvador', 'maré ondina salvador', 'pesca baía todos os santos maré', 'maré itapuã salvador'],
@@ -153,7 +153,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     ],
   },
 
-  'sao-sebastiao': {
+  'porto-de-sao-sebastiao': {
     titleSuffix: 'Maré Alta e Baixa Hoje — Praias e Ilhabela',
     description: 'Tábua de marés de São Sebastião para hoje e 2026. Horários para surf, pesca e travessia para Ilhabela. Fonte oficial: Marinha do Brasil.',
     keywords: ['maré são sebastião hoje', 'tabua maré são sebastião 2026', 'maré ilhabela', 'travessia ilhabela maré', 'pesca são sebastião maré', 'surf são sebastião'],
@@ -201,6 +201,20 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
       { q: 'Qual o melhor horário de maré para surfar em Regência?', a: 'Regência tem um dos point breaks mais longos do Brasil, na foz do Rio Doce. A maré média a baixa costuma alinhar melhor a onda ao longo do banco; evite a maré cheia, que tende a fechar a formação da onda.' },
       { q: 'A maré de Barra do Riacho é a mesma de Regência?', a: 'Sim, praticamente idêntica — as duas praias ficam a poucos quilômetros uma da outra, na mesma foz, e usam a mesma referência de estação de maré.' },
       { q: 'Como a maré afeta o Terminal de Barra do Riacho?', a: 'O terminal opera embarques de celulose e depende da maré alta para navios de grande calado acessarem o canal com segurança, assim como outros portos da região Sudeste.' },
+    ],
+  },
+
+  'porto-de-tutoia': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Delta do Parnaíba e Lençóis Maranhenses',
+    description: 'Tábua de marés de Tutóia (MA) para hoje e 2026. Horários essenciais para passeios de barco pelo Delta do Parnaíba, acesso aos Lençóis Maranhenses e pesca nos igarapés. Fonte: Marinha do Brasil.',
+    keywords: ['maré tutóia hoje', 'tabua maré tutóia 2026', 'delta do parnaíba maré', 'lençóis maranhenses barco maré', 'passeio delta das américas maré', 'maré igarapés tutóia', 'pesca tutóia maré'],
+    praias: ['Tutóia', 'Caburé', 'Delta do Parnaíba'],
+    category: 'turismo',
+    portoVizinhos: ['porto-de-luis-correia', 'barreirinhas', 'paulino-neves'],
+    faqs: [
+      { q: 'Qual o melhor horário de maré para o passeio de barco no Delta do Parnaíba?', a: 'Prefira sair próximo da maré alta ou logo depois dela. Na maré baixa, muitos igarapés e canais do delta secam rapidamente, o que pode encalhar embarcações ou impedir o acesso a certos trechos.' },
+      { q: 'A maré afeta o acesso aos Lençóis Maranhenses saindo de Tutóia?', a: 'Sim. A travessia por Caburé e os canais que dão acesso às dunas dependem do nível da maré. Barqueiros locais costumam ajustar o horário de saída conforme a tábua do dia.' },
+      { q: 'É seguro navegar pelos igarapés na maré vazante?', a: 'Requer atenção. A vazante pode expor bancos de areia e deixar canais estreitos demais para embarcações maiores. Piloteiros experientes usam a tábua de marés para planejar a rota de ida e volta com segurança.' },
     ],
   },
 

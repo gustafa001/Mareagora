@@ -3,6 +3,14 @@
  * Mapeamento de portos brasileiros para arquivos de dados JSON
  */
 
+export interface PortCamera {
+  title: string;
+  sourceName: string;
+  sourceUrl: string;
+  videoId?: string;
+  channelId?: string;
+}
+
 export interface Port {
   id: string;
   name: string;
@@ -16,6 +24,7 @@ export interface Port {
   offsetMinutes?: number;
   searchNames?: string[];
   referencePortSlug?: string;
+  cameras?: PortCamera[];
 }
 
 export const PORTS: Port[] = [
@@ -69,10 +78,24 @@ export const PORTS: Port[] = [
   { id: '43', name: 'Porto do Açu',                              cityName: 'São João da Barra',        slug: 'porto-do-acu',                         state: 'RJ',  region: 'sudeste',  lat: -21.813333, lon: -40.998333, dhnId: '50169' },
   { id: '44', name: 'Porto de Angra dos Reis',                   cityName: 'Angra dos Reis',           slug: 'porto-de-angra-dos-reis',              state: 'RJ',  region: 'sudeste',  lat: -23.012889, lon: -44.314722, dhnId: '50170' },
   { id: '45', name: 'Porto de São Sebastião',                    cityName: 'São Sebastião',            slug: 'porto-de-sao-sebastiao',               state: 'SP',  region: 'sudeste',  lat: -23.810000, lon: -45.398333, dhnId: '50210' },
-  { id: '46', name: 'Porto de Santos',                           cityName: 'Santos',                   slug: 'porto-de-santos',                      state: 'SP',  region: 'sudeste',  lat: -23.956778, lon: -46.308111, dhnId: '50228' },
+  { 
+    id: '46', name: 'Porto de Santos', cityName: 'Santos', slug: 'porto-de-santos', state: 'SP', region: 'sudeste', lat: -23.956778, lon: -46.308111, dhnId: '50228',
+    cameras: [
+      { title: 'Santos ao vivo 24h', sourceName: 'Santos ao vivo 24h', sourceUrl: 'https://www.youtube.com/watch?v=c5igiMKglOw', videoId: 'c5igiMKglOw' },
+      { title: 'Porto ao Vivo', sourceName: 'Porto ao Vivo', sourceUrl: 'https://www.youtube.com/watch?v=tMYtrEBNVAU', videoId: 'tMYtrEBNVAU' }
+    ]
+  },
 
   // Litoral de SP — referência Porto de Santos (dhnId 50228)
-  { id: '57', name: 'Guarujá',                 cityName: 'Guarujá',                 slug: 'guaruja',                   state: 'SP', region: 'sudeste', lat: -23.993056, lon: -46.257778, dhnId: '50228', offsetMinutes:  0, searchNames: ['guaruja', 'guarujá', 'enseada', 'pitangueiras'], referencePortSlug: 'porto-de-santos' },
+  { 
+    id: '57', name: 'Guarujá', cityName: 'Guarujá', slug: 'guaruja', state: 'SP', region: 'sudeste', lat: -23.993056, lon: -46.257778, dhnId: '50228', offsetMinutes:  0, searchNames: ['guaruja', 'guarujá', 'enseada', 'pitangueiras'], referencePortSlug: 'porto-de-santos',
+    cameras: [
+      { title: 'Praia do Tombo', sourceName: 'Surfistafotografo', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: 'kOTmUSthCgE' },
+      { title: 'Praia da Enseada', sourceName: 'Surfistafotografo', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: '9mw3oXZUqiY' },
+      { title: 'Praia das Pitangueiras / Astúrias', sourceName: 'Surfistafotografo', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: '9JdubZJg020' },
+      { title: 'Câmera no Maluf (Pitangueiras)', sourceName: 'Surfistafotografo', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: '53CDZ8kfq10' }
+    ]
+  },
   { id: '58', name: 'São Vicente',             cityName: 'São Vicente',             slug: 'sao-vicente',               state: 'SP', region: 'sudeste', lat: -23.964444, lon: -46.391944, dhnId: '50228', offsetMinutes:  0, searchNames: ['sao vicente', 'são vicente'], referencePortSlug: 'porto-de-santos' },
   { id: '59', name: 'Praia Grande',            cityName: 'Praia Grande',            slug: 'praia-grande',              state: 'SP', region: 'sudeste', lat: -24.005833, lon: -46.412222, dhnId: '50228', offsetMinutes:  5, searchNames: ['praia grande', 'aviação', 'real'], referencePortSlug: 'porto-de-santos' },
   { id: '60', name: 'Bertioga',                cityName: 'Bertioga',                slug: 'bertioga',                  state: 'SP', region: 'sudeste', lat: -23.854444, lon: -46.138611, dhnId: '50228', offsetMinutes: 15, searchNames: ['bertioga'], referencePortSlug: 'porto-de-santos' },

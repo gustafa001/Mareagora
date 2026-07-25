@@ -164,6 +164,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               portName={seoName}
               lat={port.lat}
               lon={port.lon}
+              state={port.state}
               referencePort={referenceData}
             />
 
@@ -192,7 +193,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
             <SolunarTable
               lat={port.lat}
               lon={port.lon}
-              offsetMinutes={port.offsetMinutes}
+              offsetMinutes={-180}
               weekTides={weekTides}
             />
 

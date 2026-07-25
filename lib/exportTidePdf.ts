@@ -1,0 +1,91 @@
+/**
+ * MareAgora — Export de Tábua de Maré em PDF
+ * jsPDF + jspdf-autotable são carregados sob demanda (import dinâmico) só quando
+ * o usuário clica em exportar, pra não pesar o bundle inicial da página.
+ */
+
+import type { LinhaTabua } from './monthlyTideCalc';
+
+interface ExportTidePdfParams {
+  portName: string;
+  state: string;
+  monthLabel: string; // ex: "Julho 2026"
+  rows: LinhaTabua[];
+}
+
+function slug(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
+export async function exportTidePdf({ portName, state, monthLabel, rows }: ExportTidePdfParams): Promise<void> {
+  const [{ default: jsPDF }, autoTableModule] = await Promise.all([
+    import('jspdf'),
+    import('jspdf-autotable'),
+  ]);
+  const autoTable = autoTableModule.default;
+
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+  doc.setFontSize(16);
+  doc.setTextColor(15, 23, 42);
+  doc.text(`Tábua de Maré — ${portName}`, 14, 16);
+
+  doc.setFontSize(10);
+  doc.setTextColor(90, 100, 120);
+  doc.text(`${monthLabel} · ${state} · Fonte: Marinha do Brasil (CHM)`, 14, 22);
+
+  const head = [['Dia', '1ª Maré', '2ª Maré', '3ª Maré', '4ª Maré', 'Coef.', 'Nasce ☀', 'Põe 🌅']];
+
+  const body = rows.map(r => {
+    const celulaMare = (i: number) => {
+      const m = r.mares[i];
+      if (!m) return '—';
+      return `${m.alta ? '▲' : '▼'} ${m.hora}\n${m.altura_m.toFixed(2)}m`;
+    };
+    return [
+      `${String(r.dia).padStart(2, '0')} ${r.weekday}`,
+      celulaMare(0),
+      celulaMare(1),
+      celulaMare(2),
+      celulaMare(3),
+      r.coef !== null ? String(r.coef) : '—',
+      r.sunrise,
+      r.sunset,
+    ];
+  });
+
+  autoTable(doc, {
+    head,
+    body,
+    startY: 27,
+    theme: 'grid',
+    styles: { fontSize: 7.5, cellPadding: 1.6, halign: 'center', valign: 'middle', lineColor: [225, 230, 238], lineWidth: 0.1 },
+    headStyles: { fillColor: [15, 23, 42], textColor: 255, fontStyle: 'bold', fontSize: 7.5 },
+    columnStyles: { 0: { halign: 'left', fontStyle: 'bold', cellWidth: 20 } },
+    alternateRowStyles: { fillColor: [246, 249, 252] },
+    margin: { left: 10, right: 10 },
+    didParseCell: (data: any) => {
+      if (data.section === 'body' && data.column.index >= 1 && data.column.index <= 4) {
+        const raw = String(data.cell.raw ?? '');
+        if (raw.startsWith('▲')) data.cell.styles.textColor = [37, 99, 235];
+        else if (raw.startsWith('▼')) data.cell.styles.textColor = [234, 88, 12];
+      }
+    },
+  });
+
+  const finalY = (doc as any).lastAutoTable?.finalY ?? 27;
+  doc.setFontSize(7.5);
+  doc.setTextColor(140, 150, 165);
+  doc.text(
+    'Horários locais · ▲ maré alta · ▼ maré baixa · Gerado por MaréAgora (mareagora.com.br)',
+    14,
+    Math.min(finalY + 8, doc.internal.pageSize.getHeight() - 8)
+  );
+
+  doc.save(`tabua-de-mare-${slug(portName)}-${slug(monthLabel)}.pdf`);
+}

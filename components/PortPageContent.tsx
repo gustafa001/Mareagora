@@ -101,13 +101,13 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
           </div>
 
           <div className="flex flex-col gap-3 items-center px-2 text-center">
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight font-syne leading-tight max-w-4xl">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight font-syne leading-tight max-w-4xl text-white drop-shadow-md">
               Tábua de Maré {seoName} — {ano}
             </h1>
-            <p className="text-sm sm:text-lg md:text-xl opacity-90 font-medium font-syne hidden sm:block">
+            <p className="text-sm sm:text-lg md:text-xl opacity-90 font-medium font-syne hidden sm:block text-white/90">
               {seoName} - {ano} | Estado do {port.state}
             </p>
-            <p className="text-sm opacity-90 font-medium font-syne sm:hidden">
+            <p className="text-sm opacity-90 font-medium font-syne sm:hidden text-white/90">
               Estado do {port.state}
             </p>
 
@@ -120,7 +120,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               text={`🌊 Confira a previsão de marés em ${seoName} — MaréAgora`}
             />
 
-            <p className="mt-4 mb-20 text-xs opacity-70" suppressHydrationWarning>
+            <p className="mt-4 mb-20 text-xs opacity-70 text-white/70" suppressHydrationWarning>
               Horário local: {currentTimeBR}
             </p>
           </div>
@@ -135,6 +135,11 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
           lon={port.lon}
           todayTides={todayTides}
         />
+
+        {/* AdSense Leaderboard — abaixo do resumo, acima da dobra */}
+        <div className="mt-8 flex justify-center">
+          <AdSlot slotId={AD_SLOTS.LEADERBOARD_NAV} format="horizontal" />
+        </div>
 
         {/* Score do Dia */}
         <div className="mt-8">
@@ -159,8 +164,14 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               portName={seoName}
               lat={port.lat}
               lon={port.lon}
+              state={port.state}
               referencePort={referenceData}
             />
+
+            {/* AdSense Pós-Tabela */}
+            <div className="my-8 flex justify-center">
+              <AdSlot slotId={AD_SLOTS.POS_TABELA} format="auto" />
+            </div>
 
             {/* AdSense In-Content */}
             <div className="my-8 flex justify-center">
@@ -182,7 +193,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
             <SolunarTable
               lat={port.lat}
               lon={port.lon}
-              offsetMinutes={port.offsetMinutes}
+              offsetMinutes={-180}
               weekTides={weekTides}
             />
 
@@ -220,6 +231,13 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               </p>
             </div>
           </div>
+
+          {/* Sidebar — coluna reservada pelo grid, antes sem conteúdo */}
+          <aside className="hidden lg:block">
+            <div className="sticky top-24">
+              <AdSlot slotId={AD_SLOTS.SIDEBAR_STICKY} format="vertical" style={{ minHeight: 600 }} />
+            </div>
+          </aside>
         </div>
       </div>
     </main>

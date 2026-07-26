@@ -38,12 +38,15 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
 
   if (id === 'estados') {
     const states = Array.from(new Set(PORTS.map(p => getStateSlug(p.state))));
-    return states.map(state => ({
-      url: `${base}/mare/${state}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    }));
+    return [
+      { url: `${base}/estados`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.7 },
+      ...states.map(state => ({
+        url: `${base}/estados/${state}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.75,
+      })),
+    ];
   }
 
   if (id === 'blog') {

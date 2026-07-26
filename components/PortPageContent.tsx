@@ -17,6 +17,7 @@ import SearchPorts from '@/components/SearchPorts';
 import PortStatistics from '@/components/PortStatistics';
 import ActivityRecommendations from '@/components/ActivityRecommendations';
 import SolunarTable from '@/components/SolunarTable';
+import BarometerCard from '@/components/BarometerCard';
 import PortBlogSection from '@/components/PortBlogSection';
 import NotificationCTA from '@/components/NotificationCTA';
 import WeatherRadarCard from '@/components/port-operations/WeatherRadarCard';
@@ -215,6 +216,8 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               offsetMinutes={-180}
               weekTides={weekTides}
             />
+
+            <BarometerCard lat={port.lat} lon={port.lon} />
 
             <PortStatistics
               eventos={dataAno}

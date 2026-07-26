@@ -4,14 +4,8 @@ import { PORTS, getNearestPort, type Port } from '@/lib/ports';
 import type { GlobalPlace } from '@/lib/globalPlaces';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import dynamic from 'next/dynamic';
 import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
-
-const BotaoAlertas = dynamic(() => import('@/components/BotaoAlertas'), {
-  ssr: false,
-  loading: () => <div className="h-10 w-40 animate-pulse bg-slate-800/50 rounded-full" />,
-});
 
 type SearchResult =
   | { type: 'br'; port: Port }
@@ -279,15 +273,6 @@ export default function HomeHero() {
           >
             Ver todos os portos →
           </button>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <BotaoAlertas portSlug="porto-de-santos" portName="Porto mais próximo" />
-            <button
-              onClick={() => router.push('/configuracoes')}
-              style={{ color: '#64748b', fontSize: '0.75rem', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
-            >
-              ⚙️ Configurar porto favorito
-            </button>
-          </div>
         </div>
       </div>
     </section>

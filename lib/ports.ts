@@ -101,7 +101,7 @@ export const PORTS: Port[] = [
   { 
     id: '59', name: 'Praia Grande', cityName: 'Praia Grande', slug: 'praia-grande', state: 'SP', region: 'sudeste', lat: -24.005833, lon: -46.412222, dhnId: '50228', offsetMinutes:  5, searchNames: ['praia grande', 'aviação', 'real'], referencePortSlug: 'porto-de-santos',
     cameras: [
-      { title: 'Praia Grande ao Vivo', sourceName: 'Intelbras', sourceUrl: 'https://www.intelbras.com', videoId: '' }
+      { title: 'Praia Grande ao Vivo', sourceName: 'Intelbras', sourceUrl: 'https://www.youtube.com/live/FvrSoHFX1Ng', videoId: 'FvrSoHFX1Ng' }
     ]
   },
   { id: '60', name: 'Bertioga',                cityName: 'Bertioga',                slug: 'bertioga',                  state: 'SP', region: 'sudeste', lat: -23.854444, lon: -46.138611, dhnId: '50228', offsetMinutes: 15, searchNames: ['bertioga'], referencePortSlug: 'porto-de-santos' },

@@ -132,7 +132,6 @@ export const PORTS: Port[] = [
   { id: '55', name: 'Porto do Rio Grande',                      cityName: 'Rio Grande',               slug: 'porto-do-rio-grande',                  state: 'RS',  region: 'sul',      lat: -32.138611, lon: -52.103611, dhnId: '60380' },
 
   // ── Especial (Antártida, ilhas oceânicas) ──────────────────────────────────
-  { id: '28', name: 'Fernando de Noronha',                       cityName: 'Fernando de Noronha',      slug: 'arquipelago-de-fernando-de-noronha',   state: 'PE',  region: 'especial', lat: -3.833333,  lon: -32.403333, dhnId: '30955' },
   { id: '36', name: 'Ilha da Trindade',                          cityName: 'Ilha da Trindade',         slug: 'ilha-da-trindade',                     state: 'ES',  region: 'especial', lat: -20.508333, lon: -29.310000, dhnId: '40263' },
   { id: '56', name: 'Base Comandante Ferraz (Antártida)',        cityName: 'Base Ferraz (Antártida)',  slug: 'base-comandante-ferraz',               state: 'ANT', region: 'especial', lat: -62.085000, lon: -58.395000, dhnId: '60900' },
 

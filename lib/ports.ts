@@ -93,7 +93,8 @@ export const PORTS: Port[] = [
   { 
     id: '57', name: 'Guarujá', cityName: 'Guarujá', slug: 'guaruja', state: 'SP', region: 'sudeste', lat: -23.993056, lon: -46.257778, dhnId: '50228', offsetMinutes:  0, searchNames: ['guaruja', 'guarujá', 'enseada', 'pitangueiras'], referencePortSlug: 'porto-de-santos',
     cameras: [
-      { title: 'Praia da Enseada', sourceName: 'Surfistafotografo (Fábio Paulista)', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: 'v5Y6WsD577M' }
+      { title: 'Praia da Enseada', sourceName: 'Surfistafotografo (Fábio Paulista)', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: 'v5Y6WsD577M' },
+      { title: 'Praia das Pitangueiras', sourceName: 'Surfistafotografo (Fábio Paulista)', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: 'pJvaJY7pKvk' }
     ]
   },
   { id: '58', name: 'São Vicente',             cityName: 'São Vicente',             slug: 'sao-vicente',               state: 'SP', region: 'sudeste', lat: -23.964444, lon: -46.391944, dhnId: '50228', offsetMinutes:  0, searchNames: ['sao vicente', 'são vicente'], referencePortSlug: 'porto-de-santos' },

@@ -79,6 +79,7 @@ export default function RootLayout({
 
         {/* Google AdSense */}
         <meta name="google-adsense-account" content="ca-pub-2920008879492175" />
+        <meta name="google-site-verification" content="sHCQQ9fcGrzTM7k2FVoiEiBczB8Z4peDcz1k3Pnx6G8" />
         {/* Script AdSense */}
         <Script
           async

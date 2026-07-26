@@ -71,7 +71,12 @@ export const PORTS: Port[] = [
   { id: '35', name: 'Porto de Vitória',                          cityName: 'Vitória',                  slug: 'porto-de-vitoria',                     state: 'ES',  region: 'sudeste',  lat: -20.321667, lon: -40.335944, dhnId: '40256' },
   { id: '37', name: 'Terminal da Ponta do Ubu',                  cityName: 'Anchieta',                 slug: 'terminal-da-ponta-do-ubu-i',           state: 'ES',  region: 'sudeste',  lat: -20.787833, lon: -40.570389, dhnId: '40292' },
   { id: '38', name: 'Terminal de Imbetiba',                      cityName: 'Macaé',                    slug: 'terminal-maritimo-de-imbetiba',        state: 'RJ',  region: 'sudeste',  lat: -22.385000, lon: -41.770000, dhnId: '50116' },
-  { id: '39', name: 'Rio de Janeiro - Ilha Fiscal',              cityName: 'Rio de Janeiro',           slug: 'rio-de-janeiro-fiscal',                state: 'RJ',  region: 'sudeste',  lat: -22.896694, lon: -43.166000, dhnId: '50140' },
+  { 
+    id: '39', name: 'Rio de Janeiro - Ilha Fiscal', cityName: 'Rio de Janeiro', slug: 'rio-de-janeiro-fiscal', state: 'RJ', region: 'sudeste', lat: -22.896694, lon: -43.166000, dhnId: '50140',
+    cameras: [
+      { title: 'Rio de Janeiro ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/O8ZLvDZ_WKQ', videoId: 'O8ZLvDZ_WKQ' }
+    ]
+  },
   { id: '40', name: 'Porto de Itaguaí',                          cityName: 'Itaguaí',                  slug: 'porto-de-itaguai',                     state: 'RJ',  region: 'sudeste',  lat: -22.932083, lon: -43.842278, dhnId: '50145' },
   { id: '41', name: 'Porto do Forno',                            cityName: 'Arraial do Cabo',          slug: 'porto-do-forno',                       state: 'RJ',  region: 'sudeste',  lat: -22.972667, lon: -42.013861, dhnId: '50156' },
   { id: '42', name: 'Terminal da Ilha Guaíba',                   cityName: 'Mangaratiba',              slug: 'terminal-da-ilha-guaiba',              state: 'RJ',  region: 'sudeste',  lat: -22.999778, lon: -44.031639, dhnId: '50165' },

@@ -74,7 +74,7 @@ export const PORTS: Port[] = [
   { 
     id: '39', name: 'Rio de Janeiro - Ilha Fiscal', cityName: 'Rio de Janeiro', slug: 'rio-de-janeiro-fiscal', state: 'RJ', region: 'sudeste', lat: -22.896694, lon: -43.166000, dhnId: '50140',
     cameras: [
-      { title: 'Rio de Janeiro ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/O8ZLvDZ_WKQ', videoId: 'O8ZLvDZ_WKQ' }
+      { title: 'Rio de Janeiro - Ilha Fiscal ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/O8ZLvDZ_WKQ', videoId: 'O8ZLvDZ_WKQ' }
     ]
   },
   { id: '40', name: 'Porto de Itaguaí',                          cityName: 'Itaguaí',                  slug: 'porto-de-itaguai',                     state: 'RJ',  region: 'sudeste',  lat: -22.932083, lon: -43.842278, dhnId: '50145' },
@@ -86,7 +86,7 @@ export const PORTS: Port[] = [
   { 
     id: '46', name: 'Porto de Santos', cityName: 'Santos', slug: 'porto-de-santos', state: 'SP', region: 'sudeste', lat: -23.956778, lon: -46.308111, dhnId: '50228',
     cameras: [
-      { title: 'Santos ao Vivo', sourceName: 'Olhar 013', sourceUrl: 'https://www.youtube.com/@olhar013', videoId: '3S6__7YkhYk' }
+      { title: 'Santos - Orla ao Vivo', sourceName: 'Olhar 013', sourceUrl: 'https://www.youtube.com/@olhar013', videoId: '3S6__7YkhYk' }
     ]
   },
 
@@ -106,7 +106,7 @@ export const PORTS: Port[] = [
   { 
     id: '59', name: 'Praia Grande', cityName: 'Praia Grande', slug: 'praia-grande', state: 'SP', region: 'sudeste', lat: -24.005833, lon: -46.412222, dhnId: '50228', offsetMinutes:  5, searchNames: ['praia grande', 'aviação', 'real'], referencePortSlug: 'porto-de-santos',
     cameras: [
-      { title: 'Praia Grande ao Vivo', sourceName: 'Intelbras', sourceUrl: 'https://www.youtube.com/live/FvrSoHFX1Ng', videoId: 'FvrSoHFX1Ng' }
+      { title: 'Praia Grande - Orla ao Vivo', sourceName: 'Intelbras', sourceUrl: 'https://www.youtube.com/live/FvrSoHFX1Ng', videoId: 'FvrSoHFX1Ng' }
     ]
   },
   { id: '60', name: 'Bertioga',                cityName: 'Bertioga',                slug: 'bertioga',                  state: 'SP', region: 'sudeste', lat: -23.854444, lon: -46.138611, dhnId: '50228', offsetMinutes: 15, searchNames: ['bertioga'], referencePortSlug: 'porto-de-santos' },

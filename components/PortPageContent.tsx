@@ -22,7 +22,7 @@ import NotificationCTA from '@/components/NotificationCTA';
 import WeatherRadarCard from '@/components/port-operations/WeatherRadarCard';
 const DailyScoreCard = dynamic(() => import('@/components/DailyScoreCard'), { ssr: false });
 import TideSchemaMarkup from '@/components/TideSchemaMarkup';
-import { getStateSlug } from '@/lib/states';
+import { getStateSlug, getStateName } from '@/lib/states';
 import ShareButton from '@/components/ShareButton';
 import { useSeaConditions } from '@/hooks/useSeaConditions';
 import { getNextHighAndLow } from '@/lib/tideUtils';
@@ -82,8 +82,8 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
         nextHigh={nextHigh ? { hora: nextHigh.hora, altura_m: nextHigh.altura_m } : null}
         nextLow={nextLow ? { hora: nextLow.hora, altura_m: nextLow.altura_m } : null}
         pageUrl={`https://mareagora.com.br/mare/${getStateSlug(port.state)}/${port.slug}`}
-        parentUrl="https://mareagora.com.br/estados"
-        parentName={port.state}
+        parentUrl={`https://mareagora.com.br/estados/${getStateSlug(port.state)}`}
+        parentName={getStateName(port.state)}
         locale="pt"
       />
       <NavBar />
@@ -94,10 +94,10 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
           {/* Botão Voltar */}
           <div className="absolute top-0 left-4 md:left-0 pt-4 md:pt-0">
             <a 
-              href="/portos" 
+              href={`/estados/${getStateSlug(port.state)}`}
               className="inline-flex items-center gap-2 text-[10px] font-bold text-blue-400 hover:text-white transition-all uppercase tracking-widest bg-white/5 hover:bg-blue-500/20 px-4 py-2 rounded-xl border border-white/10 hover:border-blue-400/50 backdrop-blur-md"
             >
-              ← Portos
+              ← {getStateName(port.state)}
             </a>
           </div>
 

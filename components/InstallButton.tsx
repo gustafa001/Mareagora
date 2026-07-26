@@ -9,17 +9,26 @@ interface InstallButtonProps {
 
 export default function InstallButton({ variant = 'desktop' }: InstallButtonProps) {
   const { canInstall, isIOS, isStandalone, install } = useInstallPrompt();
-  const [showIOSHint, setShowIOSHint] = useState(false);
+  const [showHint, setShowHint] = useState(false);
+  const [hintType, setHintType] = useState<'ios' | 'generic'>('generic');
 
-  // já instalado, ou (não é iOS e o navegador não liberou o prompt): não mostra nada
-  if (isStandalone || (!isIOS && !canInstall)) return null;
+  // só esconde se já estiver instalado — fora isso, o botão fica sempre visível
+  if (isStandalone) return null;
 
   const handleClick = async () => {
-    if (isIOS) {
-      setShowIOSHint(true);
+    if (canInstall) {
+      // navegador liberou o prompt nativo (Chrome/Edge/Android)
+      await install();
       return;
     }
-    await install();
+    if (isIOS) {
+      setHintType('ios');
+      setShowHint(true);
+      return;
+    }
+    // Firefox, Safari desktop, ou Chrome que ainda não disparou o evento
+    setHintType('generic');
+    setShowHint(true);
   };
 
   const desktopClasses =
@@ -45,25 +54,42 @@ export default function InstallButton({ variant = 'desktop' }: InstallButtonProp
         )}
       </button>
 
-      {showIOSHint && (
+      {showHint && (
         <div
           className="fixed inset-0 bg-black/50 flex items-end sm:items-center justify-center z-[200]"
-          onClick={() => setShowIOSHint(false)}
+          onClick={() => setShowHint(false)}
         >
           <div
             className="bg-white rounded-t-2xl sm:rounded-2xl p-5 max-w-sm w-full text-sm text-gray-800"
             onClick={(e) => e.stopPropagation()}
           >
-            <p className="font-semibold mb-2">Instalar o MaréAgora no iPhone</p>
-            <p className="mt-1">
-              1. Toque no ícone de <strong>Compartilhar</strong> (□↑) na barra do Safari.
-            </p>
-            <p className="mt-1">
-              2. Escolha <strong>&quot;Adicionar à Tela de Início&quot;</strong>.
-            </p>
+            {hintType === 'ios' ? (
+              <>
+                <p className="font-semibold mb-2">Instalar o MaréAgora no iPhone</p>
+                <p className="mt-1">
+                  1. Toque no ícone de <strong>Compartilhar</strong> (□↑) na barra do Safari.
+                </p>
+                <p className="mt-1">
+                  2. Escolha <strong>&quot;Adicionar à Tela de Início&quot;</strong>.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="font-semibold mb-2">Instalar o MaréAgora</p>
+                <p className="mt-1">
+                  <strong>No Chrome/Edge:</strong> clique no ícone de instalação (⊕ ou tela com seta) na barra de endereço, ou abra o menu (⋮) e escolha <strong>&quot;Instalar MaréAgora&quot;</strong>.
+                </p>
+                <p className="mt-2">
+                  <strong>No Firefox/Safari (desktop):</strong> esses navegadores não suportam instalação de apps no computador. Acesse pelo celular pra instalar.
+                </p>
+                <p className="mt-2">
+                  <strong>No Android:</strong> abra o menu (⋮) do Chrome e toque em <strong>&quot;Instalar app&quot;</strong> ou <strong>&quot;Adicionar à tela inicial&quot;</strong>.
+                </p>
+              </>
+            )}
             <button
               className="mt-4 w-full bg-gray-100 rounded-lg py-2 font-semibold"
-              onClick={() => setShowIOSHint(false)}
+              onClick={() => setShowHint(false)}
             >
               Entendi
             </button>

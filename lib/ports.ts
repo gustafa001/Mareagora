@@ -86,7 +86,7 @@ export const PORTS: Port[] = [
   { 
     id: '46', name: 'Porto de Santos', cityName: 'Santos', slug: 'porto-de-santos', state: 'SP', region: 'sudeste', lat: -23.956778, lon: -46.308111, dhnId: '50228',
     cameras: [
-      { title: 'Santos - Orla ao Vivo', sourceName: 'Olhar 013', sourceUrl: 'https://www.youtube.com/@olhar013', videoId: '3S6__7YkhYk' }
+      { title: 'Santos - Praia do Gonzaga ao Vivo', sourceName: 'Olhar 013', sourceUrl: 'https://www.youtube.com/@olhar013', videoId: '3S6__7YkhYk' }
     ]
   },
 
@@ -98,8 +98,8 @@ export const PORTS: Port[] = [
   { 
     id: '57', name: 'Guarujá', cityName: 'Guarujá', slug: 'guaruja', state: 'SP', region: 'sudeste', lat: -23.993056, lon: -46.257778, dhnId: '50228', offsetMinutes:  0, searchNames: ['guaruja', 'guarujá', 'enseada', 'pitangueiras'], referencePortSlug: 'porto-de-santos',
     cameras: [
-      { title: 'Praia da Enseada', sourceName: 'Surfistafotografo (Fábio Paulista)', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: 'v5Y6WsD577M' },
-      { title: 'Praia das Pitangueiras', sourceName: 'Surfistafotografo (Fábio Paulista)', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: 'pJvaJY7pKvk' }
+      { title: 'Guarujá - Praia da Enseada (Posto 11) ao Vivo', sourceName: 'Surfistafotografo (Fábio Paulista)', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: 'v5Y6WsD577M' },
+      { title: 'Guarujá - Praia das Pitangueiras ao Vivo', sourceName: 'Surfistafotografo (Fábio Paulista)', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: 'pJvaJY7pKvk' }
     ]
   },
   { id: '58', name: 'São Vicente',             cityName: 'São Vicente',             slug: 'sao-vicente',               state: 'SP', region: 'sudeste', lat: -23.964444, lon: -46.391944, dhnId: '50228', offsetMinutes:  0, searchNames: ['sao vicente', 'são vicente'], referencePortSlug: 'porto-de-santos' },

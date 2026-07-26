@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import InstallButton from './InstallButton';
 
 interface NavBarProps {
   className?: string;
@@ -52,6 +53,7 @@ export default function NavBar({ className = '' }: NavBarProps) {
                 </span>
               </Link>
             ))}
+            <InstallButton variant="desktop" />
           </div>
 
           {/* Botão hamburguer — mobile */}
@@ -96,6 +98,7 @@ export default function NavBar({ className = '' }: NavBarProps) {
               <span className="text-sm font-semibold uppercase tracking-wide">{link.label}</span>
             </Link>
           ))}
+          <InstallButton variant="mobile" />
         </div>
       </div>
     </nav>

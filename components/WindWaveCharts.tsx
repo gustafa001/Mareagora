@@ -40,7 +40,7 @@ export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
       `https://marine-api.open-meteo.com/v1/marine` +
       `?latitude=${lat}&longitude=${lon}` +
       `&hourly=wave_height,wave_period,wave_direction` +
-      `&forecast_days=5&timezone=${tz}`;
+      `&forecast_days=7&timezone=${tz}`;
 
     // API de Clima (Vento) — agora inclui rajadas (windgusts_10m).
     const windUrl =
@@ -48,7 +48,7 @@ export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
       `?latitude=${lat}&longitude=${lon}` +
       `&hourly=windspeed_10m,winddirection_10m,windgusts_10m` +
       `&wind_speed_unit=kmh` +
-      `&forecast_days=5&timezone=${tz}`;
+      `&forecast_days=7&timezone=${tz}`;
 
     Promise.all([
       fetch(marineUrl).then((r) => r.json()),
@@ -85,9 +85,9 @@ export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <WaveChart hourly={marineHourly} days={5} />
-        <WindChart hourly={windHourly} days={5} />
-        <WaveEnergyChart hourly={marineHourly} days={5} />
+        <WaveChart hourly={marineHourly} days={7} />
+        <WindChart hourly={windHourly} days={7} />
+        <WaveEnergyChart hourly={marineHourly} days={7} />
         <WindRadarCard lat={lat} lon={lon} />
       </div>
     </section>

@@ -9,6 +9,7 @@ interface NavBarProps {
 
 const NAV_LINKS = [
   { href: '/portos', icon: '⚓', label: 'Portos' },
+  { href: '/estados', icon: '🗺️', label: 'Estados' },
   { href: '/guia-praias', icon: '🏖️', label: 'Praias' },
   { href: '/blog', icon: '📝', label: 'Blog' },
   { href: '/operacoes-portuarias', icon: '🏗️', label: 'Operação Portuária' },

@@ -92,7 +92,12 @@ export const PORTS: Port[] = [
 
   // Litoral Norte de SP — referência São Sebastião (dhnId 50210)
   // ATENÇÃO: offsetMinutes abaixo é um placeholder (0) — não verificado contra tábua oficial da Marinha.
-  { id: '65', name: 'Ubatuba', cityName: 'Ubatuba', slug: 'ubatuba', state: 'SP', region: 'sudeste', lat: -23.433611, lon: -45.083889, dhnId: '50210', offsetMinutes: 0, searchNames: ['ubatuba', 'itamambuca', 'prumirim', 'vermelha do norte'], referencePortSlug: 'porto-de-sao-sebastiao' },
+  { 
+    id: '65', name: 'Ubatuba', cityName: 'Ubatuba', slug: 'ubatuba', state: 'SP', region: 'sudeste', lat: -23.433611, lon: -45.083889, dhnId: '50210', offsetMinutes: 0, searchNames: ['ubatuba', 'itamambuca', 'prumirim', 'vermelha do norte'], referencePortSlug: 'porto-de-sao-sebastiao',
+    cameras: [
+      { title: 'Ubatuba - Praia Grande (Baguari) ao Vivo', sourceName: 'UBACAM', sourceUrl: 'https://www.youtube.com/watch?v=yPSJYJk-Szc', videoId: 'yPSJYJk-Szc' }
+    ]
+  },
 
   // Litoral de SP — referência Porto de Santos (dhnId 50228)
   { 

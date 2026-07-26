@@ -1,20 +1,13 @@
 "use client";
 
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Cell,
-} from "recharts";
+import { useMemo } from "react";
+import { groupHourlyByDay, toCardinal, dominantDirection } from "@/components/charts/surfChartUtils";
 
 interface HourlyWind {
   time: string[];
   windspeed_10m?: number[];
   winddirection_10m?: number[];
+  windgusts_10m?: number[];
 }
 
 interface WindChartProps {
@@ -23,218 +16,156 @@ interface WindChartProps {
   beachName?: string;
 }
 
-interface DataPoint {
-  label: string;
-  fullDate: string;
-  speed: number | null;
-  rawKmh: number;
-  dir: number;
-  cardinal: string;
-  beaufort: number;
+interface Point {
+  time: string;
+  wind: number;
+  gust: number;
+  direction: number;
 }
 
-interface TooltipProps {
-  active?: boolean;
-  payload?: Array<{ payload: DataPoint }>;
-}
+const WIND_COLOR = "#fbbf24";
+const GUST_COLOR = "#ea580c";
 
-export default function WindChart({ hourly, days = 7, beachName = "praia" }: WindChartProps) {
-  if (!hourly?.time?.length) return <ChartSkeleton label="Carregando vento…" />;
+export default function WindChart({ hourly, days = 5, beachName = "praia" }: WindChartProps) {
+  const points: Point[] = useMemo(() => {
+    if (!hourly?.time?.length) return [];
+    return hourly.time.map((t, i) => {
+      const wind = hourly.windspeed_10m?.[i] ?? 0;
+      const gust = hourly.windgusts_10m?.[i] ?? wind;
+      return { time: t, wind, gust: Math.max(wind, gust), direction: hourly.winddirection_10m?.[i] ?? 0 };
+    });
+  }, [hourly]);
 
-  const limit = days * 24;
-  const data: DataPoint[] = hourly.time.slice(0, limit).map((iso, i) => {
-    const kmh = hourly.windspeed_10m?.[i] ?? 0;
-    const dir = hourly.winddirection_10m?.[i] ?? 0;
-    const date = new Date(iso);
-    return {
-      label: formatLabel(date),
-      fullDate: formatFull(date),
-      speed: roundOne(kmh),
-      rawKmh: kmh,
-      dir,
-      cardinal: toCardinal(dir),
-      beaufort: toBeaufort(kmh),
-    };
-  });
+  if (!points.length) return <ChartSkeleton label="Carregando vento…" />;
 
-  const ticks = data
-    .map((d, i) => ({ i, h: new Date(hourly.time[i]).getHours() }))
-    .filter(({ h }) => h === 0 || h === 12)
-    .map(({ i }) => data[i]?.label)
-    .filter(Boolean) as string[];
+  const dayGroups = groupHourlyByDay(points, days);
+  const sampled = dayGroups.map((g) => ({
+    ...g,
+    points: g.points.filter((_, i) => i % 3 === 0),
+    dir: dominantDirection(g.points.map((p) => p.direction)),
+  }));
 
-  const maxSpeed = Math.max(...data.map((d) => d.speed ?? 0));
-  const arrows = data.filter((_, i) => i % 6 === 0).slice(0, 14);
+  const maxWind = Math.max(20, ...points.map((p) => p.gust)) * 1.15;
+
+  const W = 680;
+  const marginLeft = 34, marginRight = 6, marginTop = 30, marginBottom = 50;
+  const plotW = W - marginLeft - marginRight;
+  const plotH = 190;
+  const H = marginTop + plotH + marginBottom;
+  const dayW = plotW / sampled.length;
+
+  const yTicks = buildYTicks(maxWind);
 
   return (
     <div style={styles.card} aria-label={`Gráfico de vento — ${beachName}`}>
       <header style={styles.header}>
-        <span style={styles.title}>💨 Vento — 7 dias</span>
-        <div style={styles.legend}>
-          <LegendItem color={BEAUFORT_COLORS[1]} label="Fraco" />
-          <LegendItem color={BEAUFORT_COLORS[5]} label="Moderado" />
-          <LegendItem color={BEAUFORT_COLORS[8]} label="Forte" />
+        <span style={styles.title}>💨 Vento</span>
+        <div style={{ display: "flex", gap: 12 }}>
+          <LegendDot color={WIND_COLOR} label="vento" />
+          <LegendDot color={GUST_COLOR} label="rajadas" />
         </div>
       </header>
 
-      <ResponsiveContainer width="100%" height={200}>
-        <BarChart data={data} margin={{ top: 8, right: 16, left: 0, bottom: 0 }} barCategoryGap="30%">
-          <CartesianGrid stroke="rgba(255,255,255,0.1)" vertical={false} />
-          <XAxis
-            dataKey="label"
-            ticks={ticks}
-            tick={styles.tick as any}
-            axisLine={false}
-            tickLine={false}
-            interval="preserveStartEnd"
-          />
-          <YAxis
-            domain={[0, Math.ceil(maxSpeed * 1.2) || 30]}
-            tickFormatter={(v: number) => `${v}`}
-            tick={styles.tick as any}
-            axisLine={false}
-            tickLine={false}
-            width={28}
-          />
-          <Tooltip content={<WindTooltip />} />
-          <Bar dataKey="speed" radius={[3, 3, 0, 0]}>
-            {data.map((entry, i) => (
-              <Cell key={i} fill={beaufortColor(entry.beaufort)} />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
+      <div style={{ overflowX: "auto" }}>
+        <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ minWidth: W, display: "block" }}>
+          {sampled.map((g, di) => (
+            <g key={g.key}>
+              <rect x={marginLeft + di * dayW} y={0} width={dayW - 1} height={22} fill={di === 0 ? "#fbbf24" : "rgba(255,255,255,0.06)"} rx={4} />
+              <text x={marginLeft + di * dayW + dayW / 2} y={15} textAnchor="middle" fontSize={11} fontWeight={700} fill={di === 0 ? "#2b1600" : "#cbd5e1"}>
+                {g.label}
+              </text>
+            </g>
+          ))}
 
-      <div style={styles.dirRow}>
-        {arrows.map((d, i) => (
-          <div key={i} style={styles.dirItem} title={`${d.cardinal} (${d.dir}°)`}>
-            <svg width="18" height="18" viewBox="0 0 18 18"
-              style={{ transform: `rotate(${d.dir}deg)`, transition: "transform 0.3s" }}>
-              <polygon points="9,1 13,15 9,12 5,15" fill={beaufortColor(d.beaufort)} fillOpacity={0.9} />
-            </svg>
-            <span style={{ ...styles.dirLabel, color: beaufortColor(d.beaufort) }}>{d.cardinal}</span>
-          </div>
-        ))}
-      </div>
+          {yTicks.map((y) => {
+            const yy = marginTop + plotH - (y / maxWind) * plotH;
+            return (
+              <g key={y}>
+                <line x1={marginLeft} x2={W - marginRight} y1={yy} y2={yy} stroke="rgba(255,255,255,0.08)" strokeDasharray="3,3" />
+                <text x={marginLeft - 6} y={yy + 3} textAnchor="end" fontSize={9} fill="#94a3b8">{y}</text>
+              </g>
+            );
+          })}
 
-      <div style={styles.bftScale}>
-        {BEAUFORT_LEGEND.map(({ b, label }) => (
-          <div key={b} style={styles.bftItem}>
-            <div style={{ width: 8, height: 8, borderRadius: "50%", background: BEAUFORT_COLORS[b] }} />
-            <span style={styles.bftLabel}>{label}</span>
-          </div>
-        ))}
+          {sampled.map((g, di) => {
+            const slotW = dayW / g.points.length;
+            return (
+              <g key={g.key}>
+                {g.points.map((p, pi) => {
+                  const windH = (p.wind / maxWind) * plotH;
+                  const gustH = (Math.max(0, p.gust - p.wind) / maxWind) * plotH;
+                  const x = marginLeft + di * dayW + pi * slotW + slotW * 0.12;
+                  const bw = slotW * 0.76;
+                  const yWind = marginTop + plotH - windH;
+                  return (
+                    <g key={pi}>
+                      <rect x={x} y={yWind} width={bw} height={Math.max(1, windH)} fill={WIND_COLOR} />
+                      <rect x={x} y={yWind - gustH} width={bw} height={gustH} fill={GUST_COLOR} />
+                    </g>
+                  );
+                })}
+                {di > 0 && <line x1={marginLeft + di * dayW} x2={marginLeft + di * dayW} y1={marginTop} y2={marginTop + plotH} stroke="#0d1526" strokeWidth={2} />}
+              </g>
+            );
+          })}
+
+          <line x1={marginLeft} x2={W - marginRight} y1={marginTop + plotH} y2={marginTop + plotH} stroke="rgba(255,255,255,0.15)" />
+
+          {sampled.map((g, di) => {
+            const cx = marginLeft + di * dayW + dayW / 2;
+            const cy = marginTop + plotH + 22;
+            return (
+              <g key={g.key} transform={`translate(${cx},${cy}) rotate(${g.dir})`}>
+                <circle cx={0} cy={0} r={10} fill="rgba(251,191,36,0.15)" stroke={WIND_COLOR} strokeWidth={1} />
+                <path d="M0,-5 L3.5,3 L0,0.5 L-3.5,3 Z" fill={WIND_COLOR} />
+              </g>
+            );
+          })}
+          {sampled.map((g, di) => (
+            <text key={g.key + "-lbl"} x={marginLeft + di * dayW + dayW / 2} y={marginTop + plotH + 42} textAnchor="middle" fontSize={10} fontWeight={700} fill={WIND_COLOR}>
+              {toCardinal(g.dir)}
+            </text>
+          ))}
+        </svg>
       </div>
     </div>
   );
 }
 
-function WindTooltip({ active, payload }: TooltipProps) {
-  if (!active || !payload?.length) return null;
-  const d = payload[0]?.payload;
-  return (
-    <div style={styles.tooltip}>
-      <p style={styles.tooltipDate}>{d?.fullDate}</p>
-      <div style={styles.tooltipRow}>
-        <span style={{ color: "#22d3ee" }}>💨 Vel.</span>
-        <span style={{ color: "#22d3ee", fontFamily: "monospace", fontWeight: "bold" }}>{d?.speed} km/h</span>
-      </div>
-      <div style={styles.tooltipRow}>
-        <span style={{ color: "#cbd5e1" }}>🧭 Dir.</span>
-        <span style={{ color: "#cbd5e1", fontFamily: "monospace" }}>{d?.cardinal} ({d?.dir}°)</span>
-      </div>
-      <p style={{ ...styles.tooltipCond, color: beaufortColor(d?.beaufort ?? 0) }}>
-        Beaufort {d?.beaufort} — {BEAUFORT_LABELS[Math.min(d?.beaufort ?? 0, 12)]}
-      </p>
-    </div>
-  );
+function buildYTicks(max: number) {
+  const step = max <= 30 ? 10 : max <= 60 ? 15 : 20;
+  const ticks: number[] = [];
+  for (let v = 0; v <= max; v += step) ticks.push(Math.round(v));
+  return ticks;
 }
 
-function toBeaufort(kmh: number): number {
-  if (kmh < 1) return 0; if (kmh < 6) return 1; if (kmh < 12) return 2;
-  if (kmh < 20) return 3; if (kmh < 29) return 4; if (kmh < 39) return 5;
-  if (kmh < 50) return 6; if (kmh < 62) return 7; if (kmh < 75) return 8;
-  if (kmh < 89) return 9; if (kmh < 103) return 10; if (kmh < 118) return 11;
-  return 12;
-}
-
-const BEAUFORT_COLORS: Record<number, string> = {
-  0: "#2dd4bf", 1: "#2dd4bf", 2: "#2dd4bf", 3: "#22d3ee", 4: "#22d3ee",
-  5: "#fbbf24", 6: "#fbbf24", 7: "#f87171", 8: "#f87171",
-  9: "#ef4444", 10: "#ef4444", 11: "#ef4444", 12: "#ef4444",
-};
-
-const BEAUFORT_LABELS = [
-  "Calmaria", "Aragem", "Brisa leve", "Brisa fraca", "Brisa mod.",
-  "Brisa fresca", "Vento fresco", "Vento forte", "Vendaval",
-  "Vendaval forte", "Tempestade", "Tempest. violenta", "Furacão",
-];
-
-const BEAUFORT_LEGEND = [
-  { b: 1, label: "Calmaria" }, { b: 3, label: "Brisa" },
-  { b: 5, label: "Moderado" }, { b: 7, label: "Forte" }, { b: 9, label: "Vendaval" },
-];
-
-function beaufortColor(b: number): string {
-  return BEAUFORT_COLORS[Math.min(b ?? 0, 12)];
-}
-
-function toCardinal(deg: number): string {
-  const dirs = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSO","SO","OSO","O","ONO","NO","NNO"];
-  return dirs[Math.round(deg / 22.5) % 16];
-}
-
-function formatLabel(date: Date) {
-  return date.toLocaleString("pt-BR", { weekday: "short", hour: "2-digit", minute: "2-digit" });
-}
-function formatFull(date: Date) {
-  return date.toLocaleString("pt-BR", { weekday: "long", day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" });
-}
-function roundOne(v: number | null | undefined): number | null {
-  return v != null ? Math.round(v * 10) / 10 : null;
-}
-
-function LegendItem({ color, label }: { color: string; label: string }) {
+function LegendDot({ color, label }: { color: string; label: string }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
       <div style={{ width: 10, height: 10, borderRadius: 2, background: color }} />
-      <span style={{ color, fontSize: 11, fontFamily: "monospace", fontWeight: "bold" }}>{label}</span>
+      <span style={{ color, fontSize: 11, fontWeight: 700 }}>{label}</span>
     </div>
   );
 }
 
 function ChartSkeleton({ label }: { label: string }) {
   return (
-    <div style={{ ...styles.card, display: "flex", alignItems: "center", justifyContent: "center", height: 260 }}>
-      <p style={{ color: "rgba(34, 211, 238, 0.5)", fontFamily: "monospace", fontSize: 13 }}>{label}</p>
+    <div style={{ ...styles.card, display: "flex", alignItems: "center", justifyContent: "center", height: 240 }}>
+      <p style={{ color: "rgba(251,191,36,0.5)", fontFamily: "monospace", fontSize: 13 }}>{label}</p>
     </div>
   );
 }
 
-const styles = {
+const styles: Record<string, React.CSSProperties> = {
   card: {
-    background: "transparent",
-    padding: "0",
-  } as React.CSSProperties,
-  header: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 } as React.CSSProperties,
-  title: { color: "#f8fafc", fontSize: 13, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const },
-  legend: { display: "flex", gap: 12, alignItems: "center" } as React.CSSProperties,
-  tick: { fill: "#cbd5e1", fontSize: 10, fontWeight: 600 },
-  dirRow: { display: "flex", justifyContent: "space-around", alignItems: "center", marginTop: 12, padding: "8px 0", borderTop: "1px solid rgba(255, 255, 255, 0.1)" } as React.CSSProperties,
-  dirItem: { display: "flex", flexDirection: "column" as const, alignItems: "center", gap: 3 },
-  dirLabel: { fontSize: 8, letterSpacing: "0.05em", fontWeight: 700 },
-  bftScale: { display: "flex", justifyContent: "space-between", marginTop: 12, padding: "10px 0 0", borderTop: "1px solid rgba(255, 255, 255, 0.1)" } as React.CSSProperties,
-  bftItem: { display: "flex", alignItems: "center", gap: 6 } as React.CSSProperties,
-  bftLabel: { color: "#94a3b8", fontSize: 9, fontWeight: 600 } as React.CSSProperties,
-  tooltip: {
-    background: "#1e293b",
-    border: "1px solid #334155",
-    borderRadius: 12,
-    padding: "12px 16px",
-    fontSize: 12,
-    boxShadow: "0 10px 25px rgba(0,0,0,0.5)",
-  } as React.CSSProperties,
-  tooltipDate: { color: "#94a3b8", fontSize: 10, marginBottom: 8, textTransform: "uppercase" as const } as React.CSSProperties,
-  tooltipRow: { display: "flex", justifyContent: "space-between", gap: 30, marginBottom: 4 } as React.CSSProperties,
-  tooltipCond: { marginTop: 8, fontSize: 11, fontWeight: 700, textAlign: "center" as const, textTransform: "uppercase" as const, letterSpacing: "0.05em" },
+    background: "rgba(2, 6, 23, 0.7)",
+    backdropFilter: "blur(20px)",
+    WebkitBackdropFilter: "blur(20px)",
+    border: "1px solid rgba(251, 191, 36, 0.15)",
+    borderRadius: 20,
+    padding: "20px 16px 16px",
+    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4)",
+  },
+  header: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 },
+  title: { color: "#f8fafc", fontSize: 13, fontWeight: 700, letterSpacing: "0.05em" },
 };

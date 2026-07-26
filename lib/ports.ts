@@ -81,7 +81,7 @@ export const PORTS: Port[] = [
   { 
     id: '46', name: 'Porto de Santos', cityName: 'Santos', slug: 'porto-de-santos', state: 'SP', region: 'sudeste', lat: -23.956778, lon: -46.308111, dhnId: '50228',
     cameras: [
-      { title: 'Porto de Santos', sourceName: 'Praticagem de São Paulo', sourceUrl: 'https://www.youtube.com/@praticagemdesaopaulo6975', channelId: 'UCefnILJtDR_L6DB6ud-ST6Q' }
+      { title: 'Santos ao Vivo', sourceName: 'Olhar 013', sourceUrl: 'https://www.youtube.com/@olhar013', videoId: '3S6__7YkhYk' }
     ]
   },
 

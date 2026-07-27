@@ -23,6 +23,15 @@ interface SeaTemp {
   color: string;
 }
 
+interface UvStatus {
+  value: number | null;
+  level: string;
+  icon: string;
+  color: string;
+  bg: string;
+  advice: string;
+}
+
 function getRainStatus(precipNext6h: number[], probNext6h: number[]): RainStatus {
   const maxPrecip = Math.max(...precipNext6h.map(v => v ?? 0));
   const maxProb = Math.max(...probNext6h.map(v => v ?? 0));
@@ -72,10 +81,45 @@ function getSeaTempStatus(temp: number | null): SeaTemp {
   return { temp, icon: '🔥', label: 'Quente — ótima para banho', color: 'text-orange-400' };
 }
 
+function getUvStatus(value: number | null): UvStatus {
+  if (value === null) {
+    return { value: null, level: 'Carregando...', icon: '☀️', color: 'text-slate-400', bg: 'bg-white/[0.03] border-white/5', advice: '' };
+  }
+  if (value < 3) {
+    return {
+      value, level: 'Baixo', icon: '🟢', color: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/30',
+      advice: 'Pode sair sem necessidade de proteção solar.',
+    };
+  }
+  if (value < 6) {
+    return {
+      value, level: 'Moderado', icon: '🟡', color: 'text-yellow-400', bg: 'bg-yellow-500/10 border-yellow-500/30',
+      advice: 'Use protetor solar e óculos escuros em exposição prolongada.',
+    };
+  }
+  if (value < 8) {
+    return {
+      value, level: 'Alto', icon: '🟠', color: 'text-orange-400', bg: 'bg-orange-500/10 border-orange-500/30',
+      advice: 'Use protetor solar 30+, chapéu e óculos. Procure sombra no meio do dia.',
+    };
+  }
+  if (value < 11) {
+    return {
+      value, level: 'Muito Alto', icon: '🔴', color: 'text-red-400', bg: 'bg-red-500/10 border-red-500/30',
+      advice: 'Use protetor solar 50+, chapéu e óculos. Evite o sol entre 10h e 16h.',
+    };
+  }
+  return {
+    value, level: 'Extremo', icon: '🟣', color: 'text-purple-400', bg: 'bg-purple-500/10 border-purple-500/30',
+    advice: 'Evite exposição ao sol. Proteção extra obrigatória se precisar sair.',
+  };
+}
+
 export default function WeatherRadarCard({ lat, lon }: Props) {
   const iframeContainerRef = useRef<HTMLDivElement>(null);
   const [rainStatus, setRainStatus] = useState<RainStatus | null>(null);
   const [seaTemp, setSeaTemp] = useState<SeaTemp>({ temp: null, icon: '🌊', label: 'Carregando...', color: 'text-slate-400' });
+  const [uvStatus, setUvStatus] = useState<UvStatus>(getUvStatus(null));
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const windyUrl = `https://embed.windy.com/embed2.html?lat=${lat}&lon=${lon}&zoom=8&level=surface&overlay=radar&product=radar&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1`;
@@ -85,7 +129,7 @@ export default function WeatherRadarCard({ lat, lon }: Props) {
     const tz = 'auto';
     const weatherUrl =
       `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
-      `&hourly=precipitation,precipitation_probability&forecast_days=1&timezone=${tz}`;
+      `&hourly=precipitation,precipitation_probability,uv_index&forecast_days=1&timezone=${tz}`;
     const marineUrl =
       `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}` +
       `&hourly=sea_surface_temperature&forecast_days=1&timezone=${tz}`;
@@ -103,6 +147,10 @@ export default function WeatherRadarCard({ lat, lon }: Props) {
       // SST: current hour
       const sst: number | null = marineData?.hourly?.sea_surface_temperature?.[nowH] ?? null;
       setSeaTemp(getSeaTempStatus(sst));
+
+      // UV: current hour
+      const uv: number | null = weatherData?.hourly?.uv_index?.[nowH] ?? null;
+      setUvStatus(getUvStatus(uv));
     });
   }, [lat, lon]);
 
@@ -202,11 +250,34 @@ export default function WeatherRadarCard({ lat, lon }: Props) {
         )}
       </div>
 
+      {/* ── 4. Índice UV ── */}
+      <div className={`mt-4 rounded-2xl border px-4 py-3 ${uvStatus.bg}`}>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">{uvStatus.icon}</span>
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Índice UV Atual</p>
+              <p className={`text-sm font-bold mt-0.5 ${uvStatus.color}`}>
+                {uvStatus.value !== null ? `${uvStatus.value.toFixed(1)} — ${uvStatus.level}` : uvStatus.level}
+              </p>
+            </div>
+          </div>
+          {uvStatus.value !== null && (
+            <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-lg font-black border ${uvStatus.bg} ${uvStatus.color}`}>
+              {uvStatus.value.toFixed(0)}
+            </div>
+          )}
+        </div>
+        {uvStatus.advice && (
+          <p className={`text-[11px] mt-2 ${uvStatus.color} opacity-90`}>{uvStatus.advice}</p>
+        )}
+      </div>
+
       {/* Footer */}
       <div className="mt-3 flex items-center justify-between text-[10px]">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-          <span className="text-slate-500 font-medium">Radar via Windy.com • SST via Open-Meteo</span>
+          <span className="text-slate-500 font-medium">Radar via Windy.com • SST/UV via Open-Meteo</span>
         </div>
       </div>
     </OpsCard>

@@ -120,21 +120,6 @@ export const PORTS: Port[] = [
   { id: '63', name: 'Itanhaém',                cityName: 'Itanhaém',                slug: 'itanhaem',                  state: 'SP', region: 'sudeste', lat: -24.183333, lon: -46.783333, dhnId: '50228', offsetMinutes: 15, searchNames: ['itanhaem', 'itanhaém'], referencePortSlug: 'porto-de-santos' },
   { id: '64', name: 'Peruíbe',                 cityName: 'Peruíbe',                 slug: 'peruibe',                   state: 'SP', region: 'sudeste', lat: -24.316667, lon: -47.000000, dhnId: '50228', offsetMinutes: 20, searchNames: ['peruibe', 'peruíbe'], referencePortSlug: 'porto-de-santos' },
 
-  // ── Região Sul ────────────────────────────────────────────────────────────
-  { id: '47', name: 'Barra de Paranaguá - Canal SE',            cityName: 'Paranaguá (Barra SE)',     slug: 'barra-de-paranagua-sueste',            state: 'PR',  region: 'sul',      lat: -25.540000, lon: -48.295000, dhnId: '60130' },
-  { id: '48', name: 'Porto de Paranaguá',                       cityName: 'Paranaguá',                slug: 'porto-de-paranagua',                   state: 'PR',  region: 'sul',      lat: -25.501667, lon: -48.531667, dhnId: '60132' },
-  { id: '49', name: 'Barra de Paranaguá - Canal da Galheta',    cityName: 'Paranaguá (Galheta)',      slug: 'barra-de-paranagua-galheta',           state: 'PR',  region: 'sul',      lat: -25.567083, lon: -48.316083, dhnId: '60135' },
-  { id: '50', name: 'Terminal Portuário da Ponta do Félix',     cityName: 'Antonina',                 slug: 'terminal-portuario-da-ponta-do-felix', state: 'PR',  region: 'sul',      lat: -25.455000, lon: -48.678333, dhnId: '60139' },
-  { id: '51', name: 'Porto de São Francisco do Sul',            cityName: 'São Francisco do Sul',     slug: 'porto-de-sao-francisco-do-sul',        state: 'SC',  region: 'sul',      lat: -26.244528, lon: -48.640861, dhnId: '60225' },
-  { id: '52', name: 'Porto de Itajaí',                          cityName: 'Itajaí',                   slug: 'porto-de-itajai',                      state: 'SC',  region: 'sul',      lat: -26.906667, lon: -48.649167, dhnId: '60235' },
-  { id: '53', name: 'Porto de Florianópolis',                   cityName: 'Florianópolis',            slug: 'porto-de-florianopolis',               state: 'SC',  region: 'sul',      lat: -27.587778, lon: -48.556944, dhnId: '60245' },
-  { id: '54', name: 'Porto de Imbituba',                        cityName: 'Imbituba',                 slug: 'porto-de-imbituba',                    state: 'SC',  region: 'sul',      lat: -28.233333, lon: -48.650000, dhnId: '60250' },
-  { id: '55', name: 'Porto do Rio Grande',                      cityName: 'Rio Grande',               slug: 'porto-do-rio-grande',                  state: 'RS',  region: 'sul',      lat: -32.138611, lon: -52.103611, dhnId: '60380' },
-
-  // ── Especial (Antártida, ilhas oceânicas) ──────────────────────────────────
-  { id: '36', name: 'Ilha da Trindade',                          cityName: 'Ilha da Trindade',         slug: 'ilha-da-trindade',                     state: 'ES',  region: 'especial', lat: -20.508333, lon: -29.310000, dhnId: '40263' },
-  { id: '56', name: 'Base Comandante Ferraz (Antártida)',        cityName: 'Base Ferraz (Antártida)',  slug: 'base-comandante-ferraz',               state: 'ANT', region: 'especial', lat: -62.085000, lon: -58.395000, dhnId: '60900' },
-
   // ── Praias Turísticas ────────────────────────────────────────────────────
   { id: '66', name: 'Copacabana',           cityName: 'Copacabana',           slug: 'copacabana',           state: 'RJ', region: 'sudeste',  lat: -22.971177, lon: -43.182543, dhnId: '50140', offsetMinutes: 0, searchNames: ['copacabana'],                     referencePortSlug: 'rio-de-janeiro-fiscal' },
   { id: '67', name: 'Ipanema',              cityName: 'Ipanema',              slug: 'ipanema',              state: 'RJ', region: 'sudeste',  lat: -22.986889, lon: -43.202944, dhnId: '50140', offsetMinutes: 0, searchNames: ['ipanema'],                        referencePortSlug: 'rio-de-janeiro-fiscal' },
@@ -154,6 +139,21 @@ export const PORTS: Port[] = [
   { id: '81', name: 'Balneário Camboriú',   cityName: 'Balneário Camboriú',   slug: 'balneario-camboriu',   state: 'SC', region: 'sul',      lat: -26.990556, lon: -48.635000, dhnId: '60235', offsetMinutes: 0, searchNames: ['balneario camboriu', 'balneário camboriú', 'bc'], referencePortSlug: 'porto-de-itajai' },
   { id: '82', name: 'Bombinhas',            cityName: 'Bombinhas',            slug: 'bombinhas',            state: 'SC', region: 'sul',      lat: -27.137222, lon: -48.483889, dhnId: '60235', offsetMinutes: 0, searchNames: ['bombinhas'],                      referencePortSlug: 'porto-de-itajai' },
   { id: '83', name: 'Joaquina',             cityName: 'Joaquina',             slug: 'joaquina',             state: 'SC', region: 'sul',      lat: -27.629444, lon: -48.441944, dhnId: '60245', offsetMinutes: 0, searchNames: ['joaquina', 'praia da joaquina', 'joaquina florianopolis'], referencePortSlug: 'porto-de-florianopolis' },
+
+  // ── Região Sul ────────────────────────────────────────────────────────────
+  { id: '47', name: 'Barra de Paranaguá - Canal SE',            cityName: 'Paranaguá (Barra SE)',     slug: 'barra-de-paranagua-sueste',            state: 'PR',  region: 'sul',      lat: -25.540000, lon: -48.295000, dhnId: '60130' },
+  { id: '48', name: 'Porto de Paranaguá',                       cityName: 'Paranaguá',                slug: 'porto-de-paranagua',                   state: 'PR',  region: 'sul',      lat: -25.501667, lon: -48.531667, dhnId: '60132' },
+  { id: '49', name: 'Barra de Paranaguá - Canal da Galheta',    cityName: 'Paranaguá (Galheta)',      slug: 'barra-de-paranagua-galheta',           state: 'PR',  region: 'sul',      lat: -25.567083, lon: -48.316083, dhnId: '60135' },
+  { id: '50', name: 'Terminal Portuário da Ponta do Félix',     cityName: 'Antonina',                 slug: 'terminal-portuario-da-ponta-do-felix', state: 'PR',  region: 'sul',      lat: -25.455000, lon: -48.678333, dhnId: '60139' },
+  { id: '51', name: 'Porto de São Francisco do Sul',            cityName: 'São Francisco do Sul',     slug: 'porto-de-sao-francisco-do-sul',        state: 'SC',  region: 'sul',      lat: -26.244528, lon: -48.640861, dhnId: '60225' },
+  { id: '52', name: 'Porto de Itajaí',                          cityName: 'Itajaí',                   slug: 'porto-de-itajai',                      state: 'SC',  region: 'sul',      lat: -26.906667, lon: -48.649167, dhnId: '60235' },
+  { id: '53', name: 'Porto de Florianópolis',                   cityName: 'Florianópolis',            slug: 'porto-de-florianopolis',               state: 'SC',  region: 'sul',      lat: -27.587778, lon: -48.556944, dhnId: '60245' },
+  { id: '54', name: 'Porto de Imbituba',                        cityName: 'Imbituba',                 slug: 'porto-de-imbituba',                    state: 'SC',  region: 'sul',      lat: -28.233333, lon: -48.650000, dhnId: '60250' },
+  { id: '55', name: 'Porto do Rio Grande',                      cityName: 'Rio Grande',               slug: 'porto-do-rio-grande',                  state: 'RS',  region: 'sul',      lat: -32.138611, lon: -52.103611, dhnId: '60380' },
+
+  // ── Especial (Antártida, ilhas oceânicas) ──────────────────────────────────
+  { id: '36', name: 'Ilha da Trindade',                          cityName: 'Ilha da Trindade',         slug: 'ilha-da-trindade',                     state: 'ES',  region: 'especial', lat: -20.508333, lon: -29.310000, dhnId: '40263' },
+  { id: '56', name: 'Base Comandante Ferraz (Antártida)',        cityName: 'Base Ferraz (Antártida)',  slug: 'base-comandante-ferraz',               state: 'ANT', region: 'especial', lat: -62.085000, lon: -58.395000, dhnId: '60900' },
 
 ];
 

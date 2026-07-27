@@ -251,16 +251,14 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               strategy={blogStrategy}
             />
 
-            {/* Aviso Legal de Isenção de Responsabilidade Náutica */}
-            <div className="mt-8 p-6 bg-red-50 border border-red-100 rounded-xl">
-              <h3 className="flex items-center gap-2 text-red-800 font-bold mb-2">
-                <span className="text-xl">⚠️</span> Aviso Importante de Navegação
+            {/* Isenção de Responsabilidade pelo Uso dos Dados */}
+            <div className="mt-8 p-6 bg-slate-50 border border-slate-200 rounded-xl">
+              <h3 className="flex items-center gap-2 text-slate-700 font-bold mb-2">
+                <span className="text-xl">ℹ️</span> Isenção de Responsabilidade
               </h3>
-              <p className="text-red-700/90 text-sm leading-relaxed">
-                As previsões de marés, ventos e ondas exibidas no MaréAgora têm finalidade exclusivamente <strong>informativa e recreativa</strong>. 
-                Nossos dados são baseados em fontes públicas e modelos matemáticos. 
-                <br className="mb-1" />
-                <strong>Em nenhuma hipótese</strong> estas informações devem ser utilizadas para navegação, planejamento de operações portuárias oficiais ou qualquer atividade que envolva risco de vida ou de patrimônio. Para tais fins, consulte <strong>sempre</strong> as Tábuas das Marés oficiais e cartas náuticas certificadas pela Diretoria de Hidrografia e Navegação (DHN) da Marinha do Brasil.
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Os dados de maré exibidos no MaréAgora têm como fonte a Diretoria de Hidrografia e Navegação (DHN) da Marinha do Brasil. O MaréAgora não se responsabiliza por eventuais falhas, atrasos ou imprecisões na disponibilização desses dados pela fonte oficial, nem pelo uso que for feito das informações aqui apresentadas.
+                {' '}Consulte nossos <a href="/termos" className="underline hover:text-slate-800">Termos de Uso</a> para mais detalhes.
               </p>
             </div>
           </div>

@@ -33,9 +33,11 @@ export async function generateMetadata({ params }: { params: { slug: string, cid
   const url = `https://mareagora.com.br/mare/${estado}/${slug}`;
   const ogImage = `https://mareagora.com.br/mare/${estado}/${slug}/opengraph-image`;
 
-  const seoName = port.cityName;
-
   const isCommercial = port.name.toLowerCase().includes('porto') || port.name.toLowerCase().includes('terminal') || config?.category === 'industrial';
+
+  // Portos/terminais comerciais usam o nome do terminal no título (bate com a busca do usuário);
+  // praias continuam usando o nome da cidade.
+  const seoName = isCommercial ? port.name : port.cityName;
 
   let defaultSuffix = isCommercial 
     ? 'Horários e Coeficientes Oficiais' 

@@ -121,7 +121,12 @@ export const PORTS: Port[] = [
   { id: '64', name: 'Peruíbe',                 cityName: 'Peruíbe',                 slug: 'peruibe',                   state: 'SP', region: 'sudeste', lat: -24.316667, lon: -47.000000, dhnId: '50228', offsetMinutes: 20, searchNames: ['peruibe', 'peruíbe'], referencePortSlug: 'porto-de-santos' },
 
   // ── Praias Turísticas ────────────────────────────────────────────────────
-  { id: '66', name: 'Copacabana',           cityName: 'Copacabana',           slug: 'copacabana',           state: 'RJ', region: 'sudeste',  lat: -22.971177, lon: -43.182543, dhnId: '50140', offsetMinutes: 0, searchNames: ['copacabana'],                     referencePortSlug: 'rio-de-janeiro-fiscal' },
+  { 
+    id: '66', name: 'Copacabana', cityName: 'Copacabana', slug: 'copacabana', state: 'RJ', region: 'sudeste', lat: -22.971177, lon: -43.182543, dhnId: '50140', offsetMinutes: 0, searchNames: ['copacabana'], referencePortSlug: 'rio-de-janeiro-fiscal',
+    cameras: [
+      { title: 'Copacabana - Praia ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/n6bLMUaGTRM', videoId: 'n6bLMUaGTRM' }
+    ]
+  },
   { id: '67', name: 'Ipanema',              cityName: 'Ipanema',              slug: 'ipanema',              state: 'RJ', region: 'sudeste',  lat: -22.986889, lon: -43.202944, dhnId: '50140', offsetMinutes: 0, searchNames: ['ipanema'],                        referencePortSlug: 'rio-de-janeiro-fiscal' },
   { id: '68', name: 'Búzios',               cityName: 'Búzios',               slug: 'buzios',               state: 'RJ', region: 'sudeste',  lat: -22.746944, lon: -41.881667, dhnId: '50156', offsetMinutes: 0, searchNames: ['buzios', 'búzios', 'armacao dos buzios'], referencePortSlug: 'porto-do-forno' },
   { id: '69', name: 'Maresias',             cityName: 'Maresias',             slug: 'maresias',             state: 'SP', region: 'sudeste',  lat: -23.790833, lon: -45.566111, dhnId: '50210', offsetMinutes: 0, searchNames: ['maresias'],                       referencePortSlug: 'porto-de-sao-sebastiao' },

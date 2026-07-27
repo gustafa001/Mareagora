@@ -102,7 +102,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
             </a>
           </div>
 
-          <div className="flex flex-col gap-3 items-center px-2 text-center mt-14 md:mt-0">
+          <div className="flex flex-col gap-3 items-center px-2 text-center pt-14 md:pt-0">
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight font-syne leading-tight max-w-4xl text-white drop-shadow-md">
               Tábua de Maré {seoName} — {ano}
             </h1>

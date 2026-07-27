@@ -124,8 +124,8 @@ export default function HomeHero() {
       <div className="relative z-10 w-full max-w-2xl">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-20 h-20 mb-6 rounded-3xl bg-gradient-to-br from-blue-400 to-cyan-400 shadow-2xl shadow-blue-500/20">
-            <span className="text-4xl">🌊</span>
+          <div className="inline-flex items-center justify-center w-20 h-20 mb-6 rounded-3xl overflow-hidden shadow-2xl shadow-blue-500/20">
+            <img src="/logo-mark.png" alt="MaréAgora" className="w-full h-full object-cover" />
           </div>
           <h1 className="text-4xl md:text-6xl font-black text-white mb-3 font-syne tracking-tighter">
             MaréAgora

@@ -119,7 +119,8 @@ export default async function MareMundoLocalPage({ params }: Props) {
       />
       <NavBar />
 
-      <section className="relative overflow-hidden bg-gradient-to-b from-slate-900 via-slate-900/90 to-slate-950 pt-24 pb-16 border-b border-white/5">
+      <section className="relative overflow-hidden hero-section pt-24 pb-16 border-b border-white/5">
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-950/70 to-slate-950" />
         <div className="container relative z-10">
 
           {/* Botão Voltar */}
@@ -143,7 +144,7 @@ export default async function MareMundoLocalPage({ params }: Props) {
             </Link>
           </div>
 
-          <div className="flex flex-col gap-3 items-center px-2 text-center">
+          <div className="flex flex-col gap-3 items-center px-2 text-center pt-14 md:pt-0">
             <p className="text-xs font-bold uppercase tracking-widest text-blue-400 opacity-80">
               {place.countryName} · Previsão Global
             </p>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { getPortBySlug, PORTS, haversineDistance } from '@/lib/ports';
 import { getEventosDia, getEventosAno, getEventosRange } from '@/lib/mare';
 import { portosConfig } from '@/data/porto-seo-config';
@@ -55,7 +56,16 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
 
   const now = new Date();
 
-  const currentTimeBR = new Date().toLocaleTimeString('pt-BR', {
+  // Relógio "vivo": sem isso, o horário (e o cálculo de próxima alta/baixa)
+  // ficava congelado no momento em que a página carregou/hidratou.
+  const [liveNow, setLiveNow] = useState(now);
+
+  useEffect(() => {
+    const timer = setInterval(() => setLiveNow(new Date()), 30_000); // atualiza a cada 30s
+    return () => clearInterval(timer);
+  }, []);
+
+  const currentTimeBR = liveNow.toLocaleTimeString('pt-BR', {
     hour: '2-digit',
     minute: '2-digit',
     timeZone: 'America/Sao_Paulo',
@@ -89,7 +99,8 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
       />
       <NavBar />
 
-      <section className="relative overflow-hidden bg-gradient-to-b from-slate-900 via-slate-900/90 to-slate-950 pt-24 pb-16 border-b border-white/5">
+      <section className="relative overflow-hidden hero-section pt-24 pb-16 border-b border-white/5">
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-950/70 to-slate-950" />
         <div className="container relative z-10">
 
           {/* Botão Voltar */}

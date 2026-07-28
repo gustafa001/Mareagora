@@ -104,10 +104,19 @@ export default function Page() {
           <h1 className="text-4xl font-black tracking-tighter text-slate-900 font-syne mb-4 text-center">
             Maré para Pesca
           </h1>
-          <p className="text-lg text-slate-600 mb-10 text-center max-w-2xl mx-auto">
+          <p className="text-lg text-slate-600 mb-6 text-center max-w-2xl mx-auto">
             Os quatro fatores que mais influenciam uma boa pescaria: maré, lua, pressão atmosférica e vento. Veja o
             resumo de hoje e busque o seu porto para os dados completos.
           </p>
+
+          <div className="mb-10 text-center">
+            <Link
+              href="/lugares-de-pesca"
+              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
+            >
+              🗺️ Ver mapa de píers, molhes e praias de pesca
+            </Link>
+          </div>
 
           {/* Card do dia */}
           <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-8 mb-10 text-center">
@@ -186,6 +195,9 @@ export default function Page() {
           </div>
 
           <div className="text-center flex flex-col sm:flex-row gap-2 sm:gap-6 justify-center">
+            <Link href="/lugares-de-pesca" className="text-blue-600 font-medium hover:underline">
+              Veja também: mapa de lugares de pesca →
+            </Link>
             <Link href="/coeficiente" className="text-blue-600 font-medium hover:underline">
               Veja também: o que é o coeficiente de maré →
             </Link>

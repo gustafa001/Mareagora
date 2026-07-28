@@ -266,8 +266,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
                 <span className="text-xl">⚠️</span> Aviso Importante de Navegação
               </h3>
               <p className="text-red-700/90 text-sm leading-relaxed">
-                As previsões de marés, ventos e ondas exibidas no MaréAgora têm finalidade exclusivamente <strong>informativa e recreativa</strong>. 
-                Nossos dados são baseados em fontes públicas e modelos matemáticos. 
+                Os dados de maré exibidos no MaréAgora têm como fonte a Diretoria de Hidrografia e Navegação (DHN) da Marinha do Brasil. O MaréAgora não se responsabiliza por eventuais falhas, atrasos ou imprecisões na disponibilização desses dados pela fonte oficial, nem pelo uso que for feito das informações aqui apresentadas.
                 <br className="mb-1" />
                 <strong>Em nenhuma hipótese</strong> estas informações devem ser utilizadas para navegação, planejamento de operações portuárias oficiais ou qualquer atividade que envolva risco de vida ou de patrimônio. Para tais fins, consulte <strong>sempre</strong> as Tábuas das Marés oficiais e cartas náuticas certificadas pela Diretoria de Hidrografia e Navegação (DHN) da Marinha do Brasil.
               </p>

@@ -7,6 +7,7 @@ import InstallButton from './InstallButton';
 import { PORTS, getNearestPort, getPortBySlug, type Port } from '@/lib/ports';
 import { getStateSlug } from '@/lib/states';
 import { useRecentPorts } from '@/hooks/useRecentPorts';
+import { Umbrella, Anchor, Map, Globe, FileText, Building2, MapPin, Loader2 } from 'lucide-react';
 
 interface NavBarProps {
   className?: string;
@@ -15,12 +16,12 @@ interface NavBarProps {
 // Ordem pensada por prioridade de uso: Praias e Portos primeiro (conteúdo mais
 // buscado), Operação Portuária (nicho) mais pra baixo.
 const NAV_LINKS = [
-  { href: '/guia-praias', icon: '🏖️', label: 'Praias' },
-  { href: '/portos', icon: '⚓', label: 'Portos' },
-  { href: '/estados', icon: '🗺️', label: 'Estados' },
-  { href: '/mare-mundo', icon: '🌍', label: 'Mundo' },
-  { href: '/blog', icon: '📝', label: 'Blog' },
-  { href: '/operacoes-portuarias', icon: '🏗️', label: 'Operação Portuária' },
+  { href: '/guia-praias', icon: Umbrella, label: 'Praias' },
+  { href: '/portos', icon: Anchor, label: 'Portos' },
+  { href: '/estados', icon: Map, label: 'Estados' },
+  { href: '/mare-mundo', icon: Globe, label: 'Mundo' },
+  { href: '/blog', icon: FileText, label: 'Blog' },
+  { href: '/operacoes-portuarias', icon: Building2, label: 'Operação Portuária' },
 ];
 
 function portHref(port: Port) {
@@ -122,7 +123,7 @@ export default function NavBar({ className = '' }: NavBarProps) {
                 className="px-3 py-2 rounded-xl text-slate-200 hover:text-white bg-slate-800/40 hover:bg-blue-500/20 border border-slate-700/50 hover:border-blue-400/50 transition-all duration-300 flex flex-col items-center justify-center gap-1.5 flex-shrink-0"
                 title={link.label}
               >
-                <span className="text-lg leading-none">{link.icon}</span>
+                <link.icon className="w-[18px] h-[18px]" strokeWidth={2} />
                 <span className="text-xs font-semibold uppercase tracking-wide leading-tight text-center whitespace-nowrap">
                   {link.label}
                 </span>
@@ -205,9 +206,13 @@ export default function NavBar({ className = '' }: NavBarProps) {
             disabled={isGeolocationLoading}
             className="px-4 py-3 rounded-xl text-slate-200 hover:text-white bg-slate-800/40 hover:bg-blue-500/20 border border-slate-700/50 hover:border-blue-400/50 transition-all duration-300 flex items-center gap-3 disabled:opacity-60"
           >
-            <span className="text-lg leading-none">{isGeolocationLoading ? '⏳' : '📍'}</span>
+            {isGeolocationLoading ? (
+              <Loader2 className="w-[18px] h-[18px] animate-spin" strokeWidth={2} />
+            ) : (
+              <MapPin className="w-[18px] h-[18px]" strokeWidth={2} />
+            )}
             <span className="text-sm font-semibold uppercase tracking-wide">
-              {isGeolocationLoading ? 'Localizando...' : 'Porto mais perto de mim'}
+              {isGeolocationLoading ? 'Localizando...' : 'Praia mais perto de mim'}
             </span>
           </button>
 
@@ -240,7 +245,7 @@ export default function NavBar({ className = '' }: NavBarProps) {
               onClick={closeMenu}
               className="px-4 py-3 rounded-xl text-slate-200 hover:text-white bg-slate-800/40 hover:bg-blue-500/20 border border-slate-700/50 hover:border-blue-400/50 transition-all duration-300 flex items-center gap-3"
             >
-              <span className="text-lg leading-none">{link.icon}</span>
+              <link.icon className="w-[18px] h-[18px]" strokeWidth={2} />
               <span className="text-sm font-semibold uppercase tracking-wide">{link.label}</span>
             </Link>
           ))}

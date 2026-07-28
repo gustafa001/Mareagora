@@ -91,7 +91,7 @@ export default function FishingSpotsMap() {
 
     if (!(window as any).L) {
       const script = document.createElement('script')
-      script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet-src.min.js'
+      script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
       script.onload = initMap
       document.head.appendChild(script)
     } else {

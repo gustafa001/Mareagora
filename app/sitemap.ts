@@ -103,7 +103,8 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
     '/lua',
     '/ondas',
     '/coeficiente',
-    '/pesca'
+    '/pesca',
+    '/lugares-de-pesca'
   ];
 
   return genericRoutes.map(route => ({

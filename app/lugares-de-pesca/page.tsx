@@ -3,6 +3,8 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import NavBar from '@/components/NavBar';
 import SchemaGenerator from '@/components/seo/SchemaGenerator';
+import { AD_SLOTS } from '@/lib/adConfig';
+import AdSlot from '@/components/ads/AdSlot';
 import { groupFishingSpotsByRegion } from '@/lib/fishingSpots';
 
 const FishingSpotsMap = dynamic(() => import('@/components/FishingSpotsMap'), { ssr: false });
@@ -53,8 +55,16 @@ export default function Page() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-3 sm:p-4 mb-12">
+          <div className="mb-8">
+            <AdSlot slotId={AD_SLOTS.LEADERBOARD_NAV} format="horizontal" />
+          </div>
+
+          <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-3 sm:p-4 mb-8">
             <FishingSpotsMap />
+          </div>
+
+          <div className="mb-12">
+            <AdSlot slotId={AD_SLOTS.INCONTENT_RECT} format="auto" />
           </div>
 
           {grupos.map((grupo) => (

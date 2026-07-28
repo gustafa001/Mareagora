@@ -7,7 +7,10 @@ import InstallButton from './InstallButton';
 import { PORTS, getNearestPort, getPortBySlug, type Port } from '@/lib/ports';
 import { getStateSlug } from '@/lib/states';
 import { useRecentPorts } from '@/hooks/useRecentPorts';
-import { Umbrella, Anchor, Map, Globe, FileText, Building2, MapPin, Loader2 } from 'lucide-react';
+import {
+  Umbrella, Anchor, Map, Globe, FileText, Building2, MapPin, Loader2,
+  Waves, CalendarClock, CalendarDays, TrendingUp, Moon, Sparkles, MoonStar, Fish,
+} from 'lucide-react';
 
 interface NavBarProps {
   className?: string;
@@ -18,10 +21,55 @@ interface NavBarProps {
 const NAV_LINKS = [
   { href: '/guia-praias', icon: Umbrella, label: 'Praias' },
   { href: '/portos', icon: Anchor, label: 'Portos' },
+  { href: '/lugares-de-pesca', icon: Fish, label: 'Pesca' },
   { href: '/estados', icon: Map, label: 'Estados' },
   { href: '/mare-mundo', icon: Globe, label: 'Mundo' },
   { href: '/blog', icon: FileText, label: 'Blog' },
   { href: '/operacoes-portuarias', icon: Building2, label: 'Operação Portuária' },
+];
+
+// Menu mobile agrupado em seções, no estilo de apps de maré/pesca de referência.
+const NAV_SECTIONS: {
+  title: string;
+  highlight?: boolean;
+  items: { href: string; icon: typeof Umbrella; label: string }[];
+}[] = [
+  {
+    title: 'Marés',
+    items: [
+      { href: '/mare-hoje', icon: Waves, label: 'Maré hoje' },
+      { href: '/mare-amanha', icon: CalendarClock, label: 'Maré amanhã' },
+      { href: '/mare-semana', icon: CalendarDays, label: 'Maré da semana' },
+      { href: '/coeficiente', icon: TrendingUp, label: 'Coeficiente de maré' },
+    ],
+  },
+  {
+    title: 'Lua & Solunar',
+    items: [
+      { href: '/lua', icon: Moon, label: 'Fases da lua' },
+      { href: '/mare-viva', icon: Sparkles, label: 'Maré viva (sizígia)' },
+      { href: '/mare-morta', icon: MoonStar, label: 'Maré morta (quadratura)' },
+    ],
+  },
+  {
+    title: 'Lugares de pesca',
+    highlight: true,
+    items: [
+      { href: '/lugares-de-pesca', icon: MapPin, label: 'Mapa de pesca' },
+      { href: '/pesca', icon: Fish, label: 'Guia: melhor hora pra pescar' },
+    ],
+  },
+  {
+    title: 'Explorar',
+    items: [
+      { href: '/guia-praias', icon: Umbrella, label: 'Praias' },
+      { href: '/portos', icon: Anchor, label: 'Portos' },
+      { href: '/estados', icon: Map, label: 'Estados' },
+      { href: '/mare-mundo', icon: Globe, label: 'Mundo' },
+      { href: '/blog', icon: FileText, label: 'Blog' },
+      { href: '/operacoes-portuarias', icon: Building2, label: 'Operação Portuária' },
+    ],
+  },
 ];
 
 function portHref(port: Port) {
@@ -160,7 +208,7 @@ export default function NavBar({ className = '' }: NavBarProps) {
       {/* Menu deslizante — mobile */}
       <div
         id="mobile-menu"
-        className={`sm:hidden overflow-hidden transition-all duration-300 ease-in-out ${menuOpen ? 'max-h-[36rem] overflow-y-auto' : 'max-h-0'}`}
+        className={`sm:hidden overflow-hidden transition-all duration-300 ease-in-out ${menuOpen ? 'max-h-[calc(100vh-5rem)] overflow-y-auto' : 'max-h-0'}`}
       >
         <div className="px-4 pb-4 pt-1 flex flex-col gap-2 border-t border-white/5">
 
@@ -238,16 +286,29 @@ export default function NavBar({ className = '' }: NavBarProps) {
 
           <div className="border-t border-white/5 my-1" />
 
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={closeMenu}
-              className="px-4 py-3 rounded-xl text-slate-200 hover:text-white bg-slate-800/40 hover:bg-blue-500/20 border border-slate-700/50 hover:border-blue-400/50 transition-all duration-300 flex items-center gap-3"
-            >
-              <link.icon className="w-[18px] h-[18px]" strokeWidth={2} />
-              <span className="text-sm font-semibold uppercase tracking-wide">{link.label}</span>
-            </Link>
+          {NAV_SECTIONS.map((section) => (
+            <div key={section.title} className="pt-2">
+              <div className="px-1 pb-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                {section.title}
+              </div>
+              <div className="flex flex-col gap-2">
+                {section.items.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={closeMenu}
+                    className={
+                      section.highlight
+                        ? 'px-4 py-3 rounded-xl text-white bg-blue-500/90 hover:bg-blue-500 border border-blue-400/60 transition-all duration-300 flex items-center gap-3'
+                        : 'px-4 py-3 rounded-xl text-slate-200 hover:text-white bg-slate-800/40 hover:bg-blue-500/20 border border-slate-700/50 hover:border-blue-400/50 transition-all duration-300 flex items-center gap-3'
+                    }
+                  >
+                    <item.icon className="w-[18px] h-[18px]" strokeWidth={2} />
+                    <span className="text-sm font-semibold uppercase tracking-wide">{item.label}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
           ))}
 
           {/* Instalar app — destacado, é a alavanca de retorno/engajamento */}

@@ -261,11 +261,11 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
             />
 
             {/* Aviso Legal de Isenção de Responsabilidade Náutica */}
-            <div className="mt-8 p-6 bg-red-50 border border-red-100 rounded-xl">
-              <h3 className="flex items-center gap-2 text-red-800 font-bold mb-2">
-                <span className="text-xl">⚠️</span> Aviso Importante de Navegação
+            <div className="mt-8 p-6 bg-slate-50 border border-slat-200 rounded-xl">
+              <h3 className="flex items-center gap-2 text-slat-700 font-bold mb-2">
+                <span className="text-xl">⚠️</span> Isenção de Responsabilidade
               </h3>
-              <p className="text-red-700/90 text-sm leading-relaxed">
+              <p className="text-slate-600 text-sm leading-relaxed">
                 Os dados de maré exibidos no MaréAgora têm como fonte a Diretoria de Hidrografia e Navegação (DHN) da Marinha do Brasil. O MaréAgora não se responsabiliza por eventuais falhas, atrasos ou imprecisões na disponibilização desses dados pela fonte oficial, nem pelo uso que for feito das informações aqui apresentadas.
                 <br className="mb-1" />
                 <strong>Em nenhuma hipótese</strong> estas informações devem ser utilizadas para navegação, planejamento de operações portuárias oficiais ou qualquer atividade que envolva risco de vida ou de patrimônio. Para tais fins, consulte <strong>sempre</strong> as Tábuas das Marés oficiais e cartas náuticas certificadas pela Diretoria de Hidrografia e Navegação (DHN) da Marinha do Brasil.

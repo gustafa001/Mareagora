@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import NavBar from '@/components/NavBar';
-import FishingSpotsMap from '@/components/FishingSpotsMap';
 import SchemaGenerator from '@/components/seo/SchemaGenerator';
 import { groupFishingSpotsByRegion } from '@/lib/fishingSpots';
+
+const FishingSpotsMap = dynamic(() => import('@/components/FishingSpotsMap'), { ssr: false });
 
 export const metadata: Metadata = {
   title: 'Lugares de Pesca no Brasil — Mapa de Píers, Molhes e Praias | MaréAgora',

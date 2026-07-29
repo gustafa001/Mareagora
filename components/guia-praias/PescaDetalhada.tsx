@@ -13,14 +13,14 @@ export interface PescaDetalhadaData {
  * nunca vem preenchido (nenhuma praia tem esses campos cadastrados ainda),
  * então a seção fica oculta. Quando uma fonte de dados de pesca for
  * integrada, basta popular `pescaDetalhada` na praia correspondente em
- * app/guia-praias/page.tsx — nenhuma outra mudança é necessária aqui.
+ * app/guia-praias/page.tsx - nenhuma outra mudança é necessária aqui.
  */
 export default function PescaDetalhada({ data }: { data?: PescaDetalhadaData }) {
   return (
     <ConditionalSection data={data}>
       <section className="pp-section" aria-labelledby="pesca-detalhada-heading">
         <h2 className="pp-section-title" id="pesca-detalhada-heading">
-          🎣 Pesca — detalhes
+          🎣 Pesca - detalhes
         </h2>
         <div className="pp-text-section">
           {data?.especies && data.especies.length > 0 && (

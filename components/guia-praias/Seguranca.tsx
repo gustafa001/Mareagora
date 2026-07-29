@@ -10,9 +10,9 @@ export interface SegurancaData {
 }
 
 const BANDEIRA_LABEL: Record<NonNullable<SegurancaData['bandeira']>, string> = {
-  verde: '🟢 Bandeira verde — mar seguro para banho',
-  amarela: '🟡 Bandeira amarela — atenção redobrada',
-  vermelha: '🔴 Bandeira vermelha — banho não recomendado',
+  verde: '🟢 Bandeira verde - mar seguro para banho',
+  amarela: '🟡 Bandeira amarela - atenção redobrada',
+  vermelha: '🔴 Bandeira vermelha - banho não recomendado',
 }
 
 export default function Seguranca({ data }: { data?: SegurancaData }) {
@@ -26,7 +26,7 @@ export default function Seguranca({ data }: { data?: SegurancaData }) {
           {data?.bandeira && <p>{BANDEIRA_LABEL[data.bandeira]}</p>}
           {data?.correnteDeRetorno && <p>⚠️ Correnteza de retorno registrada nesta praia.</p>}
           {data?.pedras && <p>⚠️ Presença de pedras em parte da faixa de areia ou no mar.</p>}
-          {data?.ondasFortes && <p>⚠️ Ondas fortes — atenção redobrada para banho.</p>}
+          {data?.ondasFortes && <p>⚠️ Ondas fortes - atenção redobrada para banho.</p>}
 
           {data?.areasPerigosas && data.areasPerigosas.length > 0 && (
             <>

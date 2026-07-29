@@ -30,6 +30,69 @@ interface Praia {
   porto: PortoMeta
   afiliado?: { label: string; url: string }
   unsplashQuery: string
+
+  // ─── Campos opcionais do Guia de Praia (fase 2) ────────────────────────
+  // Nenhuma praia tem esses campos preenchidos ainda: eles existem para
+  // permitir cadastro incremental de dados reais, praia por praia, sem
+  // quebrar tipos. Enquanto vazios, as seções correspondentes ficam ocultas
+  // (ver components/guia-praias/*.tsx e ConditionalSection).
+  informacoesGerais?: {
+    tipoDePraia?: string
+    aguaDoceOuSalgada?: 'doce' | 'salgada'
+    extensaoKm?: number
+    faixaDeAreia?: string
+    marPredominante?: string
+  }
+  estrutura?: {
+    banheiros?: boolean
+    quiosques?: boolean
+    restaurantes?: boolean
+    hoteis?: boolean
+    estacionamento?: boolean
+    camping?: boolean
+    salvaVidas?: boolean
+    chuveiros?: boolean
+    acessibilidade?: boolean
+    wifi?: boolean
+    animaisPermitidos?: boolean
+  }
+  atividades?: Array<
+    | 'surf'
+    | 'pesca'
+    | 'caiaque'
+    | 'sup'
+    | 'banho'
+    | 'mergulho'
+    | 'passeio-de-barco'
+    | 'caminhada'
+    | 'fotografia'
+  >
+  comoChegar?: {
+    principaisAcessos?: string[]
+    transportePublico?: string
+  }
+  seguranca?: {
+    bandeira?: 'verde' | 'amarela' | 'vermelha'
+    correnteDeRetorno?: boolean
+    pedras?: boolean
+    ondasFortes?: boolean
+    areasPerigosas?: string[]
+    cuidadosImportantes?: string[]
+  }
+  pescaDetalhada?: {
+    especies?: string[]
+    tipoDePesca?: string[]
+    melhorEpoca?: string
+    iscas?: string[]
+    lugaresProximos?: string[]
+  }
+  galeria?: Array<{ url: string; alt: string }>
+  lugaresProximos?: Array<{
+    tipo: 'mirante' | 'parque' | 'marina' | 'molhe' | 'pier' | 'farol' | 'outro'
+    nome: string
+    slug?: string
+    url?: string
+  }>
 }
 
 // ─── dados ───────────────────────────────────────────────────────────────────

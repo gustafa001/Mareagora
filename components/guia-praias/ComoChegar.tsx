@@ -4,7 +4,7 @@ interface ComoChegarProps {
   uf: string
   lat: number
   lon: number
-  // Opcionais — só existem quando cadastrados manualmente para a praia
+  // Opcionais - só existem quando cadastrados manualmente para a praia
   principaisAcessos?: string[]
   transportePublico?: string
 }
@@ -18,7 +18,7 @@ export default function ComoChegar({
   principaisAcessos,
   transportePublico,
 }: ComoChegarProps) {
-  // Coordenadas reais (mesmas usadas pela maré/ondas) — sem geocoding inventado.
+  // Coordenadas reais (mesmas usadas pela maré/ondas) - sem geocoding inventado.
   const mapsEmbedUrl = `https://www.google.com/maps?q=${lat},${lon}&z=13&output=embed`
   const mapsDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`
 

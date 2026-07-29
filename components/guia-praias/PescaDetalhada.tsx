@@ -9,7 +9,7 @@ export interface PescaDetalhadaData {
 }
 
 /**
- * Seção "preparada para integração futura" pedida no briefing: hoje `data`
+ * Seção "preparada para integração futura" pedida no briefing: hoje `data` 
  * nunca vem preenchido (nenhuma praia tem esses campos cadastrados ainda),
  * então a seção fica oculta. Quando uma fonte de dados de pesca for
  * integrada, basta popular `pescaDetalhada` na praia correspondente em

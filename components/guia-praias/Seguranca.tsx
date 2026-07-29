@@ -4,7 +4,7 @@ export interface SegurancaData {
   bandeira?: 'verde' | 'amarela' | 'vermelha'
   correnteDeRetorno?: boolean
   pedras?: boolean
-  ondasFortes?: boolean
+  ondasFortes?: boolean 
   areasPerigosas?: string[]
   cuidadosImportantes?: string[]
 }

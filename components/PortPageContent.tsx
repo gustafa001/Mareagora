@@ -262,7 +262,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
 
             {/* Aviso Legal de Isenção de Responsabilidade Náutica */}
             <div className="mt-8 p-6 bg-slate-50 border border-slat-200 rounded-xl">
-              <h3 className="flex items-center gap-2 text-slat-700 font-bold mb-2">
+              <h3 className="flex items-center gap-2 text-slate-700 font-bold mb-2">
                 <span className="text-xl">⚠️</span> Isenção de Responsabilidade
               </h3>
               <p className="text-slate-600 text-sm leading-relaxed">

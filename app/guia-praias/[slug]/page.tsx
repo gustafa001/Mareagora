@@ -1,26 +1,56 @@
 // app/guia-praias/[slug]/page.tsx
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { PRAIAS } from '../page'
 import TideCardLive from '@/components/TideCardLive'
+import BeachConditions from '@/components/BeachConditions'
 import BeachAffiliateCard from '@/components/BeachAffiliateCard'
 import { AD_SLOTS } from '@/lib/adConfig'
 import AdSlot from '@/components/ads/AdSlot'
+import BeachSchemaMarkup from '@/components/guia-praias/BeachSchemaMarkup'
+import { getPortBySlug } from '@/lib/ports'
+import { getCamerasForPraia } from '@/lib/guia-praias/getCamerasForPraia'
+import { getPraiasProximas } from '@/lib/guia-praias/getPraiasProximas'
 
-// â”€â”€â”€ SEO dinÃ¢mico por praia â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+import InformacoesGerais from '@/components/guia-praias/InformacoesGerais'
+import Estrutura from '@/components/guia-praias/Estrutura'
+import Atividades from '@/components/guia-praias/Atividades'
+import ComoChegar from '@/components/guia-praias/ComoChegar'
+import Seguranca from '@/components/guia-praias/Seguranca'
+import PescaDetalhada from '@/components/guia-praias/PescaDetalhada'
+import CamerasAoVivo from '@/components/guia-praias/CamerasAoVivo'
+import Galeria from '@/components/guia-praias/Galeria'
+import PraiasProximas from '@/components/guia-praias/PraiasProximas'
+import LugaresProximos from '@/components/guia-praias/LugaresProximos'
+import Faq, { buildFaq } from '@/components/guia-praias/Faq'
+import ConteudoRelacionado from '@/components/guia-praias/ConteudoRelacionado'
+
+// ─── SEO dinâmico por praia ─────────────────────────────────────────────────
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const praia = PRAIAS.find((p) => p.slug === params.slug)
   if (!praia) return {}
-  const hasConteudo = !!CONTEUDO[praia.slug];
+  const hasConteudo = !!CONTEUDO[praia.slug]
+  const url = `https://mareagora.com.br/guia-praias/${praia.slug}`
+  const title = `${praia.nome} — Guia Completo: Maré, Ondas e Dicas | MaréAgora`
+  const description = `Guia completo de ${praia.nome}, ${praia.estado}: maré em tempo real, condições de ondas, estrutura, segurança e dicas de pesca. Dados oficiais da Marinha do Brasil.`
+
   return {
-    title: `${praia.nome} â€” Maré, Ondas e Dicas | MaréAgora`,
-    description: `Confira a maré em tempo real, condições de ondas e dicas de pesca para ${praia.nome}, ${praia.estado}. Dados oficiais da Marinha do Brasil.`,
-    keywords: `${praia.nome}, maré ${praia.nome}, praia ${praia.estado}, surf ${praia.nome}`,
+    title,
+    description,
+    keywords: `${praia.nome}, maré ${praia.nome}, praia ${praia.estado}, guia ${praia.nome}, surf ${praia.nome}`,
     robots: hasConteudo ? { index: true, follow: true } : { index: false, follow: false },
+    alternates: { canonical: url },
     openGraph: {
-      title: `${praia.nome} â€” Maré ao vivo | MaréAgora`,
+      title,
       description: praia.descricao,
-      url: `https://mareagora.com.br/guia-praias/${praia.slug}`,
+      url,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary',
+      title,
+      description: praia.descricao,
     },
   }
 }
@@ -29,15 +59,15 @@ export async function generateStaticParams() {
   return PRAIAS.map((p) => ({ slug: p.slug }))
 }
 
-// â”€â”€â”€ conteúdo SEO por praia (pode virar MDX futuramente) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── conteúdo SEO por praia (pode virar MDX futuramente) ───────────────────
 const CONTEUDO: Record<string, { sobre: string; pesca: string; melhorEpoca: string }> = {
   'jurere-sc': {
-    sobre: 'JurerÃª Internacional é a praia mais famosa de Florianópolis, conhecida pelos beach clubs sofisticados, casas de alto padrão e infraestrutura completa. O mar calmo e raso é ideal para famílias com crianças.',
+    sobre: 'Jurerê Internacional é a praia mais famosa de Florianópolis, conhecida pelos beach clubs sofisticados, casas de alto padrão e infraestrutura completa. O mar calmo e raso é ideal para famílias com crianças.',
     pesca: 'A pesca é boa nas pedras do costão leste, especialmente para robalo e tainha na maré enchendo. Os melhores horários são nas primeiras horas da manhã, quando o fluxo de maré está forte.',
     melhorEpoca: 'Dezembro a março para o verão agitado. Abril a junho para mar mais calmo e menos movimento.',
   },
   'jericoacoara-ce': {
-    sobre: 'Jericoacoara, ou "Jeri", é um dos destinos mais desejados do Brasil. A vila sem ruas asfaltadas fica dentro de um Parque Nacional e oferece dunas, lagoas e o famoso pÃ´r do sol na Pedra Furada.',
+    sobre: 'Jericoacoara, ou "Jeri", é um dos destinos mais desejados do Brasil. A vila sem ruas asfaltadas fica dentro de um Parque Nacional e oferece dunas, lagoas e o famoso pôr do sol na Pedra Furada.',
     pesca: 'A pesca artesanal é forte na região. Na maré baixa, os pescadores locais indicam os melhores pontos ao longo da praia principal. Atum e dourado são abundantes na costa.',
     melhorEpoca: 'Julho a dezembro para os ventos ideais de kitesurf. Janeiro a junho para mar mais calmo.',
   },
@@ -52,7 +82,7 @@ const CONTEUDO: Record<string, { sobre: string; pesca: string; melhorEpoca: stri
     melhorEpoca: 'Maio a setembro para surf e pesca. Verão para banho de mar com ondas menores.',
   },
   'morro-de-sao-paulo-ba': {
-    sobre: 'Morro de São Paulo fica na Ilha de Tinharé, sem carros. As praias são numeradas (Primeira, Segunda, Terceira e Quarta Praia) com características distintas â€” da mais agitada Ã  mais selvagem.',
+    sobre: 'Morro de São Paulo fica na Ilha de Tinharé, sem carros. As praias são numeradas (Primeira, Segunda, Terceira e Quarta Praia) com características distintas — da mais agitada à mais selvagem.',
     pesca: 'A Quarta Praia, mais isolada, oferece ótima pesca de arremesso. Os recifes de corais ao redor da ilha são paraíso para pesca subaquática e snorkel.',
     melhorEpoca: 'Setembro a março para clima seco. Julho é alta temporada apesar da chuva.',
   },
@@ -93,30 +123,59 @@ const CONTEUDO: Record<string, { sobre: string; pesca: string; melhorEpoca: stri
   },
 }
 
-// â”€â”€â”€ componente â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── componente ──────────────────────────────────────────────────────────
 export default function PraiaPagina({ params }: { params: { slug: string } }) {
   const praia = PRAIAS.find((p) => p.slug === params.slug)
   if (!praia) notFound()
 
   const conteudo = CONTEUDO[praia.slug]
+  const port = getPortBySlug(praia.porto.slug)
+  const url = `https://mareagora.com.br/guia-praias/${praia.slug}`
+
+  const cameras = getCamerasForPraia(praia.nome, praia.uf)
+  const praiasProximas = getPraiasProximas(praia, PRAIAS)
+
+  const faqItems = buildFaq({
+    nome: praia.nome,
+    uf: praia.uf,
+    temPesca: !!conteudo?.pesca,
+    melhorEpoca: conteudo?.melhorEpoca,
+    idealParaFamilia: praia.tags.some((t) => t.toLowerCase() === 'família'),
+    temEstacionamento: praia.estrutura?.estacionamento,
+    temQuiosques: praia.estrutura?.quiosques,
+    temSalvaVidas: praia.estrutura?.salvaVidas,
+    temAnimaisPermitidos: praia.estrutura?.animaisPermitidos,
+    temCameras: cameras.length > 0,
+    principaisAcessos: praia.comoChegar?.principaisAcessos,
+  })
 
   return (
     <main className="praia-page">
+      {port && (
+        <BeachSchemaMarkup
+          nome={praia.nome}
+          descricao={praia.descricao}
+          url={url}
+          port={port}
+          faq={faqItems}
+        />
+      )}
+
       {/* ── Botão Voltar ── */}
-      <a href="/guia-praias" className="pp-back-btn">
+      <Link href="/guia-praias" className="pp-back-btn">
         ← Guia de Praias
-      </a>
+      </Link>
 
       {/* ── Breadcrumb ── */}
       <nav className="pp-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">MaréAgora</a>
+        <Link href="/">MaréAgora</Link>
         <span>/</span>
-        <a href="/guia-praias">Guia de Praias</a>
+        <Link href="/guia-praias">Guia de Praias</Link>
         <span>/</span>
         <span>{praia.nome}</span>
       </nav>
 
-      {/* â”€â”€ Hero â”€â”€ */}
+      {/* ── Hero ── */}
       <header className="pp-hero">
         <div className="pp-hero-bg" />
         <div className="pp-hero-content">
@@ -124,7 +183,7 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
           <h1>{praia.nome}</h1>
           <p>{praia.descricao}</p>
           <div className="pp-tags">
-            {praia.tags.map((tag) => (
+            {praia.tags?.map((tag) => (
               <span key={tag} className="pp-tag">{tag}</span>
             ))}
           </div>
@@ -136,61 +195,94 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
         <AdSlot slotId={AD_SLOTS.LEADERBOARD_NAV} format="horizontal" />
       </div>
 
-      {/* â”€â”€ Layout principal â”€â”€ */}
+      {/* ── Layout principal ── */}
       <div className="pp-layout">
         {/* Coluna principal */}
         <div className="pp-main">
 
-          {/* Componente de maré ao vivo â€” já existe no MaréAgora! */}
+          {/* 2. Informações gerais — a partir de campos reais da praia */}
+          <InformacoesGerais
+            nome={praia.nome}
+            estado={praia.estado}
+            uf={praia.uf}
+            regiao={praia.regiao}
+            tags={praia.tags}
+            melhorEpoca={conteudo?.melhorEpoca}
+            extra={praia.informacoesGerais}
+          />
+
+          {/* 3. Condições atuais — reaproveita componentes existentes, sem alterar suas APIs */}
           <section className="pp-section">
             <h2 className="pp-section-title">
-              <span className="pp-live-dot" /> Maré em Tempo Real
+              <span className="pp-live-dot" /> Condições atuais
             </h2>
-            {/* TideCardLive já existe no seu projeto â€” só passar o objeto port */}
-            <TideCardLive port={praia.porto} />
+            <div className="pp-conditions-stack">
+              <TideCardLive port={praia.porto} />
+              {port && <BeachConditions lat={port.lat} lon={port.lon} />}
+            </div>
           </section>
 
-          {/* Sobre a praia */}
+          {/* 4. Sobre a praia */}
           {conteudo && (
-            <>
-              <section className="pp-section pp-text-section">
-                <h2 className="pp-section-title">Sobre {praia.nome}</h2>
-                <p>{conteudo.sobre}</p>
-              </section>
-
-              <section className="pp-section pp-text-section">
-                <h2 className="pp-section-title">ðŸŽ£ Pesca em {praia.nome}</h2>
-                <p>{conteudo.pesca}</p>
-              </section>
-
-              <section className="pp-section pp-text-section">
-                <h2 className="pp-section-title">ðŸ“… Melhor época para visitar</h2>
-                <p>{conteudo.melhorEpoca}</p>
-              </section>
-            </>
+            <section className="pp-section pp-text-section">
+              <h2 className="pp-section-title">Sobre {praia.nome}</h2>
+              <p>{conteudo.sobre}</p>
+            </section>
           )}
+
+          {/* 5. Estrutura */}
+          <Estrutura data={praia.estrutura} />
+
+          {/* 6. Atividades */}
+          <Atividades data={praia.atividades} />
+
+          {/* 7. Como chegar — usa as mesmas coordenadas oficiais da maré/ondas */}
+          {port && (
+            <ComoChegar
+              nome={praia.nome}
+              cidade={praia.nome}
+              uf={praia.uf}
+              lat={port.lat}
+              lon={port.lon}
+              principaisAcessos={praia.comoChegar?.principaisAcessos}
+              transportePublico={praia.comoChegar?.transportePublico}
+            />
+          )}
+
+          {/* 8. Segurança */}
+          <Seguranca data={praia.seguranca} />
 
           {/* AdSense meio */}
           <div className="pp-ad-slot pp-ad-rect">
             <AdSlot slotId={AD_SLOTS.INCONTENT_RECT} format="rectangle" />
           </div>
 
-          {/* FAQ â€” SEO */}
-          <section className="pp-section pp-faq">
-            <h2 className="pp-section-title">Perguntas frequentes</h2>
-            <details className="pp-faq-item">
-              <summary>Qual é a maré hoje em {praia.nome}?</summary>
-              <p>VocÃª pode ver a maré em tempo real no card acima, com dados oficiais da Marinha do Brasil atualizados a cada hora.</p>
-            </details>
-            <details className="pp-faq-item">
-              <summary>Quando é o melhor horário para pescar em {praia.nome}?</summary>
-              <p>Os melhores horários são 1 hora antes e depois da virada de maré (enchente ou vazante). Consulte o gráfico de maré acima para o horário exato de hoje.</p>
-            </details>
-            <details className="pp-faq-item">
-              <summary>As ondas estão boas em {praia.nome} hoje?</summary>
-              <p>O card de maré acima mostra as condições atuais de ondas e vento em tempo real via Open-Meteo Marine API.</p>
-            </details>
-          </section>
+          {/* 9. Pesca (texto simples existente) + Pesca detalhada (preparada p/ integração futura) */}
+          {conteudo && (
+            <section className="pp-section pp-text-section">
+              <h2 className="pp-section-title">🎣 Pesca em {praia.nome}</h2>
+              <p>{conteudo.pesca}</p>
+            </section>
+          )}
+          <PescaDetalhada data={praia.pescaDetalhada} />
+
+          {/* 10. Câmeras ao vivo */}
+          <CamerasAoVivo cameras={cameras} />
+
+          {/* 11. Galeria */}
+          <Galeria fotos={praia.galeria} nome={praia.nome} />
+
+          {/* 12. Praias próximas */}
+          <PraiasProximas praias={praiasProximas} />
+
+          {/* 13. Lugares próximos */}
+          <LugaresProximos lugares={praia.lugaresProximos} />
+
+          {/* 14. Perguntas frequentes */}
+          <Faq items={faqItems} />
+
+          {/* 15. Conteúdo relacionado */}
+          <ConteudoRelacionado nome={praia.nome} uf={praia.uf} portoSlug={praia.porto.slug} />
         </div>
 
         {/* Sidebar */}
@@ -230,16 +322,16 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
             </a>
           </div>
 
-          {/* Outras praias */}
+          {/* Outras praias (fallback simples; ver também "Praias próximas" no conteúdo principal) */}
           <div className="pp-other-beaches">
             <h3>Outras praias</h3>
             {PRAIAS.filter((p) => p.slug !== praia.slug)
               .slice(0, 4)
               .map((p) => (
-                <a key={p.slug} href={`/guia-praias/${p.slug}`} className="pp-other-link">
+                <Link key={p.slug} href={`/guia-praias/${p.slug}`} className="pp-other-link">
                   <span>{p.nome}</span>
                   <span className="pp-other-uf">{p.uf}</span>
-                </a>
+                </Link>
               ))}
           </div>
         </aside>
@@ -327,6 +419,56 @@ const styles = `
   @keyframes ppPulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 
   .pp-text-section p { font-size: 0.95rem; line-height: 1.8; color: #8a9aaa; }
+  .pp-text-section ul { margin: 0.5rem 0 1rem 1.25rem; color: #8a9aaa; font-size: 0.9rem; line-height: 1.7; }
+
+  /* Condições atuais */
+  .pp-conditions-stack { display: flex; flex-direction: column; gap: 1rem; }
+
+  /* Informações gerais */
+  .pp-info-card {
+    background: rgba(14,58,110,0.2); border: 1px solid rgba(33,150,196,0.15);
+    border-radius: 14px; padding: 1.25rem 1.5rem; display: grid; gap: 0.9rem;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  .pp-info-item { display: flex; flex-direction: column; gap: 0.2rem; }
+  .pp-info-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: #2196c4; font-weight: 700; }
+  .pp-info-value { font-size: 0.9rem; color: #d4c49a; }
+  .pp-info-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+  /* Estrutura (ícones) */
+  .pp-icon-grid {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.75rem;
+  }
+  .pp-icon-item {
+    display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #d4c49a;
+    background: rgba(14,58,110,0.15); border: 1px solid rgba(33,150,196,0.1);
+    border-radius: 10px; padding: 0.6rem 0.75rem;
+  }
+
+  /* Atividades (badges) */
+  .pp-badge-list { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .pp-badge {
+    display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; font-weight: 600;
+    color: #7ab8d0; background: rgba(33,150,196,0.1); border: 1px solid rgba(33,150,196,0.25);
+    border-radius: 100px; padding: 0.4rem 0.9rem;
+  }
+
+  /* Como chegar */
+  .pp-map-wrapper { border-radius: 14px; overflow: hidden; border: 1px solid rgba(33,150,196,0.15); margin-bottom: 1rem; }
+  .pp-map-iframe { width: 100%; height: 320px; border: 0; display: block; }
+  .pp-como-chegar-info { font-size: 0.9rem; color: #8a9aaa; line-height: 1.7; display: flex; flex-direction: column; gap: 0.5rem; }
+  .pp-como-chegar-info strong { color: #d4c49a; }
+
+  /* Câmeras */
+  .pp-cameras-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+
+  /* Galeria */
+  .pp-galeria-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.75rem; }
+  .pp-galeria-item { position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden; }
+
+  /* Listas de proximidade */
+  .pp-nearby-list, .pp-related-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
 
   /* FAQ */
   .pp-faq-item {
@@ -339,7 +481,7 @@ const styles = `
   }
   .pp-faq-item summary::-webkit-details-marker { display: none; }
   .pp-faq-item summary::after { content: '+'; color: #2196c4; }
-  .pp-faq-item[open] summary::after { content: 'âˆ’'; }
+  .pp-faq-item[open] summary::after { content: '−'; }
   .pp-faq-item p { padding: 0 1rem 1rem; font-size: 0.88rem; color: #8a9aaa; line-height: 1.6; }
 
   /* Sidebar */
@@ -349,7 +491,7 @@ const styles = `
     border: 1px solid rgba(33,150,196,0.1);
   }
   .pp-sidebar h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: #2196c4; margin-bottom: 1rem; }
-  
+
   .pp-affiliate-link {
     display: block; font-size: 0.82rem; color: #8a9aaa; text-decoration: none;
     padding: 0.75rem; border-radius: 8px; background: rgba(0,0,0,0.2);
@@ -369,5 +511,6 @@ const styles = `
     .pp-layout { grid-template-columns: 1fr; }
     .pp-sidebar { order: -1; }
     .pp-hero { padding: 3rem 1.5rem 4rem; }
+    .pp-map-iframe { height: 240px; }
   }
 `

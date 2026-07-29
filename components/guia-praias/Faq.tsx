@@ -4,7 +4,7 @@ export interface FaqItem {
 }
 
 /**
- * Monta a FAQ a partir dos dados reais já disponíveis para a praia — nunca
+ * Monta a FAQ a partir dos dados reais já disponíveis para a praia - nunca
  * de texto genérico solto. Cada pergunta só entra na lista se a informação
  * que ela responde realmente existir (ver comentários por item).
  */
@@ -82,7 +82,7 @@ export function buildFaq(params: {
   if (temPesca) {
     faq.push({
       pergunta: `${nome} é boa para pesca?`,
-      resposta: `Sim — veja detalhes na seção "Pesca" desta página, incluindo horários e dicas específicas para ${nome}.`,
+      resposta: `Sim - veja detalhes na seção "Pesca" desta página, incluindo horários e dicas específicas para ${nome}.`,
     })
     faq.push({
       pergunta: `Quando é o melhor horário para pescar em ${nome}?`,

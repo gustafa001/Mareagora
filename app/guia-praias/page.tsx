@@ -5,13 +5,13 @@ import { AD_SLOTS } from '@/lib/adConfig'
 import AdSlot from '@/components/ads/AdSlot'
 
 export const metadata: Metadata = {
-  title: 'Guia de Praias do Brasil — Marés, Ondas e Dicas | MaréAgora',
+  title: 'Guia de Praias do Brasil - Marés, Ondas e Dicas | MaréAgora',
   description:
     'Descubra as melhores praias do Brasil com dados de marés em tempo real, condições de ondas e dicas de pesca. Guia completo do litoral brasileiro.',
   keywords: 'praias brasil, maré praia, ondas surf, pesca esportiva, guia praias',
 }
 
-// ─── tipos ───────────────────────────────────────────────────────────────────
+// --- tipos -------------------------------------------------------------------
 interface PortoMeta {
   slug: string
   nome: string
@@ -31,7 +31,7 @@ interface Praia {
   afiliado?: { label: string; url: string }
   unsplashQuery: string
 
-  // ─── Campos opcionais do Guia de Praia (fase 2) ────────────────────────
+  // --- Campos opcionais do Guia de Praia (fase 2) ------------------------
   // Nenhuma praia tem esses campos preenchidos ainda: eles existem para
   // permitir cadastro incremental de dados reais, praia por praia, sem
   // quebrar tipos. Enquanto vazios, as seções correspondentes ficam ocultas
@@ -95,10 +95,10 @@ interface Praia {
   }>
 }
 
-// ─── dados ───────────────────────────────────────────────────────────────────
+// --- dados -------------------------------------------------------------------
 export const PRAIAS: Praia[] = [
 
-  // ── Região Norte ──────────────────────────────────────────────────────────
+  // -- Região Norte ----------------------------------------------------------
   {
     slug: 'porto-de-belem',
     nome: 'Porto de Belém (Val de Cães)',
@@ -208,7 +208,7 @@ export const PRAIAS: Praia[] = [
     unsplashQuery: 'tropical island wildlife birds brazil',
   },
 
-  // ── Região Nordeste ───────────────────────────────────────────────────────
+  // -- Região Nordeste -------------------------------------------------------
   {
     slug: 'porto-de-itaqui',
     nome: 'Porto de Itaqui',
@@ -486,7 +486,7 @@ export const PRAIAS: Praia[] = [
     unsplashQuery: 'ilheus bahia surf beach brazil coast',
   },
 
-  // ── Região Sudeste ────────────────────────────────────────────────────────
+  // -- Região Sudeste --------------------------------------------------------
   {
     slug: 'terminal-de-barra-do-riacho',
     nome: 'Barra do Riacho',
@@ -752,7 +752,7 @@ export const PRAIAS: Praia[] = [
     unsplashQuery: 'preserved beach ecotourism atlantic forest sao paulo',
   },
 
-  // ── Região Sul ────────────────────────────────────────────────────────────
+  // -- Região Sul ------------------------------------------------------------
   {
     slug: 'barra-de-paranagua-sueste',
     nome: 'Barra de Paranaguá',
@@ -878,16 +878,16 @@ const REGIAO_LABELS: Record<string, string> = {
   sul: '❄️ Região Sul',
 }
 
-// ─── componente ──────────────────────────────────────────────────────────────
+// --- componente --------------------------------------------------------------
 export default function GuiaPraias() {
   const regioes = ['norte', 'nordeste', 'sudeste', 'sul'] as const
 
   return (
     <main className="guia-praias">
-      {/* ── Hero ── */}
+      {/* -- Hero -- */}
       <section className="gp-hero">
         <Link href="/" className="gp-back-btn">
-          ← Início
+          &larr; Início
         </Link>
         <div className="gp-hero-bg" />
         <div className="gp-hero-content">
@@ -898,7 +898,7 @@ export default function GuiaPraias() {
           </h1>
           <p>
             Dados de marés em tempo real, condições de ondas e dicas de pesca
-            para cada praia — tudo integrado ao MaréAgora.
+            para cada praia - tudo integrado ao MaréAgora.
           </p>
         </div>
         <div className="gp-waves">
@@ -907,12 +907,12 @@ export default function GuiaPraias() {
         </div>
       </section>
 
-      {/* ── AdSense topo ── */}
+      {/* -- AdSense topo -- */}
       <div className="gp-ad-slot">
         <AdSlot slotId={AD_SLOTS.LEADERBOARD_NAV} format="horizontal" />
       </div>
 
-      {/* ── Grid por região ── */}
+      {/* -- Grid por região -- */}
       <section className="gp-grid-section">
         <div className="gp-container">
           {regioes.map((regiao) => {
@@ -947,7 +947,7 @@ export default function GuiaPraias() {
                         </div>
                         <div className="gp-card-footer">
                           <span className="gp-live-dot" /> Maré ao vivo
-                          <span className="gp-arrow">→</span>
+                          <span className="gp-arrow">&rarr;</span>
                         </div>
                         </div>
                       </Link>
@@ -971,12 +971,12 @@ export default function GuiaPraias() {
         </div>
       </section>
 
-      {/* ── AdSense meio ── */}
+      {/* -- AdSense meio -- */}
       <div className="gp-ad-slot gp-ad-wide">
         <AdSlot slotId={AD_SLOTS.INCONTENT_RECT} format="auto" />
       </div>
 
-      {/* ── SEO text block ── */}
+      {/* -- SEO text block -- */}
       <section className="gp-seo-section">
         <div className="gp-container gp-seo-grid">
           <div>
@@ -996,10 +996,10 @@ export default function GuiaPraias() {
           <div>
             <h3>Regiões cobertas</h3>
             <ul className="gp-estados-list">
-              <li><span className="gp-check">✓</span> Região Norte — PA, AP</li>
-              <li><span className="gp-check">✓</span> Região Nordeste — MA, PI, CE, RN, PB, PE, AL, SE</li>
-              <li><span className="gp-check">✓</span> Região Sudeste — BA, ES, RJ, SP</li>
-              <li><span className="gp-check">✓</span> Região Sul — PR, SC, RS</li>
+              <li><span className="gp-check">✓</span> Região Norte - PA, AP</li>
+              <li><span className="gp-check">✓</span> Região Nordeste - MA, PI, CE, RN, PB, PE, AL, SE</li>
+              <li><span className="gp-check">✓</span> Região Sudeste - BA, ES, RJ, SP</li>
+              <li><span className="gp-check">✓</span> Região Sul - PR, SC, RS</li>
             </ul>
             <p className="gp-coming-soon">Em breve: mais localidades em cada estado</p>
           </div>
@@ -1011,7 +1011,7 @@ export default function GuiaPraias() {
   )
 }
 
-// ─── estilos ─────────────────────────────────────────────────────────────────
+// --- estilos -----------------------------------------------------------------
 const styles = `
   .guia-praias { background: #04111f; min-height: 100vh; }
 

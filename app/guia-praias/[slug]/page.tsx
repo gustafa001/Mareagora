@@ -26,13 +26,13 @@ import LugaresProximos from '@/components/guia-praias/LugaresProximos'
 import Faq, { buildFaq } from '@/components/guia-praias/Faq'
 import ConteudoRelacionado from '@/components/guia-praias/ConteudoRelacionado'
 
-// ─── SEO dinâmico por praia ─────────────────────────────────────────────────
+// --- SEO dinâmico por praia -------------------------------------------------
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const praia = PRAIAS.find((p) => p.slug === params.slug)
   if (!praia) return {}
   const hasConteudo = !!CONTEUDO[praia.slug]
   const url = `https://mareagora.com.br/guia-praias/${praia.slug}`
-  const title = `${praia.nome} — Guia Completo: Maré, Ondas e Dicas | MaréAgora`
+  const title = `${praia.nome} - Guia Completo: Maré, Ondas e Dicas | MaréAgora`
   const description = `Guia completo de ${praia.nome}, ${praia.estado}: maré em tempo real, condições de ondas, estrutura, segurança e dicas de pesca. Dados oficiais da Marinha do Brasil.`
 
   return {
@@ -59,7 +59,7 @@ export async function generateStaticParams() {
   return PRAIAS.map((p) => ({ slug: p.slug }))
 }
 
-// ─── conteúdo SEO por praia (pode virar MDX futuramente) ───────────────────
+// --- conteúdo SEO por praia (pode virar MDX futuramente) -------------------
 const CONTEUDO: Record<string, { sobre: string; pesca: string; melhorEpoca: string }> = {
   'jurere-sc': {
     sobre: 'Jurerê Internacional é a praia mais famosa de Florianópolis, conhecida pelos beach clubs sofisticados, casas de alto padrão e infraestrutura completa. O mar calmo e raso é ideal para famílias com crianças.',
@@ -82,7 +82,7 @@ const CONTEUDO: Record<string, { sobre: string; pesca: string; melhorEpoca: stri
     melhorEpoca: 'Maio a setembro para surf e pesca. Verão para banho de mar com ondas menores.',
   },
   'morro-de-sao-paulo-ba': {
-    sobre: 'Morro de São Paulo fica na Ilha de Tinharé, sem carros. As praias são numeradas (Primeira, Segunda, Terceira e Quarta Praia) com características distintas — da mais agitada à mais selvagem.',
+    sobre: 'Morro de São Paulo fica na Ilha de Tinharé, sem carros. As praias são numeradas (Primeira, Segunda, Terceira e Quarta Praia) com características distintas - da mais agitada à mais selvagem.',
     pesca: 'A Quarta Praia, mais isolada, oferece ótima pesca de arremesso. Os recifes de corais ao redor da ilha são paraíso para pesca subaquática e snorkel.',
     melhorEpoca: 'Setembro a março para clima seco. Julho é alta temporada apesar da chuva.',
   },
@@ -123,7 +123,7 @@ const CONTEUDO: Record<string, { sobre: string; pesca: string; melhorEpoca: stri
   },
 }
 
-// ─── componente ──────────────────────────────────────────────────────────
+// --- componente ----------------------------------------------------------
 export default function PraiaPagina({ params }: { params: { slug: string } }) {
   const praia = PRAIAS.find((p) => p.slug === params.slug)
   if (!praia) notFound()
@@ -161,21 +161,21 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
         />
       )}
 
-      {/* ── Botão Voltar ── */}
-      <Link href="/guia-praias" className="pp-back-btn">
-        ← Guia de Praias
-      </Link>
+      {/* -- Botão Voltar -- */}
+      <a href="/guia-praias" className="pp-back-btn">
+        &larr; Guia de Praias
+      </a>
 
-      {/* ── Breadcrumb ── */}
+      {/* -- Breadcrumb -- */}
       <nav className="pp-breadcrumb" aria-label="Breadcrumb">
-        <Link href="/">MaréAgora</Link>
+        <a href="/">MaréAgora</a>
         <span>/</span>
-        <Link href="/guia-praias">Guia de Praias</Link>
+        <a href="/guia-praias">Guia de Praias</a>
         <span>/</span>
         <span>{praia.nome}</span>
       </nav>
 
-      {/* ── Hero ── */}
+      {/* -- Hero -- */}
       <header className="pp-hero">
         <div className="pp-hero-bg" />
         <div className="pp-hero-content">
@@ -183,24 +183,24 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
           <h1>{praia.nome}</h1>
           <p>{praia.descricao}</p>
           <div className="pp-tags">
-            {praia.tags?.map((tag) => (
+            {praia.tags.map((tag) => (
               <span key={tag} className="pp-tag">{tag}</span>
             ))}
           </div>
         </div>
       </header>
 
-      {/* ── AdSense topo ── */}
+      {/* -- AdSense topo -- */}
       <div className="pp-ad-slot">
         <AdSlot slotId={AD_SLOTS.LEADERBOARD_NAV} format="horizontal" />
       </div>
 
-      {/* ── Layout principal ── */}
+      {/* -- Layout principal -- */}
       <div className="pp-layout">
         {/* Coluna principal */}
         <div className="pp-main">
 
-          {/* 2. Informações gerais — a partir de campos reais da praia */}
+          {/* 2. Informações gerais - a partir de campos reais da praia */}
           <InformacoesGerais
             nome={praia.nome}
             estado={praia.estado}
@@ -211,7 +211,7 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
             extra={praia.informacoesGerais}
           />
 
-          {/* 3. Condições atuais — reaproveita componentes existentes, sem alterar suas APIs */}
+          {/* 3. Condições atuais - reaproveita componentes existentes, sem alterar suas APIs */}
           <section className="pp-section">
             <h2 className="pp-section-title">
               <span className="pp-live-dot" /> Condições atuais
@@ -236,7 +236,7 @@ export default function PraiaPagina({ params }: { params: { slug: string } }) {
           {/* 6. Atividades */}
           <Atividades data={praia.atividades} />
 
-          {/* 7. Como chegar — usa as mesmas coordenadas oficiais da maré/ondas */}
+          {/* 7. Como chegar - usa as mesmas coordenadas oficiais da maré/ondas */}
           {port && (
             <ComoChegar
               nome={praia.nome}
@@ -481,7 +481,7 @@ const styles = `
   }
   .pp-faq-item summary::-webkit-details-marker { display: none; }
   .pp-faq-item summary::after { content: '+'; color: #2196c4; }
-  .pp-faq-item[open] summary::after { content: '−'; }
+  .pp-faq-item[open] summary::after { content: '-'; }
   .pp-faq-item p { padding: 0 1rem 1rem; font-size: 0.88rem; color: #8a9aaa; line-height: 1.6; }
 
   /* Sidebar */

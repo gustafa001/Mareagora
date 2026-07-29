@@ -161,6 +161,7 @@ export default function RootLayout({
         </div>
 
         <InstallPWA />
+        <MobileStickyAd />
       </body>
     </html>
   );

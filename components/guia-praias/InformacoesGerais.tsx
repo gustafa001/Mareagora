@@ -12,7 +12,7 @@ interface InformacoesGeraisProps {
   extra?: {
     tipoDePraia?: string
     aguaDoceOuSalgada?: 'doce' | 'salgada'
-    extensaoKm?: number
+    extensaoKm?: number 
     faixaDeAreia?: string
     marPredominante?: string
   }

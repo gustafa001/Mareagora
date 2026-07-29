@@ -7,7 +7,7 @@ interface InformacoesGeraisProps {
   regiao: string
   tags: string[]
   melhorEpoca?: string
-  // Campos opcionais — só aparecem quando a praia tiver esse dado cadastrado
+  // Campos opcionais - só aparecem quando a praia tiver esse dado cadastrado
   // (ver `informacoesGerais?` no tipo Praia em app/guia-praias/page.tsx).
   extra?: {
     tipoDePraia?: string
@@ -66,11 +66,11 @@ export default function InformacoesGerais({
         <Item label="Faixa de areia" value={extra?.faixaDeAreia} />
         <Item label="Mar predominante" value={extra?.marPredominante} />
         <Item label="Melhor época" value={melhorEpoca} />
-        {tags?.length > 0 && (
+        {tags.length > 0 && (
           <div className="pp-info-item">
             <span className="pp-info-label">Ideal para</span>
             <span className="pp-info-value pp-info-tags">
-              {tags?.map((tag) => (
+              {tags.map((tag) => (
                 <span key={tag} className="pp-tag">
                   {tag}
                 </span>

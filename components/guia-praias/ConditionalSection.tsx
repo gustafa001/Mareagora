@@ -11,7 +11,7 @@ function isEmptyValue(data: unknown): boolean {
 /**
  * Regra central do Guia de Praias: nunca renderizar um bloco vazio.
  * Se `data` não existir (ou for array/objeto vazio), a seção inteira
- * não é montada — em vez de mostrar um card em branco ou texto genérico.
+ * não é montada - em vez de mostrar um card em branco ou texto genérico.
  */
 export default function ConditionalSection({
   data,

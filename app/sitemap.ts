@@ -3,7 +3,7 @@ import { PORTS } from '@/lib/ports';
 import { getStateSlug } from '@/lib/states';
 import { getPosts } from '@/lib/blog';
 
-const base = 'https://mareagora.com.br';
+const base = 'https://www.mareagora.com.br';
 
 export async function generateSitemaps() {
   return [

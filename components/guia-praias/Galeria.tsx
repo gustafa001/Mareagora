@@ -14,6 +14,8 @@ export interface FotoGaleria {
  * reais, popular `galeria` na praia correspondente ativa este bloco.
  */
 export default function Galeria({ fotos, nome }: { fotos?: FotoGaleria[]; nome: string }) {
+  if (!fotos || fotos.length === 0) return null
+
   return (
     <ConditionalSection data={fotos}>
       <section className="pp-section" aria-labelledby="galeria-heading">
@@ -21,7 +23,7 @@ export default function Galeria({ fotos, nome }: { fotos?: FotoGaleria[]; nome: 
           Galeria
         </h2>
         <div className="pp-galeria-grid">
-          {fotos!.map((foto, i) => (
+          {fotos.map((foto, i) => (
             <div key={foto.url} className="pp-galeria-item">
               <Image
                 src={foto.url}

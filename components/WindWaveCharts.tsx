@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import WaveChart from "@/components/WaveChart";
 import WindChart from "@/components/WindChart";
+import WaveEnergyChart from "@/components/WaveEnergyChart";
 import WindRadarCard from "@/components/WindRadarCard";
 
 interface WindWaveChartsProps {
@@ -14,14 +15,14 @@ interface MarineHourly {
   time: string[];
   wave_height: number[];
   wave_period: number[];
-  swell_wave_height?: number[];
-  swell_wave_period?: number[];
+  wave_direction: number[];
 }
 
 interface WindHourly {
   time: string[];
   windspeed_10m: number[];
   winddirection_10m: number[];
+  windgusts_10m: number[];
 }
 
 export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
@@ -33,21 +34,21 @@ export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
     setLoading(true);
     const tz = "America%2FSao_Paulo";
 
-    // API de Marinha (Ondas) - Suporta até 7 dias na versão gratuita padrão, 
-    // mas vamos tentar 7 dias primeiro para garantir estabilidade se 30 falhar.
+    // API de Marinha (Ondas) — agora inclui período e direção, usados para
+    // colorir as barras e desenhar as setas no estilo Surfguru.
     const marineUrl =
       `https://marine-api.open-meteo.com/v1/marine` +
       `?latitude=${lat}&longitude=${lon}` +
       `&hourly=wave_height,wave_period,wave_direction` +
       `&forecast_days=7&timezone=${tz}`;
 
-    // API de Clima (Vento) - Suporta até 16 dias.
+    // API de Clima (Vento) — agora inclui rajadas (windgusts_10m).
     const windUrl =
       `https://api.open-meteo.com/v1/forecast` +
       `?latitude=${lat}&longitude=${lon}` +
-      `&hourly=windspeed_10m,winddirection_10m` +
+      `&hourly=windspeed_10m,winddirection_10m,windgusts_10m` +
       `&wind_speed_unit=kmh` +
-      `&forecast_days=14&timezone=${tz}`;
+      `&forecast_days=7&timezone=${tz}`;
 
     Promise.all([
       fetch(marineUrl).then((r) => r.json()),
@@ -73,18 +74,6 @@ export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
     );
   }
 
-  // Preparar dados para o gráfico de ondas (Próximos 7 dias)
-  const waveData = marineHourly ? marineHourly.time.filter((_, i) => i % 6 === 0).map((t, i) => {
-    const originalIdx = marineHourly.time.findIndex(tt => tt === t);
-    const date = new Date(t);
-    return {
-      time: date.getHours() === 0 
-        ? date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })
-        : date.getHours() + "h",
-      height: marineHourly.wave_height[originalIdx]
-    };
-  }) : [];
-
   return (
     <section className="mb-8">
       <div className="flex items-center gap-4 mb-10">
@@ -96,29 +85,9 @@ export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Gráfico de Ondas */}
-        <div className="bg-[#0d1526] border border-white/5 rounded-[2.5rem] p-8 shadow-2xl overflow-hidden relative">
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-          
-          <div className="flex justify-between items-center mb-8">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
-                <span className="text-xl">🌊</span>
-              </div>
-              <div>
-                <h3 className="text-white font-bold text-lg leading-none">Altura das Ondas</h3>
-                <p className="text-slate-500 text-xs mt-1 font-medium uppercase tracking-widest">Próximos 7 dias</p>
-              </div>
-            </div>
-            <div className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-[10px] font-black text-blue-400 uppercase tracking-tighter">
-              Metros (m)
-            </div>
-          </div>
-          
-          <WaveChart data={waveData} />
-        </div>
-
-        {/* Radar de Vento Animado */}
+        <WaveChart hourly={marineHourly} days={7} />
+        <WindChart hourly={windHourly} days={7} />
+        <WaveEnergyChart hourly={marineHourly} days={7} />
         <WindRadarCard lat={lat} lon={lon} />
       </div>
     </section>

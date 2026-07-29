@@ -1,52 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useInstallPrompt } from '@/hooks/useInstallPrompt';
 
 export default function InstallPWA() {
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-  const [showBanner, setShowBanner] = useState(false);
-  const [isInstalled, setIsInstalled] = useState(false);
+  const { canInstall, isStandalone, install } = useInstallPrompt();
+  const [dismissed, setDismissed] = useState(false);
 
-  useEffect(() => {
-    // Verificar se a app já foi instalada
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      setIsInstalled(true);
-      return;
-    }
-
-    const handler = (e: any) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-      // Mostrar banner imediatamente
-      setShowBanner(true);
-    };
-
-    window.addEventListener('beforeinstallprompt', handler);
-
-    // Verificar se a app foi instalada após o prompt
-    window.addEventListener('appinstalled', () => {
-      setIsInstalled(true);
-      setShowBanner(false);
-    });
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handler);
-      window.removeEventListener('appinstalled', () => {});
-    };
-  }, []);
+  if (isStandalone || dismissed || !canInstall) return null;
 
   const handleInstall = async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') {
-      setDeferredPrompt(null);
-      setShowBanner(false);
-    }
+    const outcome = await install();
+    if (outcome === 'accepted') setDismissed(true);
   };
-
-  // Se já está instalado, não mostrar nada
-  if (isInstalled || !showBanner || !deferredPrompt) return null;
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-[100] md:bottom-8 md:right-8 md:left-auto md:w-96">
@@ -62,8 +28,8 @@ export default function InstallPWA() {
                 Acesse as marés offline e receba alertas direto no seu dispositivo.
               </p>
             </div>
-            <button 
-              onClick={() => setShowBanner(false)}
+            <button
+              onClick={() => setDismissed(true)}
               className="text-slate-500 hover:text-white transition-colors flex-shrink-0"
               aria-label="Fechar"
             >
@@ -80,7 +46,7 @@ export default function InstallPWA() {
               Instalar ⚓
             </button>
             <button
-              onClick={() => setShowBanner(false)}
+              onClick={() => setDismissed(true)}
               className="flex-1 py-3 rounded-xl bg-slate-700 text-slate-200 font-bold text-sm uppercase tracking-widest hover:bg-slate-600 transition-all"
             >
               Depois

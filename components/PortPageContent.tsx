@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { getPortBySlug, PORTS, haversineDistance } from '@/lib/ports';
 import { getEventosDia, getEventosAno, getEventosRange } from '@/lib/mare';
 import { portosConfig } from '@/data/porto-seo-config';
@@ -17,17 +18,19 @@ import SearchPorts from '@/components/SearchPorts';
 import PortStatistics from '@/components/PortStatistics';
 import ActivityRecommendations from '@/components/ActivityRecommendations';
 import SolunarTable from '@/components/SolunarTable';
+import BarometerCard from '@/components/BarometerCard';
 import PortBlogSection from '@/components/PortBlogSection';
 import NotificationCTA from '@/components/NotificationCTA';
 import WeatherRadarCard from '@/components/port-operations/WeatherRadarCard';
 const DailyScoreCard = dynamic(() => import('@/components/DailyScoreCard'), { ssr: false });
 import TideSchemaMarkup from '@/components/TideSchemaMarkup';
-import { getStateSlug } from '@/lib/states';
+import { getStateSlug, getStateName } from '@/lib/states';
 import ShareButton from '@/components/ShareButton';
 import { useSeaConditions } from '@/hooks/useSeaConditions';
 import { getNextHighAndLow } from '@/lib/tideUtils';
 import { notFound } from 'next/navigation';
 import type { BlogPost } from '@/lib/blog';
+import { useRecentPorts } from '@/hooks/useRecentPorts';
 
 interface PortPageContentProps {
   slug: string;
@@ -43,6 +46,14 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
   const seoName = port.cityName;
 
   const { waveHeight, loading: seaLoading } = useSeaConditions(port.lat, port.lon);
+
+  // registra o porto como "visto recentemente" pro menu de navegação
+  const { addRecentPort } = useRecentPorts();
+  useEffect(() => {
+    addRecentPort(port.slug);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [port.slug]);
+
   const config = portosConfig[slug];
   const categoria = config?.category ?? 'turismo';
 
@@ -54,7 +65,16 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
 
   const now = new Date();
 
-  const currentTimeBR = new Date().toLocaleTimeString('pt-BR', {
+  // Relógio "vivo": sem isso, o horário (e o cálculo de próxima alta/baixa)
+  // ficava congelado no momento em que a página carregou/hidratou.
+  const [liveNow, setLiveNow] = useState(now);
+
+  useEffect(() => {
+    const timer = setInterval(() => setLiveNow(new Date()), 30_000); // atualiza a cada 30s
+    return () => clearInterval(timer);
+  }, []);
+
+  const currentTimeBR = liveNow.toLocaleTimeString('pt-BR', {
     hour: '2-digit',
     minute: '2-digit',
     timeZone: 'America/Sao_Paulo',
@@ -82,26 +102,27 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
         nextHigh={nextHigh ? { hora: nextHigh.hora, altura_m: nextHigh.altura_m } : null}
         nextLow={nextLow ? { hora: nextLow.hora, altura_m: nextLow.altura_m } : null}
         pageUrl={`https://mareagora.com.br/mare/${getStateSlug(port.state)}/${port.slug}`}
-        parentUrl="https://mareagora.com.br/estados"
-        parentName={port.state}
+        parentUrl={`https://mareagora.com.br/estados/${getStateSlug(port.state)}`}
+        parentName={getStateName(port.state)}
         locale="pt"
       />
       <NavBar />
 
-      <section className="relative overflow-hidden bg-gradient-to-b from-slate-900 via-slate-900/90 to-slate-950 pt-24 pb-16 border-b border-white/5">
+      <section className="relative overflow-hidden hero-section pt-24 pb-16 border-b border-white/5">
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-950/70 to-slate-950" />
         <div className="container relative z-10">
 
           {/* Botão Voltar */}
           <div className="absolute top-0 left-4 md:left-0 pt-4 md:pt-0">
             <a 
-              href="/portos" 
+              href={`/estados/${getStateSlug(port.state)}`}
               className="inline-flex items-center gap-2 text-[10px] font-bold text-blue-400 hover:text-white transition-all uppercase tracking-widest bg-white/5 hover:bg-blue-500/20 px-4 py-2 rounded-xl border border-white/10 hover:border-blue-400/50 backdrop-blur-md"
             >
-              ← Portos
+              ← {getStateName(port.state)}
             </a>
           </div>
 
-          <div className="flex flex-col gap-3 items-center px-2 text-center">
+          <div className="flex flex-col gap-3 items-center px-2 text-center pt-14 md:pt-0">
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight font-syne leading-tight max-w-4xl text-white drop-shadow-md">
               Tábua de Maré {seoName} — {ano}
             </h1>
@@ -216,6 +237,8 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               weekTides={weekTides}
             />
 
+            <BarometerCard lat={port.lat} lon={port.lon} />
+
             <PortStatistics
               eventos={dataAno}
               portName={seoName}
@@ -238,15 +261,15 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
             />
 
             {/* Aviso Legal de Isenção de Responsabilidade Náutica */}
-            <div className="mt-8 p-6 bg-red-50 border border-red-100 rounded-xl">
-              <h3 className="flex items-center gap-2 text-red-800 font-bold mb-2">
-                <span className="text-xl">⚠️</span> Aviso Importante de Navegação
+            <div className="mt-8 p-6 bg-slate-50 border border-slat-200 rounded-xl">
+              <h3 className="flex items-center gap-2 text-slate-700 font-bold mb-2">
+                <span className="text-xl">⚠️</span> Isenção de Responsabilidade
               </h3>
-              <p className="text-red-700/90 text-sm leading-relaxed">
-                As previsões de marés, ventos e ondas exibidas no MaréAgora têm finalidade exclusivamente <strong>informativa e recreativa</strong>. 
-                Nossos dados são baseados em fontes públicas e modelos matemáticos. 
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Os dados de maré exibidos no MaréAgora têm como fonte a Diretoria de Hidrografia e Navegação (DHN) da Marinha do Brasil. O MaréAgora não se responsabiliza por eventuais falhas, atrasos ou imprecisões na disponibilização desses dados pela fonte oficial, nem pelo uso que for feito das informações aqui apresentadas.
                 <br className="mb-1" />
                 <strong>Em nenhuma hipótese</strong> estas informações devem ser utilizadas para navegação, planejamento de operações portuárias oficiais ou qualquer atividade que envolva risco de vida ou de patrimônio. Para tais fins, consulte <strong>sempre</strong> as Tábuas das Marés oficiais e cartas náuticas certificadas pela Diretoria de Hidrografia e Navegação (DHN) da Marinha do Brasil.
+                {' '}Consulte nossos <a href="/termos" className="underline hover:text-slate-800">Termos de Uso</a> para mais detalhes.
               </p>
             </div>
           </div>

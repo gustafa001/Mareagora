@@ -4,14 +4,8 @@ import { PORTS, getNearestPort, type Port } from '@/lib/ports';
 import type { GlobalPlace } from '@/lib/globalPlaces';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import dynamic from 'next/dynamic';
 import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
-
-const BotaoAlertas = dynamic(() => import('@/components/BotaoAlertas'), {
-  ssr: false,
-  loading: () => <div className="h-10 w-40 animate-pulse bg-slate-800/50 rounded-full" />,
-});
 
 type SearchResult =
   | { type: 'br'; port: Port }
@@ -130,8 +124,8 @@ export default function HomeHero() {
       <div className="relative z-10 w-full max-w-2xl">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-20 h-20 mb-6 rounded-3xl bg-gradient-to-br from-blue-400 to-cyan-400 shadow-2xl shadow-blue-500/20">
-            <span className="text-4xl">🌊</span>
+          <div className="inline-flex items-center justify-center w-20 h-20 mb-6 rounded-3xl overflow-hidden shadow-2xl shadow-blue-500/20">
+            <img src="/logo-mark.png" alt="MaréAgora" className="w-full h-full object-cover" />
           </div>
           <h1 className="text-4xl md:text-6xl font-black text-white mb-3 font-syne tracking-tighter">
             MaréAgora
@@ -279,15 +273,6 @@ export default function HomeHero() {
           >
             Ver todos os portos →
           </button>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <BotaoAlertas portSlug="porto-de-santos" portName="Porto mais próximo" />
-            <button
-              onClick={() => router.push('/configuracoes')}
-              style={{ color: '#64748b', fontSize: '0.75rem', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
-            >
-              ⚙️ Configurar porto favorito
-            </button>
-          </div>
         </div>
       </div>
     </section>

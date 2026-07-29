@@ -57,7 +57,7 @@ export default function SearchPorts({ ports }: SearchPortsProps) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => query.length > 0 && setIsOpen(true)}
-          placeholder="🔍 Pesquisar praias ou portos..."
+          placeholder="Pesquisar praias ou portos..."
           className="w-full px-4 py-3 pl-11 bg-white/95 backdrop-blur-sm border border-white/30 rounded-xl text-gray-800 placeholder-gray-500 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-transparent transition-all"
         />
         <svg 

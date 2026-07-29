@@ -71,7 +71,12 @@ export const PORTS: Port[] = [
   { id: '35', name: 'Porto de Vitória',                          cityName: 'Vitória',                  slug: 'porto-de-vitoria',                     state: 'ES',  region: 'sudeste',  lat: -20.321667, lon: -40.335944, dhnId: '40256' },
   { id: '37', name: 'Terminal da Ponta do Ubu',                  cityName: 'Anchieta',                 slug: 'terminal-da-ponta-do-ubu-i',           state: 'ES',  region: 'sudeste',  lat: -20.787833, lon: -40.570389, dhnId: '40292' },
   { id: '38', name: 'Terminal de Imbetiba',                      cityName: 'Macaé',                    slug: 'terminal-maritimo-de-imbetiba',        state: 'RJ',  region: 'sudeste',  lat: -22.385000, lon: -41.770000, dhnId: '50116' },
-  { id: '39', name: 'Rio de Janeiro - Ilha Fiscal',              cityName: 'Rio de Janeiro',           slug: 'rio-de-janeiro-fiscal',                state: 'RJ',  region: 'sudeste',  lat: -22.896694, lon: -43.166000, dhnId: '50140' },
+  { 
+    id: '39', name: 'Rio de Janeiro - Ilha Fiscal', cityName: 'Rio de Janeiro', slug: 'rio-de-janeiro-fiscal', state: 'RJ', region: 'sudeste', lat: -22.896694, lon: -43.166000, dhnId: '50140',
+    cameras: [
+      { title: 'Rio de Janeiro - São Conrado Beach ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/O8ZLvDZ_WKQ', videoId: 'O8ZLvDZ_WKQ' }
+    ]
+  },
   { id: '40', name: 'Porto de Itaguaí',                          cityName: 'Itaguaí',                  slug: 'porto-de-itaguai',                     state: 'RJ',  region: 'sudeste',  lat: -22.932083, lon: -43.842278, dhnId: '50145' },
   { id: '41', name: 'Porto do Forno',                            cityName: 'Arraial do Cabo',          slug: 'porto-do-forno',                       state: 'RJ',  region: 'sudeste',  lat: -22.972667, lon: -42.013861, dhnId: '50156' },
   { id: '42', name: 'Terminal da Ilha Guaíba',                   cityName: 'Mangaratiba',              slug: 'terminal-da-ilha-guaiba',              state: 'RJ',  region: 'sudeste',  lat: -22.999778, lon: -44.031639, dhnId: '50165' },
@@ -81,27 +86,32 @@ export const PORTS: Port[] = [
   { 
     id: '46', name: 'Porto de Santos', cityName: 'Santos', slug: 'porto-de-santos', state: 'SP', region: 'sudeste', lat: -23.956778, lon: -46.308111, dhnId: '50228',
     cameras: [
-      { title: 'Santos ao Vivo', sourceName: 'Olhar 013', sourceUrl: 'https://www.youtube.com/@olhar013', videoId: '3S6__7YkhYk' }
+      { title: 'Santos - Praia do Gonzaga ao Vivo', sourceName: 'Olhar 013', sourceUrl: 'https://www.youtube.com/@olhar013', videoId: '3S6__7YkhYk' }
     ]
   },
 
   // Litoral Norte de SP — referência São Sebastião (dhnId 50210)
   // ATENÇÃO: offsetMinutes abaixo é um placeholder (0) — não verificado contra tábua oficial da Marinha.
-  { id: '65', name: 'Ubatuba', cityName: 'Ubatuba', slug: 'ubatuba', state: 'SP', region: 'sudeste', lat: -23.433611, lon: -45.083889, dhnId: '50210', offsetMinutes: 0, searchNames: ['ubatuba', 'itamambuca', 'prumirim', 'vermelha do norte'], referencePortSlug: 'porto-de-sao-sebastiao' },
+  { 
+    id: '65', name: 'Ubatuba', cityName: 'Ubatuba', slug: 'ubatuba', state: 'SP', region: 'sudeste', lat: -23.433611, lon: -45.083889, dhnId: '50210', offsetMinutes: 0, searchNames: ['ubatuba', 'itamambuca', 'prumirim', 'vermelha do norte'], referencePortSlug: 'porto-de-sao-sebastiao',
+    cameras: [
+      { title: 'Ubatuba - Praia Grande (Baguari) ao Vivo', sourceName: 'UBACAM', sourceUrl: 'https://www.youtube.com/watch?v=yPSJYJk-Szc', videoId: 'yPSJYJk-Szc' }
+    ]
+  },
 
   // Litoral de SP — referência Porto de Santos (dhnId 50228)
   { 
     id: '57', name: 'Guarujá', cityName: 'Guarujá', slug: 'guaruja', state: 'SP', region: 'sudeste', lat: -23.993056, lon: -46.257778, dhnId: '50228', offsetMinutes:  0, searchNames: ['guaruja', 'guarujá', 'enseada', 'pitangueiras'], referencePortSlug: 'porto-de-santos',
     cameras: [
-      { title: 'Praia da Enseada', sourceName: 'Surfistafotografo (Fábio Paulista)', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: 'v5Y6WsD577M' },
-      { title: 'Praia das Pitangueiras', sourceName: 'Surfistafotografo (Fábio Paulista)', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: 'pJvaJY7pKvk' }
+      { title: 'Guarujá - Praia da Enseada (Posto 11) ao Vivo', sourceName: 'Surfistafotografo (Fábio Paulista)', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: 'v5Y6WsD577M' },
+      { title: 'Guarujá - Praia das Pitangueiras ao Vivo', sourceName: 'Surfistafotografo (Fábio Paulista)', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: 'pJvaJY7pKvk' }
     ]
   },
   { id: '58', name: 'São Vicente',             cityName: 'São Vicente',             slug: 'sao-vicente',               state: 'SP', region: 'sudeste', lat: -23.964444, lon: -46.391944, dhnId: '50228', offsetMinutes:  0, searchNames: ['sao vicente', 'são vicente'], referencePortSlug: 'porto-de-santos' },
   { 
-    id: '59', name: 'Praia Grande', cityName: 'Praia Grande', slug: 'praia-grande', state: 'SP', region: 'sudeste', lat: -24.005833, lon: -46.412222, dhnId: '50228', offsetMinutes: 5, searchNames: ['praia grande', 'aviação', 'real'], referencePortSlug: 'porto-de-santos',
+    id: '59', name: 'Praia Grande', cityName: 'Praia Grande', slug: 'praia-grande', state: 'SP', region: 'sudeste', lat: -24.005833, lon: -46.412222, dhnId: '50228', offsetMinutes:  5, searchNames: ['praia grande', 'aviação', 'real'], referencePortSlug: 'porto-de-santos',
     cameras: [
-      { title: 'Praia Grande ao Vivo', sourceName: 'Câmera ao Vivo', sourceUrl: 'https://www.youtube.com/live/FvrSoHFX1Ng', videoId: 'FvrSoHFX1Ng' }
+      { title: 'Praia Grande - Orla ao Vivo', sourceName: 'Intelbras', sourceUrl: 'https://www.youtube.com/live/FvrSoHFX1Ng', videoId: 'FvrSoHFX1Ng' }
     ]
   },
   { id: '60', name: 'Bertioga',                cityName: 'Bertioga',                slug: 'bertioga',                  state: 'SP', region: 'sudeste', lat: -23.854444, lon: -46.138611, dhnId: '50228', offsetMinutes: 15, searchNames: ['bertioga'], referencePortSlug: 'porto-de-santos' },
@@ -109,6 +119,31 @@ export const PORTS: Port[] = [
   { id: '62', name: 'Mongaguá',                cityName: 'Mongaguá',                slug: 'mongagua',                  state: 'SP', region: 'sudeste', lat: -24.085278, lon: -46.622500, dhnId: '50228', offsetMinutes: 10, searchNames: ['mongagua', 'mongaguá'], referencePortSlug: 'porto-de-santos' },
   { id: '63', name: 'Itanhaém',                cityName: 'Itanhaém',                slug: 'itanhaem',                  state: 'SP', region: 'sudeste', lat: -24.183333, lon: -46.783333, dhnId: '50228', offsetMinutes: 15, searchNames: ['itanhaem', 'itanhaém'], referencePortSlug: 'porto-de-santos' },
   { id: '64', name: 'Peruíbe',                 cityName: 'Peruíbe',                 slug: 'peruibe',                   state: 'SP', region: 'sudeste', lat: -24.316667, lon: -47.000000, dhnId: '50228', offsetMinutes: 20, searchNames: ['peruibe', 'peruíbe'], referencePortSlug: 'porto-de-santos' },
+
+  // ── Praias Turísticas ────────────────────────────────────────────────────
+  { 
+    id: '66', name: 'Copacabana', cityName: 'Copacabana', slug: 'copacabana', state: 'RJ', region: 'sudeste', lat: -22.971177, lon: -43.182543, dhnId: '50140', offsetMinutes: 0, searchNames: ['copacabana'], referencePortSlug: 'rio-de-janeiro-fiscal',
+    cameras: [
+      { title: 'Copacabana - Praia ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/n6bLMUaGTRM', videoId: 'n6bLMUaGTRM' }
+    ]
+  },
+  { id: '67', name: 'Ipanema',              cityName: 'Ipanema',              slug: 'ipanema',              state: 'RJ', region: 'sudeste',  lat: -22.986889, lon: -43.202944, dhnId: '50140', offsetMinutes: 0, searchNames: ['ipanema'],                        referencePortSlug: 'rio-de-janeiro-fiscal' },
+  { id: '68', name: 'Búzios',               cityName: 'Búzios',               slug: 'buzios',               state: 'RJ', region: 'sudeste',  lat: -22.746944, lon: -41.881667, dhnId: '50156', offsetMinutes: 0, searchNames: ['buzios', 'búzios', 'armacao dos buzios'], referencePortSlug: 'porto-do-forno' },
+  { id: '69', name: 'Maresias',             cityName: 'Maresias',             slug: 'maresias',             state: 'SP', region: 'sudeste',  lat: -23.790833, lon: -45.566111, dhnId: '50210', offsetMinutes: 0, searchNames: ['maresias'],                       referencePortSlug: 'porto-de-sao-sebastiao' },
+  { id: '70', name: 'Porto de Galinhas',    cityName: 'Porto de Galinhas',    slug: 'porto-de-galinhas',    state: 'PE', region: 'nordeste', lat: -8.510556,  lon: -35.003333, dhnId: '30686', offsetMinutes: 0, searchNames: ['porto de galinhas'],              referencePortSlug: 'porto-de-suape' },
+  { id: '71', name: 'Boa Viagem',           cityName: 'Boa Viagem',           slug: 'boa-viagem',           state: 'PE', region: 'nordeste', lat: -8.118667,  lon: -34.899444, dhnId: '30645', offsetMinutes: 0, searchNames: ['boa viagem', 'boa viagem recife'],   referencePortSlug: 'porto-do-recife' },
+  { id: '72', name: 'Praia do Forte',       cityName: 'Praia do Forte',       slug: 'praia-do-forte',       state: 'BA', region: 'nordeste', lat: -12.581667, lon: -38.001667, dhnId: '40141', offsetMinutes: 0, searchNames: ['praia do forte'],                 referencePortSlug: 'porto-de-salvador' },
+  { id: '73', name: 'Morro de São Paulo',   cityName: 'Morro de São Paulo',   slug: 'morro-de-sao-paulo',   state: 'BA', region: 'nordeste', lat: -13.383333, lon: -38.916667, dhnId: '40141', offsetMinutes: 0, searchNames: ['morro de sao paulo', 'morro de são paulo', 'tinharé'], referencePortSlug: 'porto-de-salvador' },
+  { id: '74', name: 'Trancoso',             cityName: 'Trancoso',             slug: 'trancoso',             state: 'BA', region: 'nordeste', lat: -16.593056, lon: -39.099444, dhnId: '40145', offsetMinutes: 0, searchNames: ['trancoso'],                       referencePortSlug: 'porto-de-ilheus' },
+  { id: '75', name: 'Jericoacoara',         cityName: 'Jericoacoara',         slug: 'jericoacoara',         state: 'CE', region: 'nordeste', lat: -2.795278,  lon: -40.512778, dhnId: '30225', offsetMinutes: 0, searchNames: ['jericoacoara', 'jeri'],           referencePortSlug: 'porto-de-luis-correia' },
+  { id: '76', name: 'Praia do Futuro',      cityName: 'Praia do Futuro',      slug: 'praia-do-futuro',      state: 'CE', region: 'nordeste', lat: -3.750000,  lon: -38.470000, dhnId: '30340', offsetMinutes: 0, searchNames: ['praia do futuro', 'praia do futuro fortaleza'], referencePortSlug: 'porto-de-mucuripe-fortaleza' },
+  { id: '77', name: 'Ponta Negra',          cityName: 'Ponta Negra',          slug: 'ponta-negra',          state: 'RN', region: 'nordeste', lat: -5.876667,  lon: -35.171944, dhnId: '30462', offsetMinutes: 0, searchNames: ['ponta negra', 'ponta negra natal'], referencePortSlug: 'porto-de-natal' },
+  { id: '78', name: 'Pipa',                 cityName: 'Pipa',                 slug: 'pipa',                 state: 'RN', region: 'nordeste', lat: -6.231111,  lon: -35.039167, dhnId: '30462', offsetMinutes: 0, searchNames: ['pipa', 'praia da pipa'],           referencePortSlug: 'porto-de-natal' },
+  { id: '79', name: 'Maragogi',             cityName: 'Maragogi',             slug: 'maragogi',             state: 'AL', region: 'nordeste', lat: -9.011944,  lon: -35.222500, dhnId: '30725', offsetMinutes: 0, searchNames: ['maragogi'],                       referencePortSlug: 'porto-de-maceio' },
+  { id: '80', name: 'Baía do Sancho',       cityName: 'Baía do Sancho',       slug: 'baia-do-sancho',       state: 'PE', region: 'especial', lat: -3.856667,  lon: -32.491667, dhnId: '30955', offsetMinutes: 0, searchNames: ['baia do sancho', 'baía do sancho', 'fernando de noronha'], referencePortSlug: 'arquipelago-de-fernando-de-noronha' },
+  { id: '81', name: 'Balneário Camboriú',   cityName: 'Balneário Camboriú',   slug: 'balneario-camboriu',   state: 'SC', region: 'sul',      lat: -26.990556, lon: -48.635000, dhnId: '60235', offsetMinutes: 0, searchNames: ['balneario camboriu', 'balneário camboriú', 'bc'], referencePortSlug: 'porto-de-itajai' },
+  { id: '82', name: 'Bombinhas',            cityName: 'Bombinhas',            slug: 'bombinhas',            state: 'SC', region: 'sul',      lat: -27.137222, lon: -48.483889, dhnId: '60235', offsetMinutes: 0, searchNames: ['bombinhas'],                      referencePortSlug: 'porto-de-itajai' },
+  { id: '83', name: 'Joaquina',             cityName: 'Joaquina',             slug: 'joaquina',             state: 'SC', region: 'sul',      lat: -27.629444, lon: -48.441944, dhnId: '60245', offsetMinutes: 0, searchNames: ['joaquina', 'praia da joaquina', 'joaquina florianopolis'], referencePortSlug: 'porto-de-florianopolis' },
 
   // ── Região Sul ────────────────────────────────────────────────────────────
   { id: '47', name: 'Barra de Paranaguá - Canal SE',            cityName: 'Paranaguá (Barra SE)',     slug: 'barra-de-paranagua-sueste',            state: 'PR',  region: 'sul',      lat: -25.540000, lon: -48.295000, dhnId: '60130' },
@@ -122,7 +157,6 @@ export const PORTS: Port[] = [
   { id: '55', name: 'Porto do Rio Grande',                      cityName: 'Rio Grande',               slug: 'porto-do-rio-grande',                  state: 'RS',  region: 'sul',      lat: -32.138611, lon: -52.103611, dhnId: '60380' },
 
   // ── Especial (Antártida, ilhas oceânicas) ──────────────────────────────────
-  { id: '28', name: 'Fernando de Noronha',                       cityName: 'Fernando de Noronha',      slug: 'arquipelago-de-fernando-de-noronha',   state: 'PE',  region: 'especial', lat: -3.833333,  lon: -32.403333, dhnId: '30955' },
   { id: '36', name: 'Ilha da Trindade',                          cityName: 'Ilha da Trindade',         slug: 'ilha-da-trindade',                     state: 'ES',  region: 'especial', lat: -20.508333, lon: -29.310000, dhnId: '40263' },
   { id: '56', name: 'Base Comandante Ferraz (Antártida)',        cityName: 'Base Ferraz (Antártida)',  slug: 'base-comandante-ferraz',               state: 'ANT', region: 'especial', lat: -62.085000, lon: -58.395000, dhnId: '60900' },
 

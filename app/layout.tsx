@@ -35,7 +35,8 @@ const firaSans = Fira_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "MaréAgora — Tábua de Marés 2026",
+  metadataBase: new URL('https://mareagora.com.br'),
+  title: `MaréAgora — Tábua de Marés ${new Date().getFullYear()}`,
   description: "Horários e alturas das marés com dados oficiais da Marinha do Brasil. Previsão de ondas e vento em tempo real.",
   manifest: "/manifest.json",
   appleWebApp: {
@@ -78,6 +79,7 @@ export default function RootLayout({
 
         {/* Google AdSense */}
         <meta name="google-adsense-account" content="ca-pub-2920008879492175" />
+        <meta name="google-site-verification" content="sHCQQ9fcGrzTM7k2FVoiEiBczB8Z4peDcz1k3Pnx6G8" />
         {/* Script AdSense */}
         <Script
           async
@@ -112,6 +114,17 @@ export default function RootLayout({
             }
           `}
         </Script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'MaréAgora',
+              url: 'https://mareagora.com.br',
+            })
+          }}
+        />
         <style>{`
           @keyframes wave1 {
             0%   { d: path("M0,60 C180,100 360,20 540,60 C720,100 900,20 1080,60 C1260,100 1350,40 1440,60 L1440,120 L0,120Z"); }

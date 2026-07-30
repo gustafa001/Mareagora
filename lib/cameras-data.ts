@@ -39,10 +39,10 @@ const DESCRIPTIONS: Record<string, string> = {
     'Praia central do Guarujá, ao lado do calçadão, uma das mais movimentadas da cidade.',
   WJ6LLt6xxkY:
     'Vista da orla de Praia Grande, no litoral sul de São Paulo.',
-  n6bLMUaGTRM:
-    'A praia mais famosa do Rio de Janeiro, entre o Forte de Copacabana e o Leme.',
   ukoSyGLdoTQ:
     'Vista do Morro do Itararé, em São Vicente, mirante natural com vista panorâmica da Baía de Santos.',
+  OlEJOalq4oQ:
+    'Vista da Praia dos Sonhos, em Itanhaém, no litoral sul de São Paulo.',
 };
 
 // Agrupamento visual por região turística (mais legível que o campo
@@ -52,9 +52,9 @@ const GROUP_LABELS: Record<string, string> = {
   guaruja: 'Baixada Santista',
   'praia-grande': 'Baixada Santista',
   'sao-vicente': 'Baixada Santista',
+  itanhaem: 'Baixada Santista',
   ubatuba: 'Litoral Norte SP',
   'rio-de-janeiro-fiscal': 'Rio de Janeiro',
-  copacabana: 'Rio de Janeiro',
 };
 
 const GROUP_ORDER = ['Baixada Santista', 'Litoral Norte SP', 'Rio de Janeiro'];

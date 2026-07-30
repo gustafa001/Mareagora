@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { getLiveCameraGroups } from '@/lib/live-cameras';
 import LiveCameraCard from '@/components/LiveCameraCard';
 
@@ -13,6 +14,16 @@ export default function CamerasPage() {
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
+        {/* Botão Voltar */}
+        <div className="mb-4">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-xs font-bold text-blue-600 hover:text-blue-800 transition-all uppercase tracking-widest bg-white hover:bg-blue-50 px-4 py-2 rounded-xl border border-slate-200 hover:border-blue-300 shadow-sm"
+          >
+            ← Início
+          </Link>
+        </div>
+
         <div className="mb-8 text-center sm:mb-12">
           <h1 className="mb-4 text-3xl font-black tracking-tighter text-slate-900 sm:text-4xl md:text-5xl font-syne uppercase">
             Praias ao Vivo

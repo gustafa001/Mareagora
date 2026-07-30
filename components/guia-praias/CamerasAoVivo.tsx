@@ -1,8 +1,8 @@
 import LiveCameraEmbed from '@/components/LiveCameraEmbed'
 import ConditionalSection from './ConditionalSection'
-import type { BeachCamera } from '@/lib/cameras-data'
+import type { LiveCamera } from '@/lib/cameras-data'
 
-export default function CamerasAoVivo({ cameras }: { cameras: BeachCamera[] }) {
+export default function CamerasAoVivo({ cameras }: { cameras: LiveCamera[] }) {
   return (
     <ConditionalSection data={cameras}>
       <section className="pp-section" aria-labelledby="cameras-heading">
@@ -13,10 +13,10 @@ export default function CamerasAoVivo({ cameras }: { cameras: BeachCamera[] }) {
           {cameras.map((cam) => (
             <LiveCameraEmbed
               key={cam.id}
-              title={cam.name}
-              sourceName={cam.credit}
-              sourceUrl={cam.creditUrl}
-              videoId={cam.embedId}
+              title={cam.title}
+              sourceName={cam.sourceName}
+              sourceUrl={cam.sourceUrl}
+              videoId={cam.videoId}
             />
           ))}
         </div>

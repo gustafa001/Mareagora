@@ -23,7 +23,7 @@ export interface LiveCamera {
 // Descrição curta por vídeo — mantida separada de ports.ts pra não poluir
 // aquele arquivo com texto editorial.
 const DESCRIPTIONS: Record<string, string> = {
-  O8ZLvDZ_WKQ:
+  qM5J5aPdmMY:
     'Vista da praia de São Conrado, na Zona Sul do Rio, point tradicional de voo livre com a Pedra da Gávea ao fundo.',
   '3S6__7YkhYk':
     'Vista da Praia do Gonzaga, um dos trechos mais movimentados da orla de Santos.',
@@ -33,7 +33,7 @@ const DESCRIPTIONS: Record<string, string> = {
     'Vista do Posto 11 na Praia da Enseada, uma das mais extensas do litoral do Guarujá.',
   pJvaJY7pKvk:
     'Praia central do Guarujá, ao lado do calçadão, uma das mais movimentadas da cidade.',
-  FvrSoHFX1Ng:
+  WJ6LLt6xxkY:
     'Vista da orla de Praia Grande, no litoral sul de São Paulo.',
   n6bLMUaGTRM:
     'A praia mais famosa do Rio de Janeiro, entre o Forte de Copacabana e o Leme.',

@@ -123,15 +123,16 @@ export const PORTS: Port[] = [
   { id: '60', name: 'Bertioga',                cityName: 'Bertioga',                slug: 'bertioga',                  state: 'SP', region: 'sudeste', lat: -23.854444, lon: -46.138611, dhnId: '50228', offsetMinutes: 15, searchNames: ['bertioga'], referencePortSlug: 'porto-de-santos' },
   { id: '61', name: 'Riviera de São Lourenço', cityName: 'Riviera de São Lourenço', slug: 'riviera-de-sao-lourenco',   state: 'SP', region: 'sudeste', lat: -23.833333, lon: -46.033333, dhnId: '50228', offsetMinutes: 15, searchNames: ['riviera', 'riviera de sao lourenco', 'são lourenço'], referencePortSlug: 'porto-de-santos' },
   { id: '62', name: 'Mongaguá',                cityName: 'Mongaguá',                slug: 'mongagua',                  state: 'SP', region: 'sudeste', lat: -24.085278, lon: -46.622500, dhnId: '50228', offsetMinutes: 10, searchNames: ['mongagua', 'mongaguá'], referencePortSlug: 'porto-de-santos' },
-  { id: '63', name: 'Itanhaém',                cityName: 'Itanhaém',                slug: 'itanhaem',                  state: 'SP', region: 'sudeste', lat: -24.183333, lon: -46.783333, dhnId: '50228', offsetMinutes: 15, searchNames: ['itanhaem', 'itanhaém'], referencePortSlug: 'porto-de-santos' },
+  { id: '63', name: 'Itanhaém',                cityName: 'Itanhaém',                slug: 'itanhaem',                  state: 'SP', region: 'sudeste', lat: -24.183333, lon: -46.783333, dhnId: '50228', offsetMinutes: 15, searchNames: ['itanhaem', 'itanhaém'], referencePortSlug: 'porto-de-santos',
+    cameras: [
+      { title: 'Praia dos Sonhos (Itanhaém) ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/OlEJOalq4oQ', videoId: 'OlEJOalq4oQ' }
+    ]
+  },
   { id: '64', name: 'Peruíbe',                 cityName: 'Peruíbe',                 slug: 'peruibe',                   state: 'SP', region: 'sudeste', lat: -24.316667, lon: -47.000000, dhnId: '50228', offsetMinutes: 20, searchNames: ['peruibe', 'peruíbe'], referencePortSlug: 'porto-de-santos' },
 
   // ── Praias Turísticas ────────────────────────────────────────────────────
   { 
-    id: '66', name: 'Copacabana', cityName: 'Copacabana', slug: 'copacabana', state: 'RJ', region: 'sudeste', lat: -22.971177, lon: -43.182543, dhnId: '50140', offsetMinutes: 0, searchNames: ['copacabana'], referencePortSlug: 'rio-de-janeiro-fiscal',
-    cameras: [
-      { title: 'Copacabana - Praia ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/n6bLMUaGTRM', videoId: 'n6bLMUaGTRM' }
-    ]
+    id: '66', name: 'Copacabana', cityName: 'Copacabana', slug: 'copacabana', state: 'RJ', region: 'sudeste', lat: -22.971177, lon: -43.182543, dhnId: '50140', offsetMinutes: 0, searchNames: ['copacabana'], referencePortSlug: 'rio-de-janeiro-fiscal'
   },
   { id: '67', name: 'Ipanema',              cityName: 'Ipanema',              slug: 'ipanema',              state: 'RJ', region: 'sudeste',  lat: -22.986889, lon: -43.202944, dhnId: '50140', offsetMinutes: 0, searchNames: ['ipanema'],                        referencePortSlug: 'rio-de-janeiro-fiscal' },
   { id: '68', name: 'Búzios',               cityName: 'Búzios',               slug: 'buzios',               state: 'RJ', region: 'sudeste',  lat: -22.746944, lon: -41.881667, dhnId: '50156', offsetMinutes: 0, searchNames: ['buzios', 'búzios', 'armacao dos buzios'], referencePortSlug: 'porto-do-forno' },

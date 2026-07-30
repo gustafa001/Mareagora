@@ -9,7 +9,7 @@ import { getStateSlug } from '@/lib/states';
 import { useRecentPorts } from '@/hooks/useRecentPorts';
 import {
   Umbrella, Anchor, Map, Globe, FileText, Building2, MapPin, Loader2,
-  Waves, CalendarClock, CalendarDays, TrendingUp, Moon, Sparkles, MoonStar, Fish,
+  Waves, CalendarClock, CalendarDays, TrendingUp, Moon, Sparkles, MoonStar, Fish, Camera,
 } from 'lucide-react';
 
 interface NavBarProps {
@@ -22,6 +22,7 @@ const NAV_LINKS = [
   { href: '/guia-praias', icon: Umbrella, label: 'Praias' },
   { href: '/portos', icon: Anchor, label: 'Portos' },
   { href: '/lugares-de-pesca', icon: Fish, label: 'Pesca' },
+  { href: '/cameras', icon: Camera, label: 'Câmeras' },
   { href: '/estados', icon: Map, label: 'Estados' },
   { href: '/mare-mundo', icon: Globe, label: 'Mundo' },
   { href: '/blog', icon: FileText, label: 'Blog' },
@@ -64,6 +65,7 @@ const NAV_SECTIONS: {
     items: [
       { href: '/guia-praias', icon: Umbrella, label: 'Praias' },
       { href: '/portos', icon: Anchor, label: 'Portos' },
+      { href: '/cameras', icon: Camera, label: 'Câmeras ao vivo' },
       { href: '/estados', icon: Map, label: 'Estados' },
       { href: '/mare-mundo', icon: Globe, label: 'Mundo' },
       { href: '/blog', icon: FileText, label: 'Blog' },

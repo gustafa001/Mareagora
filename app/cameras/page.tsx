@@ -1,14 +1,14 @@
-import { beachCameras, regions } from '@/lib/cameras-data';
-import CameraPlayer from '@/components/CameraPlayer';
+import { getLiveCameraGroups } from '@/lib/live-cameras';
+import LiveCameraCard from '@/components/LiveCameraCard';
 
 export const metadata = {
   title: 'Câmeras ao Vivo das Praias | MaréAgora',
-  description: 'Veja em tempo real as condições do mar e das praias do litoral brasileiro através de câmeras ao vivo de Santos, Guarujá, Ubatuba, Rio de Janeiro e mais.',
+  description:
+    'Veja em tempo real as condições do mar e das praias do litoral brasileiro através de câmeras ao vivo de Santos, Guarujá, Praia Grande, Ubatuba e Rio de Janeiro.',
 };
 
 export default function CamerasPage() {
-  // Filtra as câmeras que não estão inativas
-  const activeCameras = beachCameras.filter((cam) => cam.status !== 'inactive');
+  const groups = getLiveCameraGroups();
 
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
@@ -24,27 +24,18 @@ export default function CamerasPage() {
         </div>
 
         <div className="space-y-12 sm:space-y-16">
-          {regions.map((region) => {
-            const regionCameras = activeCameras.filter(
-              (cam) => cam.region === region
-            );
-
-            // Se não houver câmeras ativas nesta região, não exibe a seção
-            if (regionCameras.length === 0) return null;
-
-            return (
-              <section key={region} className="space-y-6">
-                <h2 className="text-2xl font-bold tracking-tight text-slate-800 border-b border-slate-200 pb-2">
-                  {region}
-                </h2>
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {regionCameras.map((camera) => (
-                    <CameraPlayer key={camera.id} camera={camera} />
-                  ))}
-                </div>
-              </section>
-            );
-          })}
+          {groups.map((group) => (
+            <section key={group.label} className="space-y-6">
+              <h2 className="text-2xl font-bold tracking-tight text-slate-800 border-b border-slate-200 pb-2">
+                {group.label}
+              </h2>
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {group.cameras.map((camera) => (
+                  <LiveCameraCard key={camera.id} camera={camera} />
+                ))}
+              </div>
+            </section>
+          ))}
         </div>
       </div>
     </main>

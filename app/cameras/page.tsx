@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { getLiveCameraGroups } from '@/lib/live-cameras';
 import LiveCameraCard from '@/components/LiveCameraCard';
+import { AD_SLOTS } from '@/lib/adConfig';
+import AdSlot from '@/components/ads/AdSlot';
 
 export const metadata = {
   title: 'Câmeras ao Vivo das Praias | MaréAgora',
@@ -34,8 +36,13 @@ export default function CamerasPage() {
           </p>
         </div>
 
+        {/* AdSense topo */}
+        <div className="mb-10 sm:mb-12">
+          <AdSlot slotId={AD_SLOTS.LEADERBOARD_NAV} format="horizontal" />
+        </div>
+
         <div className="space-y-12 sm:space-y-16">
-          {groups.map((group) => (
+          {groups.map((group, index) => (
             <section key={group.label} className="space-y-6">
               <h2 className="text-2xl font-bold tracking-tight text-slate-800 border-b border-slate-200 pb-2">
                 {group.label}
@@ -45,8 +52,24 @@ export default function CamerasPage() {
                   <LiveCameraCard key={camera.id} camera={camera} />
                 ))}
               </div>
+
+              {/* AdSense entre a 1ª e a 2ª região, meio do conteúdo */}
+              {index === 0 && groups.length > 1 && (
+                <div className="flex justify-center pt-4">
+                  <AdSlot
+                    slotId={AD_SLOTS.INCONTENT_RECT}
+                    format="rectangle"
+                    style={{ width: 336, height: 280 }}
+                  />
+                </div>
+              )}
             </section>
           ))}
+        </div>
+
+        {/* AdSense antes do rodapé */}
+        <div className="mt-12 sm:mt-16">
+          <AdSlot slotId={AD_SLOTS.PREFOOTER} format="horizontal" />
         </div>
       </div>
     </main>

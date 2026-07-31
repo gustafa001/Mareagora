@@ -4,7 +4,13 @@ import type { LiveCamera } from '@/lib/live-cameras';
 import { getStateSlug } from '@/lib/states';
 
 export default function LiveCameraCard({ camera }: { camera: LiveCamera }) {
-  const embedUrl = `https://www.youtube.com/embed/${camera.videoId}?autoplay=0&mute=1`;
+  // Câmeras com channelId usam o embed "live_stream", que sempre aponta pra
+  // transmissão ativa do canal no momento — não quebra se o dono da câmera
+  // reiniciar a live (o que troca o videoId). Preferimos isso quando disponível;
+  // videoId fixo fica como alternativa pra canais que não têm live constante.
+  const embedUrl = camera.channelId
+    ? `https://www.youtube.com/embed/live_stream?channel=${camera.channelId}&autoplay=0&mute=1`
+    : `https://www.youtube.com/embed/${camera.videoId}?autoplay=0&mute=1`;
   const mareHref = `/mare/${getStateSlug(camera.state)}/${camera.portSlug}`;
 
   return (

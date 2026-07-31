@@ -192,6 +192,20 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     ],
   },
 
+  'porto-de-galinhas': {
+    titleSuffix: 'Horário das Piscinas Naturais Hoje',
+    description: 'Tábua de maré de Porto de Galinhas (PE) para hoje e 2026. Horário da maré baixa para as piscinas naturais, passeio de jangada e mergulho. Fonte: Marinha do Brasil (estação de referência Suape).',
+    keywords: ['maré porto de galinhas', 'maré porto de galinhas hoje', 'tábua de maré porto de galinhas', 'maré baixa porto de galinhas', 'horário piscinas naturais porto de galinhas', 'tabua de mare porto de galinhas 2026', 'maré cupe', 'maré maracaípe'],
+    praias: ['Porto de Galinhas', 'Muro Alto', 'Cupe', 'Maracaípe', 'Serrambi'],
+    category: 'turismo',
+    portoVizinhos: ['porto-de-suape', 'porto-do-recife'],
+    faqs: [
+      { q: 'Qual o melhor horário para visitar as piscinas naturais de Porto de Galinhas?', a: 'O ideal é a maré baixa, de preferência abaixo de 0,5m. Chegue cerca de 1h30 antes do horário da baixamar para aproveitar mais tempo com os recifes expostos e a água calma.' },
+      { q: 'A maré afeta o passeio de jangada em Porto de Galinhas?', a: 'Sim. As jangadas só conseguem levar os visitantes até as piscinas naturais quando a maré está baixa. Em maré alta, os recifes ficam cobertos e o passeio não é realizado.' },
+      { q: 'Por que Porto de Galinhas usa a tábua de maré de Suape?', a: 'Porto de Galinhas fica a poucos quilômetros de Suape e não tem estação maregráfica própria da Marinha, então usa Suape como estação de referência, com os mesmos horários de maré.' },
+    ],
+  },
+
   'porto-de-natal': {
     titleSuffix: 'Maré Alta e Baixa Hoje — Piscinas Naturais e Turismo',
     description: 'Tábua de marés de Natal (RN) para hoje e 2026. Horários para as piscinas naturais de Maracajaú, Genipabu e praias da orla. Fonte: Marinha do Brasil.',

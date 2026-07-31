@@ -30,7 +30,7 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
 
   if (id === 'guia-praias') {
     const { PRAIAS } = await import('./guia-praias/page');
-    const { CONTEUDO } = await import('./guia-praias/[slug]/page');
+    const { CONTEUDO } = await import('@/lib/guia-praias/conteudoPraias');
     return PRAIAS.filter(p => !!CONTEUDO[p.slug]).map(p => ({
       url: `${base}/guia-praias/${p.slug}`,
       lastModified: new Date(),

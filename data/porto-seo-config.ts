@@ -178,6 +178,20 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     ],
   },
 
+  'porto-de-suape': {
+    titleSuffix: 'Horários e Coeficientes Oficiais',
+    description: 'Tábua de marés do Porto de Suape (PE) para hoje e 2026. Horários de maré alta e baixa, coeficientes oficiais da Marinha do Brasil para operações portuárias, pesca e as praias vizinhas de Porto de Galinhas e Muro Alto.',
+    keywords: ['maré suape', 'maré suape hoje', 'maré porto de suape', 'tabua de marés suape', 'tabua maré suape 2026', 'horário maré suape hoje', 'maré suape pe', 'maré ipojuca', 'maré suape pesca', 'maré muro alto'],
+    praias: ['Muro Alto', 'Nazaré', 'Porto de Galinhas', 'Maracaípe', 'Cupe'],
+    category: 'industrial',
+    portoVizinhos: ['porto-do-recife', 'porto-de-galinhas'],
+    faqs: [
+      { q: 'Como a maré afeta as operações no Porto de Suape?', a: 'O calado operacional do canal varia com a maré, sendo essencial para o planejamento de atracação de navios de grande porte. O canal interno foi ampliado para 16,2m, com praticagem obrigatória para as manobras na Zona 14.' },
+      { q: 'Qual o melhor horário de maré para visitar Muro Alto e Porto de Galinhas, perto de Suape?', a: 'A maré baixa é ideal para acessar as piscinas naturais formadas pelos recifes de arenito. Chegue pelo menos 1 hora antes da baixamar para aproveitar o acesso e a água mais cristalina.' },
+      { q: 'As marés de Suape servem para navegação comercial?', a: 'Os dados apresentados são referência baseada nas tábuas oficiais da Marinha do Brasil (DHN/CHM), mas para operações portuárias e navegação comercial, sempre consulte a Autoridade Portuária de Suape e a praticagem local.' },
+    ],
+  },
+
   'porto-de-natal': {
     titleSuffix: 'Maré Alta e Baixa Hoje — Piscinas Naturais e Turismo',
     description: 'Tábua de marés de Natal (RN) para hoje e 2026. Horários para as piscinas naturais de Maracajaú, Genipabu e praias da orla. Fonte: Marinha do Brasil.',

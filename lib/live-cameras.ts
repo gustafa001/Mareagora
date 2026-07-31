@@ -25,18 +25,24 @@ export interface LiveCamera {
 const DESCRIPTIONS: Record<string, string> = {
   qM5J5aPdmMY:
     'Vista da praia de São Conrado, na Zona Sul do Rio, point tradicional de voo livre com a Pedra da Gávea ao fundo.',
-  '3S6__7YkhYk':
+  'gmc9ryoJ-vs':
     'Vista da Praia do Gonzaga, um dos trechos mais movimentados da orla de Santos.',
+  '5BxqzvR6TgM':
+    'Vista da entrada do canal do Porto de Santos, o maior porto da América Latina, com a movimentação de navios em tempo real.',
+  CkHrJQGVukI:
+    'Vista do Canal 1 de Santos, um dos canais que cortam a cidade e conectam a orla à parte continental.',
   'yPSJYJk-Szc':
     'Uma das praias mais procuradas de Ubatuba, no trecho conhecido como Baguari.',
-  v5Y6WsD577M:
-    'Vista do Posto 11 na Praia da Enseada, uma das mais extensas do litoral do Guarujá.',
   pJvaJY7pKvk:
     'Praia central do Guarujá, ao lado do calçadão, uma das mais movimentadas da cidade.',
   WJ6LLt6xxkY:
     'Vista da orla de Praia Grande, no litoral sul de São Paulo.',
-  n6bLMUaGTRM:
-    'A praia mais famosa do Rio de Janeiro, entre o Forte de Copacabana e o Leme.',
+  ukoSyGLdoTQ:
+    'Vista do Morro do Itararé, em São Vicente, mirante natural com vista panorâmica da Baía de Santos.',
+  yf7EqBAnFek:
+    'Vista da Praia dos Milionários, em São Vicente, um dos trechos mais nobres da orla da cidade.',
+  OlEJOalq4oQ:
+    'Vista da Praia dos Sonhos, em Itanhaém, no litoral sul de São Paulo.',
 };
 
 // Agrupamento visual por região turística (mais legível que o campo
@@ -45,9 +51,10 @@ const GROUP_LABELS: Record<string, string> = {
   'porto-de-santos': 'Baixada Santista',
   guaruja: 'Baixada Santista',
   'praia-grande': 'Baixada Santista',
+  'sao-vicente': 'Baixada Santista',
+  itanhaem: 'Baixada Santista',
   ubatuba: 'Litoral Norte SP',
   'rio-de-janeiro-fiscal': 'Rio de Janeiro',
-  copacabana: 'Rio de Janeiro',
 };
 
 const GROUP_ORDER = ['Baixada Santista', 'Litoral Norte SP', 'Rio de Janeiro'];

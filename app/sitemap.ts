@@ -9,6 +9,7 @@ export async function generateSitemaps() {
   return [
     { id: 'index' },
     { id: 'praias' },
+    { id: 'guia-praias' },
     { id: 'portos' },
     { id: 'estados' },
     { id: 'blog' },
@@ -19,7 +20,7 @@ export async function generateSitemaps() {
 
 export default async function sitemap({ id }: { id: string }): Promise<MetadataRoute.Sitemap> {
   if (id === 'praias') {
-    return PORTS.filter(p => !p.name.toLowerCase().includes('porto') && !p.name.toLowerCase().includes('terminal')).map(p => ({
+    return PORTS.filter(p => p.referencePortSlug || (!p.name.toLowerCase().includes('porto') && !p.name.toLowerCase().includes('terminal'))).map(p => ({
       url: `${base}/mare/${getStateSlug(p.state)}/${p.slug}`,
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
@@ -27,8 +28,19 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
     }));
   }
 
+  if (id === 'guia-praias') {
+    const { PRAIAS } = await import('./guia-praias/page');
+    const { CONTEUDO } = await import('./guia-praias/[slug]/page');
+    return PRAIAS.filter(p => !!CONTEUDO[p.slug]).map(p => ({
+      url: `${base}/guia-praias/${p.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    }));
+  }
+
   if (id === 'portos') {
-    return PORTS.filter(p => p.name.toLowerCase().includes('porto') || p.name.toLowerCase().includes('terminal')).map(p => ({
+    return PORTS.filter(p => !p.referencePortSlug && (p.name.toLowerCase().includes('porto') || p.name.toLowerCase().includes('terminal'))).map(p => ({
       url: `${base}/operacoes-portuarias/${getStateSlug(p.state)}/${p.slug}`,
       lastModified: new Date(),
       changeFrequency: 'daily' as const,

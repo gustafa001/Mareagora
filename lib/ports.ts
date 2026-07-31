@@ -7,6 +7,10 @@ export interface PortCamera {
   title: string;
   sourceName: string;
   sourceUrl: string;
+  // Use videoId para uma live com ID fixo (raramente muda).
+  // Use channelId (formato UC...) para canais que reiniciam a
+  // transmissão com frequência — o embed sempre pega a live atual
+  // do canal, então não quebra quando o videoId muda.
   videoId?: string;
   channelId?: string;
 }
@@ -136,6 +140,12 @@ export const PORTS: Port[] = [
   },
   { id: '67', name: 'Ipanema',              cityName: 'Ipanema',              slug: 'ipanema',              state: 'RJ', region: 'sudeste',  lat: -22.986889, lon: -43.202944, dhnId: '50140', offsetMinutes: 0, searchNames: ['ipanema'],                        referencePortSlug: 'rio-de-janeiro-fiscal' },
   { id: '68', name: 'Búzios',               cityName: 'Búzios',               slug: 'buzios',               state: 'RJ', region: 'sudeste',  lat: -22.746944, lon: -41.881667, dhnId: '50156', offsetMinutes: 0, searchNames: ['buzios', 'búzios', 'armacao dos buzios'], referencePortSlug: 'porto-do-forno' },
+  {
+    id: '85', name: 'Cabo Frio', cityName: 'Cabo Frio', slug: 'cabo-frio', state: 'RJ', region: 'sudeste', lat: -22.878611, lon: -42.018889, dhnId: '50156', offsetMinutes: 0, searchNames: ['cabo frio', 'praia do forte'], referencePortSlug: 'porto-do-forno',
+    cameras: [
+      { title: 'Cabo Frio - Praia do Forte ao Vivo', sourceName: 'Point do Forte', sourceUrl: 'https://www.youtube.com/@cabofrio-rj', channelId: 'UCBLHvdpCPy8J1acuXWu82tA' }
+    ]
+  },
   { id: '69', name: 'Maresias',             cityName: 'Maresias',             slug: 'maresias',             state: 'SP', region: 'sudeste',  lat: -23.790833, lon: -45.566111, dhnId: '50210', offsetMinutes: 0, searchNames: ['maresias'],                       referencePortSlug: 'porto-de-sao-sebastiao' },
   { id: '70', name: 'Porto de Galinhas',    cityName: 'Porto de Galinhas',    slug: 'porto-de-galinhas',    state: 'PE', region: 'nordeste', lat: -8.510556,  lon: -35.003333, dhnId: '30686', offsetMinutes: 0, searchNames: ['porto de galinhas'],              referencePortSlug: 'porto-de-suape' },
   { id: '84', name: 'Muro Alto',            cityName: 'Muro Alto',            slug: 'muro-alto',            state: 'PE', region: 'nordeste', lat: -8.470000,  lon: -35.008000, dhnId: '30686', offsetMinutes: 0, searchNames: ['muro alto', 'praia de muro alto'], referencePortSlug: 'porto-de-suape' },

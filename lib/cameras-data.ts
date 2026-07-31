@@ -25,7 +25,7 @@ export interface LiveCamera {
 const DESCRIPTIONS: Record<string, string> = {
   qM5J5aPdmMY:
     'Vista da praia de São Conrado, na Zona Sul do Rio, point tradicional de voo livre com a Pedra da Gávea ao fundo.',
-  '3S6__7YkhYk':
+  'gmc9ryoJ-vs':
     'Vista da Praia do Gonzaga, um dos trechos mais movimentados da orla de Santos.',
   '5BxqzvR6TgM':
     'Vista da entrada do canal do Porto de Santos, o maior porto da América Latina, com a movimentação de navios em tempo real.',
@@ -39,6 +39,8 @@ const DESCRIPTIONS: Record<string, string> = {
     'Vista da orla de Praia Grande, no litoral sul de São Paulo.',
   ukoSyGLdoTQ:
     'Vista do Morro do Itararé, em São Vicente, mirante natural com vista panorâmica da Baía de Santos.',
+  yf7EqBAnFek:
+    'Vista da Praia dos Milionários, em São Vicente, um dos trechos mais nobres da orla da cidade.',
   OlEJOalq4oQ:
     'Vista da Praia dos Sonhos, em Itanhaém, no litoral sul de São Paulo.',
 };

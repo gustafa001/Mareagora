@@ -5,10 +5,14 @@ import { getStateSlug } from '@/lib/states';
 import { portosConfig } from '@/data/porto-seo-config';
 import PortOperationsPage from '@/components/port-operations/PortOperationsPage';
 
-/** Apenas portos comerciais/industriais fazem sentido para este dashboard. */
+/** Apenas portos comerciais/industriais fazem sentido para este dashboard.
+ *  Praias que usam a maré de outro porto como referência (referencePortSlug)
+ *  nunca são o porto comercial em si, mesmo quando o nome contém "porto"
+ *  (ex.: Porto de Galinhas é uma praia, não um porto industrial). */
 function isCommercialPort(slug: string): boolean {
   const port = getPortBySlug(slug);
   if (!port) return false;
+  if (port.referencePortSlug) return false;
   const config = portosConfig[slug];
   return (
     port.name.toLowerCase().includes('porto') ||

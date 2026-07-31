@@ -60,7 +60,7 @@ export async function generateStaticParams() {
 }
 
 // --- conteúdo SEO por praia (pode virar MDX futuramente) -------------------
-const CONTEUDO: Record<string, { sobre: string; pesca: string; melhorEpoca: string }> = {
+export const CONTEUDO: Record<string, { sobre: string; pesca: string; melhorEpoca: string }> = {
   'jurere-sc': {
     sobre: 'Jurerê Internacional é a praia mais famosa de Florianópolis, conhecida pelos beach clubs sofisticados, casas de alto padrão e infraestrutura completa. O mar calmo e raso é ideal para famílias com crianças.',
     pesca: 'A pesca é boa nas pedras do costão leste, especialmente para robalo e tainha na maré enchendo. Os melhores horários são nas primeiras horas da manhã, quando o fluxo de maré está forte.',
@@ -120,6 +120,36 @@ const CONTEUDO: Record<string, { sobre: string; pesca: string; melhorEpoca: stri
     sobre: 'O Guarujá, conhecido como a Pérola do Atlântico, oferece desde praias altamente badaladas como Enseada e Pitangueiras, até joias escondidas e preservadas, acessíveis apenas por trilha ou mar.',
     pesca: 'Com diversos costões rochosos e praias de tombo, a pesca costeira é um grande atrativo. A pesca de costão rende peixes maiores em dias de mar agitado e maré subindo.',
     melhorEpoca: 'Dezembro a março para aproveitar o verão e a vida noturna. Abril a junho para curtir surf e praias tranquilas com ótimo clima.',
+  },
+  'sao-vicente': {
+    sobre: 'São Vicente é a cidade mais antiga do Brasil, fundada em 1532, e combina esse peso histórico com praias tranquilas voltadas para famílias. A Ilha Porchat, ligada ao continente por uma ponte, oferece mirantes com vista para toda a Baixada Santista.',
+    pesca: 'Os costões da Ilha Porchat e o canal de Bertioga-Piaçabuçu são bons pontos de pesca de arremesso. A maré enchente costuma trazer melhores resultados para tainha e corvina junto à arrebentação.',
+    melhorEpoca: 'Verão para aproveitar a orla e o comércio da praia do Itararé. Nos fins de semana de baixa temporada o mar costuma ficar mais calmo e a cidade menos movimentada.',
+  },
+  'bertioga': {
+    sobre: 'Bertioga preserva boa parte da Mata Atlântica original e tem praias mais desertas que o restante do litoral paulista, além do histórico Forte São João, erguido no século XVI para defender o canal que dá nome à cidade.',
+    pesca: 'O Canal de Bertioga é um dos pontos mais procurados da região para pesca de robalo e caratinga, principalmente na virada da maré, quando a correnteza concentra o cardume próximo às margens.',
+    melhorEpoca: 'Abril a agosto oferece mar mais calmo e praias vazias, ideais para quem busca sossego. O verão atrai visitantes para a orla de Riviera e a Praia da Enseada.',
+  },
+  'riviera-de-sao-lourenco': {
+    sobre: 'A Riviera de São Lourenço é um bairro planejado em Bertioga, com praias limpas, marina própria e infraestrutura de alto padrão. É procurada por quem busca conforto sem abrir mão do acesso fácil ao mar aberto.',
+    pesca: 'A região da marina e dos costões próximos favorece a pesca embarcada. Nas praias abertas, a pesca de arremesso funciona melhor nas primeiras horas da manhã, com a maré ainda baixa.',
+    melhorEpoca: 'Dezembro a março concentra a alta temporada, com toda a infraestrutura de lazer em funcionamento. Fora desse período o local fica mais tranquilo e os preços caem.',
+  },
+  'mongagua': {
+    sobre: 'Mongaguá é um balneário mais discreto da Baixada Santista, com ondas consistentes que atraem surfistas e uma orla menos disputada que a de cidades vizinhas como Praia Grande.',
+    pesca: 'A pesca de arremesso na arrebentação rende bons resultados, especialmente em dias de mar com ondulação moderada. A região também é procurada por pescadores de caranguejo nos manguezais próximos.',
+    melhorEpoca: 'Outono e inverno trazem ondas mais organizadas para o surf. O verão é a época de maior movimento na orla e no comércio local.',
+  },
+  'itanhaem': {
+    sobre: 'Uma das primeiras vilas fundadas no Brasil, Itanhaém tem praias mais preservadas e é cortada por rios de água limpa, como o Rio Branco, que desce das encostas da Serra do Mar até o mar.',
+    pesca: 'Os rios e a foz junto à praia são bons pontos de pesca de robalo e tainha, principalmente na maré vazante, quando os peixes se concentram nos canais mais estreitos.',
+    melhorEpoca: 'Primavera e outono oferecem clima ameno para explorar tanto a praia quanto os passeios pelos rios. O verão é mais quente e movimentado.',
+  },
+  'peruibe': {
+    sobre: 'Peruíbe é conhecida como a "Cidade do Clima Especial" e abriga parte da Estação Ecológica Juréia-Itatins, uma das últimas grandes áreas de Mata Atlântica preservada no litoral paulista.',
+    pesca: 'A pesca de arremesso é praticada ao longo de toda a orla, com destaque para a foz do Rio Preto. A proximidade da Juréia também atrai pescadores para pontos mais isolados e preservados.',
+    melhorEpoca: 'Abril a setembro é indicado para quem busca ecoturismo e trilhas na Juréia com clima mais ameno. O verão concentra o maior movimento na praia central.',
   },
 }
 

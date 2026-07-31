@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 function isCommercialPort(slug: string): boolean {
   const port = getPortBySlug(slug);
   if (!port) return false;
+  if (port.referencePortSlug) return false;
   const config = portosConfig[slug];
   return (
     port.name.toLowerCase().includes('porto') ||

@@ -16,7 +16,8 @@ export interface LiveCamera {
   description: string;
   sourceName: string;
   sourceUrl: string;
-  videoId: string;
+  videoId?: string;
+  channelId?: string;
   portSlug: string;
 }
 
@@ -55,24 +56,26 @@ const GROUP_LABELS: Record<string, string> = {
   itanhaem: 'Baixada Santista',
   ubatuba: 'Litoral Norte SP',
   'rio-de-janeiro-fiscal': 'Rio de Janeiro',
+  'cabo-frio': 'Região dos Lagos',
 };
 
-const GROUP_ORDER = ['Baixada Santista', 'Litoral Norte SP', 'Rio de Janeiro'];
+const GROUP_ORDER = ['Baixada Santista', 'Litoral Norte SP', 'Rio de Janeiro', 'Região dos Lagos'];
 
 function toLiveCameras(port: Port): LiveCamera[] {
   if (!port.cameras || port.cameras.length === 0) return [];
   return port.cameras
-    .filter((cam) => Boolean(cam.videoId))
+    .filter((cam) => Boolean(cam.videoId) || Boolean(cam.channelId))
     .map((cam) => ({
-      id: `${port.slug}-${cam.videoId}`,
+      id: `${port.slug}-${cam.videoId ?? cam.channelId}`,
       title: cam.title,
       cityName: port.cityName,
       state: port.state,
       groupLabel: GROUP_LABELS[port.slug] ?? port.cityName,
-      description: DESCRIPTIONS[cam.videoId as string] ?? '',
+      description: (cam.videoId && DESCRIPTIONS[cam.videoId]) ?? '',
       sourceName: cam.sourceName,
       sourceUrl: cam.sourceUrl,
-      videoId: cam.videoId as string,
+      videoId: cam.videoId,
+      channelId: cam.channelId,
       portSlug: port.slug,
     }));
 }

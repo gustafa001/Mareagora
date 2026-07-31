@@ -206,6 +206,104 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     ],
   },
 
+  'muro-alto': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Piscina Natural e Resorts',
+    description: 'Tábua de maré de Muro Alto (Ipojuca, PE) para hoje e 2026. Horário da maré baixa para a piscina natural formada pelos recifes em frente aos resorts. Fonte: Marinha do Brasil (estação de Suape).',
+    keywords: ['maré muro alto', 'maré muro alto hoje', 'tábua de maré muro alto', 'maré muro alto ipojuca', 'horário maré muro alto', 'piscina natural muro alto maré'],
+    praias: ['Muro Alto', 'Cupe', 'Suape'],
+    category: 'turismo',
+    portoVizinhos: ['porto-de-suape', 'porto-de-galinhas', 'cupe'],
+    faqs: [
+      { q: 'Qual o melhor horário de maré para a piscina natural de Muro Alto?', a: 'A maré baixa é o momento ideal — os recifes em frente à praia formam uma piscina natural extensa e calma, protegida das ondas do mar aberto.' },
+      { q: 'A praia de Muro Alto diminui muito na maré alta?', a: 'Sim, a faixa de areia fica bem mais estreita na preamar, e as ondas se aproximam mais dos bares e resorts à beira-mar.' },
+    ],
+  },
+
+  'cupe': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Pontal e Piscinas Naturais',
+    description: 'Tábua de maré do Cupe (Ipojuca, PE) para hoje e 2026. Horário da maré baixa para o Pontal do Cupe e suas piscinas naturais, entre Muro Alto e Porto de Galinhas. Fonte: Marinha do Brasil (estação de Suape).',
+    keywords: ['maré cupe', 'maré cupe hoje', 'tábua de maré cupe', 'praia do cupe maré', 'pontal do cupe maré baixa', 'maré cupe ipojuca'],
+    praias: ['Cupe', 'Muro Alto', 'Porto de Galinhas'],
+    category: 'turismo',
+    portoVizinhos: ['muro-alto', 'porto-de-galinhas'],
+    faqs: [
+      { q: 'Qual o melhor horário de maré para visitar o Pontal do Cupe?', a: 'Na maré baixa, os recifes ficam expostos e formam piscinas naturais tranquilas, ideais para banho e observação de peixes.' },
+    ],
+  },
+
+  'maracaipe': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Surf e Piscinas Naturais',
+    description: 'Tábua de maré de Maracaípe (Ipojuca, PE) para hoje e 2026. Horários para o surf na praia e as piscinas naturais do Pontal de Maracaípe na maré baixa. Fonte: Marinha do Brasil (estação de Suape).',
+    keywords: ['maré maracaípe', 'maré maracaípe hoje', 'tábua de maré maracaípe', 'surf maracaípe maré', 'pontal de maracaípe maré', 'maré maracaipe porto de galinhas'],
+    praias: ['Maracaípe', 'Porto de Galinhas', 'Serrambi'],
+    category: 'surf',
+    portoVizinhos: ['porto-de-galinhas', 'serrambi'],
+    faqs: [
+      { q: 'Qual a melhor maré para surfar em Maracaípe?', a: 'A maré alta a média costuma trazer as ondas mais consistentes para o surf. Em maré muito baixa, os bancos de areia expostos podem atrapalhar as séries.' },
+      { q: 'Quando aparecem as piscinas naturais do Pontal de Maracaípe?', a: 'Somente na maré baixa, na foz do rio Maracaípe, onde se formam poças calmas entre recifes e manguezais.' },
+    ],
+  },
+
+  'serrambi': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Piscinas Naturais e Recifes',
+    description: 'Tábua de maré de Serrambi (Ipojuca, PE) para hoje e 2026. Horário da maré baixa para as piscinas naturais da Ponta de Serrambi. Fonte: Marinha do Brasil (estação de Suape).',
+    keywords: ['maré serrambi', 'maré serrambi hoje', 'tábua de maré serrambi', 'ponta de serrambi maré', 'piscinas naturais serrambi maré baixa'],
+    praias: ['Serrambi', 'Maracaípe'],
+    category: 'turismo',
+    portoVizinhos: ['maracaipe', 'porto-de-galinhas'],
+    faqs: [
+      { q: 'Qual o horário ideal para as piscinas naturais de Serrambi?', a: 'Assim como nas demais praias da região, a maré baixa é o momento em que os recifes ficam expostos e formam piscinas calmas e cristalinas.' },
+    ],
+  },
+
+  'gaibu': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Surf e Praia',
+    description: 'Tábua de maré de Gaibu (Cabo de Santo Agostinho, PE) para hoje e 2026. Horários de maré alta e baixa para surf, pesca e praia. Fonte: Marinha do Brasil (estação de Suape).',
+    keywords: ['maré gaibu', 'maré gaibu hoje', 'tábua de maré gaibu', 'surf gaibu maré', 'maré gaibu cabo de santo agostinho'],
+    praias: ['Gaibu', 'Calhetas'],
+    category: 'surf',
+    portoVizinhos: ['calhetas', 'porto-de-suape'],
+    faqs: [
+      { q: 'Gaibu é uma boa praia para surfar?', a: 'Sim, é um dos pontos de surf mais conhecidos do Cabo de Santo Agostinho. A maré média costuma formar as melhores ondas.' },
+    ],
+  },
+
+  'calhetas': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Mergulho e Passeio de Barco',
+    description: 'Tábua de maré de Calhetas (Cabo de Santo Agostinho, PE) para hoje e 2026. Horários de maré para mergulho, passeio de barco e banho na enseada calma. Fonte: Marinha do Brasil (estação de Suape).',
+    keywords: ['maré calhetas', 'maré calhetas hoje', 'tábua de maré calhetas', 'praia de calhetas maré', 'maré calhetas cabo de santo agostinho'],
+    praias: ['Calhetas', 'Gaibu'],
+    category: 'turismo',
+    portoVizinhos: ['gaibu', 'porto-de-suape'],
+    faqs: [
+      { q: 'A maré afeta o mergulho em Calhetas?', a: 'Sim. Águas mais calmas e claras costumam ocorrer na maré baixa a média, quando a enseada fica mais protegida.' },
+    ],
+  },
+
+  'praia-do-paiva': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Praia e Reserva do Paiva',
+    description: 'Tábua de maré da Praia do Paiva (Cabo de Santo Agostinho, PE) para hoje e 2026. Horários de maré para praia, caminhada na orla e a Reserva do Paiva. Fonte: Marinha do Brasil (estação de Suape).',
+    keywords: ['maré praia do paiva', 'maré paiva hoje', 'tábua de maré paiva', 'maré paiva pernambuco', 'reserva do paiva maré'],
+    praias: ['Praia do Paiva', 'Gaibu'],
+    category: 'turismo',
+    portoVizinhos: ['gaibu', 'calhetas'],
+    faqs: [
+      { q: 'Qual o melhor horário de maré para caminhar na orla do Paiva?', a: 'A maré baixa deixa uma faixa de areia mais larga e compactada, ideal para caminhadas e corrida na praia.' },
+    ],
+  },
+
+  'farol-de-nazare': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Pesca e Vila de Nazaré',
+    description: 'Tábua de maré do Farol de Nazaré, em Suape (PE), para hoje e 2026. Horários de maré para pesca artesanal na Vila de Nazaré e passeios na entrada do porto. Fonte: Marinha do Brasil.',
+    keywords: ['maré farol de nazaré', 'farol de nazaré maré hoje', 'tábua de maré farol de nazaré', 'maré vila de nazaré suape', 'maré nazaré ipojuca'],
+    praias: ['Farol de Nazaré', 'Suape'],
+    category: 'pesca',
+    portoVizinhos: ['porto-de-suape', 'muro-alto'],
+    faqs: [
+      { q: 'Por que o Farol de Nazaré usa os mesmos horários de maré de Suape?', a: 'Porque fica bem na entrada do complexo portuário de Suape, a poucos quilômetros da estação de referência da Marinha do Brasil.' },
+    ],
+  },
+
   'porto-de-natal': {
     titleSuffix: 'Maré Alta e Baixa Hoje — Piscinas Naturais e Turismo',
     description: 'Tábua de marés de Natal (RN) para hoje e 2026. Horários para as piscinas naturais de Maracajaú, Genipabu e praias da orla. Fonte: Marinha do Brasil.',

@@ -1,0 +1,24 @@
+{
+  "countryCode": "nl",
+  "analyzedAt": "2026-07-31T23:58:02.228Z",
+  "placeCount": 62,
+  "pairCount": 1891,
+  "stats": {
+    "avg": 25.68,
+    "min": 14,
+    "max": 60.99,
+    "p50": 23.5,
+    "p75": 30.17,
+    "p90": 36.84,
+    "p95": 41.77
+  },
+  "highPairs": [],
+  "warnPairs": [
+    {
+      "a": "eemshaven",
+      "b": "oudeschild",
+      "score": 0.6099290780141844
+    }
+  ],
+  "approved": true
+}

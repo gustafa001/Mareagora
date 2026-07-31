@@ -15,6 +15,19 @@
 import fs from 'fs';
 import path from 'path';
 import type { CachedTideRegime } from './tideRegimeCache';
+import { NL_REGION_BY_SLUG, NL_REGION_TEXT_PT, NL_REGION_TEXT_EN, MH_ATOLL_FACTS } from './regionalFacts';
+
+// Fato real e verificável específico da localidade (região hidrográfica NL
+// ou dados geográficos reais de atóis MH), usado para diferenciar páginas
+// que o check-content-similarity.ts apontou como texto raso/duplicado.
+function realFactSentence(slug: string | undefined, locale: 'pt' | 'en'): string | null {
+  if (!slug) return null;
+  const nlRegion = NL_REGION_BY_SLUG[slug];
+  if (nlRegion) return locale === 'en' ? NL_REGION_TEXT_EN[nlRegion] : NL_REGION_TEXT_PT[nlRegion];
+  const mhFact = MH_ATOLL_FACTS[slug];
+  if (mhFact) return locale === 'en' ? mhFact.note_en : mhFact.note_pt;
+  return null;
+}
 
 // ── Cache em memória ──────────────────────────────────────────────────────────
 let _regimeCache: Record<string, CachedTideRegime> | null = null;
@@ -402,17 +415,19 @@ export function generateTideDescription(
     const purposeFn = pick(PAGE_PURPOSE_EN, effectiveSlug, 5);
     const valNote = pick(VALIDATION_NOTE_EN, effectiveSlug, 6);
     const estimateNote = isEstimate ? ' (values estimated from nearest harmonic station)' : '';
+    const realFact = realFactSentence(slug, 'en');
 
     return [
       introFn(name, lat, lon, countryName, hemisphere),
       `Its tidal pattern is ${regimeLabel}, with a mean tidal range of ${ampMedia}m and spring tides reaching up to ${ampMax}m${estimateNote}.`,
+      realFact,
       ampContext,
       regimeUse,
       geoContext !== geoContext2 ? geoContext2 : GEO_CONTEXT_EN[(GEO_CONTEXT_EN.indexOf(geoContext) + 1) % GEO_CONTEXT_EN.length],
       purposeFn(ano, name),
       `In ${monthName}, ${name} is in its ${season} season${isCoastal ? ', a key period for water sports, fishing, diving, and coastal navigation' : ''}.`,
       valNote,
-    ].join(' ');
+    ].filter(Boolean).join(' ');
   }
 
   // ── Português ──────────────────────────────────────────────────────────────
@@ -431,15 +446,17 @@ export function generateTideDescription(
   const purposeFn = pick(PAGE_PURPOSE_PT, effectiveSlug, 5);
   const valNote = pick(VALIDATION_NOTE_PT, effectiveSlug, 6);
   const estimateNote = isEstimate ? ' (estimado a partir da estação harmônica mais próxima)' : '';
+  const realFact = realFactSentence(slug, 'pt');
 
   return [
     introFn(name, lat, lon, countryName, hemisphere),
     `O regime de marés local é ${regimeLabel}, com amplitude média de ${ampMedia}m e máxima de ${ampMax}m nas sizígias${estimateNote}.`,
+    realFact,
     ampContext,
     regimeUse,
     geoContext !== geoContext2 ? geoContext2 : GEO_CONTEXT_PT[(GEO_CONTEXT_PT.indexOf(geoContext) + 1) % GEO_CONTEXT_PT.length],
     purposeFn(ano, name),
     `Em ${monthName}, ${name} vive o período de ${season}${isCoastal ? ', época importante para esportes náuticos, pesca, mergulho e planejamento de travessias' : ''}.`,
     valNote,
-  ].join(' ');
+  ].filter(Boolean).join(' ');
 }

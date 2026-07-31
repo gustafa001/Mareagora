@@ -2,8 +2,11 @@ import { MetadataRoute } from 'next';
 import { PORTS } from '@/lib/ports';
 import { getStateSlug } from '@/lib/states';
 import { getPosts } from '@/lib/blog';
+import rolloutStatus from '@/data/content-rollout-status.json';
 
 const base = 'https://www.mareagora.com.br';
+const _rollout = rolloutStatus as Record<string, { approved: boolean }>;
+const isApproved = (slug: string) => _rollout[slug]?.approved === true;
 
 export async function generateSitemaps() {
   return [
@@ -74,7 +77,7 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
     const { GLOBAL_PLACES } = await import('@/lib/globalPlaces');
     return [
       { url: `${base}/mare-mundo`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.6 },
-      ...GLOBAL_PLACES.map(p => ({
+      ...GLOBAL_PLACES.filter(p => isApproved(p.slug)).map(p => ({
         url: `${base}/mare-mundo/${p.countryCode}/${p.slug}`,
         lastModified: new Date(),
         changeFrequency: 'daily' as const,
@@ -87,7 +90,7 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
     const { GLOBAL_PLACES } = await import('@/lib/globalPlaces');
     return [
       { url: `${base}/tide`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.6 },
-      ...GLOBAL_PLACES.map(p => ({
+      ...GLOBAL_PLACES.filter(p => isApproved(p.slug)).map(p => ({
         url: `${base}/tide/${p.countryCode}/${p.slug}`,
         lastModified: new Date(),
         changeFrequency: 'daily' as const,

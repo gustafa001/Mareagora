@@ -204,12 +204,16 @@
     "approvedBy": "similarity-check"
   },
   "amsterdam": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "rotterdam": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "hamburg": {
     "approved": true,
@@ -1694,72 +1698,106 @@
     "approvedBy": "similarity-check"
   },
   "majuro": {
-    "approved": false,
-    "countryCode": "mh"
+    "approved": true,
+    "countryCode": "mh",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "enewetok": {
-    "approved": false,
-    "countryCode": "mh"
+    "approved": true,
+    "countryCode": "mh",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "kwajalein-atoll-kwajalein-i": {
-    "approved": false,
-    "countryCode": "mh"
+    "approved": true,
+    "countryCode": "mh",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "ujae-atoll": {
-    "approved": false,
-    "countryCode": "mh"
+    "approved": true,
+    "countryCode": "mh",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "arno-atoll": {
-    "approved": false,
-    "countryCode": "mh"
+    "approved": true,
+    "countryCode": "mh",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "ailuk-atoll": {
-    "approved": false,
-    "countryCode": "mh"
+    "approved": true,
+    "countryCode": "mh",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "wotje-atoll": {
-    "approved": false,
-    "countryCode": "mh"
+    "approved": true,
+    "countryCode": "mh",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "likiep-atoll": {
-    "approved": false,
-    "countryCode": "mh"
+    "approved": true,
+    "countryCode": "mh",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "erikub-atoll": {
-    "approved": false,
-    "countryCode": "mh"
+    "approved": true,
+    "countryCode": "mh",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "rongerik-atoll": {
-    "approved": false,
-    "countryCode": "mh"
+    "approved": true,
+    "countryCode": "mh",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "maloelap-atoll": {
-    "approved": false,
-    "countryCode": "mh"
+    "approved": true,
+    "countryCode": "mh",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "ailinglapalap-atoll": {
-    "approved": false,
-    "countryCode": "mh"
+    "approved": true,
+    "countryCode": "mh",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "ebon-boston-atoll": {
-    "approved": false,
-    "countryCode": "mh"
+    "approved": true,
+    "countryCode": "mh",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "port-rhin-mili-atoll": {
-    "approved": false,
-    "countryCode": "mh"
+    "approved": true,
+    "countryCode": "mh",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "jaluit-atoll-se-pass": {
-    "approved": false,
-    "countryCode": "mh"
+    "approved": true,
+    "countryCode": "mh",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "kwajalein-atoll-namur-island": {
-    "approved": false,
-    "countryCode": "mh"
+    "approved": true,
+    "countryCode": "mh",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "rongelap-island-rongelap-atoll": {
-    "approved": false,
-    "countryCode": "mh"
+    "approved": true,
+    "countryCode": "mh",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "malakal": {
     "approved": true,
@@ -3586,244 +3624,364 @@
     "approvedBy": "similarity-check"
   },
   "j61": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "nes": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "a121": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "d151": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "k141": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "vuren": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "kampen": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "lemmer": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "cadzand": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "yerseke": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "delfzijl": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "kadoelen": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "moerdijk": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "dordrecht": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "eemshaven": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "geulhaven": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "harlingen": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "parksluis": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "rotterdam-nl": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "terneuzen": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "den-helder": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "f3platform": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "gouda-brug": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "huibertgat": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "lauwersoog": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "marollegat": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "oudeschild": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "stavenisse": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "vlissingen": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "walsoorden": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "zwartsluis": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "amaliahaven": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "keizersveer": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "l9-platform": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "petten-zuid": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "schoonhoven": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "spijkenisse": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "westkapelle": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "scheveningen": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "eems-meetpaal": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "euro-platform": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "haringvliet10": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "k13a-platform": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "spooldersluis": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "goidschalxoord": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "hollandse-brug": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "kornwerderzand": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "krimpen-ad-lek": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "mond-der-vecht": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "platform-d15-a": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "platform-f16-a": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "roompot-buiten": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "schellingwoude": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "texel-noordzee": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "vlakte-vd-raan": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "vlieland-haven": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "north-cormorant": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "schiermonnikoog": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "wierumergronden": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "den-oever-buiten": {
-    "approved": false,
-    "countryCode": "nl"
+    "approved": true,
+    "countryCode": "nl",
+    "approvedAt": "2026-07-31",
+    "approvedBy": "similarity-check"
   },
   "ito": {
     "approved": true,

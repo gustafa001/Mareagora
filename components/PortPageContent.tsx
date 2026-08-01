@@ -46,7 +46,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
 
   const seoName = port.cityName;
 
-  const { waveHeight, swellHeight, swellPeriod, swellDirection, forecast: swellForecast, loading: seaLoading } = useSeaConditions(port.lat, port.lon);
+  const { waveHeight, windSpeed, swellHeight, swellPeriod, swellDirection, forecast: swellForecast, hourlyToday, loading: seaLoading } = useSeaConditions(port.lat, port.lon);
 
   // registra o porto como "visto recentemente" pro menu de navegação
   const { addRecentPort } = useRecentPorts();
@@ -223,7 +223,9 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               swellHeight={swellHeight}
               swellPeriod={swellPeriod}
               swellDirection={swellDirection}
+              windSpeed={windSpeed}
               forecast={swellForecast}
+              hourlyToday={hourlyToday}
               loading={seaLoading}
             />
 

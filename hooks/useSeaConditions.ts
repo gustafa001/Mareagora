@@ -7,6 +7,12 @@ export interface RessacaForecastDay {
   swellDirection: number | null; // graus
 }
 
+export interface HourlySwellEntry {
+  hour: number;              // 0–23
+  swellHeight: number | null;
+  swellPeriod: number | null;
+}
+
 export function useSeaConditions(lat: number, lon: number) {
   const [waveHeight, setWaveHeight] = useState<number | null>(null);
   const [windSpeed, setWindSpeed] = useState<number | null>(null);
@@ -14,16 +20,17 @@ export function useSeaConditions(lat: number, lon: number) {
   const [swellPeriod, setSwellPeriod] = useState<number | null>(null);
   const [swellDirection, setSwellDirection] = useState<number | null>(null);
   const [forecast, setForecast] = useState<RessacaForecastDay[]>([]);
+  const [hourlyToday, setHourlyToday] = useState<HourlySwellEntry[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchSeaConditions() {
-      // hourly: dados de agora (altura de onda + swell) | daily: previsão de swell para os próximos 7 dias
+      // hourly: dados hora a hora (swell + direção) | daily: previsão de 7 dias
       const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&hourly=wave_height,swell_wave_height,swell_wave_period,swell_wave_direction&daily=swell_wave_height_max,swell_wave_period_max,swell_wave_direction_dominant&timezone=America%2FSao_Paulo&forecast_days=7`;
       const windUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_speed_10m&wind_speed_unit=kmh&timezone=America%2FSao_Paulo`;
 
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 4000);
+      const timeoutId = setTimeout(() => controller.abort(), 6000);
 
       try {
         const [resWave, resWind] = await Promise.all([
@@ -51,6 +58,20 @@ export function useSeaConditions(lat: number, lon: number) {
         setSwellDirection(h.swell_wave_direction?.[i] ?? null);
         setWindSpeed(jsonWind.current?.wind_speed_10m ?? null);
 
+        // Dados hora a hora de hoje (para cálculo de melhor janela real)
+        const todayEntries: HourlySwellEntry[] = [];
+        h.time.forEach((t: string, j: number) => {
+          if (t.startsWith(todayStr)) {
+            const hour = parseInt(t.split('T')[1].split(':')[0], 10);
+            todayEntries.push({
+              hour,
+              swellHeight: h.swell_wave_height?.[j] ?? null,
+              swellPeriod: h.swell_wave_period?.[j] ?? null,
+            });
+          }
+        });
+        setHourlyToday(todayEntries);
+
         const d = jsonWave.daily;
         if (d?.time) {
           setForecast(
@@ -73,5 +94,5 @@ export function useSeaConditions(lat: number, lon: number) {
     fetchSeaConditions();
   }, [lat, lon]);
 
-  return { waveHeight, windSpeed, swellHeight, swellPeriod, swellDirection, forecast, loading };
+  return { waveHeight, windSpeed, swellHeight, swellPeriod, swellDirection, forecast, hourlyToday, loading };
 }

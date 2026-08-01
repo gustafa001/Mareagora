@@ -45,7 +45,7 @@ const EMPTY: SeaConditionsData = {
 };
 
 function buildUrls(lat: number, lon: number) {
-  const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&hourly=wave_height,swell_wave_height,swell_wave_period,swell_wave_direction&daily=swell_wave_height_max,swell_wave_period_max,swell_wave_direction_dominant&timezone=America%2FSao_Paulo&forecast_days=7`;
+  const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&hourly=wave_height,swell_wave_height,swell_wave_period,swell_wave_direction&daily=swell_wave_height_max,swell_wave_period_max,swell_wave_direction_dominant&timezone=America%2FSao_Paulo&forecast_days=10`;
   const windUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_speed_10m&wind_speed_unit=kmh&timezone=America%2FSao_Paulo`;
   return { marineUrl, windUrl };
 }

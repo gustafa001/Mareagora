@@ -22,6 +22,25 @@ export interface RessacaClassification {
   description: string;
 }
 
+// Mesmos thresholds usados dentro de classifyRessaca, expostos para
+// desenhar a escala visual (gauge) sem duplicar os números em outro lugar.
+export const RESSACA_SCALE: { severity: RessacaSeverity; short: string; color: string; upTo: number }[] = [
+  { severity: 'calmo', short: 'Calmo', color: '#10b981', upTo: 1.0 },
+  { severity: 'moderado', short: 'Moderado', color: '#38bdf8', upTo: 1.8 },
+  { severity: 'ressaca', short: 'Ressaca', color: '#f59e0b', upTo: 2.5 },
+  { severity: 'ressaca-forte', short: 'Forte', color: '#ef4444', upTo: 3.2 }, // upTo do último degrau = teto visual do gauge
+];
+
+// Posição (0-1) do ponteiro no gauge, considerando o mesmo ajuste de
+// período longo que classifyRessaca aplica à altura.
+export function ressacaGaugePosition(swellHeight: number | null, swellPeriod: number | null): number {
+  if (swellHeight === null) return 0;
+  const longPeriod = swellPeriod !== null && swellPeriod >= 10;
+  const effectiveHeight = longPeriod ? swellHeight + 0.4 : swellHeight;
+  const max = RESSACA_SCALE[RESSACA_SCALE.length - 1].upTo;
+  return Math.min(Math.max(effectiveHeight / max, 0), 1);
+}
+
 export function classifyRessaca(
   swellHeight: number | null,
   swellPeriod: number | null

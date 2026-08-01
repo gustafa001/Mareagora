@@ -46,7 +46,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
 
   const seoName = port.cityName;
 
-  const { waveHeight, swellHeight, swellPeriod, forecast: swellForecast, loading: seaLoading } = useSeaConditions(port.lat, port.lon);
+  const { waveHeight, swellHeight, swellPeriod, swellDirection, forecast: swellForecast, loading: seaLoading } = useSeaConditions(port.lat, port.lon);
 
   // registra o porto como "visto recentemente" pro menu de navegação
   const { addRecentPort } = useRecentPorts();
@@ -222,6 +222,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
             <RessacaAlert
               swellHeight={swellHeight}
               swellPeriod={swellPeriod}
+              swellDirection={swellDirection}
               forecast={swellForecast}
               loading={seaLoading}
             />

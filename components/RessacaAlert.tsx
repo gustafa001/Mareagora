@@ -81,7 +81,7 @@ function ActivityChipItem({ icon, label, status, color }: { icon: string; label:
 }
 
 function BarChart({ forecast }: { forecast: RessacaForecastDay[] }) {
-  const days = forecast.slice(0, 7);
+  const days = forecast.slice(0, 10);
   const maxVal = Math.max(...days.map((d) => d.swellHeightMax ?? 0), 0.5);
 
   return (
@@ -156,7 +156,7 @@ export default function RessacaAlert({
   const bestWindow = calculateBestWindow(hourlyToday);
   const pico = calcularPicoDoDia(hourlyToday);
 
-  // Antes olhava só os 3 dias seguintes — agora cobre toda a janela de 7 dias
+  // Antes olhava só os 3 dias seguintes — agora cobre toda a janela de 10 dias
   // que a API já retorna (mesma janela usada no gráfico de barras abaixo),
   // e aponta o primeiro dia em que a ressaca deve chegar.
   const upcomingRessacaDay = forecast.slice(1).find((d) => {
@@ -229,7 +229,7 @@ export default function RessacaAlert({
         )}
       </div>
 
-      {/* Gráfico de barras dos 7 dias */}
+      {/* Gráfico de barras dos 10 dias */}
       {forecast.length > 0 && (
         <div className="rounded-xl bg-black/20 p-3 border border-white/5">
           <BarChart forecast={forecast} />

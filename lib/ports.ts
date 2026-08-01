@@ -109,7 +109,7 @@ export const PORTS: Port[] = [
   { 
     id: '57', name: 'Guarujá', cityName: 'Guarujá', slug: 'guaruja', state: 'SP', region: 'sudeste', lat: -23.993056, lon: -46.257778, dhnId: '50228', offsetMinutes:  0, searchNames: ['guaruja', 'guarujá', 'enseada', 'pitangueiras'], referencePortSlug: 'porto-de-santos',
     cameras: [
-      { title: 'Guarujá - Praia das Pitangueiras ao Vivo', sourceName: 'Surfistafotografo (Fábio Paulista)', sourceUrl: 'https://www.youtube.com/@cameraaovivo', videoId: 'pJvaJY7pKvk' }
+      { title: 'Guarujá - Praia das Pitangueiras ao Vivo', sourceName: 'Marcelo Praia Grande e Região', sourceUrl: 'https://www.youtube.com/live/zd6V3jeNSOk', videoId: 'zd6V3jeNSOk' }
     ]
   },
   { id: '58', name: 'São Vicente',             cityName: 'São Vicente',             slug: 'sao-vicente',               state: 'SP', region: 'sudeste', lat: -23.964444, lon: -46.391944, dhnId: '50228', offsetMinutes:  0, searchNames: ['sao vicente', 'são vicente'], referencePortSlug: 'porto-de-santos',

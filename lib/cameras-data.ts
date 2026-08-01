@@ -33,7 +33,7 @@ const DESCRIPTIONS: Record<string, string> = {
     'Vista do Canal 1 de Santos, um dos canais que cortam a cidade e conectam a orla à parte continental.',
   'yPSJYJk-Szc':
     'Uma das praias mais procuradas de Ubatuba, no trecho conhecido como Baguari.',
-  pJvaJY7pKvk:
+  zd6V3jeNSOk:
     'Praia central do Guarujá, ao lado do calçadão, uma das mais movimentadas da cidade.',
   WJ6LLt6xxkY:
     'Vista da orla de Praia Grande, no litoral sul de São Paulo.',

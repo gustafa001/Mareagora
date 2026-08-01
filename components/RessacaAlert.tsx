@@ -10,6 +10,7 @@ import {
   activityPesca,
   calculateTrend,
   calculateBestWindow,
+  calcularPicoDoDia,
 } from '@/lib/ressaca';
 import { degToCompass } from '@/lib/tideUtils';
 import type { RessacaForecastDay, HourlySwellEntry } from '@/hooks/useSeaConditions';
@@ -22,6 +23,7 @@ interface RessacaAlertProps {
   forecast?: RessacaForecastDay[];
   hourlyToday?: HourlySwellEntry[];
   loading?: boolean;
+  error?: string | null;
 }
 
 const WEEKDAYS_ABBR = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
@@ -121,6 +123,7 @@ export default function RessacaAlert({
   forecast = [],
   hourlyToday = [],
   loading,
+  error,
 }: RessacaAlertProps) {
   if (loading) {
     return (
@@ -128,6 +131,14 @@ export default function RessacaAlert({
         <div className="h-5 w-40 bg-white/10 rounded mb-3" />
         <div className="h-24 bg-white/5 rounded mb-3" />
         <div className="h-4 w-full bg-white/5 rounded" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="rounded-2xl border border-white/10 bg-[#0d1526]/90 backdrop-blur-xl p-5 text-sm text-slate-400">
+        {error} Tente novamente em instantes.
       </div>
     );
   }
@@ -143,13 +154,19 @@ export default function RessacaAlert({
 
   const trend = calculateTrend(forecast);
   const bestWindow = calculateBestWindow(hourlyToday);
+  const pico = calcularPicoDoDia(hourlyToday);
 
-  const upcomingWarning = forecast
-    .slice(1, 4)
-    .some((d) => {
-      const c = classifyRessaca(d.swellHeightMax, d.swellPeriodMax);
-      return c.severity === 'ressaca' || c.severity === 'ressaca-forte';
-    });
+  // Antes olhava só os 3 dias seguintes — agora cobre toda a janela de 7 dias
+  // que a API já retorna (mesma janela usada no gráfico de barras abaixo),
+  // e aponta o primeiro dia em que a ressaca deve chegar.
+  const upcomingRessacaDay = forecast.slice(1).find((d) => {
+    const c = classifyRessaca(d.swellHeightMax, d.swellPeriodMax);
+    return c.severity === 'ressaca' || c.severity === 'ressaca-forte';
+  });
+  const upcomingWarning = Boolean(upcomingRessacaDay);
+  const upcomingWarningLabel = upcomingRessacaDay
+    ? formatDayLabel(upcomingRessacaDay.date, forecast.indexOf(upcomingRessacaDay))
+    : null;
 
   return (
     <section
@@ -221,9 +238,26 @@ export default function RessacaAlert({
 
       {upcomingWarning && !hasWarning && (
         <p className="text-xs text-amber-400 font-semibold">
-          ⚠ Ressaca prevista nos próximos dias — confira a tábua antes de planejar atividades no mar.
+          ⚠ Ressaca prevista para {upcomingWarningLabel} — confira a tábua antes de planejar atividades no mar.
         </p>
       )}
+
+      {/* Pico do dia */}
+      {pico && (
+        <div className="flex items-center justify-between rounded-xl bg-black/20 border border-white/5 px-3 py-2.5">
+          <span className="text-xs text-slate-400 font-semibold">
+            Pico previsto hoje
+          </span>
+          <span className="text-xs font-black font-syne" style={{ color: pico.classificacao.color }}>
+            {pico.alturaM.toFixed(1)}m
+            {pico.periodoS !== null && ` / ${pico.periodoS}s`} às {pico.horario}
+          </span>
+        </div>
+      )}
+
+      <p className="text-[10px] text-slate-500">
+        Fonte: Open-Meteo (modelo GFS Wave) · atualizado a cada hora
+      </p>
     </section>
   );
 }

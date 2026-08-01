@@ -1,6 +1,9 @@
 /**
  * MaréAgora — Classificação de Ressaca (Swell)
  * ---------------------------------------------------------------------------
+ * MESCLA: lógica de severidade/chips/tendência (versão em produção) +
+ * cálculo de pico do dia e horário exato (versão alternativa recebida).
+ * ---------------------------------------------------------------------------
  * "Ressaca" no sentido de mar agitado por swell de longo período — diferente
  * de vento local (wind wave). Usa swell_wave_height + swell_wave_period do
  * Open-Meteo Marine API (ver hooks/useSeaConditions.ts).
@@ -184,4 +187,44 @@ export function calculateBestWindow(hourlyToday: HourlySwellEntry[]): string | n
 
   const endHour = Math.min(bestStart + 3, 18);
   return `${bestStart}h – ${endHour}h`;
+}
+
+// ── Pico do dia ───────────────────────────────────────────────────────────────
+// (trazido da versão alternativa: identifica o horário exato de maior swell)
+
+export interface PicoDoDia {
+  alturaM: number;
+  periodoS: number | null;
+  direcaoGraus: number | null;
+  horario: string; // "HH:mm"
+  classificacao: RessacaClassification;
+}
+
+/**
+ * A partir dos dados horários de hoje, encontra o horário de maior swell
+ * (o "pico") e já retorna sua classificação de severidade.
+ * Requer que hourlyToday tenha sido montado com swellDirection (opcional)
+ * e timeLabel ("HH:mm") — ver useSeaConditions.ts.
+ */
+export function calcularPicoDoDia(
+  hourlyToday: HourlySwellEntry[]
+): PicoDoDia | null {
+  const comDados = hourlyToday.filter((e) => e.swellHeight !== null);
+  if (comDados.length === 0) return null;
+
+  let pico = comDados[0];
+  for (const e of comDados) {
+    if ((e.swellHeight ?? 0) > (pico.swellHeight ?? 0)) pico = e;
+  }
+
+  const alturaM = Number((pico.swellHeight ?? 0).toFixed(1));
+  const periodoS = pico.swellPeriod !== null ? Math.round(pico.swellPeriod) : null;
+
+  return {
+    alturaM,
+    periodoS,
+    direcaoGraus: pico.swellDirection ?? null,
+    horario: pico.timeLabel ?? `${String(pico.hour).padStart(2, '0')}:00`,
+    classificacao: classifyRessaca(alturaM, periodoS),
+  };
 }

@@ -27,6 +27,7 @@ import TideSchemaMarkup from '@/components/TideSchemaMarkup';
 import { getStateSlug, getStateName } from '@/lib/states';
 import ShareButton from '@/components/ShareButton';
 import { useSeaConditions } from '@/hooks/useSeaConditions';
+import RessacaAlert from '@/components/RessacaAlert';
 import { getNextHighAndLow } from '@/lib/tideUtils';
 import { notFound } from 'next/navigation';
 import type { BlogPost } from '@/lib/blog';
@@ -45,7 +46,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
 
   const seoName = port.cityName;
 
-  const { waveHeight, loading: seaLoading } = useSeaConditions(port.lat, port.lon);
+  const { waveHeight, swellHeight, swellPeriod, forecast: swellForecast, loading: seaLoading } = useSeaConditions(port.lat, port.lon);
 
   // registra o porto como "visto recentemente" pro menu de navegação
   const { addRecentPort } = useRecentPorts();
@@ -217,6 +218,13 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
             <div className="my-8 flex justify-center">
               <AdSlot slotId={AD_SLOTS.INCONTENT_RECT} format="auto" />
             </div>
+
+            <RessacaAlert
+              swellHeight={swellHeight}
+              swellPeriod={swellPeriod}
+              forecast={swellForecast}
+              loading={seaLoading}
+            />
 
             <WindWaveCharts lat={port.lat} lon={port.lon} />
 

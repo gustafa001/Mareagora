@@ -1,25 +1,35 @@
 import { useState, useEffect } from 'react';
 
+export interface RessacaForecastDay {
+  date: string;          // "YYYY-MM-DD"
+  swellHeightMax: number | null; // m
+  swellPeriodMax: number | null; // s
+}
+
 export function useSeaConditions(lat: number, lon: number) {
   const [waveHeight, setWaveHeight] = useState<number | null>(null);
   const [windSpeed, setWindSpeed] = useState<number | null>(null);
+  const [swellHeight, setSwellHeight] = useState<number | null>(null);
+  const [swellPeriod, setSwellPeriod] = useState<number | null>(null);
+  const [forecast, setForecast] = useState<RessacaForecastDay[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchSeaConditions() {
-      const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&hourly=wave_height&timezone=America%2FSao_Paulo&forecast_days=1`;
+      // hourly: dados de agora (altura de onda + swell) | daily: previsão de swell para os próximos dias
+      const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&hourly=wave_height,swell_wave_height,swell_wave_period&daily=swell_wave_height_max,swell_wave_period_max&timezone=America%2FSao_Paulo&forecast_days=4`;
       const windUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_speed_10m&wind_speed_unit=kmh&timezone=America%2FSao_Paulo`;
-      
+
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 4000);
-      
+
       try {
         const [resWave, resWind] = await Promise.all([
           fetch(url, { signal: controller.signal }),
           fetch(windUrl, { signal: controller.signal })
         ]);
         clearTimeout(timeoutId);
-        
+
         const jsonWave = await resWave.json();
         const jsonWind = await resWind.json();
 
@@ -27,14 +37,27 @@ export function useSeaConditions(lat: number, lon: number) {
         const now = new Date();
         const nowPad = now.getHours().toString().padStart(2, '0');
         const todayStr = now.toLocaleDateString('en-CA');
-        
+
         const idx = h.time.findIndex((t: string) => {
           return t.startsWith(todayStr) && t.includes(`T${nowPad}:`);
         });
         const i = idx >= 0 ? idx : 0;
-        
-        setWaveHeight(h.wave_height[i]);
-        setWindSpeed(jsonWind.current?.wind_speed_10m);
+
+        setWaveHeight(h.wave_height?.[i] ?? null);
+        setSwellHeight(h.swell_wave_height?.[i] ?? null);
+        setSwellPeriod(h.swell_wave_period?.[i] ?? null);
+        setWindSpeed(jsonWind.current?.wind_speed_10m ?? null);
+
+        const d = jsonWave.daily;
+        if (d?.time) {
+          setForecast(
+            d.time.map((date: string, idx2: number) => ({
+              date,
+              swellHeightMax: d.swell_wave_height_max?.[idx2] ?? null,
+              swellPeriodMax: d.swell_wave_period_max?.[idx2] ?? null,
+            }))
+          );
+        }
       } catch (e) {
         clearTimeout(timeoutId);
         console.error("Erro ao buscar condições do mar:", e);
@@ -46,5 +69,5 @@ export function useSeaConditions(lat: number, lon: number) {
     fetchSeaConditions();
   }, [lat, lon]);
 
-  return { waveHeight, windSpeed, loading };
+  return { waveHeight, windSpeed, swellHeight, swellPeriod, forecast, loading };
 }

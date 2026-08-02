@@ -230,6 +230,11 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               error={seaError}
             />
 
+            {/* AdSense Pós-Ressaca — usuário já engajado com o gráfico, retângulo elegível a vídeo */}
+            <div className="my-8 flex justify-center">
+              <AdSlot slotId={AD_SLOTS.POS_RESSACA} format="auto" />
+            </div>
+
             <WindWaveCharts lat={port.lat} lon={port.lon} />
 
             <ActivityRecommendations

@@ -12,6 +12,9 @@ export const AD_SLOTS = {
   // Rectangle (336x280) - After tide table
   POS_TABELA: "7112125910",
 
+  // Rectangle (336x280) - After ressaca/swell forecast chart
+  POS_RESSACA: "1064875041",
+
   // Large Skyscraper (300x600) - Sidebar
   SIDEBAR_STICKY: "5506502412",
 

@@ -37,6 +37,7 @@ export const GLOBAL_PLACES: GlobalPlace[] = [
   { slug: 'bilbao',         name: 'Bilbao',           countryCode: 'es', countryName: 'Espanha',          lat: 43.2630,  lon: -2.9350,    utcOffsetMin: 60  },
   { slug: 'palma-de-mallorca', name: 'Palma de Mallorca', countryCode: 'es', countryName: 'Espanha',     lat: 39.5696,  lon: 2.6502,     utcOffsetMin: 60  },
   { slug: 'las-palmas',     name: 'Las Palmas',       countryCode: 'es', countryName: 'Espanha',          lat: 28.1235,  lon: -15.4363,   utcOffsetMin: 0   },
+  { slug: 'marbella',       name: 'Marbella',         countryCode: 'es', countryName: 'Espanha',          lat: 36.5099,  lon: -4.8863,    utcOffsetMin: 60  },
 
   // ── FRANÇA ───────────────────────────────────────────────────────────────
   { slug: 'marseille',      name: 'Marselha',         countryCode: 'fr', countryName: 'França',           lat: 43.2965,  lon: 5.3698,     utcOffsetMin: 60  },
@@ -44,6 +45,7 @@ export const GLOBAL_PLACES: GlobalPlace[] = [
   { slug: 'bordeaux',       name: 'Bordeaux',         countryCode: 'fr', countryName: 'França',           lat: 44.8378,  lon: -0.5792,    utcOffsetMin: 60  },
   { slug: 'brest',          name: 'Brest',            countryCode: 'fr', countryName: 'França',           lat: 48.3905,  lon: -4.4860,    utcOffsetMin: 60  },
   { slug: 'la-rochelle',    name: 'La Rochelle',      countryCode: 'fr', countryName: 'França',           lat: 46.1591,  lon: -1.1520,    utcOffsetMin: 60  },
+  { slug: 'saint-tropez',   name: 'Saint-Tropez',     countryCode: 'fr', countryName: 'França',           lat: 43.2677,  lon: 6.6407,     utcOffsetMin: 60  },
 
   // ── ITÁLIA ────────────────────────────────────────────────────────────────
   { slug: 'genova',         name: 'Gênova',           countryCode: 'it', countryName: 'Itália',           lat: 44.4056,  lon: 8.9463,     utcOffsetMin: 60  },
@@ -51,6 +53,7 @@ export const GLOBAL_PLACES: GlobalPlace[] = [
   { slug: 'venezia',        name: 'Veneza',           countryCode: 'it', countryName: 'Itália',           lat: 45.4408,  lon: 12.3155,    utcOffsetMin: 60  },
   { slug: 'palermo',        name: 'Palermo',          countryCode: 'it', countryName: 'Itália',           lat: 38.1157,  lon: 13.3615,    utcOffsetMin: 60  },
   { slug: 'bari',           name: 'Bari',             countryCode: 'it', countryName: 'Itália',           lat: 41.1171,  lon: 16.8719,    utcOffsetMin: 60  },
+  { slug: 'amalfi',         name: 'Amalfi (Costa Amalfitana)', countryCode: 'it', countryName: 'Itália',  lat: 40.6340,  lon: 14.6027,    utcOffsetMin: 60  },
 
   // ── REINO UNIDO ──────────────────────────────────────────────────────────
   { slug: 'london',         name: 'Londres',          countryCode: 'gb', countryName: 'Reino Unido',      lat: 51.5074,  lon: -0.1278,    utcOffsetMin: 0   },
@@ -87,6 +90,8 @@ export const GLOBAL_PLACES: GlobalPlace[] = [
   { slug: 'atenas',         name: 'Atenas (Piraeus)', countryCode: 'gr', countryName: 'Grécia',           lat: 37.9755,  lon: 23.7348,    utcOffsetMin: 120 },
   { slug: 'thessaloniki',   name: 'Tessalônica',      countryCode: 'gr', countryName: 'Grécia',           lat: 40.6401,  lon: 22.9444,    utcOffsetMin: 120 },
   { slug: 'heraklion',      name: 'Heraklion (Creta)',countryCode: 'gr', countryName: 'Grécia',           lat: 35.3387,  lon: 25.1442,    utcOffsetMin: 120 },
+  { slug: 'santorini',      name: 'Santorini',        countryCode: 'gr', countryName: 'Grécia',           lat: 36.3932,  lon: 25.4615,    utcOffsetMin: 120 },
+  { slug: 'mykonos',        name: 'Mykonos',          countryCode: 'gr', countryName: 'Grécia',           lat: 37.4467,  lon: 25.3289,    utcOffsetMin: 120 },
 
   // ── TURQUIA ───────────────────────────────────────────────────────────────
   { slug: 'istanbul',       name: 'Istambul',         countryCode: 'tr', countryName: 'Turquia',          lat: 41.0082,  lon: 28.9784,    utcOffsetMin: 180 },
@@ -150,13 +155,19 @@ export const GLOBAL_PLACES: GlobalPlace[] = [
   // ── SRI LANKA ─────────────────────────────────────────────────────────────
   { slug: 'colombo',        name: 'Colombo',          countryCode: 'lk', countryName: 'Sri Lanka',        lat: 6.9271,   lon: 79.8612,    utcOffsetMin: 330 },
 
+  // ── MALDIVAS ──────────────────────────────────────────────────────────────
+  { slug: 'male',           name: 'Malé',             countryCode: 'mv', countryName: 'Maldivas',         lat: 4.1755,   lon: 73.5093,    utcOffsetMin: 300 },
+
   // ── TAILÂNDIA ────────────────────────────────────────────────────────────
   { slug: 'bangkok',        name: 'Bangkok',          countryCode: 'th', countryName: 'Tailândia',        lat: 13.7563,  lon: 100.5018,   utcOffsetMin: 420 },
   { slug: 'phuket',         name: 'Phuket',           countryCode: 'th', countryName: 'Tailândia',        lat: 7.8804,   lon: 98.3923,    utcOffsetMin: 420 },
+  { slug: 'krabi',          name: 'Krabi',            countryCode: 'th', countryName: 'Tailândia',        lat: 8.0863,   lon: 98.9063,    utcOffsetMin: 420 },
+  { slug: 'koh-samui',      name: 'Koh Samui',        countryCode: 'th', countryName: 'Tailândia',        lat: 9.5120,   lon: 100.0136,   utcOffsetMin: 420 },
 
   // ── VIETNÃ ────────────────────────────────────────────────────────────────
   { slug: 'ho-chi-minh',    name: 'Ho Chi Minh',      countryCode: 'vn', countryName: 'Vietnã',           lat: 10.8231,  lon: 106.6297,   utcOffsetMin: 420 },
   { slug: 'da-nang',        name: 'Da Nang',          countryCode: 'vn', countryName: 'Vietnã',           lat: 16.0544,  lon: 108.2022,   utcOffsetMin: 420 },
+  { slug: 'nha-trang',      name: 'Nha Trang',        countryCode: 'vn', countryName: 'Vietnã',           lat: 12.2388,  lon: 109.1967,   utcOffsetMin: 420 },
 
   // ── MALÁSIA ───────────────────────────────────────────────────────────────
   { slug: 'kuala-lumpur',   name: 'Kuala Lumpur (Port Klang)', countryCode: 'my', countryName: 'Malásia', lat: 3.0000,   lon: 101.4000,   utcOffsetMin: 480 },
@@ -173,6 +184,7 @@ export const GLOBAL_PLACES: GlobalPlace[] = [
   // ── FILIPINAS ────────────────────────────────────────────────────────────
   { slug: 'manila',         name: 'Manila',           countryCode: 'ph', countryName: 'Filipinas',        lat: 14.5995,  lon: 120.9842,   utcOffsetMin: 480 },
   { slug: 'cebu',           name: 'Cebu',             countryCode: 'ph', countryName: 'Filipinas',        lat: 10.3157,  lon: 123.8854,   utcOffsetMin: 480 },
+  { slug: 'boracay',        name: 'Boracay',          countryCode: 'ph', countryName: 'Filipinas',        lat: 11.9674,  lon: 121.9248,   utcOffsetMin: 480 },
 
   // ── CHINA ─────────────────────────────────────────────────────────────────
   { slug: 'shanghai',       name: 'Shanghai',         countryCode: 'cn', countryName: 'China',            lat: 31.2304,  lon: 121.4737,   utcOffsetMin: 480 },
@@ -190,10 +202,12 @@ export const GLOBAL_PLACES: GlobalPlace[] = [
   { slug: 'yokohama',       name: 'Yokohama',         countryCode: 'jp', countryName: 'Japão',            lat: 35.4437,  lon: 139.6380,   utcOffsetMin: 540 },
   { slug: 'nagasaki',       name: 'Nagasaki',         countryCode: 'jp', countryName: 'Japão',            lat: 32.7503,  lon: 129.8777,   utcOffsetMin: 540 },
   { slug: 'kobe',           name: 'Kobe',             countryCode: 'jp', countryName: 'Japão',            lat: 34.6901,  lon: 135.1956,   utcOffsetMin: 540 },
+  { slug: 'okinawa',        name: 'Okinawa (Naha)',   countryCode: 'jp', countryName: 'Japão',            lat: 26.2124,  lon: 127.6809,   utcOffsetMin: 540 },
 
   // ── COREIA DO SUL ────────────────────────────────────────────────────────
   { slug: 'busan',          name: 'Busan',            countryCode: 'kr', countryName: 'Coreia do Sul',    lat: 35.1796,  lon: 129.0756,   utcOffsetMin: 540 },
   { slug: 'incheon',        name: 'Incheon',          countryCode: 'kr', countryName: 'Coreia do Sul',    lat: 37.4563,  lon: 126.7052,   utcOffsetMin: 540 },
+  { slug: 'jeju',           name: 'Jeju',             countryCode: 'kr', countryName: 'Coreia do Sul',    lat: 33.4996,  lon: 126.5312,   utcOffsetMin: 540 },
 
   // ── AUSTRÁLIA ────────────────────────────────────────────────────────────
   { slug: 'bondi-beach',    name: 'Bondi Beach',      countryCode: 'au', countryName: 'Austrália',        lat: -33.8908, lon: 151.2743,   utcOffsetMin: 600 },
@@ -211,6 +225,10 @@ export const GLOBAL_PLACES: GlobalPlace[] = [
   { slug: 'wellington',     name: 'Wellington',       countryCode: 'nz', countryName: 'Nova Zelândia',    lat: -41.2924, lon: 174.7787,   utcOffsetMin: 720 },
   { slug: 'christchurch',   name: 'Christchurch',     countryCode: 'nz', countryName: 'Nova Zelândia',    lat: -43.5321, lon: 172.6362,   utcOffsetMin: 720 },
 
+  // ── POLINÉSIA FRANCESA ───────────────────────────────────────────────────
+  { slug: 'bora-bora',      name: 'Bora Bora',        countryCode: 'pf', countryName: 'Polinésia Francesa', lat: -16.5004, lon: -151.7415, utcOffsetMin: -600 },
+  { slug: 'tahiti',         name: 'Tahiti (Papeete)', countryCode: 'pf', countryName: 'Polinésia Francesa', lat: -17.5516, lon: -149.5585, utcOffsetMin: -600 },
+
   // ── ESTADOS UNIDOS ───────────────────────────────────────────────────────
   { slug: 'miami',          name: 'Miami',            countryCode: 'us', countryName: 'Estados Unidos',   lat: 25.7617,  lon: -80.1918,   utcOffsetMin: -300,
     cameras: [
@@ -219,11 +237,13 @@ export const GLOBAL_PLACES: GlobalPlace[] = [
   },
   { slug: 'nova-york',      name: 'Nova York',        countryCode: 'us', countryName: 'Estados Unidos',   lat: 40.7128,  lon: -74.0060,   utcOffsetMin: -300 },
   { slug: 'los-angeles',    name: 'Los Angeles',      countryCode: 'us', countryName: 'Estados Unidos',   lat: 34.0522,  lon: -118.2437,  utcOffsetMin: -480 },
+  { slug: 'malibu',         name: 'Malibu',           countryCode: 'us', countryName: 'Estados Unidos',   lat: 34.0259,  lon: -118.7798,  utcOffsetMin: -480 },
   { slug: 'san-francisco',  name: 'San Francisco',    countryCode: 'us', countryName: 'Estados Unidos',   lat: 37.7749,  lon: -122.4194,  utcOffsetMin: -480 },
   { slug: 'seattle',        name: 'Seattle',          countryCode: 'us', countryName: 'Estados Unidos',   lat: 47.6062,  lon: -122.3321,  utcOffsetMin: -480 },
   { slug: 'boston',         name: 'Boston',           countryCode: 'us', countryName: 'Estados Unidos',   lat: 42.3601,  lon: -71.0589,   utcOffsetMin: -300 },
   { slug: 'new-orleans',    name: 'New Orleans',      countryCode: 'us', countryName: 'Estados Unidos',   lat: 29.9511,  lon: -90.0715,   utcOffsetMin: -360 },
   { slug: 'honolulu',       name: 'Honolulu',         countryCode: 'us', countryName: 'Estados Unidos',   lat: 21.3069,  lon: -157.8583,  utcOffsetMin: -600 },
+  { slug: 'maui',           name: 'Maui (Waikiki)',   countryCode: 'us', countryName: 'Estados Unidos',   lat: 20.7984,  lon: -156.3319,  utcOffsetMin: -600 },
   { slug: 'san-diego',      name: 'San Diego',        countryCode: 'us', countryName: 'Estados Unidos',   lat: 32.7157,  lon: -117.1611,  utcOffsetMin: -480 },
   { slug: 'charleston',     name: 'Charleston',       countryCode: 'us', countryName: 'Estados Unidos',   lat: 32.7765,  lon: -79.9311,   utcOffsetMin: -300 },
   { slug: 'anchorage',      name: 'Anchorage',        countryCode: 'us', countryName: 'Estados Unidos',   lat: 61.2181,  lon: -149.9003,  utcOffsetMin: -540 },
@@ -239,15 +259,26 @@ export const GLOBAL_PLACES: GlobalPlace[] = [
   { slug: 'acapulco',       name: 'Acapulco',         countryCode: 'mx', countryName: 'México',           lat: 16.8531,  lon: -99.8237,   utcOffsetMin: -360 },
   { slug: 'veracruz',       name: 'Veracruz',         countryCode: 'mx', countryName: 'México',           lat: 19.1738,  lon: -96.1342,   utcOffsetMin: -360 },
   { slug: 'mazatlan',       name: 'Mazatlán',         countryCode: 'mx', countryName: 'México',           lat: 23.2494,  lon: -106.4111,  utcOffsetMin: -420 },
+  { slug: 'puerto-vallarta', name: 'Puerto Vallarta', countryCode: 'mx', countryName: 'México',           lat: 20.6534,  lon: -105.2253,  utcOffsetMin: -420 },
 
   // ── CUBA ──────────────────────────────────────────────────────────────────
   { slug: 'havana',         name: 'Havana',           countryCode: 'cu', countryName: 'Cuba',             lat: 23.1136,  lon: -82.3666,   utcOffsetMin: -300 },
+  { slug: 'varadero',       name: 'Varadero',         countryCode: 'cu', countryName: 'Cuba',             lat: 23.1350,  lon: -81.2890,   utcOffsetMin: -300 },
 
   // ── REPÚBLICA DOMINICANA ─────────────────────────────────────────────────
   { slug: 'santo-domingo',  name: 'Santo Domingo',    countryCode: 'do', countryName: 'República Dominicana', lat: 18.4861, lon: -69.9312, utcOffsetMin: -240 },
 
   // ── JAMAICA ───────────────────────────────────────────────────────────────
   { slug: 'kingston',       name: 'Kingston',         countryCode: 'jm', countryName: 'Jamaica',          lat: 17.9970,  lon: -76.7936,   utcOffsetMin: -300 },
+
+  // ── BAHAMAS ───────────────────────────────────────────────────────────────
+  { slug: 'nassau',         name: 'Nassau',           countryCode: 'bs', countryName: 'Bahamas',          lat: 25.0480,  lon: -77.3554,   utcOffsetMin: -300 },
+
+  // ── ARUBA ─────────────────────────────────────────────────────────────────
+  { slug: 'aruba',          name: 'Aruba (Oranjestad)', countryCode: 'aw', countryName: 'Aruba',          lat: 12.5092,  lon: -70.0086,   utcOffsetMin: -240 },
+
+  // ── CURAÇAO ───────────────────────────────────────────────────────────────
+  { slug: 'curacao',        name: 'Curaçao (Willemstad)', countryCode: 'cw', countryName: 'Curaçao',      lat: 12.1084,  lon: -68.9335,   utcOffsetMin: -240 },
 
   // ── COLOMBIA ──────────────────────────────────────────────────────────────
   { slug: 'cartagena',      name: 'Cartagena',        countryCode: 'co', countryName: 'Colômbia',         lat: 10.3910,  lon: -75.4794,   utcOffsetMin: -300 },

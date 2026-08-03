@@ -1,4 +1,5 @@
 import { PORTS, type Port } from './ports';
+import { GLOBAL_PLACES, type GlobalPlace } from './globalPlaces';
 
 /**
  * Câmeras ao vivo que JÁ RODAM nas páginas de maré (/mare/[estado]/[slug]),
@@ -19,6 +20,9 @@ export interface LiveCamera {
   videoId?: string;
   channelId?: string;
   portSlug: string;
+  // Sobrepõe o link "Ver maré de..." quando o local não segue o padrão
+  // /mare/[estado]/[slug] (ex: locais globais em /mare-mundo/[pais]/[slug]).
+  href?: string;
 }
 
 // Descrição curta por vídeo — mantida separada de ports.ts pra não poluir
@@ -44,6 +48,8 @@ const DESCRIPTIONS: Record<string, string> = {
     'Vista da Praia dos Milionários, em São Vicente, um dos trechos mais nobres da orla da cidade.',
   OlEJOalq4oQ:
     'Vista da Praia dos Sonhos, em Itanhaém, no litoral sul de São Paulo.',
+  bi7B4EmyHHs:
+    'Vista de Sunny Isles Beach, em Miami, na Flórida.',
 };
 
 // Agrupamento visual por região turística (mais legível que o campo
@@ -59,7 +65,7 @@ const GROUP_LABELS: Record<string, string> = {
   'cabo-frio': 'Região dos Lagos',
 };
 
-const GROUP_ORDER = ['Baixada Santista', 'Litoral Norte SP', 'Rio de Janeiro', 'Região dos Lagos'];
+const GROUP_ORDER = ['Baixada Santista', 'Litoral Norte SP', 'Rio de Janeiro', 'Região dos Lagos', 'Internacional'];
 
 function toLiveCameras(port: Port): LiveCamera[] {
   if (!port.cameras || port.cameras.length === 0) return [];
@@ -80,8 +86,28 @@ function toLiveCameras(port: Port): LiveCamera[] {
     }));
 }
 
+function toLiveCamerasFromPlace(place: GlobalPlace): LiveCamera[] {
+  if (!place.cameras || place.cameras.length === 0) return [];
+  return place.cameras
+    .filter((cam) => Boolean(cam.videoId) || Boolean(cam.channelId))
+    .map((cam) => ({
+      id: `${place.slug}-${cam.videoId ?? cam.channelId}`,
+      title: cam.title,
+      cityName: place.name,
+      state: place.countryName,
+      groupLabel: 'Internacional',
+      description: (cam.videoId && DESCRIPTIONS[cam.videoId]) ?? '',
+      sourceName: cam.sourceName,
+      sourceUrl: cam.sourceUrl,
+      videoId: cam.videoId,
+      channelId: cam.channelId,
+      portSlug: place.slug,
+      href: `/mare-mundo/${place.countryCode}/${place.slug}`,
+    }));
+}
+
 export function getLiveCameras(): LiveCamera[] {
-  return PORTS.flatMap(toLiveCameras);
+  return [...PORTS.flatMap(toLiveCameras), ...GLOBAL_PLACES.flatMap(toLiveCamerasFromPlace)];
 }
 
 export function getLiveCameraGroups(): { label: string; cameras: LiveCamera[] }[] {

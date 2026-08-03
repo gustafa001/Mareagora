@@ -11,7 +11,7 @@ export default function LiveCameraCard({ camera }: { camera: LiveCamera }) {
   const embedUrl = camera.channelId
     ? `https://www.youtube.com/embed/live_stream?channel=${camera.channelId}&autoplay=0&mute=1`
     : `https://www.youtube.com/embed/${camera.videoId}?autoplay=0&mute=1`;
-  const mareHref = `/mare/${getStateSlug(camera.state)}/${camera.portSlug}`;
+  const mareHref = camera.href ?? `/mare/${getStateSlug(camera.state)}/${camera.portSlug}`;
 
   return (
     <div className="w-full rounded-xl border border-slate-200 bg-white p-4 shadow-sm">

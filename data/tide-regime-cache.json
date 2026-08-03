@@ -14317,5 +14317,194 @@
     "stationDistanceKm": 0,
     "isEstimate": false,
     "computedAt": "2026-07-24"
+  },
+  "marbella": {
+    "regime": "semidiurno",
+    "amplitudeMedia": 0.4,
+    "amplitudeMax": 0.5,
+    "stationId": "ticon/malaga-mala-esp-ieo",
+    "stationDistanceKm": 48,
+    "isEstimate": false,
+    "computedAt": "2026-08-03"
+  },
+  "saint-tropez": {
+    "regime": "semidiurno",
+    "amplitudeMedia": 0.2,
+    "amplitudeMax": 0.3,
+    "stationId": "ticon/port_ferreol-847-fra-refmar",
+    "stationDistanceKm": 12,
+    "isEstimate": false,
+    "computedAt": "2026-08-03"
+  },
+  "amalfi": {
+    "regime": "semidiurno",
+    "amplitudeMedia": 0.3,
+    "amplitudeMax": 0.3,
+    "stationId": "ticon/salerno-sal-ita-ispra",
+    "stationDistanceKm": 13,
+    "isEstimate": false,
+    "computedAt": "2026-08-03"
+  },
+  "santorini": {
+    "regime": "misto",
+    "amplitudeMedia": 0.1,
+    "amplitudeMax": 0.1,
+    "stationId": "ticon/hrakleio-hra-grc-cmems",
+    "stationDistanceKm": 119,
+    "isEstimate": true,
+    "computedAt": "2026-08-03"
+  },
+  "mykonos": {
+    "regime": "misto",
+    "amplitudeMedia": 0.1,
+    "amplitudeMax": 0.1,
+    "stationId": "ticon/paleafokea-pal-grc-cmems",
+    "stationDistanceKm": 126,
+    "isEstimate": true,
+    "computedAt": "2026-08-03"
+  },
+  "male": {
+    "regime": "semidiurno",
+    "amplitudeMedia": 0.6,
+    "amplitudeMax": 0.8,
+    "stationId": "ticon/male_hulule-108b-mdv-uhslc_rq",
+    "stationDistanceKm": 3,
+    "isEstimate": false,
+    "computedAt": "2026-08-03"
+  },
+  "krabi": {
+    "regime": "semidiurno",
+    "amplitudeMedia": 1.6,
+    "amplitudeMax": 2.4,
+    "stationId": "ticon/ko_taphao_noi-148-tha-uhslc_fd",
+    "stationDistanceKm": 60,
+    "isEstimate": false,
+    "computedAt": "2026-08-03"
+  },
+  "koh-samui": {
+    "regime": "diurno",
+    "amplitudeMedia": 1,
+    "amplitudeMax": 2,
+    "stationId": "ticon/ko_lak-328-tha-uhslc_fd",
+    "stationDistanceKm": 255,
+    "isEstimate": true,
+    "computedAt": "2026-08-03"
+  },
+  "nha-trang": {
+    "regime": "misto",
+    "amplitudeMedia": 0.8,
+    "amplitudeMax": 1.5,
+    "stationId": "ticon/qui_nhon-381-vnm-uhslc_fd",
+    "stationDistanceKm": 170,
+    "isEstimate": true,
+    "computedAt": "2026-08-03"
+  },
+  "boracay": {
+    "regime": "semidiurno",
+    "amplitudeMedia": 1.2,
+    "amplitudeMax": 1.6,
+    "stationId": "ticon/legaspi-371-phl-uhslc_fd",
+    "stationDistanceKm": 238,
+    "isEstimate": true,
+    "computedAt": "2026-08-03"
+  },
+  "okinawa": {
+    "regime": "semidiurno",
+    "amplitudeMedia": 1.4,
+    "amplitudeMax": 1.8,
+    "stationId": "ticon/naha-355-jpn-uhslc_fd",
+    "stationDistanceKm": 1,
+    "isEstimate": false,
+    "computedAt": "2026-08-03"
+  },
+  "jeju": {
+    "regime": "semidiurno",
+    "amplitudeMedia": 1.7,
+    "amplitudeMax": 2.3,
+    "stationId": "ticon/fukue-ma50-jpn-jodc_jma",
+    "stationDistanceKm": 234,
+    "isEstimate": true,
+    "computedAt": "2026-08-03"
+  },
+  "bora-bora": {
+    "regime": "semidiurno",
+    "amplitudeMedia": 0.1,
+    "amplitudeMax": 0.2,
+    "stationId": "ticon/huahine-587-fra-refmar",
+    "stationDistanceKm": 79,
+    "isEstimate": true,
+    "computedAt": "2026-08-03"
+  },
+  "tahiti": {
+    "regime": "semidiurno",
+    "amplitudeMedia": 0.2,
+    "amplitudeMax": 0.3,
+    "stationId": "ticon/papeete-383-fra-refmar",
+    "stationDistanceKm": 3,
+    "isEstimate": false,
+    "computedAt": "2026-08-03"
+  },
+  "malibu": {
+    "regime": "semidiurno",
+    "amplitudeMedia": 1.5,
+    "amplitudeMax": 2.3,
+    "stationId": "noaa/9410840",
+    "stationDistanceKm": 26,
+    "isEstimate": false,
+    "computedAt": "2026-08-03"
+  },
+  "maui": {
+    "regime": "misto",
+    "amplitudeMedia": 0.6,
+    "amplitudeMax": 0.9,
+    "stationId": "noaa/TPT2797",
+    "stationDistanceKm": 14,
+    "isEstimate": false,
+    "computedAt": "2026-08-03"
+  },
+  "puerto-vallarta": {
+    "regime": "semidiurno",
+    "amplitudeMedia": 0.8,
+    "amplitudeMax": 1.4,
+    "stationId": "ticon/puertovallarta_flotador-19-mex-unam",
+    "stationDistanceKm": 2,
+    "isEstimate": false,
+    "computedAt": "2026-08-03"
+  },
+  "varadero": {
+    "regime": "misto",
+    "amplitudeMedia": 0.6,
+    "amplitudeMax": 0.8,
+    "stationId": "noaa/TEC4693",
+    "stationDistanceKm": 12,
+    "isEstimate": false,
+    "computedAt": "2026-08-03"
+  },
+  "nassau": {
+    "regime": "semidiurno",
+    "amplitudeMedia": 0.9,
+    "amplitudeMax": 1.1,
+    "stationId": "noaa/TEC4623",
+    "stationDistanceKm": 4,
+    "isEstimate": false,
+    "computedAt": "2026-08-03"
+  },
+  "aruba": {
+    "regime": "diurno",
+    "amplitudeMedia": 0.3,
+    "amplitudeMax": 0.4,
+    "stationId": "ticon/bullen_bay-878-cuw-uhslc_fd",
+    "stationDistanceKm": 113,
+    "isEstimate": true,
+    "computedAt": "2026-08-03"
+  },
+  "curacao": {
+    "regime": "misto",
+    "amplitudeMedia": 0.2,
+    "amplitudeMax": 0.4,
+    "stationId": "ticon/willemstad-778a-cuw-uhslc_rq",
+    "stationDistanceKm": 1,
+    "isEstimate": false,
+    "computedAt": "2026-08-03"
   }
 }

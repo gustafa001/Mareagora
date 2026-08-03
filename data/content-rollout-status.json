@@ -9544,5 +9544,131 @@
     "countryCode": "na",
     "approvedAt": "2026-07-27",
     "approvedBy": "similarity-check"
+  },
+  "santorini": {
+    "approved": true,
+    "countryCode": "gr",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "mykonos": {
+    "approved": true,
+    "countryCode": "gr",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "bora-bora": {
+    "approved": true,
+    "countryCode": "pf",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "tahiti": {
+    "approved": true,
+    "countryCode": "pf",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "boracay": {
+    "approved": true,
+    "countryCode": "ph",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "maui": {
+    "approved": true,
+    "countryCode": "us",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "malibu": {
+    "approved": true,
+    "countryCode": "us",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "krabi": {
+    "approved": true,
+    "countryCode": "th",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "koh-samui": {
+    "approved": true,
+    "countryCode": "th",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "nha-trang": {
+    "approved": true,
+    "countryCode": "vn",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "saint-tropez": {
+    "approved": true,
+    "countryCode": "fr",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "amalfi": {
+    "approved": true,
+    "countryCode": "it",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "marbella": {
+    "approved": true,
+    "countryCode": "es",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "okinawa": {
+    "approved": true,
+    "countryCode": "jp",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "jeju": {
+    "approved": true,
+    "countryCode": "kr",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "nassau": {
+    "approved": true,
+    "countryCode": "bs",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "aruba": {
+    "approved": true,
+    "countryCode": "aw",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "curacao": {
+    "approved": true,
+    "countryCode": "cw",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "varadero": {
+    "approved": true,
+    "countryCode": "cu",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "puerto-vallarta": {
+    "approved": true,
+    "countryCode": "mx",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
+  },
+  "male": {
+    "approved": true,
+    "countryCode": "mv",
+    "approvedAt": "2026-08-03",
+    "approvedBy": "similarity-check"
   }
 }

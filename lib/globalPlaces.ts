@@ -285,7 +285,6 @@ export const GLOBAL_PLACES: GlobalPlace[] = [
 
   // ── SINT MAARTEN ─────────────────────────────────────────────────────────
   {
-  {
     slug: 'maho-beach', name: 'Maho Beach', countryCode: 'sx', countryName: 'Sint Maarten', lat: 18.0410, lon: -63.1189, utcOffsetMin: -240,
   },
 

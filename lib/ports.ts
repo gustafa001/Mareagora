@@ -162,7 +162,12 @@ export const PORTS: Port[] = [
   { id: '74', name: 'Trancoso',             cityName: 'Trancoso',             slug: 'trancoso',             state: 'BA', region: 'nordeste', lat: -16.593056, lon: -39.099444, dhnId: '40145', offsetMinutes: 0, searchNames: ['trancoso'],                       referencePortSlug: 'porto-de-ilheus' },
   { id: '75', name: 'Jericoacoara',         cityName: 'Jericoacoara',         slug: 'jericoacoara',         state: 'CE', region: 'nordeste', lat: -2.795278,  lon: -40.512778, dhnId: '30225', offsetMinutes: 0, searchNames: ['jericoacoara', 'jeri'],           referencePortSlug: 'porto-de-luis-correia' },
   { id: '76', name: 'Praia do Futuro',      cityName: 'Praia do Futuro',      slug: 'praia-do-futuro',      state: 'CE', region: 'nordeste', lat: -3.750000,  lon: -38.470000, dhnId: '30340', offsetMinutes: 0, searchNames: ['praia do futuro', 'praia do futuro fortaleza'], referencePortSlug: 'porto-de-mucuripe-fortaleza' },
-  { id: '77', name: 'Ponta Negra',          cityName: 'Ponta Negra',          slug: 'ponta-negra',          state: 'RN', region: 'nordeste', lat: -5.876667,  lon: -35.171944, dhnId: '30462', offsetMinutes: 0, searchNames: ['ponta negra', 'ponta negra natal'], referencePortSlug: 'porto-de-natal' },
+  {
+    id: '77', name: 'Ponta Negra', cityName: 'Ponta Negra', slug: 'ponta-negra', state: 'RN', region: 'nordeste', lat: -5.876667, lon: -35.171944, dhnId: '30462', offsetMinutes: 0, searchNames: ['ponta negra', 'ponta negra natal'], referencePortSlug: 'porto-de-natal',
+    cameras: [
+      { title: 'Ponta Negra (Natal) ao Vivo', sourceName: 'WebcamNatal', sourceUrl: 'https://www.youtube.com/channel/UC-dGHuK8OcC_WIWvNzxysag', channelId: 'UC-dGHuK8OcC_WIWvNzxysag' }
+    ]
+  },
   { id: '78', name: 'Pipa',                 cityName: 'Pipa',                 slug: 'pipa',                 state: 'RN', region: 'nordeste', lat: -6.231111,  lon: -35.039167, dhnId: '30462', offsetMinutes: 0, searchNames: ['pipa', 'praia da pipa'],           referencePortSlug: 'porto-de-natal' },
   { id: '79', name: 'Maragogi',             cityName: 'Maragogi',             slug: 'maragogi',             state: 'AL', region: 'nordeste', lat: -9.011944,  lon: -35.222500, dhnId: '30725', offsetMinutes: 0, searchNames: ['maragogi'],                       referencePortSlug: 'porto-de-maceio' },
   { id: '80', name: 'Baía do Sancho',       cityName: 'Baía do Sancho',       slug: 'baia-do-sancho',       state: 'PE', region: 'especial', lat: -3.856667,  lon: -32.491667, dhnId: '30955', offsetMinutes: 0, searchNames: ['baia do sancho', 'baía do sancho', 'fernando de noronha'], referencePortSlug: 'arquipelago-de-fernando-de-noronha' },

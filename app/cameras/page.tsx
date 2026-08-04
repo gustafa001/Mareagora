@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getLiveCameraGroups } from '@/lib/live-cameras';
 import LiveCameraCard from '@/components/LiveCameraCard';
+import SuggestCameraBox from '@/components/SuggestCameraBox';
 import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
 
@@ -65,6 +66,11 @@ export default function CamerasPage() {
               )}
             </section>
           ))}
+        </div>
+
+        {/* Caixa de sugestão de câmera */}
+        <div className="mt-12 sm:mt-16">
+          <SuggestCameraBox />
         </div>
 
         {/* AdSense antes do rodapé */}

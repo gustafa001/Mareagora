@@ -62,7 +62,7 @@ const GROUP_ORDER = ['Baixada Santista', 'Litoral Norte SP', 'Rio de Janeiro'];
 function toLiveCameras(port: Port): LiveCamera[] {
   if (!port.cameras || port.cameras.length === 0) return [];
   return port.cameras
-    .filter((cam) => Boolean(cam.videoId))
+    .filter((cam) => cam.active !== false && Boolean(cam.videoId))
     .map((cam) => ({
       id: `${port.slug}-${cam.videoId}`,
       title: cam.title,

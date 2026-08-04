@@ -4,6 +4,9 @@ export interface GlobalPlaceCamera {
   sourceUrl: string;
   videoId?: string;
   channelId?: string;
+  // Marque como false pra esconder a câmera sem apagar os dados dela.
+  // Omitido ou true = ativa.
+  active?: boolean;
 }
 
 export interface GlobalPlace {

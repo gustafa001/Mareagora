@@ -101,7 +101,7 @@ export const PORTS: Port[] = [
   { 
     id: '65', name: 'Ubatuba', cityName: 'Ubatuba', slug: 'ubatuba', state: 'SP', region: 'sudeste', lat: -23.433611, lon: -45.083889, dhnId: '50210', offsetMinutes: 0, searchNames: ['ubatuba', 'itamambuca', 'prumirim', 'vermelha do norte'], referencePortSlug: 'porto-de-sao-sebastiao',
     cameras: [
-      { title: 'Ubatuba - Praia Grande (Baguari) ao Vivo', sourceName: 'UBACAM', sourceUrl: 'https://www.youtube.com/channel/UCVQG1pBkRM4xlRrBmV65kUw', channelId: 'UCVQG1pBkRM4xlRrBmV65kUw' }
+      { title: 'Ubatuba - Praia Grande (Baguari) ao Vivo', sourceName: 'UBACAM', sourceUrl: 'https://www.youtube.com/live/0WjOyshv9BA?si=weRxDoweM4VtHFjz', channelId: 'weRxDoweM4VtHFjz' }
     ]
   },
 

@@ -282,10 +282,8 @@ export const GLOBAL_PLACES: GlobalPlace[] = [
 
   // ── SINT MAARTEN ─────────────────────────────────────────────────────────
   {
+  {
     slug: 'maho-beach', name: 'Maho Beach', countryCode: 'sx', countryName: 'Sint Maarten', lat: 18.0410, lon: -63.1189, utcOffsetMin: -240,
-    cameras: [
-      { title: 'Maho Beach (Sint Maarten) ao Vivo', sourceName: 'SHOWME Caribbean', sourceUrl: 'https://www.youtube.com/channel/UCRjMuOBDCfSsCNIe2p0_tdg', channelId: 'UCRjMuOBDCfSsCNIe2p0_tdg' }
-    ]
   },
 
   // ── COLOMBIA ──────────────────────────────────────────────────────────────

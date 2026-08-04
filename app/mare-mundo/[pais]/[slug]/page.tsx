@@ -207,11 +207,11 @@ export default async function MareMundoLocalPage({ params }: Props) {
               lon={place.lon}
             />
 
-            {place.cameras && place.cameras.length > 0 && (
+            {place.cameras && place.cameras.filter((c) => c.active !== false).length > 0 && (
               <div className="my-8 flex flex-col gap-6">
                 <h2 className="text-2xl font-bold font-syne text-slate-800">Câmeras ao Vivo em {place.name}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {place.cameras.map((cam, idx) => (
+                  {place.cameras.filter((cam) => cam.active !== false).map((cam, idx) => (
                     <LiveCameraEmbed
                       key={idx}
                       title={cam.title}

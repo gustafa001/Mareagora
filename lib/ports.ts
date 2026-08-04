@@ -13,6 +13,10 @@ export interface PortCamera {
   // do canal, então não quebra quando o videoId muda.
   videoId?: string;
   channelId?: string;
+  // Marque como false pra esconder a câmera sem apagar os dados dela
+  // (ex: embed bloqueado pelo dono, live fora do ar por um tempo).
+  // Omitido ou true = ativa.
+  active?: boolean;
 }
 
 export interface Port {

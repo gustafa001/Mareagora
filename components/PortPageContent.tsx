@@ -191,11 +191,11 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               referencePort={referenceData}
             />
 
-            {port.cameras && port.cameras.length > 0 && (
+            {port.cameras && port.cameras.filter((c) => c.active !== false).length > 0 && (
               <div className="my-8 flex flex-col gap-6">
                 <h2 className="text-2xl font-bold font-syne text-slate-800">Câmeras ao Vivo em {seoName}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {port.cameras.map((cam, idx) => (
+                  {port.cameras.filter((cam) => cam.active !== false).map((cam, idx) => (
                     <LiveCameraEmbed
                       key={idx}
                       title={cam.title}

@@ -2,11 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const TO_EMAIL = 'contatos@mareagora.com.br';
-// Enquanto o domínio mareagora.com.br não estiver verificado no Resend,
-// o envio só funciona com esse remetente de sandbox deles.
-// Depois de verificar o domínio (Resend > Domains), troque para
-// algo como 'MaréAgora <sugestoes@mareagora.com.br>'.
-const FROM_EMAIL = 'MaréAgora <onboarding@resend.dev>';
+const FROM_EMAIL = 'MaréAgora <sugestoes@mareagora.com.br>';
 
 export async function POST(req: NextRequest) {
   try {

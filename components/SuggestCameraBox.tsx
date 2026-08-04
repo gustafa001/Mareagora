@@ -2,26 +2,31 @@
 
 import { useState } from 'react';
 
-const CONTACT_EMAIL = 'contatos@mareagora.com.br';
-
 export default function SuggestCameraBox() {
   const [praia, setPraia] = useState('');
   const [link, setLink] = useState('');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!praia.trim()) return;
 
-    const subject = `Sugestão de câmera ao vivo${praia ? `: ${praia}` : ''}`;
-    const bodyLines = [
-      `Praia/local sugerido: ${praia || '(não informado)'}`,
-      `Link da câmera (YouTube, etc.): ${link || '(não informado)'}`,
-      '',
-      'Comentário adicional:',
-      '',
-    ];
-    const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+    setStatus('sending');
+    try {
+      const res = await fetch('/api/suggest-camera', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ praia, link }),
+      });
 
-    window.location.href = mailto;
+      if (!res.ok) throw new Error('Falha no envio');
+
+      setStatus('sent');
+      setPraia('');
+      setLink('');
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (
@@ -35,45 +40,56 @@ export default function SuggestCameraBox() {
           adicionar aqui.
         </p>
 
-        <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3 text-left">
-          <div>
-            <label htmlFor="suggest-praia" className="mb-1 block text-xs font-semibold text-slate-500">
-              Praia ou local
-            </label>
-            <input
-              id="suggest-praia"
-              type="text"
-              value={praia}
-              onChange={(e) => setPraia(e.target.value)}
-              placeholder="Ex: Praia de Camburi, Vitória - ES"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-            />
+        {status === 'sent' ? (
+          <div className="mt-6 rounded-lg bg-emerald-50 px-4 py-6 text-sm font-medium text-emerald-700">
+            ✅ Sugestão enviada, obrigado!
           </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3 text-left">
+            <div>
+              <label htmlFor="suggest-praia" className="mb-1 block text-xs font-semibold text-slate-500">
+                Praia ou local
+              </label>
+              <input
+                id="suggest-praia"
+                type="text"
+                value={praia}
+                onChange={(e) => setPraia(e.target.value)}
+                placeholder="Ex: Praia de Camburi, Vitória - ES"
+                required
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              />
+            </div>
 
-          <div>
-            <label htmlFor="suggest-link" className="mb-1 block text-xs font-semibold text-slate-500">
-              Link da câmera (opcional)
-            </label>
-            <input
-              id="suggest-link"
-              type="url"
-              value={link}
-              onChange={(e) => setLink(e.target.value)}
-              placeholder="https://www.youtube.com/live/..."
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-            />
-          </div>
+            <div>
+              <label htmlFor="suggest-link" className="mb-1 block text-xs font-semibold text-slate-500">
+                Link da câmera (opcional)
+              </label>
+              <input
+                id="suggest-link"
+                type="url"
+                value={link}
+                onChange={(e) => setLink(e.target.value)}
+                placeholder="https://www.youtube.com/live/..."
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              />
+            </div>
 
-          <button
-            type="submit"
-            className="mt-2 inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
-          >
-            ✉️ Enviar sugestão
-          </button>
-          <p className="text-center text-xs text-slate-400">
-            Abre seu aplicativo de e-mail com a mensagem pronta para {CONTACT_EMAIL}
-          </p>
-        </form>
+            <button
+              type="submit"
+              disabled={status === 'sending'}
+              className="mt-2 inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700 disabled:opacity-60"
+            >
+              {status === 'sending' ? 'Enviando...' : '✉️ Enviar sugestão'}
+            </button>
+
+            {status === 'error' && (
+              <p className="text-center text-xs text-red-500">
+                Não deu pra enviar agora. Tenta de novo em instantes.
+              </p>
+            )}
+          </form>
+        )}
       </div>
     </section>
   );

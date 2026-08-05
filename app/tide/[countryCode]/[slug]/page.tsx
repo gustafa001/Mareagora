@@ -27,6 +27,8 @@ const DailyScoreCard = dynamic(() => import('@/components/DailyScoreCard'), { ss
 import TideSchemaMarkup from '@/components/TideSchemaMarkup';
 import ShareButton from '@/components/ShareButton';
 import { generateTideDescription } from '@/lib/tideDescription';
+import { AD_SLOTS } from '@/lib/adConfig';
+import AdSlot from '@/components/ads/AdSlot';
 
 const BASE = 'https://mareagora.com.br';
 const en = t('en');
@@ -251,6 +253,11 @@ export default async function TideLocalPage({ params }: Props) {
               <span className="text-xl">⚠️</span> Notice
             </h3>
             <p className="text-amber-700/90 text-sm leading-relaxed">{en.disclaimer}</p>
+          </div>
+
+          {/* AdSense Footer */}
+          <div className="mt-4 flex justify-center">
+            <AdSlot slotId={AD_SLOTS.PREFOOTER} format="horizontal" />
           </div>
         </div>
       </div>

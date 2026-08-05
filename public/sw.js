@@ -1,76 +1,97 @@
 // ═══════════════════════════════════════════════
 // MaréAgora — Service Worker (PWA)
-// Salve este arquivo como /sw.js na raiz do site
 // ═══════════════════════════════════════════════
 
-const CACHE = 'mareagora-v1';
-const ASSETS = [
-  './',
-  './index.html',
-  './offline.html',
-  './manifest.json',
+const CACHE = 'mareagora-v2'; // bump de versão força limpeza do cache antigo
+const PRECACHE_ASSETS = [
+  '/',
+  '/offline.html',
+  '/manifest.json',
+  '/icons/icon-192x192.png',
+  '/icons/icon-512x512.png',
 ];
 
-// Instala e faz cache dos assets estáticos
-self.addEventListener('install', e => {
+// Instala e faz cache dos assets estáticos que realmente existem
+self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())
+    caches.open(CACHE)
+      .then((c) => c.addAll(PRECACHE_ASSETS))
+      .then(() => self.skipWaiting())
+      .catch((err) => console.error('[SW] precache falhou:', err))
   );
 });
 
 // Limpa caches antigos
-self.addEventListener('activate', e => {
+self.addEventListener('activate', (e) => {
   e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    ).then(() => self.clients.claim())
+    caches.keys()
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
+      .then(() => self.clients.claim())
   );
 });
 
-// Estratégia: Network First (dados de maré precisam ser frescos)
-// Fallback para cache se offline
-self.addEventListener('fetch', e => {
-  const url = new URL(e.request.url);
+self.addEventListener('fetch', (e) => {
+  const req = e.request;
+  if (req.method !== 'GET') return; // não intercepta POST (ex: /api/push/*)
 
-  // API calls — sempre tenta rede primeiro
+  const url = new URL(req.url);
+
+  // APIs externas de maré/clima — sempre tenta rede primeiro, cai pro cache se offline
   if (url.hostname.includes('open-meteo') || url.hostname.includes('marinha')) {
-    e.respondWith(
-      fetch(e.request)
-        .then(res => {
-          // Salva no cache para uso offline
-          const clone = res.clone();
-          caches.open(CACHE).then(c => c.put(e.request, clone));
-          return res;
-        })
-        .catch(() => caches.match(e.request))
-    );
+    e.respondWith(networkFirst(req));
     return;
   }
 
-  // Assets estáticos — Cache First
-  e.respondWith(
-    caches.match(e.request).then(cached => {
-      if (cached) return cached;
-      return fetch(e.request)
-        .then(res => {
-          const clone = res.clone();
-          caches.open(CACHE).then(c => c.put(e.request, clone));
-          return res;
-        })
-        .catch(() => caches.match('/offline.html'));
-    })
-  );
+  // Navegação (páginas do site, incluindo /mare/[slug], /mare-mundo/... etc)
+  // e chamadas internas de dados (Server Actions / RSC) — Network First,
+  // pra sempre mostrar a maré mais atual quando online, e cair pro cache
+  // (última versão vista) quando offline.
+  if (req.mode === 'navigate' || url.pathname.startsWith('/api/tide') || url.pathname.startsWith('/api/global-tide')) {
+    e.respondWith(networkFirst(req, '/offline.html'));
+    return;
+  }
+
+  // Assets estáticos do Next.js (_next/static, imagens, fontes) — são
+  // imutáveis (hash no nome do arquivo), então Cache First é seguro e rápido.
+  e.respondWith(cacheFirst(req));
 });
+
+async function networkFirst(request, offlineFallback) {
+  try {
+    const res = await fetch(request);
+    const clone = res.clone();
+    caches.open(CACHE).then((c) => c.put(request, clone));
+    return res;
+  } catch {
+    const cached = await caches.match(request);
+    if (cached) return cached;
+    if (offlineFallback) return caches.match(offlineFallback);
+    return Response.error();
+  }
+}
+
+async function cacheFirst(request) {
+  const cached = await caches.match(request);
+  if (cached) return cached;
+  try {
+    const res = await fetch(request);
+    const clone = res.clone();
+    caches.open(CACHE).then((c) => c.put(request, clone));
+    return res;
+  } catch {
+    return caches.match('/offline.html');
+  }
+}
 
 // ═══════════════════════════════════════════════
 // Notificações Push
 // ═══════════════════════════════════════════════
 
-self.addEventListener('push', e => {
+self.addEventListener('push', (e) => {
   const data = e.data ? e.data.json() : {
     title: 'MaréAgora',
     body: 'Confira a tábua de marés de hoje!',
-    icon: '/icons/icon-192x192.png'
+    icon: '/icons/icon-192x192.png',
   };
 
   const options = {
@@ -78,19 +99,13 @@ self.addEventListener('push', e => {
     icon: data.icon || '/icons/icon-192x192.png',
     badge: '/icons/icon-192x192.png',
     vibrate: [100, 50, 100],
-    data: {
-      url: data.url || '/'
-    }
+    data: { url: data.url || '/' },
   };
 
-  e.waitUntil(
-    self.registration.showNotification(data.title, options)
-  );
+  e.waitUntil(self.registration.showNotification(data.title, options));
 });
 
-self.addEventListener('notificationclick', e => {
+self.addEventListener('notificationclick', (e) => {
   e.notification.close();
-  e.waitUntil(
-    clients.openWindow(e.notification.data.url)
-  );
+  e.waitUntil(clients.openWindow(e.notification.data.url));
 });

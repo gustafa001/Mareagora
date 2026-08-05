@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import type { MareEvento } from '@/lib/mare';
 import { getTideStatus, tideAtMinute, type TideEvent } from '@/lib/tideUtils';
@@ -15,17 +15,34 @@ interface TideStatusCardProps {
 }
 
 export default function TideStatusCard({ todayTides, onShowNextDays }: TideStatusCardProps) {
-  const now = new Date();
-  const currentMinute = now.getHours() * 60 + now.getMinutes();
-  const currentHeight = todayTides.length ? tideAtMinute(currentMinute, todayTides as unknown as TideEvent[]) : null;
-  const { rising, next } = todayTides.length
-    ? getTideStatus(currentMinute, todayTides as unknown as TideEvent[])
-    : { rising: true, next: null as TideEvent | null };
+  // `currentMinute` só é calculado depois de montar no cliente (pós-hidratação).
+  // Calcular `new Date()` direto no render fazia o horário do servidor (SSR)
+  // divergir do horário do navegador na hidratação, quebrando "Agora",
+  // "Tendência", "Próx. Alta/Baixa" e disparando os erros #418/#423/#425.
+  const [currentMinute, setCurrentMinute] = useState<number | null>(null);
 
-  const nextHigh = todayTides.find(t => t.tipo === 'high' && timeToMin(t.hora) > currentMinute)
-    ?? todayTides.find(t => t.tipo === 'high');
-  const nextLow = todayTides.find(t => t.tipo === 'low' && timeToMin(t.hora) > currentMinute)
-    ?? todayTides.find(t => t.tipo === 'low');
+  useEffect(() => {
+    const update = () => {
+      const now = new Date();
+      setCurrentMinute(now.getHours() * 60 + now.getMinutes());
+    };
+    update();
+    const interval = setInterval(update, 60000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const hasTime = currentMinute !== null;
+  const currentHeight = hasTime && todayTides.length ? tideAtMinute(currentMinute, todayTides as unknown as TideEvent[]) : null;
+  const { rising } = hasTime && todayTides.length
+    ? getTideStatus(currentMinute, todayTides as unknown as TideEvent[])
+    : { rising: true };
+
+  const nextHigh = hasTime
+    ? (todayTides.find(t => t.tipo === 'high' && timeToMin(t.hora) > currentMinute) ?? todayTides.find(t => t.tipo === 'high'))
+    : todayTides.find(t => t.tipo === 'high');
+  const nextLow = hasTime
+    ? (todayTides.find(t => t.tipo === 'low' && timeToMin(t.hora) > currentMinute) ?? todayTides.find(t => t.tipo === 'low'))
+    : todayTides.find(t => t.tipo === 'low');
 
   return (
     <OpsCard title="Situação da Maré" icon="🌊">

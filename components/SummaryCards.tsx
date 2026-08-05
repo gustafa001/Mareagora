@@ -18,7 +18,9 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides }
   const { waveHeight, windSpeed, loading } = useSeaConditions(lat, lon);
   
   const [timeStr, setTimeStr] = useState('--:--');
-  
+  const [moonData, setMoonData] = useState<{ name: string; icon: string } | null>(null);
+  const [coefData, setCoefData] = useState<{ value: number; label: string; color: string } | null>(null);
+
   useEffect(() => {
     const updateTime = () => {
       setTimeStr(new Date().toLocaleTimeString('pt-BR', {
@@ -32,13 +34,21 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides }
     return () => clearInterval(interval);
   }, []);
 
+  // Calculado só no cliente (useEffect), depois da hidratação — evita
+  // divergência de fuso/horário entre o render do servidor e do navegador
+  // (new Date() direto no render causava os erros de hidratação #418/#423/#425).
+  useEffect(() => {
+    const now = new Date();
+    const moonAge = getMoonAge(now);
+    setMoonData(getMoonPhase(moonAge));
+    setCoefData(getTideCoefficient(moonAge, todayTides));
+  }, [todayTides]);
+
   const wavesStr = waveHeight !== null ? `${waveHeight.toFixed(1)} m` : "--";
   const windStr = windSpeed !== null ? `${windSpeed.toFixed(0)} km/h` : "--";
 
-  const now = new Date();
-  const moonAge = getMoonAge(now);
-  const moon = getMoonPhase(moonAge);
-  const coef = getTideCoefficient(moonAge, todayTides);
+  const moon = moonData ?? { name: '—', icon: '🌙' };
+  const coef = coefData ?? { value: 0, label: '—', color: 'text-slate-400' };
 
   let colorClass = "card-mar-calmo";
   if (waveHeight !== null) {

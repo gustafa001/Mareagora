@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { GLOBAL_PLACES } from '@/lib/globalPlaces';
 import NavBar from '@/components/NavBar';
+import { AD_SLOTS } from '@/lib/adConfig';
+import AdSlot from '@/components/ads/AdSlot';
 
 export const metadata = {
   title: 'Maré no Mundo | MaréAgora',
@@ -134,6 +136,11 @@ export default function MareMundoPage() {
               </section>
             );
           })}
+        </div>
+
+        {/* AdSense Rodapé */}
+        <div className="mt-8 flex justify-center">
+          <AdSlot slotId={AD_SLOTS.PREFOOTER} format="horizontal" />
         </div>
       </div>
     </main>

@@ -31,6 +31,8 @@ import TideSchemaMarkup from '@/components/TideSchemaMarkup';
 import LiveCameraEmbed from '@/components/LiveCameraEmbed';
 import ShareButton from '@/components/ShareButton';
 import { generateTideDescription } from '@/lib/tideDescription';
+import { AD_SLOTS } from '@/lib/adConfig';
+import AdSlot from '@/components/ads/AdSlot';
 
 interface Props {
   params: { pais: string; slug: string };
@@ -293,6 +295,11 @@ export default async function MareMundoLocalPage({ params }: Props) {
               <p className="text-red-700/90 text-sm leading-relaxed">
                 {strings.disclaimer}
               </p>
+            </div>
+
+            {/* AdSense Rodapé */}
+            <div className="mt-4 flex justify-center">
+              <AdSlot slotId={AD_SLOTS.PREFOOTER} format="horizontal" />
             </div>
           </div>
         </div>

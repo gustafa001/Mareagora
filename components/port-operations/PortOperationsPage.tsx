@@ -36,9 +36,10 @@ const DAY_LABELS = ['Hoje', 'Amanhã', 'Dia +2', 'Dia +3'];
 
 interface PortOperationsPageProps {
   slug: string;
+  todayStr?: string;
 }
 
-export default function PortOperationsPage({ slug }: PortOperationsPageProps) {
+export default function PortOperationsPage({ slug, todayStr: todayStrProp }: PortOperationsPageProps) {
   const port = getPortBySlug(slug);
   if (!port) notFound();
 
@@ -51,13 +52,26 @@ export default function PortOperationsPage({ slug }: PortOperationsPageProps) {
   const [eventLog, setEventLog] = useState<HistoryLogEntry[]>([]);
   const lastStatusRef = useRef<string | null>(null);
 
-  const todayStr = new Date().toLocaleDateString('en-CA');
-  const yesterdayStr = new Date(Date.now() - 86400000).toLocaleDateString('en-CA');
+  const [mountedTodayStr, setMountedTodayStr] = useState<string>(todayStrProp || new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' }));
+  const [nowState, setNowState] = useState<Date | null>(null);
+
+  useEffect(() => {
+    const now = new Date();
+    setNowState(now);
+    setMountedTodayStr(now.toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' }));
+  }, []);
+
+  const todayStr = mountedTodayStr;
+  const yesterdayStr = useMemo(() => {
+    const [y, m, d] = todayStr.split('-').map(Number);
+    const prevDate = new Date(y, m - 1, d - 1);
+    return `${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, '0')}-${String(prevDate.getDate()).padStart(2, '0')}`;
+  }, [todayStr]);
 
   const todayTides = useMemo(() => getEventosDia(port, todayStr), [port, todayStr]);
   const yesterdayTides = useMemo(() => getEventosDia(port, yesterdayStr), [port, yesterdayStr]);
 
-  const now = new Date();
+  const now = nowState || new Date(todayStr + 'T12:00:00-03:00');
   const nowMinute = now.getHours() * 60 + now.getMinutes();
 
   const points = useMemo(

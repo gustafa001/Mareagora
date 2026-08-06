@@ -49,5 +49,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   const port = getPortBySlug(slug);
   if (!port || !isCommercialPort(slug)) notFound();
 
-  return <PortOperationsPage slug={slug} />;
+  const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
+
+  return <PortOperationsPage slug={slug} todayStr={todayStr} />;
 }

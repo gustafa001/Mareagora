@@ -55,6 +55,7 @@ export default function Page({ params }: { params: { slug: string, cidade: strin
   const port = getPortBySlug(slug);
   if (!port || !isCommercialPort(slug) || getStateSlug(port.state) !== estado) notFound();
 
+  const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
   const dataHoje = new Date().toISOString().split('T')[0];
   const { text: seoText, faq: seoFaq } = generateSEOContent(port, dataHoje);
 
@@ -79,7 +80,7 @@ export default function Page({ params }: { params: { slug: string, cidade: strin
         </div>
       </div>
 
-      <PortOperationsPage slug={slug} />
+      <PortOperationsPage slug={slug} todayStr={todayStr} />
     </>
   );
 }

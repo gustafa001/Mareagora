@@ -82,9 +82,9 @@ function timeToMin(hora: string): number {
 
 function Metric({ label, value, accent }: { label: string; value: string; accent: string }) {
   return (
-    <div className="flex-1 min-w-[7rem]">
+    <div className="flex-1 min-w-[7rem]" suppressHydrationWarning>
       <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">{label}</p>
-      <p className={`text-base font-black font-syne ${accent}`}>{value}</p>
+      <p className={`text-base font-black font-syne ${accent}`} suppressHydrationWarning>{value}</p>
     </div>
   );
 }

@@ -32,6 +32,7 @@ import { getNextHighAndLow } from '@/lib/tideUtils';
 import { notFound } from 'next/navigation';
 import type { BlogPost } from '@/lib/blog';
 import { useRecentPorts } from '@/hooks/useRecentPorts';
+import { ClientOnly } from '@/components/ClientOnly';
 
 interface PortPageContentProps {
   slug: string;
@@ -167,13 +168,21 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
       </section>
 
       <div className="container">
-        <SummaryCards
-          nextHigh={nextHigh}
-          nextLow={nextLow}
-          lat={port.lat}
-          lon={port.lon}
-          todayTides={todayTides}
-        />
+        <ClientOnly fallback={
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 -mt-16 relative z-20 min-h-[160px]">
+            <div className="glass-card h-[160px] bg-white/5 rounded-2xl animate-pulse" />
+            <div className="glass-card h-[160px] bg-white/5 rounded-2xl animate-pulse" />
+            <div className="glass-card h-[160px] bg-white/5 rounded-2xl animate-pulse" />
+          </div>
+        }>
+          <SummaryCards
+            nextHigh={nextHigh}
+            nextLow={nextLow}
+            lat={port.lat}
+            lon={port.lon}
+            todayTides={todayTides}
+          />
+        </ClientOnly>
 
         {/* AdSense Leaderboard — abaixo do resumo, acima da dobra */}
         <div className="mt-8 flex justify-center">
@@ -182,17 +191,29 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
 
         {/* Score do Dia */}
         <div className="mt-8">
-          <DailyScoreCard
-            lat={port.lat}
-            lon={port.lon}
-            todayTides={todayTides}
-            utcOffsetMin={-180}
-          />
+          <ClientOnly fallback={
+            <div className="rounded-[24px] overflow-hidden shadow-2xl p-6 bg-[#0d1b2e] border border-white/5 animate-pulse min-h-[260px] flex items-center justify-center">
+              <div className="text-slate-500 font-syne text-xs uppercase tracking-widest">Carregando score do dia...</div>
+            </div>
+          }>
+            <DailyScoreCard
+              lat={port.lat}
+              lon={port.lon}
+              todayTides={todayTides}
+              utcOffsetMin={-180}
+            />
+          </ClientOnly>
         </div>
 
         <div className="mt-12 flex flex-col lg:grid lg:grid-cols-[1fr_350px] gap-8">
           <div className="flex flex-col gap-8">
-            <TideWeekCard days={weekTides} />
+            <ClientOnly fallback={
+              <div className="rounded-2xl bg-[#0d1b2e] border border-white/5 p-6 min-h-[300px] animate-pulse">
+                <div className="h-[300px] bg-white/5 rounded-2xl" />
+              </div>
+            }>
+              <TideWeekCard days={weekTides} />
+            </ClientOnly>
 
             <div className="my-8">
               <WeatherRadarCard lat={port.lat} lon={port.lon} />

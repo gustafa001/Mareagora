@@ -61,8 +61,8 @@ export default function SchemaGenerator({
     inLanguage: 'pt-BR',
     isPartOf: { '@id': `${base}/#website` },
     about: { '@id': `${base}/#organization` },
-    datePublished: datePublished || new Date().toISOString(),
-    dateModified: dateModified || new Date().toISOString(),
+    datePublished: datePublished || '2026-01-01T00:00:00.000Z',
+    dateModified: dateModified || '2026-01-01T00:00:00.000Z',
     primaryImageOfPage: {
       '@type': 'ImageObject',
       url: defaultImage,

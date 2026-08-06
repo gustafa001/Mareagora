@@ -20,13 +20,13 @@ interface SolunarTableProps {
 }
 
 function formatHora(d: Date): string {
-  return d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  return d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' });
 }
 
 function formatDataCurta(dataStr: string): string {
   const [ano, mes, dia] = dataStr.split('-').map(Number);
   const d = new Date(ano, mes - 1, dia);
-  return d.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit' });
+  return d.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit', timeZone: 'America/Sao_Paulo' });
 }
 
 export default function SolunarTable({ lat, lon, offsetMinutes = -180, weekTides }: SolunarTableProps) {

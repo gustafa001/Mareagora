@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import type { MareDia } from '@/lib/mare';
 import { getTideStatus, tideAtMinute, type TideEvent } from '@/lib/tideUtils';
@@ -15,17 +16,30 @@ interface TideWeekCardProps {
 export default function TideWeekCard({ days }: TideWeekCardProps) {
   const todayTides = days[0]?.mares ?? [];
 
-  const now = new Date();
-  const currentMinute = now.getHours() * 60 + now.getMinutes();
-  const currentHeight = todayTides.length ? tideAtMinute(currentMinute, todayTides as unknown as TideEvent[]) : null;
-  const { rising } = todayTides.length
+  const [currentMinute, setCurrentMinute] = useState<number | null>(null);
+
+  useEffect(() => {
+    const update = () => {
+      const now = new Date();
+      setCurrentMinute(now.getHours() * 60 + now.getMinutes());
+    };
+    update();
+    const interval = setInterval(update, 60000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const hasTime = currentMinute !== null;
+  const currentHeight = hasTime && todayTides.length ? tideAtMinute(currentMinute, todayTides as unknown as TideEvent[]) : null;
+  const { rising } = hasTime && todayTides.length
     ? getTideStatus(currentMinute, todayTides as unknown as TideEvent[])
     : { rising: true };
 
-  const nextHigh = todayTides.find(t => t.tipo === 'high' && timeToMin(t.hora) > currentMinute)
-    ?? todayTides.find(t => t.tipo === 'high');
-  const nextLow = todayTides.find(t => t.tipo === 'low' && timeToMin(t.hora) > currentMinute)
-    ?? todayTides.find(t => t.tipo === 'low');
+  const nextHigh = hasTime
+    ? (todayTides.find(t => t.tipo === 'high' && timeToMin(t.hora) > currentMinute) ?? todayTides.find(t => t.tipo === 'high'))
+    : todayTides.find(t => t.tipo === 'high');
+  const nextLow = hasTime
+    ? (todayTides.find(t => t.tipo === 'low' && timeToMin(t.hora) > currentMinute) ?? todayTides.find(t => t.tipo === 'low'))
+    : todayTides.find(t => t.tipo === 'low');
 
   return (
     <OpsCard title="Situação da Maré" icon="🌊">

@@ -138,7 +138,7 @@ export default function TideChart7Days({ days }: TideChart7DaysProps) {
   const handleSVGMouseLeave = () => setTooltipData(null);
 
   // Linha do "agora" só faz sentido se o dia 0 do range for hoje
-  const todayStr = new Date().toLocaleDateString('en-CA');
+  const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
   const isTodayInRange = validDays[0]?.data === todayStr;
   const nowMinutes = isTodayInRange && currentTime
     ? parseInt(currentTime.split(':')[0]) * 60 + parseInt(currentTime.split(':')[1])

@@ -1,3 +1,6 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import type { Port } from '@/lib/ports';
 import { getSunTimes } from '@/lib/portOperations';
 import { getMoonAge, getMoonPhase } from '@/lib/tideUtils';
@@ -8,9 +11,15 @@ interface PortInfoCardProps {
 }
 
 export default function PortInfoCard({ port }: PortInfoCardProps) {
-  const now = new Date();
-  const { sunrise, sunset } = getSunTimes(now.getFullYear(), now.getMonth() + 1, now.getDate(), port.lat, port.lon);
-  const moon = getMoonPhase(getMoonAge(now));
+  const [now, setNow] = useState<Date | null>(null);
+
+  useEffect(() => {
+    setNow(new Date());
+  }, []);
+
+  const targetDate = now || new Date('2026-01-01T12:00:00-03:00');
+  const { sunrise, sunset } = getSunTimes(targetDate.getFullYear(), targetDate.getMonth() + 1, targetDate.getDate(), port.lat, port.lon);
+  const moon = getMoonPhase(getMoonAge(targetDate));
 
   const rows: { label: string; value: string }[] = [
     { label: 'Nome', value: port.name },

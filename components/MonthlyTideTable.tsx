@@ -2,7 +2,7 @@
 import { getStateSlug } from "@/lib/states";
 import { PORTS } from "@/lib/ports";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { TideDay } from "@/lib/tideUtils";
 import { WEEKDAYS, MONTHS, coefColor, buildMonthRows } from "@/lib/monthlyTideCalc";
 import { exportTidePdf } from "@/lib/exportTidePdf";

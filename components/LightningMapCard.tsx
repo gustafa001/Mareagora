@@ -41,8 +41,16 @@ export default function LightningMapCard({
     `&InfoDiv=0` +
     `&MenuButtonDiv=0` +
     `&ScaleControl=0` +
-    `&LinksCheckboxChecked=1` +
-    `&LinksRangeValue=30` +
+    // Camada de raios propriamente dita — sem isso o mapa fica "vazio"
+    `&LightningCheckboxChecked=1` +
+    `&LightningRangeValue=8` +
+    // Círculos concêntricos ao redor de cada raio — gera o efeito de
+    // "mancha"/heatmap quando há vários raios próximos, como na TV
+    `&CirclesCheckboxChecked=1` +
+    `&CirclesRangeValue=6` +
+    // Contador de raios por região
+    `&CountingCheckboxChecked=1` +
+    `&CountingRangeValue=5` +
     `&MapStyle=2` +
     `&MapStyleRangeValue=10` +
     `&Advertisment=0` +

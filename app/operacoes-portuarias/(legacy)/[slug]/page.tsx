@@ -5,6 +5,8 @@ import { getStateSlug } from '@/lib/states';
 import { portosConfig } from '@/data/porto-seo-config';
 import PortOperationsPage from '@/components/port-operations/PortOperationsPage';
 
+export const revalidate = 3600; // regenera a página a cada 1h (ISR), evita data congelada do build
+
 /** Apenas portos comerciais/industriais fazem sentido para este dashboard.
  *  Praias que usam a maré de outro porto como referência (referencePortSlug)
  *  nunca são o porto comercial em si, mesmo quando o nome contém "porto"

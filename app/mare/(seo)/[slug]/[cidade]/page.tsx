@@ -15,6 +15,8 @@ import { getPortoDescription } from '@/lib/porto-descriptions';
 import SchemaGenerator from '@/components/seo/SchemaGenerator';
 import { generateSEOContent } from '@/lib/seo/content-generator';
 
+export const revalidate = 3600; // regenera a página a cada 1h (ISR), evita data congelada do build
+
 export async function generateStaticParams() {
   return PORTS.map(port => ({
     slug: getStateSlug(port.state),

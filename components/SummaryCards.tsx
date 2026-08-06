@@ -69,7 +69,9 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides }
             </div>
             <div className="text-4xl font-extrabold mt-4 font-syne drop-shadow-md">{nextHigh?.hora || "--:--"}</div>
           </div>
-          <div className="text-lg font-bold mt-2 drop-shadow-sm tracking-wide">+{nextHigh?.altura_m.toFixed(2)} m</div>
+          <div className="text-lg font-bold mt-2 drop-shadow-sm tracking-wide">
+            {nextHigh?.altura_m != null ? `+${nextHigh.altura_m.toFixed(2)} m` : '--'}
+          </div>
         </div>
 
         {/* Próxima Maré Baixa */}
@@ -81,7 +83,9 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides }
             </div>
             <div className="text-4xl font-extrabold mt-4 font-syne drop-shadow-md">{nextLow?.hora || "--:--"}</div>
           </div>
-          <div className="text-lg font-bold mt-2 drop-shadow-sm tracking-wide">+{nextLow?.altura_m.toFixed(2)} m</div>
+          <div className="text-lg font-bold mt-2 drop-shadow-sm tracking-wide">
+            {nextLow?.altura_m != null ? `+${nextLow.altura_m.toFixed(2)} m` : '--'}
+          </div>
         </div>
 
         {/* Condições Agora */}

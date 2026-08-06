@@ -64,27 +64,33 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
   const ano = new Date().getFullYear();
   const dataAno = getEventosAno(port, ano);
 
-  const now = new Date();
-
-  // Relógio "vivo": sem isso, o horário (e o cálculo de próxima alta/baixa)
-  // ficava congelado no momento em que a página carregou/hidratou.
-  const [liveNow, setLiveNow] = useState(now);
+  // Relógio "vivo": só passa a existir depois de montar no cliente
+  // (pós-hidratação). Antes disso usamos um placeholder fixo — igual no
+  // servidor e no primeiro render do cliente — em vez de recalcular
+  // `new Date()` de novo (que ainda divergiria por segundos e continuaria
+  // causando os erros de hidratação #418/#423/#425).
+  const [liveNow, setLiveNow] = useState<Date | null>(null);
 
   useEffect(() => {
+    setLiveNow(new Date());
     const timer = setInterval(() => setLiveNow(new Date()), 30_000); // atualiza a cada 30s
     return () => clearInterval(timer);
   }, []);
 
-  const currentTimeBR = liveNow.toLocaleTimeString('pt-BR', {
-    hour: '2-digit',
-    minute: '2-digit',
-    timeZone: 'America/Sao_Paulo',
-  });
+  const currentTimeBR = liveNow
+    ? liveNow.toLocaleTimeString('pt-BR', {
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'America/Sao_Paulo',
+      })
+    : '--:--';
 
   const [brH, brM] = currentTimeBR.split(':').map(Number);
-  const currentMin = (brH || 0) * 60 + (brM || 0);
+  const currentMin = liveNow ? (brH || 0) * 60 + (brM || 0) : null;
 
-  const { nextHigh, nextLow } = getNextHighAndLow(todayTides, currentMin);
+  const { nextHigh, nextLow } = currentMin !== null
+    ? getNextHighAndLow(todayTides, currentMin)
+    : { nextHigh: null, nextLow: null };
 
   const referencePort = port.referencePortSlug ? getPortBySlug(port.referencePortSlug) : null;
   const referenceData = referencePort ? {

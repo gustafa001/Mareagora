@@ -21,32 +21,47 @@ interface MonthlyTideTableProps {
 }
 
 export default function MonthlyTideTable({ eventos, portName, lat, lon, state = "", referencePort }: MonthlyTideTableProps) {
-  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth());
+  // Ano/mês/"hoje" só passam a existir depois de montar no cliente
+  // (pós-hidratação). Essa página é gerada estaticamente no build — o
+  // "agora" do servidor fica congelado em quando o site foi publicado,
+  // enquanto o do navegador é o momento real da visita. Calcular
+  // `new Date()` direto no valor inicial (como antes) divergia sempre
+  // que build e visita caíam em meses diferentes, causando os erros de
+  // hidratação #418/#423/#425.
+  const [now, setNow] = useState<Date | null>(null);
+  const [selectedYear, setSelectedYear] = useState<number | null>(null);
+  const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
   const [exportando, setExportando] = useState<null | "pdf" | "imagem">(null);
+
+  useEffect(() => {
+    const n = new Date();
+    setNow(n);
+    setSelectedYear(n.getFullYear());
+    setSelectedMonth(n.getMonth());
+  }, []);
 
   const tabelaRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const today = useMemo(() => {
-    const n = new Date();
-    return `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, "0")}-${String(n.getDate()).padStart(2, "0")}`;
-  }, []);
+    if (!now) return '';
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+  }, [now]);
 
-  const rows = useMemo(
-    () => buildMonthRows(eventos, selectedYear, selectedMonth, lat, lon, today),
-    [eventos, selectedMonth, selectedYear, lat, lon, today]
-  );
+  const rows = useMemo(() => {
+    if (selectedYear === null || selectedMonth === null) return [];
+    return buildMonthRows(eventos, selectedYear, selectedMonth, lat, lon, today);
+  }, [eventos, selectedMonth, selectedYear, lat, lon, today]);
 
   const availableYears = useMemo(() => {
-    const currentYear = new Date().getFullYear();
-    const years = new Set<number>([currentYear]);
+    const years = new Set<number>();
+    if (now) years.add(now.getFullYear());
     if (eventos) eventos.forEach(e => { const y = parseInt(e.data.split('-')[0], 10); if (!isNaN(y)) years.add(y); });
     return Array.from(years).sort();
-  }, [eventos]);
+  }, [eventos, now]);
 
   async function handleDownloadPdf() {
-    if (exportando) return;
+    if (exportando || selectedMonth === null || selectedYear === null) return;
     setExportando("pdf");
     try {
       await exportTidePdf({
@@ -64,7 +79,7 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
   }
 
   async function handleDownloadImage() {
-    if (exportando || !tabelaRef.current || !scrollRef.current) return;
+    if (exportando || !tabelaRef.current || !scrollRef.current || selectedMonth === null || selectedYear === null) return;
     setExportando("imagem");
 
     const prevMaxHeight = scrollRef.current.style.maxHeight;
@@ -94,7 +109,7 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
     }
   }
 
-  if (!rows.length) return (
+  if (!rows.length || selectedYear === null || selectedMonth === null) return (
     <div className="classic-card text-center text-gray-400 py-8">Dados indisponíveis para o período.</div>
   );
 

@@ -19,14 +19,35 @@ interface SolunarTableProps {
   weekTides: MareDia[];
 }
 
+const DIAS_CURTOS = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
+
+/**
+ * Formata hora de um Date (UTC timestamp) em BRT.
+ * Usa en-CA + hour12:false para garantir "HH:MM" idêntico em Node.js e Chrome,
+ * eliminando possíveis diferenças de ICU com o locale pt-BR.
+ */
 function formatHora(d: Date): string {
-  return d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' });
+  return d.toLocaleTimeString('en-CA', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: 'America/Sao_Paulo',
+  });
 }
 
+/**
+ * Formata string "YYYY-MM-DD" como "dom 06/08" etc.
+ * Usa UTC meio-dia para que a mesma data do calendário seja preservada em
+ * qualquer fuso — evita o bug em que midnight UTC = noite anterior no BRT,
+ * que fazia o servidor mostrar o dia errado (regressão do #425).
+ * Lookup manual de dia-da-semana evita divergência de ICU entre servidor/cliente.
+ */
 function formatDataCurta(dataStr: string): string {
   const [ano, mes, dia] = dataStr.split('-').map(Number);
-  const d = new Date(ano, mes - 1, dia);
-  return d.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit', timeZone: 'America/Sao_Paulo' });
+  // Meio-dia UTC é o mesmo dia em qualquer fuso de UTC−12 a UTC+14
+  const d = new Date(Date.UTC(ano, mes - 1, dia, 12, 0, 0));
+  const wd = DIAS_CURTOS[d.getUTCDay()];
+  return `${wd} ${String(dia).padStart(2, '0')}/${String(mes).padStart(2, '0')}`;
 }
 
 export default function SolunarTable({ lat, lon, offsetMinutes = -180, weekTides }: SolunarTableProps) {
@@ -39,7 +60,7 @@ export default function SolunarTable({ lat, lon, offsetMinutes = -180, weekTides
       const inicioDia = inicioDiaLocal(dia.data, offsetMinutes);
       const periodos = getPeriodosSolunares(inicioDia, lat, lon);
       const idadeLua = getIdadeLua(inicioDia);
-      const avaliacao = getAvaliacaoSolunar(idadeLua, periodos, dia.mares);
+      const avaliacao = getAvaliacaoSolunar(idadeLua, periodos, dia.mares, offsetMinutes);
       return { data: dia.data, periodos, idadeLua, avaliacao };
     });
   }, [dias, lat, lon, offsetMinutes]);

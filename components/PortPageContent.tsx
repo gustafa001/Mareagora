@@ -205,6 +205,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               lon={port.lon}
               state={port.state}
               referencePort={referenceData}
+              initialDateStr={todayStr}
             />
 
             {port.cameras && port.cameras.filter((c) => c.active !== false).length > 0 && (

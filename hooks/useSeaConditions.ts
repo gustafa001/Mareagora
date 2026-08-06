@@ -37,8 +37,9 @@ export function useSeaConditions(lat: number, lon: number) {
         setWindSpeed(data.windSpeed);
         setForecast(data.forecast);
         setHourlyToday(data.hourlyToday);
-      } catch (e) {
+      } catch (e: any) {
         clearTimeout(timeoutId);
+        if (e?.name === 'AbortError') return;
         console.error('Erro ao buscar condições do mar:', e);
         setError('Não foi possível carregar as condições do mar agora.');
       } finally {

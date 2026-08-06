@@ -106,7 +106,15 @@ export interface AvaliacaoSolunar {
 export function getAvaliacaoSolunar(
   moonAge: number,
   periodos: PeriodoSolunar[],
-  mares: MareEventoSimples[]
+  mares: MareEventoSimples[],
+  /**
+   * Offset UTC do fuso local dos horários de maré (em minutos).
+   * Default: -180 (BRT = America/Sao_Paulo).
+   * Necessário para converter `p.centro` (Date UTC) para o mesmo
+   * referencial dos strings `hora` das marés, evitando divergência
+   * entre o servidor (UTC) e o cliente (BRT) nos erros #418/#423.
+   */
+  offsetMinutes = -180
 ): AvaliacaoSolunar {
   const distExtremo = Math.min(
     moonAge,
@@ -119,11 +127,14 @@ export function getAvaliacaoSolunar(
   const altas = mares.filter(m => m.tipo === 'high');
   const destaque = periodos.some(p => {
     if (p.tipo !== 'maior') return false;
-    const centroMin = p.centro.getHours() * 60 + p.centro.getMinutes();
+    // Usa getUTCHours/UTCMinutes + offset explícito para ser idêntico em
+    // qualquer timezone de servidor ou cliente.
+    const centroUtcMin = p.centro.getUTCHours() * 60 + p.centro.getUTCMinutes();
+    const centroLocalMin = ((centroUtcMin + offsetMinutes) % 1440 + 1440) % 1440;
     return altas.some(alta => {
       const [h, m] = alta.hora.split(':').map(Number);
       const altaMin = (h || 0) * 60 + (m || 0);
-      return Math.abs(altaMin - centroMin) <= 45;
+      return Math.abs(altaMin - centroLocalMin) <= 45;
     });
   });
 

@@ -18,26 +18,21 @@ interface MonthlyTideTableProps {
     slug: string;
     distanceKm: number;
   };
+  initialDateStr?: string;
 }
 
-export default function MonthlyTideTable({ eventos, portName, lat, lon, state = "", referencePort }: MonthlyTideTableProps) {
-  // Ano/mês/"hoje" só passam a existir depois de montar no cliente
-  // (pós-hidratação). Essa página é gerada estaticamente no build — o
-  // "agora" do servidor fica congelado em quando o site foi publicado,
-  // enquanto o do navegador é o momento real da visita. Calcular
-  // `new Date()` direto no valor inicial (como antes) divergia sempre
-  // que build e visita caíam em meses diferentes, causando os erros de
-  // hidratação #418/#423/#425.
+export default function MonthlyTideTable({ eventos, portName, lat, lon, state = "", referencePort, initialDateStr }: MonthlyTideTableProps) {
+  const defaultYear = initialDateStr ? Number(initialDateStr.slice(0, 4)) : (eventos && eventos[0] ? Number(eventos[0].data.slice(0, 4)) : 2026);
+  const defaultMonth = initialDateStr ? Number(initialDateStr.slice(5, 7)) - 1 : (eventos && eventos[0] ? Number(eventos[0].data.slice(5, 7)) - 1 : 0);
+
   const [now, setNow] = useState<Date | null>(null);
-  const [selectedYear, setSelectedYear] = useState<number | null>(null);
-  const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
+  const [selectedYear, setSelectedYear] = useState<number>(defaultYear);
+  const [selectedMonth, setSelectedMonth] = useState<number>(defaultMonth);
   const [exportando, setExportando] = useState<null | "pdf" | "imagem">(null);
 
   useEffect(() => {
     const n = new Date();
     setNow(n);
-    setSelectedYear(n.getFullYear());
-    setSelectedMonth(n.getMonth());
   }, []);
 
   const tabelaRef = useRef<HTMLDivElement>(null);

@@ -1,13 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
 import type { MareEvento } from '@/lib/mare';
 import { getTideStatus, tideAtMinute, type TideEvent } from '@/lib/tideUtils';
 import OpsCard from './OpsCard';
-
-// Reaproveita o componente de gráfico já existente, sem qualquer alteração.
-const TideChart = dynamic(() => import('@/components/TideChart'), { ssr: false });
+import TideChart from '@/components/TideChart';
 
 interface TideStatusCardProps {
   todayTides: MareEvento[];
@@ -15,11 +12,12 @@ interface TideStatusCardProps {
 }
 
 export default function TideStatusCard({ todayTides, onShowNextDays }: TideStatusCardProps) {
-  // `currentMinute` só é calculado depois de montar no cliente (pós-hidratação).
-  // Calcular `new Date()` direto no render fazia o horário do servidor (SSR)
-  // divergir do horário do navegador na hidratação, quebrando "Agora",
-  // "Tendência", "Próx. Alta/Baixa" e disparando os erros #418/#423/#425.
+  const [mounted, setMounted] = useState(false);
   const [currentMinute, setCurrentMinute] = useState<number | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const update = () => {
@@ -30,6 +28,14 @@ export default function TideStatusCard({ todayTides, onShowNextDays }: TideStatu
     const interval = setInterval(update, 60000);
     return () => clearInterval(interval);
   }, []);
+
+  if (!mounted) {
+    return (
+      <OpsCard title="Situação da Maré" icon="🌊">
+        <div className="h-[250px] bg-white/5 rounded-2xl animate-pulse" />
+      </OpsCard>
+    );
+  }
 
   const hasTime = currentMinute !== null;
   const currentHeight = hasTime && todayTides.length ? tideAtMinute(currentMinute, todayTides as unknown as TideEvent[]) : null;

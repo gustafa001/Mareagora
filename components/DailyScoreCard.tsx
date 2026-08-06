@@ -247,9 +247,14 @@ function computeScores(tides: TideEvent[], marine: MarineData | null, utcOffsetM
 }
 
 export default function DailyScoreCard({ lat, lon, todayTides, utcOffsetMin = 0 }: Props) {
+  const [mounted, setMounted] = useState(false);
   const [marine, setMarine] = useState<MarineData | null>(null);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState<number | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -275,6 +280,14 @@ export default function DailyScoreCard({ lat, lon, todayTides, utcOffsetMin = 0 
       setMarine({ waveHeight: wh, wavePeriod: wp, windSpeed: ws, windDir: wd });
     }).finally(() => setLoading(false));
   }, [lat, lon, utcOffsetMin]);
+
+  if (!mounted) {
+    return (
+      <div className="rounded-[24px] overflow-hidden shadow-2xl p-6 bg-[#0d1b2e] border border-white/5 animate-pulse min-h-[260px] flex items-center justify-center">
+        <div className="text-slate-500 font-syne text-xs uppercase tracking-widest">Carregando score do dia...</div>
+      </div>
+    );
+  }
 
   const scores = computeScores(todayTides, loading ? null : marine, utcOffsetMin);
   const overall = Math.round(scores.reduce((s, a) => s + a.score, 0) / scores.length);

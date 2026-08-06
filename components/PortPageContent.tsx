@@ -8,7 +8,7 @@ import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
 import dynamic from 'next/dynamic';
 import NavBar from '@/components/NavBar';
-const TideWeekCard = dynamic(() => import('@/components/TideWeekCard'), { ssr: false });
+import TideWeekCard from '@/components/TideWeekCard';
 
 import MonthlyTideTable from '@/components/MonthlyTideTable';
 import SummaryCards from '@/components/SummaryCards';
@@ -22,7 +22,7 @@ import BarometerCard from '@/components/BarometerCard';
 import PortBlogSection from '@/components/PortBlogSection';
 import NotificationCTA from '@/components/NotificationCTA';
 import WeatherRadarCard from '@/components/port-operations/WeatherRadarCard';
-const DailyScoreCard = dynamic(() => import('@/components/DailyScoreCard'), { ssr: false });
+import DailyScoreCard from '@/components/DailyScoreCard';
 import TideSchemaMarkup from '@/components/TideSchemaMarkup';
 import { getStateSlug, getStateName } from '@/lib/states';
 import ShareButton from '@/components/ShareButton';

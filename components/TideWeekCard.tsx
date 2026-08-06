@@ -6,7 +6,7 @@ import type { MareDia } from '@/lib/mare';
 import { getTideStatus, tideAtMinute, type TideEvent } from '@/lib/tideUtils';
 import OpsCard from './port-operations/OpsCard';
 
-const TideChart7Days = dynamic(() => import('./TideChart7Days'), { ssr: false });
+import TideChart7Days from './TideChart7Days';
 
 interface TideWeekCardProps {
   /** 7 dias de eventos de maré, começando por hoje */
@@ -14,9 +14,13 @@ interface TideWeekCardProps {
 }
 
 export default function TideWeekCard({ days }: TideWeekCardProps) {
+  const [mounted, setMounted] = useState(false);
   const todayTides = days[0]?.mares ?? [];
-
   const [currentMinute, setCurrentMinute] = useState<number | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const update = () => {
@@ -27,6 +31,14 @@ export default function TideWeekCard({ days }: TideWeekCardProps) {
     const interval = setInterval(update, 60000);
     return () => clearInterval(interval);
   }, []);
+
+  if (!mounted) {
+    return (
+      <OpsCard title="Situação da Maré" icon="🌊">
+        <div className="h-[300px] bg-white/5 rounded-2xl animate-pulse" />
+      </OpsCard>
+    );
+  }
 
   const hasTime = currentMinute !== null;
   const currentHeight = hasTime && todayTides.length ? tideAtMinute(currentMinute, todayTides as unknown as TideEvent[]) : null;

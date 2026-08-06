@@ -6,6 +6,7 @@ import Script from "next/script";
 import MobileStickyAd from "@/components/ads/MobileStickyAd";
 import Footer from "@/components/Footer";
 import InstallPWA from "@/components/InstallPWA";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -162,6 +163,7 @@ export default function RootLayout({
 
         <InstallPWA />
         <MobileStickyAd />
+        <SpeedInsights />
       </body>
     </html>
   );

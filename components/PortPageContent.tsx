@@ -22,6 +22,7 @@ import BarometerCard from '@/components/BarometerCard';
 import PortBlogSection from '@/components/PortBlogSection';
 import NotificationCTA from '@/components/NotificationCTA';
 import WeatherRadarCard from '@/components/port-operations/WeatherRadarCard';
+import LightningMapCard from '@/components/LightningMapCard';
 import DailyScoreCard from '@/components/DailyScoreCard';
 import TideSchemaMarkup from '@/components/TideSchemaMarkup';
 import { getStateSlug, getStateName } from '@/lib/states';
@@ -217,6 +218,10 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
 
             <div className="my-8">
               <WeatherRadarCard lat={port.lat} lon={port.lon} />
+            </div>
+
+            <div className="my-8">
+              <LightningMapCard lat={port.lat} lon={port.lon} zoom={7} />
             </div>
 
             <MonthlyTideTable

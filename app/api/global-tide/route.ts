@@ -5,7 +5,7 @@ import { getGlobalTideData } from '@/lib/globalTide';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const lat = parseFloat(searchParams.get('lat') || '');
+  const lat = parseFloat(searchParams.get('lat') || ''); 
   const lon = parseFloat(searchParams.get('lon') || '');
   const days = parseInt(searchParams.get('days') || '7', 10);
 

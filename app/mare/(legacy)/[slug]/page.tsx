@@ -91,6 +91,9 @@ export default async function PortPage({ params }: { params: { slug: string } })
 
   const portDescription = getPortoDescription(slug);
   const ano = new Date().getFullYear();
+  // Data de "hoje" no fuso de Brasília, calculada uma única vez aqui no
+  // servidor e repassada como prop (ver comentário em PortPageContent.tsx).
+  const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
 
   const config = portosConfig[slug];
   const categoria = config?.category ?? 'turismo';
@@ -151,6 +154,7 @@ export default async function PortPage({ params }: { params: { slug: string } })
         portDescription={portDescription}
         blogPosts={blogPosts}
         blogStrategy={blogStrategy}
+        todayStr={todayStr}
       />
       <div className="container pb-16">
         <PortoFAQ slug={slug} categoria={categoria} />

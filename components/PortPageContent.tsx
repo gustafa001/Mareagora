@@ -38,9 +38,20 @@ interface PortPageContentProps {
   portDescription: string;
   blogPosts: BlogPost[];
   blogStrategy: 'specific' | 'generic';
+  /**
+   * Data de "hoje" (formato en-CA, ex: 2026-08-06) calculada UMA VEZ no
+   * servidor (Server Component pai) e passada como prop. Calcular
+   * `new Date()` aqui dentro (Client Component) fazia o servidor usar o
+   * horário de quando a página foi gerada/publicada e o navegador usar o
+   * horário real da visita — como a página é estática, essas datas podem
+   * divergir por dias, mudando quais marés são "hoje" e derrubando a
+   * hidratação (#418/#423/#425). Recebendo a data pronta do servidor, o
+   * cliente nunca recalcula: não tem como divergir.
+   */
+  todayStr: string;
 }
 
-export default function PortPageContent({ slug, portDescription, blogPosts, blogStrategy }: PortPageContentProps) {
+export default function PortPageContent({ slug, portDescription, blogPosts, blogStrategy, todayStr }: PortPageContentProps) {
   const port = getPortBySlug(slug);
   if (!port) notFound();
 
@@ -58,10 +69,9 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
   const config = portosConfig[slug];
   const categoria = config?.category ?? 'turismo';
 
-  const todayStr = new Date().toLocaleDateString('en-CA');
   const todayTides = getEventosDia(port, todayStr);
   const weekTides = getEventosRange(port, todayStr, 7);
-  const ano = new Date().getFullYear();
+  const ano = Number(todayStr.slice(0, 4));
   const dataAno = getEventosAno(port, ano);
 
   // Relógio "vivo": só passa a existir depois de montar no cliente

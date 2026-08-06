@@ -6,12 +6,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // TEMPORÁRIO — só pra diagnosticar o erro de hidratação #418/#423/#425.
-  // Faz o Chrome mostrar os arquivos/linhas reais na pilha de chamadas em
-  // vez de nomes minificados (oZ, sq, co...). Remover depois de achar o bug
-  // (deixa o bundle maior e expõe o código-fonte no DevTools de qualquer
-  // visitante).
-  productionBrowserSourceMaps: true,
   // Garante que as pastas data/ e content/blog/ sejam incluídas no bundle das serverless functions do Vercel
   experimental: {
     outputFileTracingIncludes: {

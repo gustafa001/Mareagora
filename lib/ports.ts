@@ -128,7 +128,7 @@ export const PORTS: Port[] = [
   { id: '62', name: 'Mongaguá',                cityName: 'Mongaguá',                slug: 'mongagua',                  state: 'SP', region: 'sudeste', lat: -24.085278, lon: -46.622500, dhnId: '50228', offsetMinutes: 10, searchNames: ['mongagua', 'mongaguá'], referencePortSlug: 'porto-de-santos' },
   { id: '63', name: 'Itanhaém',                cityName: 'Itanhaém',                slug: 'itanhaem',                  state: 'SP', region: 'sudeste', lat: -24.183333, lon: -46.783333, dhnId: '50228', offsetMinutes: 15, searchNames: ['itanhaem', 'itanhaém'], referencePortSlug: 'porto-de-santos',
     cameras: [
-      { title: 'Praia dos Sonhos (Itanhaém) ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/OlEJOalq4oQ', videoId: 'OlEJOalq4oQ' }
+      { title: 'Praia dos Sonhos (Itanhaém) ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/DvjGg1E-BZ8', videoId: 'DvjGg1E-BZ8' }
     ]
   },
   { id: '64', name: 'Peruíbe',                 cityName: 'Peruíbe',                 slug: 'peruibe',                   state: 'SP', region: 'sudeste', lat: -24.316667, lon: -47.000000, dhnId: '50228', offsetMinutes: 20, searchNames: ['peruibe', 'peruíbe'], referencePortSlug: 'porto-de-santos' },

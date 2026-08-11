@@ -15,6 +15,20 @@ webpush.setVapidDetails(VAPID_EMAIL, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
  */
 export async function POST(req: NextRequest) {
   try {
+    const cronSecret = process.env.CRON_SECRET;
+    if (!cronSecret) {
+      console.error('[push/notify POST] CRON_SECRET is not configured');
+      return NextResponse.json(
+        { error: 'Server misconfiguration: CRON_SECRET missing' },
+        { status: 500 },
+      );
+    }
+
+    const authHeader = req.headers.get('authorization');
+    if (authHeader !== `Bearer ${cronSecret}`) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const body = await req.json().catch(() => ({}));
     const { portSlug } = body as { portSlug?: string };
 

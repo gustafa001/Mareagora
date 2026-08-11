@@ -6,17 +6,19 @@ import { PORTS } from '@/lib/ports';
 import { getEventosDia } from '@/lib/mare';
 
 /**
- * POST /api/push/notify
+ * GET /api/push/notify — chamado pelo Cron da Vercel (que dispara via GET)
+ * POST /api/push/notify — para uso manual
  * Body: { portSlug?: string }  — se omitido, notifica todos os portos
  *
  * Verifica se há maré baixa nas próximas 2h para o porto e dispara push.
  *
  * Proteção: exige a variável CRON_SECRET no ambiente (HTTP 500 se ausente) e
  * valida o header `Authorization: Bearer <CRON_SECRET>` no request (HTTP 401).
+ * O Cron da Vercel envia esse header automaticamente.
  * As chaves VAPID são resolvidas em runtime (não no import) para não derrubar
  * o build quando as variáveis não existirem no ambiente de compilação.
  */
-export async function POST(req: NextRequest) {
+async function handleNotify(req: NextRequest) {
   try {
     const notifySecret = process.env.CRON_SECRET;
     if (!notifySecret) {
@@ -114,3 +116,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Internal error' }, { status: 500 });
   }
 }
+
+export const GET = handleNotify;
+export const POST = handleNotify;

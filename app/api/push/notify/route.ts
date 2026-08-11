@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import webpush from 'web-push';
-import { VAPID_EMAIL, VAPID_PRIVATE_KEY, VAPID_PUBLIC_KEY } from '@/lib/vapid';
+import { VAPID_EMAIL, getVapidPrivateKey, getVapidPublicKey } from '@/lib/vapid';
 import { getAllSubscriptions, getSubscriptionsByPort, removeSubscription } from '@/lib/pushStorage';
 import { PORTS } from '@/lib/ports';
 import { getEventosDia } from '@/lib/mare';
-
-webpush.setVapidDetails(VAPID_EMAIL, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
 
 /**
  * POST /api/push/notify
@@ -15,6 +13,8 @@ webpush.setVapidDetails(VAPID_EMAIL, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
  *
  * Proteção: exige a variável CRON_SECRET no ambiente (HTTP 500 se ausente) e
  * valida o header `Authorization: Bearer <CRON_SECRET>` no request (HTTP 401).
+ * As chaves VAPID são resolvidas em runtime (não no import) para não derrubar
+ * o build quando as variáveis não existirem no ambiente de compilação.
  */
 export async function POST(req: NextRequest) {
   try {
@@ -30,6 +30,8 @@ export async function POST(req: NextRequest) {
     if (auth !== `Bearer ${notifySecret}`) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+
+    webpush.setVapidDetails(VAPID_EMAIL, getVapidPublicKey(), getVapidPrivateKey());
 
     const body = await req.json().catch(() => ({}));
     const { portSlug } = body as { portSlug?: string };

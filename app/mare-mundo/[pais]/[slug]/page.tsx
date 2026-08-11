@@ -67,7 +67,7 @@ export default async function MareMundoLocalPage({ params }: Props) {
   const prefs = getGlobalPreferences(acceptLanguage);
   const strings = t(prefs.locale);
 
-  const hoje = new Date().toISOString().slice(0, 10);
+  const hoje = new Date(Date.now() + (place.utcOffsetMin ?? 0) * 60000).toISOString().slice(0, 10);
   const ano = new Date().getFullYear();
 
   // Busca 7 dias para os cards de resumo

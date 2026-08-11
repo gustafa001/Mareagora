@@ -16,17 +16,17 @@ export default async function TideWidget({ params, searchParams }: Props) {
   const cc = searchParams.cc;
   const lang = searchParams.lang ?? 'pt';
 
-  const hoje = new Date().toISOString().slice(0, 10);
-
   let name = '';
   let todayTides: { hora: string; altura_m: number; tipo?: string }[] = [];
   let lat = 0;
   let lon = 0;
 
-  // Try global place
+  // Data de hoje no fuso local (lugar global: utcOffsetMin; porto BR: Brasília),
+  // em vez de UTC — senão perto da meia-noite mostra o dia seguinte.
   if (cc) {
     const place = getGlobalPlace(cc, slug);
     if (!place) notFound();
+    const hoje = new Date(Date.now() + (place.utcOffsetMin ?? 0) * 60000).toISOString().slice(0, 10);
     name = place.name;
     lat = place.lat;
     lon = place.lon;
@@ -36,6 +36,7 @@ export default async function TideWidget({ params, searchParams }: Props) {
     // Try BR port
     const port = getPortBySlug(slug);
     if (!port) notFound();
+    const hoje = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
     name = port.cityName || port.name;
     lat = port.lat;
     lon = port.lon;

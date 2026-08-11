@@ -60,7 +60,7 @@ export default async function TideLocalPage({ params }: Props) {
   const place = getGlobalPlace(params.countryCode, params.slug);
   if (!place) notFound();
 
-  const today = new Date().toISOString().slice(0, 10);
+  const today = new Date(Date.now() + (place.utcOffsetMin ?? 0) * 60000).toISOString().slice(0, 10);
   const year = new Date().getFullYear();
 
   const { dias: weekDias, isEstimate, stationDistanceKm } = await getTideForLocation(

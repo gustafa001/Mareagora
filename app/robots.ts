@@ -10,6 +10,7 @@ export default function robots(): MetadataRoute.Robots {
     sitemap: [
       'https://www.mareagora.com.br/sitemap/index.xml',
       'https://www.mareagora.com.br/sitemap/praias.xml',
+      'https://www.mareagora.com.br/sitemap/guia-praias.xml',
       'https://www.mareagora.com.br/sitemap/portos.xml',
       'https://www.mareagora.com.br/sitemap/estados.xml',
       'https://www.mareagora.com.br/sitemap/blog.xml',

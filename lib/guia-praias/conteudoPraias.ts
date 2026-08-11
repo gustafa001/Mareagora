@@ -4,36 +4,6 @@
 // pelo Next.js (default, metadata, generateMetadata, generateStaticParams etc.).
 
 export const CONTEUDO: Record<string, { sobre: string; pesca: string; melhorEpoca: string }> = {
-  'jurere-sc': {
-    sobre: 'Jurerê Internacional é a praia mais famosa de Florianópolis, conhecida pelos beach clubs sofisticados, casas de alto padrão e infraestrutura completa. O mar calmo e raso é ideal para famílias com crianças.',
-    pesca: 'A pesca é boa nas pedras do costão leste, especialmente para robalo e tainha na maré enchendo. Os melhores horários são nas primeiras horas da manhã, quando o fluxo de maré está forte.',
-    melhorEpoca: 'Dezembro a março para o verão agitado. Abril a junho para mar mais calmo e menos movimento.',
-  },
-  'jericoacoara-ce': {
-    sobre: 'Jericoacoara, ou "Jeri", é um dos destinos mais desejados do Brasil. A vila sem ruas asfaltadas fica dentro de um Parque Nacional e oferece dunas, lagoas e o famoso pôr do sol na Pedra Furada.',
-    pesca: 'A pesca artesanal é forte na região. Na maré baixa, os pescadores locais indicam os melhores pontos ao longo da praia principal. Atum e dourado são abundantes na costa.',
-    melhorEpoca: 'Julho a dezembro para os ventos ideais de kitesurf. Janeiro a junho para mar mais calmo.',
-  },
-  'praia-do-espelho-ba': {
-    sobre: 'A Praia do Espelho fica entre Trancoso e Caraíva, no extremo sul da Bahia. As piscinas naturais formadas na maré baixa são o principal atrativo, junto com as falésias coloridas.',
-    pesca: 'Na maré baixa as piscinas naturais ficam expostas e a pesca com anzol de mão é popular entre os locais. Robalos e peixes de recife são comuns.',
-    melhorEpoca: 'Setembro a março. Evite julho e agosto pela maré muito alta que cobre as piscinas.',
-  },
-  'grumari-rj': {
-    sobre: 'Grumari é a praia mais isolada do Rio de Janeiro, dentro de uma Área de Proteção Ambiental. Sem quiosques permanentes, é frequentada por surfistas e quem busca natureza preservada.',
-    pesca: 'Uma das melhores praias do Rio para pesca de arremesso. Anchova e corvina são abundantes, especialmente no inverno. A maré baixa é essencial para acessar os melhores pontos.',
-    melhorEpoca: 'Maio a setembro para surf e pesca. Verão para banho de mar com ondas menores.',
-  },
-  'morro-de-sao-paulo-ba': {
-    sobre: 'Morro de São Paulo fica na Ilha de Tinharé, sem carros. As praias são numeradas (Primeira, Segunda, Terceira e Quarta Praia) com características distintas - da mais agitada à mais selvagem.',
-    pesca: 'A Quarta Praia, mais isolada, oferece ótima pesca de arremesso. Os recifes de corais ao redor da ilha são paraíso para pesca subaquática e snorkel.',
-    melhorEpoca: 'Setembro a março para clima seco. Julho é alta temporada apesar da chuva.',
-  },
-  'bombinhas-sc': {
-    sobre: 'Bombinhas é considerada a cidade com as águas mais transparentes do Sul do Brasil. A Praia de Bombas e Bombinhas formam um balneário completo com rica vida marinha nos costões.',
-    pesca: 'Os costões rochosos são ideais para pesca de garoupa e badejo. O mergulho é excelente, especialmente na Reserva Biológica Marinha do Arvoredo.',
-    melhorEpoca: 'Dezembro a fevereiro para verão. Março a maio para turismo sem aglomeração.',
-  },
   'praia-grande': {
     sobre: 'A Praia Grande possui uma das orlas mais extensas e urbanizadas de São Paulo. Com 22 km de extensão ininterrupta, é famosa por seus quiosques modernos, ciclovia de ponta a ponta e calçadão movimentado. É um destino extremamente popular para famílias da capital.',
     pesca: 'A pesca de arremesso é excelente nas primeiras horas da manhã. O fluxo da maré traz cardumes de pequenos peixes para a zona de arrebentação, tornando-se um local ideal para pesca de corvina e pescada.',

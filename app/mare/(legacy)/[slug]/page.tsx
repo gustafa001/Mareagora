@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const estadoSlug = getStateSlug(port.state);
   const url = `https://mareagora.com.br/mare/${slug}`;
   const seoUrl = `https://mareagora.com.br/mare/${estadoSlug}/${slug}`;
-  const ogImage = `https://mareagora.com.br/mare/${slug}/opengraph-image`;
+  const ogImage = `https://mareagora.com.br/opengraph-image.png`;
 
   const isCommercial = port.name.toLowerCase().includes('porto') || port.name.toLowerCase().includes('terminal') || config?.category === 'industrial';
 

@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: { params: { slug: string, cid
   const config = portosConfig[slug];
   const ano = new Date().getFullYear();
   const url = `https://mareagora.com.br/mare/${estado}/${slug}`;
-  const ogImage = `https://mareagora.com.br/mare/${estado}/${slug}/opengraph-image`;
+  const ogImage = `https://mareagora.com.br/opengraph-image.png`;
 
   const isCommercial = !port.referencePortSlug && (port.name.toLowerCase().includes('porto') || port.name.toLowerCase().includes('terminal') || config?.category === 'industrial');
 

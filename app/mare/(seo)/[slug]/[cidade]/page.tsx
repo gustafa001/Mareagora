@@ -110,8 +110,9 @@ export default async function PortPage({ params }: { params: { slug: string, cid
 
   const seoName = port.cityName;
   
-  // Data de hoje (para AI Overview, SEO)
-  const dataHoje = new Date().toISOString().split('T')[0];
+  // Data de hoje no fuso de Brasília (para AI Overview, SEO) — mesma lógica
+  // do todayStr acima, evitando que o dia UTC (à frente de -03:00) desloque a data.
+  const dataHoje = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
   const { text: seoText, faq: seoFaq } = generateSEOContent(port, dataHoje);
 
   return (

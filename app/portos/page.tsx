@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: 'Todos os Portos — Tábua de Marés Brasil | MaréAgora',
   description: `Previsão de marés para ${PORT_COUNT} portos brasileiros. Dados oficiais da Marinha do Brasil. Encontre maré alta, baixa e coeficientes para qualquer porto do litoral brasileiro.`,
   alternates: {
-    canonical: 'https://www.mareagora.com.br/portos',
+    canonical: 'https://mareagora.com.br/portos',
   },
 };
 
@@ -29,13 +29,13 @@ export default function PortosPage() {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://www.mareagora.com.br/"
+        "item": "https://mareagora.com.br/"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Portos",
-        "item": "https://www.mareagora.com.br/portos"
+        "item": "https://mareagora.com.br/portos"
       }
     ]
   };

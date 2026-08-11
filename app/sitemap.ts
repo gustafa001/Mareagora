@@ -4,7 +4,7 @@ import { getStateSlug } from '@/lib/states';
 import { getPosts } from '@/lib/blog';
 import rolloutStatus from '@/data/content-rollout-status.json';
 
-const base = 'https://www.mareagora.com.br';
+const base = 'https://mareagora.com.br';
 const _rollout = rolloutStatus as Record<string, { approved: boolean }>;
 const isApproved = (slug: string) => _rollout[slug]?.approved === true;
 

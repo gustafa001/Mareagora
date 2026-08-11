@@ -89,7 +89,7 @@ export default async function BlogPostPage({ params }: Props) {
     "author": {
       "@type": "Person",
       "name": post.author,
-      "url": "https://www.mareagora.com.br/sobre"
+      "url": "https://mareagora.com.br/sobre"
     }
   };
 

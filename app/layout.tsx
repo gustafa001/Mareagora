@@ -36,7 +36,7 @@ const firaSans = Fira_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.mareagora.com.br'),
+  metadataBase: new URL('https://mareagora.com.br'),
   title: `MaréAgora — Tábua de Marés ${new Date().getFullYear()}`,
   description: "Horários e alturas das marés com dados oficiais da Marinha do Brasil. Previsão de ondas e vento em tempo real.",
   manifest: "/manifest.json",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   alternates: {
     languages: {
-      'pt-BR': 'https://www.mareagora.com.br',
+      'pt-BR': 'https://mareagora.com.br',
     },
   },
 };
@@ -119,7 +119,7 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'WebSite',
               name: 'MaréAgora',
-              url: 'https://www.mareagora.com.br',
+              url: 'https://mareagora.com.br',
             })
           }}
         />

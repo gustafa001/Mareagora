@@ -56,7 +56,6 @@ export const viewport: Viewport = {
   themeColor: "#0f172a",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
 };
 
 export default function RootLayout({
@@ -69,7 +68,7 @@ export default function RootLayout({
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
-        
+
         {/* Performance Preconnects */}
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
@@ -81,6 +80,8 @@ export default function RootLayout({
         {/* Google AdSense */}
         <meta name="google-adsense-account" content="ca-pub-2920008879492175" />
         <meta name="google-site-verification" content="sHCQQ9fcGrzTM7k2FVoiEiBczB8Z4peDcz1k3Pnx6G8" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-title" content="MareAgora" />
         {/* Script AdSense */}
         <Script
           async
@@ -106,11 +107,7 @@ export default function RootLayout({
           {`
             if ('serviceWorker' in navigator) {
               window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js').then(function(registration) {
-                  console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }, function(err) {
-                  console.log('ServiceWorker registration failed: ', err);
-                });
+                navigator.serviceWorker.register('/sw.js');
               });
             }
           `}
@@ -126,24 +123,6 @@ export default function RootLayout({
             })
           }}
         />
-        <style>{`
-          @keyframes wave1 {
-            0%   { d: path("M0,60 C180,100 360,20 540,60 C720,100 900,20 1080,60 C1260,100 1350,40 1440,60 L1440,120 L0,120Z"); }
-            50%  { d: path("M0,40 C180,20 360,80 540,40 C720,20 900,80 1080,40 C1260,20 1350,70 1440,40 L1440,120 L0,120Z"); }
-            100% { d: path("M0,60 C180,100 360,20 540,60 C720,100 900,20 1080,60 C1260,100 1350,40 1440,60 L1440,120 L0,120Z"); }
-          }
-          @keyframes wave2 {
-            0%   { d: path("M0,80 C200,40 400,100 600,80 C800,60 1000,110 1200,80 C1320,65 1380,85 1440,80 L1440,120 L0,120Z"); }
-            50%  { d: path("M0,60 C200,90 400,50 600,70 C800,90 1000,60 1200,75 C1320,85 1380,55 1440,60 L1440,120 L0,120Z"); }
-            100% { d: path("M0,80 C200,40 400,100 600,80 C800,60 1000,110 1200,80 C1320,65 1380,85 1440,80 L1440,120 L0,120Z"); }
-          }
-          .wave-path-1 {
-            animation: wave1 8s ease-in-out infinite;
-          }
-          .wave-path-2 {
-            animation: wave2 6s ease-in-out infinite;
-          }
-        `}</style>
       </head>
       <body className="font-dm-sans">
         <div className="bg-waves">

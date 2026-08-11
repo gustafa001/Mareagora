@@ -38,7 +38,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `https://mareagora.com.br/blog/${post.slug}`,
       type: 'article',
       publishedTime: post.date,
+      modifiedTime: post.updatedAt,
       tags: post.tags,
+      locale: 'pt_BR',
+      siteName: 'MaréAgora',
+      images: [{ url: 'https://mareagora.com.br/opengraph-image.png', width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: ['https://mareagora.com.br/opengraph-image.png'],
     },
   };
 }
@@ -87,10 +97,25 @@ export default async function BlogPostPage({ params }: Props) {
     "datePublished": post.date,
     "dateModified": post.updatedAt,
     "author": {
-      "@type": "Person",
-      "name": post.author,
-      "url": "https://mareagora.com.br/sobre"
-    }
+      "@type": "Organization",
+      "name": "Equipe MaréAgora",
+      "url": "https://mareagora.com.br/sobre",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://mareagora.com.br/icons/icon-512x512.png"
+      }
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "MaréAgora",
+      "url": "https://mareagora.com.br",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://mareagora.com.br/icons/icon-512x512.png"
+      }
+    },
+    "mainEntityOfPage": `https://mareagora.com.br/blog/${post.slug}`,
+    "image": "https://mareagora.com.br/opengraph-image.png"
   };
 
   return (
@@ -177,7 +202,7 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
           <div>
             <h3 className="text-lg font-bold text-white mb-1" style={{ fontFamily: 'var(--font-syne)' }}>Escrito por {post.author}</h3>
-            <p className="text-sm text-slate-400 leading-relaxed">Especialista náutico e oceanógrafo amador, apaixonado pelas águas e pela navegação no Brasil. Compartilhando conhecimento sobre marés, segurança e exploração costeira.</p>
+            <p className="text-sm text-slate-400 leading-relaxed">A Equipe MaréAgora analisa dados oficiais da Marinha do Brasil (DHN) para produzir guias e dicas sobre marés, surf, pesca e navegação no litoral brasileiro.</p>
           </div>
         </div>
 

@@ -8,6 +8,13 @@ const base = 'https://mareagora.com.br';
 const _rollout = rolloutStatus as Record<string, { approved: boolean }>;
 const isApproved = (slug: string) => _rollout[slug]?.approved === true;
 
+const tideDataDate = () => {
+  const now = new Date();
+  // Dados de maré são anuais (PDFs da Marinha publicados 1x/ano).
+  // lastModified honesto = início do ano vigente, não "hoje".
+  return new Date(now.getFullYear(), 0, 1).toISOString();
+};
+
 export async function generateSitemaps() {
   return [
     { id: 'index' },
@@ -25,7 +32,7 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
   if (id === 'praias') {
     return PORTS.filter(p => p.referencePortSlug || (!p.name.toLowerCase().includes('porto') && !p.name.toLowerCase().includes('terminal'))).map(p => ({
       url: `${base}/mare/${getStateSlug(p.state)}/${p.slug}`,
-      lastModified: new Date(),
+      lastModified: tideDataDate(),
       changeFrequency: 'daily' as const,
       priority: 0.8,
     }));
@@ -36,7 +43,7 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
     const { CONTEUDO } = await import('@/lib/guia-praias/conteudoPraias');
     return PRAIAS.filter(p => !!CONTEUDO[p.slug]).map(p => ({
       url: `${base}/guia-praias/${p.slug}`,
-      lastModified: new Date(),
+      lastModified: tideDataDate(),
       changeFrequency: 'weekly' as const,
       priority: 0.7,
     }));
@@ -45,7 +52,7 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
   if (id === 'portos') {
     return PORTS.filter(p => !p.referencePortSlug && (p.name.toLowerCase().includes('porto') || p.name.toLowerCase().includes('terminal'))).map(p => ({
       url: `${base}/operacoes-portuarias/${getStateSlug(p.state)}/${p.slug}`,
-      lastModified: new Date(),
+      lastModified: tideDataDate(),
       changeFrequency: 'daily' as const,
       priority: 0.9,
     }));
@@ -54,10 +61,10 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
   if (id === 'estados') {
     const states = Array.from(new Set(PORTS.map(p => getStateSlug(p.state))));
     return [
-      { url: `${base}/estados`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.7 },
+      { url: `${base}/estados`, lastModified: tideDataDate(), changeFrequency: 'weekly' as const, priority: 0.7 },
       ...states.map(state => ({
         url: `${base}/estados/${state}`,
-        lastModified: new Date(),
+        lastModified: tideDataDate(),
         changeFrequency: 'weekly' as const,
         priority: 0.75,
       })),
@@ -67,7 +74,7 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
   if (id === 'blog') {
     return getPosts().map(p => ({
       url: `${base}/blog/${p.slug}`,
-      lastModified: new Date(p.date),
+      lastModified: new Date(p.updatedAt),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     }));
@@ -76,10 +83,10 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
   if (id === 'mundo') {
     const { GLOBAL_PLACES } = await import('@/lib/globalPlaces');
     return [
-      { url: `${base}/mare-mundo`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.6 },
+      { url: `${base}/mare-mundo`, lastModified: tideDataDate(), changeFrequency: 'weekly' as const, priority: 0.6 },
       ...GLOBAL_PLACES.filter(p => isApproved(p.slug)).map(p => ({
         url: `${base}/mare-mundo/${p.countryCode}/${p.slug}`,
-        lastModified: new Date(),
+        lastModified: tideDataDate(),
         changeFrequency: 'daily' as const,
         priority: 0.5,
       }))
@@ -89,10 +96,10 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
   if (id === 'tide-en') {
     const { GLOBAL_PLACES } = await import('@/lib/globalPlaces');
     return [
-      { url: `${base}/tide`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.6 },
+      { url: `${base}/tide`, lastModified: tideDataDate(), changeFrequency: 'weekly' as const, priority: 0.6 },
       ...GLOBAL_PLACES.filter(p => isApproved(p.slug)).map(p => ({
         url: `${base}/tide/${p.countryCode}/${p.slug}`,
-        lastModified: new Date(),
+        lastModified: tideDataDate(),
         changeFrequency: 'daily' as const,
         priority: 0.5,
       }))
@@ -102,7 +109,6 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
   // id === 'index' (Base generic routes)
   const genericRoutes = [
     '',
-    '/mare',
     '/portos',
     '/guia-praias',
     '/cameras',
@@ -124,7 +130,6 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
 
   return genericRoutes.map(route => ({
     url: `${base}${route}`,
-    lastModified: new Date(),
     changeFrequency: 'daily' as const,
     priority: route === '' ? 1.0 : 0.8,
   }));

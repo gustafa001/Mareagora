@@ -27,7 +27,7 @@ export default function SchemaGenerator({
 }: SchemaProps) {
   const schemas: any[] = [];
   const base = 'https://mareagora.com.br';
-  const logo = `${base}/icon-512x512.png`;
+  const logo = `${base}/icons/icon-512x512.png`;
   const defaultImage = image || `${base}/opengraph-image.png`;
 
   // 1. Organization & WebSite (sempre incluídos)
@@ -130,12 +130,12 @@ export default function SchemaGenerator({
       '@id': `${url}#breadcrumb`,
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Início', item: base },
-        { '@type': 'ListItem', position: 2, name: 'Tábua de Marés', item: `${base}/mare` },
+        { '@type': 'ListItem', position: 2, name: 'Tábua de Marés', item: `${base}/portos` },
         {
           '@type': 'ListItem',
           position: 3,
           name: getStateName(port.state),
-          item: `${base}/mare/${getStateSlug(port.state)}`,
+          item: `${base}/estados/${getStateSlug(port.state)}`,
         },
         { '@type': 'ListItem', position: 4, name: port.name, item: url },
       ],

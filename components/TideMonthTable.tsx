@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TideDay, TideEvent } from '@/lib/tideUtils';
 
 interface TideMonthTableProps {
@@ -23,11 +23,23 @@ function getWeekday(year: number, month: number, day: number): string {
 }
 
 export default function TideMonthTable({ eventos }: TideMonthTableProps) {
-  const now = new Date();
-  const [year, setYear] = useState(now.getFullYear());
-  const [month, setMonth] = useState(now.getMonth()); // 0-indexed
+  // A data atual só é lida no cliente (useEffect) para não divergir do render
+  // do servidor (páginas SSG/ISR) — evita os erros de hidratação #418/#423/#425.
+  const [todayStr, setTodayStr] = useState('');
 
-  const todayStr = now.toISOString().split('T')[0];
+  useEffect(() => {
+    setTodayStr(new Date().toISOString().split('T')[0]);
+  }, []);
+
+  // Mês/ano iniciais derivados dos dados (determinísticos no servidor e cliente)
+  const primeiraData = eventos[0]?.data;
+  const primeiraDataParts = primeiraData ? primeiraData.split('-').map(Number) : null;
+  const [year, setYear] = useState(() =>
+    primeiraDataParts ? primeiraDataParts[0] : new Date().getFullYear(),
+  );
+  const [month, setMonth] = useState(() =>
+    primeiraDataParts ? primeiraDataParts[1] - 1 : new Date().getMonth(),
+  ); // 0-indexed
 
   // Build lookup map: "2026-03-31" -> TideDay
   const lookup = new Map<string, TideDay>();
@@ -93,7 +105,7 @@ export default function TideMonthTable({ eventos }: TideMonthTableProps) {
               const dateStr = getDateStr(day);
               const tideDay = lookup.get(dateStr);
               const weekday = getWeekday(year, month, day);
-              const isToday = dateStr === todayStr;
+              const isToday = todayStr !== '' && dateStr === todayStr;
               const mares = tideDay?.mares ?? [];
 
               // Sort by hora

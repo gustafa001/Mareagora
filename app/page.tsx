@@ -9,6 +9,9 @@ import SchemaGenerator from '@/components/seo/SchemaGenerator';
 export const metadata = {
   title: 'MaréAgora — Tábua de Marés do Brasil em Tempo Real',
   description: 'Consulte a tábua de marés oficial da Marinha do Brasil para todos os portos. Previsão de maré alta e baixa, ondas e vento para pesca, surf e navegação.',
+  alternates: {
+    canonical: 'https://mareagora.com.br',
+  },
 };
 
 export default function Home() {

@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: 'Blog — MaréAgora',
   description:
     'Guias, dicas e previsões de marés para todo o litoral do Brasil. Surf, pesca, mergulho e navegação com dados da Marinha do Brasil.',
+  alternates: {
+    canonical: 'https://mareagora.com.br/blog',
+  },
   openGraph: {
     title: 'Blog — MaréAgora',
     description:

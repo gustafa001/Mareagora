@@ -134,7 +134,7 @@ export default function NavBar({ className = '' }: NavBarProps) {
         setIsGeolocationLoading(false);
         alert('Não foi possível obter sua localização. Tente pesquisar o porto ou praia.');
       },
-      { timeout: 5000, enableHighAccuracy: false }
+      { timeout: 10000, enableHighAccuracy: true, maximumAge: 60000 }
     );
   };
 

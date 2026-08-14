@@ -1,11 +1,14 @@
 'use client';
 
+import { useT } from '@/lib/tideI18n';
+
 interface WindRadarCardProps {
   lat: number;
   lon: number;
 }
 
 export default function WindRadarCard({ lat, lon }: WindRadarCardProps) {
+  const { s } = useT();
   // URL do Windy Embed configurada para Vento (overlay=wind)
   const windyUrl = `https://embed.windy.com/embed2.html?lat=${lat}&lon=${lon}&zoom=8&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1`;
 
@@ -19,8 +22,8 @@ export default function WindRadarCard({ lat, lon }: WindRadarCardProps) {
             <span className="text-xl">💨</span>
           </div>
           <div>
-            <h3 className="text-white font-bold text-lg leading-none">Radar de Ventos</h3>
-            <p className="text-slate-500 text-xs mt-1 font-medium uppercase tracking-widest">Tempo Real e Projeção</p>
+            <h3 className="text-white font-bold text-lg leading-none">{s.windRadarTitle}</h3>
+            <p className="text-slate-500 text-xs mt-1 font-medium uppercase tracking-widest">{s.windRadarSubtitle}</p>
           </div>
         </div>
         <div className="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-[10px] font-black text-cyan-400 uppercase tracking-tighter">
@@ -35,7 +38,7 @@ export default function WindRadarCard({ lat, lon }: WindRadarCardProps) {
           height="100%"
           frameBorder="0"
           className="grayscale-[20%] brightness-[90%] contrast-[110%]"
-          title="Radar de Ventos em Tempo Real"
+          title={s.windRadarFrameTitle}
         />
         
         <div className="absolute top-3 right-3 px-2 py-1 bg-black/50 backdrop-blur-md rounded-lg text-[9px] text-cyan-400 font-bold uppercase tracking-widest pointer-events-none border border-cyan-500/20">
@@ -46,9 +49,9 @@ export default function WindRadarCard({ lat, lon }: WindRadarCardProps) {
       <div className="mt-4 flex items-center justify-between text-[10px]">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
-          <span className="text-slate-500 font-medium">Mapa de partículas animado</span>
+          <span className="text-slate-500 font-medium">{s.particleMap}</span>
         </div>
-        <span className="text-slate-600 italic">Interativo: use o zoom</span>
+        <span className="text-slate-600 italic">{s.interactiveZoom}</span>
       </div>
     </div>
   );

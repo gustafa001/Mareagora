@@ -5,6 +5,7 @@ import WaveChart from "@/components/WaveChart";
 import WindChart from "@/components/WindChart";
 import WaveEnergyChart from "@/components/WaveEnergyChart";
 import WindRadarCard from "@/components/WindRadarCard";
+import { useT } from "@/lib/tideI18n";
 
 interface WindWaveChartsProps {
   lat: number;
@@ -26,6 +27,7 @@ interface WindHourly {
 }
 
 export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
+  const { s } = useT();
   const [marineHourly, setMarineHourly] = useState<MarineHourly | null>(null);
   const [windHourly, setWindHourly] = useState<WindHourly | null>(null);
   const [loading, setLoading] = useState(true);
@@ -79,7 +81,7 @@ export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
       <div className="flex items-center gap-4 mb-10">
         <div className="w-1.5 h-8 bg-gradient-to-b from-blue-400 to-cyan-400 rounded-full" />
         <h2 className="text-2xl md:text-3xl font-black text-[#0d1526] font-syne tracking-tight uppercase">
-          Previsão Detalhada
+          {s.detailedForecast}
         </h2>
         <div className="flex-1 h-px bg-gradient-to-r from-[#0d1526]/20 to-transparent" />
       </div>

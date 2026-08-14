@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { groupHourlyByDay, powerColor, POWER_STOPS } from "@/components/charts/surfChartUtils";
+import { useT } from "@/lib/tideI18n";
 
 interface HourlyMarine {
   time: string[];
@@ -27,7 +28,9 @@ function wavePower(h: number, t: number) {
 }
 
 export default function WaveEnergyChart({ hourly, days = 5, beachName = "praia" }: WaveEnergyChartProps) {
+  const { lang, s } = useT();
   const [mode, setMode] = useState<Mode>("energia");
+  const groupOpts = { todayLabel: s.today, tomorrowLabel: s.tomorrow, locale: lang === 'en' ? 'en-US' : 'pt-BR' };
 
   const points = useMemo(() => {
     if (!hourly?.time?.length) return [];
@@ -38,9 +41,9 @@ export default function WaveEnergyChart({ hourly, days = 5, beachName = "praia" 
     });
   }, [hourly]);
 
-  if (!points.length) return <ChartSkeleton label="Carregando energia das ondas…" />;
+  if (!points.length) return <ChartSkeleton label={s.loadingEnergy} />;
 
-  const dayGroups = groupHourlyByDay(points, days).map((g) => ({
+  const dayGroups = groupHourlyByDay(points, days, groupOpts).map((g) => ({
     ...g,
     points: g.points.filter((_, i) => i % 3 === 0),
   }));
@@ -58,21 +61,21 @@ export default function WaveEnergyChart({ hourly, days = 5, beachName = "praia" 
   const yTicks = buildYTicks(maxVal);
 
   return (
-    <div style={styles.card} aria-label={`Gráfico de energia das ondas — ${beachName}`}>
+    <div style={styles.card} aria-label={s.energyChartAria(beachName)}>
       <header style={styles.header}>
-        <span style={styles.title}>⚡ Energia e potência</span>
+        <span style={styles.title}>{s.energyPowerTitle}</span>
       </header>
 
       <div style={styles.toggleRow}>
         <button style={{ ...styles.toggleBtn, ...(mode === "energia" ? styles.toggleBtnActive : {}) }} onClick={() => setMode("energia")}>
-          energia
+          {s.modeEnergy}
         </button>
         <button style={{ ...styles.toggleBtn, ...(mode === "potencia" ? styles.toggleBtnActive : {}) }} onClick={() => setMode("potencia")}>
-          potência
+          {s.modePower}
         </button>
       </div>
       <p style={styles.subtitle}>
-        {mode === "energia" ? "Energia das ondas em Joules/m²" : "Potência das ondas em kW/m"}
+        {mode === "energia" ? s.energySubtitle : s.powerSubtitle}
       </p>
 
       <div style={{ overflowX: "auto" }}>
@@ -118,7 +121,7 @@ export default function WaveEnergyChart({ hourly, days = 5, beachName = "praia" 
         </svg>
       </div>
 
-      <Legend stops={POWER_STOPS} caption="cores do gráfico: potência das ondas, kW por metro" />
+      <Legend stops={POWER_STOPS} caption={s.powerLegendCaption} />
     </div>
   );
 }

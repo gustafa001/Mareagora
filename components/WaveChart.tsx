@@ -8,6 +8,7 @@ import {
   toCardinal,
   dominantDirection,
 } from "@/components/charts/surfChartUtils";
+import { useT } from "@/lib/tideI18n";
 
 interface HourlyMarine {
   time: string[];
@@ -32,6 +33,9 @@ interface Point {
 const RESSACA_LIMIT = 2.5;
 
 export default function WaveChart({ hourly, days = 5, beachName = "praia" }: WaveChartProps) {
+  const { lang, s } = useT();
+  const groupOpts = { todayLabel: s.today, tomorrowLabel: s.tomorrow, locale: lang === 'en' ? 'en-US' : 'pt-BR' };
+
   const points: Point[] = useMemo(() => {
     if (!hourly?.time?.length) return [];
     return hourly.time.map((t, i) => ({
@@ -42,9 +46,9 @@ export default function WaveChart({ hourly, days = 5, beachName = "praia" }: Wav
     }));
   }, [hourly]);
 
-  if (!points.length) return <ChartSkeleton label="Carregando ondas…" />;
+  if (!points.length) return <ChartSkeleton label={s.loadingWaves} />;
 
-  const dayGroups = groupHourlyByDay(points, days);
+  const dayGroups = groupHourlyByDay(points, days, groupOpts);
   // Amostra ~8 pontos por dia (a cada 3h) pra manter o visual limpo
   const sampled = dayGroups.map((g) => ({
     ...g,
@@ -64,10 +68,10 @@ export default function WaveChart({ hourly, days = 5, beachName = "praia" }: Wav
   const yTicks = buildYTicks(maxHeight);
 
   return (
-    <div style={styles.card} aria-label={`Gráfico de ondas — ${beachName}`}>
+    <div style={styles.card} aria-label={s.waveChartAria(beachName)}>
       <header style={styles.header}>
-        <span style={styles.title}>🌊 Altura e período das ondas</span>
-        <span style={styles.badge}>Metros (m)</span>
+        <span style={styles.title}>{s.waveChartTitle}</span>
+        <span style={styles.badge}>{s.meters}</span>
       </header>
 
       <div style={{ overflowX: "auto" }}>
@@ -169,7 +173,7 @@ export default function WaveChart({ hourly, days = 5, beachName = "praia" }: Wav
         </svg>
       </div>
 
-      <Legend stops={PERIOD_STOPS} caption="cores do gráfico: período primário em segundos (s)" />
+      <Legend stops={PERIOD_STOPS} caption={s.waveLegendCaption} />
     </div>
   );
 }

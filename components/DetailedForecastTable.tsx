@@ -2,6 +2,7 @@
 
 import { TideEvent, tideAtMinute, degToCompass } from "@/lib/tideUtils";
 import { useEffect, useState } from "react";
+import { useT } from "@/lib/tideI18n";
 
 interface DetailedForecastTableProps {
   lat: number;
@@ -23,6 +24,7 @@ interface ForecastBlock {
 }
 
 export default function DetailedForecastTable({ lat, lon, todayTides }: DetailedForecastTableProps) {
+  const { s } = useT();
   const [data, setData] = useState<ForecastBlock[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -116,7 +118,7 @@ export default function DetailedForecastTable({ lat, lon, todayTides }: Detailed
   if (loading) {
     return (
       <div className="classic-card my-8 overflow-hidden relative">
-        <h3 className="card-title mb-4 animate-pulse text-gray-400">Previsão Detalhada Hora a Hora...</h3>
+        <h3 className="card-title mb-4 animate-pulse text-gray-400">{s.dftLoading}</h3>
         <div className="h-[300px] w-full loading-shimmer rounded-xl"></div>
       </div>
     );
@@ -127,15 +129,15 @@ export default function DetailedForecastTable({ lat, lon, todayTides }: Detailed
   return (
     <div className="classic-card my-12 overflow-hidden shadow-sm border border-[rgba(56,201,240,0.15)] bg-white/95">
       <div className="flex justify-between items-end mb-6">
-        <h3 className="card-title !mb-0 text-[#2d3748]">📊 Previsão Horizontal Detalhada</h3>
-        <span className="text-xs font-bold uppercase tracking-wider text-[#38c9f0] bg-[#38c9f0]/10 px-3 py-1 rounded-full border border-[#38c9f0]/20">Próximas 24h</span>
+        <h3 className="card-title !mb-0 text-[#2d3748]">{s.dftTitle}</h3>
+        <span className="text-xs font-bold uppercase tracking-wider text-[#38c9f0] bg-[#38c9f0]/10 px-3 py-1 rounded-full border border-[#38c9f0]/20">{s.dftNext24h}</span>
       </div>
 
       <div className="overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
         <div className="min-w-[760px]">
           {/* Cabeçalho de Horas */}
           <div className="grid grid-cols-[160px_repeat(auto-fit,minmax(60px,1fr))] border-b border-gray-200 pb-2 mb-2">
-            <div className="text-xs font-bold text-gray-500 uppercase self-end">Hora Local</div>
+            <div className="text-xs font-bold text-gray-500 uppercase self-end">{s.dftLocalTime}</div>
             {data.map((b, i) => (
               <div key={i} className="text-center font-syne font-bold text-gray-800 text-[15px]">
                 {b.hour}
@@ -145,7 +147,7 @@ export default function DetailedForecastTable({ lat, lon, todayTides }: Detailed
 
           {/* Vento Direção */}
           <div className="grid grid-cols-[160px_repeat(auto-fit,minmax(60px,1fr))] py-2.5 border-b border-gray-100 hover:bg-gray-50 transition-colors">
-            <div className="text-[13px] font-medium text-gray-600 self-center">Dir. do vento</div>
+            <div className="text-[13px] font-medium text-gray-600 self-center">{s.dftWindDir}</div>
             {data.map((b, i) => (
               <div key={i} className="flex justify-center flex-col items-center gap-1">
                 <span className="text-gray-400 text-[10px] uppercase font-bold translate-y-1">{degToCompass(b.windDir)}</span>
@@ -161,7 +163,7 @@ export default function DetailedForecastTable({ lat, lon, todayTides }: Detailed
 
           {/* Vento Velocidade (COLOR CODED) */}
           <div className="grid grid-cols-[160px_repeat(auto-fit,minmax(60px,1fr))] py-2 border-b border-gray-100 hover:bg-gray-50 transition-colors">
-            <div className="text-[13px] font-medium text-gray-600 self-center">Velocidade (km/h)</div>
+            <div className="text-[13px] font-medium text-gray-600 self-center">{s.dftSpeed}</div>
             {data.map((b, i) => (
               <div key={i} className={`flex items-center justify-center font-bold text-[15px] py-[6px] mx-1 rounded-md shadow-inner transition-colors ${getWindColor(b.windSpeed)}`}>
                 {Math.round(b.windSpeed)}
@@ -171,7 +173,7 @@ export default function DetailedForecastTable({ lat, lon, todayTides }: Detailed
 
           {/* Vento Rajadas (COLOR CODED) */}
           <div className="grid grid-cols-[160px_repeat(auto-fit,minmax(60px,1fr))] py-2 border-b border-gray-200 hover:bg-gray-50 transition-colors">
-            <div className="text-[13px] font-medium text-gray-600 self-center">Rajadas (km/h)</div>
+            <div className="text-[13px] font-medium text-gray-600 self-center">{s.dftGusts}</div>
             {data.map((b, i) => (
               <div key={i} className={`flex items-center justify-center font-bold text-[15px] py-[6px] mx-1 rounded-md shadow-inner opacity-85 transition-colors ${getWindColor(b.windGust)}`}>
                 {Math.round(b.windGust)}
@@ -181,7 +183,7 @@ export default function DetailedForecastTable({ lat, lon, todayTides }: Detailed
 
           {/* Temperatura */}
           <div className="grid grid-cols-[160px_repeat(auto-fit,minmax(60px,1fr))] py-3 border-b border-gray-100/50 bg-[#ff914d]/5 hover:bg-[#ff914d]/10 transition-colors">
-            <div className="text-[13px] font-medium text-gray-600 self-center">Temperatura (°C)</div>
+            <div className="text-[13px] font-medium text-gray-600 self-center">{s.dftTemp}</div>
             {data.map((b, i) => (
               <div key={i} className="text-center font-bold text-[#ff914d] text-sm">
                 {Math.round(b.temp)}°
@@ -191,7 +193,7 @@ export default function DetailedForecastTable({ lat, lon, todayTides }: Detailed
 
           {/* Ondas Altura */}
           <div className="grid grid-cols-[160px_repeat(auto-fit,minmax(60px,1fr))] py-3.5 border-b border-gray-100/50 bg-[#2a68f6]/5 hover:bg-[#2a68f6]/10 transition-colors">
-            <div className="text-[13px] font-medium text-gray-600 self-center">Altura da onda (m)</div>
+            <div className="text-[13px] font-medium text-gray-600 self-center">{s.dftWaveHeight}</div>
             {data.map((b, i) => (
               <div key={i} className="text-center font-syne font-extrabold text-[#2a68f6] text-[15px]">
                 {b.waveHeight.toFixed(1)}
@@ -201,7 +203,7 @@ export default function DetailedForecastTable({ lat, lon, todayTides }: Detailed
 
           {/* Ondas Período / Direção */}
           <div className="grid grid-cols-[160px_repeat(auto-fit,minmax(60px,1fr))] py-3.5 border-b border-gray-200 bg-[#2a68f6]/[0.08] hover:bg-[#2a68f6]/[0.12] transition-colors">
-            <div className="text-[13px] font-medium text-gray-600 self-center leading-tight">Período (s)<br/><span className="text-[10px] font-normal text-gray-400">Dir. onda</span></div>
+            <div className="text-[13px] font-medium text-gray-600 self-center leading-tight">{s.dftPeriod}<br/><span className="text-[10px] font-normal text-gray-400">{s.dftWaveDir}</span></div>
             {data.map((b, i) => (
               <div key={i} className="flex flex-col items-center justify-center">
                 <span className="text-sm font-bold text-gray-700">{b.wavePeriod.toFixed(0)}</span>
@@ -215,7 +217,7 @@ export default function DetailedForecastTable({ lat, lon, todayTides }: Detailed
 
           {/* Altura da Maré Interpolar */}
           <div className="grid grid-cols-[160px_repeat(auto-fit,minmax(60px,1fr))] py-4 hover:bg-gray-50 transition-colors mt-2">
-            <div className="text-[14px] font-extrabold text-[#2d3748] self-center tracking-tight">Altura Maré (m)</div>
+            <div className="text-[14px] font-extrabold text-[#2d3748] self-center tracking-tight">{s.dftTideHeight}</div>
             {data.map((b, i) => (
               <div key={i} className="text-center">
                 <span className={`inline-block px-3 py-1.5 rounded-md text-[13px] font-extrabold border shadow-sm ${b.tideHeight > 1.2 ? 'bg-[#38c9f0]/10 text-[#0d2240] border-[#38c9f0]/30' : 'bg-[#ff914d]/10 text-[#0d2240] border-[#ff914d]/30'}`}>

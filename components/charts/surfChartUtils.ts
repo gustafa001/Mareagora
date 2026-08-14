@@ -82,24 +82,28 @@ export interface DayGroup<T> {
 /** Agrupa uma série horária (com campo `time` em ISO) em blocos de dia local (America/Sao_Paulo). */
 export function groupHourlyByDay<T extends { time: string }>(
   items: T[],
-  maxDays = 5
+  maxDays = 5,
+  opts?: { todayLabel?: string; tomorrowLabel?: string; locale?: string }
 ): DayGroup<T>[] {
+  const locale = opts?.locale ?? "pt-BR";
+  const todayLabel = opts?.todayLabel ?? "Hoje";
+  const tomorrowLabel = opts?.tomorrowLabel ?? "Amanhã";
   const groups = new Map<string, DayGroup<T>>();
   for (const item of items) {
     const date = new Date(item.time);
-    const key = date.toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" });
+    const key = date.toLocaleDateString(locale, { timeZone: "America/Sao_Paulo" });
     if (!groups.has(key)) {
       groups.set(key, { key, label: "", date, points: [] });
     }
     groups.get(key)!.points.push(item);
   }
   const arr = Array.from(groups.values()).slice(0, maxDays);
-  const today = new Date().toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" });
-  const tomorrow = new Date(Date.now() + 86400000).toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" });
+  const today = new Date().toLocaleDateString(locale, { timeZone: "America/Sao_Paulo" });
+  const tomorrow = new Date(Date.now() + 86400000).toLocaleDateString(locale, { timeZone: "America/Sao_Paulo" });
   arr.forEach((g) => {
-    if (g.key === today) g.label = "Hoje";
-    else if (g.key === tomorrow) g.label = "Amanhã";
-    else g.label = g.date.toLocaleDateString("pt-BR", { weekday: "short", day: "2-digit", timeZone: "America/Sao_Paulo" }).replace(".", "");
+    if (g.key === today) g.label = todayLabel;
+    else if (g.key === tomorrow) g.label = tomorrowLabel;
+    else g.label = g.date.toLocaleDateString(locale, { weekday: "short", day: "2-digit", timeZone: "America/Sao_Paulo" }).replace(".", "");
   });
   return arr;
 }

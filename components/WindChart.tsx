@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { groupHourlyByDay, toCardinal, dominantDirection } from "@/components/charts/surfChartUtils";
+import { useT } from "@/lib/tideI18n";
 
 interface HourlyWind {
   time: string[];
@@ -27,6 +28,9 @@ const WIND_COLOR = "#fbbf24";
 const GUST_COLOR = "#ea580c";
 
 export default function WindChart({ hourly, days = 5, beachName = "praia" }: WindChartProps) {
+  const { lang, s } = useT();
+  const groupOpts = { todayLabel: s.today, tomorrowLabel: s.tomorrow, locale: lang === 'en' ? 'en-US' : 'pt-BR' };
+
   const points: Point[] = useMemo(() => {
     if (!hourly?.time?.length) return [];
     return hourly.time.map((t, i) => {
@@ -36,9 +40,9 @@ export default function WindChart({ hourly, days = 5, beachName = "praia" }: Win
     });
   }, [hourly]);
 
-  if (!points.length) return <ChartSkeleton label="Carregando vento…" />;
+  if (!points.length) return <ChartSkeleton label={s.loadingWind} />;
 
-  const dayGroups = groupHourlyByDay(points, days);
+  const dayGroups = groupHourlyByDay(points, days, groupOpts);
   const sampled = dayGroups.map((g) => ({
     ...g,
     points: g.points.filter((_, i) => i % 3 === 0),
@@ -57,12 +61,12 @@ export default function WindChart({ hourly, days = 5, beachName = "praia" }: Win
   const yTicks = buildYTicks(maxWind);
 
   return (
-    <div style={styles.card} aria-label={`Gráfico de vento — ${beachName}`}>
+    <div style={styles.card} aria-label={s.windChartAria(beachName)}>
       <header style={styles.header}>
-        <span style={styles.title}>💨 Vento</span>
+        <span style={styles.title}>{s.windChartTitle}</span>
         <div style={{ display: "flex", gap: 12 }}>
-          <LegendDot color={WIND_COLOR} label="vento" />
-          <LegendDot color={GUST_COLOR} label="rajadas" />
+          <LegendDot color={WIND_COLOR} label={s.windLegend} />
+          <LegendDot color={GUST_COLOR} label={s.gusts} />
         </div>
       </header>
 

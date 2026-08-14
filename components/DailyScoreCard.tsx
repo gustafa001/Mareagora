@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import type { TideEvent } from '@/lib/tideUtils';
+import { useT, type TDict } from '@/lib/tideI18n';
 
 interface Props {
   lat: number;
@@ -26,12 +27,12 @@ interface MarineData {
   windDir: number;      // graus
 }
 
-function getScoreLabel(score: number): string {
-  if (score >= 9) return 'Excelente';
-  if (score >= 7) return 'Ótimo';
-  if (score >= 5) return 'Bom';
-  if (score >= 3) return 'Razoável';
-  return 'Ruim';
+function getScoreLabel(score: number, s: TDict): string {
+  if (score >= 9) return s.rating_excellent;
+  if (score >= 7) return s.rating_great;
+  if (score >= 5) return s.rating_good;
+  if (score >= 3) return s.rating_fair;
+  return s.rating_poor;
 }
 
 function getScoreColor(score: number): string {
@@ -108,7 +109,7 @@ function currentTideHeight(tides: TideEvent[], utcOffsetMin: number): number {
   return sorted[sorted.length - 1]?.altura_m ?? 0;
 }
 
-function computeScores(tides: TideEvent[], marine: MarineData | null, utcOffsetMin: number): ActivityScore[] {
+function computeScores(tides: TideEvent[], marine: MarineData | null, utcOffsetMin: number, s: TDict): ActivityScore[] {
   const range = calcTidalRange(tides);
   const rising = isTideRising(tides, utcOffsetMin);
   const curH = currentTideHeight(tides, utcOffsetMin);
@@ -130,34 +131,34 @@ function computeScores(tides: TideEvent[], marine: MarineData | null, utcOffsetM
   // Wave height: ideal 0.8–2.0m
   if (wave >= 0.8 && wave <= 2.0) {
     surfScore += 2;
-    surfReasons.push(`Onda ideal (${wave.toFixed(1)}m)`);
+    surfReasons.push(s.r_wave_ideal(wave));
   } else if (wave > 2.0 && wave <= 3.0) {
     surfScore += 1;
-    surfReasons.push(`Onda grande (${wave.toFixed(1)}m)`);
+    surfReasons.push(s.r_wave_big(wave));
   } else if (wave < 0.5) {
     surfScore -= 2;
-    surfReasons.push(`Mar calmo demais (${wave.toFixed(1)}m)`);
+    surfReasons.push(s.r_wave_tooCalm(wave));
   } else if (wave > 3.0) {
     surfScore -= 1;
-    surfReasons.push(`Mar agitado (${wave.toFixed(1)}m)`);
+    surfReasons.push(s.r_wave_choppy(wave));
   }
 
   // Wave period: >=10s is quality swell
-  if (period >= 10) { surfScore += 1; surfReasons.push('Período longo (ground swell)'); }
-  else if (period >= 7) { surfReasons.push('Período médio'); }
-  else if (period > 0 && period < 6) { surfScore -= 1; surfReasons.push('Período curto (wind swell)'); }
+  if (period >= 10) { surfScore += 1; surfReasons.push(s.r_period_long); }
+  else if (period >= 7) { surfReasons.push(s.r_period_med); }
+  else if (period > 0 && period < 6) { surfScore -= 1; surfReasons.push(s.r_period_short); }
 
   // Wind: <15km/h ideal, offshore better (can't know direction quality without coast bearing)
-  if (wind < 15) { surfScore += 1; surfReasons.push('Vento fraco (boas condições)'); }
-  else if (wind > 30) { surfScore -= 2; surfReasons.push(`Vento forte (${wind.toFixed(0)} km/h)`); }
-  else if (wind > 20) { surfScore -= 1; surfReasons.push(`Vento moderado (${wind.toFixed(0)} km/h)`); }
+  if (wind < 15) { surfScore += 1; surfReasons.push(s.r_wind_light); }
+  else if (wind > 30) { surfScore -= 2; surfReasons.push(s.r_wind_strong(Math.round(wind))); }
+  else if (wind > 20) { surfScore -= 1; surfReasons.push(s.r_wind_moderate(Math.round(wind))); }
 
   // Tide: mid-tide is best for most breaks
   if (Math.abs(curH - midH) < (range * 0.25)) {
-    surfScore += 1; surfReasons.push('Maré meia (ideal para surfe)');
+    surfScore += 1; surfReasons.push(s.r_midTide);
   }
 
-  if (!marine) surfReasons.push('Estimativa (sem dados de onda)');
+  if (!marine) surfReasons.push(s.r_estimate_noWave);
   surfScore = Math.max(0, Math.min(10, surfScore));
 
   // ─── PESCA ─────────────────────────────────────────────────────────
@@ -165,26 +166,26 @@ function computeScores(tides: TideEvent[], marine: MarineData | null, utcOffsetM
   const pescaReasons: string[] = [];
 
   // Solunar bonus
-  if (solunar === 2) { pescaScore += 3; pescaReasons.push('Período solunar maior ativo 🌙'); }
-  else if (solunar === 1) { pescaScore += 1; pescaReasons.push('Período solunar menor ativo'); }
+  if (solunar === 2) { pescaScore += 3; pescaReasons.push(s.r_solunar_major); }
+  else if (solunar === 1) { pescaScore += 1; pescaReasons.push(s.r_solunar_minor); }
 
   // Tidal range: larger = better for fishing
-  if (range >= 1.5) { pescaScore += 2; pescaReasons.push(`Maré viva (amplitude ${range.toFixed(1)}m)`); }
-  else if (range >= 0.8) { pescaScore += 1; pescaReasons.push(`Amplitude moderada (${range.toFixed(1)}m)`); }
-  else { pescaScore -= 1; pescaReasons.push('Maré morta (baixa amplitude)'); }
+  if (range >= 1.5) { pescaScore += 2; pescaReasons.push(s.r_spring_tide(range)); }
+  else if (range >= 0.8) { pescaScore += 1; pescaReasons.push(s.r_moderate_range(range)); }
+  else { pescaScore -= 1; pescaReasons.push(s.r_neap_tide); }
 
   // Rising tide is generally better for fishing
-  if (rising === true) { pescaScore += 1; pescaReasons.push('Maré enchendo (peixes se movem)'); }
+  if (rising === true) { pescaScore += 1; pescaReasons.push(s.r_flooding); }
 
   // Wind: fishing is better with calm sea
-  if (wind < 20) { pescaScore += 1; pescaReasons.push('Vento favorável para pescaria'); }
-  else if (wind > 35) { pescaScore -= 2; pescaReasons.push(`Vento forte (${wind.toFixed(0)} km/h)`); }
+  if (wind < 20) { pescaScore += 1; pescaReasons.push(s.r_wind_favorable); }
+  else if (wind > 35) { pescaScore -= 2; pescaReasons.push(s.r_wind_strong_fish(Math.round(wind))); }
 
   // Wave height for fishing
-  if (wave > 0 && wave < 1.0) { pescaScore += 1; pescaReasons.push('Mar adequado para pescaria'); }
-  else if (wave >= 2.0) { pescaScore -= 1; pescaReasons.push(`Mar agitado (${wave.toFixed(1)}m)`); }
+  if (wave > 0 && wave < 1.0) { pescaScore += 1; pescaReasons.push(s.r_sea_good_fish); }
+  else if (wave >= 2.0) { pescaScore -= 1; pescaReasons.push(s.r_sea_rough_fish(wave)); }
 
-  if (!marine) pescaReasons.push('Dados climáticos indisponíveis');
+  if (!marine) pescaReasons.push(s.r_no_weather);
   pescaScore = Math.max(0, Math.min(10, pescaScore));
 
   // ─── PRAIA ─────────────────────────────────────────────────────────
@@ -193,21 +194,21 @@ function computeScores(tides: TideEvent[], marine: MarineData | null, utcOffsetM
 
   // Low tide = more beach
   if (curH <= minH + range * 0.3) {
-    praiaScore += 2; praiaReasons.push('Maré baixa — mais areia! 🏖️');
+    praiaScore += 2; praiaReasons.push(s.r_low_tide_moreSand);
   } else if (curH >= maxH - range * 0.3) {
-    praiaScore -= 1; praiaReasons.push('Maré alta — pouca areia');
+    praiaScore -= 1; praiaReasons.push(s.r_high_tide_lessSand);
   }
 
   // Calm sea
-  if (wave < 0.5) { praiaScore += 2; praiaReasons.push('Mar tranquilo (ótimo para banho)'); }
-  else if (wave < 1.0) { praiaScore += 1; praiaReasons.push('Mar moderado'); }
-  else if (wave >= 1.5) { praiaScore -= 1; praiaReasons.push(`Ondas altas (${wave.toFixed(1)}m) para praia`); }
+  if (wave < 0.5) { praiaScore += 2; praiaReasons.push(s.r_calm_swim); }
+  else if (wave < 1.0) { praiaScore += 1; praiaReasons.push(s.r_moderate_sea); }
+  else if (wave >= 1.5) { praiaScore -= 1; praiaReasons.push(s.r_high_waves_beach(wave)); }
 
   // Wind
-  if (wind < 20) { praiaScore += 1; praiaReasons.push('Vento agradável'); }
-  else if (wind > 35) { praiaScore -= 2; praiaReasons.push('Vento forte (areia voa)'); }
+  if (wind < 20) { praiaScore += 1; praiaReasons.push(s.r_pleasant_wind); }
+  else if (wind > 35) { praiaScore -= 2; praiaReasons.push(s.r_strong_wind_sand); }
 
-  if (!marine) praiaReasons.push('Estimativa sem dados climáticos');
+  if (!marine) praiaReasons.push(s.r_estimate_noWeather);
   praiaScore = Math.max(0, Math.min(10, praiaScore));
 
   // ─── MERGULHO ──────────────────────────────────────────────────────
@@ -221,32 +222,33 @@ function computeScores(tides: TideEvent[], marine: MarineData | null, utcOffsetM
     const tMin = h2 * 60 + m2;
     return Math.abs(tMin - nowMinMerg) <= 45;
   });
-  if (nearSlack) { mergulhoScore += 2; mergulhoReasons.push('Próximo de maré parada (melhor visibilidade)'); }
+  if (nearSlack) { mergulhoScore += 2; mergulhoReasons.push(s.r_nearSlack); }
 
   // Calm sea for diving
-  if (wave < 0.5) { mergulhoScore += 2; mergulhoReasons.push('Mar calmo (ótimo para mergulho)'); }
-  else if (wave < 1.0) { mergulhoScore += 1; mergulhoReasons.push('Condições aceitáveis'); }
-  else if (wave >= 1.5) { mergulhoScore -= 2; mergulhoReasons.push(`Ondas fortes (${wave.toFixed(1)}m)`); }
+  if (wave < 0.5) { mergulhoScore += 2; mergulhoReasons.push(s.r_calm_diving); }
+  else if (wave < 1.0) { mergulhoScore += 1; mergulhoReasons.push(s.r_acceptable); }
+  else if (wave >= 1.5) { mergulhoScore -= 2; mergulhoReasons.push(s.r_strong_waves(wave)); }
 
   // Wind
-  if (wind < 15) { mergulhoScore += 1; mergulhoReasons.push('Vento calmo'); }
-  else if (wind > 25) { mergulhoScore -= 2; mergulhoReasons.push('Vento alto compromete condições'); }
+  if (wind < 15) { mergulhoScore += 1; mergulhoReasons.push(s.r_calm_wind); }
+  else if (wind > 25) { mergulhoScore -= 2; mergulhoReasons.push(s.r_wind_high_diving); }
 
   // Neap tide = clearer water generally
-  if (range < 1.0) { mergulhoScore += 1; mergulhoReasons.push('Maré morta (água mais clara)'); }
+  if (range < 1.0) { mergulhoScore += 1; mergulhoReasons.push(s.r_neap_clear); }
 
-  if (!marine) mergulhoReasons.push('Estimativa sem dados climáticos');
+  if (!marine) mergulhoReasons.push(s.r_estimate_noWeather);
   mergulhoScore = Math.max(0, Math.min(10, mergulhoScore));
 
   return [
-    { name: 'Surf', emoji: '🏄', score: surfScore, label: getScoreLabel(surfScore), color: getScoreColor(surfScore), reasons: surfReasons },
-    { name: 'Pesca', emoji: '🎣', score: pescaScore, label: getScoreLabel(pescaScore), color: getScoreColor(pescaScore), reasons: pescaReasons },
-    { name: 'Praia', emoji: '🏖️', score: praiaScore, label: getScoreLabel(praiaScore), color: getScoreColor(praiaScore), reasons: praiaReasons },
-    { name: 'Mergulho', emoji: '🤿', score: mergulhoScore, label: getScoreLabel(mergulhoScore), color: getScoreColor(mergulhoScore), reasons: mergulhoReasons },
+    { name: s.surf, emoji: '🏄', score: surfScore, label: getScoreLabel(surfScore, s), color: getScoreColor(surfScore), reasons: surfReasons },
+    { name: s.fishing, emoji: '🎣', score: pescaScore, label: getScoreLabel(pescaScore, s), color: getScoreColor(pescaScore), reasons: pescaReasons },
+    { name: s.beach, emoji: '🏖️', score: praiaScore, label: getScoreLabel(praiaScore, s), color: getScoreColor(praiaScore), reasons: praiaReasons },
+    { name: s.diving, emoji: '🤿', score: mergulhoScore, label: getScoreLabel(mergulhoScore, s), color: getScoreColor(mergulhoScore), reasons: mergulhoReasons },
   ] as ActivityScore[];
 }
 
 export default function DailyScoreCard({ lat, lon, todayTides, utcOffsetMin = 0 }: Props) {
+  const { s } = useT();
   const [mounted, setMounted] = useState(false);
   const [marine, setMarine] = useState<MarineData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -284,12 +286,12 @@ export default function DailyScoreCard({ lat, lon, todayTides, utcOffsetMin = 0 
   if (!mounted) {
     return (
       <div className="rounded-[24px] overflow-hidden shadow-2xl p-6 bg-[#0d1b2e] border border-white/5 animate-pulse min-h-[260px] flex items-center justify-center">
-        <div className="text-slate-500 font-syne text-xs uppercase tracking-widest">Carregando score do dia...</div>
+        <div className="text-slate-500 font-syne text-xs uppercase tracking-widest">{s.loadingScore}</div>
       </div>
     );
   }
 
-  const scores = computeScores(todayTides, loading ? null : marine, utcOffsetMin);
+  const scores = computeScores(todayTides, loading ? null : marine, utcOffsetMin, s);
   const overall = Math.round(scores.reduce((s, a) => s + a.score, 0) / scores.length);
 
   return (
@@ -307,9 +309,9 @@ export default function DailyScoreCard({ lat, lon, todayTides, utcOffsetMin = 0 
       >
         <div>
           <h2 className="text-white font-syne font-bold text-xl flex items-center gap-2">
-            <span>📊</span> Score do Dia
+            <span>📊</span> {s.dayScore}
           </h2>
-          <p className="text-slate-400 text-xs mt-0.5">Condições atuais para atividades costeiras</p>
+          <p className="text-slate-400 text-xs mt-0.5">{s.scoreSubtitle}</p>
         </div>
 
         {/* Overall Score */}
@@ -324,7 +326,7 @@ export default function DailyScoreCard({ lat, lon, todayTides, utcOffsetMin = 0 
             {loading ? '…' : overall}
           </div>
           <span className="text-[10px] text-slate-400 uppercase tracking-widest mt-1">
-            {loading ? '' : getScoreLabel(overall)}
+            {loading ? '' : getScoreLabel(overall, s)}
           </span>
         </div>
       </div>
@@ -372,7 +374,7 @@ export default function DailyScoreCard({ lat, lon, todayTides, utcOffsetMin = 0 
               className="text-[10px] font-bold uppercase tracking-widest"
               style={{ color: activity.color }}
             >
-              {loading ? 'Calculando…' : activity.label}
+              {loading ? s.calculating : activity.label}
             </span>
 
             {/* Expanded reasons */}
@@ -393,7 +395,7 @@ export default function DailyScoreCard({ lat, lon, todayTides, utcOffsetMin = 0 
       {/* Footer hint */}
       <div className="px-5 pb-4 text-center">
         <p className="text-[10px] text-slate-600 uppercase tracking-widest">
-          Toque em cada atividade para ver os fatores • Atualizado agora
+          {s.footerHint}
         </p>
       </div>
     </section>

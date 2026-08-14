@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { GLOBAL_PLACES } from '@/lib/globalPlaces';
+import { enCountryName, enPlaceName } from '@/lib/globalNames';
 import NavBar from '@/components/NavBar';
 import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
@@ -97,7 +98,7 @@ export default function TideIndexPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {Object.entries(byCountry).map(([countryCode, places]) => {
             const flag = getCountryFlag(countryCode);
-            const countryName = places[0].countryName;
+            const countryName = enCountryName(countryCode, places[0].countryName);
 
             return (
               <section
@@ -125,7 +126,7 @@ export default function TideIndexPage() {
                         href={`/tide/${p.countryCode}/${p.slug}`}
                         className="flex items-center justify-between py-2 px-3 rounded-xl hover:bg-blue-500/15 text-slate-300 hover:text-white transition-all text-sm font-medium group"
                       >
-                        <span>{p.name}</span>
+                        <span>{enPlaceName(p.name)}</span>
                         <span className="text-xs text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity font-bold">
                           Tide table →
                         </span>

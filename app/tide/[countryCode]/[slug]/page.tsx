@@ -2,6 +2,7 @@ export const runtime = 'nodejs';
 
 import { notFound } from 'next/navigation';
 import { getGlobalPlace, getNearbyGlobalPlaces } from '@/lib/globalPlaces';
+import { enCountryName, enPlaceName } from '@/lib/globalNames';
 import { getTideForLocation } from '@/lib/tideRouter';
 import { t } from '@/lib/globalPreferences';
 import dynamic from 'next/dynamic';
@@ -41,9 +42,11 @@ export async function generateMetadata({ params }: Props) {
   const place = getGlobalPlace(params.countryCode, params.slug);
   if (!place) return { title: 'Tide Table | MaréAgora' };
   const year = new Date().getFullYear();
+  const placeName = enPlaceName(place.name);
+  const countryName = enCountryName(place.countryCode, place.countryName);
   return {
-    title: `Tide Table ${place.name} ${year} | MaréAgora`,
-    description: `${place.name} tide table ${year}. Real-time waves, wind, rain radar and full monthly tide schedule for ${place.name}, ${place.countryName}.`,
+    title: `Tide Table ${placeName} ${year} | MaréAgora`,
+    description: `${placeName} tide table ${year}. Real-time waves, wind, rain radar and full monthly tide schedule for ${placeName}, ${countryName}.`,
     robots: isApproved(params.slug) ? { index: true, follow: true } : { index: false, follow: true },
     alternates: {
       canonical: `${BASE}/tide/${params.countryCode}/${params.slug}`,
@@ -59,6 +62,9 @@ export async function generateMetadata({ params }: Props) {
 export default async function TideLocalPage({ params }: Props) {
   const place = getGlobalPlace(params.countryCode, params.slug);
   if (!place) notFound();
+
+  const placeName = enPlaceName(place.name);
+  const countryName = enCountryName(place.countryCode, place.countryName);
 
   const today = new Date(Date.now() + (place.utcOffsetMin ?? 0) * 60000).toISOString().slice(0, 10);
   const year = new Date().getFullYear();
@@ -100,15 +106,15 @@ export default async function TideLocalPage({ params }: Props) {
   return (
     <main className="min-h-screen pb-20">
       <TideSchemaMarkup
-        locationName={place.name}
-        countryOrStateName={place.countryName}
+        locationName={placeName}
+        countryOrStateName={countryName}
         lat={place.lat}
         lon={place.lon}
         nextHigh={nextHigh ? { hora: nextHigh.hora, altura_m: nextHigh.altura_m } : null}
         nextLow={nextLow ? { hora: nextLow.hora, altura_m: nextLow.altura_m } : null}
         pageUrl={`${BASE}/tide/${params.countryCode}/${params.slug}`}
         parentUrl={`${BASE}/tide`}
-        parentName={place.countryName}
+        parentName={countryName}
         locale="en"
       />
       <NavBar />
@@ -139,13 +145,13 @@ export default async function TideLocalPage({ params }: Props) {
 
           <div className="flex flex-col gap-3 items-center px-2 text-center">
             <p className="text-xs font-bold uppercase tracking-widest text-blue-400 opacity-80">
-              {place.countryName} · Harmonic Tide Model
+              {countryName} · Harmonic Tide Model
             </p>
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight font-syne leading-tight max-w-4xl text-white drop-shadow-md">
-              Tide Table {place.name} — {year}
+              Tide Table {placeName} — {year}
             </h1>
             <p className="text-sm sm:text-lg md:text-xl opacity-90 font-medium font-syne hidden sm:block text-white/90">
-              {place.name} · {place.countryName} · Harmonic Prediction
+              {placeName} · {countryName} · Harmonic Prediction
             </p>
 
             {isEstimate && (
@@ -159,8 +165,8 @@ export default async function TideLocalPage({ params }: Props) {
             </div>
 
             <ShareButton
-              title={`Tide Table ${place.name} ${year} | MaréAgora`}
-              text={`🌊 Check the tide forecast for ${place.name}, ${place.countryName} — MaréAgora`}
+              title={`Tide Table ${placeName} ${year} | MaréAgora`}
+              text={`🌊 Check the tide forecast for ${placeName}, ${countryName} — MaréAgora`}
             />
 
             <div className="mb-20" />
@@ -185,7 +191,7 @@ export default async function TideLocalPage({ params }: Props) {
 
           <MonthlyTideTable
             eventos={yearDias}
-            portName={place.name}
+            portName={placeName}
             lat={place.lat}
             lon={place.lon}
           />
@@ -228,7 +234,7 @@ export default async function TideLocalPage({ params }: Props) {
                       href={`/tide/${p.countryCode}/${p.slug}`}
                       className="inline-flex items-center gap-1 text-sm bg-blue-50 hover:bg-blue-100 text-blue-700 px-3 py-1.5 rounded-full border border-blue-100 transition-colors"
                     >
-                      {p.name}
+                      {enPlaceName(p.name)}
                       <span className="text-[10px] text-blue-400">{distanciaKm} km</span>
                     </Link>
                   </li>
@@ -240,10 +246,10 @@ export default async function TideLocalPage({ params }: Props) {
           {/* Editorial section / About the tides */}
           <section className="rounded-2xl border border-white/10 bg-[#0d1526]/90 backdrop-blur-xl p-6 shadow-lg">
             <h2 className="text-lg font-bold text-slate-200 font-syne mb-3 flex items-center gap-2">
-              <span>📘</span> About {place.name} Tide Forecast
+              <span>📘</span> About {placeName} Tide Forecast
             </h2>
             <p className="text-sm text-slate-400 leading-relaxed">
-              {generateTideDescription(place.name, place.countryName, place.countryCode, place.lat, place.lon, 'en', place.slug)}
+              {generateTideDescription(placeName, countryName, place.countryCode, place.lat, place.lon, 'en', place.slug)}
             </p>
           </section>
 

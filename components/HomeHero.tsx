@@ -101,6 +101,7 @@ export default function HomeHero() {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const nearest = getNearestPort(pos.coords.latitude, pos.coords.longitude);
+        setIsGeolocationLoading(false);
         router.push(`/mare/${getStateSlug(nearest.state)}/${nearest.slug}`);
       },
       (error) => {
@@ -109,7 +110,7 @@ export default function HomeHero() {
         setShowSuggestions(true);
         searchInputRef.current?.focus();
       },
-      { timeout: 5000, enableHighAccuracy: false }
+      { timeout: 10000, enableHighAccuracy: true, maximumAge: 60000 }
     );
   };
 

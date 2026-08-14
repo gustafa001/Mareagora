@@ -9,6 +9,7 @@ import {
   type PeriodoSolunar,
 } from '@/lib/solunar';
 import { getMoonPhase } from '@/lib/tideUtils';
+import { useT, WEEKDAYS_SHORT_EN, WEEKDAYS_SHORT_PT } from '@/lib/tideI18n';
 import type { MareDia } from '@/lib/mare';
 
 interface SolunarTableProps {
@@ -18,8 +19,6 @@ interface SolunarTableProps {
   /** 7+ dias de eventos de maré do porto, começando por hoje, para cruzar com os períodos maiores */
   weekTides: MareDia[];
 }
-
-const DIAS_CURTOS = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
 
 /**
  * Formata hora de um Date (UTC timestamp) em BRT.
@@ -42,16 +41,18 @@ function formatHora(d: Date): string {
  * que fazia o servidor mostrar o dia errado (regressão do #425).
  * Lookup manual de dia-da-semana evita divergência de ICU entre servidor/cliente.
  */
-function formatDataCurta(dataStr: string): string {
+function formatDataCurta(dataStr: string, weekdays: string[]): string {
   const [ano, mes, dia] = dataStr.split('-').map(Number);
   // Meio-dia UTC é o mesmo dia em qualquer fuso de UTC−12 a UTC+14
   const d = new Date(Date.UTC(ano, mes - 1, dia, 12, 0, 0));
-  const wd = DIAS_CURTOS[d.getUTCDay()];
+  const wd = weekdays[d.getUTCDay()];
   return `${wd} ${String(dia).padStart(2, '0')}/${String(mes).padStart(2, '0')}`;
 }
 
 export default function SolunarTable({ lat, lon, offsetMinutes = -180, weekTides }: SolunarTableProps) {
+  const { lang, s } = useT();
   const [diaSelecionado, setDiaSelecionado] = useState(0);
+  const weekdays = lang === 'en' ? WEEKDAYS_SHORT_EN : WEEKDAYS_SHORT_PT;
 
   const dias = useMemo(() => weekTides.slice(0, 7), [weekTides]);
 
@@ -68,7 +69,7 @@ export default function SolunarTable({ lat, lon, offsetMinutes = -180, weekTides
   if (calculo.length === 0) return null;
 
   const atual = calculo[Math.min(diaSelecionado, calculo.length - 1)];
-  const fase = getMoonPhase(atual.idadeLua);
+  const fase = getMoonPhase(atual.idadeLua, lang);
 
   const maiores = atual.periodos.filter((p: PeriodoSolunar) => p.tipo === 'maior');
   const menores = atual.periodos.filter((p: PeriodoSolunar) => p.tipo === 'menor');
@@ -77,7 +78,7 @@ export default function SolunarTable({ lat, lon, offsetMinutes = -180, weekTides
     <section className="bg-[#0d1526] text-white rounded-3xl p-6 shadow-xl border border-white/5">
       <div className="flex items-center justify-between flex-wrap gap-3 mb-6">
         <h2 className="text-2xl font-bold font-syne flex items-center gap-2 text-cyan-400">
-          🎣 Tábua Solunar
+          🎣 {s.solunarTable}
         </h2>
         <div className="flex items-center gap-1 text-lg" title={`${atual.avaliacao.estrelas} de 5`}>
           {Array.from({ length: 5 }).map((_, i) => (
@@ -100,7 +101,7 @@ export default function SolunarTable({ lat, lon, offsetMinutes = -180, weekTides
                 : 'bg-white/5 text-slate-300 border-white/10 hover:border-cyan-500/50 hover:bg-white/10'
             }`}
           >
-            <div className="capitalize mb-1">{i === 0 ? 'Hoje' : formatDataCurta(c.data)}</div>
+            <div className="capitalize mb-1">{i === 0 ? s.today : formatDataCurta(c.data, weekdays)}</div>
             <div className="flex justify-center gap-0.5">
               {Array.from({ length: c.avaliacao.estrelas }).map((_, idx) => (
                 <span key={idx} className={i === diaSelecionado ? 'text-[#0d1526]' : 'text-orange-400'}>★</span>
@@ -113,7 +114,7 @@ export default function SolunarTable({ lat, lon, offsetMinutes = -180, weekTides
       {atual.avaliacao.destaque && (
         <div className="mb-6 text-sm font-semibold text-cyan-100 bg-cyan-950/50 border border-cyan-800/50 rounded-2xl px-5 py-3 flex items-center gap-3 shadow-inner">
           <span className="text-xl">🌊</span>
-          <span>Um período maior coincide com a maré cheia hoje — janela de excelente atividade.</span>
+          <span>{s.highlight}</span>
         </div>
       )}
 
@@ -125,46 +126,44 @@ export default function SolunarTable({ lat, lon, offsetMinutes = -180, weekTides
       <div className="grid sm:grid-cols-2 gap-6">
         <div>
           <h3 className="text-[10px] font-black text-cyan-500/70 uppercase tracking-[0.2em] mb-3 px-1">
-            Períodos Maiores (2h)
+            {s.majorPeriods}
           </h3>
           <div className="space-y-3">
             {maiores.map((p, i) => (
               <div key={i} className="flex items-center justify-between bg-white/5 border border-white/10 rounded-2xl px-5 py-4 hover:bg-white/10 transition-colors">
                 <span className="font-bold text-lg text-cyan-50">{formatHora(p.inicio)} – {formatHora(p.fim)}</span>
-                <span className="text-[10px] text-cyan-400 font-bold uppercase tracking-wider">{i === 0 ? 'Lua a pino' : 'Lua no fundo'}</span>
+                <span className="text-[10px] text-cyan-400 font-bold uppercase tracking-wider">{i === 0 ? s.moonOverhead : s.moonUnderfoot}</span>
               </div>
             ))}
             {maiores.length === 0 && (
-              <p className="text-sm text-slate-500 italic px-1">Sem dados de culminação para este dia.</p>
+              <p className="text-sm text-slate-500 italic px-1">{s.noMajorData}</p>
             )}
           </div>
         </div>
 
         <div>
           <h3 className="text-[10px] font-black text-orange-500/70 uppercase tracking-[0.2em] mb-3 px-1">
-            Períodos Menores (1h)
+            {s.minorPeriods}
           </h3>
           <div className="space-y-3">
             {menores.map((p, i) => (
               <div key={i} className="flex items-center justify-between bg-white/5 border border-white/10 rounded-2xl px-5 py-4 hover:bg-white/10 transition-colors">
                 <span className="font-bold text-lg text-orange-50">{formatHora(p.inicio)} – {formatHora(p.fim)}</span>
-                <span className="text-[10px] text-orange-400 font-bold uppercase tracking-wider">{i === 0 ? 'Nascer da lua' : 'Poente da lua'}</span>
+                <span className="text-[10px] text-orange-400 font-bold uppercase tracking-wider">{i === 0 ? s.moonrise : s.moonset}</span>
               </div>
             ))}
             {menores.length === 0 && (
-              <p className="text-sm text-slate-500 italic px-1">Sem dados de nascer/poente para este dia.</p>
+              <p className="text-sm text-slate-500 italic px-1">{s.noMinorData}</p>
             )}
           </div>
         </div>
       </div>
 
       <div className="mt-8 pt-6 border-t border-white/5">
-        <p className="text-[11px] text-slate-500 leading-relaxed text-justify">
-          Baseado na <strong className="text-slate-400">Teoria Solunar</strong> (John Alden Knight): peixes e animais silvestres tendem a se
-          alimentar mais nos períodos em que a lua está a pino ou no fundo (maiores) e no
-          nascer/poente da lua (menores). A pontuação considera a fase lunar e o cruzamento dos
-          períodos maiores com a maré cheia local.
-        </p>
+        <p
+          className="text-[11px] text-slate-500 leading-relaxed text-justify [&_strong]:text-slate-400"
+          dangerouslySetInnerHTML={{ __html: s.solunarTheory }}
+        />
       </div>
     </section>
   );

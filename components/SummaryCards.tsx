@@ -13,9 +13,11 @@ interface SummaryCardsProps {
 
 import { useSeaConditions } from "@/hooks/useSeaConditions";
 import { getMoonAge, getMoonPhase, getTideCoefficient } from "@/lib/tideUtils";
+import { useT } from "@/lib/tideI18n";
 
 export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides }: SummaryCardsProps) {
   const { waveHeight, windSpeed, loading } = useSeaConditions(lat, lon);
+  const { lang, s } = useT();
   
   const [timeStr, setTimeStr] = useState('--:--');
   const [moonData, setMoonData] = useState<{ name: string; icon: string } | null>(null);
@@ -40,9 +42,9 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides }
   useEffect(() => {
     const now = new Date();
     const moonAge = getMoonAge(now);
-    setMoonData(getMoonPhase(moonAge));
-    setCoefData(getTideCoefficient(moonAge, todayTides));
-  }, [todayTides]);
+    setMoonData(getMoonPhase(moonAge, lang));
+    setCoefData(getTideCoefficient(moonAge, todayTides, lang));
+  }, [todayTides, lang]);
 
   const wavesStr = waveHeight !== null ? `${waveHeight.toFixed(1)} m` : "--";
   const windStr = windSpeed !== null ? `${windSpeed.toFixed(0)} km/h` : "--";
@@ -64,7 +66,7 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides }
         <div className="summary-card glass-card card-mare-alta flex flex-col justify-between min-h-[160px]">
           <div>
             <div className="flex justify-between items-start">
-              <span className="text-sm font-bold opacity-80 backdrop-blur-sm shadow-sm md:shadow-none bg-black/10 px-2 py-0.5 rounded md:bg-transparent md:px-0 md:py-0 md:rounded-none inline-block">Próxima Alta</span>
+              <span className="text-sm font-bold opacity-80 backdrop-blur-sm shadow-sm md:shadow-none bg-black/10 px-2 py-0.5 rounded md:bg-transparent md:px-0 md:py-0 md:rounded-none inline-block">{s.nextHigh}</span>
               <span className="text-2xl drop-shadow-md">🌊</span>
             </div>
             <div className="text-4xl font-extrabold mt-4 font-syne drop-shadow-md">{nextHigh?.hora || "--:--"}</div>
@@ -78,7 +80,7 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides }
         <div className="summary-card glass-card card-mare-baixa flex flex-col justify-between min-h-[160px]">
           <div>
             <div className="flex justify-between items-start">
-              <span className="text-sm font-bold opacity-80 backdrop-blur-sm shadow-sm md:shadow-none bg-black/10 px-2 py-0.5 rounded md:bg-transparent md:px-0 md:py-0 md:rounded-none inline-block">Próxima Baixa</span>
+              <span className="text-sm font-bold opacity-80 backdrop-blur-sm shadow-sm md:shadow-none bg-black/10 px-2 py-0.5 rounded md:bg-transparent md:px-0 md:py-0 md:rounded-none inline-block">{s.nextLow}</span>
               <span className="text-2xl drop-shadow-md">📉</span>
             </div>
             <div className="text-4xl font-extrabold mt-4 font-syne drop-shadow-md">{nextLow?.hora || "--:--"}</div>
@@ -92,13 +94,13 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides }
         <div className={`summary-card glass-card ${!loading ? colorClass : 'card-mar-suave loading-shimmer'} flex flex-col justify-between min-h-[160px] transition-all duration-700`}>
           <div>
             <div className="flex justify-between items-start">
-              <span className="text-sm font-bold opacity-80 backdrop-blur-sm shadow-sm md:shadow-none bg-black/10 px-2 py-0.5 rounded md:bg-transparent md:px-0 md:py-0 md:rounded-none inline-block">Condições Agora</span>
+              <span className="text-sm font-bold opacity-80 backdrop-blur-sm shadow-sm md:shadow-none bg-black/10 px-2 py-0.5 rounded md:bg-transparent md:px-0 md:py-0 md:rounded-none inline-block">{s.conditionsNow}</span>
               <span className="text-xl animate-pulse">🕒</span>
             </div>
             <div className="text-4xl font-extrabold mt-4 font-syne drop-shadow-md">{timeStr}</div>
           </div>
           <div className="text-sm font-bold opacity-90 mt-2 leading-tight drop-shadow-sm bg-black/10 px-3 py-1.5 rounded-lg inline-block self-start">
-            Vento: {windStr} · Ondas: {wavesStr}
+            {s.wind}: {windStr} · {s.waves}: {wavesStr}
           </div>
         </div>
       </div>
@@ -111,7 +113,7 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides }
               📊
             </div>
             <div>
-              <div className="text-[10px] font-black uppercase tracking-[0.2em] mb-1 font-syne" style={{ color: '#22d3ee' }}>Coeficiente</div>
+              <div className="text-[10px] font-black uppercase tracking-[0.2em] mb-1 font-syne" style={{ color: '#22d3ee' }}>{s.coefficient}</div>
               <div className="text-5xl font-black font-syne leading-none drop-shadow-lg" style={{ color: coef.color.includes('emerald') ? '#34d399' : coef.color.includes('rose') ? '#f43f5e' : coef.color.includes('orange') ? '#fb923c' : '#facc15' }}>
                 {coef.value}
               </div>
@@ -123,7 +125,7 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides }
           </div>
           <div className="hidden lg:block text-right max-w-[140px]">
             <p className="text-[10px] leading-relaxed font-medium opacity-80" style={{ color: '#cbd5e1' }}>
-              Amplitude da maré. Valores altos indicam marés vivas.
+              {s.coefHint}
             </p>
           </div>
         </div>
@@ -134,19 +136,19 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides }
               {moon.icon}
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] mb-1 font-syne" style={{ color: '#60a5fa' }}>Fase Lunar</div>
+              <div className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] mb-1 font-syne" style={{ color: '#60a5fa' }}>{s.moonPhase}</div>
               <div className="text-xl sm:text-3xl font-black font-syne leading-tight sm:leading-none drop-shadow-lg truncate" style={{ color: '#ffffff' }}>
                 {moon.name}
               </div>
               <div className="text-xs font-bold mt-2 flex items-center gap-1.5" style={{ color: '#93c5fd' }}>
                 <span className="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.6)]"></span>
-                Ideal para Pesca
+                {s.idealForFishing}
               </div>
             </div>
           </div>
           <div className="hidden lg:block text-right max-w-[140px]">
             <p className="text-[10px] leading-relaxed font-medium opacity-80" style={{ color: '#cbd5e1' }}>
-              A lua rege a força das marés e o peixe.
+              {s.moonHint}
             </p>
           </div>
         </div>

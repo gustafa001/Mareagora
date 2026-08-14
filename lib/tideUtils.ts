@@ -90,17 +90,44 @@ export function getMoonAge(date: Date): number {
 /**
  * Retorna o nome da fase lunar e ícone (aceita idade da lua em dias ou um objeto Date)
  */
-export function getMoonPhase(ageOrDate: number | Date): { name: string; icon: string } {
+const MOON_PHASE_NAMES_PT: Record<string, string> = {
+  new: 'Lua Nova',
+  waxingCrescent: 'Lua Crescente',
+  firstQuarter: 'Quarto Crescente',
+  waxingGibbous: 'Gibosa Crescente',
+  full: 'Lua Cheia',
+  waningGibbous: 'Gibosa Minguante',
+  lastQuarter: 'Quarto Minguante',
+  waningCrescent: 'Lua Minguante',
+};
+
+const MOON_PHASE_NAMES_EN: Record<string, string> = {
+  new: 'New Moon',
+  waxingCrescent: 'Waxing Crescent',
+  firstQuarter: 'First Quarter',
+  waxingGibbous: 'Waxing Gibbous',
+  full: 'Full Moon',
+  waningGibbous: 'Waning Gibbous',
+  lastQuarter: 'Last Quarter',
+  waningCrescent: 'Waning Crescent',
+};
+
+/**
+ * Retorna o nome da fase lunar e ícone (aceita idade da lua em dias ou um objeto Date).
+ * `lang` controla o idioma do nome ('pt' padrão).
+ */
+export function getMoonPhase(ageOrDate: number | Date, lang?: 'pt' | 'en'): { name: string; icon: string } {
   const age = typeof ageOrDate === 'number' ? ageOrDate : getMoonAge(ageOrDate);
-  if (age < 1.84566) return { name: 'Lua Nova', icon: '🌑' };
-  if (age < 5.53699) return { name: 'Lua Crescente', icon: '🌒' };
-  if (age < 9.22831) return { name: 'Quarto Crescente', icon: '🌓' };
-  if (age < 12.91963) return { name: 'Gibosa Crescente', icon: '🌔' };
-  if (age < 16.61096) return { name: 'Lua Cheia', icon: '🌕' };
-  if (age < 20.30228) return { name: 'Gibosa Minguante', icon: '🌖' };
-  if (age < 23.99361) return { name: 'Quarto Minguante', icon: '🌗' };
-  if (age < 27.68493) return { name: 'Lua Minguante', icon: '🌘' };
-  return { name: 'Lua Nova', icon: '🌑' };
+  const names = lang === 'en' ? MOON_PHASE_NAMES_EN : MOON_PHASE_NAMES_PT;
+  if (age < 1.84566) return { name: names.new, icon: '🌑' };
+  if (age < 5.53699) return { name: names.waxingCrescent, icon: '🌒' };
+  if (age < 9.22831) return { name: names.firstQuarter, icon: '🌓' };
+  if (age < 12.91963) return { name: names.waxingGibbous, icon: '🌔' };
+  if (age < 16.61096) return { name: names.full, icon: '🌕' };
+  if (age < 20.30228) return { name: names.waningGibbous, icon: '🌖' };
+  if (age < 23.99361) return { name: names.lastQuarter, icon: '🌗' };
+  if (age < 27.68493) return { name: names.waningCrescent, icon: '🌘' };
+  return { name: names.new, icon: '🌑' };
 }
 
 /**
@@ -152,7 +179,8 @@ export function getNextHighAndLow(
  */
 export function getTideCoefficient(
   moonAgeOrDate: number | Date,
-  todayTides?: TideEvent[]
+  todayTides?: TideEvent[],
+  lang?: 'pt' | 'en'
 ): { value: number; label: string; color: string } {
   let value: number;
 
@@ -170,17 +198,18 @@ export function getTideCoefficient(
     value = Math.round(70 + cosVal * 50);
   }
 
-  let label = "Moderada";
+  const isEn = lang === 'en';
+  let label = isEn ? 'Moderate' : 'Moderada';
   let color = "text-yellow-400";
 
   if (value <= 40) {
-    label = "Maré Morta (Fraca)";
+    label = isEn ? 'Neap Tide (Weak)' : 'Maré Morta (Fraca)';
     color = "text-emerald-400";
   } else if (value >= 90) {
-    label = "Maré Viva (Forte)";
+    label = isEn ? 'Spring Tide (Strong)' : 'Maré Viva (Forte)';
     color = "text-rose-500";
   } else if (value > 70) {
-    label = "Moderada Alta";
+    label = isEn ? 'Moderately High' : 'Moderada Alta';
     color = "text-orange-400";
   }
 

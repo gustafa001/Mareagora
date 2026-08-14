@@ -23,6 +23,7 @@ export default function AdSlot({
   // anúncios (ou o próprio AdSense) mexa nele antes da hidratação —
   // evita os erros de hydration mismatch #418/#423/#425.
   const [mounted, setMounted] = useState(false);
+  const hasPushed = useRef(false);
 
   useEffect(() => {
     setMounted(true);
@@ -32,37 +33,44 @@ export default function AdSlot({
     // Only run on client side
     if (typeof window === 'undefined' || !adRef.current || !mounted) return;
 
-    // Evita o erro "No slot size for availableWidth=0": só chama o
-    // push() quando o container já tem largura real renderizada.
-    // Em navegação client-side / conexões lentas o layout pode não
-    // estar pronto no primeiro paint, então tentamos por alguns frames.
+    const el = adRef.current;
+    let ro: ResizeObserver | undefined;
+    let raf = 0;
     let cancelled = false;
-    let attempts = 0;
 
+    // Evita o erro "No slot size for availableWidth=0": nunca chama o push()
+    // enquanto o container estiver oculto (display:none / dentro de aba
+    // fechada) ou sem largura real. Assim que ele ficar visível com largura,
+    // o ResizeObserver dispara o push única vez.
     const tryPush = () => {
-      if (cancelled) return;
-      const width = adRef.current?.offsetWidth ?? 0;
+      if (cancelled || hasPushed.current) return;
+      const visible = el.getClientRects().length > 0 && el.offsetWidth > 0 && el.offsetParent !== null;
+      if (!visible) return;
 
-      if (width > 0) {
-        try {
-          // @ts-ignore
-          (window.adsbygoogle = window.adsbygoogle || []).push({});
-        } catch (e) {
-          console.error('AdSense error:', e);
-        }
-        return;
+      hasPushed.current = true;
+      try {
+        // @ts-ignore
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {
+        console.error('AdSense error:', e);
       }
-
-      attempts += 1;
-      if (attempts < 10) {
-        requestAnimationFrame(tryPush);
-      }
+      ro?.disconnect();
     };
 
-    requestAnimationFrame(tryPush);
+    // Primeira tentativa logo após o layout do primeiro frame.
+    raf = requestAnimationFrame(tryPush);
+
+    // Observa o container: quando ganhar largura visível (ex.: aba aberta
+    // depois, layout lento), faz o push automaticamente em vez de desistir.
+    if (typeof ResizeObserver !== 'undefined') {
+      ro = new ResizeObserver(() => tryPush());
+      ro.observe(el);
+    }
 
     return () => {
       cancelled = true;
+      cancelAnimationFrame(raf);
+      ro?.disconnect();
     };
   }, [mounted]);
 

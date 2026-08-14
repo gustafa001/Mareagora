@@ -4,8 +4,9 @@ import { PORTS } from "@/lib/ports";
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { TideDay } from "@/lib/tideUtils";
-import { WEEKDAYS, MONTHS, coefColor, buildMonthRows } from "@/lib/monthlyTideCalc";
+import { WEEKDAYS, WEEKDAYS_EN, MONTHS, coefColor, buildMonthRows } from "@/lib/monthlyTideCalc";
 import { exportTidePdf } from "@/lib/exportTidePdf";
+import { useT, MONTHS_EN } from "@/lib/tideI18n";
 
 interface MonthlyTideTableProps {
   eventos: TideDay[];
@@ -22,6 +23,9 @@ interface MonthlyTideTableProps {
 }
 
 export default function MonthlyTideTable({ eventos, portName, lat, lon, state = "", referencePort, initialDateStr }: MonthlyTideTableProps) {
+  const { lang, s } = useT();
+  const weekdays = lang === 'en' ? WEEKDAYS_EN : WEEKDAYS;
+  const monthNames = lang === 'en' ? MONTHS_EN : MONTHS;
   const defaultYear = initialDateStr ? Number(initialDateStr.slice(0, 4)) : (eventos && eventos[0] ? Number(eventos[0].data.slice(0, 4)) : 2026);
   const defaultMonth = initialDateStr ? Number(initialDateStr.slice(5, 7)) - 1 : (eventos && eventos[0] ? Number(eventos[0].data.slice(5, 7)) - 1 : 0);
 
@@ -45,8 +49,8 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
 
   const rows = useMemo(() => {
     if (selectedYear === null || selectedMonth === null) return [];
-    return buildMonthRows(eventos, selectedYear, selectedMonth, lat, lon, today);
-  }, [eventos, selectedMonth, selectedYear, lat, lon, today]);
+    return buildMonthRows(eventos, selectedYear, selectedMonth, lat, lon, today, weekdays);
+  }, [eventos, selectedMonth, selectedYear, lat, lon, today, weekdays]);
 
   const availableYears = useMemo(() => {
     const years = new Set<number>();
@@ -62,12 +66,13 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
       await exportTidePdf({
         portName,
         state,
-        monthLabel: `${MONTHS[selectedMonth]} ${selectedYear}`,
+        monthLabel: `${monthNames[selectedMonth]} ${selectedYear}`,
         rows,
+        lang,
       });
     } catch (err) {
       console.error("[MonthlyTideTable] Erro ao gerar PDF:", err);
-      alert("Não foi possível gerar o PDF agora. Tente novamente.");
+      alert(s.pdfError);
     } finally {
       setExportando(null);
     }
@@ -90,13 +95,13 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
         useCORS: true,
       });
       const link = document.createElement("a");
-      const nome = `tabua-de-mare-${portName.toLowerCase().replace(/\s+/g, "-")}-${MONTHS[selectedMonth].toLowerCase()}-${selectedYear}.png`;
+      const nome = `tabua-de-mare-${portName.toLowerCase().replace(/\s+/g, "-")}-${monthNames[selectedMonth].toLowerCase()}-${selectedYear}.png`;
       link.download = nome;
       link.href = canvas.toDataURL("image/png");
       link.click();
     } catch (err) {
       console.error("[MonthlyTideTable] Erro ao gerar imagem:", err);
-      alert("Não foi possível gerar a imagem agora. Tente novamente.");
+      alert(s.imageError);
     } finally {
       scrollRef.current.style.maxHeight = prevMaxHeight;
       scrollRef.current.style.overflowY = prevOverflowY;
@@ -105,7 +110,7 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
   }
 
   if (!rows.length || selectedYear === null || selectedMonth === null) return (
-    <div className="classic-card text-center text-gray-400 py-8">Dados indisponíveis para o período.</div>
+    <div className="classic-card text-center text-gray-400 py-8">{s.noDataPeriod}</div>
   );
 
   return (
@@ -130,14 +135,14 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
         <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
           <span style={{ fontSize: "1.2rem" }}>🌊</span>
           <span style={{ fontWeight: 700, fontSize: "1rem", color: "#e2e8f0", letterSpacing: "-0.01em" }}>
-            Tábua de Marés — {portName}
+            {s.tideTable} — {portName}
           </span>
         </div>
 
         <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
           <div style={{ display: "flex", gap: "1rem", marginRight: "0.5rem" }}>
-            <span style={{ color: "#60a5fa", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.5px" }}>▲ ALTA</span>
-            <span style={{ color: "#fb923c", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.5px" }}>▼ BAIXA</span>
+            <span style={{ color: "#60a5fa", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.5px" }}>▲ {s.high}</span>
+            <span style={{ color: "#fb923c", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.5px" }}>▼ {s.low}</span>
           </div>
           <select
             value={selectedMonth}
@@ -148,7 +153,7 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
               fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", outline: "none",
             }}
           >
-            {MONTHS.map((m, idx) => <option key={m} value={idx} style={{ background: "#1e293b" }}>{m}</option>)}
+            {monthNames.map((m, idx) => <option key={m} value={idx} style={{ background: "#1e293b" }}>{m}</option>)}
           </select>
           <select
             value={selectedYear}
@@ -178,7 +183,7 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
         }}
       >
         <span style={{ fontSize: "0.7rem", color: "#64748b", fontWeight: 600, marginRight: "0.25rem" }}>
-          Levar sem sinal:
+          {s.goOffline}
         </span>
         <button
           onClick={handleDownloadPdf}
@@ -191,7 +196,7 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
             opacity: exportando && exportando !== "pdf" ? 0.5 : 1,
           }}
         >
-          📄 {exportando === "pdf" ? "Gerando PDF…" : "Baixar PDF do mês"}
+          📄 {exportando === "pdf" ? s.downloadPdfLoading : s.downloadPdf}
         </button>
         <button
           onClick={handleDownloadImage}
@@ -204,7 +209,7 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
             opacity: exportando && exportando !== "imagem" ? 0.5 : 1,
           }}
         >
-          🖼️ {exportando === "imagem" ? "Gerando imagem…" : "Baixar imagem (PNG)"}
+          🖼️ {exportando === "imagem" ? s.downloadImageLoading : s.downloadImage}
         </button>
       </div>
 
@@ -219,8 +224,9 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
         }}>
           <span style={{ fontSize: "0.9rem" }}>ℹ️</span>
           <p style={{ margin: 0, fontSize: "0.75rem", color: "#94a3b8", fontWeight: 500 }}>
-            Os dados de {portName} são referenciados pelo <a href={`/mare/${getStateSlug(PORTS.find(p => p.slug === referencePort.slug)?.state || "sp")}/${referencePort.slug}`} style={{ color: "#60a5fa", textDecoration: "underline", textUnderlineOffset: "3px" }}>{referencePort.name}</a> (~{referencePort.distanceKm} km).
-            <span className="hidden sm:inline"> As diferenças de horário são inferiores a 2 minutos.</span>
+            {s.referenceNote(portName, referencePort.name, referencePort.distanceKm)}{" "}
+            <a href={`/mare/${getStateSlug(PORTS.find(p => p.slug === referencePort.slug)?.state || "sp")}/${referencePort.slug}`} style={{ color: "#60a5fa", textDecoration: "underline", textUnderlineOffset: "3px" }}>{referencePort.name}</a>.
+            <span className="hidden sm:inline"> {s.referenceDelta}</span>
           </p>
         </div>
       )}
@@ -230,19 +236,19 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
         <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "520px" }}>
           <thead style={{ position: "sticky", top: 0, zIndex: 10, background: "#0f172a", boxShadow: "0 2px 4px rgba(0,0,0,0.5)" }}>
             <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-              <th style={{ padding: "0.65rem 1rem", textAlign: "left", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "1.5px", color: "#64748b", textTransform: "uppercase", position: "sticky", left: 0, background: "#0f172a", zIndex: 11, minWidth: "64px" }}>DIA</th>
-              {["1ª MARÉ","2ª MARÉ","3ª MARÉ","4ª MARÉ"].map(h => (
+              <th style={{ padding: "0.65rem 1rem", textAlign: "left", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "1.5px", color: "#64748b", textTransform: "uppercase", position: "sticky", left: 0, background: "#0f172a", zIndex: 11, minWidth: "64px" }}>{s.day}</th>
+              {[s.tide1, s.tide2, s.tide3, s.tide4].map(h => (
                 <th key={h} style={{ padding: "0.65rem 0.5rem", textAlign: "center", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "1.5px", color: "#64748b", textTransform: "uppercase", minWidth: "90px" }}>{h}</th>
               ))}
-              <th style={{ padding: "0.65rem 0.5rem", textAlign: "center", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "1.5px", color: "#64748b", textTransform: "uppercase", minWidth: "52px", borderLeft: "1px solid rgba(255,255,255,0.06)" }}>COEF</th>
-              <th style={{ padding: "0.65rem 0.5rem", textAlign: "center", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "1.5px", color: "#64748b", textTransform: "uppercase", minWidth: "64px" }}>☀ NASCE</th>
-              <th style={{ padding: "0.65rem 0.5rem", textAlign: "center", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "1.5px", color: "#64748b", textTransform: "uppercase", minWidth: "64px" }}>🌅 PÕE</th>
+              <th style={{ padding: "0.65rem 0.5rem", textAlign: "center", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "1.5px", color: "#64748b", textTransform: "uppercase", minWidth: "52px", borderLeft: "1px solid rgba(255,255,255,0.06)" }}>{s.coef}</th>
+              <th style={{ padding: "0.65rem 0.5rem", textAlign: "center", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "1.5px", color: "#64748b", textTransform: "uppercase", minWidth: "64px" }}>☀ {s.sunrise}</th>
+              <th style={{ padding: "0.65rem 0.5rem", textAlign: "center", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "1.5px", color: "#64748b", textTransform: "uppercase", minWidth: "64px" }}>🌅 {s.sunset}</th>
             </tr>
           </thead>
           <tbody>
             {rows.map((row) => {
-              const isSunday = WEEKDAYS[0] === row.weekday;
-              const isSaturday = WEEKDAYS[6] === row.weekday;
+              const isSunday = weekdays[0] === row.weekday;
+              const isSaturday = weekdays[6] === row.weekday;
               const coefStyle = row.coef !== null ? coefColor(row.coef) : null;
 
               return (
@@ -324,7 +330,7 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
 
       {/* Footer */}
       <div style={{ padding: "0.65rem 1rem", borderTop: "1px solid rgba(255,255,255,0.04)", background: "rgba(0,0,0,0.2)", textAlign: "center", fontSize: "0.65rem", color: "#475569", letterSpacing: "0.3px" }}>
-        Fonte: Marinha do Brasil (CHM) · Horários em UTC-3 · ☀ calculado para {portName}
+        {s.sourceFooter(portName)}
       </div>
     </div>
   );

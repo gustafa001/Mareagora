@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import type { MareDia } from '@/lib/mare';
 import { getTideStatus, tideAtMinute, type TideEvent } from '@/lib/tideUtils';
+import { useT } from '@/lib/tideI18n';
 import OpsCard from './port-operations/OpsCard';
 
 import TideChart7Days from './TideChart7Days';
@@ -14,6 +15,7 @@ interface TideWeekCardProps {
 }
 
 export default function TideWeekCard({ days }: TideWeekCardProps) {
+  const { s } = useT();
   const [mounted, setMounted] = useState(false);
   const todayTides = days[0]?.mares ?? [];
   const [currentMinute, setCurrentMinute] = useState<number | null>(null);
@@ -34,7 +36,7 @@ export default function TideWeekCard({ days }: TideWeekCardProps) {
 
   if (!mounted) {
     return (
-      <OpsCard title="Situação da Maré" icon="🌊">
+      <OpsCard title={s.tideSituation} icon="🌊">
         <div className="h-[300px] bg-white/5 rounded-2xl animate-pulse" />
       </OpsCard>
     );
@@ -54,21 +56,21 @@ export default function TideWeekCard({ days }: TideWeekCardProps) {
     : todayTides.find(t => t.tipo === 'low');
 
   return (
-    <OpsCard title="Situação da Maré" icon="🌊">
+    <OpsCard title={s.tideSituation} icon="🌊">
       <div className="grid sm:grid-cols-[1fr_auto] gap-6 items-start">
         <div>
           {days.length > 0 ? (
             <TideChart7Days days={days} />
           ) : (
-            <p className="text-slate-400 text-sm">Sem dados de maré para os próximos dias.</p>
+            <p className="text-slate-400 text-sm">{s.noTideData}</p>
           )}
         </div>
 
         <div className="flex sm:flex-col gap-4 sm:gap-3 sm:w-44 flex-wrap">
-          <Metric label="Agora" value={currentHeight !== null ? `${currentHeight.toFixed(2)}m` : '--'} accent="text-cyan-300" />
-          <Metric label="Tendência" value={rising ? '↑ Subindo' : '↓ Descendo'} accent={rising ? 'text-emerald-400' : 'text-orange-400'} />
-          <Metric label="Próx. Alta" value={nextHigh ? `${nextHigh.hora} · ${nextHigh.altura_m.toFixed(2)}m` : '--'} accent="text-cyan-300" />
-          <Metric label="Próx. Baixa" value={nextLow ? `${nextLow.hora} · ${nextLow.altura_m.toFixed(2)}m` : '--'} accent="text-orange-300" />
+          <Metric label={s.now} value={currentHeight !== null ? `${currentHeight.toFixed(2)}m` : '--'} accent="text-cyan-300" />
+          <Metric label={s.trend} value={rising ? s.rising : s.falling} accent={rising ? 'text-emerald-400' : 'text-orange-400'} />
+          <Metric label={s.nextHighShort} value={nextHigh ? `${nextHigh.hora} · ${nextHigh.altura_m.toFixed(2)}m` : '--'} accent="text-cyan-300" />
+          <Metric label={s.nextLowShort} value={nextLow ? `${nextLow.hora} · ${nextLow.altura_m.toFixed(2)}m` : '--'} accent="text-orange-300" />
         </div>
       </div>
     </OpsCard>

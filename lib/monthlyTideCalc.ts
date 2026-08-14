@@ -7,6 +7,7 @@
 import { TideDay } from './tideUtils';
 
 export const WEEKDAYS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+export const WEEKDAYS_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 export const MONTHS = [
   'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
   'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro',
@@ -135,7 +136,8 @@ export function buildMonthRows(
   month: number, // 0-indexado
   lat: number,
   lon: number,
-  todayStr: string
+  todayStr: string,
+  weekdays: string[] = WEEKDAYS
 ): LinhaTabua[] {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
@@ -144,7 +146,7 @@ export function buildMonthRows(
     const evento = eventos?.find(e => e.data === dateStr) || null;
     const date = parseLocalDate(dateStr);
     const day = date.getDate();
-    const weekday = WEEKDAYS[date.getDay()];
+    const weekday = weekdays[date.getDay()];
 
     const maresBrutas = pickBestFour(evento?.mares ?? []);
     const mares: MareResumo[] = maresBrutas.map((t, idx) => ({

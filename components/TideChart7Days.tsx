@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import type { MareDia, MareEvento } from '@/lib/mare';
+import { useT, WEEKDAYS_SHORT_EN, WEEKDAYS_SHORT_PT } from '@/lib/tideI18n';
 
 interface TideChart7DaysProps {
   /** 7 dias consecutivos de eventos de maré, já ordenados a partir de hoje */
@@ -14,6 +15,7 @@ interface FlatEvent extends MareEvento {
 }
 
 export default function TideChart7Days({ days }: TideChart7DaysProps) {
+  const { lang, s } = useT();
   const [currentTime, setCurrentTime] = useState<string>('');
   const [hoveredPoint, setHoveredPoint] = useState<number | null>(null);
   const [tooltipData, setTooltipData] = useState<{ x: number; y: number; time: string; height: number } | null>(null);
@@ -29,9 +31,10 @@ export default function TideChart7Days({ days }: TideChart7DaysProps) {
   }, []);
 
   const validDays = days.filter(d => d.mares && d.mares.length > 0);
+  const weekdays = lang === 'en' ? WEEKDAYS_SHORT_EN : WEEKDAYS_SHORT_PT;
 
   if (validDays.length === 0) {
-    return <div className="text-center p-4 text-slate-400 text-sm">Sem dados de maré para os próximos dias.</div>;
+    return <div className="text-center p-4 text-slate-400 text-sm">{s.noTideData}</div>;
   }
 
   const numDays = validDays.length;
@@ -65,7 +68,7 @@ export default function TideChart7Days({ days }: TideChart7DaysProps) {
         label: cur.hora,
         height: cur.altura_m,
         time: cur.hora,
-        dateLabel: shortDate(validDays[cur.dayIndex].data),
+        dateLabel: shortDate(validDays[cur.dayIndex].data, weekdays),
         isEvent: true,
         type,
       });
@@ -89,7 +92,7 @@ export default function TideChart7Days({ days }: TideChart7DaysProps) {
       label: last.hora,
       height: last.altura_m,
       time: last.hora,
-      dateLabel: shortDate(validDays[last.dayIndex].data),
+      dateLabel: shortDate(validDays[last.dayIndex].data, weekdays),
       isEvent: true,
       type: lastType,
     });
@@ -131,7 +134,7 @@ export default function TideChart7Days({ days }: TideChart7DaysProps) {
       const minutesInDay = minutes - dayIdx * 24 * 60;
       const hh = String(Math.floor(minutesInDay / 60)).padStart(2, '0');
       const mm = String(Math.floor(minutesInDay % 60)).padStart(2, '0');
-      setTooltipData({ x: svgX, y: svgY, time: `${shortDate(validDays[dayIdx].data)} ${hh}:${mm}`, height: Math.max(0, height) });
+      setTooltipData({ x: svgX, y: svgY, time: `${shortDate(validDays[dayIdx].data, weekdays)} ${hh}:${mm}`, height: Math.max(0, height) });
     }
   };
 
@@ -264,7 +267,7 @@ export default function TideChart7Days({ days }: TideChart7DaysProps) {
               textAnchor="middle"
               fontWeight="500"
             >
-              {shortDate(day.data)}
+              {shortDate(day.data, weekdays)}
             </text>
           ))}
         </svg>
@@ -273,8 +276,7 @@ export default function TideChart7Days({ days }: TideChart7DaysProps) {
   );
 }
 
-function shortDate(isoDate: string): string {
+function shortDate(isoDate: string, weekdays: string[]): string {
   const d = new Date(`${isoDate}T00:00:00`);
-  const dias = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-  return `${dias[d.getDay()]} ${String(d.getDate()).padStart(2, '0')}`;
+  return `${weekdays[d.getDay()]} ${String(d.getDate()).padStart(2, '0')}`;
 }

@@ -7,6 +7,7 @@ import InstallButton from './InstallButton';
 import { PORTS, getNearestPort, getPortBySlug, type Port } from '@/lib/ports';
 import { getStateSlug } from '@/lib/states';
 import { useRecentPorts } from '@/hooks/useRecentPorts';
+import { useT } from '@/lib/tideI18n';
 import {
   Umbrella, Anchor, Map, Globe, FileText, Building2, MapPin, Loader2,
   Waves, CalendarClock, CalendarDays, TrendingUp, Moon, Sparkles, MoonStar, Fish, Camera,
@@ -16,75 +17,76 @@ interface NavBarProps {
   className?: string;
 }
 
-// Ordem pensada por prioridade de uso: Praias e Portos primeiro (conteúdo mais
-// buscado), Operação Portuária (nicho) mais pra baixo.
-const NAV_LINKS = [
-  { href: '/guia-praias', icon: Umbrella, label: 'Praias' },
-  { href: '/portos', icon: Anchor, label: 'Portos' },
-  { href: '/lugares-de-pesca', icon: Fish, label: 'Pesca' },
-  { href: '/cameras', icon: Camera, label: 'Câmeras' },
-  { href: '/estados', icon: Map, label: 'Estados' },
-  { href: '/mare-mundo', icon: Globe, label: 'Mundo' },
-  { href: '/blog', icon: FileText, label: 'Blog' },
-  { href: '/operacoes-portuarias', icon: Building2, label: 'Operação Portuária' },
-];
-
-// Menu mobile agrupado em seções, no estilo de apps de maré/pesca de referência.
-const NAV_SECTIONS: {
-  title: string;
-  highlight?: boolean;
-  items: { href: string; icon: typeof Umbrella; label: string }[];
-}[] = [
-  {
-    title: 'Marés',
-    items: [
-      { href: '/mare-hoje', icon: Waves, label: 'Maré hoje' },
-      { href: '/mare-amanha', icon: CalendarClock, label: 'Maré amanhã' },
-      { href: '/mare-semana', icon: CalendarDays, label: 'Maré da semana' },
-      { href: '/coeficiente', icon: TrendingUp, label: 'Coeficiente de maré' },
-    ],
-  },
-  {
-    title: 'Lua & Solunar',
-    items: [
-      { href: '/lua', icon: Moon, label: 'Fases da lua' },
-      { href: '/mare-viva', icon: Sparkles, label: 'Maré viva (sizígia)' },
-      { href: '/mare-morta', icon: MoonStar, label: 'Maré morta (quadratura)' },
-    ],
-  },
-  {
-    title: 'Lugares de pesca',
-    highlight: true,
-    items: [
-      { href: '/lugares-de-pesca', icon: MapPin, label: 'Mapa de pesca' },
-      { href: '/pesca', icon: Fish, label: 'Guia: melhor hora pra pescar' },
-    ],
-  },
-  {
-    title: 'Explorar',
-    items: [
-      { href: '/guia-praias', icon: Umbrella, label: 'Praias' },
-      { href: '/portos', icon: Anchor, label: 'Portos' },
-      { href: '/cameras', icon: Camera, label: 'Câmeras ao vivo' },
-      { href: '/estados', icon: Map, label: 'Estados' },
-      { href: '/mare-mundo', icon: Globe, label: 'Mundo' },
-      { href: '/blog', icon: FileText, label: 'Blog' },
-      { href: '/operacoes-portuarias', icon: Building2, label: 'Operação Portuária' },
-    ],
-  },
-];
-
 function portHref(port: Port) {
   return `/mare/${getStateSlug(port.state)}/${port.slug}`;
 }
 
 export default function NavBar({ className = '' }: NavBarProps) {
+  const { s } = useT();
   const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [isGeolocationLoading, setIsGeolocationLoading] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const { recentSlugs, addRecentPort } = useRecentPorts();
+
+  // Links desktop em ordem de prioridade: Praias e Portos primeiro (conteúdo
+  // mais buscado), Operação Portuária (nicho) mais pra baixo.
+  const NAV_LINKS = [
+    { href: '/guia-praias', icon: Umbrella, label: s.navBeaches },
+    { href: '/portos', icon: Anchor, label: s.navPorts },
+    { href: '/lugares-de-pesca', icon: Fish, label: s.navFishing },
+    { href: '/cameras', icon: Camera, label: s.navCameras },
+    { href: '/estados', icon: Map, label: s.navStates },
+    { href: '/mare-mundo', icon: Globe, label: s.navWorld },
+    { href: '/blog', icon: FileText, label: s.navBlog },
+    { href: '/operacoes-portuarias', icon: Building2, label: s.navPortOps },
+  ];
+
+  // Menu mobile agrupado em seções, no estilo de apps de maré/pesca de referência.
+  const NAV_SECTIONS: {
+    title: string;
+    highlight?: boolean;
+    items: { href: string; icon: typeof Umbrella; label: string }[];
+  }[] = [
+    {
+      title: s.navSectionTides,
+      items: [
+        { href: '/mare-hoje', icon: Waves, label: s.navToday },
+        { href: '/mare-amanha', icon: CalendarClock, label: s.navTomorrow },
+        { href: '/mare-semana', icon: CalendarDays, label: s.navWeek },
+        { href: '/coeficiente', icon: TrendingUp, label: s.navCoefficient },
+      ],
+    },
+    {
+      title: s.navSectionMoon,
+      items: [
+        { href: '/lua', icon: Moon, label: s.navMoonPhases },
+        { href: '/mare-viva', icon: Sparkles, label: s.navSpringTide },
+        { href: '/mare-morta', icon: MoonStar, label: s.navNeapTide },
+      ],
+    },
+    {
+      title: s.navSectionFishing,
+      highlight: true,
+      items: [
+        { href: '/lugares-de-pesca', icon: MapPin, label: s.navFishingMap },
+        { href: '/pesca', icon: Fish, label: s.navFishingGuide },
+      ],
+    },
+    {
+      title: s.navSectionExplore,
+      items: [
+        { href: '/guia-praias', icon: Umbrella, label: s.navBeaches },
+        { href: '/portos', icon: Anchor, label: s.navPorts },
+        { href: '/cameras', icon: Camera, label: s.navBeachLive },
+        { href: '/estados', icon: Map, label: s.navStates },
+        { href: '/mare-mundo', icon: Globe, label: s.navWorld },
+        { href: '/blog', icon: FileText, label: s.navBlog },
+        { href: '/operacoes-portuarias', icon: Building2, label: s.navPortOps },
+      ],
+    },
+  ];
 
   const recentPorts = useMemo(
     () => recentSlugs.map((slug) => getPortBySlug(slug)).filter((p): p is Port => Boolean(p)),
@@ -119,7 +121,7 @@ export default function NavBar({ className = '' }: NavBarProps) {
 
   const handleGeolocation = () => {
     if (!navigator.geolocation) {
-      alert('Geolocalização não suportada neste navegador');
+      alert(s.navGeoUnsupported);
       return;
     }
     setIsGeolocationLoading(true);
@@ -132,7 +134,7 @@ export default function NavBar({ className = '' }: NavBarProps) {
       (error) => {
         console.error('Geolocation error:', error);
         setIsGeolocationLoading(false);
-        alert('Não foi possível obter sua localização. Tente pesquisar o porto ou praia.');
+        alert(s.navGeoError);
       },
       { timeout: 10000, enableHighAccuracy: true, maximumAge: 60000 }
     );
@@ -165,7 +167,7 @@ export default function NavBar({ className = '' }: NavBarProps) {
           </Link>
 
           {/* Navigation Links — desktop (inalterado, só a ordem do array mudou) */}
-          <div className="hidden sm:flex items-center gap-4 md:gap-8">
+          <div className="hidden sm:flex items-center gap-4 md:gap-8 overflow-x-auto scrollbar-hide min-w-0">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
@@ -188,10 +190,10 @@ export default function NavBar({ className = '' }: NavBarProps) {
             onClick={() => setMenuOpen((prev) => !prev)}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
-            aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+            aria-label={menuOpen ? s.navCloseMenu : s.navOpenMenu}
             className="sm:hidden flex items-center justify-center w-10 h-10 rounded-xl bg-slate-800/40 border border-slate-700/50 text-slate-200 hover:text-white hover:bg-blue-500/20 hover:border-blue-400/50 transition-all duration-300 flex-shrink-0"
           >
-            <span className="sr-only">{menuOpen ? 'Fechar menu' : 'Abrir menu'}</span>
+            <span className="sr-only">{menuOpen ? s.navCloseMenu : s.navOpenMenu}</span>
             <div className="flex flex-col items-center justify-center gap-1.5">
               <span
                 className={`block w-5 h-0.5 bg-current rounded-full transition-transform duration-300 ${menuOpen ? 'translate-y-2 rotate-45' : ''}`}
@@ -221,7 +223,7 @@ export default function NavBar({ className = '' }: NavBarProps) {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Buscar praia ou porto..."
+              placeholder={s.navSearchPlaceholder}
               className="w-full px-4 py-3 pl-11 bg-blue-500/10 border-2 border-blue-400/40 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400 transition-all"
             />
             <svg
@@ -262,7 +264,7 @@ export default function NavBar({ className = '' }: NavBarProps) {
               <MapPin className="w-[18px] h-[18px]" strokeWidth={2} />
             )}
             <span className="text-sm font-semibold uppercase tracking-wide">
-              {isGeolocationLoading ? 'Localizando...' : 'Praia mais perto de mim'}
+              {isGeolocationLoading ? s.navLocating : s.navNearest}
             </span>
           </button>
 
@@ -270,7 +272,7 @@ export default function NavBar({ className = '' }: NavBarProps) {
           {recentPorts.length > 0 && query.trim().length === 0 && (
             <div className="pt-1">
               <div className="px-1 pb-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-500">
-                Vistos recentemente
+                {s.navRecentlyViewed}
               </div>
               <div className="flex flex-wrap gap-2">
                 {recentPorts.map((port) => (

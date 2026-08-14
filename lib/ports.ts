@@ -226,16 +226,6 @@ export function getAllRegions(): Region[] {
   ];
 }
 
-export function getNearestPort(lat: number, lon: number): Port {
-  let nearest = PORTS[0];
-  let minDist = Infinity;
-  for (const port of PORTS) {
-    const d = Math.sqrt(Math.pow(port.lat - lat, 2) + Math.pow(port.lon - lon, 2));
-    if (d < minDist) { minDist = d; nearest = port; }
-  }
-  return nearest;
-}
-
 export interface PortoProximo {
   nome: string;
   slug: string;
@@ -252,6 +242,16 @@ export function haversineDistance(lat1: number, lon1: number, lat2: number, lon2
             Math.sin(dLon / 2) * Math.sin(dLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
+}
+
+export function getNearestPort(lat: number, lon: number): Port {
+  let nearest = PORTS[0];
+  let minDist = Infinity;
+  for (const port of PORTS) {
+    const d = haversineDistance(lat, lon, port.lat, port.lon);
+    if (d < minDist) { minDist = d; nearest = port; }
+  }
+  return nearest;
 }
 
 export function getPortosProximos(portoSlug: string, limit: number = 4): PortoProximo[] {

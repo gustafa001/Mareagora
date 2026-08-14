@@ -12,18 +12,10 @@ export default function TideLayout({
         id="aclib"
         src="//acscdn.com/script/aclib.js"
         strategy="afterInteractive"
+        onReady={() => {
+          (window as unknown as { aclib?: { runAutoTag?: (opts: { zoneId: string }) => void } }).aclib?.runAutoTag?.({ zoneId: 'zeprbiznxb' });
+        }}
       />
-      <Script id="adcash-autotag" strategy="afterInteractive">
-        {`
-          if (window.aclib) {
-            aclib.runAutoTag({ zoneId: 'zeprbiznxb' });
-          } else {
-            document.getElementById('aclib').addEventListener('load', function () {
-              aclib.runAutoTag({ zoneId: 'zeprbiznxb' });
-            });
-          }
-        `}
-      </Script>
 
       {children}
     </>

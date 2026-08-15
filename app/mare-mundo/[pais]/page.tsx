@@ -50,7 +50,9 @@ export default function MareMundoCountryPage({ params }: CountryPageProps) {
   if (allPlaces.length === 0) notFound();
 
   const curados = allPlaces.filter(p => !isAutoPlace(p.slug));
-  const auto = allPlaces.filter(p => isAutoPlace(p.slug));
+  const auto = allPlaces
+    .filter(p => isAutoPlace(p.slug))
+    .sort((a, b) => a.name.localeCompare(b.name, 'pt'));
   const flag = getCountryFlag(params.pais);
   const countryName = allPlaces[0].countryName;
 

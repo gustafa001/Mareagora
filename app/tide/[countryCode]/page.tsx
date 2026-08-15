@@ -51,7 +51,9 @@ export default function TideCountryPage({ params }: CountryPageProps) {
   if (allPlaces.length === 0) notFound();
 
   const curated = allPlaces.filter(p => !isAutoPlace(p.slug));
-  const auto = allPlaces.filter(p => isAutoPlace(p.slug));
+  const auto = allPlaces
+    .filter(p => isAutoPlace(p.slug))
+    .sort((a, b) => enPlaceName(a.name).localeCompare(enPlaceName(b.name), 'en'));
   const flag = getCountryFlag(params.countryCode);
   const countryName = enCountryName(params.countryCode, allPlaces[0].countryName);
 

@@ -148,7 +148,9 @@ export default function MareMundoPage() {
             const flag = getCountryFlag(countryCode);
             const countryName = places[0].countryName;
             const curados = places.filter(p => !isAutoPlace(p.slug));
-            const auto = places.filter(p => isAutoPlace(p.slug));
+            const auto = places
+              .filter(p => isAutoPlace(p.slug))
+              .sort((a, b) => a.name.localeCompare(b.name, 'pt'));
 
             return (
               <section
@@ -220,7 +222,10 @@ export default function MareMundoPage() {
               🌍 Outros países ({paisesSoAuto.length})
             </summary>
             <div className="mt-4 flex flex-wrap gap-2">
-              {paisesSoAuto.map(cc => {
+              {paisesSoAuto
+                .map(cc => ({ cc, name: porPais[cc][0].countryName }))
+                .sort((a, b) => a.name.localeCompare(b.name, 'pt'))
+                .map(({ cc }) => {
                 const places = porPais[cc];
                 const countryName = places[0].countryName;
                 return (

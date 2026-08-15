@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { GLOBAL_PLACES, CURATED_PLACES, AUTO_PLACES, FEATURED_PLACES, isAutoPlace } from '@/lib/globalPlaces';
 import { enCountryName, enPlaceName } from '@/lib/globalNames';
 import NavBar from '@/components/NavBar';
+import MundoSearchBar from '@/components/MundoSearchBar';
 import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
 
@@ -97,8 +98,13 @@ export default function TideIndexPage() {
         </div>
       </section>
 
+      {/* Search */}
+      <section className="container relative z-40 mt-8 px-4">
+        <MundoSearchBar basePath="/tide" locale="en" />
+      </section>
+
       {/* Featured Destinations */}
-      <section className="container relative z-40 -mt-4 md:-mt-10">
+      <section className="container relative z-40 mt-8">
         <div className="flex items-end justify-between mb-4 px-1">
           <h2 className="font-syne text-xl md:text-2xl font-bold text-white">
             <span className="text-blue-400">★</span> Featured Destinations
@@ -146,7 +152,9 @@ export default function TideIndexPage() {
             const flag = getCountryFlag(countryCode);
             const countryName = enCountryName(countryCode, places[0].countryName);
             const curated = places.filter(p => !isAutoPlace(p.slug));
-            const auto = places.filter(p => isAutoPlace(p.slug));
+            const auto = places
+              .filter(p => isAutoPlace(p.slug))
+              .sort((a, b) => enPlaceName(a.name).localeCompare(enPlaceName(b.name), 'en'));
 
             return (
               <section
@@ -218,7 +226,10 @@ export default function TideIndexPage() {
               🌍 Other countries ({countriesWithOnlyAuto.length})
             </summary>
             <div className="mt-4 flex flex-wrap gap-2">
-              {countriesWithOnlyAuto.map(cc => {
+              {countriesWithOnlyAuto
+                .map(cc => ({ cc, name: enCountryName(cc, byCountry[cc][0].countryName) }))
+                .sort((a, b) => a.name.localeCompare(b.name, 'en'))
+                .map(({ cc }) => {
                 const places = byCountry[cc];
                 const countryName = enCountryName(cc, places[0].countryName);
                 return (
@@ -235,7 +246,6 @@ export default function TideIndexPage() {
             </div>
           </details>
         )}
-
         {/* AdSense Footer */}
         <div className="mt-8 flex justify-center">
           <AdSlot slotId={AD_SLOTS.PREFOOTER} format="horizontal" />

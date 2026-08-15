@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { GlobalPlace } from '@/lib/globalPlaces';
+import { enPlaceName, enCountryName } from '@/lib/globalNames';
 
 function getCountryFlag(code: string): string {
   try {
@@ -15,11 +16,22 @@ function getCountryFlag(code: string): string {
   }
 }
 
-export default function MundoSearchBar() {
+export default function MundoSearchBar({
+  basePath = '/mare-mundo',
+  locale = 'pt',
+  placeholder,
+}: {
+  basePath?: string;
+  locale?: 'pt' | 'en';
+  placeholder?: string;
+}) {
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<GlobalPlace[]>([]);
   const [open, setOpen] = useState(false);
+  const isEn = locale === 'en';
+  const inputPlaceholder =
+    placeholder ?? (isEn ? 'Search a city or country worldwide...' : 'Buscar cidade ou país no mundo...');
 
   async function handleChange(value: string) {
     setQuery(value);
@@ -37,7 +49,7 @@ export default function MundoSearchBar() {
   function go(place: GlobalPlace) {
     setOpen(false);
     setQuery('');
-    router.push(`/mare-mundo/${place.countryCode}/${place.slug}`);
+    router.push(`/${basePath.replace(/^\//, '')}/${place.countryCode}/${place.slug}`);
   }
 
   return (
@@ -51,7 +63,7 @@ export default function MundoSearchBar() {
             if (results.length > 0) setOpen(true);
           }}
           onBlur={() => setTimeout(() => setOpen(false), 150)}
-          placeholder="Buscar cidade ou país no mundo..."
+          placeholder={inputPlaceholder}
           className="w-full px-6 py-4 rounded-2xl bg-slate-900/80 border border-blue-500/30 text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all backdrop-blur-sm"
         />
         <span className="absolute right-6 top-1/2 -translate-y-1/2 text-xl">🔍</span>
@@ -66,8 +78,10 @@ export default function MundoSearchBar() {
               className="w-full px-5 py-3 text-left text-white hover:bg-cyan-500/10 transition-colors border-b border-slate-800/30 last:border-0 flex items-center gap-3"
             >
               <span className="text-lg">{getCountryFlag(place.countryCode)}</span>
-              <span className="font-medium">{place.name}</span>
-              <span className="text-slate-400 text-xs ml-auto">{place.countryName}</span>
+              <span className="font-medium">{isEn ? enPlaceName(place.name) : place.name}</span>
+              <span className="text-slate-400 text-xs ml-auto">
+                {isEn ? enCountryName(place.countryCode, place.countryName) : place.countryName}
+              </span>
             </button>
           ))}
         </div>
@@ -76,7 +90,7 @@ export default function MundoSearchBar() {
       {open && results.length === 0 && query.trim().length >= 2 && (
         <div className="absolute top-full left-0 right-0 mt-2 bg-slate-900/95 border border-blue-500/30 rounded-2xl backdrop-blur-sm z-20 shadow-2xl">
           <div className="px-6 py-4 text-slate-400 text-sm text-center">
-            Nenhum local encontrado. Tente outro nome.
+            {isEn ? 'No place found. Try another name.' : 'Nenhum local encontrado. Tente outro nome.'}
           </div>
         </div>
       )}

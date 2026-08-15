@@ -56,17 +56,17 @@ export default function TideWeekCard({ days }: TideWeekCardProps) {
     : todayTides.find(t => t.tipo === 'low');
 
   return (
-    <OpsCard title={s.tideSituation} icon="🌊">
-      <div className="grid sm:grid-cols-[1fr_auto] gap-6 items-start">
-        <div>
+    <OpsCard title={s.tideSituation} icon="🌊" className="max-w-full overflow-hidden">
+      <div className="grid sm:grid-cols-[minmax(0,1fr)_auto] gap-6 items-start">
+        <div className="min-w-0">
           {days.length > 0 ? (
             <TideChart7Days days={days} />
           ) : (
-            <p className="text-slate-400 text-sm">{s.noTideData}</p>
+            <p className="text-slate-400 text-sm break-words">{s.noTideData}</p>
           )}
         </div>
 
-        <div className="flex sm:flex-col gap-4 sm:gap-3 sm:w-44 flex-wrap">
+        <div className="flex sm:flex-col gap-4 sm:gap-3 sm:w-44 flex-wrap min-w-0">
           <Metric label={s.now} value={currentHeight !== null ? `${currentHeight.toFixed(2)}m` : '--'} accent="text-cyan-300" />
           <Metric label={s.trend} value={rising ? s.rising : s.falling} accent={rising ? 'text-emerald-400' : 'text-orange-400'} />
           <Metric label={s.nextHighShort} value={nextHigh ? `${nextHigh.hora} · ${nextHigh.altura_m.toFixed(2)}m` : '--'} accent="text-cyan-300" />
@@ -84,9 +84,9 @@ function timeToMin(hora: string): number {
 
 function Metric({ label, value, accent }: { label: string; value: string; accent: string }) {
   return (
-    <div className="flex-1 min-w-[7rem]" suppressHydrationWarning>
-      <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">{label}</p>
-      <p className={`text-base font-black font-syne ${accent}`} suppressHydrationWarning>{value}</p>
+    <div className="flex-1 min-w-[7rem] max-w-full break-words" suppressHydrationWarning>
+      <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold break-words">{label}</p>
+      <p className={`text-base font-black font-syne break-words ${accent}`} suppressHydrationWarning>{value}</p>
     </div>
   );
 }

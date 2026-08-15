@@ -148,12 +148,12 @@ export default function TideChart7Days({ days }: TideChart7DaysProps) {
     : null;
 
   return (
-    <div className="w-full">
+    <div className="w-full min-w-0">
       <div className="w-full overflow-x-auto rounded-2xl" style={{ background: '#0f1f3d' }}>
         <svg
           viewBox={`0 0 ${viewBox.width} ${viewBox.height}`}
           className="cursor-crosshair"
-          style={{ width: `${Math.max(100, numDays * 33)}%`, minWidth: '100%', height: 'auto' }}
+          style={{ width: `${Math.max(100, numDays * 33)}%`, minWidth: '100%', height: 'auto', display: 'block' }}
           preserveAspectRatio="xMidYMid meet"
           onMouseMove={handleSVGMouseMove}
           onMouseLeave={handleSVGMouseLeave}

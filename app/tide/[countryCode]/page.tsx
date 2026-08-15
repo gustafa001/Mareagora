@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { GLOBAL_PLACES, getPlacesByCountry, isAutoPlace } from '@/lib/globalPlaces';
 import { enCountryName, enPlaceName } from '@/lib/globalNames';
 import NavBar from '@/components/NavBar';
+import MundoSearchBar from '@/components/MundoSearchBar';
 import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
 
@@ -84,7 +85,12 @@ export default function TideCountryPage({ params }: CountryPageProps) {
         </div>
       </section>
 
-      <div className="container -mt-10 relative z-40">
+      {/* Search */}
+      <section className="container relative z-40 mt-8 px-4">
+        <MundoSearchBar basePath="/tide" locale="en" />
+      </section>
+
+      <div className="container mt-8 relative z-40">
         {curated.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {curated.map(p => (

@@ -109,10 +109,14 @@ export default function TideChart7Days({ days }: TideChart7DaysProps) {
 
   const viewBox = { width: 380 * Math.min(numDays, 3), height: 240 };
   const padding = 25;
-  const graphArea = { width: viewBox.width - padding * 2, height: viewBox.height - padding * 2 };
+  const paddingLeft = 42;
+  const graphArea = {
+    width: viewBox.width - paddingLeft - padding,
+    height: viewBox.height - padding * 2,
+  };
   const graphMaxHeight = maxHeight * 1.1;
 
-  const scaleX = (minutes: number) => (minutes / maxTime) * graphArea.width + padding;
+  const scaleX = (minutes: number) => (minutes / maxTime) * graphArea.width + paddingLeft;
   const scaleY = (height: number) => viewBox.height - padding - (height / graphMaxHeight) * graphArea.height;
 
   const pathData = chartData.length > 0
@@ -126,7 +130,7 @@ export default function TideChart7Days({ days }: TideChart7DaysProps) {
     const y = e.clientY - rect.top;
     const svgX = (x / rect.width) * viewBox.width;
     const svgY = (y / rect.height) * viewBox.height;
-    const minutes = ((svgX - padding) / graphArea.width) * maxTime;
+    const minutes = ((svgX - paddingLeft) / graphArea.width) * maxTime;
     const height = (viewBox.height - padding - svgY) / graphArea.height * graphMaxHeight;
 
     if (minutes >= 0 && minutes <= maxTime && height >= 0 && height <= graphMaxHeight) {
@@ -178,8 +182,8 @@ export default function TideChart7Days({ days }: TideChart7DaysProps) {
             .filter(h => h <= graphMaxHeight)
             .map(h => (
               <g key={`h-${h}`}>
-                <line x1={padding} y1={scaleY(h)} x2={viewBox.width - padding} y2={scaleY(h)} stroke="rgba(255,255,255,0.08)" strokeWidth="0.8" strokeDasharray="3,3" />
-                <text x={padding - 8} y={scaleY(h) + 4} fontSize="9" fill="rgba(255,255,255,0.3)" textAnchor="end" fontWeight="500">{h.toFixed(1)}m</text>
+                <line x1={paddingLeft} y1={scaleY(h)} x2={viewBox.width - padding} y2={scaleY(h)} stroke="rgba(255,255,255,0.08)" strokeWidth="0.8" strokeDasharray="3,3" />
+                <text x={paddingLeft - 8} y={scaleY(h) + 4} fontSize="9" fill="rgba(255,255,255,0.3)" textAnchor="end" fontWeight="500">{h.toFixed(1)}m</text>
               </g>
             ))}
 
@@ -197,9 +201,9 @@ export default function TideChart7Days({ days }: TideChart7DaysProps) {
             />
           ))}
 
-          <line x1={padding} y1={scaleY(0)} x2={viewBox.width - padding} y2={scaleY(0)} stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
+          <line x1={paddingLeft} y1={scaleY(0)} x2={viewBox.width - padding} y2={scaleY(0)} stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
 
-          <path d={`${pathData} L ${viewBox.width - padding},${scaleY(0)} L ${padding},${scaleY(0)} Z`} fill="url(#tideGradient7d)" />
+          <path d={`${pathData} L ${viewBox.width - padding},${scaleY(0)} L ${paddingLeft},${scaleY(0)} Z`} fill="url(#tideGradient7d)" />
           <path d={pathData} stroke="rgb(0, 184, 224)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" filter="url(#glow7d)" opacity="0.95" />
 
           {chartData.filter(d => d.isEvent).map((data, idx) => {

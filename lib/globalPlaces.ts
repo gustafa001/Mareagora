@@ -1677,6 +1677,33 @@ export const GLOBAL_PLACES: GlobalPlace[] = [
   { slug: 'walvis-bay', name: 'Walvis Bay', countryCode: 'na', countryName: 'Namibia', lat: -22.95, lon: 14.5, utcOffsetMin: 120 },
 ];
 
+// ── Separação curadoria × automático ──────────────────────────────────────────
+// A lista acima tem duas partes: localidades curadas à mão (~167, no topo) e
+// localidades geradas automaticamente a partir de @neaps/tide-database (o resto).
+// A primeira entrada da seção automática é a estação 'hilo' (não existe outra
+// com esse slug na seção curada), então usamos ela como âncora da separação.
+const AUTO_START = GLOBAL_PLACES.findIndex(p => p.slug === 'hilo');
+
+/** Localidades curadas à mão — as que merecem destaque nos índices. */
+export const CURATED_PLACES: GlobalPlace[] =
+  AUTO_START > 0 ? GLOBAL_PLACES.slice(0, AUTO_START) : GLOBAL_PLACES;
+
+/** Localidades geradas automaticamente (nomes ruidosos) — ficam escondidas/rebaixadas nos índices. */
+export const AUTO_PLACES: GlobalPlace[] =
+  AUTO_START > 0 ? GLOBAL_PLACES.slice(AUTO_START) : [];
+
+export function isAutoPlace(slug: string): boolean {
+  return AUTO_PLACES.some(p => p.slug === slug);
+}
+
+/** Destaques curados exibidos como cards visuais no topo dos índices. */
+export const FEATURED_PLACES: GlobalPlace[] = [
+  'lisboa', 'barcelona', 'venezia', 'santorini', 'bali', 'sydney',
+  'tokyo', 'cancun', 'miami', 'dubai', 'cape-town', 'bora-bora',
+]
+  .map(slug => GLOBAL_PLACES.find(p => p.slug === slug))
+  .filter((p): p is GlobalPlace => Boolean(p));
+
 export function getGlobalPlace(countryCode: string, slug: string): GlobalPlace | undefined {
   return GLOBAL_PLACES.find(p => p.countryCode === countryCode && p.slug === slug);
 }

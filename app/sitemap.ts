@@ -82,8 +82,15 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
 
   if (id === 'mundo') {
     const { GLOBAL_PLACES } = await import('@/lib/globalPlaces');
+    const countries = Array.from(new Set(GLOBAL_PLACES.map(p => p.countryCode)));
     return [
       { url: `${base}/mare-mundo`, lastModified: tideDataDate(), changeFrequency: 'weekly' as const, priority: 0.6 },
+      ...countries.map(cc => ({
+        url: `${base}/mare-mundo/${cc}`,
+        lastModified: tideDataDate(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.6,
+      })),
       ...GLOBAL_PLACES.filter(p => isApproved(p.slug)).map(p => ({
         url: `${base}/mare-mundo/${p.countryCode}/${p.slug}`,
         lastModified: tideDataDate(),
@@ -95,8 +102,15 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
 
   if (id === 'tide-en') {
     const { GLOBAL_PLACES } = await import('@/lib/globalPlaces');
+    const countries = Array.from(new Set(GLOBAL_PLACES.map(p => p.countryCode)));
     return [
       { url: `${base}/tide`, lastModified: tideDataDate(), changeFrequency: 'weekly' as const, priority: 0.6 },
+      ...countries.map(cc => ({
+        url: `${base}/tide/${cc}`,
+        lastModified: tideDataDate(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.6,
+      })),
       ...GLOBAL_PLACES.filter(p => isApproved(p.slug)).map(p => ({
         url: `${base}/tide/${p.countryCode}/${p.slug}`,
         lastModified: tideDataDate(),

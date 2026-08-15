@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { GLOBAL_PLACES } from '@/lib/globalPlaces';
+import { GLOBAL_PLACES, CURATED_PLACES, AUTO_PLACES, FEATURED_PLACES, isAutoPlace } from '@/lib/globalPlaces';
 import { enCountryName, enPlaceName } from '@/lib/globalNames';
 import NavBar from '@/components/NavBar';
 import { AD_SLOTS } from '@/lib/adConfig';
@@ -38,6 +38,10 @@ export default function TideIndexPage() {
 
   const totalPlaces = GLOBAL_PLACES.length;
   const totalCountries = Object.keys(byCountry).length;
+  const curatedCountries = new Set(CURATED_PLACES.map(p => p.countryCode));
+  const autoCountries = new Set(AUTO_PLACES.map(p => p.countryCode));
+  const countriesWithOnlyAuto = Array.from(autoCountries).filter(c => !curatedCountries.has(c));
+  const featured = FEATURED_PLACES;
 
   return (
     <main className="min-h-screen pb-20 bg-[#070d19] text-white">
@@ -93,12 +97,56 @@ export default function TideIndexPage() {
         </div>
       </section>
 
+      {/* Featured Destinations */}
+      <section className="container relative z-40 -mt-4 md:-mt-10">
+        <div className="flex items-end justify-between mb-4 px-1">
+          <h2 className="font-syne text-xl md:text-2xl font-bold text-white">
+            <span className="text-blue-400">★</span> Featured Destinations
+          </h2>
+          <Link href="/tide" className="text-xs font-bold text-blue-400 hover:text-white uppercase tracking-widest">
+            View all →
+          </Link>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {featured.map(p => {
+            const countryName = enCountryName(p.countryCode, p.countryName);
+            return (
+              <Link
+                key={p.slug}
+                href={`/tide/${p.countryCode}/${p.slug}`}
+                className="group rounded-2xl overflow-hidden border border-white/10 hover:border-blue-500/50 transition-all duration-300 hover:shadow-blue-900/30 hover:shadow-2xl"
+                style={{
+                  background: 'linear-gradient(160deg, #0f2747 0%, #0a1830 60%, #071020 100%)',
+                }}
+              >
+                <div className="h-1 bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600" />
+                <div className="p-4">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-blue-400">
+                    {getCountryFlag(p.countryCode)} {countryName}
+                  </p>
+                  <h3 className="font-syne font-bold text-sm mt-1 text-slate-100 group-hover:text-white">
+                    {enPlaceName(p.name)}
+                  </h3>
+                  <p className="text-[11px] text-slate-500 mt-2 group-hover:text-blue-400 font-bold transition-colors">
+                    Tide table →
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
       {/* Grid of Countries and Cities */}
-      <div className="container -mt-10 relative z-40">
+      <div className="container mt-10 relative z-40">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Object.entries(byCountry).map(([countryCode, places]) => {
+          {Object.entries(byCountry)
+            .filter(([, places]) => places.some(p => !isAutoPlace(p.slug)))
+            .map(([countryCode, places]) => {
             const flag = getCountryFlag(countryCode);
             const countryName = enCountryName(countryCode, places[0].countryName);
+            const curated = places.filter(p => !isAutoPlace(p.slug));
+            const auto = places.filter(p => isAutoPlace(p.slug));
 
             return (
               <section
@@ -112,7 +160,11 @@ export default function TideIndexPage() {
                 <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
                   <div className="flex items-center gap-3">
                     <span className="text-2xl">{flag}</span>
-                    <h2 className="font-syne text-lg font-bold text-slate-100">{countryName}</h2>
+                    <h2 className="font-syne text-lg font-bold text-slate-100">
+                      <Link href={`/tide/${countryCode}`} className="hover:text-blue-400 transition-colors">
+                        {countryName}
+                      </Link>
+                    </h2>
                   </div>
                   <span className="text-[10px] font-bold text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-full border border-blue-500/20 uppercase tracking-wider">
                     {places.length} {places.length === 1 ? 'location' : 'locations'}
@@ -120,7 +172,7 @@ export default function TideIndexPage() {
                 </div>
 
                 <ul className="space-y-1">
-                  {places.map(p => (
+                  {curated.map(p => (
                     <li key={p.slug}>
                       <Link
                         href={`/tide/${p.countryCode}/${p.slug}`}
@@ -134,10 +186,55 @@ export default function TideIndexPage() {
                     </li>
                   ))}
                 </ul>
+
+                {auto.length > 0 && (
+                  <details className="mt-3">
+                    <summary className="cursor-pointer text-xs font-bold text-slate-500 hover:text-blue-400 transition-colors uppercase tracking-wider">
+                      + {auto.length} more station{auto.length === 1 ? '' : 's'}
+                    </summary>
+                    <ul className="mt-2 space-y-0.5 max-h-48 overflow-y-auto">
+                      {auto.map(p => (
+                        <li key={p.slug}>
+                          <Link
+                            href={`/tide/${p.countryCode}/${p.slug}`}
+                            className="flex items-center justify-between py-1 px-3 rounded-lg text-[13px] text-slate-600 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"
+                          >
+                            {enPlaceName(p.name)}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                )}
               </section>
             );
           })}
         </div>
+
+        {/* Auto-only countries: compact collapsible */}
+        {countriesWithOnlyAuto.length > 0 && (
+          <details className="mt-10 rounded-[20px] border border-white/10 bg-white/5 p-6">
+            <summary className="cursor-pointer font-syne font-bold text-slate-300 hover:text-white text-lg">
+              🌍 Other countries ({countriesWithOnlyAuto.length})
+            </summary>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {countriesWithOnlyAuto.map(cc => {
+                const places = byCountry[cc];
+                const countryName = enCountryName(cc, places[0].countryName);
+                return (
+                  <Link
+                    key={cc}
+                    href={`/tide/${cc}`}
+                    className="inline-flex items-center gap-1.5 text-sm bg-blue-50 hover:bg-blue-100 text-blue-700 px-3 py-1.5 rounded-full border border-blue-100 transition-colors"
+                  >
+                    {getCountryFlag(cc)} {countryName}
+                    <span className="text-[10px] text-blue-400">{places.length}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </details>
+        )}
 
         {/* AdSense Footer */}
         <div className="mt-8 flex justify-center">

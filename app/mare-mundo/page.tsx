@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { GLOBAL_PLACES } from '@/lib/globalPlaces';
+import { GLOBAL_PLACES, CURATED_PLACES, AUTO_PLACES, FEATURED_PLACES, isAutoPlace } from '@/lib/globalPlaces';
 import NavBar from '@/components/NavBar';
 import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
@@ -37,6 +37,10 @@ export default function MareMundoPage() {
 
   const totalLocais = GLOBAL_PLACES.length;
   const totalPaises = Object.keys(porPais).length;
+  const paisesCurados = new Set(CURATED_PLACES.map(p => p.countryCode));
+  const paisesAuto = new Set(AUTO_PLACES.map(p => p.countryCode));
+  const paisesSoAuto = Array.from(paisesAuto).filter(c => !paisesCurados.has(c));
+  const destaques = FEATURED_PLACES;
 
   return (
     <main className="min-h-screen pb-20 bg-[#070d19] text-white">
@@ -92,12 +96,53 @@ export default function MareMundoPage() {
         </div>
       </section>
 
+      {/* Destinos em Destaque */}
+      <section className="container relative z-40 -mt-4 md:-mt-10">
+        <div className="flex items-end justify-between mb-4 px-1">
+          <h2 className="font-syne text-xl md:text-2xl font-bold text-white">
+            <span className="text-blue-400">★</span> Destinos em Destaque
+          </h2>
+          <Link href="/mare-mundo" className="text-xs font-bold text-blue-400 hover:text-white uppercase tracking-widest">
+            Ver todos →
+          </Link>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {destaques.map(p => (
+            <Link
+              key={p.slug}
+              href={`/mare-mundo/${p.countryCode}/${p.slug}`}
+              className="group rounded-2xl overflow-hidden border border-white/10 hover:border-blue-500/50 transition-all duration-300 hover:shadow-blue-900/30 hover:shadow-2xl"
+              style={{
+                background: 'linear-gradient(160deg, #0f2747 0%, #0a1830 60%, #071020 100%)',
+              }}
+            >
+              <div className="h-1 bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600" />
+              <div className="p-4">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-blue-400">
+                  {getCountryFlag(p.countryCode)} {p.countryName}
+                </p>
+                <h3 className="font-syne font-bold text-sm mt-1 text-slate-100 group-hover:text-white">
+                  {p.name}
+                </h3>
+                <p className="text-[11px] text-slate-500 mt-2 group-hover:text-blue-400 font-bold transition-colors">
+                  Ver maré →
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       {/* Grid de Países e Cidades */}
-      <div className="container -mt-10 relative z-40">
+      <div className="container mt-10 relative z-40">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Object.entries(porPais).map(([countryCode, places]) => {
+          {Object.entries(porPais)
+            .filter(([, places]) => places.some(p => !isAutoPlace(p.slug)))
+            .map(([countryCode, places]) => {
             const flag = getCountryFlag(countryCode);
             const countryName = places[0].countryName;
+            const curados = places.filter(p => !isAutoPlace(p.slug));
+            const auto = places.filter(p => isAutoPlace(p.slug));
 
             return (
               <section
@@ -111,7 +156,11 @@ export default function MareMundoPage() {
                 <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
                   <div className="flex items-center gap-3">
                     <span className="text-2xl">{flag}</span>
-                    <h2 className="font-syne text-lg font-bold text-slate-100">{countryName}</h2>
+                    <h2 className="font-syne text-lg font-bold text-slate-100">
+                      <Link href={`/mare-mundo/${countryCode}`} className="hover:text-blue-400 transition-colors">
+                        {countryName}
+                      </Link>
+                    </h2>
                   </div>
                   <span className="text-[10px] font-bold text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-full border border-blue-500/20 uppercase tracking-wider">
                     {places.length} {places.length === 1 ? 'local' : 'locais'}
@@ -119,7 +168,7 @@ export default function MareMundoPage() {
                 </div>
 
                 <ul className="space-y-1">
-                  {places.map(p => (
+                  {curados.map(p => (
                     <li key={p.slug}>
                       <Link
                         href={`/mare-mundo/${p.countryCode}/${p.slug}`}
@@ -133,10 +182,55 @@ export default function MareMundoPage() {
                     </li>
                   ))}
                 </ul>
+
+                {auto.length > 0 && (
+                  <details className="mt-3">
+                    <summary className="cursor-pointer text-xs font-bold text-slate-500 hover:text-blue-400 transition-colors uppercase tracking-wider">
+                      + {auto.length} mais estaç{auto.length === 1 ? 'ão' : 'ões'}
+                    </summary>
+                    <ul className="mt-2 space-y-0.5 max-h-48 overflow-y-auto">
+                      {auto.map(p => (
+                        <li key={p.slug}>
+                          <Link
+                            href={`/mare-mundo/${p.countryCode}/${p.slug}`}
+                            className="flex items-center justify-between py-1 px-3 rounded-lg text-[13px] text-slate-600 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"
+                          >
+                            {p.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                )}
               </section>
             );
           })}
         </div>
+
+        {/* Países só com estações automáticas */}
+        {paisesSoAuto.length > 0 && (
+          <details className="mt-10 rounded-[20px] border border-white/10 bg-white/5 p-6">
+            <summary className="cursor-pointer font-syne font-bold text-slate-300 hover:text-white text-lg">
+              🌍 Outros países ({paisesSoAuto.length})
+            </summary>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {paisesSoAuto.map(cc => {
+                const places = porPais[cc];
+                const countryName = places[0].countryName;
+                return (
+                  <Link
+                    key={cc}
+                    href={`/mare-mundo/${cc}`}
+                    className="inline-flex items-center gap-1.5 text-sm bg-blue-50 hover:bg-blue-100 text-blue-700 px-3 py-1.5 rounded-full border border-blue-100 transition-colors"
+                  >
+                    {getCountryFlag(cc)} {countryName}
+                    <span className="text-[10px] text-blue-400">{places.length}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </details>
+        )}
 
         {/* AdSense Rodapé */}
         <div className="mt-8 flex justify-center">

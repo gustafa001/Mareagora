@@ -1,7 +1,8 @@
 export const runtime = 'nodejs';
+export const revalidate = 21600; // ISR: regenera a cada 6h, evita data congelada do build
 
 import { notFound } from 'next/navigation';
-import { getGlobalPlace, getNearbyGlobalPlaces } from '@/lib/globalPlaces';
+import { CURATED_PLACES, getGlobalPlace, getNearbyGlobalPlaces } from '@/lib/globalPlaces';
 import { enCountryName, enPlaceName } from '@/lib/globalNames';
 import { getTideForLocation } from '@/lib/tideRouter';
 import { t } from '@/lib/globalPreferences';
@@ -36,6 +37,13 @@ const en = t('en');
 
 interface Props {
   params: { countryCode: string; slug: string };
+}
+
+export function generateStaticParams() {
+  return CURATED_PLACES.filter(p => isApproved(p.slug)).map(p => ({
+    countryCode: p.countryCode,
+    slug: p.slug,
+  }));
 }
 
 export async function generateMetadata({ params }: Props) {

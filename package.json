@@ -12,6 +12,7 @@
     "start": "next start",
     "lint": "eslint .",
     "check": "tsc --noEmit",
+    "indexnow": "node scripts/indexnow-ping.mjs",
     "test": "tsx --test tests/tideUtils.test.ts && tsx --test tests/tideRegimeClassifier.test.ts",
     "format": "prettier --write ."
   },

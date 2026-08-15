@@ -1,4 +1,10 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MaréAgora — Tábuas de Maré
+
+**Site:** [https://mareagora.com.br](https://mareagora.com.br) · **Blog:** [https://mareagora.com.br/blog](https://mareagora.com.br/blog)
+
+Previsões de maré, ondas, lua e condições do mar para praias, portos e estados do Brasil e do mundo — com tábua de marés, guias de praias, detectoristas, operações portuárias e mapa-múndi das marés. Gratuito e sem cadastro.
+
+Feito com [Next.js](https://nextjs.org), [NEAPS](https://neaps.dev) e [Radix UI](https://www.radix-ui.com).
 
 ## Getting Started
 

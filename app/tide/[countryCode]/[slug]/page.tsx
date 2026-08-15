@@ -191,7 +191,8 @@ export default async function TideLocalPage({ params }: Props) {
           todayTides={todayTides as TideEvent[]}
         />
 
-        <div className="mt-12 flex flex-col gap-8">
+        <div className="mt-12 flex flex-col lg:grid lg:grid-cols-[1fr_350px] gap-8">
+          <div className="flex flex-col gap-8">
 
           <TideWeekCard days={weekDias} />
 
@@ -272,6 +273,7 @@ export default async function TideLocalPage({ params }: Props) {
           {/* AdSense Footer */}
           <div className="mt-4 flex justify-center">
             <AdSlot slotId={AD_SLOTS.PREFOOTER} format="horizontal" />
+          </div>
           </div>
         </div>
       </div>

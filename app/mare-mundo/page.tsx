@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { GLOBAL_PLACES, CURATED_PLACES, AUTO_PLACES, FEATURED_PLACES, isAutoPlace } from '@/lib/globalPlaces';
 import NavBar from '@/components/NavBar';
+import MundoSearchBar from '@/components/MundoSearchBar';
 import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
 
@@ -96,8 +97,13 @@ export default function MareMundoPage() {
         </div>
       </section>
 
+      {/* Busca de destinos */}
+      <section className="container relative z-40 mt-8 px-4">
+        <MundoSearchBar />
+      </section>
+
       {/* Destinos em Destaque */}
-      <section className="container relative z-40 -mt-4 md:-mt-10">
+      <section className="container relative z-40 mt-8">
         <div className="flex items-end justify-between mb-4 px-1">
           <h2 className="font-syne text-xl md:text-2xl font-bold text-white">
             <span className="text-blue-400">★</span> Destinos em Destaque

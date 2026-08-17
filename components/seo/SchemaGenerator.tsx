@@ -91,7 +91,7 @@ export default function SchemaGenerator({
       port.name.toLowerCase().includes('porto') ||
       port.name.toLowerCase().includes('terminal');
 
-    const placeType = type === 'Beach' ? 'Beach' : isCommercial ? 'LocalBusiness' : 'TouristAttraction';
+    const placeType = type === 'Beach' ? 'Beach' : isCommercial ? 'CivicStructure' : 'TouristAttraction';
 
     schemas.push({
       '@type': placeType,

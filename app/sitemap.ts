@@ -72,7 +72,7 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
   }
 
   if (id === 'blog') {
-    return getPosts().map(p => ({
+    return getPosts().filter(p => !p.noindex).map(p => ({
       url: `${base}/blog/${p.slug}`,
       lastModified: new Date(p.updatedAt),
       changeFrequency: 'monthly' as const,

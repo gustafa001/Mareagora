@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: CountryPageProps) {
       languages: {
         'pt': `${BASE}/mare-mundo/${params.countryCode}`,
         'en': `${BASE}/tide/${params.countryCode}`,
-        'x-default': `${BASE}/tide/${params.countryCode}`,
+        'x-default': `${BASE}/mare-mundo/${params.countryCode}`,
       },
     },
   };

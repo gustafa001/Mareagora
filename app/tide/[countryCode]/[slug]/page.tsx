@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: Props) {
       languages: {
         'pt': `${BASE}/mare-mundo/${params.countryCode}/${params.slug}`,
         'en': `${BASE}/tide/${params.countryCode}/${params.slug}`,
-        'x-default': `${BASE}/tide/${params.countryCode}/${params.slug}`,
+        'x-default': `${BASE}/mare-mundo/${params.countryCode}/${params.slug}`,
       },
     },
   };

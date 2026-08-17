@@ -69,7 +69,7 @@ export default function CameraPlayer({ camera }: CameraPlayerProps) {
             name: `Câmera ao vivo - ${camera.title}`,
             description: camera.description,
             thumbnailUrl: `https://mareagora.com.br/icon-512x512.png`,
-            uploadDate: new Date().toISOString(),
+            uploadDate: '2026-01-01',
             embedUrl: embedUrl,
             publisher: {
               '@type': 'Organization',

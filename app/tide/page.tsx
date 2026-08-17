@@ -14,7 +14,7 @@ export const metadata = {
     languages: {
       'pt': 'https://mareagora.com.br/mare-mundo',
       'en': 'https://mareagora.com.br/tide',
-      'x-default': 'https://mareagora.com.br/tide',
+      'x-default': 'https://mareagora.com.br/mare-mundo',
     },
   },
 };

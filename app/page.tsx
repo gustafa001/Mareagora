@@ -11,6 +11,10 @@ export const metadata = {
   description: 'Consulte a tábua de marés oficial da Marinha do Brasil para todos os portos. Previsão de maré alta e baixa, ondas e vento para pesca, surf e navegação.',
   alternates: {
     canonical: 'https://mareagora.com.br',
+    languages: {
+      'pt': 'https://mareagora.com.br',
+      'x-default': 'https://mareagora.com.br',
+    },
   },
 };
 

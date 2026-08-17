@@ -47,7 +47,8 @@ export const metadata: Metadata = {
   },
   alternates: {
     languages: {
-      'pt-BR': 'https://mareagora.com.br',
+      'pt': 'https://mareagora.com.br',
+      'x-default': 'https://mareagora.com.br',
     },
   },
 };

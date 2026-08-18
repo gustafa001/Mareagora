@@ -81,7 +81,7 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
   }
 
   if (id === 'mundo') {
-    const { GLOBAL_PLACES } = await import('@/lib/globalPlaces');
+    const { GLOBAL_PLACES, AUTO_SLUGS_TO_REMOVE } = await import('@/lib/globalPlaces');
     const countries = Array.from(new Set(GLOBAL_PLACES.map(p => p.countryCode)));
     return [
       { url: `${base}/mare-mundo`, lastModified: tideDataDate(), changeFrequency: 'weekly' as const, priority: 0.6 },
@@ -91,7 +91,7 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
         changeFrequency: 'weekly' as const,
         priority: 0.6,
       })),
-      ...GLOBAL_PLACES.filter(p => isApproved(p.slug)).map(p => ({
+      ...GLOBAL_PLACES.filter(p => isApproved(p.slug) && !AUTO_SLUGS_TO_REMOVE.has(p.slug)).map(p => ({
         url: `${base}/mare-mundo/${p.countryCode}/${p.slug}`,
         lastModified: tideDataDate(),
         changeFrequency: 'daily' as const,
@@ -101,7 +101,7 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
   }
 
   if (id === 'tide-en') {
-    const { GLOBAL_PLACES } = await import('@/lib/globalPlaces');
+    const { GLOBAL_PLACES, AUTO_SLUGS_TO_REMOVE } = await import('@/lib/globalPlaces');
     const countries = Array.from(new Set(GLOBAL_PLACES.map(p => p.countryCode)));
     return [
       { url: `${base}/tide`, lastModified: tideDataDate(), changeFrequency: 'weekly' as const, priority: 0.6 },
@@ -111,7 +111,7 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
         changeFrequency: 'weekly' as const,
         priority: 0.6,
       })),
-      ...GLOBAL_PLACES.filter(p => isApproved(p.slug)).map(p => ({
+      ...GLOBAL_PLACES.filter(p => isApproved(p.slug) && !AUTO_SLUGS_TO_REMOVE.has(p.slug)).map(p => ({
         url: `${base}/tide/${p.countryCode}/${p.slug}`,
         lastModified: tideDataDate(),
         changeFrequency: 'daily' as const,

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { GLOBAL_PLACES, CURATED_PLACES, AUTO_PLACES, FEATURED_PLACES, isAutoPlace } from '@/lib/globalPlaces';
+import { GLOBAL_PLACES, CURATED_PLACES, FILTERED_AUTO_PLACES, FEATURED_PLACES, isAutoPlace } from '@/lib/globalPlaces';
 import NavBar from '@/components/NavBar';
 import MundoSearchBar from '@/components/MundoSearchBar';
 import { AD_SLOTS } from '@/lib/adConfig';
@@ -39,7 +39,7 @@ export default function MareMundoPage() {
   const totalLocais = GLOBAL_PLACES.length;
   const totalPaises = Object.keys(porPais).length;
   const paisesCurados = new Set(CURATED_PLACES.map(p => p.countryCode));
-  const paisesAuto = new Set(AUTO_PLACES.map(p => p.countryCode));
+  const paisesAuto = new Set(FILTERED_AUTO_PLACES.map(p => p.countryCode));
   const paisesSoAuto = Array.from(paisesAuto).filter(c => !paisesCurados.has(c));
   const destaques = FEATURED_PLACES;
 

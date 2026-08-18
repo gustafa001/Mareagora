@@ -648,5 +648,135 @@
     "source": "/operacoes-portuarias/base-comandante-ferraz",
     "destination": "/operacoes-portuarias/antartida/base-comandante-ferraz",
     "permanent": true
+  },
+  {
+    "source": "/mare-mundo/es/malaga-es",
+    "destination": "/mare-mundo/es/malaga",
+    "permanent": true
+  },
+  {
+    "source": "/mare-mundo/es/valencia-es",
+    "destination": "/mare-mundo/es/valencia",
+    "permanent": true
+  },
+  {
+    "source": "/mare-mundo/es/cadiz-es",
+    "destination": "/mare-mundo/es/cadiz",
+    "permanent": true
+  },
+  {
+    "source": "/mare-mundo/fr/marseille-fr",
+    "destination": "/mare-mundo/fr/marseille",
+    "permanent": true
+  },
+  {
+    "source": "/mare-mundo/it/genova-it",
+    "destination": "/mare-mundo/it/genova",
+    "permanent": true
+  },
+  {
+    "source": "/mare-mundo/it/napoli-it",
+    "destination": "/mare-mundo/it/napoli",
+    "permanent": true
+  },
+  {
+    "source": "/mare-mundo/gr/thessaloniki-gr",
+    "destination": "/mare-mundo/gr/thessaloniki",
+    "permanent": true
+  },
+  {
+    "source": "/mare-mundo/za/cape-town-za",
+    "destination": "/mare-mundo/za/cape-town",
+    "permanent": true
+  },
+  {
+    "source": "/mare-mundo/ve/la-guaira-ve",
+    "destination": "/mare-mundo/ve/la-guaira",
+    "permanent": true
+  },
+  {
+    "source": "/mare-mundo/pe/callao-pe",
+    "destination": "/mare-mundo/pe/callao",
+    "permanent": true
+  },
+  {
+    "source": "/mare-mundo/cl/valparaiso-cl",
+    "destination": "/mare-mundo/cl/valparaiso",
+    "permanent": true
+  },
+  {
+    "source": "/mare-mundo/pt/funchal-pt",
+    "destination": "/mare-mundo/pt/funchal",
+    "permanent": true
+  },
+  {
+    "source": "/mare-mundo/pt/ponta-delgada-pt",
+    "destination": "/mare-mundo/pt/ponta-delgada",
+    "permanent": true
+  },
+  {
+    "source": "/tide/es/malaga-es",
+    "destination": "/tide/es/malaga",
+    "permanent": true
+  },
+  {
+    "source": "/tide/es/valencia-es",
+    "destination": "/tide/es/valencia",
+    "permanent": true
+  },
+  {
+    "source": "/tide/es/cadiz-es",
+    "destination": "/tide/es/cadiz",
+    "permanent": true
+  },
+  {
+    "source": "/tide/fr/marseille-fr",
+    "destination": "/tide/fr/marseille",
+    "permanent": true
+  },
+  {
+    "source": "/tide/it/genova-it",
+    "destination": "/tide/it/genova",
+    "permanent": true
+  },
+  {
+    "source": "/tide/it/napoli-it",
+    "destination": "/tide/it/napoli",
+    "permanent": true
+  },
+  {
+    "source": "/tide/gr/thessaloniki-gr",
+    "destination": "/tide/gr/thessaloniki",
+    "permanent": true
+  },
+  {
+    "source": "/tide/za/cape-town-za",
+    "destination": "/tide/za/cape-town",
+    "permanent": true
+  },
+  {
+    "source": "/tide/ve/la-guaira-ve",
+    "destination": "/tide/ve/la-guaira",
+    "permanent": true
+  },
+  {
+    "source": "/tide/pe/callao-pe",
+    "destination": "/tide/pe/callao",
+    "permanent": true
+  },
+  {
+    "source": "/tide/cl/valparaiso-cl",
+    "destination": "/tide/cl/valparaiso",
+    "permanent": true
+  },
+  {
+    "source": "/tide/pt/funchal-pt",
+    "destination": "/tide/pt/funchal",
+    "permanent": true
+  },
+  {
+    "source": "/tide/pt/ponta-delgada-pt",
+    "destination": "/tide/pt/ponta-delgada",
+    "permanent": true
   }
 ]

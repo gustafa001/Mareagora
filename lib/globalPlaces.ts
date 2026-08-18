@@ -1692,8 +1692,18 @@ export const CURATED_PLACES: GlobalPlace[] =
 export const AUTO_PLACES: GlobalPlace[] =
   AUTO_START > 0 ? GLOBAL_PLACES.slice(AUTO_START) : [];
 
+export const AUTO_SLUGS_TO_REMOVE = new Set([
+  'malaga-es', 'valencia-es', 'cadiz-es', 'marseille-fr',
+  'genova-it', 'napoli-it', 'thessaloniki-gr', 'cape-town-za',
+  'la-guaira-ve', 'callao-pe', 'valparaiso-cl', 'funchal-pt',
+  'ponta-delgada-pt',
+]);
+
+export const FILTERED_AUTO_PLACES: GlobalPlace[] =
+  AUTO_PLACES.filter(p => !AUTO_SLUGS_TO_REMOVE.has(p.slug));
+
 export function isAutoPlace(slug: string): boolean {
-  return AUTO_PLACES.some(p => p.slug === slug);
+  return FILTERED_AUTO_PLACES.some(p => p.slug === slug);
 }
 
 /** Destaques curados exibidos como cards visuais no topo dos índices. */

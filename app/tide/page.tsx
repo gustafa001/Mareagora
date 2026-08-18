@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { GLOBAL_PLACES, CURATED_PLACES, AUTO_PLACES, FEATURED_PLACES, isAutoPlace } from '@/lib/globalPlaces';
+import { GLOBAL_PLACES, CURATED_PLACES, FILTERED_AUTO_PLACES, FEATURED_PLACES, isAutoPlace } from '@/lib/globalPlaces';
 import { enCountryName, enPlaceName } from '@/lib/globalNames';
 import NavBar from '@/components/NavBar';
 import MundoSearchBar from '@/components/MundoSearchBar';
@@ -40,7 +40,7 @@ export default function TideIndexPage() {
   const totalPlaces = GLOBAL_PLACES.length;
   const totalCountries = Object.keys(byCountry).length;
   const curatedCountries = new Set(CURATED_PLACES.map(p => p.countryCode));
-  const autoCountries = new Set(AUTO_PLACES.map(p => p.countryCode));
+  const autoCountries = new Set(FILTERED_AUTO_PLACES.map(p => p.countryCode));
   const countriesWithOnlyAuto = Array.from(autoCountries).filter(c => !curatedCountries.has(c));
   const featured = FEATURED_PLACES;
 

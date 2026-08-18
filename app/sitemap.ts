@@ -121,30 +121,22 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
   }
 
   // id === 'index' (Base generic routes)
-  const genericRoutes = [
-    '',
-    '/portos',
-    '/guia-praias',
-    '/cameras',
-    '/sobre',
-    '/contato',
-    '/termos',
-    '/privacidade',
-    '/mare-hoje',
-    '/mare-amanha',
-    '/mare-semana',
-    '/mare-viva',
-    '/mare-morta',
-    '/lua',
-    '/ondas',
-    '/coeficiente',
-    '/pesca',
-    '/lugares-de-pesca'
-  ];
+  const today = new Date().toISOString();
+  const staticRoutes = ['', '/portos', '/guia-praias', '/cameras', '/sobre', '/contato', '/termos', '/privacidade'];
+  const dailyRoutes = ['/mare-hoje', '/mare-amanha', '/mare-semana', '/mare-viva', '/mare-morta', '/lua', '/ondas', '/coeficiente', '/pesca', '/lugares-de-pesca'];
 
-  return genericRoutes.map(route => ({
-    url: `${base}${route}`,
-    changeFrequency: 'daily' as const,
-    priority: route === '' ? 1.0 : 0.8,
-  }));
+  return [
+    ...staticRoutes.map(route => ({
+      url: `${base}${route}`,
+      lastModified: tideDataDate(),
+      changeFrequency: 'daily' as const,
+      priority: route === '' ? 1.0 : 0.8,
+    })),
+    ...dailyRoutes.map(route => ({
+      url: `${base}${route}`,
+      lastModified: today,
+      changeFrequency: 'daily' as const,
+      priority: 0.8,
+    })),
+  ];
 }

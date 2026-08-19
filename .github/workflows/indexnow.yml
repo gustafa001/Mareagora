@@ -1,0 +1,41 @@
+name: IndexNow - Submit URLs after Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  indexnow:
+    name: Submit sitemaps to IndexNow
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Wait for Vercel deploy
+        run: sleep 60
+
+      - name: Submit URLs to IndexNow
+        env:
+          INDEXNOW_KEY: '16a9786571fdeec8d29ddd0ce264ec38'
+          BASE_URL: 'https://mareagora.com.br'
+        run: |
+          ALL_URLS_FILE=$(mktemp)
+          SITEMAPS="$BASE_URL/sitemap/praias.xml $BASE_URL/sitemap/guia-praias.xml $BASE_URL/sitemap/portos.xml $BASE_URL/sitemap/estados.xml $BASE_URL/sitemap/blog.xml $BASE_URL/sitemap/mundo.xml $BASE_URL/sitemap/tide-en.xml"
+          for SITEMAP in $SITEMAPS; do
+            echo "Processing: $SITEMAP"
+            curl -sf "$SITEMAP" | grep -oP '(?<=<loc>)[^<]+' >> "$ALL_URLS_FILE" || true
+          done
+          sort -u "$ALL_URLS_FILE" -o "$ALL_URLS_FILE"
+          TOTAL=$(wc -l < "$ALL_URLS_FILE")
+          echo "Total unique URLs: $TOTAL"
+          split -l 10000 "$ALL_URLS_FILE" /tmp/indexnow_batch_
+          BATCH_NUM=0
+          for BATCH_FILE in /tmp/indexnow_batch_*; do
+            BATCH_NUM=$((BATCH_NUM + 1))
+            URL_ARRAY=$(grep -v '^$' "$BATCH_FILE" | jq -R . | jq -s .)
+            PAYLOAD=$(jq -n --arg host "mareagora.com.br" --arg key "$INDEXNOW_KEY" --arg keyLocation "$BASE_URL/$INDEXNOW_KEY.txt" --argjson urlList "$URL_ARRAY" '{host: $host, key: $key, keyLocation: $keyLocation, urlList: $urlList}')
+            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST "https://api.indexnow.org/indexnow" -H "Content-Type: application/json; charset=utf-8" -d "$PAYLOAD")
+            echo "Batch $BATCH_NUM: HTTP $HTTP_STATUS"
+          done
+          echo "Done! $TOTAL URLs submitted to IndexNow."

@@ -33,6 +33,8 @@ import { notFound } from 'next/navigation';
 import type { BlogPost } from '@/lib/blog';
 import { useRecentPorts } from '@/hooks/useRecentPorts';
 import { ClientOnly } from '@/components/ClientOnly';
+import { exportTidePdf } from '@/lib/exportTidePdf';
+import { WEEKDAYS, MONTHS, buildMonthRows } from '@/lib/monthlyTideCalc';
 
 interface PortPageContentProps {
   slug: string;
@@ -98,6 +100,30 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
 
   const [brH, brM] = currentTimeBR.split(':').map(Number);
   const currentMin = liveNow ? (brH || 0) * 60 + (brM || 0) : null;
+
+  const [pdfExporting, setPdfExporting] = useState(false);
+
+  async function handleExportPdf() {
+    if (pdfExporting || !port) return;
+    setPdfExporting(true);
+    try {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth();
+      const rows = buildMonthRows(dataAno, year, month, port.lat, port.lon, todayStr, WEEKDAYS);
+      await exportTidePdf({
+        portName: seoName,
+        state: port.state,
+        monthLabel: `${MONTHS[month]} ${year}`,
+        rows,
+        lang: 'pt',
+      });
+    } catch (err) {
+      console.error('[PortPageContent] Erro ao gerar PDF:', err);
+    } finally {
+      setPdfExporting(false);
+    }
+  }
 
   const { nextHigh, nextLow } = currentMin !== null
     ? getNextHighAndLow(todayTides, currentMin)
@@ -224,19 +250,47 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               <AdSlot slotId={AD_SLOTS.PREFOOTER} format="horizontal" />
             </div>
 
-            <MonthlyTideTable
-              eventos={dataAno}
-              portName={seoName}
-              lat={port.lat}
-              lon={port.lon}
-              state={port.state}
-              referencePort={referenceData}
-              initialDateStr={todayStr}
-            />
+            <button
+              onClick={handleExportPdf}
+              disabled={pdfExporting}
+              className="my-6 block w-full bg-gradient-to-r from-[#0d1526] to-[#1a3a5c] rounded-2xl p-5 text-center border border-blue-500/20 hover:border-blue-400/40 transition-all hover:shadow-lg hover:shadow-blue-500/10 disabled:opacity-50 cursor-pointer"
+            >
+              <p className="text-base font-bold font-syne text-white">
+                {pdfExporting ? '⏳ Gerando PDF...' : '📄 Exporte a tábua de maré em PDF'}
+              </p>
+              <p className="text-xs text-slate-400 mt-1">
+                {pdfExporting ? 'Aguarde um momento' : 'Baixe a tabela completa do mês para consultar offline'}
+              </p>
+            </button>
+
+            <div id="tabela-mensal">
+              <MonthlyTideTable
+                eventos={dataAno}
+                portName={seoName}
+                lat={port.lat}
+                lon={port.lon}
+                state={port.state}
+                referencePort={referenceData}
+                initialDateStr={todayStr}
+              />
+            </div>
+
+            <a href="#graficos-meteorologia" className="my-6 block bg-gradient-to-r from-[#0d1526] to-[#1a3a5c] rounded-2xl p-5 text-center border border-cyan-500/20 hover:border-cyan-400/40 transition-all hover:shadow-lg hover:shadow-cyan-500/10">
+              <p className="text-base font-bold font-syne text-white">📈 Veja a previsão detalhada dos próximos 7 dias</p>
+              <p className="text-xs text-slate-400 mt-1">Gráficos de ondas, vento e temperatura da água</p>
+            </a>
 
             {port.cameras && port.cameras.filter((c) => c.active !== false).length > 0 && (
               <div className="my-8 flex flex-col gap-6">
-                <h2 className="text-2xl font-bold font-syne text-slate-800">Câmeras ao Vivo em {seoName}</h2>
+                <div className="bg-gradient-to-r from-[#0d1526] to-[#1a3a5c] rounded-2xl p-5 border border-green-500/20">
+                  <div className="flex items-center gap-3">
+                    <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
+                    <div>
+                      <p className="text-base font-bold font-syne text-white">📹 Veja a praia ao vivo agora</p>
+                      <p className="text-xs text-slate-400">Câmeras ao Vivo em {seoName}</p>
+                    </div>
+                  </div>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {port.cameras.filter((cam) => cam.active !== false).map((cam, idx) => (
                     <LiveCameraEmbed
@@ -278,7 +332,9 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               <AdSlot slotId={AD_SLOTS.POS_RESSACA} format="auto" />
             </div>
 
-            <WindWaveCharts lat={port.lat} lon={port.lon} />
+            <div id="graficos-meteorologia">
+              <WindWaveCharts lat={port.lat} lon={port.lon} />
+            </div>
 
             <ActivityRecommendations
               todayTides={todayTides}

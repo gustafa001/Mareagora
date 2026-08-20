@@ -1,0 +1,30 @@
+name: Notify Google Search Console
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  notify-google:
+    name: Submit sitemap to Google Search Console
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Wait for Vercel deploy
+        run: sleep 60
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Submit sitemap to Google
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: node scripts/notify-google-sitemaps.mjs

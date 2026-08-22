@@ -5,7 +5,7 @@ import { getPosts } from '@/lib/blog';
 import rolloutStatus from '@/data/content-rollout-status.json';
 
 const base = 'https://mareagora.com.br';
-const _rollout = rolloutStatus as Record<string, { approved: boolean }>;
+const _rollout = rolloutStatus as Record<string, { approved: boolean; approvedAt?: string }>;
 const isApproved = (slug: string) => _rollout[slug]?.approved === true;
 
 const tideDataDate = () => {
@@ -13,6 +13,19 @@ const tideDataDate = () => {
   // Dados de maré são anuais (PDFs da Marinha publicados 1x/ano).
   // lastModified honesto = início do ano vigente, não "hoje".
   return new Date(now.getFullYear(), 0, 1).toISOString();
+};
+
+// Usa a data real de aprovação do rollout (quando a página passou a ser indexável)
+// em vez de uma data fixa, para que o Google receba sinal de que o conteúdo/robots
+// mudou e valha a pena rastrear de novo. Cai para o início do ano como fallback
+// honesto quando não há approvedAt registrado.
+const globalPlaceLastModified = (slug: string) => {
+  const approvedAt = _rollout[slug]?.approvedAt;
+  if (approvedAt) {
+    const parsed = new Date(approvedAt);
+    if (!Number.isNaN(parsed.getTime())) return parsed.toISOString();
+  }
+  return tideDataDate();
 };
 
 export async function generateSitemaps() {
@@ -93,7 +106,7 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
       })),
       ...GLOBAL_PLACES.filter(p => isApproved(p.slug) && !AUTO_SLUGS_TO_REMOVE.has(p.slug)).map(p => ({
         url: `${base}/mare-mundo/${p.countryCode}/${p.slug}`,
-        lastModified: tideDataDate(),
+        lastModified: globalPlaceLastModified(p.slug),
         changeFrequency: 'daily' as const,
         priority: 0.5,
       }))
@@ -113,7 +126,7 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
       })),
       ...GLOBAL_PLACES.filter(p => isApproved(p.slug) && !AUTO_SLUGS_TO_REMOVE.has(p.slug)).map(p => ({
         url: `${base}/tide/${p.countryCode}/${p.slug}`,
-        lastModified: tideDataDate(),
+        lastModified: globalPlaceLastModified(p.slug),
         changeFrequency: 'daily' as const,
         priority: 0.5,
       }))

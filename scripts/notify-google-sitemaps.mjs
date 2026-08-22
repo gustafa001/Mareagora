@@ -15,7 +15,12 @@
  */
 
 const SITE_URL = 'sc-domain:mareagora.com.br';
-const SITEMAP_FEEDPATH = 'https://mareagora.com.br/sitemap/index.xml';
+// URL correta: o Next.js gera automaticamente o índice mestre em /sitemap.xml
+// (que lista /sitemap/mundo.xml, /sitemap/tide-en.xml, /sitemap/blog.xml etc).
+// /sitemap/index.xml é apenas o sub-sitemap com id "index" (rotas estáticas
+// genéricas) definido em app/sitemap.ts — nunca continha as páginas de
+// mundo/tide/blog, então o Google nunca era avisado sobre elas por aqui.
+const SITEMAP_FEEDPATH = 'https://mareagora.com.br/sitemap.xml';
 
 function log(label, ok, detail = '') {
   const icon = ok ? '✅' : '❌';

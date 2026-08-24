@@ -20,13 +20,17 @@ export default async function TideWidget({ params, searchParams }: Props) {
   let todayTides: { hora: string; altura_m: number; tipo?: string }[] = [];
   let lat = 0;
   let lon = 0;
+  // Offset do local em minutos (Brasília = -180). Usar o relógio do servidor
+  // (UTC) fazia a "próxima maré" desalinhar perto da meia-noite local.
+  let tzOffsetMin = -180;
 
   // Data de hoje no fuso local (lugar global: utcOffsetMin; porto BR: Brasília),
   // em vez de UTC — senão perto da meia-noite mostra o dia seguinte.
   if (cc) {
     const place = getGlobalPlace(cc, slug);
     if (!place) notFound();
-    const hoje = new Date(Date.now() + (place.utcOffsetMin ?? 0) * 60000).toISOString().slice(0, 10);
+    tzOffsetMin = place.utcOffsetMin ?? 0;
+    const hoje = new Date(Date.now() + tzOffsetMin * 60000).toISOString().slice(0, 10);
     name = place.name;
     lat = place.lat;
     lon = place.lon;
@@ -43,8 +47,8 @@ export default async function TideWidget({ params, searchParams }: Props) {
     todayTides = getEventosDia(port, hoje);
   }
 
-  const now = new Date();
-  const nowMin = now.getHours() * 60 + now.getMinutes();
+  const nowLocal = new Date(Date.now() + tzOffsetMin * 60000);
+  const nowMin = nowLocal.getUTCHours() * 60 + nowLocal.getUTCMinutes();
   const nextTide = todayTides.find(t => {
     const [h, m] = t.hora.split(':').map(Number);
     return h * 60 + m > nowMin;

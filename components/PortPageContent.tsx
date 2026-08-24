@@ -29,6 +29,8 @@ import ShareButton from '@/components/ShareButton';
 import { useSeaConditions } from '@/hooks/useSeaConditions';
 import RessacaAlert from '@/components/RessacaAlert';
 import { getNextHighAndLow } from '@/lib/tideUtils';
+import { classifyToday } from '@/lib/tideQuality';
+import TideQualityBadge from '@/components/TideQualityBadge';
 import { notFound } from 'next/navigation';
 import type { BlogPost } from '@/lib/blog';
 import { useRecentPorts } from '@/hooks/useRecentPorts';
@@ -129,6 +131,8 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
     ? getNextHighAndLow(todayTides, currentMin)
     : { nextHigh: null, nextLow: null };
 
+  const tideQuality = classifyToday(todayTides, currentMin);
+
   const referencePort = port.referencePortSlug ? getPortBySlug(port.referencePortSlug) : null;
   const referenceData = referencePort ? {
     name: referencePort.cityName || referencePort.name,
@@ -185,6 +189,12 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               title={`Tábua de Maré ${seoName} ${ano} | MaréAgora`}
               text={`🌊 Confira a previsão de marés em ${seoName} — MaréAgora`}
             />
+
+            {tideQuality && (
+              <div className="mt-2">
+                <TideQualityBadge result={tideQuality} />
+              </div>
+            )}
 
             <p className="mt-4 mb-20 text-xs opacity-70 text-white/70" suppressHydrationWarning>
               Horário local: {currentTimeBR}

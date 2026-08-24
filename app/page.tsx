@@ -1,10 +1,13 @@
 import HomeHero from '@/components/HomeHero';
 import FeaturedPorts from '@/components/FeaturedPorts';
+import BestTidesToday from '@/components/BestTidesToday';
 import RegionalLinks from '@/components/RegionalLinks';
 import RecentBlogPosts from '@/components/RecentBlogPosts';
 import AdSlot from '@/components/ads/AdSlot';
 import { AD_SLOTS } from '@/lib/adConfig';
 import SchemaGenerator from '@/components/seo/SchemaGenerator';
+
+export const revalidate = 3600; // ISR: classificação "hoje" não pode congelar no build
 
 export const metadata = {
   title: 'MaréAgora — Tábua de Marés do Brasil em Tempo Real',
@@ -33,6 +36,9 @@ export default function Home() {
 
       {/* SEÇÃO 1: Portos em Destaque */}
       <FeaturedPorts />
+
+      {/* SEÇÃO 1.5: Melhores do litoral hoje (classificação qualitativa) */}
+      <BestTidesToday />
 
       {/* SEÇÃO 2: Conteúdo Editorial (SEO) */}
       <section className="w-full max-w-4xl mx-auto px-6 py-16 text-slate-300 border-t border-white/5">

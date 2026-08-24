@@ -22,6 +22,30 @@ export interface TideQualityResult {
   tone: "excelente" | "bom" | "regular" | "calmo";
 }
 
+type Lang = "pt" | "en";
+
+const LABELS: Record<Lang, Record<"piscinasExcelente" | "piscinasBoa" | "surfe" | "pesca" | "calma", { label: string; detail: (d: string) => string }>> = {
+  pt: {
+    piscinasExcelente: { label: "Excelente para piscinas naturais", detail: (h) => `Baixa-mar seca (${h} m) hoje` },
+    piscinasBoa: { label: "Bom para piscinas naturais", detail: (h) => `Baixa-mar em ${h} m` },
+    surfe: { label: "Condições boas para surfe", detail: (a) => `Amplitude de ${a} m` },
+    pesca: { label: "Janela favorável para pesca", detail: (a) => `Maré em movimento (amplitude ${a} m)` },
+    calma: { label: "Dia de maré calma", detail: (a) => `Amplitude pequena (${a} m)` },
+  },
+  en: {
+    piscinasExcelente: { label: "Excellent for natural pools", detail: (h) => `Dry low tide (${h} m) today` },
+    piscinasBoa: { label: "Good for natural pools", detail: (h) => `Low tide at ${h} m` },
+    surfe: { label: "Good surfing conditions", detail: (a) => `${a} m tidal range` },
+    pesca: { label: "Favorable fishing window", detail: (a) => `Moving tide (${a} m range)` },
+    calma: { label: "Calm tide day", detail: (a) => `Small tidal range (${a} m)` },
+  },
+};
+
+const SURFE_ESTADO: Record<Lang, Record<string, string>> = {
+  pt: { subindo: "maré enchendo", baixando: "maré secando", neutro: "hoje" },
+  en: { subindo: "rising tide", baixando: "falling tide", neutro: "today" },
+};
+
 function toMin(hora: string): number | null {
   const m = /^(\d{1,2}):(\d{2})$/.exec(hora?.trim() ?? "");
   if (!m) return null;
@@ -65,25 +89,41 @@ function estadoAgora(
  */
 export function classifyToday(
   eventos: MareEventoLite[] | undefined,
-  nowMin: number | null
+  nowMin: number | null,
+  lang: Lang = "pt"
 ): TideQualityResult | null {
   if (!eventos || eventos.length < 2) return null;
 
   const alturas = eventos.map((e) => e.altura_m).filter((h) => Number.isFinite(h));
   if (alturas.length < 2) return null;
 
+  const L = LABELS[lang];
   const minH = Math.min(...alturas);
   const maxH = Math.max(...alturas);
   const amplitude = maxH - minH;
+  const amp = amplitude.toFixed(2);
+  const low = minH.toFixed(2);
 
   const estado = nowMin === null ? null : estadoAgora(eventos, nowMin);
+  const estadoWord =
+    lang === "en"
+      ? estado === "subindo"
+        ? SURFE_ESTADO.en.subindo
+        : estado === "baixando"
+          ? SURFE_ESTADO.en.baixando
+          : SURFE_ESTADO.en.neutro
+      : estado === "subindo"
+        ? SURFE_ESTADO.pt.subindo
+        : estado === "baixando"
+          ? SURFE_ESTADO.pt.baixando
+          : SURFE_ESTADO.pt.neutro;
 
   // 1) Piscinas naturais: maré baixa bem seca é o gatilho (padrão NE/SE).
   if (minH <= 0.35) {
     return {
       score: 95,
-      label: "Excelente para piscinas naturais",
-      detail: `Baixa-mar seca (${minH.toFixed(2)} m) hoje`,
+      label: L.piscinasExcelente.label,
+      detail: L.piscinasExcelente.detail(low),
       emoji: "🤿",
       tone: "excelente",
     };
@@ -91,8 +131,8 @@ export function classifyToday(
   if (minH <= 0.55 && amplitude >= 0.6) {
     return {
       score: 80,
-      label: "Bom para piscinas naturais",
-      detail: `Baixa-mar em ${minH.toFixed(2)} m`,
+      label: L.piscinasBoa.label,
+      detail: L.piscinasBoa.detail(low),
       emoji: "🤿",
       tone: "bom",
     };
@@ -100,16 +140,10 @@ export function classifyToday(
 
   // 2) Surfe: amplitude generosa com maré em movimento ajuda.
   if (amplitude >= 0.9) {
-    const quando =
-      estado === "subindo"
-        ? "maré enchendo"
-        : estado === "baixando"
-          ? "maré secando"
-          : "hoje";
     return {
       score: 75,
-      label: "Condições boas para surfe",
-      detail: `Amplitude de ${amplitude.toFixed(2)} m — ${quando}`,
+      label: L.surfe.label,
+      detail: `${L.surfe.detail(amp)} — ${estadoWord}`,
       emoji: "🏄",
       tone: "bom",
     };
@@ -119,8 +153,8 @@ export function classifyToday(
   if (amplitude >= 0.4) {
     return {
       score: 65,
-      label: "Janela favorável para pesca",
-      detail: `Maré em movimento (amplitude ${amplitude.toFixed(2)} m)`,
+      label: L.pesca.label,
+      detail: L.pesca.detail(amp),
       emoji: "🎣",
       tone: "regular",
     };
@@ -129,8 +163,8 @@ export function classifyToday(
   // 4) Quadratura: dia de marés fracas.
   return {
     score: 40,
-    label: "Dia de maré calma",
-    detail: `Amplitude pequena (${amplitude.toFixed(2)} m)`,
+    label: L.calma.label,
+    detail: L.calma.detail(amp),
     emoji: "😌",
     tone: "calmo",
   };

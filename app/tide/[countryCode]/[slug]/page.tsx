@@ -29,6 +29,8 @@ const DailyScoreCard = dynamic(() => import('@/components/DailyScoreCard'), { ss
 import TideSchemaMarkup from '@/components/TideSchemaMarkup';
 import ShareButton from '@/components/ShareButton';
 import { generateTideDescription } from '@/lib/tideDescription';
+import { classifyToday } from '@/lib/tideQuality';
+import TideQualityBadge from '@/components/TideQualityBadge';
 import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
 
@@ -109,6 +111,8 @@ export default async function TideLocalPage({ params }: Props) {
 
   const { nextHigh, nextLow } = getNextHighAndLow(todayTides as TideEvent[], currentMin);
 
+  const tideQuality = classifyToday(todayTides, currentMin, 'en');
+
   const nearby = getNearbyGlobalPlaces(place);
 
   return (
@@ -176,6 +180,12 @@ export default async function TideLocalPage({ params }: Props) {
               title={`Tide Table ${placeName} ${year} | MaréAgora`}
               text={`🌊 Check the tide forecast for ${placeName}, ${countryName} — MaréAgora`}
             />
+
+            {tideQuality && (
+              <div className="mt-2">
+                <TideQualityBadge result={tideQuality} />
+              </div>
+            )}
 
             <div className="mb-20" />
           </div>

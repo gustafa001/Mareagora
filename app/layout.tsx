@@ -4,6 +4,8 @@ import "./globals.css";
 import "./blog.css";
 import Script from "next/script";
 import MobileStickyAd from "@/components/ads/MobileStickyAd";
+import ConsentedScripts from "@/components/ads/ConsentedScripts";
+import CookieConsent from "@/components/CookieConsent";
 import Footer from "@/components/Footer";
 import InstallPWA from "@/components/InstallPWA";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -83,37 +85,7 @@ export default function RootLayout({
         <meta name="google-site-verification" content="sHCQQ9fcGrzTM7k2FVoiEiBczB8Z4peDcz1k3Pnx6G8" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-title" content="MareAgora" />
-        {/* Script AdSense */}
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2920008879492175"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
-        {/* Google Analytics GA4 — G-LP14YCN9MZ */}
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-LP14YCN9MZ"
-          strategy="lazyOnload"
-        />
-        <Script id="ga4-init" strategy="lazyOnload">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-LP14YCN9MZ');
-          `}
-        </Script>
-        {/* Microsoft Clarity — y4hkx0np5z */}
-        <Script id="ms-clarity" strategy="afterInteractive">
-          {`
-            (function(c,l,a,r,i,t,y){
-                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-            })(window, document, "clarity", "script", "y4hkx0np5z");
-          `}
-        </Script>
+        {/* AdSense, GA4 e Clarity carregam via <ConsentedScripts /> apos consentimento LGPD */}
         <Script id="register-sw" strategy="afterInteractive">
           {`
             if ('serviceWorker' in navigator) {
@@ -153,6 +125,8 @@ export default function RootLayout({
 
         <InstallPWA />
         <MobileStickyAd />
+        <ConsentedScripts />
+        <CookieConsent />
         <SpeedInsights />
       </body>
     </html>

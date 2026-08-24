@@ -620,16 +620,6 @@
     "permanent": true
   },
   {
-    "source": "/mare/arquipelago-de-fernando-de-noronha",
-    "destination": "/mare/pernambuco/arquipelago-de-fernando-de-noronha",
-    "permanent": true
-  },
-  {
-    "source": "/operacoes-portuarias/arquipelago-de-fernando-de-noronha",
-    "destination": "/operacoes-portuarias/pernambuco/arquipelago-de-fernando-de-noronha",
-    "permanent": true
-  },
-  {
     "source": "/mare/ilha-da-trindade",
     "destination": "/mare/espirito-santo/ilha-da-trindade",
     "permanent": true

@@ -26,8 +26,8 @@ export default function ConditionsCard({ lat, lon }: ConditionsCardProps) {
           return d.getHours() === nowH && d.toDateString() === now.toDateString();
         });
         const i = idx >= 0 ? idx : 0;
-        const wh = h.wave_height[i];
-        const wp = h.wave_period[i];
+        const wh = h.wave_height?.[i] ?? 0;
+        const wp = h.wave_period?.[i] ?? 0;
 
         let icon = '🏄', label = 'Boas condições', desc = 'Ondas adequadas para a maioria das atividades.';
         if (wh < 0.3) { icon = '😴'; label = 'Mar calmo'; desc = 'Ótimo para mergulho e natação. Poucas ondas para surfe.'; }

@@ -20,7 +20,7 @@ import { getEventosDia } from '@/lib/mare';
  */
 async function handleNotify(req: NextRequest) {
   try {
-    const notifySecret = process.env.CRON_SECRET;
+    const notifySecret = process.env.CRON_SECRET || process.env.NOTIFY_SECRET;
     if (!notifySecret) {
       return NextResponse.json(
         { error: 'CRON_SECRET not configured' },
@@ -29,7 +29,8 @@ async function handleNotify(req: NextRequest) {
     }
 
     const auth = req.headers.get('authorization');
-    if (auth !== `Bearer ${notifySecret}`) {
+    const xNotifySecret = req.headers.get('x-notify-secret');
+    if (auth !== `Bearer ${notifySecret}` && xNotifySecret !== notifySecret) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 

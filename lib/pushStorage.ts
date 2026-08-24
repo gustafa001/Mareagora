@@ -1,12 +1,15 @@
 /**
- * Push subscription storage using /tmp (MVP — data lost on cold start)
- * Each entry: { endpoint, keys, portSlug }
+ * Push subscription storage.
+ * Uses process.cwd() which persists within a Vercel serverless instance.
+ * NOTE: subscriptions are lost on redeploy. For persistent storage,
+ * migrate to Vercel KV or Upstash Redis.
  */
 
 import { promises as fs } from 'fs';
 import path from 'path';
 
-const STORAGE_FILE = path.join('/tmp', 'mareagora-push-subs.json');
+const STORAGE_DIR = path.join(process.cwd(), '.data');
+const STORAGE_FILE = path.join(STORAGE_DIR, 'push-subs.json');
 
 export interface PushSubscriptionRecord {
   endpoint: string;
@@ -25,6 +28,7 @@ async function readAll(): Promise<PushSubscriptionRecord[]> {
 }
 
 async function writeAll(records: PushSubscriptionRecord[]): Promise<void> {
+  await fs.mkdir(STORAGE_DIR, { recursive: true });
   await fs.writeFile(STORAGE_FILE, JSON.stringify(records, null, 2), 'utf-8');
 }
 

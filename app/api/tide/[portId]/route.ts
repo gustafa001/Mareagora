@@ -2,29 +2,35 @@ import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
 
+const VALID_PORT_ID = /^\d{4,6}$/;
+
 export async function GET(
   request: Request,
   { params }: { params: { portId: string } }
 ) {
   const { portId } = params;
 
+  if (!VALID_PORT_ID.test(portId)) {
+    return NextResponse.json(
+      { error: 'ID de porto inválido' },
+      { status: 400 }
+    );
+  }
+
   try {
-    // portId é o dhnId do porto (ex: "50228" para Porto de Santos)
     const filePath = path.join(process.cwd(), 'data', 'mare', `${portId}.json`);
     const fileContent = await fs.readFile(filePath, 'utf-8');
     const data = JSON.parse(fileContent);
 
     return NextResponse.json(data, {
       headers: {
-        // Cache de 24h no browser, 7 dias no CDN do Vercel
         'Cache-Control': 'public, s-maxage=604800, stale-while-revalidate=86400',
         'Content-Type': 'application/json',
       },
     });
-  } catch (error) {
-    console.error(`Erro ao carregar dados da maré para portId ${portId}:`, error);
+  } catch {
     return NextResponse.json(
-      { error: 'Porto não encontrado', details: error instanceof Error ? error.message : 'Erro desconhecido' },
+      { error: 'Porto não encontrado' },
       { status: 404 }
     );
   }

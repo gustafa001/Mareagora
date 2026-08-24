@@ -25,8 +25,8 @@ export default function BeachConditions({ lat, lon }: BeachConditionsProps) {
 
         const now = new Date();
         const hour = now.getHours();
-        const waveHeight = marineRes.hourly?.wave_height[hour] || 0;
-        const wavePeriod = marineRes.hourly?.wave_period[hour] || 0;
+        const waveHeight = marineRes.hourly?.wave_height?.[hour] ?? 0;
+        const wavePeriod = marineRes.hourly?.wave_period?.[hour] ?? 0;
         const waterTemp = marineRes.hourly?.sea_surface_temperature?.[hour] || 0;
         const weather = weatherRes.current;
 

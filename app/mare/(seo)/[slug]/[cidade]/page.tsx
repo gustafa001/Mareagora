@@ -15,7 +15,7 @@ import { getPortoDescription } from '@/lib/porto-descriptions';
 import SchemaGenerator from '@/components/seo/SchemaGenerator';
 import { generateSEOContent } from '@/lib/seo/content-generator';
 
-export const revalidate = 3600; // regenera a página a cada 1h (ISR), evita data congelada do build
+export const revalidate = 21600; // regenera a página a cada 6h (ISR), evita data congelada do build — reduzido de 1h p/ diminuir ISR Writes/CPU no free tier
 
 export async function generateStaticParams() {
   return PORTS.map(port => ({

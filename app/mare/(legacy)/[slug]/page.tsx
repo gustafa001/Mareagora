@@ -13,7 +13,7 @@ import { getPostsByPort } from '@/lib/blog';
 import type { BlogPost } from '@/lib/blog';
 import { getPortoDescription } from '@/lib/porto-descriptions';
 
-export const revalidate = 3600; // regenera a página a cada 1h (ISR), evita data congelada do build
+export const revalidate = 21600; // regenera a página a cada 6h (ISR), evita data congelada do build — reduzido de 1h p/ diminuir ISR Writes/CPU no free tier
 
 export async function generateStaticParams() {
   return getAllSlugs().map(slug => ({ slug }));

@@ -7,7 +7,7 @@ import PortOperationsPage from '@/components/port-operations/PortOperationsPage'
 import SchemaGenerator from '@/components/seo/SchemaGenerator';
 import { generateSEOContent } from '@/lib/seo/content-generator';
 
-export const revalidate = 3600; // regenera a página a cada 1h (ISR), evita data congelada do build
+export const revalidate = 21600; // regenera a página a cada 6h (ISR), evita data congelada do build — reduzido de 1h p/ diminuir ISR Writes/CPU no free tier
 
 /** Apenas portos comerciais/industriais fazem sentido para este dashboard.
  *  Praias que usam a maré de outro porto como referência (referencePortSlug)

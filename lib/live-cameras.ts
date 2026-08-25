@@ -50,6 +50,14 @@ const DESCRIPTIONS: Record<string, string> = {
     'Vista da Praia dos Sonhos, em Itanhaém, no litoral sul de São Paulo.',
   bi7B4EmyHHs:
     'Vista de Sunny Isles Beach, em Miami, na Flórida.',
+  fCBfwATvBBI:
+    'Vista em 4K da Praia do Gonzaga e do Canal 2, em Santos.',
+  VykzH5wVZW4:
+    'Vista do Boqueirão e da Guilhermina, na orla de Praia Grande.',
+  'qqcsE-v9Cac':
+    'Vista da Praia do Itararé, em São Vicente.',
+  jrleSsjuNqw:
+    'Transmissão 24h da Praia do Forte, em Cabo Frio.',
 };
 
 // Agrupamento visual por região turística (mais legível que o campo

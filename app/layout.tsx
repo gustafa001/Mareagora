@@ -4,6 +4,7 @@ import "./globals.css";
 import "./blog.css";
 import Script from "next/script";
 import MobileStickyAd from "@/components/ads/MobileStickyAd";
+import AdsScripts from "@/components/ads/AdsScripts";
 import ConsentedScripts from "@/components/ads/ConsentedScripts";
 import CookieConsent from "@/components/CookieConsent";
 import Footer from "@/components/Footer";
@@ -85,7 +86,8 @@ export default function RootLayout({
         <meta name="google-site-verification" content="sHCQQ9fcGrzTM7k2FVoiEiBczB8Z4peDcz1k3Pnx6G8" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-title" content="MareAgora" />
-        {/* AdSense, GA4 e Clarity carregam via <ConsentedScripts /> apos consentimento LGPD */}
+        {/* AdSense carrega sempre via <AdsScripts /> (nao-personalizado ate consentimento).
+            GA4 e Clarity carregam via <ConsentedScripts /> apos consentimento LGPD */}
         <Script id="register-sw" strategy="afterInteractive">
           {`
             if ('serviceWorker' in navigator) {
@@ -125,6 +127,7 @@ export default function RootLayout({
 
         <InstallPWA />
         <MobileStickyAd />
+        <AdsScripts />
         <ConsentedScripts />
         <CookieConsent />
         <SpeedInsights />

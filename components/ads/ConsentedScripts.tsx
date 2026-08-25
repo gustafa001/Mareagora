@@ -4,6 +4,12 @@ import Script from "next/script";
 import { useEffect, useState } from "react";
 import { CONSENT_KEY } from "@/components/CookieConsent";
 
+/**
+ * GA4 e Clarity SÓ carregam com consentimento explícito ("granted").
+ * O AdSense foi movido para <AdsScripts /> (components/ads/AdsScripts.tsx),
+ * que carrega sempre e usa anúncios não-personalizados até o usuário aceitar
+ * — assim a monetização não fica zerada enquanto o usuário não decide.
+ */
 export default function ConsentedScripts() {
   const [granted, setGranted] = useState(false);
 
@@ -22,12 +28,6 @@ export default function ConsentedScripts() {
 
   return (
     <>
-      <Script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2920008879492175"
-        crossOrigin="anonymous"
-        strategy="afterInteractive"
-      />
       {/* Google Analytics GA4 — G-LP14YCN9MZ */}
       <Script
         async

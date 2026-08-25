@@ -35,8 +35,8 @@ export default function CookieConsent() {
     >
       <div className="mx-auto flex max-w-3xl flex-col gap-3 sm:flex-row sm:items-center">
         <p className="flex-1 leading-relaxed">
-          Usamos cookies para personalizar anúncios e melhorar sua experiência.
-          Você pode aceitar tudo ou continuar apenas com o essencial.{" "}
+          Usamos cookies para personalizar anúncios e medir audiência. Você
+          pode aceitar tudo ou continuar só com anúncios não personalizados.{" "}
           <a href="/cookies" className="underline decoration-cyan-400 underline-offset-2 hover:text-cyan-300">
             Saiba mais
           </a>
@@ -46,7 +46,7 @@ export default function CookieConsent() {
             onClick={() => decide("denied")}
             className="rounded-lg border border-white/20 px-4 py-2 font-medium transition-colors hover:bg-white/10"
           >
-            Só o essencial
+            Anúncios não personalizados
           </button>
           <button
             onClick={() => decide("granted")}

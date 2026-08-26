@@ -135,7 +135,7 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
 
   // id === 'index' (Base generic routes)
   const today = new Date().toISOString();
-  const staticRoutes = ['', '/portos', '/guia-praias', '/cameras', '/sobre', '/contato', '/termos', '/privacidade'];
+  const staticRoutes = ['', '/portos', '/guia-praias', '/cameras', '/sobre', '/contato', '/termos', '/privacidade', '/glossario-de-mare', '/tide/fishing-guide'];
   const dailyRoutes = ['/mare-hoje', '/mare-amanha', '/mare-semana', '/mare-viva', '/mare-morta', '/lua', '/ondas', '/coeficiente', '/pesca', '/lugares-de-pesca'];
 
   return [

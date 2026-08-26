@@ -72,6 +72,7 @@ export default function NavBar({ className = '' }: NavBarProps) {
       items: [
         { href: '/lugares-de-pesca', icon: MapPin, label: s.navFishingMap },
         { href: '/pesca', icon: Fish, label: s.navFishingGuide },
+        { href: '/glossario-de-mare', icon: Waves, label: 'Glossário' },
       ],
     },
     {

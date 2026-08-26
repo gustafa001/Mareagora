@@ -15,6 +15,7 @@ export default function Footer() {
             <Link href="/" className="hover:text-white transition-colors">Início</Link>
             <Link href="/portos" className="hover:text-white transition-colors">Portos</Link>
             <Link href="/guia-praias" className="hover:text-white transition-colors">Guia de Praias</Link>
+            <Link href="/glossario-de-mare" className="hover:text-white transition-colors">Glossário</Link>
             <Link href="/sobre" className="hover:text-white transition-colors">Sobre</Link>
             <Link href="/termos" className="hover:text-white transition-colors">Termos de Uso</Link>
             <Link href="/privacidade" className="hover:text-white transition-colors">Privacidade</Link>

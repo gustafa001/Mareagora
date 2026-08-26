@@ -52,7 +52,7 @@ export default function ConditionsCard({ lat, lon }: ConditionsCardProps) {
       <h3 className="card-title mb-4">🏄 Condições da Água</h3>
       <div className="text-center py-6 bg-gray-50 rounded-2xl border border-gray-100 mt-2">
         <div className="text-[3.5rem] mb-3 leading-none">{conditions?.icon || '⏳'}</div>
-        <div className="font-syne font-extrabold text-[1.4rem] tracking-tight text-gray-800 mb-2">{conditions?.label || 'Calculando…'}</div>
+        <div className="font-syne font-extrabold text-[1.4rem] text-gray-800 mb-2">{conditions?.label || 'Calculando…'}</div>
         <div className="text-gray-500 text-sm leading-relaxed px-5">{conditions?.desc || '—'}</div>
       </div>
     </div>

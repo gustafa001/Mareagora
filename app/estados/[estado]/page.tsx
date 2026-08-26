@@ -111,7 +111,7 @@ export default function EstadoPage({ params }: { params: { estado: string } }) {
           </nav>
 
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-black text-white mb-6 font-syne tracking-tighter">
+            <h1 className="text-4xl md:text-6xl font-black text-white mb-6 font-syne">
               Tábua de Maré — {stateName}
             </h1>
             <p className="text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">

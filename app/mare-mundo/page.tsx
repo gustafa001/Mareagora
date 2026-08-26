@@ -87,7 +87,7 @@ export default function MareMundoPage() {
             <p className="text-xs font-bold uppercase tracking-widest text-blue-400 opacity-90">
               🌍 Cobertura Internacional
             </p>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight font-syne leading-tight max-w-4xl">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold font-syne leading-tight max-w-4xl">
               Tábua de Marés no Mundo
             </h1>
             <p className="text-sm sm:text-lg opacity-90 font-medium max-w-2xl text-slate-300">

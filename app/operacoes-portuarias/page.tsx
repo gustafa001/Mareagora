@@ -36,7 +36,7 @@ export default function OperacoesPortuariasIndexPage() {
         <NavBar />
 
         <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6 text-center">
-          <h1 className="text-3xl sm:text-5xl font-black font-syne text-white uppercase tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-black font-syne text-white uppercase">
             Operações Portuárias
           </h1>
           <p className="mt-3 text-slate-400 text-sm sm:text-base max-w-2xl mx-auto">

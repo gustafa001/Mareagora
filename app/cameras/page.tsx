@@ -28,7 +28,7 @@ export default function CamerasPage() {
         </div>
 
         <div className="mb-8 text-center sm:mb-12">
-          <h1 className="mb-4 text-3xl font-black tracking-tighter text-slate-900 sm:text-4xl md:text-5xl font-syne uppercase">
+          <h1 className="mb-4 text-3xl font-black text-slate-900 sm:text-4xl md:text-5xl font-syne uppercase">
             Praias ao Vivo
           </h1>
           <p className="mx-auto max-w-2xl text-base text-slate-600 sm:text-lg">

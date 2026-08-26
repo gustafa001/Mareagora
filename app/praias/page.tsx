@@ -17,7 +17,7 @@ export default function Page() {
         description="Condições do mar em todas as praias."
       />
       <div className="mx-auto max-w-4xl text-center">
-        <h1 className="text-4xl font-black tracking-tighter text-slate-900 font-syne mb-6">
+        <h1 className="text-4xl font-black text-slate-900 font-syne mb-6">
           Guia de Praias
         </h1>
         <p className="text-lg text-slate-600 mb-8">

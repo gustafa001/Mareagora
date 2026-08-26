@@ -159,7 +159,7 @@ export default async function TideLocalPage({ params }: Props) {
             <p className="text-xs font-bold uppercase tracking-widest text-blue-400 opacity-80">
               {countryName} · Harmonic Tide Model
             </p>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight font-syne leading-tight max-w-4xl text-white drop-shadow-md">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold font-syne leading-tight max-w-4xl text-white drop-shadow-md">
               Tide Table {placeName} — {year}
             </h1>
             <p className="text-sm sm:text-lg md:text-xl opacity-90 font-medium font-syne hidden sm:block text-white/90">

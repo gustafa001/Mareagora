@@ -38,7 +38,7 @@ export default function PortHeader({ port, lastUpdated, isOnline, isUpdating }: 
           <Link href="/operacoes-portuarias" className="text-[10px] font-bold text-blue-400 hover:text-white uppercase tracking-widest">
             ← Operações Portuárias
           </Link>
-          <h1 className="mt-1 text-2xl sm:text-4xl font-black font-syne text-white uppercase tracking-tight">
+          <h1 className="mt-1 text-2xl sm:text-4xl font-black font-syne text-white uppercase">
             {port.name}
           </h1>
           <p className="text-slate-400 text-sm sm:text-base font-medium mt-1">

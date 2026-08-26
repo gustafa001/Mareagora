@@ -69,7 +69,7 @@ export default function PortBlogSection({ portSlug, portName, posts, strategy = 
       >
         <h2 className="text-lg sm:text-xl font-bold font-syne text-white flex items-center gap-3">
           <span className="text-blue-400">📝</span> 
-          <span className="tracking-tight">{isSpecific ? `Artigos sobre ${portName}` : 'Artigos Recentes'}</span>
+          <span>{isSpecific ? `Artigos sobre ${portName}` : 'Artigos Recentes'}</span>
         </h2>
         <Link
           href="/blog"

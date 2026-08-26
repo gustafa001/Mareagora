@@ -80,7 +80,7 @@ export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
     <section className="mb-8">
       <div className="flex items-center gap-4 mb-10">
         <div className="w-1.5 h-8 bg-gradient-to-b from-blue-400 to-cyan-400 rounded-full" />
-        <h2 className="text-2xl md:text-3xl font-black text-[#0d1526] font-syne tracking-tight uppercase">
+        <h2 className="text-2xl md:text-3xl font-black text-[#0d1526] font-syne uppercase">
           {s.detailedForecast}
         </h2>
         <div className="flex-1 h-px bg-gradient-to-r from-[#0d1526]/20 to-transparent" />

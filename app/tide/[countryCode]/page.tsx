@@ -75,7 +75,7 @@ export default function TideCountryPage({ params }: CountryPageProps) {
             <p className="text-xs font-bold uppercase tracking-widest text-blue-400 opacity-80">
               {flag} {countryName}
             </p>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight font-syne leading-tight max-w-4xl text-white drop-shadow-md">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold font-syne leading-tight max-w-4xl text-white drop-shadow-md">
               Tide Tables {countryName}
             </h1>
             <p className="text-sm sm:text-lg opacity-90 font-medium font-syne text-white/90">

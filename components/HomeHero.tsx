@@ -128,7 +128,7 @@ export default function HomeHero() {
           <div className="inline-flex items-center justify-center w-20 h-20 mb-6 rounded-3xl overflow-hidden shadow-2xl shadow-blue-500/20">
             <img src="/logo-mark.png" alt="MaréAgora" className="w-full h-full object-cover" />
           </div>
-          <h1 className="text-4xl md:text-6xl font-black text-white mb-3 font-syne tracking-tighter">
+          <h1 className="text-4xl md:text-6xl font-black text-white mb-3 font-syne">
             MaréAgora
           </h1>
           <p className="text-blue-200/70 font-medium">

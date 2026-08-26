@@ -164,7 +164,7 @@ export default function NavBar({ className = '' }: NavBarProps) {
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="font-black text-base sm:text-2xl tracking-tighter font-syne uppercase whitespace-nowrap">MaréAgora</span>
+            <span className="font-black text-base sm:text-2xl font-syne uppercase whitespace-nowrap">MaréAgora</span>
           </Link>
 
           {/* Navigation Links — desktop (inalterado, só a ordem do array mudou) */}

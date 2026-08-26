@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Syne, DM_Sans, Fira_Code, Fira_Sans } from "next/font/google";
+import { Manrope, DM_Sans, Fira_Code, Fira_Sans } from "next/font/google";
 import "./globals.css";
 import "./blog.css";
 import Script from "next/script";
@@ -11,10 +11,10 @@ import Footer from "@/components/Footer";
 import InstallPWA from "@/components/InstallPWA";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const syne = Syne({
+const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-syne",
-  weight: ["400", "600", "700", "800"],
+  weight: ["500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -68,7 +68,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={`${syne.variable} ${dmSans.variable} ${firaCode.variable} ${firaSans.variable}`}>
+    <html lang="pt-BR" className={`${manrope.variable} ${dmSans.variable} ${firaCode.variable} ${firaSans.variable}`}>
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />

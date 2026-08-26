@@ -39,7 +39,7 @@ export default function Page() {
 
       <div className="px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-5xl">
-          <h1 className="text-4xl font-black tracking-tighter text-slate-900 font-syne mb-4 text-center">
+          <h1 className="text-4xl font-black text-slate-900 font-syne mb-4 text-center">
             Lugares de Pesca
           </h1>
           <p className="text-lg text-slate-600 mb-10 text-center max-w-2xl mx-auto">

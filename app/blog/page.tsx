@@ -100,7 +100,7 @@ export default function BlogPage({ searchParams }: { searchParams: { page?: stri
               <span>MaréAgora Blog</span>
             </div>
             <h1
-              className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white mb-4"
+              className="text-4xl md:text-6xl font-black uppercase text-white mb-4"
               style={{ fontFamily: 'var(--font-syne)' }}
             >
               Guias e Artigos

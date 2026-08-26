@@ -17,7 +17,7 @@ export default function Page() {
         description="Condições de surf e navegação."
       />
       <div className="mx-auto max-w-4xl text-center">
-        <h1 className="text-4xl font-black tracking-tighter text-slate-900 font-syne mb-6">
+        <h1 className="text-4xl font-black text-slate-900 font-syne mb-6">
           Previsão de Ondas
         </h1>
         <p className="text-lg text-slate-600 mb-8">

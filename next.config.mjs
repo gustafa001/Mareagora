@@ -11,6 +11,7 @@ const nextConfig = {
     outputFileTracingIncludes: {
       '/api/tide/[portId]': ['./data/**/*.json'],
       '/mare/[slug]': ['./data/**/*.json'],
+      '/widget/porto/[porto]': ['./data/**/*.json'],
       '/blog': ['./content/blog/**/*.md'],
       '/blog/[slug]': ['./content/blog/**/*.md'],
       '/sitemap.xml': ['./content/blog/**/*.md'],

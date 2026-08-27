@@ -18,6 +18,9 @@ export default function WidgetIndexPage() {
   return (
     <main className="min-h-screen bg-slate-50 py-12 px-4">
       <div className="max-w-3xl mx-auto">
+        <Link href="/" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700 mb-6">
+          ← Voltar
+        </Link>
         <h1 className="text-3xl font-black text-slate-900 font-syne mb-4">Widget de Maré</h1>
         <p className="text-slate-600 mb-8">
           Incorporne a tábua de maré do seu porto favorito em qualquer site. Copie o iframe abaixo e cole no seu blog, pousada ou escola de surf.

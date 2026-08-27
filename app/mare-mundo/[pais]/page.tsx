@@ -35,6 +35,7 @@ export async function generateMetadata({ params }: CountryPageProps) {
   return {
     title: `Tábua de Marés ${countryName} | MaréAgora`,
     description: `Tábua de marés harmônica para ${places.length} locais costeiros em ${countryName}. Horários de maré alta e baixa, ondas e vento em ${countryName}.`,
+    robots: { index: false, follow: true },
     alternates: {
       canonical: `${BASE}/mare-mundo/${params.pais}`,
       languages: {

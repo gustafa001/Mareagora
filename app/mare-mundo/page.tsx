@@ -8,6 +8,7 @@ import AdSlot from '@/components/ads/AdSlot';
 export const metadata = {
   title: 'Maré no Mundo | MaréAgora',
   description: 'Previsão de marés, ondas e ventos para mais de 150 praias e portos internacionais em todo o mundo.',
+  robots: { index: false, follow: true },
   alternates: {
     canonical: 'https://mareagora.com.br/mare-mundo',
     languages: {

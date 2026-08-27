@@ -36,6 +36,7 @@ export async function generateMetadata({ params }: CountryPageProps) {
   return {
     title: `Tide Tables ${countryName} | MaréAgora`,
     description: `Harmonic tide tables for ${places.length} coastal locations in ${countryName}. High and low tide times, wave and wind charts for ${countryName}.`,
+    robots: { index: false, follow: true },
     alternates: {
       canonical: `${BASE}/tide/${params.countryCode}`,
       languages: {

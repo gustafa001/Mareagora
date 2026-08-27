@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `Tábua de Maré ${place.name} ${ano} | MaréAgora`,
     description: `Previsão completa de maré, ondas, vento e condições do mar em ${place.name}, ${place.countryName}. Tábua de marés ${ano} atualizada.`,
-    robots: isApproved(params.slug) ? { index: true, follow: true } : { index: false, follow: true },
+    robots: { index: false, follow: true },
     alternates: {
       canonical: `${BASE}/mare-mundo/${params.pais}/${params.slug}`,
       languages: {

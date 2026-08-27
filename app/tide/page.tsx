@@ -9,6 +9,7 @@ import AdSlot from '@/components/ads/AdSlot';
 export const metadata = {
   title: 'World Tide Tables | MaréAgora',
   description: 'Harmonic tide predictions, waves, wind and weather forecast for over 150 beaches and ports worldwide.',
+  robots: { index: false, follow: true },
   alternates: {
     canonical: 'https://mareagora.com.br/tide',
     languages: {

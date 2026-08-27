@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `Tide Table ${placeName} ${year} | MaréAgora`,
     description: `${placeName} tide table ${year}. Real-time waves, wind, rain radar and full monthly tide schedule for ${placeName}, ${countryName}.`,
-    robots: isApproved(params.slug) ? { index: true, follow: true } : { index: false, follow: true },
+    robots: { index: false, follow: true },
     alternates: {
       canonical: `${BASE}/tide/${params.countryCode}/${params.slug}`,
       languages: {

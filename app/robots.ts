@@ -14,8 +14,6 @@ export default function robots(): MetadataRoute.Robots {
       'https://mareagora.com.br/sitemap/portos.xml',
       'https://mareagora.com.br/sitemap/estados.xml',
       'https://mareagora.com.br/sitemap/blog.xml',
-      'https://mareagora.com.br/sitemap/mundo.xml',
-      'https://mareagora.com.br/sitemap/tide-en.xml',
     ],
   };
 }

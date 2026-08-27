@@ -2,30 +2,14 @@ import { MetadataRoute } from 'next';
 import { PORTS } from '@/lib/ports';
 import { getStateSlug } from '@/lib/states';
 import { getPosts } from '@/lib/blog';
-import rolloutStatus from '@/data/content-rollout-status.json';
 
 const base = 'https://mareagora.com.br';
-const _rollout = rolloutStatus as Record<string, { approved: boolean; approvedAt?: string }>;
-const isApproved = (slug: string) => _rollout[slug]?.approved === true;
 
 const tideDataDate = () => {
   const now = new Date();
   // Dados de maré são anuais (PDFs da Marinha publicados 1x/ano).
   // lastModified honesto = início do ano vigente, não "hoje".
   return new Date(now.getFullYear(), 0, 1).toISOString();
-};
-
-// Usa a data real de aprovação do rollout (quando a página passou a ser indexável)
-// em vez de uma data fixa, para que o Google receba sinal de que o conteúdo/robots
-// mudou e valha a pena rastrear de novo. Cai para o início do ano como fallback
-// honesto quando não há approvedAt registrado.
-const globalPlaceLastModified = (slug: string) => {
-  const approvedAt = _rollout[slug]?.approvedAt;
-  if (approvedAt) {
-    const parsed = new Date(approvedAt);
-    if (!Number.isNaN(parsed.getTime())) return parsed.toISOString();
-  }
-  return tideDataDate();
 };
 
 export async function generateSitemaps() {
@@ -36,8 +20,6 @@ export async function generateSitemaps() {
     { id: 'portos' },
     { id: 'estados' },
     { id: 'blog' },
-    { id: 'mundo' },
-    { id: 'tide-en' },
   ];
 }
 
@@ -46,8 +28,6 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
     return PORTS.filter(p => p.referencePortSlug || (!p.name.toLowerCase().includes('porto') && !p.name.toLowerCase().includes('terminal'))).map(p => ({
       url: `${base}/mare/${getStateSlug(p.state)}/${p.slug}`,
       lastModified: tideDataDate(),
-      changeFrequency: 'daily' as const,
-      priority: 0.8,
     }));
   }
 
@@ -57,8 +37,6 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
     return PRAIAS.filter(p => !!CONTEUDO[p.slug]).map(p => ({
       url: `${base}/guia-praias/${p.slug}`,
       lastModified: tideDataDate(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
     }));
   }
 
@@ -66,20 +44,16 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
     return PORTS.filter(p => !p.referencePortSlug && (p.name.toLowerCase().includes('porto') || p.name.toLowerCase().includes('terminal'))).map(p => ({
       url: `${base}/operacoes-portuarias/${getStateSlug(p.state)}/${p.slug}`,
       lastModified: tideDataDate(),
-      changeFrequency: 'daily' as const,
-      priority: 0.9,
     }));
   }
 
   if (id === 'estados') {
     const states = Array.from(new Set(PORTS.map(p => getStateSlug(p.state))));
     return [
-      { url: `${base}/estados`, lastModified: tideDataDate(), changeFrequency: 'weekly' as const, priority: 0.7 },
+      { url: `${base}/estados`, lastModified: tideDataDate() },
       ...states.map(state => ({
         url: `${base}/estados/${state}`,
         lastModified: tideDataDate(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.75,
       })),
     ];
   }
@@ -88,49 +62,7 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
     return getPosts().filter(p => !p.noindex).map(p => ({
       url: `${base}/blog/${p.slug}`,
       lastModified: new Date(p.updatedAt),
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
     }));
-  }
-
-  if (id === 'mundo') {
-    const { GLOBAL_PLACES, AUTO_SLUGS_TO_REMOVE } = await import('@/lib/globalPlaces');
-    const countries = Array.from(new Set(GLOBAL_PLACES.map(p => p.countryCode)));
-    return [
-      { url: `${base}/mare-mundo`, lastModified: tideDataDate(), changeFrequency: 'weekly' as const, priority: 0.6 },
-      ...countries.map(cc => ({
-        url: `${base}/mare-mundo/${cc}`,
-        lastModified: tideDataDate(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.6,
-      })),
-      ...GLOBAL_PLACES.filter(p => isApproved(p.slug) && !AUTO_SLUGS_TO_REMOVE.has(p.slug)).map(p => ({
-        url: `${base}/mare-mundo/${p.countryCode}/${p.slug}`,
-        lastModified: globalPlaceLastModified(p.slug),
-        changeFrequency: 'daily' as const,
-        priority: 0.5,
-      }))
-    ];
-  }
-
-  if (id === 'tide-en') {
-    const { GLOBAL_PLACES, AUTO_SLUGS_TO_REMOVE } = await import('@/lib/globalPlaces');
-    const countries = Array.from(new Set(GLOBAL_PLACES.map(p => p.countryCode)));
-    return [
-      { url: `${base}/tide`, lastModified: tideDataDate(), changeFrequency: 'weekly' as const, priority: 0.6 },
-      ...countries.map(cc => ({
-        url: `${base}/tide/${cc}`,
-        lastModified: tideDataDate(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.6,
-      })),
-      ...GLOBAL_PLACES.filter(p => isApproved(p.slug) && !AUTO_SLUGS_TO_REMOVE.has(p.slug)).map(p => ({
-        url: `${base}/tide/${p.countryCode}/${p.slug}`,
-        lastModified: globalPlaceLastModified(p.slug),
-        changeFrequency: 'daily' as const,
-        priority: 0.5,
-      }))
-    ];
   }
 
   // id === 'index' (Base generic routes)
@@ -142,14 +74,10 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
     ...staticRoutes.map(route => ({
       url: `${base}${route}`,
       lastModified: tideDataDate(),
-      changeFrequency: 'daily' as const,
-      priority: route === '' ? 1.0 : 0.8,
     })),
     ...dailyRoutes.map(route => ({
       url: `${base}${route}`,
       lastModified: today,
-      changeFrequency: 'daily' as const,
-      priority: 0.8,
     })),
   ];
 }

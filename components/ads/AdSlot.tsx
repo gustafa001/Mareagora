@@ -16,6 +16,8 @@ export default function AdSlot({
   style,
   fullWidthResponsive = true,
 }: AdSlotProps) {
+  if (process.env.NEXT_PUBLIC_ADSENSE_ENABLED !== 'true') return null;
+
   const adRef = useRef<HTMLDivElement>(null);
   // Só renderiza o <ins> do AdSense depois que o componente já montou no
   // cliente (pós-hidratação). O servidor nunca envia esse elemento, então

@@ -15,6 +15,8 @@ import { CONSENT_KEY } from "@/components/CookieConsent";
  * próxima navegação) passam a ser personalizadas.
  */
 export default function AdsScripts() {
+  if (process.env.NEXT_PUBLIC_ADSENSE_ENABLED !== 'true') return null;
+
   const [npa, setNpa] = useState(1);
 
   useEffect(() => {

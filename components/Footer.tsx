@@ -21,6 +21,7 @@ export default function Footer() {
             <Link href="/privacidade" className="hover:text-white transition-colors">Privacidade</Link>
             <Link href="/cookies" className="hover:text-white transition-colors">Política de Cookies</Link>
             <Link href="/contato" className="hover:text-white transition-colors">Contato</Link>
+            <Link href="/widget" className="hover:text-white transition-colors">Widget</Link>
           </nav>
         </div>
 

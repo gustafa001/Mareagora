@@ -32,7 +32,7 @@ export default async function WidgetPortoPage({ params }: { params: { porto: str
     <main className="min-h-screen bg-white flex items-center justify-center p-4" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       <div className="w-full max-w-[320px] bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-5 text-white shadow-lg">
         <div className="flex items-center gap-2 mb-4">
-          <span className="text-lg">🌊</span>
+          <img src="/logo-mark.png" alt="MaréAgora" className="w-6 h-6 rounded" />
           <div>
             <h1 className="text-sm font-bold leading-tight">{port.cityName}</h1>
             <p className="text-[10px] text-slate-400">{port.state} — MaréAgora</p>

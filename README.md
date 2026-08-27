@@ -35,7 +35,42 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel 
+## SEO & Indexação
+
+### Sitemaps
+- `/sitemap/index.xml` — hub central
+- `/sitemap/praias.xml` — 95+ praias brasileiras
+- `/sitemap/guia-praias.xml` — guias detalhados
+- `/sitemap/estados.xml` — páginas de estados
+- `/sitemap/blog.xml` — artigos do blog
+- `/sitemap/portos.xml` — portos industriais
+
+### Internacionalização
+- Rotas `/mare-mundo/**` e `/tide/**` com `robots: { index: false, follow: true }` (exceto `/tide/fishing-guide` que indexa para EN)
+- Hreflang entre `/pesca` (PT) e `/tide/fishing-guide` (EN)
+
+### AdSense
+- Condicionado pela env var `NEXT_PUBLIC_ADSENSE_ENABLED` (default off)
+- `.env.example` documenta todas as variáveis
+
+### Widget Incorporável
+- `/widget` — instruções de embed com snippets iframe
+- `/widget/porto/[porto]` — card leve de maré, noindex, ISR 30min, sem scripts de terceiros
+- `/widget/:path*` excluído de X-Frame-Options no `next.config.mjs`
+
+### API de Revalidação
+- `POST /api/revalidate` com Bearer token — revalida 8 páginas-piloto
+- Sem cron GitHub Actions (ISR cuida da atualização periódica)
+
+### Scripts de Análise
+- `scripts/gsc-top-queries.ts` — exporta top queries do GSC (CSV + MD)
+- `scripts/gsc-digest.ts` — digest semanal: compara queries 7d vs 28d, alertas de CTR e posições
+
+### Outreach
+- `outreach/guaruja-prospectos.csv` — 20 empresas (escolas de surf, pousadas, marinas, restaurantes)
+- `outreach/email-template.md` — 5 templates segmentados por tipo de negócio
+
+## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 

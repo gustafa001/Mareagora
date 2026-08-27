@@ -1,12 +1,8 @@
+'use client';
+
 import Link from 'next/link';
 import { getPortBySlug, PORTS } from '@/lib/ports';
 import { getStateSlug } from '@/lib/states';
-
-export const metadata = {
-  title: 'Widget de Maré | MaréAgora',
-  description: 'Widget incorporável com horários de maré alta e baixa para portos brasileiros.',
-  robots: { index: false, follow: false },
-};
 
 export default function WidgetIndexPage() {
   const featured = PORTS.filter(p =>

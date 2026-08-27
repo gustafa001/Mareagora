@@ -29,13 +29,24 @@ jobs:
           sort -u "$ALL_URLS_FILE" -o "$ALL_URLS_FILE"
           TOTAL=$(wc -l < "$ALL_URLS_FILE")
           echo "Total unique URLs: $TOTAL"
-          split -l 10000 "$ALL_URLS_FILE" /tmp/indexnow_batch_
+          split -l 500 "$ALL_URLS_FILE" /tmp/indexnow_batch_
           BATCH_NUM=0
           for BATCH_FILE in /tmp/indexnow_batch_*; do
             BATCH_NUM=$((BATCH_NUM + 1))
-            URL_ARRAY=$(grep -v '^$' "$BATCH_FILE" | jq -R . | jq -s .)
-            PAYLOAD=$(jq -n --arg host "mareagora.com.br" --arg key "$INDEXNOW_KEY" --arg keyLocation "$BASE_URL/$INDEXNOW_KEY.txt" --argjson urlList "$URL_ARRAY" '{host: $host, key: $key, keyLocation: $keyLocation, urlList: $urlList}')
-            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST "https://api.indexnow.org/indexnow" -H "Content-Type: application/json; charset=utf-8" -d "$PAYLOAD")
+            PAYLOAD_FILE=$(mktemp)
+            # Build JSON payload entirely via files/pipes — avita variaveis shell grandes (ARG_MAX)
+            grep -v '^$' "$BATCH_FILE" \
+              | jq -R . \
+              | jq -s --arg host "mareagora.com.br" \
+                       --arg key "$INDEXNOW_KEY" \
+                       --arg keyLocation "$BASE_URL/$INDEXNOW_KEY.txt" \
+                  '{host: $host, key: $key, keyLocation: $keyLocation, urlList: .}' \
+              > "$PAYLOAD_FILE"
+            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+              -X POST "https://api.indexnow.org/indexnow" \
+              -H "Content-Type: application/json; charset=utf-8" \
+              --data-binary "@$PAYLOAD_FILE")
             echo "Batch $BATCH_NUM: HTTP $HTTP_STATUS"
+            rm -f "$PAYLOAD_FILE"
           done
           echo "Done! $TOTAL URLs submitted to IndexNow."

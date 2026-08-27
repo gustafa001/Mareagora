@@ -94,10 +94,8 @@ export const PORTS: Port[] = [
   { 
     id: '46', name: 'Porto de Santos', cityName: 'Santos', slug: 'porto-de-santos', state: 'SP', region: 'sudeste', lat: -23.956778, lon: -46.308111, dhnId: '50228',
     cameras: [
-      { title: 'Santos - Praia do Gonzaga ao Vivo', sourceName: 'Olhar 013', sourceUrl: 'https://www.youtube.com/@olhar013', videoId: 'gmc9ryoJ-vs' },
       { title: 'Entrada do Canal - Porto de Santos ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/5BxqzvR6TgM', videoId: '5BxqzvR6TgM' },
-      { title: 'Canal 1 - Santos ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/CkHrJQGVukI', videoId: 'CkHrJQGVukI' },
-      { title: 'Santos - Praia do Gonzaga e Canal 2 ao Vivo (4K)', sourceName: 'Olhar 013', sourceUrl: 'https://www.youtube.com/live/fCBfwATvBBI', videoId: 'fCBfwATvBBI', channelId: 'UCHhtdcqzwyPYY0qBlEPh0QQ' }
+      { title: 'Canal 1 - Santos ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/CkHrJQGVukI', videoId: 'CkHrJQGVukI' }
     ]
   },
 
@@ -115,17 +113,10 @@ export const PORTS: Port[] = [
   { id: '58', name: 'São Vicente',             cityName: 'São Vicente',             slug: 'sao-vicente',               state: 'SP', region: 'sudeste', lat: -23.964444, lon: -46.391944, dhnId: '50228', offsetMinutes:  0, searchNames: ['sao vicente', 'são vicente'], referencePortSlug: 'porto-de-santos',
     cameras: [
       { title: 'Morro do Itararé (São Vicente) ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/ukoSyGLdoTQ', videoId: 'ukoSyGLdoTQ' },
-      { title: 'Praia dos Milionários (São Vicente) ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/yf7EqBAnFek', videoId: 'yf7EqBAnFek' },
       { title: 'Praia do Itararé (São Vicente) ao Vivo', sourceName: 'Tem Onda', sourceUrl: 'https://www.youtube.com/live/qqcsE-v9Cac', videoId: 'qqcsE-v9Cac', channelId: 'UCXXjkrL-Ue7P_cc8KG61l1g' }
     ]
   },
-  { 
-    id: '59', name: 'Praia Grande', cityName: 'Praia Grande', slug: 'praia-grande', state: 'SP', region: 'sudeste', lat: -24.005833, lon: -46.412222, dhnId: '50228', offsetMinutes:  5, searchNames: ['praia grande', 'aviação', 'real'], referencePortSlug: 'porto-de-santos',
-    cameras: [
-      { title: 'Praia Grande - Orla ao Vivo', sourceName: 'Intelbras', sourceUrl: 'https://www.youtube.com/live/WJ6LLt6xxkY', videoId: 'WJ6LLt6xxkY' },
-      { title: 'Praia Grande - Boqueirão/Guilhermina ao Vivo', sourceName: 'Guia Turístico de Praia Grande', sourceUrl: 'https://www.youtube.com/live/VykzH5wVZW4', videoId: 'VykzH5wVZW4', channelId: 'UC4roE4SbVIvcQGCYXlnijGQ' }
-    ]
-  },
+  { id: '59', name: 'Praia Grande', cityName: 'Praia Grande', slug: 'praia-grande', state: 'SP', region: 'sudeste', lat: -24.005833, lon: -46.412222, dhnId: '50228', offsetMinutes:  5, searchNames: ['praia grande', 'aviação', 'real'], referencePortSlug: 'porto-de-santos' },
   { id: '60', name: 'Bertioga',                cityName: 'Bertioga',                slug: 'bertioga',                  state: 'SP', region: 'sudeste', lat: -23.854444, lon: -46.138611, dhnId: '50228', offsetMinutes: 15, searchNames: ['bertioga'], referencePortSlug: 'porto-de-santos' },
   { id: '61', name: 'Riviera de São Lourenço', cityName: 'Riviera de São Lourenço', slug: 'riviera-de-sao-lourenco',   state: 'SP', region: 'sudeste', lat: -23.833333, lon: -46.033333, dhnId: '50228', offsetMinutes: 15, searchNames: ['riviera', 'riviera de sao lourenco', 'são lourenço'], referencePortSlug: 'porto-de-santos' },
   { id: '62', name: 'Mongaguá',                cityName: 'Mongaguá',                slug: 'mongagua',                  state: 'SP', region: 'sudeste', lat: -24.085278, lon: -46.622500, dhnId: '50228', offsetMinutes: 10, searchNames: ['mongagua', 'mongaguá'], referencePortSlug: 'porto-de-santos' },

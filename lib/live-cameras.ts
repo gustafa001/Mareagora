@@ -30,32 +30,22 @@ export interface LiveCamera {
 const DESCRIPTIONS: Record<string, string> = {
   qM5J5aPdmMY:
     'Vista da praia de São Conrado, na Zona Sul do Rio, point tradicional de voo livre com a Pedra da Gávea ao fundo.',
-  'gmc9ryoJ-vs':
-    'Vista da Praia do Gonzaga, um dos trechos mais movimentados da orla de Santos.',
   '5BxqzvR6TgM':
     'Vista da entrada do canal do Porto de Santos, o maior porto da América Latina, com a movimentação de navios em tempo real.',
   CkHrJQGVukI:
     'Vista do Canal 1 de Santos, um dos canais que cortam a cidade e conectam a orla à parte continental.',
-  'yPSJYJk-Szc':
-    'Uma das praias mais procuradas de Ubatuba, no trecho conhecido como Baguari.',
+  'q5jrRV0Tc-Y':
+    'Praia central do Guarujá, ao lado do calçadão, uma das mais movimentadas da cidade.',
   zd6V3jeNSOk:
     'Praia central do Guarujá, ao lado do calçadão, uma das mais movimentadas da cidade.',
-  WJ6LLt6xxkY:
-    'Vista da orla de Praia Grande, no litoral sul de São Paulo.',
   ukoSyGLdoTQ:
     'Vista do Morro do Itararé, em São Vicente, mirante natural com vista panorâmica da Baía de Santos.',
-  yf7EqBAnFek:
-    'Vista da Praia dos Milionários, em São Vicente, um dos trechos mais nobres da orla da cidade.',
-  OlEJOalq4oQ:
-    'Vista da Praia dos Sonhos, em Itanhaém, no litoral sul de São Paulo.',
-  bi7B4EmyHHs:
-    'Vista de Sunny Isles Beach, em Miami, na Flórida.',
-  fCBfwATvBBI:
-    'Vista em 4K da Praia do Gonzaga e do Canal 2, em Santos.',
-  VykzH5wVZW4:
-    'Vista do Boqueirão e da Guilhermina, na orla de Praia Grande.',
   'qqcsE-v9Cac':
     'Vista da Praia do Itararé, em São Vicente.',
+  'DvjGg1E-BZ8':
+    'Vista da Praia dos Sonhos, em Itanhaém, no litoral sul de São Paulo.',
+  OlEJOalq4oQ:
+    'Vista da Praia dos Sonhos, em Itanhaém, no litoral sul de São Paulo.',
   jrleSsjuNqw:
     'Transmissão 24h da Praia do Forte, em Cabo Frio.',
 };
@@ -65,7 +55,6 @@ const DESCRIPTIONS: Record<string, string> = {
 const GROUP_LABELS: Record<string, string> = {
   'porto-de-santos': 'Baixada Santista',
   guaruja: 'Baixada Santista',
-  'praia-grande': 'Baixada Santista',
   'sao-vicente': 'Baixada Santista',
   itanhaem: 'Baixada Santista',
   ubatuba: 'Litoral Norte SP',

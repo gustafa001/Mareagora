@@ -10,7 +10,7 @@ const nextConfig = {
   experimental: {
     outputFileTracingIncludes: {
       '/api/tide/[portId]': ['./data/**/*.json'],
-      '/mare/[slug]': ['./data/**/*.json'],
+      '/mare/[slug]/[cidade]': ['./data/**/*.json'],
       '/widget/porto/[porto]': ['./data/**/*.json'],
       '/blog': ['./content/blog/**/*.md'],
       '/blog/[slug]': ['./content/blog/**/*.md'],

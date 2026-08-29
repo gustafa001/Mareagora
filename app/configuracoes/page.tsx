@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { PORTS, Port } from '@/lib/ports';
+import { getStateSlug } from '@/lib/states';
 import dynamic from 'next/dynamic';
 
 const BotaoAlertas = dynamic(() => import('@/components/BotaoAlertas'), { ssr: false });
@@ -144,7 +145,7 @@ export default function ConfiguracoesPage() {
         {selectedPort && (
           <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
             <Link
-              href={`/mare/${selectedPort.slug}`}
+              href={`/mare/${getStateSlug(selectedPort.state)}/${selectedPort.slug}`}
               style={{
                 color: '#0ea5e9', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 700,
               }}

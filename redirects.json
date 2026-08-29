@@ -768,5 +768,325 @@
     "source": "/tide/pt/ponta-delgada-pt",
     "destination": "/tide/pt/ponta-delgada",
     "permanent": true
+  },
+  {
+    "source": "/mare/ubatuba",
+    "destination": "/mare/sao-paulo/ubatuba",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/ubatuba",
+    "destination": "/operacoes-portuarias/sao-paulo/ubatuba",
+    "permanent": true
+  },
+  {
+    "source": "/mare/copacabana",
+    "destination": "/mare/rio-de-janeiro/copacabana",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/copacabana",
+    "destination": "/operacoes-portuarias/rio-de-janeiro/copacabana",
+    "permanent": true
+  },
+  {
+    "source": "/mare/ipanema",
+    "destination": "/mare/rio-de-janeiro/ipanema",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/ipanema",
+    "destination": "/operacoes-portuarias/rio-de-janeiro/ipanema",
+    "permanent": true
+  },
+  {
+    "source": "/mare/buzios",
+    "destination": "/mare/rio-de-janeiro/buzios",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/buzios",
+    "destination": "/operacoes-portuarias/rio-de-janeiro/buzios",
+    "permanent": true
+  },
+  {
+    "source": "/mare/cabo-frio",
+    "destination": "/mare/rio-de-janeiro/cabo-frio",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/cabo-frio",
+    "destination": "/operacoes-portuarias/rio-de-janeiro/cabo-frio",
+    "permanent": true
+  },
+  {
+    "source": "/mare/maresias",
+    "destination": "/mare/sao-paulo/maresias",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/maresias",
+    "destination": "/operacoes-portuarias/sao-paulo/maresias",
+    "permanent": true
+  },
+  {
+    "source": "/mare/porto-de-galinhas",
+    "destination": "/mare/pernambuco/porto-de-galinhas",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/porto-de-galinhas",
+    "destination": "/operacoes-portuarias/pernambuco/porto-de-galinhas",
+    "permanent": true
+  },
+  {
+    "source": "/mare/muro-alto",
+    "destination": "/mare/pernambuco/muro-alto",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/muro-alto",
+    "destination": "/operacoes-portuarias/pernambuco/muro-alto",
+    "permanent": true
+  },
+  {
+    "source": "/mare/cupe",
+    "destination": "/mare/pernambuco/cupe",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/cupe",
+    "destination": "/operacoes-portuarias/pernambuco/cupe",
+    "permanent": true
+  },
+  {
+    "source": "/mare/maracaipe",
+    "destination": "/mare/pernambuco/maracaipe",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/maracaipe",
+    "destination": "/operacoes-portuarias/pernambuco/maracaipe",
+    "permanent": true
+  },
+  {
+    "source": "/mare/serrambi",
+    "destination": "/mare/pernambuco/serrambi",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/serrambi",
+    "destination": "/operacoes-portuarias/pernambuco/serrambi",
+    "permanent": true
+  },
+  {
+    "source": "/mare/gaibu",
+    "destination": "/mare/pernambuco/gaibu",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/gaibu",
+    "destination": "/operacoes-portuarias/pernambuco/gaibu",
+    "permanent": true
+  },
+  {
+    "source": "/mare/calhetas",
+    "destination": "/mare/pernambuco/calhetas",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/calhetas",
+    "destination": "/operacoes-portuarias/pernambuco/calhetas",
+    "permanent": true
+  },
+  {
+    "source": "/mare/praia-do-paiva",
+    "destination": "/mare/pernambuco/praia-do-paiva",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/praia-do-paiva",
+    "destination": "/operacoes-portuarias/pernambuco/praia-do-paiva",
+    "permanent": true
+  },
+  {
+    "source": "/mare/farol-de-nazare",
+    "destination": "/mare/pernambuco/farol-de-nazare",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/farol-de-nazare",
+    "destination": "/operacoes-portuarias/pernambuco/farol-de-nazare",
+    "permanent": true
+  },
+  {
+    "source": "/mare/boa-viagem",
+    "destination": "/mare/pernambuco/boa-viagem",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/boa-viagem",
+    "destination": "/operacoes-portuarias/pernambuco/boa-viagem",
+    "permanent": true
+  },
+  {
+    "source": "/mare/praia-do-forte",
+    "destination": "/mare/bahia/praia-do-forte",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/praia-do-forte",
+    "destination": "/operacoes-portuarias/bahia/praia-do-forte",
+    "permanent": true
+  },
+  {
+    "source": "/mare/morro-de-sao-paulo",
+    "destination": "/mare/bahia/morro-de-sao-paulo",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/morro-de-sao-paulo",
+    "destination": "/operacoes-portuarias/bahia/morro-de-sao-paulo",
+    "permanent": true
+  },
+  {
+    "source": "/mare/trancoso",
+    "destination": "/mare/bahia/trancoso",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/trancoso",
+    "destination": "/operacoes-portuarias/bahia/trancoso",
+    "permanent": true
+  },
+  {
+    "source": "/mare/jericoacoara",
+    "destination": "/mare/ceara/jericoacoara",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/jericoacoara",
+    "destination": "/operacoes-portuarias/ceara/jericoacoara",
+    "permanent": true
+  },
+  {
+    "source": "/mare/praia-do-futuro",
+    "destination": "/mare/ceara/praia-do-futuro",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/praia-do-futuro",
+    "destination": "/operacoes-portuarias/ceara/praia-do-futuro",
+    "permanent": true
+  },
+  {
+    "source": "/mare/ponta-negra",
+    "destination": "/mare/rio-grande-do-norte/ponta-negra",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/ponta-negra",
+    "destination": "/operacoes-portuarias/rio-grande-do-norte/ponta-negra",
+    "permanent": true
+  },
+  {
+    "source": "/mare/pipa",
+    "destination": "/mare/rio-grande-do-norte/pipa",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/pipa",
+    "destination": "/operacoes-portuarias/rio-grande-do-norte/pipa",
+    "permanent": true
+  },
+  {
+    "source": "/mare/maragogi",
+    "destination": "/mare/alagoas/maragogi",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/maragogi",
+    "destination": "/operacoes-portuarias/alagoas/maragogi",
+    "permanent": true
+  },
+  {
+    "source": "/mare/baia-do-sancho",
+    "destination": "/mare/pernambuco/baia-do-sancho",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/baia-do-sancho",
+    "destination": "/operacoes-portuarias/pernambuco/baia-do-sancho",
+    "permanent": true
+  },
+  {
+    "source": "/mare/balneario-camboriu",
+    "destination": "/mare/santa-catarina/balneario-camboriu",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/balneario-camboriu",
+    "destination": "/operacoes-portuarias/santa-catarina/balneario-camboriu",
+    "permanent": true
+  },
+  {
+    "source": "/mare/bombinhas",
+    "destination": "/mare/santa-catarina/bombinhas",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/bombinhas",
+    "destination": "/operacoes-portuarias/santa-catarina/bombinhas",
+    "permanent": true
+  },
+  {
+    "source": "/mare/joaquina",
+    "destination": "/mare/santa-catarina/joaquina",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/joaquina",
+    "destination": "/operacoes-portuarias/santa-catarina/joaquina",
+    "permanent": true
+  },
+  {
+    "source": "/mare/ilhabela",
+    "destination": "/mare/sao-paulo/ilhabela",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/ilhabela",
+    "destination": "/operacoes-portuarias/sao-paulo/ilhabela",
+    "permanent": true
+  },
+  {
+    "source": "/mare/ubatumirim",
+    "destination": "/mare/sao-paulo/ubatumirim",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/ubatumirim",
+    "destination": "/operacoes-portuarias/sao-paulo/ubatumirim",
+    "permanent": true
+  },
+  {
+    "source": "/mare/barra-grande",
+    "destination": "/mare/piaui/barra-grande",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/barra-grande",
+    "destination": "/operacoes-portuarias/piaui/barra-grande",
+    "permanent": true
+  },
+  {
+    "source": "/mare/praia-do-rosa",
+    "destination": "/mare/santa-catarina/praia-do-rosa",
+    "permanent": true
+  },
+  {
+    "source": "/operacoes-portuarias/praia-do-rosa",
+    "destination": "/operacoes-portuarias/santa-catarina/praia-do-rosa",
+    "permanent": true
   }
 ]

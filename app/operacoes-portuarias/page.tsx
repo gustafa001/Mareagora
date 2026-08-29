@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { PORTS, getPortBySlug } from '@/lib/ports';
+import { getStateSlug } from '@/lib/states';
 import { portosConfig } from '@/data/porto-seo-config';
 import NavBar from '@/components/NavBar';
 
@@ -49,7 +50,7 @@ export default function OperacoesPortuariasIndexPage() {
             {commercialPorts.map((port) => (
               <Link
                 key={port.id}
-                href={`/operacoes-portuarias/${port.slug}`}
+                href={`/operacoes-portuarias/${getStateSlug(port.state)}/${port.slug}`}
                 className="rounded-2xl border border-white/10 bg-[#0d1526]/80 p-5 hover:border-blue-400/50 hover:bg-[#0d1526] transition-all group"
               >
                 <p className="text-[10px] uppercase tracking-widest text-blue-400 font-bold mb-1">{port.state}</p>

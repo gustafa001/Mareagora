@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { getStateSlug } from '@/lib/states';
 
 export default function MelhoresPraias() {
   const regions = [
@@ -361,7 +362,7 @@ export default function MelhoresPraias() {
               </div>
               <div className="praias-list">
                 {region.praias.map((p, i) => (
-                  <a key={p.slug} href={`/mare/${p.slug}`} className="praia-item">
+                  <a key={p.slug} href={`/mare/${getStateSlug(p.estado)}/${p.slug}`} className="praia-item">
                     <div className="praia-num">{i + 1}</div>
                     <div className="praia-info">
                       <div className="praia-top">

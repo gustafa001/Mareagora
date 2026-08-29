@@ -21,7 +21,7 @@ jobs:
           BASE_URL: 'https://mareagora.com.br'
         run: |
           ALL_URLS_FILE=$(mktemp)
-          SITEMAPS="$BASE_URL/sitemap/praias.xml $BASE_URL/sitemap/guia-praias.xml $BASE_URL/sitemap/portos.xml $BASE_URL/sitemap/estados.xml $BASE_URL/sitemap/blog.xml $BASE_URL/sitemap/mundo.xml $BASE_URL/sitemap/tide-en.xml"
+          SITEMAPS="$BASE_URL/sitemap/index.xml $BASE_URL/sitemap/praias.xml $BASE_URL/sitemap/guia-praias.xml $BASE_URL/sitemap/portos.xml $BASE_URL/sitemap/estados.xml $BASE_URL/sitemap/blog.xml"
           for SITEMAP in $SITEMAPS; do
             echo "Processing: $SITEMAP"
             curl -sf "$SITEMAP" | grep -oP '(?<=<loc>)[^<]+' >> "$ALL_URLS_FILE" || true

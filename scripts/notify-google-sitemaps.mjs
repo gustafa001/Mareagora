@@ -2,9 +2,14 @@
 /**
  * notify-google-sitemaps.mjs
  * ---------------------------
- * Notifies Google Search Console that the sitemap has been updated.
+ * Notifies Google Search Console that the sitemaps have been updated.
  *
  * Property type: domain (sc-domain:mareagora.com.br)
+ *
+ * NOTE: this project uses app/sitemap.ts with generateSitemaps() which
+ * produces /sitemap/{id}.xml per sub-sitemap. There is NO /sitemap.xml
+ * index (that endpoint only exists without generateSitemaps). So we
+ * submit each of the 6 sub-sitemaps individually to GSC.
  *
  * Environment variables (set via GitHub Secrets):
  *   GOOGLE_SERVICE_ACCOUNT_JSON  – full JSON key of a GCP service account
@@ -15,17 +20,30 @@
  */
 
 const SITE_URL = 'sc-domain:mareagora.com.br';
-// URL correta: o Next.js gera automaticamente o índice mestre em /sitemap.xml
-// (que lista /sitemap/mundo.xml, /sitemap/tide-en.xml, /sitemap/blog.xml etc).
-// /sitemap/index.xml é apenas o sub-sitemap com id "index" (rotas estáticas
-// genéricas) definido em app/sitemap.ts — nunca continha as páginas de
-// mundo/tide/blog, então o Google nunca era avisado sobre elas por aqui.
-const SITEMAP_FEEDPATH = 'https://mareagora.com.br/sitemap.xml';
+const SITEMAPS = [
+  'https://mareagora.com.br/sitemap/index.xml',
+  'https://mareagora.com.br/sitemap/praias.xml',
+  'https://mareagora.com.br/sitemap/guia-praias.xml',
+  'https://mareagora.com.br/sitemap/portos.xml',
+  'https://mareagora.com.br/sitemap/estados.xml',
+  'https://mareagora.com.br/sitemap/blog.xml',
+];
 
 function log(label, ok, detail = '') {
   const icon = ok ? '✅' : '❌';
   const suffix = detail ? ` — ${detail}` : '';
   console.log(`${icon} ${label}${suffix}`);
+}
+
+async function submitSitemap(accessToken, sitemapUrl) {
+  const res = await fetch(
+    `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(SITE_URL)}/sitemaps/${encodeURIComponent(sitemapUrl)}`,
+    {
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${accessToken}` },
+    },
+  );
+  return res;
 }
 
 async function notifyGoogle() {
@@ -84,23 +102,22 @@ async function notifyGoogle() {
       return;
     }
 
-    // --- submit sitemap (PUT, no body) --------------------------------------
-    const submitRes = await fetch(
-      `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(SITE_URL)}/sitemaps/${encodeURIComponent(SITEMAP_FEEDPATH)}`,
-      {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${tokenBody.access_token}`,
-        },
-      },
-    );
+    // --- submit each sub-sitemap (PUT, no body) ------------------------------
+    let allOk = true;
+    for (const sitemap of SITEMAPS) {
+      const submitRes = await submitSitemap(tokenBody.access_token, sitemap);
+      const submitBody = await submitRes.json().catch(() => null);
+      if (submitRes.ok) {
+        log('Google Search Console', true, `Submitted ${sitemap} (${submitRes.status})`);
+      } else {
+        allOk = false;
+        const msg = submitBody?.error?.message || JSON.stringify(submitBody) || `HTTP ${submitRes.status}`;
+        log('Google Search Console', false, `${sitemap} — ${msg}`);
+      }
+    }
 
-    const submitBody = await submitRes.json().catch(() => null);
-    if (submitRes.ok) {
-      log('Google Search Console', true, `Sitemap submitted (${submitRes.status})`);
-    } else {
-      const msg = submitBody?.error?.message || JSON.stringify(submitBody) || `HTTP ${submitRes.status}`;
-      log('Google Search Console', false, msg);
+    if (allOk) {
+      log('All sitemaps', true, `${SITEMAPS.length} submitted`);
     }
   } catch (err) {
     const detail = [
@@ -114,7 +131,7 @@ async function notifyGoogle() {
 // ── main ─────────────────────────────────────────────────────────────────────
 
 console.log(`\nSite URL    : ${SITE_URL}`);
-console.log(`Sitemap     : ${SITEMAP_FEEDPATH}\n`);
+console.log(`Sitemaps    : ${SITEMAPS.length} sub-sitemaps\n`);
 
 await notifyGoogle();
 

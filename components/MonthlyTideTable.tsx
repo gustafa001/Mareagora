@@ -269,6 +269,7 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
                         display: "flex", alignItems: "center", justifyContent: "center",
                         background: row.isToday ? "#3b82f6" : "transparent",
                         fontWeight: 700, fontSize: "0.95rem",
+                        fontFamily: "var(--font-fira-code), monospace",
                         color: row.isToday ? "#fff" : isSunday ? "#fb923c" : "#e2e8f0",
                       }}>{row.dia}</div>
                       <span style={{ fontSize: "0.6rem", fontWeight: 600, color: row.isToday ? "#93c5fd" : "#475569", textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "1px" }}>{row.weekday}</span>
@@ -286,8 +287,8 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
                       <td key={i} style={{ padding: "0.45rem 0.4rem", textAlign: "center", background: tide.alta ? "rgba(59,130,246,0.05)" : "rgba(251,146,60,0.05)" }}>
                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1px" }}>
                           <span style={{ fontSize: "0.5rem", color: tide.alta ? "#60a5fa" : "#fb923c" }}>{tide.alta ? "▲" : "▼"}</span>
-                          <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "#f1f5f9", fontVariantNumeric: "tabular-nums", letterSpacing: "0.3px" }}>{tide.hora}</span>
-                          <span style={{ fontSize: "0.72rem", fontWeight: 600, color: tide.alta ? "#60a5fa" : "#fb923c", fontVariantNumeric: "tabular-nums" }}>{tide.altura_m.toFixed(2)}m</span>
+                          <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "#f1f5f9", fontFamily: "var(--font-fira-code), monospace", fontVariantNumeric: "tabular-nums", letterSpacing: "0.3px" }}>{tide.hora}</span>
+                          <span style={{ fontSize: "0.72rem", fontWeight: 600, color: tide.alta ? "#60a5fa" : "#fb923c", fontFamily: "var(--font-fira-code), monospace", fontVariantNumeric: "tabular-nums" }}>{tide.altura_m.toFixed(2)}m</span>
                         </div>
                       </td>
                     );
@@ -301,6 +302,7 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
                         padding: "0.15rem 0.4rem", borderRadius: "20px",
                         color: coefStyle.text, background: coefStyle.bg,
                         border: `1px solid ${coefStyle.text}33`,
+                        fontFamily: "var(--font-fira-code), monospace",
                         fontVariantNumeric: "tabular-nums",
                       }}>{row.coef}</span>
                     ) : <span style={{ color: "#334155" }}>—</span>}
@@ -310,7 +312,7 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
                   <td style={{ padding: "0.5rem 0.4rem", textAlign: "center", background: "rgba(251,191,36,0.03)" }}>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1px" }}>
                       <span style={{ fontSize: "0.65rem" }}>☀</span>
-                      <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#fcd34d", fontVariantNumeric: "tabular-nums" }}>{row.sunrise}</span>
+                      <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#fcd34d", fontFamily: "var(--font-fira-code), monospace", fontVariantNumeric: "tabular-nums" }}>{row.sunrise}</span>
                     </div>
                   </td>
 
@@ -318,7 +320,7 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
                   <td style={{ padding: "0.5rem 0.4rem", textAlign: "center", background: "rgba(251,191,36,0.03)" }}>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1px" }}>
                       <span style={{ fontSize: "0.65rem" }}>🌅</span>
-                      <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#fb923c", fontVariantNumeric: "tabular-nums" }}>{row.sunset}</span>
+                      <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#fb923c", fontFamily: "var(--font-fira-code), monospace", fontVariantNumeric: "tabular-nums" }}>{row.sunset}</span>
                     </div>
                   </td>
                 </tr>

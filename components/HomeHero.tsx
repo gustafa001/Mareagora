@@ -1,11 +1,13 @@
 'use client';
 import { getStateSlug } from "@/lib/states";
-import { PORTS, getNearestPort, type Port } from '@/lib/ports';
+import { PORTS, getNearestPort, getPortBySlug, type Port } from '@/lib/ports';
 import type { GlobalPlace } from '@/lib/globalPlaces';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
+import { getEventosDia } from '@/lib/mare';
+import { getNextHighAndLow, tideAtMinute, getMoonAge, getMoonPhase } from '@/lib/tideUtils';
 
 type SearchResult =
   | { type: 'br'; port: Port }
@@ -44,6 +46,50 @@ export default function HomeHero() {
   const popularPorts = PORTS.filter(port =>
     ['porto-de-belem', 'porto-de-itaqui', 'porto-de-mucuripe-fortaleza', 'porto-do-recife', 'porto-de-salvador', 'porto-de-santos'].includes(port.slug)
   );
+
+  // ── Gauge de maré ao vivo (porto de referência: Santos) ──
+  // liveNow só existe depois de montar no cliente (pós-hidratação), igual
+  // ao padrão usado em PortPageContent — evita divergência de horário
+  // entre servidor e navegador (bugs de hidratação #418/#423/#425).
+  const [liveNow, setLiveNow] = useState<Date | null>(null);
+  useEffect(() => {
+    setLiveNow(new Date());
+    const timer = setInterval(() => setLiveNow(new Date()), 30_000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const referencePort = getPortBySlug('porto-de-santos');
+  const todayStr = liveNow
+    ? `${liveNow.getFullYear()}-${String(liveNow.getMonth() + 1).padStart(2, '0')}-${String(liveNow.getDate()).padStart(2, '0')}`
+    : '';
+  const todayTides = referencePort && todayStr ? getEventosDia(referencePort, todayStr) : [];
+  const currentMin = liveNow ? liveNow.getHours() * 60 + liveNow.getMinutes() : null;
+  const currentHeight = currentMin !== null && todayTides.length ? tideAtMinute(currentMin, todayTides) : null;
+  const { nextHigh, nextLow } = currentMin !== null && todayTides.length
+    ? getNextHighAndLow(todayTides, currentMin)
+    : { nextHigh: null, nextLow: null };
+  const isRising = nextHigh && (!nextLow || nextHigh.hora < nextLow.hora);
+  const moon = liveNow ? getMoonPhase(getMoonAge(liveNow)) : null;
+
+  // Curva SVG (polyline simples a partir dos eventos do dia — sem libs novas)
+  const curvePoints = (() => {
+    if (!todayTides.length) return '';
+    const sorted = [...todayTides].sort((a, b) => a.hora.localeCompare(b.hora));
+    const heights = sorted.map(t => t.altura_m);
+    const maxH = Math.max(...heights);
+    const minH = Math.min(...heights);
+    const range = maxH - minH || 1;
+    const w = 600, h = 70, pad = 10;
+    return sorted.map((t, i) => {
+      const x = (i / (sorted.length - 1 || 1)) * w;
+      const y = pad + (1 - (t.altura_m - minH) / range) * (h - pad * 2);
+      return `${x},${y}`;
+    }).join(' ');
+  })();
+
+  const currentTimeStr = liveNow
+    ? liveNow.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' })
+    : '--:--';
 
   const handleSearch = useCallback(async (query: string) => {
     setSearchQuery(query);
@@ -124,7 +170,7 @@ export default function HomeHero() {
 
       <div className="relative z-10 w-full max-w-2xl">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-20 h-20 mb-6 rounded-3xl overflow-hidden shadow-2xl shadow-blue-500/20">
             <img src="/logo-mark.png" alt="MaréAgora" className="w-full h-full object-cover" />
           </div>
@@ -135,6 +181,38 @@ export default function HomeHero() {
             Previsão de maré em tempo real — Brasil e Mundo
           </p>
         </div>
+
+        {/* Gauge de maré ao vivo — porto de referência: Santos */}
+        {referencePort && (
+          <div className="mb-8 rounded-2xl border border-cyan-500/20 bg-slate-900/50 backdrop-blur-sm p-5">
+            <div className="flex justify-between items-baseline flex-wrap gap-2 mb-1">
+              <span className="font-tideMono text-[11px] text-blue-300/70 tracking-wide">
+                Estação de referência · <b className="text-white font-bold">{referencePort.cityName || referencePort.name}</b>
+              </span>
+              {moon && <span className="font-tideMono text-[11px] text-blue-300/70">{moon.icon} {moon.name}</span>}
+            </div>
+
+            <div className="flex items-baseline gap-2 mb-2">
+              <span className="font-tideMono text-3xl font-bold text-cyan-400">
+                {currentHeight !== null ? `${currentHeight.toFixed(2)}m` : '--m'}
+              </span>
+              <span className="font-tideMono text-[11px] uppercase tracking-wider text-emerald-400">
+                {liveNow ? `Agora ${currentTimeStr} — ${isRising ? 'Enchendo' : 'Vazando'}` : 'Carregando…'}
+              </span>
+            </div>
+
+            {curvePoints && (
+              <svg viewBox="0 0 600 70" preserveAspectRatio="none" className="w-full h-16">
+                <polyline points={curvePoints} fill="none" stroke="#38c9f0" strokeWidth="2.5" />
+              </svg>
+            )}
+
+            <div className="flex justify-between font-tideMono text-[11px] text-blue-300/70 pt-3 mt-2 border-t border-white/5">
+              <span className="text-orange-400">▼ Baixa {nextLow?.hora ?? '--:--'} · {nextLow?.altura_m != null ? `${nextLow.altura_m.toFixed(2)}m` : '--'}</span>
+              <span className="text-cyan-400">▲ Alta {nextHigh?.hora ?? '--:--'} · {nextHigh?.altura_m != null ? `${nextHigh.altura_m.toFixed(2)}m` : '--'}</span>
+            </div>
+          </div>
+        )}
 
         {/* Search Box */}
         <div className="mb-8 relative">

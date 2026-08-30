@@ -28,7 +28,7 @@ import { getStateSlug, getStateName } from '@/lib/states';
 import ShareButton from '@/components/ShareButton';
 import { useSeaConditions } from '@/hooks/useSeaConditions';
 import RessacaAlert from '@/components/RessacaAlert';
-import { getNextHighAndLow } from '@/lib/tideUtils';
+import { getNextHighAndLow, tideAtMinute } from '@/lib/tideUtils';
 import { classifyToday } from '@/lib/tideQuality';
 import TideQualityBadge from '@/components/TideQualityBadge';
 import { notFound } from 'next/navigation';
@@ -133,6 +133,9 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
 
   const tideQuality = classifyToday(todayTides, currentMin);
 
+  const currentHeight = currentMin !== null && todayTides.length ? tideAtMinute(currentMin, todayTides) : null;
+  const isRising = nextHigh && (!nextLow || nextHigh.hora < nextLow.hora);
+
   const referencePort = port.referencePortSlug ? getPortBySlug(port.referencePortSlug) : null;
   const referenceData = referencePort ? {
     name: referencePort.cityName || referencePort.name,
@@ -185,19 +188,19 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               <SearchPorts ports={PORTS} />
             </div>
 
-            <ShareButton
-              title={`Tábua de Maré ${seoName} ${ano} | MaréAgora`}
-              text={`🌊 Confira a previsão de marés em ${seoName} — MaréAgora`}
-            />
+            <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
+              <ShareButton
+                title={`Tábua de Maré ${seoName} ${ano} | MaréAgora`}
+                text={`🌊 Confira a previsão de marés em ${seoName} — MaréAgora`}
+              />
 
-            {tideQuality && (
-              <div className="mt-2">
-                <TideQualityBadge result={tideQuality} />
-              </div>
-            )}
+              {tideQuality && <TideQualityBadge result={tideQuality} />}
+            </div>
 
-            <p className="mt-4 mb-20 text-xs opacity-70 text-white/70" suppressHydrationWarning>
-              Horário local: {currentTimeBR}
+            <p className="mt-4 mb-20 text-xs opacity-80 text-white/80 font-mono tracking-wide" suppressHydrationWarning>
+              {currentHeight !== null
+                ? `Agora ${currentTimeBR} — ${currentHeight.toFixed(2)}m (${isRising ? 'enchendo' : 'vazando'})`
+                : `Horário local: ${currentTimeBR}`}
             </p>
           </div>
         </div>

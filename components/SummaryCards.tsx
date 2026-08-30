@@ -106,19 +106,19 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides }
       </div>
 
       {/* Coeficiente e Lua — Design Premium Dark (#0f1f3d) — Forçado Visibilidade */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="p-6 flex items-center justify-between flex-wrap gap-4 rounded-3xl border border-white/20 shadow-2xl" style={{ background: '#0f1f3d' }}>
-          <div className="flex items-center gap-5 min-w-0 flex-1">
-            <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-2xl border border-white/10 flex-shrink-0">
+      <div className="grid grid-cols-2 gap-3 sm:gap-6">
+        <div className="p-3 sm:p-6 flex items-center justify-between flex-wrap gap-2 sm:gap-4 rounded-2xl sm:rounded-3xl border border-white/20 shadow-2xl" style={{ background: '#0f1f3d' }}>
+          <div className="flex items-center gap-2 sm:gap-5 min-w-0 flex-1">
+            <div className="w-10 sm:w-14 h-10 sm:h-14 rounded-xl sm:rounded-2xl bg-white/10 flex items-center justify-center text-lg sm:text-2xl border border-white/10 flex-shrink-0">
               📊
             </div>
             <div className="min-w-0 break-words">
-              <div className="text-[10px] font-black uppercase tracking-[0.2em] mb-1 font-syne" style={{ color: '#22d3ee' }}>{s.coefficient}</div>
-              <div className="text-5xl font-black font-syne leading-none drop-shadow-lg" style={{ color: coef.color.includes('emerald') ? '#34d399' : coef.color.includes('rose') ? '#f43f5e' : coef.color.includes('orange') ? '#fb923c' : '#facc15' }}>
+              <div className="text-[8px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] mb-1 font-syne" style={{ color: '#22d3ee' }}>{s.coefficient}</div>
+              <div className="text-2xl sm:text-5xl font-black font-tideMono leading-none drop-shadow-lg" style={{ color: coef.color.includes('emerald') ? '#34d399' : coef.color.includes('rose') ? '#f43f5e' : coef.color.includes('orange') ? '#fb923c' : '#facc15' }}>
                 {coef.value}
               </div>
-              <div className="text-xs font-bold mt-2 flex items-center gap-1.5 flex-wrap break-words" style={{ color: '#ffffff' }}>
-                <span className="w-2.5 h-2.5 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.3)]" style={{ backgroundColor: coef.color.includes('emerald') ? '#34d399' : coef.color.includes('rose') ? '#f43f5e' : coef.color.includes('orange') ? '#fb923c' : '#facc15' }}></span>
+              <div className="text-[10px] sm:text-xs font-bold mt-1 sm:mt-2 flex items-center gap-1.5 flex-wrap break-words" style={{ color: '#ffffff' }}>
+                <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.3)] flex-shrink-0" style={{ backgroundColor: coef.color.includes('emerald') ? '#34d399' : coef.color.includes('rose') ? '#f43f5e' : coef.color.includes('orange') ? '#fb923c' : '#facc15' }}></span>
                 {coef.label}
               </div>
             </div>
@@ -130,18 +130,18 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides }
           </div>
         </div>
 
-        <div className="p-4 sm:p-6 flex items-center justify-between flex-wrap gap-4 rounded-3xl border border-white/20 shadow-2xl" style={{ background: '#0f1f3d' }}>
-          <div className="flex items-center gap-3 sm:gap-5 min-w-0 flex-1">
-            <div className="w-12 sm:w-14 h-12 sm:h-14 rounded-2xl bg-white/10 flex items-center justify-center text-2xl sm:text-3xl border border-white/10 flex-shrink-0">
+        <div className="p-3 sm:p-6 flex items-center justify-between flex-wrap gap-2 sm:gap-4 rounded-2xl sm:rounded-3xl border border-white/20 shadow-2xl" style={{ background: '#0f1f3d' }}>
+          <div className="flex items-center gap-2 sm:gap-5 min-w-0 flex-1">
+            <div className="w-10 sm:w-14 h-10 sm:h-14 rounded-xl sm:rounded-2xl bg-white/10 flex items-center justify-center text-lg sm:text-3xl border border-white/10 flex-shrink-0">
               {moon.icon}
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] mb-1 font-syne" style={{ color: '#60a5fa' }}>{s.moonPhase}</div>
-              <div className="text-xl sm:text-3xl font-black font-syne leading-tight sm:leading-none drop-shadow-lg truncate" style={{ color: '#ffffff' }}>
+              <div className="text-[8px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] mb-1 font-syne" style={{ color: '#60a5fa' }}>{s.moonPhase}</div>
+              <div className="text-sm sm:text-3xl font-black font-syne leading-tight sm:leading-none drop-shadow-lg" style={{ color: '#ffffff' }}>
                 {moon.name}
               </div>
-              <div className="text-xs font-bold mt-2 flex items-center gap-1.5 flex-wrap break-words" style={{ color: '#93c5fd' }}>
-                <span className="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.6)]"></span>
+              <div className="text-[10px] sm:text-xs font-bold mt-1 sm:mt-2 flex items-center gap-1.5 flex-wrap break-words" style={{ color: '#93c5fd' }}>
+                <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.6)] flex-shrink-0"></span>
                 {s.idealForFishing}
               </div>
             </div>

@@ -317,7 +317,7 @@ export default function DailyScoreCard({ lat, lon, todayTides, utcOffsetMin = 0 
         {/* Overall Score */}
         <div className="flex flex-col items-center">
           <div
-            className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black text-white shadow-lg"
+            className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black text-white shadow-lg font-tideMono"
             style={{
               background: `conic-gradient(${getScoreColor(overall)} ${overall * 36}deg, rgba(255,255,255,0.1) 0deg)`,
               boxShadow: `0 0 20px ${getScoreColor(overall)}44`,
@@ -351,7 +351,7 @@ export default function DailyScoreCard({ lat, lon, todayTides, utcOffsetMin = 0 
                 <span className="text-white text-sm font-semibold">{activity.name}</span>
               </div>
               <span
-                className="text-sm font-black"
+                className="text-sm font-black font-tideMono"
                 style={{ color: activity.color }}
               >
                 {loading ? '…' : activity.score}/10

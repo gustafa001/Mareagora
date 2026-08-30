@@ -15,6 +15,10 @@ module.exports = {
       fontFamily: {
         syne: ["var(--font-syne)"],
         dmSans: ["var(--font-dm-sans)"],
+        // Fira Code já é carregada no layout.tsx (--font-fira-code) mas não
+        // tinha token no Tailwind ainda. Usada nos números "de instrumento"
+        // do redesign (horas, alturas, coeficiente, score).
+        tideMono: ["var(--font-fira-code)", "monospace"],
       },
       colors: {
         // Cores customizadas para tema escuro (opcional)

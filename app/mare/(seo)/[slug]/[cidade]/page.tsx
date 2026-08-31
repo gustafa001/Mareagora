@@ -14,6 +14,7 @@ import type { BlogPost } from '@/lib/blog';
 import { getPortoDescription } from '@/lib/porto-descriptions';
 import SchemaGenerator from '@/components/seo/SchemaGenerator';
 import { generateSEOContent } from '@/lib/seo/content-generator';
+import SeoOverviewTicker from '@/components/SeoOverviewTicker';
 
 export const revalidate = 21600; // regenera a página a cada 6h (ISR), evita data congelada do build — reduzido de 1h p/ diminuir ISR Writes/CPU no free tier
 
@@ -126,15 +127,11 @@ export default async function PortPage({ params }: { params: { slug: string, cid
         faq={seoFaq}
       />
       
-      {/* Resumo Gerado (AI Overview Target) */}
-      <div className="bg-slate-900/50 border-b border-slate-800 py-6">
-        <div className="container">
-          <h2 className="text-xl font-bold text-white mb-2">Visão Geral Hoje ({dataHoje.split('-').reverse().join('/')})</h2>
-          <p className="text-slate-300 leading-relaxed text-sm md:text-base">
-            {seoText}
-          </p>
-        </div>
-      </div>
+      {/* Resumo Gerado (AI Overview Target) — exibido como slider, texto completo preservado no HTML */}
+      <SeoOverviewTicker
+        title={`Visão Geral Hoje (${dataHoje.split('-').reverse().join('/')})`}
+        text={seoText}
+      />
       <PortPageContent
         slug={slug}
         portDescription={portDescription}

@@ -8,7 +8,6 @@ import AdsScripts from "@/components/ads/AdsScripts";
 import ConsentedScripts from "@/components/ads/ConsentedScripts";
 import CookieConsent from "@/components/CookieConsent";
 import Footer from "@/components/Footer";
-import InstallPWA from "@/components/InstallPWA";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const manrope = Manrope({
@@ -125,7 +124,6 @@ export default function RootLayout({
           <Footer />
         </div>
 
-        <InstallPWA />
         <MobileStickyAd />
         <AdsScripts />
         <ConsentedScripts />

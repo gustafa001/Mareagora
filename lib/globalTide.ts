@@ -34,7 +34,8 @@ function haversineKm(lat1: number, lon1: number, lat2: number, lon2: number): nu
 export async function getGlobalTideData(
   lat: number,
   lon: number,
-  forecastDays: number = 7
+  forecastDays: number = 7,
+  startDate?: Date
 ): Promise<GlobalTideData | null> {
   try {
     const station = nearestStation({ lat, lon });
@@ -42,10 +43,16 @@ export async function getGlobalTideData(
 
     const distKm = haversineKm(lat, lon, station.latitude, station.longitude);
 
-    const start = new Date();
+    // Se startDate não for informado, mantém o comportamento original
+    // (base = agora). Quando informado, calcula a partir da data pedida
+    // em vez de sempre partir de "hoje" — sem isso, pedidos de datas
+    // passadas/futuras (ex: tábua do ano a partir de 1º de janeiro)
+    // eram silenciosamente ignorados e a busca sempre começava em "ontem".
+    const base = startDate ? new Date(startDate) : new Date();
+    const start = new Date(base);
     start.setUTCDate(start.getUTCDate() - 1);
     start.setUTCHours(0, 0, 0, 0);
-    const end = new Date();
+    const end = new Date(base);
     end.setUTCDate(end.getUTCDate() + forecastDays);
 
     const prediction = getExtremesPrediction({

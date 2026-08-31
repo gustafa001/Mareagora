@@ -871,11 +871,11 @@ const UF_COLORS: Record<string, string> = {
   PR: '#2196c4', SC: '#1976d2', RS: '#5c6bc0',
 }
 
-const REGIAO_LABELS: Record<string, string> = {
-  norte: '🌿 Região Norte',
-  nordeste: '☀️ Região Nordeste',
-  sudeste: '🌆 Região Sudeste',
-  sul: '❄️ Região Sul',
+const REGIAO_INFO: Record<string, { nome: string; cor: string }> = {
+  norte: { nome: 'Região Norte', cor: '#4ea699' },
+  nordeste: { nome: 'Região Nordeste', cor: '#e0954f' },
+  sudeste: { nome: 'Região Sudeste', cor: '#2196c4' },
+  sul: { nome: 'Região Sul', cor: '#6c7fd8' },
 }
 
 // --- componente --------------------------------------------------------------
@@ -927,8 +927,14 @@ export default function GuiaPraias() {
             return (
               <div key={regiao} className="gp-regiao-block">
                 <div className="gp-section-header">
-                  <p className="gp-label">{REGIAO_LABELS[regiao]}</p>
-                  <h2>Praias com dados de maré ao vivo</h2>
+                  <div className="gp-region-tag">
+                    <span className="gp-region-dot" style={{ background: REGIAO_INFO[regiao].cor }} />
+                    <span style={{ color: REGIAO_INFO[regiao].cor }}>{REGIAO_INFO[regiao].nome}</span>
+                  </div>
+                  <div className="gp-section-heading-row">
+                    <h2>Praias com maré ao vivo</h2>
+                    <span className="gp-region-count">{praiasDaRegiao.length} praias</span>
+                  </div>
                 </div>
                 <div className="gp-grid">
                   {praiasDaRegiao.map((praia) => (
@@ -1093,14 +1099,17 @@ const styles = `
   .gp-container { max-width: 1100px; margin: 0 auto; }
   .gp-regiao-block { margin-bottom: 5rem; }
   .gp-section-header { margin-bottom: 2.5rem; }
-  .gp-label {
-    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
-    color: #2196c4; margin-bottom: 0.5rem; font-weight: 700;
+  .gp-region-tag {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.9rem; font-weight: 600; margin-bottom: 0.6rem;
   }
+  .gp-region-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .gp-section-heading-row { display: flex; align-items: baseline; gap: 0.75rem; flex-wrap: wrap; }
   .gp-section-header h2 {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: clamp(1.5rem, 3vw, 2.2rem); color: #f0e6c8; font-weight: 700;
   }
+  .gp-region-count { font-size: 0.85rem; color: #5a6a7a; }
 
   /* Card wrapper */
   .gp-grid {
@@ -1114,7 +1123,7 @@ const styles = `
   .gp-card {
     background: rgba(14,58,110,0.25);
     border: 1px solid rgba(33,150,196,0.15);
-    border-radius: 16px 16px 0 0;
+    border-radius: 16px;
     padding: 0;
     text-decoration: none; display: flex; flex-direction: column; gap: 0;
     transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
@@ -1152,7 +1161,7 @@ const styles = `
   .gp-card-footer {
     margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(33,150,196,0.1);
     display: flex; align-items: center; gap: 0.5rem;
-    font-size: 0.7rem; font-weight: 700; color: #2196c4; text-transform: uppercase; letter-spacing: 0.1em;
+    font-size: 0.75rem; font-weight: 600; color: #2196c4;
   }
   .gp-live-dot { width: 6px; height: 6px; background: #2196c4; border-radius: 50%; animation: gpPulse 1.5s infinite; }
   .gp-arrow { margin-left: auto; font-size: 1rem; transition: transform 0.2s; }
@@ -1163,10 +1172,10 @@ const styles = `
   /* Amazon affiliate button */
   .gp-amazon-btn {
     display: flex; align-items: center; justify-content: space-between;
-    gap: 0.5rem; padding: 0.6rem 1rem;
+    gap: 0.5rem; padding: 0.6rem 1rem; margin-top: 0.5rem;
     background: rgba(255,153,0,0.07);
     border: 1px solid rgba(255,153,0,0.22);
-    border-top: none; border-radius: 0 0 16px 16px;
+    border-radius: 10px;
     text-decoration: none; font-size: 0.75rem;
     color: #ffaa33; font-weight: 600;
     transition: background 0.2s, border-color 0.2s;

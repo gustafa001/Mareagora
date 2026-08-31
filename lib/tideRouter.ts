@@ -31,7 +31,11 @@ export async function getTideForLocation(
     return { dias: [], fonte: 'neaps-global' };
   }
 
-  const global = await getGlobalTideData(input.lat, input.lon, dias);
+  // Interpreta dataInicio ("YYYY-MM-DD") como meia-noite UTC e passa adiante —
+  // sem isso, getGlobalTideData ignorava a data pedida e sempre calculava
+  // a partir de "hoje", deixando a tábua anual (jan-ago) sem eventos.
+  const startDate = new Date(`${dataInicio}T00:00:00Z`);
+  const global = await getGlobalTideData(input.lat, input.lon, dias, startDate);
   if (!global) return { dias: [], fonte: 'neaps-global' };
 
   const porDia: Record<string, { dt: string; height_m: number }[]> = {};

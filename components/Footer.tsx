@@ -6,7 +6,18 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-center md:text-left">
-            <div className="text-white font-bold text-xl mb-1">🌊 MaréAgora</div>
+            <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
+              <div className="w-8 h-8 rounded-lg overflow-hidden shadow-lg shadow-blue-500/20 flex-shrink-0">
+                <img
+                  src="/logo-mark.png"
+                  alt="MaréAgora"
+                  width={32}
+                  height={32}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <span className="text-white font-black text-xl">MaréAgora</span>
+            </div>
             <p className="text-sm">Previsão de marés em tempo real</p>
             <p className="text-xs mt-1">Dados oficiais da Marinha do Brasil • DHN</p>
           </div>

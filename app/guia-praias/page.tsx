@@ -890,16 +890,23 @@ export default function GuiaPraias() {
           &larr; Início
         </Link>
         <div className="gp-hero-bg" />
+        <div className="gp-hero-glow" />
         <div className="gp-hero-content">
-          <span className="gp-eyebrow">🌊 MaréAgora · Guia de Praias</span>
-          <h1>
-            Descubra as melhores<br />
-            <em>praias do Brasil</em>
-          </h1>
-          <p>
-            Dados de marés em tempo real, condições de ondas e dicas de pesca
-            para cada praia - tudo integrado ao MaréAgora.
+          <div className="gp-brand">
+            <img src="/logo-mark.png" alt="MaréAgora" width={28} height={28} className="gp-brand-logo" />
+            <span className="gp-brand-name">MaréAgora</span>
+          </div>
+          <p className="gp-kicker">Guia de Praias do Brasil</p>
+          <h1>O litoral brasileiro, praia por praia</h1>
+          <p className="gp-hero-desc">
+            Maré em tempo real, condições de ondas e dicas de pesca para cada
+            praia — dados oficiais da Marinha do Brasil, integrados ao MaréAgora.
           </p>
+          <div className="gp-stats">
+            <div className="gp-stat"><strong>64</strong><span>praias catalogadas</span></div>
+            <div className="gp-stat"><strong>17</strong><span>estados</span></div>
+            <div className="gp-stat"><strong>4</strong><span>regiões do país</span></div>
+          </div>
         </div>
         <div className="gp-waves">
           <div className="gp-wave" />
@@ -1034,20 +1041,28 @@ const styles = `
     position: absolute; inset: 0;
     background: linear-gradient(180deg, #04111f 0%, #0a2340 60%, #0e3a6e 100%);
   }
-  .gp-hero-content { position: relative; z-index: 2; max-width: 680px; }
-  .gp-eyebrow {
-    display: inline-block; font-size: 0.75rem; letter-spacing: 0.18em;
-    text-transform: uppercase; color: #2196c4;
-    border: 1px solid #2196c4; padding: 0.3rem 1rem;
-    border-radius: 100px; margin-bottom: 1.5rem;
+  .gp-hero-content { position: relative; z-index: 2; max-width: 720px; }
+  .gp-hero-glow {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: radial-gradient(ellipse 640px 320px at 50% 0%, rgba(33,150,196,0.22), transparent 70%);
   }
+  .gp-brand { display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin-bottom: 1.75rem; }
+  .gp-brand-logo { border-radius: 8px; object-fit: cover; box-shadow: 0 4px 16px rgba(33,150,196,0.35); }
+  .gp-brand-name { font-family: var(--font-syne); font-weight: 800; font-size: 0.95rem; color: #f0e6c8; }
+  .gp-kicker { color: #2196c4; font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; }
   .gp-hero h1 {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 900;
-    color: #f0e6c8; line-height: 1.1; margin-bottom: 1rem;
+    font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800;
+    color: #f0e6c8; line-height: 1.15; margin-bottom: 1.1rem;
   }
-  .gp-hero h1 em { font-style: italic; color: #2196c4; }
-  .gp-hero p { color: #d4c49a; font-size: 1.05rem; line-height: 1.7; }
+  .gp-hero-desc { color: #d4c49a; font-size: 1.05rem; line-height: 1.7; }
+  .gp-stats {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 2.25rem;
+    margin-top: 2.25rem; padding-top: 1.75rem; border-top: 1px solid rgba(33,150,196,0.15);
+  }
+  .gp-stat { display: flex; flex-direction: column; align-items: center; gap: 0.15rem; }
+  .gp-stat strong { font-family: 'Playfair Display', Georgia, serif; font-size: 1.6rem; color: #f0e6c8; }
+  .gp-stat span { font-size: 0.75rem; color: #7ab8d0; }
 
   /* Waves */
   .gp-waves { position: absolute; bottom: 0; left: 0; right: 0; height: 80px; overflow: hidden; }

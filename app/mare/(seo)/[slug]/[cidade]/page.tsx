@@ -42,23 +42,32 @@ export async function generateMetadata({ params }: { params: { slug: string, cid
   // praias continuam usando o nome da cidade.
   const seoName = isCommercial ? port.name : port.cityName;
 
-  let defaultSuffix = isCommercial 
-    ? 'Horários e Coeficientes Oficiais' 
+  const defaultSuffix = isCommercial 
+    ? 'Horários e Coeficientes' 
     : 'Surf, Pesca e Praia';
   
-  let defaultDesc = isCommercial
+  const defaultDesc = isCommercial
     ? `Tábua de marés de ${seoName}, ${port.state} para ${ano}. Previsão de maré alta e baixa, horários e coeficientes oficiais com dados da Marinha do Brasil (CHM).`
     : `Tábua de marés de ${seoName}, ${port.state} para ${ano}. Horários de maré alta e baixa para surf, pesca e atividades na praia. Fonte: Marinha do Brasil.`;
 
-  // Use the default dynamic suffix directly, unless specifically overridden
-  const suffix = config?.titleSuffix ?? defaultSuffix;
-  
-  // Actually, the user instruction says: 
-  // Para páginas de portos COMERCIAIS: título deve ser "Tábua de Maré [Porto] — Horários e Coeficientes Oficiais"
-  // Para páginas de PRAIAS: manter "Tábua de Maré [Praia] — Surf, Pesca e Praia"
-  // So let's override it directly if it's not explicitly matching to avoid issues where config has wrong title.
-  // We'll let config override, but the fallback handles all ports/beaches correctly now.
-  const title = `Tábua de Maré ${seoName} — ${isCommercial && !config ? 'Horários e Coeficientes Oficiais' : (!isCommercial && !config ? 'Surf, Pesca e Praia' : suffix)} | MaréAgora`;
+  // Sufixo curto para o título caber em 60 caracteres junto com keyword + ano.
+  // Remove "Oficiais" e ano repetido no sufixo, pois o base já injeta o ano.
+  // Título sem o sufixo "| MaréAgora" (brand segue apenas em OG/siteName) para evitar truncamento pelo Google.
+  const suffix = (config?.titleSuffix ?? defaultSuffix)
+    .replace(/\s+Oficiais$/i, '')
+    .replace(/\s{1,2}\d{4}$/i, '')
+    .trim();
+
+  const base = `Tábua de Maré ${seoName} ${ano}`;
+  const titleCompleto = suffix ? `${base} — ${suffix}` : base;
+
+  // Sempre respeita 60 chars. Se o sufixo estourar, o base (keyword + nome + ano) já é
+  // informativo por si só e cabe completo — então dispensamos o sufixo em vez de cortá-lo.
+  const title = base.length > 60
+    ? base.slice(0, 60).trimEnd()
+    : titleCompleto.length <= 60
+      ? titleCompleto
+      : base;
 
   const description = config?.description ?? defaultDesc;
 
@@ -109,7 +118,8 @@ export default async function PortPage({ params }: { params: { slug: string, cid
 
   const { posts: blogPosts, strategy: blogStrategy } = getPostsByPort(port);
 
-  const seoName = port.cityName;
+  const isCommercial = !port.referencePortSlug && (port.name.toLowerCase().includes('porto') || port.name.toLowerCase().includes('terminal') || config?.category === 'industrial');
+  const seoName = isCommercial ? port.name : port.cityName;
   
   // Data de hoje no fuso de Brasília (para AI Overview, SEO) — mesma lógica
   // do todayStr acima, evitando que o dia UTC (à frente de -03:00) desloque a data.
@@ -122,7 +132,7 @@ export default async function PortPage({ params }: { params: { slug: string, cid
         port={port} 
         type={categoria === 'industrial' || port.name.toLowerCase().includes('porto') ? 'Port' : 'Beach'} 
         url={`https://mareagora.com.br/mare/${estado}/${slug}`} 
-        title={`Tábua de Maré ${seoName} ${ano} — MaréAgora`}
+        title={`Tábua de Maré ${seoName} ${ano}`}
         description={`Horários e alturas das marés em ${seoName} (${port.state}) para ${ano}.`}
         faq={seoFaq}
       />

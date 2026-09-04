@@ -344,6 +344,20 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     ],
   },
 
+  'sao-luis': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — São Luís e Golfão Maranhense',
+    description: 'Veja a previsão de maré de São Luís (MA) em 2026: horários de premar e baixa-mar, altura das águas e as próximas 48 horas, com dados oficiais da Marinha do Brasil. Confira os horários.',
+    keywords: ['maré são luís hoje', 'tabua maré são luís 2026', 'maré alta são luís', 'maré baixa são luís', 'horário maré são luís', 'golfão maranhense maré', 'maré praia do calhau'],
+    praias: ['Calhau', 'São Marcos', 'Ponta d’Areia', 'Olho d’Água', 'Praia do Meio'],
+    category: 'turismo',
+    portoVizinhos: ['porto-de-itaqui', 'porto-de-tutoia', 'alcantara', 'barreirinhas'],
+    faqs: [
+      { q: 'Qual o melhor horário de maré em São Luís?', a: 'As melhores janelas são nas 2 horas ao redor da maré alta e da maré baixa. No Golfão Maranhense, a amplitude é grande e o mar avança muito entre a vazante e a enchente.' },
+      { q: 'Por que a maré de São Luís muda tanto de um dia para o outro?', a: 'São Luís está no Golfão Maranhense, onde a maré segue o dia lunar (~24h50min) e atrasa cerca de 50 minutos por dia, com variações que chegam a mais de 7 metros nas luas cheia e nova.' },
+      { q: 'A maré de São Luís é forte para banho e pesca?', a: 'Sim, é uma das mais intensas do Brasil. Na maré baixa as praias ficam com extensa faixa de areia; na alta, o banho é melhor em horários de maré média. A pesca rende na virada da maré.' },
+    ],
+  },
+
 };
 
 // Templates de fallback por categoria (para portos sem config específica)

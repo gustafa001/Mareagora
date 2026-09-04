@@ -6,6 +6,7 @@ import RecentBlogPosts from '@/components/RecentBlogPosts';
 import AdSlot from '@/components/ads/AdSlot';
 import { AD_SLOTS } from '@/lib/adConfig';
 import SchemaGenerator from '@/components/seo/SchemaGenerator';
+import HomeFaq from '@/components/HomeFaq';
 
 export const revalidate = 3600; // ISR: classificação "hoje" não pode congelar no build
 
@@ -60,6 +61,9 @@ export default function Home() {
           </p>
         </div>
       </section>
+
+      {/* SEÇÃO 2.5: Como interpretar, FAQ e localidades de destaque (SEO) */}
+      <HomeFaq />
 
       {/* SEÇÃO 4: Posts do Blog */}
       <RecentBlogPosts />

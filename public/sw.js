@@ -2,7 +2,7 @@
 // MaréAgora — Service Worker (PWA)
 // ═══════════════════════════════════════════════
 
-const CACHE = 'mareagora-v2'; // bump de versão força limpeza do cache antigo
+const CACHE = 'mareagora-v3'; // bump de versão força limpeza do cache antigo
 const PRECACHE_ASSETS = [
   '/',
   '/offline.html',
@@ -35,6 +35,24 @@ self.addEventListener('fetch', (e) => {
   if (req.method !== 'GET') return; // não intercepta POST (ex: /api/push/*)
 
   const url = new URL(req.url);
+
+  // Payloads RSC / flight do App Router (Next.js) — DEPENDEM DO BUILD. O
+  // prefetch do router usa fetch() com header "RSC: 1" (mode ≠ navigate),
+  // então esses requests caíam no cacheFirst abaixo e eram cacheados com a
+  // URL da página como chave — URL que NÃO muda entre deploys. Após um
+  // redeploy, o SW entregava o flight payload do build antigo pro router
+  // atual, que tentava executar ids de módulo webpack que não existem mais
+  // -> "Cannot read properties of undefined (reading 'call')" no
+  // __webpack_require__, só em páginas pré-buscadas. Nunca cachear esses
+  // payloads: sempre busca a versão atual do build.
+  const isRscData = req.headers.get('RSC') === '1' ||
+    !!req.headers.get('Next-Router-State-Tree') ||
+    !!req.headers.get('Next-Router-Prefetch') ||
+    (req.headers.get('accept') || '').includes('text/x-component');
+  if (isRscData) {
+    e.respondWith(fetch(req));
+    return;
+  }
 
   // APIs externas de maré/clima — sempre tenta rede primeiro, cai pro cache se offline
   if (url.hostname.includes('open-meteo') || url.hostname.includes('marinha')) {

@@ -7,11 +7,6 @@ import WaveEnergyChart from "@/components/WaveEnergyChart";
 import WindRadarCard from "@/components/WindRadarCard";
 import { useT } from "@/lib/tideI18n";
 
-interface WindWaveChartsProps {
-  lat: number;
-  lon: number;
-}
-
 interface MarineHourly {
   time: string[];
   wave_height: number[];
@@ -26,13 +21,34 @@ interface WindHourly {
   windgusts_10m: number[];
 }
 
-export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
+interface WindWaveChartsProps {
+  lat: number;
+  lon: number;
+  // NOVO: dados já buscados no servidor (page.tsx), usados como estado
+  // inicial. Quando presentes, pulamos o loading/fetch inicial e evitamos
+  // o "flash" do skeleton — os gráficos já nascem preenchidos.
+  initialMarineHourly?: MarineHourly | null;
+  initialWindHourly?: WindHourly | null;
+}
+
+export default function WindWaveCharts({
+  lat,
+  lon,
+  initialMarineHourly = null,
+  initialWindHourly = null,
+}: WindWaveChartsProps) {
   const { s } = useT();
-  const [marineHourly, setMarineHourly] = useState<MarineHourly | null>(null);
-  const [windHourly, setWindHourly] = useState<WindHourly | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [marineHourly, setMarineHourly] = useState<MarineHourly | null>(initialMarineHourly);
+  const [windHourly, setWindHourly] = useState<WindHourly | null>(initialWindHourly);
+  // Só entra em "loading" se NÃO recebemos dados prontos do servidor.
+  const [loading, setLoading] = useState(!initialMarineHourly || !initialWindHourly);
 
   useEffect(() => {
+    // Já temos dados do servidor para este lat/lon: não refaz o fetch.
+    // (Se o usuário navegar para outro porto, lat/lon muda e o efeito
+    // roda de novo normalmente, buscando os dados do novo local.)
+    if (initialMarineHourly && initialWindHourly) return;
+
     setLoading(true);
     const tz = "America%2FSao_Paulo";
 
@@ -65,6 +81,7 @@ export default function WindWaveCharts({ lat, lon }: WindWaveChartsProps) {
         console.error("[WindWaveCharts] Erro ao buscar dados:", err);
         setLoading(false);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lat, lon]);
 
   if (loading) {

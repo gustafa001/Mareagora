@@ -14,6 +14,7 @@ import type { BlogPost } from '@/lib/blog';
 import { getPortoDescription } from '@/lib/porto-descriptions';
 import SchemaGenerator from '@/components/seo/SchemaGenerator';
 import { generateSEOContent } from '@/lib/seo/content-generator';
+import { getSeaConditionsSummary } from '@/lib/seo/sea-conditions'; // NOVO
 import SeoOverviewTicker from '@/components/SeoOverviewTicker';
 
 export const revalidate = 21600; // regenera a página a cada 6h (ISR), evita data congelada do build — reduzido de 1h p/ diminuir ISR Writes/CPU no free tier
@@ -124,7 +125,15 @@ export default async function PortPage({ params }: { params: { slug: string, cid
   // Data de hoje no fuso de Brasília (para AI Overview, SEO) — mesma lógica
   // do todayStr acima, evitando que o dia UTC (à frente de -03:00) desloque a data.
   const dataHoje = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
-  const { text: seoText, faq: seoFaq } = generateSEOContent(port, dataHoje);
+
+  // NOVO: busca ondas/vento no servidor, com o mesmo revalidate da página,
+  // para que o texto de SEO e o FAQ (JSON-LD) tragam números reais no HTML
+  // já entregue a crawlers/bots de IA — sem depender de fetch client-side.
+  // Em caso de falha (API fora do ar etc.), `sea` fica null e o gerador
+  // cai para o texto genérico antigo, sem quebrar a página.
+  const seaData = await getSeaConditionsSummary(port.lat, port.lon, revalidate);
+
+  const { text: seoText, faq: seoFaq } = generateSEOContent(port, dataHoje, seaData?.summary ?? null);
 
   return (
     <>
@@ -148,6 +157,11 @@ export default async function PortPage({ params }: { params: { slug: string, cid
         blogPosts={blogPosts}
         blogStrategy={blogStrategy}
         todayStr={todayStr}
+        // NOVO: dados já buscados no servidor, repassados como estado inicial
+        // para o WindWaveCharts/useSeaConditions não precisarem refazer o
+        // fetch no primeiro render do cliente (ver PortPageContent.tsx).
+        initialMarineHourly={seaData?.marineHourly ?? null}
+        initialWindHourly={seaData?.windHourly ?? null}
       />
       <div className="container pb-16">
         <PortoFAQ slug={slug} categoria={categoria} />

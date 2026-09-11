@@ -37,6 +37,7 @@ import { useRecentPorts } from '@/hooks/useRecentPorts';
 import { ClientOnly } from '@/components/ClientOnly';
 import { exportTidePdf } from '@/lib/exportTidePdf';
 import { WEEKDAYS, MONTHS, buildMonthRows } from '@/lib/monthlyTideCalc';
+import type { MarineHourly, WindHourly } from '@/lib/seo/sea-conditions';
 
 interface PortPageContentProps {
   slug: string;
@@ -54,9 +55,19 @@ interface PortPageContentProps {
    * cliente nunca recalcula: não tem como divergir.
    */
   todayStr: string;
+  /**
+   * Dados de ondas/vento já buscados no SERVIDOR (page.tsx), via
+   * getSeaConditionsSummary. Passados como estado inicial para o
+   * WindWaveCharts não precisar refazer o fetch no primeiro render do
+   * cliente — melhora LCP/CLS e evita o "flash" do skeleton de loading.
+   * `null` quando a busca no servidor falhou; nesse caso o componente
+   * cai para o comportamento antigo (fetch 100% client-side).
+   */
+  initialMarineHourly?: MarineHourly | null;
+  initialWindHourly?: WindHourly | null;
 }
 
-export default function PortPageContent({ slug, portDescription, blogPosts, blogStrategy, todayStr }: PortPageContentProps) {
+export default function PortPageContent({ slug, portDescription, blogPosts, blogStrategy, todayStr, initialMarineHourly, initialWindHourly }: PortPageContentProps) {
   const port = getPortBySlug(slug);
   if (!port) notFound();
 
@@ -346,7 +357,12 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
             </div>
 
             <div id="graficos-meteorologia">
-              <WindWaveCharts lat={port.lat} lon={port.lon} />
+              <WindWaveCharts
+                lat={port.lat}
+                lon={port.lon}
+                initialMarineHourly={initialMarineHourly}
+                initialWindHourly={initialWindHourly}
+              />
             </div>
 
             <ActivityRecommendations

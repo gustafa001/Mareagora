@@ -1,13 +1,17 @@
 import { Port } from '@/lib/ports';
 import { getEventosDia, MareDia, MareEvento } from '@/lib/mare';
 import { getMoonAge, getMoonPhase } from '@/lib/tideUtils';
+import { SeaConditionsSummary } from '@/lib/seo/sea-conditions';
 
 export interface SEOContent {
   text: string;
   faq: { question: string; answer: string }[];
 }
 
-export function generateSEOContent(port: Port, date: string): SEOContent {
+// CHANGED: aceita `sea` opcional (resumo de ondas/vento buscado no servidor).
+// Quando ausente (ex.: falha na API externa), cai para o texto genérico
+// antigo — nunca quebra a página por causa disso.
+export function generateSEOContent(port: Port, date: string, sea?: SeaConditionsSummary | null): SEOContent {
   const eventos: MareEvento[] = getEventosDia(port, date);
   const dateObj = new Date(`${date}T12:00:00Z`);
 
@@ -20,8 +24,8 @@ export function generateSEOContent(port: Port, date: string): SEOContent {
   // Horário atual no fuso de São Paulo, para saber quais marés já passaram.
   const nowMinutes = getNowMinutesBR(date);
 
-  const text = generateSpintaxText(port, date, eventos, season, moonPhaseName, amplitude, isViva, nowMinutes);
-  const faq = generateFAQ(port, date, eventos, moonPhaseName, isViva);
+  const text = generateSpintaxText(port, date, eventos, season, moonPhaseName, amplitude, isViva, nowMinutes, sea);
+  const faq = generateFAQ(port, date, eventos, moonPhaseName, isViva, sea);
 
   return { text, faq };
 }
@@ -80,6 +84,7 @@ function proximoEvento(eventos: MareEvento[], nowMinutes: number): MareEvento | 
   return eventos[0];
 }
 
+// CHANGED: novo parâmetro `sea` opcional no final da assinatura.
 function generateSpintaxText(
   port: Port,
   date: string,
@@ -88,7 +93,8 @@ function generateSpintaxText(
   moonPhase: string,
   amplitude: number,
   isViva: boolean,
-  nowMinutes: number
+  nowMinutes: number,
+  sea?: SeaConditionsSummary | null
 ) {
   const isCommercial = port.name.toLowerCase().includes('porto') || port.name.toLowerCase().includes('terminal');
 
@@ -101,23 +107,32 @@ function generateSpintaxText(
   const highInfo = nextHigh ? `A próxima maré alta ocorre às ${nextHigh.hora} com ${nextHigh.altura_m}m.` : '';
   const lowInfo = nextLow ? `Já a próxima maré baixa é registrada às ${nextLow.hora} atingindo ${nextLow.altura_m}m.` : '';
 
+  // CHANGED: frase de ondas/vento agora usa números reais quando `sea`
+  // está disponível. Mantém a frase genérica antiga como fallback.
+  const seaInfo = sea
+    ? `As ondas hoje variam entre ${sea.waveMin}m e ${sea.waveMax}m, com período de ${sea.wavePeriod}s vindo de ${sea.waveDirectionCardinal}. O vento sopra de ${sea.windDirectionCardinal} entre ${sea.windMin} e ${sea.windMax} km/h, com rajadas de até ${sea.windGustMax} km/h.`
+    : 'As ondas e os ventos na região costeira podem sofrer leves alterações dependendo do horário.';
+
   let baseText = '';
 
   if (isCommercial) {
-    baseText = `As condições de maré em ${port.name}, ${port.state} para a data atual apresentam uma amplitude de ${amplitude.toFixed(2)}m sob a influência da lua ${moonPhase}. ${highInfo} ${lowInfo} Este cenário de ${season} é característico da região, ${isViva ? 'indicando marés vivas (sizígia) que exigem atenção nas manobras portuárias.' : 'caracterizando marés de quadratura, com variações mais suaves no calado dinâmico.'}`;
+    baseText = `As condições de maré em ${port.name}, ${port.state} para a data atual apresentam uma amplitude de ${amplitude.toFixed(2)}m sob a influência da lua ${moonPhase}. ${highInfo} ${lowInfo} Este cenário de ${season} é característico da região, ${isViva ? 'indicando marés vivas (sizígia) que exigem atenção nas manobras portuárias.' : 'caracterizando marés de quadratura, com variações mais suaves no calado dinâmico.'} ${seaInfo}`;
   } else {
-    baseText = `Confira as condições para a praia de ${port.name} (${port.state}) durante o ${season}. Hoje, com a lua ${moonPhase}, a amplitude da maré é de ${amplitude.toFixed(2)} metros. ${highInfo} ${lowInfo} ${isViva ? 'Com a maré viva, o mar recua bastante na baixamar, excelente para pesca na beira e encontrar piscinas naturais.' : 'Sendo maré morta, a variação é menor, proporcionando águas mais estáveis para banhistas e navegação leve.'} As ondas e os ventos na região costeira podem sofrer leves alterações dependendo do horário.`;
+    baseText = `Confira as condições para a praia de ${port.name} (${port.state}) durante o ${season}. Hoje, com a lua ${moonPhase}, a amplitude da maré é de ${amplitude.toFixed(2)} metros. ${highInfo} ${lowInfo} ${isViva ? 'Com a maré viva, o mar recua bastante na baixamar, excelente para pesca na beira e encontrar piscinas naturais.' : 'Sendo maré morta, a variação é menor, proporcionando águas mais estáveis para banhistas e navegação leve.'} ${seaInfo}`;
   }
 
   return baseText;
 }
 
+// CHANGED: novo parâmetro `sea` opcional no final, adiciona uma 5ª
+// pergunta ao FAQ (JSON-LD) só quando os dados de mar estão disponíveis.
 function generateFAQ(
   port: Port,
   date: string,
   eventos: MareEvento[],
   moonPhase: string,
-  isViva: boolean
+  isViva: boolean,
+  sea?: SeaConditionsSummary | null
 ) {
   const faq = [];
   const highTides = eventos.filter(e => e.tipo === 'high');
@@ -154,6 +169,14 @@ function generateFAQ(
       ? `A fase ${moonPhase} alinha o Sol e a Terra, criando uma atração gravitacional muito forte. Isso causa as famosas marés vivas (ou de sizígia), resultando em marés muito altas e baixas bem secas.`
       : `Na fase ${moonPhase}, o sol e a lua formam um ângulo reto. Isso distribui a atração gravitacional e cria marés de quadratura (mortas), com menor variação de nível.`
   });
+
+  // Q5 (NOVA) — só entra se tivermos dados reais de onda/vento.
+  if (sea) {
+    faq.push({
+      question: `Como estão as ondas e o vento em ${port.cityName} hoje?`,
+      answer: `As ondas variam entre ${sea.waveMin}m e ${sea.waveMax}m, com período de ${sea.wavePeriod}s vindo de ${sea.waveDirectionCardinal}. O vento é de ${sea.windDirectionCardinal}, entre ${sea.windMin} e ${sea.windMax} km/h, com rajadas de até ${sea.windGustMax} km/h.`
+    });
+  }
 
   return faq;
 }

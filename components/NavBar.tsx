@@ -213,9 +213,12 @@ export default function NavBar({ className = '' }: NavBarProps) {
       {/* Menu deslizante — mobile */}
       <div
         id="mobile-menu"
-        className={`sm:hidden overflow-hidden transition-all duration-300 ease-in-out ${menuOpen ? 'max-h-[calc(100vh-5rem)] overflow-y-auto' : 'max-h-0'}`}
+        className={`sm:hidden overflow-hidden transition-all duration-300 ease-in-out ${menuOpen ? 'max-h-[calc(100dvh-5rem)] overflow-y-auto' : 'max-h-0'}`}
       >
-        <div className="px-4 pb-4 pt-1 flex flex-col gap-2 border-t border-white/5">
+        <div
+          className="px-4 pt-1 flex flex-col gap-2 border-t border-white/5"
+          style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 2rem)' }}
+        >
 
           {/* Busca — destaque visual, é o item mais estratégico do menu */}
           <div className="relative mt-3">

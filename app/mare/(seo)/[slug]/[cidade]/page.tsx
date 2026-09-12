@@ -60,15 +60,31 @@ export async function generateMetadata({ params }: { params: { slug: string, cid
     .trim();
 
   const base = `Tábua de Maré ${seoName} ${ano}`;
-  const titleCompleto = suffix ? `${base} — ${suffix}` : base;
+  const SEP = ' — ';
 
-  // Sempre respeita 60 chars. Se o sufixo estourar, o base (keyword + nome + ano) já é
-  // informativo por si só e cabe completo — então dispensamos o sufixo em vez de cortá-lo.
-  const title = base.length > 60
-    ? base.slice(0, 60).trimEnd()
-    : titleCompleto.length <= 60
-      ? titleCompleto
-      : base;
+  // Sempre respeita 60 chars. Antes, quando o sufixo não cabia inteiro, ele era
+  // descartado por completo — o que fazia ~22 das 26 páginas com SEO customizado
+  // caírem de volta no título genérico "Tábua de Maré {nome} {ano}", sem nenhum
+  // diferencial pro clique. Agora truncamos o sufixo no limite de palavra em vez
+  // de removê-lo, então toda página mantém alguma diferenciação no título.
+  let title = base;
+  if (base.length > 60) {
+    title = base.slice(0, 60).trimEnd();
+  } else if (suffix) {
+    const fullTitle = `${base}${SEP}${suffix}`;
+    if (fullTitle.length <= 60) {
+      title = fullTitle;
+    } else {
+      const budget = 60 - base.length - SEP.length;
+      if (budget >= 8) {
+        let truncSuffix = suffix.slice(0, budget);
+        const lastSpace = truncSuffix.lastIndexOf(' ');
+        if (lastSpace > 0) truncSuffix = truncSuffix.slice(0, lastSpace);
+        truncSuffix = truncSuffix.trim();
+        if (truncSuffix) title = `${base}${SEP}${truncSuffix}`;
+      }
+    }
+  }
 
   const description = config?.description ?? defaultDesc;
 

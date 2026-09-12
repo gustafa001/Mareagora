@@ -75,7 +75,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'arquipelago-de-fernando-de-noronha': {
-    titleSuffix: 'Maré Alta e Baixa — Mergulho e Snorkel',
+    titleSuffix: 'Horários de Hoje',
     description: 'Tábua de marés de Fernando de Noronha para hoje e 2026. Horários ideais para mergulho, snorkel e acesso às praias. Dados oficiais da Marinha do Brasil.',
     keywords: ['maré fernando de noronha', 'mergulho noronha maré', 'snorkel noronha horário', 'maré baixa noronha praias', 'tabua maré noronha 2026', 'maré baía do sancho', 'piscinas noronha maré'],
     praias: ['Baía do Sancho', 'Praia do Leão', 'Praia do Cachorro', 'Conceição', 'Boldró', 'Atalaia'],
@@ -317,7 +317,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'terminal-de-barra-do-riacho': {
-    titleSuffix: 'Maré Alta e Baixa Hoje — Surf em Regência e Barra do Riacho',
+    titleSuffix: 'Hoje',
     description: 'Tábua de marés de Barra do Riacho e Regência (ES) para hoje e 2026. Horários ideais para o point break de Regência, pesca e operações no terminal. Fonte: Marinha do Brasil.',
     keywords: ['maré barra do riacho hoje', 'maré regência es', 'tabua maré barra do riacho 2026', 'surf regência maré', 'maré aracruz es', 'point break regência', 'pesca barra do riacho maré'],
     praias: ['Barra do Riacho', 'Regência', 'Povoação'],
@@ -331,7 +331,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'porto-de-tutoia': {
-    titleSuffix: 'Maré Alta e Baixa Hoje — Delta do Parnaíba e Lençóis Maranhenses',
+    titleSuffix: 'Delta do Parnaíba Hoje',
     description: 'Tábua de marés de Tutóia (MA) para hoje e 2026. Horários essenciais para passeios de barco pelo Delta do Parnaíba, acesso aos Lençóis Maranhenses e pesca nos igarapés. Fonte: Marinha do Brasil.',
     keywords: ['maré tutóia hoje', 'tabua maré tutóia 2026', 'delta do parnaíba maré', 'lençóis maranhenses barco maré', 'passeio delta das américas maré', 'maré igarapés tutóia', 'pesca tutóia maré'],
     praias: ['Tutóia', 'Caburé', 'Delta do Parnaíba'],
@@ -345,7 +345,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'sao-luis': {
-    titleSuffix: 'Maré Alta e Baixa Hoje — São Luís e Golfão Maranhense',
+    titleSuffix: 'Maré Alta e Baixa Hoje',
     description: 'Veja a previsão de maré de São Luís (MA) em 2026: horários de premar e baixa-mar, altura das águas e as próximas 48 horas, com dados oficiais da Marinha do Brasil. Confira os horários.',
     keywords: ['maré são luís hoje', 'tabua maré são luís 2026', 'maré alta são luís', 'maré baixa são luís', 'horário maré são luís', 'golfão maranhense maré', 'maré praia do calhau'],
     praias: ['Calhau', 'São Marcos', 'Ponta d’Areia', 'Olho d’Água', 'Praia do Meio'],

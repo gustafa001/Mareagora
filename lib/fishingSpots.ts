@@ -183,6 +183,48 @@ export const FISHING_SPOTS: FishingSpot[] = [
     nearestPortSlug: 'praia-do-futuro',
     // ✅ confirmado visualmente no Google Maps em 27/07/2026 (mesma área)
   },
+  {
+    id: 'fs-13',
+    name: 'Costão do Mar Casado',
+    slug: 'costao-do-mar-casado-guaruja',
+    type: 'costão',
+    state: 'SP',
+    region: 'sudeste',
+    lat: -23.9717044,
+    lon: -46.1864624,
+    species: ['corvina', 'garoupa', 'badejo', 'sargo'],
+    description: 'Costão rochoso na Praia do Pernambuco (Guarujá), procurado para pesca de arremesso.',
+    nearestPortSlug: 'guaruja',
+    // ✅ coordenada verificada no Google Maps em 13/09/2026 (Praia do Mar Casado)
+  },
+  {
+    id: 'fs-14',
+    name: 'Costão das Tartarugas',
+    slug: 'costao-das-tartarugas-guaruja',
+    type: 'costão',
+    state: 'SP',
+    region: 'sudeste',
+    lat: -23.9942151,
+    lon: -46.1998453,
+    species: ['corvina', 'garoupa', 'badejo', 'sargo'],
+    description: 'Costão rochoso na Praia da Enseada (Guarujá), um dos pontos mais tradicionais para pesca de terra na cidade.',
+    nearestPortSlug: 'guaruja',
+    // ✅ área geral confirmada visualmente no Google Maps em 13/09/2026
+  },
+  {
+    id: 'fs-15',
+    name: 'Canal de Bertioga (Praia da Enseada)',
+    slug: 'canal-de-bertioga-enseada-guaruja',
+    type: 'rio',
+    state: 'SP',
+    region: 'sudeste',
+    lat: -23.9832,
+    lon: -46.1706,
+    species: ['robalo-flecha', 'robalo-peva'],
+    description: 'Trecho do Canal de Bertioga junto à Praia da Enseada, o ponto mais tradicional de Guarujá para pesca de robalo, especialmente na virada da maré.',
+    nearestPortSlug: 'guaruja',
+    // ⚠️ coordenada aproximada — ajustar após conferência exata no Google Maps
+  },
 ];
 
 export function getFishingSpotBySlug(slug: string): FishingSpot | undefined {

@@ -6,7 +6,8 @@
  *
  * Fórmula herdada do DailyScoreCard.tsx (bloco PESCA):
  *  - base 4
- *  - +3/+1 se estamos dentro de 1h/2h de um evento de maré (período solunar)
+ *  - +3/+1 se um período solunar REAL (getPeriodosSolunares) está ativo;
+ *    sem `periodos`, cai para o proxy legado (1h/2h ao redor de qualquer maré)
  *  - +2 (amplitude >= 1.5m) / +1 (>= 0.8m) / -1 (maré morta)
  *  - +1 se a maré está enchendo
  *  - +1 vento < 20km/h / -2 vento > 35km/h
@@ -14,6 +15,7 @@
  */
 
 import type { TideEvent } from '@/lib/tideUtils';
+import type { PeriodoSolunar } from '@/lib/solunar';
 
 export interface FishingMarine {
   waveHeight: number;   // metros
@@ -94,16 +96,29 @@ export function calcFishingScore(
   marine: FishingMarine | null,
   utcOffsetMin: number,
   nowMin?: number,
-  t: FishingReasonsI18n = PT_REASONS
+  t: FishingReasonsI18n = PT_REASONS,
+  periodos?: PeriodoSolunar[]
 ): FishingScoreResult {
   const currentMinute = nowMin ?? localNowMinutes(utcOffsetMin);
 
-  // Período solunar: 1h ao redor de uma preamar/baixamar (maior) ou 2h (menor)
+  // Período solunar: quando `periodos` é informado, usa a Teoria Solunar REAL
+  // (mesmo motor do SolunarTable e do DailyScoreCard) — converte os limites
+  // (Dates UTC) para minutos do dia no fuso local, igual ao getAvaliacaoSolunar.
+  // Sem `periodos` (chamadores antigos), mantém o proxy legado de ±1h/±2h ao
+  // redor de qualquer evento de maré.
   let solunar = 0;
-  for (const ev of tides) {
-    const diff = Math.abs(toMin(ev.hora) - currentMinute);
-    if (diff <= 60) solunar = Math.max(solunar, 2);
-    else if (diff <= 120) solunar = Math.max(solunar, 1);
+  if (periodos && periodos.length > 0) {
+    const minutoDoDia = (d: Date) => ((d.getUTCHours() * 60 + d.getUTCMinutes() + utcOffsetMin) % 1440 + 1440) % 1440;
+    const emPeriodo = (tipo: PeriodoSolunar['tipo']) =>
+      periodos.some(p => p.tipo === tipo && currentMinute >= minutoDoDia(p.inicio) && currentMinute <= minutoDoDia(p.fim));
+    if (emPeriodo('maior')) solunar = 2;
+    else if (emPeriodo('menor')) solunar = 1;
+  } else {
+    for (const ev of tides) {
+      const diff = Math.abs(toMin(ev.hora) - currentMinute);
+      if (diff <= 60) solunar = Math.max(solunar, 2);
+      else if (diff <= 120) solunar = Math.max(solunar, 1);
+    }
   }
 
   // Amplitude do dia (alta - baixa)

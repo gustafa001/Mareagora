@@ -2,6 +2,14 @@ import { Port } from '@/lib/ports';
 import { getEventosDia, MareDia, MareEvento } from '@/lib/mare';
 import { getMoonAge, getMoonPhase } from '@/lib/tideUtils';
 import { SeaConditionsSummary } from '@/lib/seo/sea-conditions';
+import {
+  getPeriodosSolunares,
+  getIdadeLua,
+  getAvaliacaoSolunar,
+  inicioDiaLocal,
+  type AvaliacaoSolunar,
+  type PeriodoSolunar,
+} from '@/lib/solunar';
 
 export interface SEOContent {
   text: string;
@@ -12,6 +20,15 @@ export interface SEOContent {
 export interface FishingSEO {
   score: number;
   label: string;
+}
+
+/**
+ * Períodos solunares reais do dia para um porto — fonte única compartilhada
+ * entre o texto SSR (aqui) e o score de pesca (page.tsx / lib/fishingScore.ts),
+ * para os dois nunca divergirem do motor do SolunarTable.
+ */
+export function getSolunarPeriodos(port: Port, date: string): PeriodoSolunar[] {
+  return getPeriodosSolunares(inicioDiaLocal(date), port.lat, port.lon);
 }
 
 // CHANGED: aceita `sea` opcional (resumo de ondas/vento buscado no servidor).
@@ -30,8 +47,17 @@ export function generateSEOContent(port: Port, date: string, sea?: SeaConditions
   // Horário atual no fuso de São Paulo, para saber quais marés já passaram.
   const nowMinutes = getNowMinutesBR(date);
 
-  const text = generateSpintaxText(port, date, eventos, season, moonPhaseName, amplitude, isViva, nowMinutes, sea, fishing);
-  const faq = generateFAQ(port, date, eventos, moonPhaseName, isViva, sea, fishing);
+  // Mesmo motor solunar do SolunarTable (client-side), calculado aqui no
+  // servidor para o "dia atual" — assim a nota em ★ sai no HTML/FAQ (SSR),
+  // não só depois da hidratação. Usa offset -180 (BRT) por padrão, igual
+  // ao resto do site (SolunarTable também assume BRT hoje).
+  const inicioDia = inicioDiaLocal(date);
+  const periodos = getSolunarPeriodos(port, date);
+  const idadeLua = getIdadeLua(inicioDia);
+  const solunar = getAvaliacaoSolunar(idadeLua, periodos, eventos);
+
+  const text = generateSpintaxText(port, date, eventos, season, moonPhaseName, amplitude, isViva, nowMinutes, sea, solunar, fishing);
+  const faq = generateFAQ(port, date, eventos, moonPhaseName, isViva, sea, solunar, fishing);
 
   return { text, faq };
 }
@@ -101,6 +127,7 @@ function generateSpintaxText(
   isViva: boolean,
   nowMinutes: number,
   sea?: SeaConditionsSummary | null,
+  solunar?: AvaliacaoSolunar,
   fishing?: FishingSEO | null
 ) {
   const isCommercial = port.name.toLowerCase().includes('porto') || port.name.toLowerCase().includes('terminal');
@@ -120,20 +147,25 @@ function generateSpintaxText(
     ? `As ondas hoje variam entre ${sea.waveMin}m e ${sea.waveMax}m, com período de ${sea.wavePeriod}s vindo de ${sea.waveDirectionCardinal}. O vento sopra de ${sea.windDirectionCardinal} entre ${sea.windMin} e ${sea.windMax} km/h, com rajadas de até ${sea.windGustMax} km/h.`
     : 'As ondas e os ventos na região costeira podem sofrer leves alterações dependendo do horário.';
 
-  // Frase do score de pesca calculado no servidor (dados reais de maré + ondas/vento).
+  // NOVO: nota solunar real (mesmo motor do SolunarTable) exposta no HTML/SSR,
+  // não só no client depois da hidratação.
+  const solunarInfo = solunar
+    ? ` A qualidade solunar de hoje para pesca é ${solunar.estrelas}/5${solunar.destaque ? ', com um período maior coincidindo com a maré cheia — janela especialmente favorável' : ''}.`
+    : '';
+
   const fishingInfo = fishing
-    ? `A atividade de pesca hoje está avaliada em ${fishing.score}/10 (${fishing.label}).`
+    ? ` A atividade de pesca hoje está avaliada em ${fishing.score}/10 (${fishing.label}).`
     : '';
 
   let baseText = '';
 
   if (isCommercial) {
-    baseText = `As condições de maré em ${port.name}, ${port.state} para a data atual apresentam uma amplitude de ${amplitude.toFixed(2)}m sob a influência da lua ${moonPhase}. ${highInfo} ${lowInfo} Este cenário de ${season} é característico da região, ${isViva ? 'indicando marés vivas (sizígia) que exigem atenção nas manobras portuárias.' : 'caracterizando marés de quadratura, com variações mais suaves no calado dinâmico.'} ${seaInfo}`;
+    baseText = `As condições de maré em ${port.name}, ${port.state} para a data atual apresentam uma amplitude de ${amplitude.toFixed(2)}m sob a influência da lua ${moonPhase}. ${highInfo} ${lowInfo} Este cenário de ${season} é característico da região, ${isViva ? 'indicando marés vivas (sizígia) que exigem atenção nas manobras portuárias.' : 'caracterizando marés de quadratura, com variações mais suaves no calado dinâmico.'} ${seaInfo}${solunarInfo}${fishingInfo}`;
   } else {
-    baseText = `Confira as condições para a praia de ${port.name} (${port.state}) durante o ${season}. Hoje, com a lua ${moonPhase}, a amplitude da maré é de ${amplitude.toFixed(2)} metros. ${highInfo} ${lowInfo} ${isViva ? 'Com a maré viva, o mar recua bastante na baixamar, excelente para pesca na beira e encontrar piscinas naturais.' : 'Sendo maré morta, a variação é menor, proporcionando águas mais estáveis para banhistas e navegação leve.'} ${seaInfo}`;
+    baseText = `Confira as condições para a praia de ${port.name} (${port.state}) durante o ${season}. Hoje, com a lua ${moonPhase}, a amplitude da maré é de ${amplitude.toFixed(2)} metros. ${highInfo} ${lowInfo} ${isViva ? 'Com a maré viva, o mar recua bastante na baixamar, excelente para pesca na beira e encontrar piscinas naturais.' : 'Sendo maré morta, a variação é menor, proporcionando águas mais estáveis para banhistas e navegação leve.'} ${seaInfo}${solunarInfo}${fishingInfo}`;
   }
 
-  return fishingInfo ? `${baseText} ${fishingInfo}` : baseText;
+  return baseText;
 }
 
 // CHANGED: novo parâmetro `sea` opcional no final, adiciona uma 5ª
@@ -145,6 +177,7 @@ function generateFAQ(
   moonPhase: string,
   isViva: boolean,
   sea?: SeaConditionsSummary | null,
+  solunar?: AvaliacaoSolunar,
   fishing?: FishingSEO | null
 ) {
   const faq = [];
@@ -168,13 +201,17 @@ function generateFAQ(
   }
 
   // Q3
+  const solunarSufixo = solunar
+    ? ` A tábua solunar de hoje marca ${solunar.estrelas}/5 estrelas${solunar.destaque ? ', com um período maior batendo com a maré cheia — vale priorizar essa janela' : ''}.`
+    : '';
   faq.push({
     question: `A maré está boa para pesca em ${port.cityName}?`,
     answer: fishing
-      ? `Hoje a atividade de pesca está avaliada em ${fishing.score}/10 (${fishing.label}), considerando maré, lua e condições do mar. ${isViva ? 'As marés vivas (sizígia) aumentam a movimentação das correntes e costumam ativar a alimentação dos peixes.' : 'As marés de quadratura (mortas) têm pouca correnteza — melhor para pesca de fundo e em locais de maior calado.'}`
-      : isViva
+      ? `Hoje a atividade de pesca está avaliada em ${fishing.score}/10 (${fishing.label}), considerando maré, lua e condições do mar. ${isViva ? 'As marés vivas (sizígia) aumentam a movimentação das correntes e costumam ativar a alimentação dos peixes.' : 'As marés de quadratura (mortas) têm pouca correnteza — melhor para pesca de fundo e em locais de maior calado.'}${solunarSufixo}`
+      : (isViva
         ? 'Sim! A atual maré viva (sizígia) aumenta a movimentação das correntes e dos nutrientes, o que costuma ativar a alimentação dos peixes.'
         : 'A maré de quadratura (morta) apresenta pouca correnteza. É ideal para pesca de fundo ou em locais de maior calado, embora os peixes possam estar menos ativos.'
+      ) + solunarSufixo
   });
 
   // Q4

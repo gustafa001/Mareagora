@@ -13,7 +13,7 @@ import { getPostsByPort } from '@/lib/blog';
 import type { BlogPost } from '@/lib/blog';
 import { getPortoDescription } from '@/lib/porto-descriptions';
 import SchemaGenerator from '@/components/seo/SchemaGenerator';
-import { generateSEOContent } from '@/lib/seo/content-generator';
+import { generateSEOContent, getSolunarPeriodos } from '@/lib/seo/content-generator';
 import { getSeaConditionsSummary } from '@/lib/seo/sea-conditions';
 import { getEventosDia } from '@/lib/mare';
 import { calcFishingScore } from '@/lib/fishingScore';
@@ -166,11 +166,16 @@ export default async function PortPage({ params }: { params: { slug: string, cid
     const ws = seaData.windHourly.windspeed_10m?.[brHour];
     if (typeof wh === 'number' && typeof ws === 'number') {
       const eventos = getEventosDia(port, dataHoje);
+      // Mesmos períodos solunares do content-generator (fonte única) — o bônus
+      // solunar do score passa a usar a Teoria Solunar real, como o DailyScoreCard.
+      const periodos = getSolunarPeriodos(port, dataHoje);
       const pesca = calcFishingScore(
         eventos,
         { waveHeight: wh, wavePeriod: wp ?? 0, windSpeed: ws },
         -180, // Brasília (UTC-3), mesmo fuso usado no resto da página
-        brHour * 60 + brMinute
+        brHour * 60 + brMinute,
+        undefined, // tradutor padrão (PT_REASONS)
+        periodos
       );
       fishing = { score: pesca.score, label: pesca.label };
     }

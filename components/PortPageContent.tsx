@@ -28,7 +28,7 @@ import { getStateSlug, getStateName } from '@/lib/states';
 import ShareButton from '@/components/ShareButton';
 import { useSeaConditions } from '@/hooks/useSeaConditions';
 import RessacaAlert from '@/components/RessacaAlert';
-import { getNextHighAndLow, tideAtMinute, getCountdownLabel, minutesUntilTide } from '@/lib/tideUtils';
+import { getNextHighAndLow, tideAtMinute } from '@/lib/tideUtils';
 import { classifyToday } from '@/lib/tideQuality';
 import TideQualityBadge from '@/components/TideQualityBadge';
 import { notFound } from 'next/navigation';
@@ -145,16 +145,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
   const tideQuality = classifyToday(todayTides, currentMin);
 
   const currentHeight = currentMin !== null && todayTides.length ? tideAtMinute(currentMin, todayTides) : null;
-  // Minutos-até-o-evento, não a string de hora — "03:02" < "21:55" como
-  // texto dava resultado errado quando a alta vinha do fallback pro dia
-  // seguinte e a baixa de hoje chegava primeiro de verdade.
-  const highIn = nextHigh && currentMin !== null ? minutesUntilTide(nextHigh.hora, currentMin) : null;
-  const lowIn = nextLow && currentMin !== null ? minutesUntilTide(nextLow.hora, currentMin) : null;
-  const isRising = highIn !== null && (lowIn === null || highIn <= lowIn);
-  const nextEvent = isRising ? nextHigh : nextLow;
-  const countdownLabel = nextEvent && currentMin !== null
-    ? getCountdownLabel(nextEvent.hora, currentMin)
-    : null;
+  const isRising = nextHigh && (!nextLow || nextHigh.hora < nextLow.hora);
 
   const referencePort = port.referencePortSlug ? getPortBySlug(port.referencePortSlug) : null;
   const referenceData = referencePort ? {
@@ -219,7 +210,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
 
             <p className="mt-4 mb-20 text-xs opacity-80 text-white/80 font-mono tracking-wide" suppressHydrationWarning>
               {currentHeight !== null
-                ? `Agora ${currentTimeBR} — ${currentHeight.toFixed(2)}m (${isRising ? 'enchendo' : 'vazando'})${countdownLabel ? ` · ${isRising ? 'próxima alta' : 'próxima baixa'} ${countdownLabel}` : ''}`
+                ? `Agora ${currentTimeBR} — ${currentHeight.toFixed(2)}m (${isRising ? 'enchendo' : 'vazando'})`
                 : `Horário local: ${currentTimeBR}`}
             </p>
           </div>
@@ -240,7 +231,6 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
             lat={port.lat}
             lon={port.lon}
             todayTides={todayTides}
-            currentMin={currentMin}
           />
         </ClientOnly>
 
@@ -261,6 +251,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               lon={port.lon}
               todayTides={todayTides}
               utcOffsetMin={-180}
+              todayStr={todayStr}
             />
           </ClientOnly>
         </div>

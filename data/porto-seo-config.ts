@@ -17,7 +17,7 @@ export interface PortoSEOConfig {
 export const portosConfig: Record<string, PortoSEOConfig> = {
 
   'guaruja': {
-    titleSuffix: 'Hoje — Surf, Pesca e Praia',
+    titleSuffix: 'Maré Alta e Baixa Hoje — Surf, Pesca e Praia',
     description: 'Tábua de marés de Guarujá para hoje e 2026. Horários de maré alta e baixa, coeficiente, melhores momentos para surf na Praia do Tombo e pesca no Canal de Bertioga. Fonte: Marinha do Brasil.',
     keywords: ['maré guarujá hoje', 'maré alta guarujá', 'tabua maré guarujá 2026', 'surf guarujá maré', 'pesca guarujá maré', 'maré pitangueiras', 'maré enseada guarujá', 'coeficiente maré guarujá', 'horário maré guarujá amanhã'],
     praias: ['Pitangueiras', 'Enseada', 'Praia do Tombo', 'Perequê', 'Góis'],
@@ -25,7 +25,8 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     portoVizinhos: ['santos', 'bertioga', 'sao-vicente'],
     faqs: [
       { q: 'Qual o melhor horário para surfar em Guarujá?', a: 'Na Praia do Tombo e Pitangueiras, a maré baixa a média (0,2m a 0,6m) favorece as ondas com mais forma. Prefira as 2 horas antes e depois da baixamar.' },
-      { q: 'Qual o melhor horário para pescar em Guarujá?', a: 'Os melhores momentos são nas 2 horas ao redor da maré alta e da maré baixa, especialmente com coeficiente acima de 60. O Canal de Bertioga é especialmente produtivo.' },
+      { q: 'Qual o melhor horário para pescar em Guarujá?', a: 'Os melhores momentos são nas 2 horas ao redor da virada da maré (enchente ou vazante), especialmente com coeficiente acima de 60. O Canal de Bertioga, que passa pela Praia da Enseada, é o ponto mais tradicional da cidade.' },
+      { q: 'Quais peixes dá para pescar em Guarujá?', a: 'No Canal de Bertioga predomina o robalo (flecha e peva). Nos costões rochosos, como o Costão das Tartarugas e o Costão do Mar Casado, são comuns corvina, garoupa, badejo e sargo.' },
       { q: 'O que é coeficiente de maré?', a: 'Número de 20 a 120 que indica a intensidade da maré. Acima de 70 são marés vivas com grande variação de nível; abaixo de 45 são marés mortas com pouca variação.' },
       { q: 'A maré alta em Guarujá pode inundar a orla de Pitangueiras?', a: 'Em marés vivas com coeficiente acima de 90, partes baixas da orla de Pitangueiras podem ser atingidas. A amplitude máxima em 2026 é de aproximadamente 1,64m.' },
       { q: 'Os dados servem para navegação?', a: 'Não. Os dados do MaréAgora são referência para atividades recreativas. Para navegação oficial, consulte sempre as tábuas publicadas pela Marinha do Brasil (CHM).' },
@@ -50,7 +51,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'ubatuba': {
-    titleSuffix: 'Hoje — Surf e Ecoturismo',
+    titleSuffix: 'Maré Alta e Baixa Hoje — Surf e Ecoturismo',
     description: 'Tábua de marés de Ubatuba para hoje e 2026. Horários ideais para surf, mergulho e ecoturismo nas praias da Costa Verde paulista. Fonte: Marinha do Brasil.',
     keywords: ['maré ubatuba hoje', 'tabua maré ubatuba 2026', 'surf ubatuba maré', 'maré prumirim', 'maré itamambuca', 'mergulho ubatuba maré', 'maré baixa ubatuba praias'],
     praias: ['Itamambuca', 'Prumirim', 'Vermelha do Norte', 'Enseada', 'Toninhas'],
@@ -63,7 +64,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'bertioga': {
-    titleSuffix: 'Hoje — Surf e Pesca',
+    titleSuffix: 'Maré Alta e Baixa Hoje — Surf e Pesca',
     description: 'Tábua de marés de Bertioga para hoje e 2026. Horários de maré alta e baixa para surf, pesca e navegação no Canal de Bertioga. Fonte oficial: Marinha do Brasil.',
     keywords: ['maré bertioga hoje', 'tabua maré bertioga 2026', 'surf bertioga maré', 'pesca canal bertioga', 'maré maresias bertioga', 'horário maré bertioga'],
     praias: ['Itaguaré', 'Boracéia', 'Enseada', 'Vista Linda'],
@@ -89,7 +90,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'porto-de-angra-dos-reis': {
-    titleSuffix: 'Hoje — Ilhas e Passeios de Barco',
+    titleSuffix: 'Maré Alta e Baixa Hoje — Ilhas e Passeios de Barco',
     description: 'Tábua de marés de Angra dos Reis para hoje e 2026. Horários para passeios de barco, mergulho e pesca nas mais de 360 ilhas da baía. Fonte: Marinha do Brasil.',
     keywords: ['maré angra dos reis hoje', 'tabua maré angra 2026', 'passeio barco angra maré', 'mergulho angra maré', 'pesca angra dos reis maré', 'maré ilha grande angra'],
     praias: ['Ilha Grande', 'Abraão', 'Lopes Mendes', 'Dois Rios', 'Calhetas'],
@@ -101,7 +102,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'porto-de-florianopolis': {
-    titleSuffix: 'Hoje — Surf e Turismo',
+    titleSuffix: 'Maré Alta e Baixa Hoje — Surf e Turismo',
     description: 'Tábua de marés de Florianópolis para hoje e 2026. Horários de maré para surf em Joaquina e Campeche, pesca e passeios. Fonte: Marinha do Brasil.',
     keywords: ['maré florianópolis hoje', 'maré floripa', 'tabua maré florianópolis 2026', 'surf joaquina maré', 'maré campeche floripa', 'maré jurerê florianópolis', 'maré ingleses floripa'],
     praias: ['Joaquina', 'Campeche', 'Jurerê Internacional', 'Ingleses', 'Barra da Lagoa', 'Mole'],
@@ -130,7 +131,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'porto-de-salvador': {
-    titleSuffix: 'Hoje — Praias e Náutica',
+    titleSuffix: 'Maré Alta e Baixa Hoje — Praias e Náutica',
     description: 'Tábua de marés de Salvador (BA) para hoje e 2026. Horários de maré para as praias da orla, pesca e navegação na Baía de Todos os Santos. Fonte: Marinha do Brasil.',
     keywords: ['maré salvador hoje', 'tabua maré salvador 2026', 'maré barra salvador', 'maré ondina salvador', 'pesca baía todos os santos maré', 'maré itapuã salvador'],
     praias: ['Barra', 'Ondina', 'Itapuã', 'Rio Vermelho', 'Flamengo'],
@@ -142,7 +143,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'rio-de-janeiro-fiscal': {
-    titleSuffix: 'Hoje — Praias e Baía de Guanabara',
+    titleSuffix: 'Maré Alta e Baixa Hoje — Praias e Baía de Guanabara',
     description: 'Tábua de marés do Rio de Janeiro para hoje e 2026. Horários de maré para as praias da Zona Sul, Guanabara e Baía de Sepetiba. Fonte: Marinha do Brasil.',
     keywords: ['maré rio de janeiro hoje', 'maré copacabana', 'tabua maré rio 2026', 'maré ipanema', 'maré barra tijuca', 'maré guanabara', 'maré praias rio'],
     praias: ['Copacabana', 'Ipanema', 'Leblon', 'Barra da Tijuca', 'Recreio'],
@@ -154,7 +155,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'porto-de-sao-sebastiao': {
-    titleSuffix: 'Hoje — Praias e Ilhabela',
+    titleSuffix: 'Maré Alta e Baixa Hoje — Praias e Ilhabela',
     description: 'Tábua de marés de São Sebastião para hoje e 2026. Horários para surf, pesca e travessia para Ilhabela. Fonte oficial: Marinha do Brasil.',
     keywords: ['maré são sebastião hoje', 'tabua maré são sebastião 2026', 'maré ilhabela', 'travessia ilhabela maré', 'pesca são sebastião maré', 'surf são sebastião'],
     praias: ['Barra do Sahy', 'Maresias', 'Paúba', 'Juqueí', 'Boiçucanga'],
@@ -166,7 +167,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'porto-do-recife': {
-    titleSuffix: 'Hoje — Piscinas Naturais e Pesca',
+    titleSuffix: 'Maré Alta e Baixa Hoje — Piscinas Naturais e Pesca',
     description: 'Tábua de marés do Recife para hoje e 2026. Horários para as piscinas naturais de Porto de Galinhas, Boa Viagem e pesca no litoral pernambucano. Fonte: Marinha do Brasil.',
     keywords: ['maré recife hoje', 'tabua maré recife 2026', 'maré boa viagem recife', 'piscinas naturais porto galinhas maré', 'maré baixa porto galinhas', 'pesca recife maré'],
     praias: ['Boa Viagem', 'Porto de Galinhas', 'Olinda', 'Piedade', 'Candeias'],
@@ -207,7 +208,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'muro-alto': {
-    titleSuffix: 'Hoje — Piscina Natural e Resorts',
+    titleSuffix: 'Maré Alta e Baixa Hoje — Piscina Natural e Resorts',
     description: 'Tábua de maré de Muro Alto (Ipojuca, PE) para hoje e 2026. Horário da maré baixa para a piscina natural formada pelos recifes em frente aos resorts. Fonte: Marinha do Brasil (estação de Suape).',
     keywords: ['maré muro alto', 'maré muro alto hoje', 'tábua de maré muro alto', 'maré muro alto ipojuca', 'horário maré muro alto', 'piscina natural muro alto maré'],
     praias: ['Muro Alto', 'Cupe', 'Suape'],
@@ -220,7 +221,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'cupe': {
-    titleSuffix: 'Hoje — Pontal e Piscinas Naturais',
+    titleSuffix: 'Maré Alta e Baixa Hoje — Pontal e Piscinas Naturais',
     description: 'Tábua de maré do Cupe (Ipojuca, PE) para hoje e 2026. Horário da maré baixa para o Pontal do Cupe e suas piscinas naturais, entre Muro Alto e Porto de Galinhas. Fonte: Marinha do Brasil (estação de Suape).',
     keywords: ['maré cupe', 'maré cupe hoje', 'tábua de maré cupe', 'praia do cupe maré', 'pontal do cupe maré baixa', 'maré cupe ipojuca'],
     praias: ['Cupe', 'Muro Alto', 'Porto de Galinhas'],
@@ -232,7 +233,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'maracaipe': {
-    titleSuffix: 'Hoje — Surf e Piscinas Naturais',
+    titleSuffix: 'Maré Alta e Baixa Hoje — Surf e Piscinas Naturais',
     description: 'Tábua de maré de Maracaípe (Ipojuca, PE) para hoje e 2026. Horários para o surf na praia e as piscinas naturais do Pontal de Maracaípe na maré baixa. Fonte: Marinha do Brasil (estação de Suape).',
     keywords: ['maré maracaípe', 'maré maracaípe hoje', 'tábua de maré maracaípe', 'surf maracaípe maré', 'pontal de maracaípe maré', 'maré maracaipe porto de galinhas'],
     praias: ['Maracaípe', 'Porto de Galinhas', 'Serrambi'],
@@ -245,7 +246,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'serrambi': {
-    titleSuffix: 'Hoje — Piscinas Naturais e Recifes',
+    titleSuffix: 'Maré Alta e Baixa Hoje — Piscinas Naturais e Recifes',
     description: 'Tábua de maré de Serrambi (Ipojuca, PE) para hoje e 2026. Horário da maré baixa para as piscinas naturais da Ponta de Serrambi. Fonte: Marinha do Brasil (estação de Suape).',
     keywords: ['maré serrambi', 'maré serrambi hoje', 'tábua de maré serrambi', 'ponta de serrambi maré', 'piscinas naturais serrambi maré baixa'],
     praias: ['Serrambi', 'Maracaípe'],
@@ -257,7 +258,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'gaibu': {
-    titleSuffix: 'Hoje — Surf e Praia',
+    titleSuffix: 'Maré Alta e Baixa Hoje — Surf e Praia',
     description: 'Tábua de maré de Gaibu (Cabo de Santo Agostinho, PE) para hoje e 2026. Horários de maré alta e baixa para surf, pesca e praia. Fonte: Marinha do Brasil (estação de Suape).',
     keywords: ['maré gaibu', 'maré gaibu hoje', 'tábua de maré gaibu', 'surf gaibu maré', 'maré gaibu cabo de santo agostinho'],
     praias: ['Gaibu', 'Calhetas'],
@@ -269,7 +270,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'calhetas': {
-    titleSuffix: 'Hoje — Mergulho e Passeio de Barco',
+    titleSuffix: 'Maré Alta e Baixa Hoje — Mergulho e Passeio de Barco',
     description: 'Tábua de maré de Calhetas (Cabo de Santo Agostinho, PE) para hoje e 2026. Horários de maré para mergulho, passeio de barco e banho na enseada calma. Fonte: Marinha do Brasil (estação de Suape).',
     keywords: ['maré calhetas', 'maré calhetas hoje', 'tábua de maré calhetas', 'praia de calhetas maré', 'maré calhetas cabo de santo agostinho'],
     praias: ['Calhetas', 'Gaibu'],
@@ -281,7 +282,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'praia-do-paiva': {
-    titleSuffix: 'Hoje — Praia e Reserva do Paiva',
+    titleSuffix: 'Maré Alta e Baixa Hoje — Praia e Reserva do Paiva',
     description: 'Tábua de maré da Praia do Paiva (Cabo de Santo Agostinho, PE) para hoje e 2026. Horários de maré para praia, caminhada na orla e a Reserva do Paiva. Fonte: Marinha do Brasil (estação de Suape).',
     keywords: ['maré praia do paiva', 'maré paiva hoje', 'tábua de maré paiva', 'maré paiva pernambuco', 'reserva do paiva maré'],
     praias: ['Praia do Paiva', 'Gaibu'],
@@ -293,7 +294,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'farol-de-nazare': {
-    titleSuffix: 'Hoje — Pesca e Vila de Nazaré',
+    titleSuffix: 'Maré Alta e Baixa Hoje — Pesca e Vila de Nazaré',
     description: 'Tábua de maré do Farol de Nazaré, em Suape (PE), para hoje e 2026. Horários de maré para pesca artesanal na Vila de Nazaré e passeios na entrada do porto. Fonte: Marinha do Brasil.',
     keywords: ['maré farol de nazaré', 'farol de nazaré maré hoje', 'tábua de maré farol de nazaré', 'maré vila de nazaré suape', 'maré nazaré ipojuca'],
     praias: ['Farol de Nazaré', 'Suape'],
@@ -305,7 +306,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'porto-de-natal': {
-    titleSuffix: 'Hoje — Piscinas Naturais e Turismo',
+    titleSuffix: 'Maré Alta e Baixa Hoje — Piscinas Naturais e Turismo',
     description: 'Tábua de marés de Natal (RN) para hoje e 2026. Horários para as piscinas naturais de Maracajaú, Genipabu e praias da orla. Fonte: Marinha do Brasil.',
     keywords: ['maré natal rn hoje', 'tabua maré natal 2026', 'maré ponta negra natal', 'maré genipabu', 'maré maracajaú', 'piscinas naturais natal maré', 'maré via costeira natal'],
     praias: ['Ponta Negra', 'Via Costeira', 'Genipabu', 'Pirangi do Norte', 'Maracajaú'],

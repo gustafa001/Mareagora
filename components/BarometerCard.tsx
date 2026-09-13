@@ -153,13 +153,55 @@ export default function BarometerCard({ lat, lon }: Props) {
   const pad = 4;
   const range = Math.max(0.5, max - min);
   const stepX = last24h.length > 1 ? (W - pad * 2) / (last24h.length - 1) : 0;
-  const pathD = last24h
-    .map((p, i) => {
-      const x = pad + i * stepX;
-      const y = pad + (H - pad * 2) * (1 - (p.hPa - min) / range);
-      return `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`;
+
+  // Pontos reais (mesma fonte Open-Meteo de sempre) já nas coordenadas do SVG.
+  const ptsXY = last24h.map((p, i) => {
+    const x = pad + i * stepX;
+    const y = pad + (H - pad * 2) * (1 - (p.hPa - min) / range);
+    return { x, y };
+  });
+
+  // Curva suavizada (Catmull-Rom → bézier cúbica) passando pelos pontos reais.
+  const pathD = (() => {
+    if (ptsXY.length === 0) return '';
+    let s = `M${ptsXY[0].x.toFixed(2)},${ptsXY[0].y.toFixed(2)}`;
+    for (let i = 0; i < ptsXY.length - 1; i++) {
+      const p0 = ptsXY[Math.max(0, i - 1)];
+      const p1 = ptsXY[i];
+      const p2 = ptsXY[i + 1];
+      const p3 = ptsXY[Math.min(ptsXY.length - 1, i + 2)];
+      const c1x = p1.x + (p2.x - p0.x) / 6;
+      const c1y = p1.y + (p2.y - p0.y) / 6;
+      const c2x = p2.x - (p3.x - p1.x) / 6;
+      const c2y = p2.y - (p3.y - p1.y) / 6;
+      s += ` C${c1x.toFixed(2)},${c1y.toFixed(2)} ${c2x.toFixed(2)},${c2y.toFixed(2)} ${p2.x.toFixed(2)},${p2.y.toFixed(2)}`;
+    }
+    return s;
+  })();
+
+  // Preenchimento sob a curva (uma linha fechada até a base do gráfico).
+  const baseY = H - pad;
+  const areaD =
+    ptsXY.length > 0
+      ? `${pathD} L${ptsXY[ptsXY.length - 1].x.toFixed(2)},${baseY} L${ptsXY[0].x.toFixed(2)},${baseY} Z`
+      : '';
+
+  // Posição de "agora" (valor mais recente).
+  const nowX = ptsXY.length > 0 ? ptsXY[ptsXY.length - 1].x : 0;
+  const nowY = ptsXY.length > 0 ? ptsXY[ptsXY.length - 1].y : 0;
+
+  // Marcações 00h/06h/12h/18h — todas as horas existem na janela de 25 pontos.
+  const marcacoes = [0, 6, 12, 18]
+    .map((h) => {
+      for (let i = last24h.length - 1; i >= 0; i--) {
+        if (new Date(last24h[i].time).getHours() === h) {
+          return { label: `${String(h).padStart(2, '0')}h`, x: pad + i * stepX };
+        }
+      }
+      return null;
     })
-    .join(' ');
+    .filter((m): m is { label: string; x: number } => m !== null)
+    .map((m) => ({ label: m.label, frac: m.x / W }));
 
   return (
     <section className="bg-[#0d1526] text-white rounded-3xl p-6 shadow-xl border border-white/5">
@@ -201,9 +243,32 @@ export default function BarometerCard({ lat, lon }: Props) {
         </p>
         <div className="bg-white/5 border border-white/10 rounded-2xl px-4 py-4 overflow-x-auto">
           <svg width="100%" height={H} viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" style={{ minWidth: 280 }}>
-            <path d={pathD} fill="none" stroke="#00D4FF" strokeWidth={2} />
+            <defs>
+              <linearGradient id="baro-area-fill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.18" />
+                <stop offset="100%" stopColor="#38bdf8" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            {areaD && <path d={areaD} fill="url(#baro-area-fill)" />}
+            {pathD && <path d={pathD} fill="none" stroke="#00D4FF" strokeWidth={2} />}
+            {ptsXY.length > 0 && (
+              <>
+                <circle cx={nowX} cy={nowY} r={7} fill="#38bdf8" opacity={0.4} />
+                <circle cx={nowX} cy={nowY} r={3.5} fill="#38bdf8" />
+              </>
+            )}
           </svg>
-          <div className="flex justify-between text-[10px] text-slate-500 mt-2">
+          <div className="relative h-3 mt-1">
+            {marcacoes.map((m) => (
+              <span key={m.label} className="absolute -translate-x-1/2 text-[10px] text-slate-500" style={{ left: `${m.frac * 100}%` }}>
+                {m.label}
+              </span>
+            ))}
+            <span className="absolute -translate-x-1/2 text-[10px] font-bold text-cyan-400" style={{ left: `${(nowX / W) * 100}%` }}>
+              agora
+            </span>
+          </div>
+          <div className="flex justify-between text-[10px] text-slate-500 mt-1">
             <span>Mín {min.toFixed(1)} hPa</span>
             <span>Máx {max.toFixed(1)} hPa</span>
           </div>

@@ -80,7 +80,7 @@ export async function generateMetadata({ params }: { params: { slug: string, cid
         let truncSuffix = suffix.slice(0, budget);
         const lastSpace = truncSuffix.lastIndexOf(' ');
         if (lastSpace > 0) truncSuffix = truncSuffix.slice(0, lastSpace);
-        truncSuffix = truncSuffix.trim();
+        truncSuffix = truncSuffix.trim().replace(/[,;:—-]+$/, '').trim();
         if (truncSuffix) title = `${base}${SEP}${truncSuffix}`;
       }
     }

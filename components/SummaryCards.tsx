@@ -9,13 +9,14 @@ interface SummaryCardsProps {
   lat: number;
   lon: number;
   todayTides?: TideEvent[];
+  currentMin?: number | null;
 }
 
 import { useSeaConditions } from "@/hooks/useSeaConditions";
-import { getMoonAge, getMoonPhase, getTideCoefficient } from "@/lib/tideUtils";
+import { getMoonAge, getMoonPhase, getTideCoefficient, getCountdownLabel } from "@/lib/tideUtils";
 import { useT } from "@/lib/tideI18n";
 
-export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides }: SummaryCardsProps) {
+export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides, currentMin }: SummaryCardsProps) {
   const { waveHeight, windSpeed, loading } = useSeaConditions(lat, lon);
   const { lang, s } = useT();
   
@@ -73,6 +74,11 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides }
           </div>
           <div className="text-lg font-bold mt-2 drop-shadow-sm tracking-wide">
             {nextHigh?.altura_m != null ? `+${nextHigh.altura_m.toFixed(2)} m` : '--'}
+            {nextHigh?.hora && currentMin != null && (
+              <span className="block text-xs font-semibold opacity-70 mt-1">
+                {getCountdownLabel(nextHigh.hora, currentMin)}
+              </span>
+            )}
           </div>
         </div>
 
@@ -87,6 +93,11 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides }
           </div>
           <div className="text-lg font-bold mt-2 drop-shadow-sm tracking-wide">
             {nextLow?.altura_m != null ? `+${nextLow.altura_m.toFixed(2)} m` : '--'}
+            {nextLow?.hora && currentMin != null && (
+              <span className="block text-xs font-semibold opacity-70 mt-1">
+                {getCountdownLabel(nextLow.hora, currentMin)}
+              </span>
+            )}
           </div>
         </div>
 

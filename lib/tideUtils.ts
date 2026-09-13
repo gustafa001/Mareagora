@@ -334,6 +334,32 @@ export function formatTime(hora: string): string {
 }
 
 /**
+ * Minutos até um horário de maré ("HH:MM"), a partir do minuto atual.
+ * Se já passou hoje, assume que é o evento do dia seguinte — sempre
+ * positivo, então dá pra comparar diretamente qual evento chega primeiro.
+ */
+export function minutesUntilTide(targetHora: string, currentMinute: number): number {
+  const [h, m] = targetHora.split(':').map(Number);
+  let targetMin = (h || 0) * 60 + (m || 0);
+  if (targetMin <= currentMinute) targetMin += 24 * 60;
+  return targetMin - currentMinute;
+}
+
+/**
+ * Calcula a contagem regressiva até um horário de maré ("HH:MM"), a partir
+ * do minuto atual. Formata o resultado de minutesUntilTide pra exibição
+ * ("em Xh Ymin").
+ */
+export function getCountdownLabel(targetHora: string, currentMinute: number): string {
+  const diff = minutesUntilTide(targetHora, currentMinute);
+  const hours = Math.floor(diff / 60);
+  const mins = diff % 60;
+  if (hours === 0) return `em ${mins}min`;
+  if (mins === 0) return `em ${hours}h`;
+  return `em ${hours}h ${mins}min`;
+}
+
+/**
  * Gera dados para o gráfico de maré
  */
 export function generateTideCurve(mares: TideEvent[]): { time: string; height: number }[] {

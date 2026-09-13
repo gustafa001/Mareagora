@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import type { MareDia } from '@/lib/mare';
-import { getTideStatus, tideAtMinute, type TideEvent } from '@/lib/tideUtils';
+import { getTideStatus, tideAtMinute, getCountdownLabel, type TideEvent } from '@/lib/tideUtils';
 import { useT } from '@/lib/tideI18n';
 import OpsCard from './port-operations/OpsCard';
 
@@ -69,8 +69,18 @@ export default function TideWeekCard({ days }: TideWeekCardProps) {
         <div className="flex sm:flex-col gap-4 sm:gap-3 sm:w-44 flex-wrap min-w-0">
           <Metric label={s.now} value={currentHeight !== null ? `${currentHeight.toFixed(2)}m` : '--'} accent="text-cyan-300" />
           <Metric label={s.trend} value={rising ? s.rising : s.falling} accent={rising ? 'text-emerald-400' : 'text-orange-400'} />
-          <Metric label={s.nextHighShort} value={nextHigh ? `${nextHigh.hora} · ${nextHigh.altura_m.toFixed(2)}m` : '--'} accent="text-cyan-300" />
-          <Metric label={s.nextLowShort} value={nextLow ? `${nextLow.hora} · ${nextLow.altura_m.toFixed(2)}m` : '--'} accent="text-orange-300" />
+          <Metric
+            label={s.nextHighShort}
+            value={nextHigh ? `${nextHigh.hora} · ${nextHigh.altura_m.toFixed(2)}m` : '--'}
+            sub={nextHigh && currentMinute != null ? getCountdownLabel(nextHigh.hora, currentMinute) : undefined}
+            accent="text-cyan-300"
+          />
+          <Metric
+            label={s.nextLowShort}
+            value={nextLow ? `${nextLow.hora} · ${nextLow.altura_m.toFixed(2)}m` : '--'}
+            sub={nextLow && currentMinute != null ? getCountdownLabel(nextLow.hora, currentMinute) : undefined}
+            accent="text-orange-300"
+          />
         </div>
       </div>
     </OpsCard>
@@ -82,11 +92,12 @@ function timeToMin(hora: string): number {
   return h * 60 + m;
 }
 
-function Metric({ label, value, accent }: { label: string; value: string; accent: string }) {
+function Metric({ label, value, accent, sub }: { label: string; value: string; accent: string; sub?: string }) {
   return (
     <div className="flex-1 min-w-[7rem] max-w-full break-words" suppressHydrationWarning>
       <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold break-words">{label}</p>
       <p className={`text-base font-black font-syne break-words ${accent}`} suppressHydrationWarning>{value}</p>
+      {sub && <p className="text-[10px] font-semibold text-slate-400 break-words" suppressHydrationWarning>{sub}</p>}
     </div>
   );
 }

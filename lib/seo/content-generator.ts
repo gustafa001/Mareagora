@@ -8,10 +8,16 @@ export interface SEOContent {
   faq: { question: string; answer: string }[];
 }
 
+/** Score de pesca calculado no servidor (ver lib/fishingScore.ts). */
+export interface FishingSEO {
+  score: number;
+  label: string;
+}
+
 // CHANGED: aceita `sea` opcional (resumo de ondas/vento buscado no servidor).
 // Quando ausente (ex.: falha na API externa), cai para o texto genérico
 // antigo — nunca quebra a página por causa disso.
-export function generateSEOContent(port: Port, date: string, sea?: SeaConditionsSummary | null): SEOContent {
+export function generateSEOContent(port: Port, date: string, sea?: SeaConditionsSummary | null, fishing?: FishingSEO | null): SEOContent {
   const eventos: MareEvento[] = getEventosDia(port, date);
   const dateObj = new Date(`${date}T12:00:00Z`);
 
@@ -24,8 +30,8 @@ export function generateSEOContent(port: Port, date: string, sea?: SeaConditions
   // Horário atual no fuso de São Paulo, para saber quais marés já passaram.
   const nowMinutes = getNowMinutesBR(date);
 
-  const text = generateSpintaxText(port, date, eventos, season, moonPhaseName, amplitude, isViva, nowMinutes, sea);
-  const faq = generateFAQ(port, date, eventos, moonPhaseName, isViva, sea);
+  const text = generateSpintaxText(port, date, eventos, season, moonPhaseName, amplitude, isViva, nowMinutes, sea, fishing);
+  const faq = generateFAQ(port, date, eventos, moonPhaseName, isViva, sea, fishing);
 
   return { text, faq };
 }
@@ -94,7 +100,8 @@ function generateSpintaxText(
   amplitude: number,
   isViva: boolean,
   nowMinutes: number,
-  sea?: SeaConditionsSummary | null
+  sea?: SeaConditionsSummary | null,
+  fishing?: FishingSEO | null
 ) {
   const isCommercial = port.name.toLowerCase().includes('porto') || port.name.toLowerCase().includes('terminal');
 
@@ -113,6 +120,11 @@ function generateSpintaxText(
     ? `As ondas hoje variam entre ${sea.waveMin}m e ${sea.waveMax}m, com período de ${sea.wavePeriod}s vindo de ${sea.waveDirectionCardinal}. O vento sopra de ${sea.windDirectionCardinal} entre ${sea.windMin} e ${sea.windMax} km/h, com rajadas de até ${sea.windGustMax} km/h.`
     : 'As ondas e os ventos na região costeira podem sofrer leves alterações dependendo do horário.';
 
+  // Frase do score de pesca calculado no servidor (dados reais de maré + ondas/vento).
+  const fishingInfo = fishing
+    ? `A atividade de pesca hoje está avaliada em ${fishing.score}/10 (${fishing.label}).`
+    : '';
+
   let baseText = '';
 
   if (isCommercial) {
@@ -121,7 +133,7 @@ function generateSpintaxText(
     baseText = `Confira as condições para a praia de ${port.name} (${port.state}) durante o ${season}. Hoje, com a lua ${moonPhase}, a amplitude da maré é de ${amplitude.toFixed(2)} metros. ${highInfo} ${lowInfo} ${isViva ? 'Com a maré viva, o mar recua bastante na baixamar, excelente para pesca na beira e encontrar piscinas naturais.' : 'Sendo maré morta, a variação é menor, proporcionando águas mais estáveis para banhistas e navegação leve.'} ${seaInfo}`;
   }
 
-  return baseText;
+  return fishingInfo ? `${baseText} ${fishingInfo}` : baseText;
 }
 
 // CHANGED: novo parâmetro `sea` opcional no final, adiciona uma 5ª
@@ -132,7 +144,8 @@ function generateFAQ(
   eventos: MareEvento[],
   moonPhase: string,
   isViva: boolean,
-  sea?: SeaConditionsSummary | null
+  sea?: SeaConditionsSummary | null,
+  fishing?: FishingSEO | null
 ) {
   const faq = [];
   const highTides = eventos.filter(e => e.tipo === 'high');
@@ -157,9 +170,11 @@ function generateFAQ(
   // Q3
   faq.push({
     question: `A maré está boa para pesca em ${port.cityName}?`,
-    answer: isViva
-      ? 'Sim! A atual maré viva (sizígia) aumenta a movimentação das correntes e dos nutrientes, o que costuma ativar a alimentação dos peixes.'
-      : 'A maré de quadratura (morta) apresenta pouca correnteza. É ideal para pesca de fundo ou em locais de maior calado, embora os peixes possam estar menos ativos.'
+    answer: fishing
+      ? `Hoje a atividade de pesca está avaliada em ${fishing.score}/10 (${fishing.label}), considerando maré, lua e condições do mar. ${isViva ? 'As marés vivas (sizígia) aumentam a movimentação das correntes e costumam ativar a alimentação dos peixes.' : 'As marés de quadratura (mortas) têm pouca correnteza — melhor para pesca de fundo e em locais de maior calado.'}`
+      : isViva
+        ? 'Sim! A atual maré viva (sizígia) aumenta a movimentação das correntes e dos nutrientes, o que costuma ativar a alimentação dos peixes.'
+        : 'A maré de quadratura (morta) apresenta pouca correnteza. É ideal para pesca de fundo ou em locais de maior calado, embora os peixes possam estar menos ativos.'
   });
 
   // Q4

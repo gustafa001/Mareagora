@@ -14,7 +14,9 @@ import type { BlogPost } from '@/lib/blog';
 import { getPortoDescription } from '@/lib/porto-descriptions';
 import SchemaGenerator from '@/components/seo/SchemaGenerator';
 import { generateSEOContent } from '@/lib/seo/content-generator';
-import { getSeaConditionsSummary } from '@/lib/seo/sea-conditions'; // NOVO
+import { getSeaConditionsSummary } from '@/lib/seo/sea-conditions';
+import { getEventosDia } from '@/lib/mare';
+import { calcFishingScore } from '@/lib/fishingScore';
 import SeoOverviewTicker from '@/components/SeoOverviewTicker';
 
 export const revalidate = 21600; // regenera a página a cada 6h (ISR), evita data congelada do build — reduzido de 1h p/ diminuir ISR Writes/CPU no free tier
@@ -149,7 +151,32 @@ export default async function PortPage({ params }: { params: { slug: string, cid
   // cai para o texto genérico antigo, sem quebrar a página.
   const seaData = await getSeaConditionsSummary(port.lat, port.lon, revalidate);
 
-  const { text: seoText, faq: seoFaq } = generateSEOContent(port, dataHoje, seaData?.summary ?? null);
+  // Score de pesca "agora" calculado no SERVIDOR, com as mesmas regras do
+  // DailyScoreCard (lib/fishingScore.ts) e os dados de ondas/vento da hora
+  // atual já buscados acima. Assim o "Pesca X/10" entra no HTML pré-renderizado
+  // (texto de SEO + FAQ JSON-LD) sem depender de JavaScript — elegível a AI
+  // Overview. Se falta dado de mar/vento, fica null e o texto cai pro antigo.
+  let fishing: { score: number; label: string } | null = null;
+  if (seaData) {
+    const brNow = new Date();
+    const brHour = Number(brNow.toLocaleTimeString('en-GB', { timeZone: 'America/Sao_Paulo', hour: '2-digit' }));
+    const brMinute = Number(brNow.toLocaleTimeString('en-GB', { timeZone: 'America/Sao_Paulo', minute: '2-digit' }));
+    const wh = seaData.marineHourly.wave_height?.[brHour];
+    const wp = seaData.marineHourly.wave_period?.[brHour];
+    const ws = seaData.windHourly.windspeed_10m?.[brHour];
+    if (typeof wh === 'number' && typeof ws === 'number') {
+      const eventos = getEventosDia(port, dataHoje);
+      const pesca = calcFishingScore(
+        eventos,
+        { waveHeight: wh, wavePeriod: wp ?? 0, windSpeed: ws },
+        -180, // Brasília (UTC-3), mesmo fuso usado no resto da página
+        brHour * 60 + brMinute
+      );
+      fishing = { score: pesca.score, label: pesca.label };
+    }
+  }
+
+  const { text: seoText, faq: seoFaq } = generateSEOContent(port, dataHoje, seaData?.summary ?? null, fishing);
 
   return (
     <>

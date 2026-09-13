@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import type { TideEvent } from '@/lib/tideUtils';
 import { useT, type TDict } from '@/lib/tideI18n';
+import { calcFishingScore } from '@/lib/fishingScore';
 
 interface Props {
   lat: number;
@@ -52,41 +53,10 @@ function localNow(utcOffsetMin: number): { h: number; m: number; totalMin: numbe
   return { h, m, totalMin: h * 60 + m };
 }
 
-function calcSolunarBonus(tides: TideEvent[], utcOffsetMin: number): number {
-  const { totalMin: nowMin } = localNow(utcOffsetMin);
-  // Major solunar period = 1h around high/low tides
-  for (const t of tides) {
-    const [h, m] = (t.hora || '00:00').split(':').map(Number);
-    const tMin = (h || 0) * 60 + (m || 0);
-    if (Math.abs(tMin - nowMin) <= 60) return 2;   // within 1h of major period
-    if (Math.abs(tMin - nowMin) <= 120) return 1;  // within 2h (minor)
-  }
-  return 0;
-}
-
 function calcTidalRange(tides: TideEvent[]): number {
   if (!tides.length) return 0;
   const heights = tides.map(t => t.altura_m ?? 0);
   return Math.max(...heights) - Math.min(...heights);
-}
-
-function isTideRising(tides: TideEvent[], utcOffsetMin: number): boolean | null {
-  const { totalMin: nowMin } = localNow(utcOffsetMin);
-  const sorted = [...tides].sort((a, b) => {
-    const [ah, am] = (a.hora || '0:0').split(':').map(Number);
-    const [bh, bm] = (b.hora || '0:0').split(':').map(Number);
-    return (ah * 60 + am) - (bh * 60 + bm);
-  });
-  for (let i = 0; i < sorted.length - 1; i++) {
-    const [ah, am] = (sorted[i].hora || '0:0').split(':').map(Number);
-    const [bh, bm] = (sorted[i + 1].hora || '0:0').split(':').map(Number);
-    const aMin = ah * 60 + am;
-    const bMin = bh * 60 + bm;
-    if (nowMin >= aMin && nowMin <= bMin) {
-      return (sorted[i + 1].altura_m ?? 0) > (sorted[i].altura_m ?? 0);
-    }
-  }
-  return null;
 }
 
 function currentTideHeight(tides: TideEvent[], utcOffsetMin: number): number {
@@ -111,9 +81,7 @@ function currentTideHeight(tides: TideEvent[], utcOffsetMin: number): number {
 
 function computeScores(tides: TideEvent[], marine: MarineData | null, utcOffsetMin: number, s: TDict): ActivityScore[] {
   const range = calcTidalRange(tides);
-  const rising = isTideRising(tides, utcOffsetMin);
   const curH = currentTideHeight(tides, utcOffsetMin);
-  const solunar = calcSolunarBonus(tides, utcOffsetMin);
 
   const heights = tides.map(t => t.altura_m ?? 0);
   const maxH = Math.max(...heights) || 1;
@@ -162,31 +130,9 @@ function computeScores(tides: TideEvent[], marine: MarineData | null, utcOffsetM
   surfScore = Math.max(0, Math.min(10, surfScore));
 
   // ─── PESCA ─────────────────────────────────────────────────────────
-  let pescaScore = 4;
-  const pescaReasons: string[] = [];
-
-  // Solunar bonus
-  if (solunar === 2) { pescaScore += 3; pescaReasons.push(s.r_solunar_major); }
-  else if (solunar === 1) { pescaScore += 1; pescaReasons.push(s.r_solunar_minor); }
-
-  // Tidal range: larger = better for fishing
-  if (range >= 1.5) { pescaScore += 2; pescaReasons.push(s.r_spring_tide(range)); }
-  else if (range >= 0.8) { pescaScore += 1; pescaReasons.push(s.r_moderate_range(range)); }
-  else { pescaScore -= 1; pescaReasons.push(s.r_neap_tide); }
-
-  // Rising tide is generally better for fishing
-  if (rising === true) { pescaScore += 1; pescaReasons.push(s.r_flooding); }
-
-  // Wind: fishing is better with calm sea
-  if (wind < 20) { pescaScore += 1; pescaReasons.push(s.r_wind_favorable); }
-  else if (wind > 35) { pescaScore -= 2; pescaReasons.push(s.r_wind_strong_fish(Math.round(wind))); }
-
-  // Wave height for fishing
-  if (wave > 0 && wave < 1.0) { pescaScore += 1; pescaReasons.push(s.r_sea_good_fish); }
-  else if (wave >= 2.0) { pescaScore -= 1; pescaReasons.push(s.r_sea_rough_fish(wave)); }
-
-  if (!marine) pescaReasons.push(s.r_no_weather);
-  pescaScore = Math.max(0, Math.min(10, pescaScore));
+  // Cálculo centralizado em lib/fishingScore.ts (mesma fonte usada no texto
+  // SSR de SEO) — o número do card sempre bate com o do HTML pré-renderizado.
+  const pesca = calcFishingScore(tides, marine, utcOffsetMin, undefined, s);
 
   // ─── PRAIA ─────────────────────────────────────────────────────────
   let praiaScore = 5;
@@ -241,7 +187,7 @@ function computeScores(tides: TideEvent[], marine: MarineData | null, utcOffsetM
 
   return [
     { name: s.surf, emoji: '🏄', score: surfScore, label: getScoreLabel(surfScore, s), color: getScoreColor(surfScore), reasons: surfReasons },
-    { name: s.fishing, emoji: '🎣', score: pescaScore, label: getScoreLabel(pescaScore, s), color: getScoreColor(pescaScore), reasons: pescaReasons },
+    { name: s.fishing, emoji: '🎣', score: pesca.score, label: getScoreLabel(pesca.score, s), color: getScoreColor(pesca.score), reasons: pesca.reasons },
     { name: s.beach, emoji: '🏖️', score: praiaScore, label: getScoreLabel(praiaScore, s), color: getScoreColor(praiaScore), reasons: praiaReasons },
     { name: s.diving, emoji: '🤿', score: mergulhoScore, label: getScoreLabel(mergulhoScore, s), color: getScoreColor(mergulhoScore), reasons: mergulhoReasons },
   ] as ActivityScore[];

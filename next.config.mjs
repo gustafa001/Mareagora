@@ -14,16 +14,28 @@ const nextConfig = {
       '/widget/porto/[porto]': ['./data/**/*.json'],
       '/blog': ['./content/blog/**/*.md'],
       '/blog/[slug]': ['./content/blog/**/*.md'],
-      '/sitemap.xml': ['./content/blog/**/*.md'],
     },
   },
   async redirects() {
+    // Canonicaliza o domínio: qualquer request em www.mareagora.com.br
+    // deve virar 301 permanente para mareagora.com.br, preservando
+    // path e query string. Isso precisa vir ANTES dos redirects
+    // dinâmicos de redirects.json para ser aplicado primeiro.
+    const wwwToApex = [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.mareagora.com.br' }],
+        destination: 'https://mareagora.com.br/:path*',
+        permanent: true,
+      },
+    ];
+
     try {
       const redirectsData = readFileSync(resolve('./redirects.json'), 'utf8');
-      return JSON.parse(redirectsData);
+      return [...wwwToApex, ...JSON.parse(redirectsData)];
     } catch (e) {
       console.warn('Could not load redirects.json, skipping dynamic redirects');
-      return [];
+      return wwwToApex;
     }
   },
   async headers() {

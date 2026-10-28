@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: { params: { slug: string, cid
 
   // Portos/terminais comerciais usam o nome do terminal no título (bate com a busca do usuário);
   // praias continuam usando o nome da cidade.
-  const seoName = isCommercial ? port.name : port.cityName;
+  const seoName = config?.seoName ?? (isCommercial ? port.name : port.cityName);
 
   const defaultSuffix = isCommercial 
     ? 'Horários e Coeficientes' 
@@ -138,7 +138,7 @@ export default async function PortPage({ params }: { params: { slug: string, cid
   const { posts: blogPosts, strategy: blogStrategy } = getPostsByPort(port);
 
   const isCommercial = !port.referencePortSlug && (port.name.toLowerCase().includes('porto') || port.name.toLowerCase().includes('terminal') || config?.category === 'industrial');
-  const seoName = isCommercial ? port.name : port.cityName;
+  const seoName = config?.seoName ?? (isCommercial ? port.name : port.cityName);
   
   // Data de hoje no fuso de Brasília (para AI Overview, SEO) — mesma lógica
   // do todayStr acima, evitando que o dia UTC (à frente de -03:00) desloque a data.

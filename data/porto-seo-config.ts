@@ -4,6 +4,7 @@
 export type PortoCategory = 'surf' | 'pesca' | 'turismo' | 'industrial' | 'nautica';
 
 export interface PortoSEOConfig {
+  seoName?: string; // opcional — nome usado no <title>/H1 quando difere do nome oficial do porto (ex.: busca por "Maceió", não "Porto de Maceió")
   titleSuffix: string;
   description: string;
   keywords: string[];
@@ -318,7 +319,8 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'terminal-de-barra-do-riacho': {
-    titleSuffix: 'Hoje',
+    seoName: 'Barra do Riacho',
+    titleSuffix: 'Horários de Hoje',
     description: 'Tábua de marés de Barra do Riacho e Regência (ES) para hoje e 2026. Horários ideais para o point break de Regência, pesca e operações no terminal. Fonte: Marinha do Brasil.',
     keywords: ['maré barra do riacho hoje', 'maré regência es', 'tabua maré barra do riacho 2026', 'surf regência maré', 'maré aracruz es', 'point break regência', 'pesca barra do riacho maré'],
     praias: ['Barra do Riacho', 'Regência', 'Povoação'],
@@ -356,6 +358,41 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
       { q: 'Qual o melhor horário de maré em São Luís?', a: 'As melhores janelas são nas 2 horas ao redor da maré alta e da maré baixa. No Golfão Maranhense, a amplitude é grande e o mar avança muito entre a vazante e a enchente.' },
       { q: 'Por que a maré de São Luís muda tanto de um dia para o outro?', a: 'São Luís está no Golfão Maranhense, onde a maré segue o dia lunar (~24h50min) e atrasa cerca de 50 minutos por dia, com variações que chegam a mais de 7 metros nas luas cheia e nova.' },
       { q: 'A maré de São Luís é forte para banho e pesca?', a: 'Sim, é uma das mais intensas do Brasil. Na maré baixa as praias ficam com extensa faixa de areia; na alta, o banho é melhor em horários de maré média. A pesca rende na virada da maré.' },
+    ],
+  },
+
+  // Busca real no Search Console: 100% das consultas são "maceió" (tabua de mare maceio, mare maceio...),
+  // nenhuma com "porto". O slug é do porto (estação da Marinha), mas o título deve casar com a busca.
+  'porto-de-maceio': {
+    seoName: 'Maceió',
+    titleSuffix: 'Horários de Hoje',
+    description: 'Tábua de marés de Maceió (AL) hoje e 2026: maré alta e baixa, coeficiente e melhor horário para as piscinas naturais da Pajuçara. Dados da Marinha do Brasil.',
+    keywords: ['tábua de maré maceió', 'tabua de mare maceio', 'maré maceió hoje', 'maré pajuçara', 'piscinas naturais pajuçara maré', 'maré ponta verde', 'maré jatiúca', 'tábua da maré maceió 2026'],
+    praias: ['Pajuçara', 'Ponta Verde', 'Jatiúca', 'Cruz das Almas', 'Garça Torta', 'Riacho Doce'],
+    category: 'turismo',
+    portoVizinhos: ['maragogi', 'porto-de-suape', 'terminal-maritimo-inacio-barbosa'],
+    faqs: [
+      { q: 'Qual o melhor horário de maré para as piscinas naturais da Pajuçara?', a: 'As piscinas naturais da Pajuçara se formam sobre recifes e costumam ficar melhores na maré baixa, com a água mais calma e transparente. Confira o horário da baixamar na tabela acima e planeje o passeio para esse período.' },
+      { q: 'De onde vêm os horários de maré de Maceió?', a: 'Os horários seguem a estação do Porto de Maceió, publicada pela Marinha do Brasil (CHM), e valem como referência para as praias da cidade, como Pajuçara, Ponta Verde e Jatiúca.' },
+      { q: 'O que é coeficiente de maré?', a: 'Número de 20 a 120 que indica a intensidade da maré. Acima de 70 são marés vivas, com grande variação de nível; abaixo de 45 são marés mortas, com pouca variação.' },
+      { q: 'Os dados servem para navegação?', a: 'Não. Os dados do MaréAgora são referência para atividades recreativas. Para navegação oficial, consulte sempre as tábuas publicadas pela Marinha do Brasil (CHM).' },
+    ],
+  },
+
+  // Consultas reais: "tabua de mare mosqueiro", "mare mosqueiro" (sem "Ilha do").
+  'ilha-do-mosqueiro': {
+    seoName: 'Mosqueiro',
+    titleSuffix: 'Praias e Horários de Hoje',
+    description: 'Tábua de marés de Mosqueiro (PA) hoje e 2026: horários de maré alta e baixa para planejar a ida às praias do Farol, Chapéu Virado e Murubira. Fonte: Marinha do Brasil.',
+    keywords: ['maré mosqueiro', 'tábua de maré mosqueiro', 'maré mosqueiro hoje', 'maré em mosqueiro', 'maré praia do farol mosqueiro', 'maré chapéu virado', 'tabua de mare mosqueiro 2026'],
+    praias: ['Farol', 'Chapéu Virado', 'Murubira', 'Paraíso'],
+    category: 'turismo',
+    portoVizinhos: ['porto-de-belem', 'porto-de-vila-do-conde'],
+    faqs: [
+      { q: 'A maré faz diferença nas praias de Mosqueiro?', a: 'Sim. Em Mosqueiro a faixa de areia aparece muito mais na maré baixa e diminui bastante na maré alta, então vale conferir o horário antes de ir à praia.' },
+      { q: 'De onde vêm os horários de maré de Mosqueiro?', a: 'Os horários seguem os dados publicados pela Marinha do Brasil (CHM) para a região da Ilha do Mosqueiro.' },
+      { q: 'O que é coeficiente de maré?', a: 'Número de 20 a 120 que indica a intensidade da maré. Acima de 70 são marés vivas, com grande variação de nível; abaixo de 45 são marés mortas, com pouca variação.' },
+      { q: 'Os dados servem para navegação?', a: 'Não. Os dados do MaréAgora são referência para atividades recreativas. Para navegação oficial, consulte sempre as tábuas publicadas pela Marinha do Brasil (CHM).' },
     ],
   },
 

@@ -8,6 +8,7 @@ import AdsScripts from "@/components/ads/AdsScripts";
 import ConsentedScripts from "@/components/ads/ConsentedScripts";
 import CookieConsent from "@/components/CookieConsent";
 import Footer from "@/components/Footer";
+import SiteChrome from "@/components/SiteChrome";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const manrope = Manrope({
@@ -109,26 +110,32 @@ export default function RootLayout({
         />
       </head>
       <body className="font-dm-sans">
-        <div className="bg-waves">
-          <svg viewBox="0 0 1440 120" preserveAspectRatio="none" fill="rgba(56,201,240,.6)">
-            <path className="wave-path-1" d="M0,60 C180,100 360,20 540,60 C720,100 900,20 1080,60 C1260,100 1350,40 1440,60 L1440,120 L0,120Z"/>
-          </svg>
-          <svg viewBox="0 0 1440 120" preserveAspectRatio="none" fill="rgba(14,127,190,.5)">
-            <path className="wave-path-2" d="M0,80 C200,40 400,100 600,80 C800,60 1000,110 1200,80 C1320,65 1380,85 1440,80 L1440,120 L0,120Z"/>
-          </svg>
-        </div>
-        <div className="flex flex-col min-h-screen">
+        <SiteChrome>
+          <div className="bg-waves">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none" fill="rgba(56,201,240,.6)">
+              <path className="wave-path-1" d="M0,60 C180,100 360,20 540,60 C720,100 900,20 1080,60 C1260,100 1350,40 1440,60 L1440,120 L0,120Z"/>
+            </svg>
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none" fill="rgba(14,127,190,.5)">
+              <path className="wave-path-2" d="M0,80 C200,40 400,100 600,80 C800,60 1000,110 1200,80 C1320,65 1380,85 1440,80 L1440,120 L0,120Z"/>
+            </svg>
+          </div>
+        </SiteChrome>
+        <div className="flex flex-col min-h-screen" id="site-shell">
           <div className="flex-grow">
             {children}
           </div>
-          <Footer />
+          <SiteChrome>
+            <Footer />
+          </SiteChrome>
         </div>
 
-        <MobileStickyAd />
-        <AdsScripts />
-        <ConsentedScripts />
-        <CookieConsent />
-        <SpeedInsights />
+        <SiteChrome>
+          <MobileStickyAd />
+          <AdsScripts />
+          <ConsentedScripts />
+          <CookieConsent />
+          <SpeedInsights />
+        </SiteChrome>
       </body>
     </html>
   );

@@ -65,14 +65,22 @@ export default function WidgetCard({
   }, []);
 
   const sendHeight = useCallback(() => {
-    const h = document.body.scrollHeight;
+    // Mede só o cartão: o body pode incluir o shell da página (min-h-screen).
+    const root = document.getElementById('mareagora-widget-root');
+    const h = root
+      ? Math.ceil(root.getBoundingClientRect().height)
+      : document.body.scrollHeight;
     window.parent?.postMessage({ type: 'mareagora-widget-height', height: h }, '*');
   }, []);
 
   useEffect(() => {
     sendHeight();
     window.addEventListener('resize', sendHeight);
-    return () => window.removeEventListener('resize', sendHeight);
+    window.addEventListener('load', sendHeight);
+    return () => {
+      window.removeEventListener('resize', sendHeight);
+      window.removeEventListener('load', sendHeight);
+    };
   }, [sendHeight]);
 
   const vars = cssVars[theme];
@@ -108,14 +116,18 @@ export default function WidgetCard({
             --auto-accent: #0284c7;
           }
         }
+        /* Dentro do iframe o fundo deve ser o do site parceiro (transparent=1). */
+        html, body { background: transparent !important; }
+        body { min-height: 0 !important; }
+        #site-shell { min-height: 0 !important; }
       `}</style>
       <main
+        id="mareagora-widget-root"
         style={{
           ...vars,
           background: transparent ? 'transparent' : 'var(--bg)',
           color: 'var(--fg)',
           fontFamily: 'system-ui, -apple-system, sans-serif',
-          minHeight: transparent ? undefined : '100vh',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

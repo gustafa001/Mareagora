@@ -28,7 +28,7 @@ import { getStateSlug, getStateName } from '@/lib/states';
 import ShareButton from '@/components/ShareButton';
 import { useSeaConditions } from '@/hooks/useSeaConditions';
 import RessacaAlert from '@/components/RessacaAlert';
-import { getNextHighAndLow, tideAtMinute, getCountdownLabel, minutesUntilTide } from '@/lib/tideUtils';
+import { getTideNow, formatCountdown } from '@/lib/tideNow';
 import { classifyToday } from '@/lib/tideQuality';
 import TideQualityBadge from '@/components/TideQualityBadge';
 import { notFound } from 'next/navigation';
@@ -138,23 +138,17 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
     }
   }
 
-  const { nextHigh, nextLow } = currentMin !== null
-    ? getNextHighAndLow(todayTides, currentMin)
-    : { nextHigh: null, nextLow: null };
+  // Maré "agora" com ontem+hoje+amanhã (fuso de Brasília): corrige a altura e o
+  // enchendo/vazando entre a última maré do dia e a primeira do dia seguinte.
+  const tideNow = liveNow ? getTideNow(port, liveNow) : null;
+  const nextHigh = tideNow?.nextHigh ?? null;
+  const nextLow = tideNow?.nextLow ?? null;
 
   const tideQuality = classifyToday(todayTides, currentMin);
 
-  const currentHeight = currentMin !== null && todayTides.length ? tideAtMinute(currentMin, todayTides) : null;
-  // Minutos-até-o-evento, não a string de hora — "03:02" < "21:55" como
-  // texto dava resultado errado quando a alta vinha do fallback pro dia
-  // seguinte e a baixa de hoje chegava primeiro de verdade.
-  const highIn = nextHigh && currentMin !== null ? minutesUntilTide(nextHigh.hora, currentMin) : null;
-  const lowIn = nextLow && currentMin !== null ? minutesUntilTide(nextLow.hora, currentMin) : null;
-  const isRising = highIn !== null && (lowIn === null || highIn <= lowIn);
-  const nextEvent = isRising ? nextHigh : nextLow;
-  const countdownLabel = nextEvent && currentMin !== null
-    ? getCountdownLabel(nextEvent.hora, currentMin)
-    : null;
+  const currentHeight = tideNow?.height ?? null;
+  const isRising = tideNow?.rising ?? true;
+  const countdownLabel = tideNow?.next ? formatCountdown(tideNow.next.minutesFromNow) : null;
 
   const referencePort = port.referencePortSlug ? getPortBySlug(port.referencePortSlug) : null;
   const referenceData = referencePort ? {

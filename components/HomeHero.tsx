@@ -6,8 +6,10 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
-import { getEventosDia } from '@/lib/mare';
-import { getNextHighAndLow, tideAtMinute, getMoonAge, getMoonPhase } from '@/lib/tideUtils';
+import Link from 'next/link';
+import { getMoonAge, getMoonPhase } from '@/lib/tideUtils';
+import { getTideNow, getTideSeries, formatCountdown, formatEventTime } from '@/lib/tideNow';
+import { useRecentPorts } from '@/hooks/useRecentPorts';
 
 type SearchResult =
   | { type: 'br'; port: Port }
@@ -26,6 +28,14 @@ function normalize(str: string) {
   return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
+// Atalhos da home: ordem = locais que mais geram cliques no Search Console
+// (out/2026). Troque os slugs aqui para mudar a lista.
+const QUICK_SLUGS = [
+  'guaruja', 'porto-de-santos', 'praia-do-forte',
+  'sao-luis', 'porto-de-maceio', 'maracaipe',
+  'arquipelago-de-fernando-de-noronha', 'praia-do-paiva', 'ilha-do-mosqueiro',
+];
+
 export default function HomeHero() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
@@ -43,14 +53,17 @@ export default function HomeHero() {
     return globalPlacesRef.current;
   }, []);
 
-  const popularPorts = PORTS.filter(port =>
-    ['porto-de-belem', 'porto-de-itaqui', 'porto-de-mucuripe-fortaleza', 'porto-do-recife', 'porto-de-salvador', 'porto-de-santos'].includes(port.slug)
-  );
+  const popularPorts = QUICK_SLUGS
+    .map(slug => getPortBySlug(slug))
+    .filter((p): p is Port => !!p);
+
+  // Último porto visitado (localStorage) — leva quem volta direto ao que já usa.
+  const { recentSlugs } = useRecentPorts();
+  const lastPort = recentSlugs.length ? getPortBySlug(recentSlugs[0]) : null;
 
   // ── Gauge de maré ao vivo (porto de referência: Santos) ──
-  // liveNow só existe depois de montar no cliente (pós-hidratação), igual
-  // ao padrão usado em PortPageContent — evita divergência de horário
-  // entre servidor e navegador (bugs de hidratação #418/#423/#425).
+  // liveNow só existe depois de montar no cliente (pós-hidratação) — evita
+  // divergência servidor/cliente (erros de hidratação #418/#423/#425).
   const [liveNow, setLiveNow] = useState<Date | null>(null);
   useEffect(() => {
     setLiveNow(new Date());
@@ -59,32 +72,31 @@ export default function HomeHero() {
   }, []);
 
   const referencePort = getPortBySlug('porto-de-santos');
-  const todayStr = liveNow
-    ? `${liveNow.getFullYear()}-${String(liveNow.getMonth() + 1).padStart(2, '0')}-${String(liveNow.getDate()).padStart(2, '0')}`
-    : '';
-  const todayTides = referencePort && todayStr ? getEventosDia(referencePort, todayStr) : [];
-  const currentMin = liveNow ? liveNow.getHours() * 60 + liveNow.getMinutes() : null;
-  const currentHeight = currentMin !== null && todayTides.length ? tideAtMinute(currentMin, todayTides) : null;
-  const { nextHigh, nextLow } = currentMin !== null && todayTides.length
-    ? getNextHighAndLow(todayTides, currentMin)
-    : { nextHigh: null, nextLow: null };
-  const isRising = nextHigh && (!nextLow || nextHigh.hora < nextLow.hora);
+  // getTideNow usa ontem+hoje+amanhã no fuso de Brasília: sem o bug de mostrar
+  // a altura/horários da manhã depois da última maré do dia.
+  const tideNow = referencePort && liveNow ? getTideNow(referencePort, liveNow) : null;
+  const series = referencePort && liveNow ? getTideSeries(referencePort, liveNow) : null;
+  const currentHeight = tideNow?.height ?? null;
+  const isRising = tideNow?.rising ?? null;
+  const nextHigh = tideNow?.nextHigh ?? null;
+  const nextLow = tideNow?.nextLow ?? null;
   const moon = liveNow ? getMoonPhase(getMoonAge(liveNow)) : null;
 
-  // Curva SVG (polyline simples a partir dos eventos do dia — sem libs novas)
-  const curvePoints = (() => {
-    if (!todayTides.length) return '';
-    const sorted = [...todayTides].sort((a, b) => a.hora.localeCompare(b.hora));
-    const heights = sorted.map(t => t.altura_m);
+  // Curva SVG: de 6h atrás a 18h à frente, com marcador do "agora".
+  const curve = (() => {
+    if (!series || series.points.length < 2) return null;
+    const heights = series.points.map(p => p.h);
     const maxH = Math.max(...heights);
     const minH = Math.min(...heights);
     const range = maxH - minH || 1;
     const w = 600, h = 70, pad = 10;
-    return sorted.map((t, i) => {
-      const x = (i / (sorted.length - 1 || 1)) * w;
-      const y = pad + (1 - (t.altura_m - minH) / range) * (h - pad * 2);
-      return `${x},${y}`;
-    }).join(' ');
+    const yOf = (v: number) => pad + (1 - (v - minH) / range) * (h - pad * 2);
+    const pts = series.points
+      .map((p, i) => `${(i / (series.points.length - 1)) * w},${yOf(p.h)}`)
+      .join(' ');
+    const nowX = series.nowIndexFraction * w;
+    const nowY = currentHeight !== null ? yOf(currentHeight) : null;
+    return { pts, nowX, nowY };
   })();
 
   const currentTimeStr = liveNow
@@ -182,9 +194,12 @@ export default function HomeHero() {
           </p>
         </div>
 
-        {/* Gauge de maré ao vivo — porto de referência: Santos */}
+        {/* Gauge de maré ao vivo — porto de referência: Santos (clicável) */}
         {referencePort && (
-          <div className="mb-8 rounded-2xl border border-cyan-500/20 bg-slate-900/50 backdrop-blur-sm p-5">
+          <Link
+            href={`/mare/${getStateSlug(referencePort.state)}/${referencePort.slug}`}
+            className="block mb-8 rounded-2xl border border-cyan-500/20 bg-slate-900/50 backdrop-blur-sm p-5 hover:border-cyan-400/50 transition-colors"
+          >
             <div className="flex justify-between items-baseline flex-wrap gap-2 mb-1">
               <span className="font-tideMono text-[11px] text-blue-300/70 tracking-wide">
                 Estação de referência · <b className="text-white font-bold">{referencePort.cityName || referencePort.name}</b>
@@ -192,26 +207,33 @@ export default function HomeHero() {
               {moon && <span className="font-tideMono text-[11px] text-blue-300/70">{moon.icon} {moon.name}</span>}
             </div>
 
-            <div className="flex items-baseline gap-2 mb-2">
+            <div className="flex items-baseline gap-2 mb-2 flex-wrap">
               <span className="font-tideMono text-3xl font-bold text-cyan-400">
                 {currentHeight !== null ? `${currentHeight.toFixed(2)}m` : '--m'}
               </span>
               <span className="font-tideMono text-[11px] uppercase tracking-wider text-emerald-400">
-                {liveNow ? `Agora ${currentTimeStr} — ${isRising ? 'Enchendo' : 'Vazando'}` : 'Carregando…'}
+                {liveNow
+                  ? `Agora ${currentTimeStr} — ${isRising === null ? '' : isRising ? 'Enchendo' : 'Vazando'}${tideNow?.next ? ` · ${isRising ? 'alta' : 'baixa'} ${formatCountdown(tideNow.next.minutesFromNow)}` : ''}`
+                  : 'Carregando…'}
               </span>
             </div>
 
-            {curvePoints && (
+            {curve && (
               <svg viewBox="0 0 600 70" preserveAspectRatio="none" className="w-full h-16">
-                <polyline points={curvePoints} fill="none" stroke="#38c9f0" strokeWidth="2.5" />
+                <polyline points={curve.pts} fill="none" stroke="#38c9f0" strokeWidth="2.5" />
+                <line x1={curve.nowX} y1="0" x2={curve.nowX} y2="70" stroke="#ffffff" strokeOpacity="0.25" strokeDasharray="3 3" />
+                {curve.nowY !== null && <circle cx={curve.nowX} cy={curve.nowY} r="5" fill="#34d399" />}
               </svg>
             )}
 
             <div className="flex justify-between font-tideMono text-[11px] text-blue-300/70 pt-3 mt-2 border-t border-white/5">
-              <span className="text-orange-400">▼ Baixa {nextLow?.hora ?? '--:--'} · {nextLow?.altura_m != null ? `${nextLow.altura_m.toFixed(2)}m` : '--'}</span>
-              <span className="text-cyan-400">▲ Alta {nextHigh?.hora ?? '--:--'} · {nextHigh?.altura_m != null ? `${nextHigh.altura_m.toFixed(2)}m` : '--'}</span>
+              <span className="text-orange-400">▼ Baixa {nextLow ? formatEventTime(nextLow) : '--:--'} · {nextLow ? `${nextLow.altura_m.toFixed(2)}m` : '--'}</span>
+              <span className="text-cyan-400">▲ Alta {nextHigh ? formatEventTime(nextHigh) : '--:--'} · {nextHigh ? `${nextHigh.altura_m.toFixed(2)}m` : '--'}</span>
             </div>
-          </div>
+            <p className="mt-3 text-center text-[11px] font-semibold uppercase tracking-widest text-cyan-300">
+              Ver tábua completa de {referencePort.cityName || referencePort.name} →
+            </p>
+          </Link>
         )}
 
         {/* Search Box */}
@@ -297,25 +319,32 @@ export default function HomeHero() {
           )}
         </div>
 
-        {/* Portos Populares (Shortcuts) */}
-        {popularPorts.length > 0 && (
-          <div className="mb-8">
-            <p className="text-slate-400 text-xs uppercase tracking-widest font-semibold mb-4 pl-2">
-              Acesso Rápido
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {popularPorts.slice(0, 6).map((port) => (
-                <button
-                  key={port.slug}
-                  onClick={() => router.push(`/mare/${getStateSlug(port.state)}/${port.slug}`)}
-                  className="px-4 py-3 rounded-xl bg-slate-900/60 border border-blue-500/20 text-white hover:border-cyan-400 hover:bg-slate-900/80 transition-all text-sm font-medium hover:shadow-lg hover:shadow-cyan-500/10"
-                >
-                  {port.cityName || port.name}
-                </button>
-              ))}
-            </div>
+        {/* Retomar + atalhos — <Link> de verdade (o Google segue; botão com onClick não) */}
+        <div className="mb-8">
+          {lastPort && (
+            <Link
+              href={`/mare/${getStateSlug(lastPort.state)}/${lastPort.slug}`}
+              className="mb-4 flex items-center justify-between rounded-xl border border-cyan-400/40 bg-cyan-500/10 px-4 py-3 text-white text-sm font-semibold hover:bg-cyan-500/20 transition-all"
+            >
+              <span>Voltar para {lastPort.cityName || lastPort.name}</span>
+              <span className="text-cyan-300">→</span>
+            </Link>
+          )}
+          <p className="text-slate-400 text-xs uppercase tracking-widest font-semibold mb-4 pl-2">
+            Mais acessados
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {popularPorts.map((port) => (
+              <Link
+                key={port.slug}
+                href={`/mare/${getStateSlug(port.state)}/${port.slug}`}
+                className="px-4 py-3 rounded-xl bg-slate-900/60 border border-blue-500/20 text-white text-center hover:border-cyan-400 hover:bg-slate-900/80 transition-all text-sm font-medium hover:shadow-lg"
+              >
+                {port.cityName || port.name}
+              </Link>
+            ))}
           </div>
-        )}
+        </div>
 
         {/* Divisor */}
         <div className="flex items-center gap-3 mb-8">
@@ -346,12 +375,12 @@ export default function HomeHero() {
 
         {/* Footer links */}
         <div className="text-center mt-8 flex flex-col items-center gap-4">
-          <button
-            onClick={() => router.push('/portos')}
+          <Link
+            href="/portos"
             className="text-slate-400 hover:text-cyan-400 text-xs uppercase tracking-widest font-medium transition-colors"
           >
             Ver todos os portos →
-          </button>
+          </Link>
         </div>
       </div>
     </section>

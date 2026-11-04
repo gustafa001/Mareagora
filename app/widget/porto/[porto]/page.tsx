@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getPortBySlug } from '@/lib/ports';
+import { getStateSlug } from '@/lib/states';
 import { getEventosDia } from '@/lib/mare';
 import { getNextHighAndLow } from '@/lib/tideUtils';
 import { formatHeight } from '@/lib/globalPreferences';
@@ -36,6 +37,7 @@ export default async function WidgetPortoPage({ params }: { params: { porto: str
       nextHigh={nextHigh}
       nextLow={nextLow}
       updatedAt={updatedAt}
+      pageUrl={`https://mareagora.com.br/mare/${getStateSlug(port.state)}/${port.slug}`}
     />
   );
 }

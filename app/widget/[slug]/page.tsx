@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { getGlobalPlace } from '@/lib/globalPlaces';
 import { getTideForLocation } from '@/lib/tideRouter';
 import { getPortBySlug } from '@/lib/ports';
+import { getStateSlug } from '@/lib/states';
 import { getEventosDia } from '@/lib/mare';
 
 interface Props {
@@ -23,6 +24,7 @@ export default async function TideWidget({ params, searchParams }: Props) {
   // Offset do local em minutos (Brasília = -180). Usar o relógio do servidor
   // (UTC) fazia a "próxima maré" desalinhar perto da meia-noite local.
   let tzOffsetMin = -180;
+  let brPageUrl = '';
 
   // Data de hoje no fuso local (lugar global: utcOffsetMin; porto BR: Brasília),
   // em vez de UTC — senão perto da meia-noite mostra o dia seguinte.
@@ -40,6 +42,7 @@ export default async function TideWidget({ params, searchParams }: Props) {
     // Try BR port
     const port = getPortBySlug(slug);
     if (!port) notFound();
+    brPageUrl = `https://mareagora.com.br/mare/${getStateSlug(port.state)}/${slug}`;
     const hoje = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
     name = port.cityName || port.name;
     lat = port.lat;
@@ -62,7 +65,7 @@ export default async function TideWidget({ params, searchParams }: Props) {
   const poweredBy = lang === 'en' ? 'Powered by' : 'Dados via';
   const pageUrl = cc
     ? `https://mareagora.com.br/tide/${cc}/${slug}`
-    : `https://mareagora.com.br/mare/${slug}`;
+    : brPageUrl;
 
   return (
     <html lang={lang}>

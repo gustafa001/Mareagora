@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { getPortBySlug, getAllSlugs, PORTS } from '@/lib/ports';
 import { getStateSlug, getStateName } from '@/lib/states';
 import type { Metadata } from 'next';
@@ -215,7 +216,13 @@ export default async function PortPage({ params }: { params: { slug: string, cid
         <PortoFAQ slug={slug} categoria={categoria} />
         <PortosProximos slug={slug} />
         <ExploreCTA />
-        
+
+        <div className="mt-8 text-center">
+          <Link href={`/embed?porto=${port.slug}`} className="text-sm text-blue-600 hover:underline">
+            Coloque a maré de {port.cityName} no seu site (widget grátis)
+          </Link>
+        </div>
+
         {/* AdSense Rodapé */}
         <div className="mt-12 flex justify-center">
           <AdSlot slotId={AD_SLOTS.PREFOOTER} format="horizontal" />

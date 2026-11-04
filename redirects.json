@@ -1088,5 +1088,10 @@
     "source": "/operacoes-portuarias/praia-do-rosa",
     "destination": "/mare/santa-catarina/praia-do-rosa",
     "permanent": true
+  },
+  {
+    "source": "/widget",
+    "destination": "/embed",
+    "permanent": true
   }
 ]

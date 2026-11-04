@@ -16,6 +16,7 @@ interface WidgetCardProps {
   nextHigh: TideEvent | null;
   nextLow: TideEvent | null;
   updatedAt: string;
+  pageUrl?: string;
 }
 
 const cssVars: Record<Theme, Record<string, string>> = {
@@ -51,6 +52,7 @@ export default function WidgetCard({
   nextHigh,
   nextLow,
   updatedAt,
+  pageUrl,
 }: WidgetCardProps) {
   const [theme, setTheme] = useState<Theme>('auto');
   const [transparent, setTransparent] = useState(false);
@@ -217,7 +219,7 @@ export default function WidgetCard({
             <span style={{ fontSize: 10, color: 'var(--muted)' }}>
               Dados por{' '}
               <a
-                href="https://mareagora.com.br"
+                href={pageUrl ?? 'https://mareagora.com.br'}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ color: 'var(--accent)', textDecoration: 'none', fontWeight: 600 }}

@@ -162,7 +162,7 @@ function generateSpintaxText(
   if (isCommercial) {
     baseText = `As condições de maré em ${port.name}, ${port.state} para a data atual apresentam uma amplitude de ${amplitude.toFixed(2)}m sob a influência da lua ${moonPhase}. ${highInfo} ${lowInfo} Este cenário de ${season} é característico da região, ${isViva ? 'indicando marés vivas (sizígia) que exigem atenção nas manobras portuárias.' : 'caracterizando marés de quadratura, com variações mais suaves no calado dinâmico.'} ${seaInfo}${solunarInfo}${fishingInfo}`;
   } else {
-    baseText = `Confira as condições para a praia de ${port.name} (${port.state}) durante o ${season}. Hoje, com a lua ${moonPhase}, a amplitude da maré é de ${amplitude.toFixed(2)} metros. ${highInfo} ${lowInfo} ${isViva ? 'Com a maré viva, o mar recua bastante na baixamar, excelente para pesca na beira e encontrar piscinas naturais.' : 'Sendo maré morta, a variação é menor, proporcionando águas mais estáveis para banhistas e navegação leve.'} ${seaInfo}${solunarInfo}${fishingInfo}`;
+    baseText = `Confira as condições para a praia de ${port.name} (${port.state}) durante ${season === 'Primavera' ? 'a' : 'o'} ${season.toLowerCase()}. Hoje, com a lua ${moonPhase}, a amplitude da maré é de ${amplitude.toFixed(2)} metros. ${highInfo} ${lowInfo} ${isViva ? 'Com a maré viva, o mar recua bastante na baixamar, excelente para pesca na beira e encontrar piscinas naturais.' : 'Sendo maré morta, a variação é menor, proporcionando águas mais estáveis para banhistas e navegação leve.'} ${seaInfo}${solunarInfo}${fishingInfo}`;
   }
 
   return baseText;

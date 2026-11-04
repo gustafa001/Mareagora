@@ -1,89 +1,265 @@
-import HomeHero from '@/components/HomeHero';
-import FeaturedPorts from '@/components/FeaturedPorts';
-import MostSearchedTides from '@/components/MostSearchedTides';
-import BestTidesToday from '@/components/BestTidesToday';
-import RegionalLinks from '@/components/RegionalLinks';
-import RecentBlogPosts from '@/components/RecentBlogPosts';
-import AdSlot from '@/components/ads/AdSlot';
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import { getPortBySlug, getAllSlugs, PORTS } from '@/lib/ports';
+import { getStateSlug, getStateName } from '@/lib/states';
+import type { Metadata } from 'next';
+import PortPageContent from '@/components/PortPageContent';
+import PortoFAQ from '@/components/PortoFAQ';
+import PortosProximos from '@/components/PortosProximos';
+import ExploreCTA from '@/components/ExploreCTA';
+import { portosConfig, categoryDefaults } from '@/data/porto-seo-config';
 import { AD_SLOTS } from '@/lib/adConfig';
+import AdSlot from '@/components/ads/AdSlot';
+import { getPostsByPort } from '@/lib/blog';
+import type { BlogPost } from '@/lib/blog';
+import { getPortoDescription } from '@/lib/porto-descriptions';
 import SchemaGenerator from '@/components/seo/SchemaGenerator';
-import HomeFaq from '@/components/HomeFaq';
+import { generateSEOContent, getSolunarPeriodos } from '@/lib/seo/content-generator';
+import { getSeaConditionsSummary } from '@/lib/seo/sea-conditions';
+import { getEventosDia } from '@/lib/mare';
+import { calcFishingScore } from '@/lib/fishingScore';
+import SeoOverviewTicker from '@/components/SeoOverviewTicker';
 
-export const revalidate = 3600; // ISR: classificação "hoje" não pode congelar no build
+export const revalidate = 21600; // regenera a página a cada 6h (ISR), evita data congelada do build — reduzido de 1h p/ diminuir ISR Writes/CPU no free tier
 
-export const metadata = {
-  title: 'MaréAgora — Tábua de Marés do Brasil em Tempo Real',
-  description: 'Consulte a tábua de marés oficial da Marinha do Brasil para todos os portos. Previsão de maré alta e baixa, ondas e vento para pesca, surf e navegação.',
-  alternates: {
-    canonical: 'https://mareagora.com.br',
-    languages: {
-      'pt': 'https://mareagora.com.br',
-      'x-default': 'https://mareagora.com.br',
+export async function generateStaticParams() {
+  return PORTS.map(port => ({
+    slug: getStateSlug(port.state),
+    cidade: port.slug,
+  }));
+}
+
+// Linha com as marés do dia (BRT) para abrir a meta description: dado concreto
+// aumenta o CTR frente ao texto genérico dos concorrentes. Sem eventos -> null.
+function buildTideSnippet(port: Parameters<typeof getEventosDia>[0], seoName: string, uf: string): string | null {
+  try {
+    const hoje = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
+    const eventos = getEventosDia(port, hoje);
+    if (!eventos || eventos.length === 0) return null;
+    const fmt = (e: { hora: string; altura_m: number }) => `${e.hora} (${e.altura_m.toFixed(1).replace('.', ',')} m)`;
+    const altas = eventos.filter(e => e.tipo === 'high').map(fmt);
+    const baixas = eventos.filter(e => e.tipo === 'low').map(fmt);
+    if (altas.length === 0 && baixas.length === 0) return null;
+    const dd = `${hoje.slice(8, 10)}/${hoje.slice(5, 7)}`;
+    const partes: string[] = [];
+    if (altas.length) partes.push(`maré alta ${altas.join(', ')}`);
+    if (baixas.length) partes.push(`baixa ${baixas.join(', ')}`);
+    return `Maré em ${seoName} (${uf}) em ${dd}: ${partes.join('; ')}.`;
+  } catch {
+    return null;
+  }
+}
+
+function cutAtWord(text: string, max: number): string {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max);
+  const i = cut.lastIndexOf(' ');
+  return (i > 60 ? cut.slice(0, i) : cut).replace(/[,;:\s—-]+$/, '') + '…';
+}
+
+export async function generateMetadata({ params }: { params: { slug: string, cidade: string } }): Promise<Metadata> {
+  const estado = params.slug;
+  const slug = params.cidade;
+  const port = getPortBySlug(slug);
+  if (!port || getStateSlug(port.state) !== estado) return { title: 'Local não encontrado' };
+
+  const config = portosConfig[slug];
+  const ano = new Date().getFullYear();
+  const url = `https://mareagora.com.br/mare/${estado}/${slug}`;
+  const ogImage = `https://mareagora.com.br/opengraph-image.png`;
+
+  const isCommercial = !port.referencePortSlug && (port.name.toLowerCase().includes('porto') || port.name.toLowerCase().includes('terminal') || config?.category === 'industrial');
+
+  // Portos/terminais comerciais usam o nome do terminal no título (bate com a busca do usuário);
+  // praias continuam usando o nome da cidade.
+  const seoName = config?.seoName ?? (isCommercial ? port.name : port.cityName);
+
+  // "hoje" é a intenção dominante nas buscas reais (Search Console), então vira o padrão
+  // de todas as páginas sem sufixo customizado.
+  const defaultSuffix = 'Maré Alta e Baixa Hoje';
+  
+  const defaultDesc = isCommercial
+    ? `Tábua de marés de ${seoName}, ${port.state} para ${ano}. Previsão de maré alta e baixa, horários e coeficientes oficiais com dados da Marinha do Brasil (CHM).`
+    : `Tábua de marés de ${seoName}, ${port.state} para ${ano}. Horários de maré alta e baixa para surf, pesca e atividades na praia. Fonte: Marinha do Brasil.`;
+
+  // Sufixo curto para o título caber em 60 caracteres junto com keyword + ano.
+  // Remove "Oficiais" e ano repetido no sufixo, pois o base já injeta o ano.
+  // Título sem o sufixo "| MaréAgora" (brand segue apenas em OG/siteName) para evitar truncamento pelo Google.
+  const suffix = (config?.titleSuffix ?? defaultSuffix)
+    .replace(/\s+Oficiais$/i, '')
+    .replace(/\s{1,2}\d{4}$/i, '')
+    .trim();
+
+  const base = `Tábua de Maré ${seoName} ${ano}`;
+  const SEP = ' — ';
+
+  // Sempre respeita 60 chars. Antes, quando o sufixo não cabia inteiro, ele era
+  // descartado por completo — o que fazia ~22 das 26 páginas com SEO customizado
+  // caírem de volta no título genérico "Tábua de Maré {nome} {ano}", sem nenhum
+  // diferencial pro clique. Agora truncamos o sufixo no limite de palavra em vez
+  // de removê-lo, então toda página mantém alguma diferenciação no título.
+  let title = base;
+  if (base.length > 60) {
+    title = base.slice(0, 60).trimEnd();
+  } else if (suffix) {
+    const fullTitle = `${base}${SEP}${suffix}`;
+    if (fullTitle.length <= 60) {
+      title = fullTitle;
+    } else {
+      const budget = 60 - base.length - SEP.length;
+      if (budget >= 8) {
+        let truncSuffix = suffix.slice(0, budget);
+        const lastSpace = truncSuffix.lastIndexOf(' ');
+        if (lastSpace > 0) truncSuffix = truncSuffix.slice(0, lastSpace);
+        truncSuffix = truncSuffix.trim().replace(/[,;:—-]+$/, '').trim();
+        if (truncSuffix) title = `${base}${SEP}${truncSuffix}`;
+      }
+    }
+  }
+
+  const baseDescription = config?.description ?? defaultDesc;
+  const tideSnippet = buildTideSnippet(port, seoName, port.state);
+  const description = tideSnippet
+    ? cutAtWord(`${tideSnippet} ${baseDescription}`, 200)
+    : baseDescription;
+
+  const keywords = config?.keywords
+    ?? [
+      `maré ${seoName.toLowerCase()}`,
+      `tabua maré ${seoName.toLowerCase()} ${ano}`,
+      `tábua de maré ${seoName.toLowerCase()}`,
+    ];
+
+  return {
+    title,
+    description,
+    keywords,
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url,
+      type: 'website',
+      locale: 'pt_BR',
+      siteName: 'MaréAgora',
+      images: [{ url: ogImage, width: 1200, height: 630, alt: `Tábua de Maré ${seoName}` }],
     },
-  },
-};
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
+    },
+  };
+}
 
-export default function Home() {
+export default async function PortPage({ params }: { params: { slug: string, cidade: string } }) {
+  const estado = params.slug;
+  const slug = params.cidade;
+  const port = getPortBySlug(slug);
+  if (!port || getStateSlug(port.state) !== estado) notFound();
+
+  const portDescription = getPortoDescription(slug);
+  const ano = new Date().getFullYear();
+  // Data de "hoje" no fuso de Brasília, calculada uma única vez aqui no
+  // servidor e repassada como prop (ver comentário em PortPageContent.tsx).
+  const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
+
+  const config = portosConfig[slug];
+  const categoria = config?.category ?? 'turismo';
+
+  const { posts: blogPosts, strategy: blogStrategy } = getPostsByPort(port);
+
+  const isCommercial = !port.referencePortSlug && (port.name.toLowerCase().includes('porto') || port.name.toLowerCase().includes('terminal') || config?.category === 'industrial');
+  const seoName = config?.seoName ?? (isCommercial ? port.name : port.cityName);
+  
+  // Data de hoje no fuso de Brasília (para AI Overview, SEO) — mesma lógica
+  // do todayStr acima, evitando que o dia UTC (à frente de -03:00) desloque a data.
+  const dataHoje = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
+
+  // NOVO: busca ondas/vento no servidor, com o mesmo revalidate da página,
+  // para que o texto de SEO e o FAQ (JSON-LD) tragam números reais no HTML
+  // já entregue a crawlers/bots de IA — sem depender de fetch client-side.
+  // Em caso de falha (API fora do ar etc.), `sea` fica null e o gerador
+  // cai para o texto genérico antigo, sem quebrar a página.
+  const seaData = await getSeaConditionsSummary(port.lat, port.lon, revalidate);
+
+  // Score de pesca "agora" calculado no SERVIDOR, com as mesmas regras do
+  // DailyScoreCard (lib/fishingScore.ts) e os dados de ondas/vento da hora
+  // atual já buscados acima. Assim o "Pesca X/10" entra no HTML pré-renderizado
+  // (texto de SEO + FAQ JSON-LD) sem depender de JavaScript — elegível a AI
+  // Overview. Se falta dado de mar/vento, fica null e o texto cai pro antigo.
+  let fishing: { score: number; label: string } | null = null;
+  if (seaData) {
+    const brNow = new Date();
+    const brHour = Number(brNow.toLocaleTimeString('en-GB', { timeZone: 'America/Sao_Paulo', hour: '2-digit' }));
+    const brMinute = Number(brNow.toLocaleTimeString('en-GB', { timeZone: 'America/Sao_Paulo', minute: '2-digit' }));
+    const wh = seaData.marineHourly.wave_height?.[brHour];
+    const wp = seaData.marineHourly.wave_period?.[brHour];
+    const ws = seaData.windHourly.windspeed_10m?.[brHour];
+    if (typeof wh === 'number' && typeof ws === 'number') {
+      const eventos = getEventosDia(port, dataHoje);
+      // Mesmos períodos solunares do content-generator (fonte única) — o bônus
+      // solunar do score passa a usar a Teoria Solunar real, como o DailyScoreCard.
+      const periodos = getSolunarPeriodos(port, dataHoje);
+      const pesca = calcFishingScore(
+        eventos,
+        { waveHeight: wh, wavePeriod: wp ?? 0, windSpeed: ws },
+        -180, // Brasília (UTC-3), mesmo fuso usado no resto da página
+        brHour * 60 + brMinute,
+        undefined, // tradutor padrão (PT_REASONS)
+        periodos
+      );
+      fishing = { score: pesca.score, label: pesca.label };
+    }
+  }
+
+  const { text: seoText, faq: seoFaq } = generateSEOContent(port, dataHoje, seaData?.summary ?? null, fishing);
+
   return (
-    <main className="min-h-screen flex flex-col bg-slate-950 relative overflow-hidden">
-      <SchemaGenerator
-        type="Home"
-        url="https://mareagora.com.br"
-        title="MaréAgora — Tábua de Marés do Brasil em Tempo Real"
-        description="Consulte a tábua de marés oficial da Marinha do Brasil para todos os portos. Previsão de maré alta e baixa, ondas e vento para pesca, surf e navegação."
+    <>
+      <SchemaGenerator 
+        port={port} 
+        type={categoria === 'industrial' || port.name.toLowerCase().includes('porto') ? 'Port' : 'Beach'} 
+        url={`https://mareagora.com.br/mare/${estado}/${slug}`} 
+        title={`Tábua de Maré ${seoName} ${ano}`}
+        description={`Horários e alturas das marés em ${seoName} (${port.state}) para ${ano}.`}
+        faq={seoFaq}
       />
+      
+      {/* Resumo Gerado (AI Overview Target) — exibido como slider, texto completo preservado no HTML */}
+      <SeoOverviewTicker
+        title={`Visão Geral Hoje (${dataHoje.split('-').reverse().join('/')})`}
+        text={seoText}
+      />
+      <PortPageContent
+        slug={slug}
+        portDescription={portDescription}
+        blogPosts={blogPosts}
+        blogStrategy={blogStrategy}
+        todayStr={todayStr}
+        // NOVO: dados já buscados no servidor, repassados como estado inicial
+        // para o WindWaveCharts/useSeaConditions não precisarem refazer o
+        // fetch no primeiro render do cliente (ver PortPageContent.tsx).
+        initialMarineHourly={seaData?.marineHourly ?? null}
+        initialWindHourly={seaData?.windHourly ?? null}
+      />
+      <div className="container pb-16">
+        <PortoFAQ slug={slug} categoria={categoria} />
+        <PortosProximos slug={slug} />
+        <ExploreCTA />
 
-      {/* SEÇÃO HERO (Mantendo busca e funcionalidades originais) */}
-      <HomeHero />
-
-      {/* SEÇÃO 1: Portos em Destaque */}
-      <FeaturedPorts />
-
-      <MostSearchedTides />
-
-      {/* SEÇÃO 1.5: Melhores do litoral hoje (classificação qualitativa) */}
-      <BestTidesToday />
-
-      {/* SEÇÃO 2: Conteúdo Editorial (SEO) */}
-      <section className="w-full max-w-4xl mx-auto px-6 py-16 text-slate-300 border-t border-white/5">
-        <h2 className="text-3xl font-black text-white mb-8 font-syne tracking-tight text-center md:text-left">
-          Tábua de Marés do Brasil — Dados Oficiais da Marinha
-        </h2>
-        
-        <div className="space-y-6 text-lg leading-relaxed">
-          <p>
-            A <strong className="text-blue-400">tábua de marés</strong> é uma ferramenta essencial para qualquer atividade realizada na costa. Ela registra as oscilações periódicas do nível do mar, informando os horários exatos da <strong className="text-white">maré alta (preamar)</strong> e da <strong className="text-white">maré baixa (baixamar)</strong>. Compreender o ciclo das marés é fundamental para garantir a segurança na navegação, planejar o melhor momento para a pesca ou simplesmente aproveitar uma praia com faixa de areia estendida.
-          </p>
-
-          <p>
-            No MaréAgora, utilizamos os dados oficiais fornecidos pela <strong className="text-white">Diretoria de Hidrografia e Navegação (DHN) da Marinha do Brasil</strong>. Nossa plataforma processa essas informações astronômicas para oferecer uma interface moderna e intuitiva, permitindo que você consulte a <strong className="text-blue-400">previsão de marés</strong> de forma rápida e precisa em mais de 50 portos brasileiros, desde o Rio Grande do Sul até o Amapá.
-          </p>
-
-          <p>
-            Seja você um <strong className="text-white">pescador</strong> em busca do melhor coeficiente de maré, um <strong className="text-white">surfista</strong> analisando a variação da profundidade para as ondas, um <strong className="text-white">mergulhador</strong> planejando a visibilidade da água ou um <strong className="text-white">navegante</strong> atento ao calado seguro, o MaréAgora é seu parceiro confiável. Oferecemos dados consolidados para tornar sua experiência no litoral brasileiro mais produtiva e segura.
-          </p>
+        <div className="mt-8 text-center">
+          <Link href={`/embed?porto=${port.slug}`} className="text-sm text-blue-600 hover:underline">
+            Coloque a maré de {port.cityName} no seu site (widget grátis)
+          </Link>
         </div>
-      </section>
 
-      {/* SEÇÃO 2.5: Como interpretar, FAQ e localidades de destaque (SEO) */}
-      <HomeFaq />
-
-      {/* SEÇÃO 4: Posts do Blog */}
-      <RecentBlogPosts />
-
-      {/* SEÇÃO 3: Links por Região */}
-      <RegionalLinks />
-
-      {/* Publicidade / Footer */}
-      <div className="w-full py-12 flex justify-center border-t border-white/5">
-        <AdSlot slotId={AD_SLOTS.PREFOOTER} format="horizontal" />
+        {/* AdSense Rodapé */}
+        <div className="mt-12 flex justify-center">
+          <AdSlot slotId={AD_SLOTS.PREFOOTER} format="horizontal" />
+        </div>
       </div>
-
-      <div className="w-full py-8 text-center bg-slate-950">
-        <p className="text-slate-600 text-xs">
-          Dados oficiais da Marinha do Brasil • MaréAgora © {new Date().getFullYear()}
-        </p>
-      </div>
-    </main>
+    </>
   );
 }

@@ -23,8 +23,8 @@ export async function generateMetadata({ params }: { params: { estado: string } 
   const cidades = PORTS.filter((p) => p.state === stateCode);
   const url = `https://mareagora.com.br/estados/${params.estado}`;
 
-  const title = `Tábua de Maré ${stateName} ${ano} — Todas as Cidades e Portos | MaréAgora`;
-  const description = `Previsão de maré em ${cidades.length} cidades e portos de ${stateName}. Horários de maré alta e baixa, coeficientes e dados oficiais da Marinha do Brasil.`;
+  const title = `Tábua de Maré ${stateName} ${ano} — Cidades e Portos`;
+  const description = `Previsão de maré em ${cidades.length} cidades e portos de ${stateName}. Horários de maré alta e baixa de hoje, coeficientes e dados oficiais da Marinha do Brasil.`;
 
   return {
     title,

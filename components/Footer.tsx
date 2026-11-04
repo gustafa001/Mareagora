@@ -1,6 +1,9 @@
 import Link from 'next/link';
+import { getTopCities } from '@/lib/topCities';
 
 export default function Footer() {
+  const topCities = getTopCities();
+
   return (
     <footer className="bg-slate-900 text-slate-400 py-12 mt-auto">
       <div className="max-w-6xl mx-auto px-4">
@@ -35,6 +38,23 @@ export default function Footer() {
             <Link href="/embed" className="hover:text-white transition-colors">Widget para o seu site</Link>
           </nav>
         </div>
+
+        {topCities.length > 0 && (
+          <div className="border-t border-slate-800 mt-8 pt-6">
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3 text-center">
+              Tábuas de maré mais buscadas
+            </p>
+            <ul className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm">
+              {topCities.map(c => (
+                <li key={c.slug}>
+                  <Link href={c.href} className="hover:text-white transition-colors">
+                    Tábua de maré {c.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         <div className="border-t border-slate-800 mt-8 pt-6 text-center text-xs">
           <p>© {new Date().getFullYear()} MaréAgora. Todos os direitos reservados.</p>

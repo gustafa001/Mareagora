@@ -1,5 +1,6 @@
 import HomeHero from '@/components/HomeHero';
 import FeaturedPorts from '@/components/FeaturedPorts';
+import MostSearchedTides from '@/components/MostSearchedTides';
 import BestTidesToday from '@/components/BestTidesToday';
 import RegionalLinks from '@/components/RegionalLinks';
 import RecentBlogPosts from '@/components/RecentBlogPosts';
@@ -37,6 +38,8 @@ export default function Home() {
 
       {/* SEÇÃO 1: Portos em Destaque */}
       <FeaturedPorts />
+
+      <MostSearchedTides />
 
       {/* SEÇÃO 1.5: Melhores do litoral hoje (classificação qualitativa) */}
       <BestTidesToday />

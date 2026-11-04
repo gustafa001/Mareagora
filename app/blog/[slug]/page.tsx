@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
 import { getPosts, getPost, getRelatedPosts } from '@/lib/blog';
+import { getPortBySlug } from '@/lib/ports';
+import { getStateSlug } from '@/lib/states';
 import NavBar from '@/components/NavBar';
 
 interface Props {
@@ -88,6 +90,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   const related = getRelatedPosts(post.slug, post.category, post.tags, 3);
   const catStyle = getCategoryStyle(post.category);
+  const port = getPortBySlug(post.slug);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -189,6 +192,17 @@ export default async function BlogPostPage({ params }: Props) {
             </div>
           )}
         </header>
+
+        {port && (
+          <p className="mb-6 text-sm">
+            <Link
+              href={`/mare/${getStateSlug(port.state)}/${port.slug}`}
+              className="font-semibold text-blue-400 hover:text-blue-300 hover:underline"
+            >
+              Ver a tábua de maré de hoje em {port.cityName || port.name} →
+            </Link>
+          </p>
+        )}
 
         {/* Article body */}
         <article className="prose prose-invert prose-lg max-w-none prose-headings:font-syne prose-a:text-blue-400 hover:prose-a:text-blue-300">

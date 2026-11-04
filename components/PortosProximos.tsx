@@ -8,7 +8,7 @@ interface PortosProximosProps {
 }
 
 export default function PortosProximos({ slug }: PortosProximosProps) {
-  const portos = getPortosProximos(slug);
+  const portos = getPortosProximos(slug, 6);
 
   if (!portos.length) return null;
 
@@ -18,7 +18,7 @@ export default function PortosProximos({ slug }: PortosProximosProps) {
         <MapPin className="text-blue-600" size={24} />
         Portos Próximos
       </h2>
-      <div className="flex overflow-x-auto pb-4 gap-4 snap-x md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible md:pb-0">
+      <div className="flex overflow-x-auto pb-4 gap-4 snap-x md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:pb-0">
         {portos.map((porto) => (
           <Link
             key={porto.slug}
@@ -28,7 +28,7 @@ export default function PortosProximos({ slug }: PortosProximosProps) {
           >
             <div className="flex items-start justify-between mb-3">
               <h3 className="font-semibold text-lg text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-2">
-                {porto.nome}
+                Tábua de maré {porto.nome}
               </h3>
               <span className="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded-full shrink-0 ml-2">
                 {porto.estado}

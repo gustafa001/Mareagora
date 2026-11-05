@@ -20,15 +20,14 @@ import ActivityRecommendations from '@/components/ActivityRecommendations';
 import SolunarTable from '@/components/SolunarTable';
 import BarometerCard from '@/components/BarometerCard';
 import PortBlogSection from '@/components/PortBlogSection';
-import NotificationCTA from '@/components/NotificationCTA';
 import WeatherRadarCard from '@/components/port-operations/WeatherRadarCard';
 import DailyScoreCard from '@/components/DailyScoreCard';
 import TideSchemaMarkup from '@/components/TideSchemaMarkup';
 import { getStateSlug, getStateName } from '@/lib/states';
-import ShareButton from '@/components/ShareButton';
+import TideTodayCard from '@/components/TideTodayCard';
 import { useSeaConditions } from '@/hooks/useSeaConditions';
 import RessacaAlert from '@/components/RessacaAlert';
-import { getTideNow, formatCountdown } from '@/lib/tideNow';
+import { getTideNow, formatCountdown, addDays } from '@/lib/tideNow';
 import { classifyToday } from '@/lib/tideQuality';
 import TideQualityBadge from '@/components/TideQualityBadge';
 import { notFound } from 'next/navigation';
@@ -38,6 +37,12 @@ import { ClientOnly } from '@/components/ClientOnly';
 import { exportTidePdf } from '@/lib/exportTidePdf';
 import { WEEKDAYS, MONTHS, buildMonthRows } from '@/lib/monthlyTideCalc';
 import type { MarineHourly, WindHourly } from '@/lib/seo/sea-conditions';
+
+/** Minutos desde 00:00 de um horário "HH:MM". */
+function timeToMinutes(hora: string): number {
+  const [h, m] = hora.split(':').map(Number);
+  return (h || 0) * 60 + (m || 0);
+}
 
 interface PortPageContentProps {
   slug: string;
@@ -144,6 +149,21 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
   const nextHigh = tideNow?.nextHigh ?? null;
   const nextLow = tideNow?.nextLow ?? null;
 
+  // Última preamar que já passou: prioriza hoje; se ainda não houve nenhuma
+  // (ex.: madrugada antes da primeira alta), usa a última de ontem.
+  const lastHighToday = currentMin !== null
+    ? [...todayTides]
+        .filter(t => t.tipo === 'high' && timeToMinutes(t.hora) <= currentMin)
+        .sort((a, b) => timeToMinutes(a.hora) - timeToMinutes(b.hora))
+        .pop() ?? null
+    : null;
+  const lastHigh = lastHighToday
+    ?? [...getEventosDia(port, addDays(todayStr, -1))]
+        .filter(t => t.tipo === 'high')
+        .sort((a, b) => timeToMinutes(a.hora) - timeToMinutes(b.hora))
+        .pop()
+    ?? null;
+
   const tideQuality = classifyToday(todayTides, currentMin);
 
   const currentHeight = tideNow?.height ?? null;
@@ -173,7 +193,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
       />
       <NavBar />
 
-      <section className="relative overflow-hidden hero-section pt-24 pb-16 border-b border-white/5">
+      <section className="relative overflow-hidden hero-section pt-10 pb-6 border-b border-white/5">
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-950/70 to-slate-950" />
         <div className="container relative z-10">
 
@@ -187,56 +207,73 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
             </a>
           </div>
 
-          <div className="flex flex-col gap-3 items-center px-2 text-center pt-14 md:pt-0">
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold font-syne leading-tight max-w-4xl text-white drop-shadow-md">
+          <div className="flex flex-col gap-2 items-center px-2 text-center pt-12 md:pt-0">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold font-syne leading-tight max-w-4xl text-white drop-shadow-md">
               Tábua de Maré {seoName} — {ano}
             </h1>
-            <p className="text-sm sm:text-lg md:text-xl opacity-90 font-medium font-syne hidden sm:block text-white/90">
+            <p className="text-sm sm:text-base md:text-lg opacity-90 font-medium font-syne hidden sm:block text-white/90">
               {seoName} - {ano} | Estado do {port.state}
             </p>
-            <p className="text-sm opacity-90 font-medium font-syne sm:hidden text-white/90">
+            <p className="text-xs sm:hidden opacity-90 font-medium font-syne text-white/90">
               Estado do {port.state}
             </p>
 
-            <div className="mt-6 mb-6 w-full max-w-md static z-40">
+            <div className="mt-2 mb-2 w-full max-w-md static z-40">
               <SearchPorts ports={PORTS} />
             </div>
 
-            <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
-              <ShareButton
-                title={`Tábua de Maré ${seoName} ${ano} | MaréAgora`}
-                text={`🌊 Confira a previsão de marés em ${seoName} — MaréAgora`}
-              />
-
+            <div className="mt-1 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
               {tideQuality && <TideQualityBadge result={tideQuality} />}
             </div>
-
-            <p className="mt-4 mb-20 text-xs opacity-80 text-white/80 font-mono tracking-wide" suppressHydrationWarning>
-              {currentHeight !== null
-                ? `Agora ${currentTimeBR} — ${currentHeight.toFixed(2)}m (${isRising ? 'enchendo' : 'vazando'})${countdownLabel ? ` · ${isRising ? 'próxima alta' : 'próxima baixa'} ${countdownLabel}` : ''}`
-                : `Horário local: ${currentTimeBR}`}
-            </p>
           </div>
         </div>
       </section>
 
       <div className="container">
-        <ClientOnly fallback={
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 -mt-16 relative z-20 min-h-[160px]">
-            <div className="glass-card h-[160px] bg-white/5 rounded-2xl animate-pulse" />
-            <div className="glass-card h-[160px] bg-white/5 rounded-2xl animate-pulse" />
-            <div className="glass-card h-[160px] bg-white/5 rounded-2xl animate-pulse" />
-          </div>
-        }>
-          <SummaryCards
-            nextHigh={nextHigh}
-            nextLow={nextLow}
+        <TideTodayCard
+          portName={seoName}
+          stateSlug={getStateSlug(port.state)}
+          portSlug={port.slug}
+          todayStr={todayStr}
+          currentHeight={currentHeight}
+          isRising={isRising}
+          nextHigh={nextHigh}
+          nextLow={nextLow}
+          lastHigh={lastHigh}
+          currentMin={currentMin}
+          countdownLabel={countdownLabel}
+        />
+
+        <div id="tabela-mensal" className="mt-6">
+          <MonthlyTideTable
+            eventos={dataAno}
+            portName={seoName}
             lat={port.lat}
             lon={port.lon}
-            todayTides={todayTides}
-            currentMin={currentMin}
+            state={port.state}
+            referencePort={referenceData}
+            initialDateStr={todayStr}
           />
-        </ClientOnly>
+        </div>
+
+        <div className="mt-6">
+          <ClientOnly fallback={
+            <div className="grid grid-cols-2 gap-3 sm:gap-6 min-h-[110px]">
+              <div className="rounded-2xl bg-white/5 animate-pulse" />
+              <div className="rounded-2xl bg-white/5 animate-pulse" />
+            </div>
+          }>
+            <SummaryCards
+              nextHigh={nextHigh}
+              nextLow={nextLow}
+              lat={port.lat}
+              lon={port.lon}
+              todayTides={todayTides}
+              currentMin={currentMin}
+              showMainCards={false}
+            />
+          </ClientOnly>
+        </div>
 
         {/* AdSense Leaderboard — abaixo do resumo, acima da dobra */}
         <div className="mt-8 flex justify-center">
@@ -291,18 +328,6 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
                 {pdfExporting ? 'Aguarde um momento' : 'Baixe a tabela completa do mês para consultar offline'}
               </p>
             </button>
-
-            <div id="tabela-mensal">
-              <MonthlyTideTable
-                eventos={dataAno}
-                portName={seoName}
-                lat={port.lat}
-                lon={port.lon}
-                state={port.state}
-                referencePort={referenceData}
-                initialDateStr={todayStr}
-              />
-            </div>
 
             <a href="#graficos-meteorologia" className="my-6 block bg-gradient-to-r from-[#0d1526] to-[#1a3a5c] rounded-2xl p-5 text-center border border-cyan-500/20 hover:border-cyan-400/40 transition-all hover:shadow-lg hover:shadow-cyan-500/10">
               <p className="text-base font-bold font-syne text-white">📈 Veja a previsão detalhada dos próximos 7 dias</p>

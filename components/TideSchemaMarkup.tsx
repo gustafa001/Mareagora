@@ -26,6 +26,7 @@ export default function TideSchemaMarkup({
   locale = 'pt',
 }: Props) {
   const isEn = locale === 'en';
+  const currentYear = new Date().getFullYear();
 
   const highTimeStr = nextHigh ? `${nextHigh.hora} (${nextHigh.altura_m.toFixed(2)}m)` : (isEn ? 'Available on table' : 'Disponível na tábua');
   const lowTimeStr = nextLow ? `${nextLow.hora} (${nextLow.altura_m.toFixed(2)}m)` : (isEn ? 'Available on table' : 'Disponível na tábua');
@@ -53,10 +54,10 @@ export default function TideSchemaMarkup({
           },
           {
             '@type': 'Question',
-            name: `Where to check the complete 2026 tide table for ${locationName}?`,
+            name: `Where to check the complete ${currentYear} tide table for ${locationName}?`,
             acceptedAnswer: {
               '@type': 'Answer',
-              text: `The complete and updated 2026 tide table for ${locationName}, including wave forecasts, wind speeds, and fishing/surfing conditions, is available for free on MaréAgora.`,
+              text: `The complete and updated ${currentYear} tide table for ${locationName}, including wave forecasts, wind speeds, and fishing/surfing conditions, is available for free on MaréAgora.`,
             },
           },
         ]
@@ -79,10 +80,10 @@ export default function TideSchemaMarkup({
           },
           {
             '@type': 'Question',
-            name: `Onde consultar a tábua de marés completa de 2026 para ${locationName}?`,
+            name: `Onde consultar a tábua de marés completa de ${currentYear} para ${locationName}?`,
             acceptedAnswer: {
               '@type': 'Answer',
-              text: `A tábua de marés completa e atualizada de 2026 para ${locationName}, com horários oficiais, coeficientes, previsão de ondas e vento, está disponível gratuitamente no MaréAgora.`,
+              text: `A tábua de marés completa e atualizada de ${currentYear} para ${locationName}, com horários oficiais, coeficientes, previsão de ondas e vento, está disponível gratuitamente no MaréAgora.`,
             },
           },
         ],

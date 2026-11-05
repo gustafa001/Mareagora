@@ -10,13 +10,20 @@ interface SummaryCardsProps {
   lon: number;
   todayTides?: TideEvent[];
   currentMin?: number | null;
+  /**
+   * Quando `false`, renderiza apenas a linha de coeficiente/lua (sem os 3
+   * cards principais). Usado no template de cidade/porto, onde o card
+   * "maré hoje" já mostra as próximas marés. Padrão `true` mantém o
+   * comportamento das demais rotas (`/tide`, `/mare-mundo`).
+   */
+  showMainCards?: boolean;
 }
 
 import { useSeaConditions } from "@/hooks/useSeaConditions";
 import { getMoonAge, getMoonPhase, getTideCoefficient, getCountdownLabel } from "@/lib/tideUtils";
 import { useT } from "@/lib/tideI18n";
 
-export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides, currentMin }: SummaryCardsProps) {
+export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides, currentMin, showMainCards = true }: SummaryCardsProps) {
   const { waveHeight, windSpeed, loading } = useSeaConditions(lat, lon);
   const { lang, s } = useT();
   
@@ -61,7 +68,8 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides, 
   }
 
   return (
-    <div className="flex flex-col gap-6 -mt-16 relative z-20">
+    <div className={`flex flex-col gap-6 relative z-20 ${showMainCards ? '-mt-16' : ''}`}>
+      {showMainCards && (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Próxima Maré Alta */}
         <div className="summary-card glass-card card-mare-alta flex flex-col justify-between min-h-[160px]">
@@ -115,6 +123,7 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides, 
           </div>
         </div>
       </div>
+      )}
 
       {/* Coeficiente e Lua — Design Premium Dark (#0f1f3d) — Forçado Visibilidade */}
       <div className="grid grid-cols-2 gap-3 sm:gap-6">

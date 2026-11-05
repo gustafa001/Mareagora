@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modelo — Card Maré Hoje | MaréAgora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --page: #07111b;
+    --page-2: #0a1624;
+    --card: #0c2137;
+    --card-2: #112b45;
+    --line: #1d3f5f;
+    --line-2: #234565;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --muted-2: #64748b;
+    --blue: #2563eb;
+    --blue-hover: #3b82f6;
+    --green: #34d399;
+    --gray-card: #97a6b5;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    background: var(--page);
+    color: var(--text);
+    font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(1200px 600px at 70% -10%, rgba(37, 99, 235, .10), transparent 60%),
+      linear-gradient(180deg, var(--page), var(--page-2));
+  }
+
+  .wrap {
+    max-width: 1720px;
+    margin: 0 auto;
+    padding: 44px 48px 56px;
+  }
+
+  .eyebrow {
+    margin: 0 0 14px;
+    font-family: 'Fira Code', ui-monospace, monospace;
+    font-size: 14px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── bloco “hoje (como está)” ── */
+  .today {
+    background: var(--gray-card);
+    border-radius: 16px;
+    padding: 26px 32px;
+    color: #fff;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, .18);
+  }
+
+  .today h2 {
+    margin: 0 0 10px;
+    font-size: 30px;
+    line-height: 1.15;
+    font-weight: 800;
+  }
+
+  .today p {
+    margin: 0;
+    font-size: 19px;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, .92);
+  }
+
+  /* ── card proposta ── */
+  .proposal {
+    background: linear-gradient(180deg, #0d2339, #0b1e31);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 28px 32px 24px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .30);
+  }
+
+  .proposal-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+
+  .proposal-title {
+    margin: 0;
+    font-size: 27px;
+    line-height: 1.2;
+    font-weight: 800;
+    letter-spacing: -.01em;
+  }
+
+  .live {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--green);
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+    padding-top: 4px;
+  }
+
+  .live-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 0 5px rgba(52, 211, 153, .12);
+  }
+
+  .now-line {
+    margin: 0 0 20px;
+    font-size: 22px;
+    line-height: 1.4;
+    color: #cbd5e1;
+    font-weight: 500;
+  }
+
+  .now-line strong { color: #fff; font-weight: 800; }
+
+  .now-value {
+    font-size: 30px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -.01em;
+  }
+
+  .now-arrow {
+    color: #fff;
+    font-weight: 800;
+  }
+
+  .now-countdown {
+    font-size: 30px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -.01em;
+  }
+
+  .tide-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .tide-box {
+    background: linear-gradient(180deg, rgba(17, 43, 69, .95), rgba(13, 35, 56, .95));
+    border: 1px solid var(--line-2);
+    border-radius: 12px;
+    padding: 18px 20px 16px;
+    min-width: 0;
+  }
+
+  .tide-label {
+    font-family: 'Fira Code', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: .10em;
+    text-transform: uppercase;
+    color: #7f9ab7;
+    margin-bottom: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tide-time {
+    font-size: 33px;
+    line-height: 1.05;
+    font-weight: 800;
+    color: #f1f5f9;
+    letter-spacing: -.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tide-sub {
+    margin-top: 7px;
+    font-size: 14px;
+    color: #8aa4bf;
+    font-weight: 600;
+  }
+
+  .tide-box.past .tide-time { color: #6f87a1; }
+  .tide-box.past .tide-sub { color: #5c748c; }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 11px 20px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background .15s ease, border-color .15s ease, transform .1s ease;
+  }
+
+  .btn:active { transform: scale(.985); }
+
+  .btn-primary {
+    background: var(--blue);
+    border-color: rgba(96, 165, 250, .55);
+    color: #fff;
+  }
+
+  .btn-primary:hover { background: var(--blue-hover); }
+
+  .btn-secondary {
+    background: #5b7085;
+    border-color: #71879b;
+    color: #fff;
+  }
+
+  .btn-secondary:hover { background: #6a8197; }
+
+  .btn svg { flex: 0 0 auto; }
+
+  .footnote {
+    margin: 18px 0 0;
+    color: #7f97b0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ── tabela de maré ── */
+  .table-card {
+    background: linear-gradient(180deg, #0d2339, #0b1e31);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .22);
+  }
+
+  .table-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--line);
+    background: rgba(255, 255, 255, .015);
+  }
+
+  .table-head h2 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: -.01em;
+  }
+
+  .table-head p {
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .table-tools { display: flex; gap: 8px; flex: 0 0 auto; }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(96, 165, 250, .28);
+    background: rgba(37, 99, 235, .12);
+    color: #93c5fd;
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .chip.orange {
+    border-color: rgba(251, 146, 60, .28);
+    background: rgba(251, 146, 60, .10);
+    color: #fdba74;
+  }
+
+  .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  table {
+    width: 100%;
+    min-width: 780px;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    background: #0b1c2e;
+    padding: 11px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, .06);
+    font-family: 'Fira Code', ui-monospace, monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: #64748b;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  thead th:first-child { text-align: left; padding-left: 22px; }
+
+  tbody td {
+    padding: 12px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, .045);
+    text-align: center;
+    font-size: 13px;
+    color: #cbd5e1;
+    white-space: nowrap;
+  }
+
+  tbody td:first-child {
+    position: sticky;
+    left: 0;
+    background: #0d2339;
+    text-align: left;
+    padding-left: 22px;
+    border-right: 1px solid rgba(255, 255, 255, .05);
+    z-index: 1;
+  }
+
+  tbody tr.today td { background: rgba(37, 99, 235, .09); }
+  tbody tr.today td:first-child { background: #12304d; }
+
+  .day-cell { display: flex; align-items: center; gap: 9px; }
+  .day-name { font-size: 10px; color: #7f97b0; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+  .day-date { font-size: 14px; color: #f1f5f9; font-weight: 800; }
+  .today-pill {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: #93c5fd;
+    background: rgba(37, 99, 235, .18);
+    border: 1px solid rgba(96, 165, 250, .28);
+    border-radius: 999px;
+    padding: 2px 6px;
+  }
+
+  .tide-cell { line-height: 1.15; }
+  .tide-cell .time { font-size: 15px; font-weight: 800; color: #e2e8f0; }
+  .tide-cell .arrow { font-size: 11px; font-weight: 800; margin-left: 2px; }
+  .tide-cell.high .arrow { color: #60a5fa; }
+  .tide-cell.low .arrow { color: #fb923c; }
+  .tide-cell .height { display: block; margin-top: 3px; font-size: 11px; color: #7f97b0; font-weight: 600; }
+  .tide-cell.empty .time { color: #475569; }
+
+  .coef-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: rgba(52, 211, 153, .12);
+    border: 1px solid rgba(52, 211, 153, .25);
+    color: #34d399;
+    font-size: 11px;
+    font-weight: 800;
+  }
+  .coef-pill.orange { background: rgba(251, 146, 60, .12); border-color: rgba(251, 146, 60, .25); color: #fb923c; }
+  .sun { font-size: 12px; color: #94a3b8; }
+
+  .table-hint {
+    display: none;
+    padding: 10px 18px 14px;
+    color: #64748b;
+    font-size: 11px;
+    text-align: center;
+  }
+
+  .mock-note {
+    margin-top: 30px;
+    color: #52677c;
+    font-size: 12px;
+    font-family: 'Fira Code', ui-monospace, monospace;
+    letter-spacing: .04em;
+  }
+
+  /* ── mobile ── */
+  @media (max-width: 760px) {
+    .wrap { padding: 22px 14px 36px; }
+
+    .eyebrow { font-size: 11px; margin-bottom: 10px; }
+
+    .today { padding: 18px 20px; border-radius: 13px; }
+    .today h2 { font-size: 20px; margin-bottom: 6px; }
+    .today p { font-size: 14px; }
+
+    .proposal { padding: 18px 16px 16px; border-radius: 14px; }
+
+    .proposal-head {
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .proposal-title { font-size: 19px; }
+    .live { font-size: 12px; padding-top: 0; }
+    .live-dot { width: 9px; height: 9px; box-shadow: 0 0 0 4px rgba(52, 211, 153, .12); }
+
+    .now-line { font-size: 13px; margin-bottom: 14px; }
+    .now-value, .now-countdown { font-size: 18px; }
+
+    .tide-grid { gap: 8px; }
+    .tide-box { padding: 11px 10px 10px; border-radius: 9px; }
+    .tide-label { font-size: 8px; letter-spacing: .06em; margin-bottom: 5px; }
+    .tide-time { font-size: 21px; }
+    .tide-sub { font-size: 10px; margin-top: 4px; }
+
+    .actions { gap: 8px; margin-top: 14px; }
+    .btn { flex: 1 1 100%; min-height: 42px; font-size: 14px; border-radius: 9px; padding: 9px 14px; }
+    .footnote { font-size: 11px; margin-top: 12px; }
+
+    .table-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 14px 16px;
+    }
+    .table-head h2 { font-size: 16px; }
+    .table-tools { width: 100%; }
+    .chip { font-size: 10px; padding: 5px 9px; }
+    thead th:first-child, tbody td:first-child { padding-left: 14px; }
+    .table-hint { display: block; }
+  }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <p class="eyebrow">Hoje (como está)</p>
+    <section class="today" aria-label="Resumo atual">
+      <h2>Visão Geral Hoje (04/11/2026)</h2>
+      <p>A próxima maré alta ocorre às 12:49 com 1.22m.</p>
+    </section>
+
+    <p class="eyebrow" style="margin-top:34px;">Proposta (calculado no navegador, às 20:52)</p>
+    <section class="proposal" aria-label="Proposta de card de maré">
+      <div class="proposal-head">
+        <h2 class="proposal-title">Santos — maré hoje, 04/11/2026</h2>
+        <span class="live"><span class="live-dot"></span>Atualizado agora</span>
+      </div>
+
+      <p class="now-line">
+        Agora: <span class="now-value">0,77 m</span>
+        <span aria-hidden="true"> · </span>
+        enchendo <span class="now-arrow" aria-hidden="true">↑</span>
+        <span aria-hidden="true"> · </span>
+        próxima alta em <span class="now-countdown">3h 22min</span>
+      </p>
+
+      <div class="tide-grid">
+        <div class="tide-box past">
+          <div class="tide-label">Preamar · Passou</div>
+          <div class="tide-time">12:49</div>
+          <div class="tide-sub">1,22 m</div>
+        </div>
+        <div class="tide-box">
+          <div class="tide-label">Próxima baixa</div>
+          <div class="tide-time">06:31</div>
+          <div class="tide-sub">amanhã</div>
+        </div>
+        <div class="tide-box">
+          <div class="tide-label">Próxima alta</div>
+          <div class="tide-time">00:14</div>
+          <div class="tide-sub">em 3h 22min</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Avisar quando a maré baixar
+        </button>
+        <a class="btn btn-secondary" href="https://wa.me/?text=Santos%20%E2%80%94%20mar%C3%A9%20hoje%2C%2004%2F11%2F2026%20%7C%20Mar%C3%A9Agora" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Compartilhar no WhatsApp
+        </a>
+      </div>
+
+      <p class="footnote">Dados oficiais da Marinha (DHN).</p>
+    </section>
+
+    <p class="eyebrow" style="margin-top:30px;">Tábua de maré — Santos · novembro de 2026</p>
+    <section class="table-card" aria-label="Tábua de maré de Santos">
+      <div class="table-head">
+        <div>
+          <h2>Tábua de maré — Santos</h2>
+          <p>Horários, alturas e coeficientes · novembro de 2026</p>
+        </div>
+        <div class="table-tools">
+          <span class="chip">📄 PDF</span>
+          <span class="chip orange">🖼️ Imagem</span>
+        </div>
+      </div>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Dia</th>
+              <th>1ª maré</th>
+              <th>2ª maré</th>
+              <th>3ª maré</th>
+              <th>4ª maré</th>
+              <th>Coef.</th>
+              <th>☀ Nascer</th>
+              <th>🌅 Pôr</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="today">
+              <td>
+                <div class="day-cell">
+                  <span class="day-date">04/11</span>
+                  <span class="day-name">Qua</span>
+                  <span class="today-pill">Hoje</span>
+                </div>
+              </td>
+              <td class="tide-cell high"><span class="time">00:14<span class="arrow">↑</span></span><span class="height">1,22 m</span></td>
+              <td class="tide-cell low"><span class="time">06:31<span class="arrow">↓</span></span><span class="height">0,33 m</span></td>
+              <td class="tide-cell high"><span class="time">12:49<span class="arrow">↑</span></span><span class="height">1,18 m</span></td>
+              <td class="tide-cell low"><span class="time">18:57<span class="arrow">↓</span></span><span class="height">0,41 m</span></td>
+              <td><span class="coef-pill">62</span></td>
+              <td class="sun">05:12</td>
+              <td class="sun">18:24</td>
+            </tr>
+            <tr>
+              <td><div class="day-cell"><span class="day-date">05/11</span><span class="day-name">Qui</span></div></td>
+              <td class="tide-cell high"><span class="time">00:58<span class="arrow">↑</span></span><span class="height">1,15 m</span></td>
+              <td class="tide-cell low"><span class="time">07:10<span class="arrow">↓</span></span><span class="height">0,38 m</span></td>
+              <td class="tide-cell high"><span class="time">13:31<span class="arrow">↑</span></span><span class="height">1,12 m</span></td>
+              <td class="tide-cell low"><span class="time">19:34<span class="arrow">↓</span></span><span class="height">0,47 m</span></td>
+              <td><span class="coef-pill">58</span></td>
+              <td class="sun">05:11</td>
+              <td class="sun">18:25</td>
+            </tr>
+            <tr>
+              <td><div class="day-cell"><span class="day-date">06/11</span><span class="day-name">Sex</span></div></td>
+              <td class="tide-cell high"><span class="time">01:44<span class="arrow">↑</span></span><span class="height">1,08 m</span></td>
+              <td class="tide-cell low"><span class="time">07:51<span class="arrow">↓</span></span><span class="height">0,45 m</span></td>
+              <td class="tide-cell high"><span class="time">14:18<span class="arrow">↑</span></span><span class="height">1,05 m</span></td>
+              <td class="tide-cell low"><span class="time">20:15<span class="arrow">↓</span></span><span class="height">0,54 m</span></td>
+              <td><span class="coef-pill">53</span></td>
+              <td class="sun">05:10</td>
+              <td class="sun">18:26</td>
+            </tr>
+            <tr>
+              <td><div class="day-cell"><span class="day-date">07/11</span><span class="day-name">Sáb</span></div></td>
+              <td class="tide-cell high"><span class="time">02:34<span class="arrow">↑</span></span><span class="height">1,01 m</span></td>
+              <td class="tide-cell low"><span class="time">08:37<span class="arrow">↓</span></span><span class="height">0,52 m</span></td>
+              <td class="tide-cell high"><span class="time">15:11<span class="arrow">↑</span></span><span class="height">0,98 m</span></td>
+              <td class="tide-cell low"><span class="time">21:02<span class="arrow">↓</span></span><span class="height">0,61 m</span></td>
+              <td><span class="coef-pill orange">47</span></td>
+              <td class="sun">05:09</td>
+              <td class="sun">18:26</td>
+            </tr>
+            <tr>
+              <td><div class="day-cell"><span class="day-date">08/11</span><span class="day-name">Dom</span></div></td>
+              <td class="tide-cell high"><span class="time">03:32<span class="arrow">↑</span></span><span class="height">0,95 m</span></td>
+              <td class="tide-cell low"><span class="time">09:30<span class="arrow">↓</span></span><span class="height">0,59 m</span></td>
+              <td class="tide-cell high"><span class="time">16:13<span class="arrow">↑</span></span><span class="height">0,92 m</span></td>
+              <td class="tide-cell low"><span class="time">21:58<span class="arrow">↓</span></span><span class="height">0,66 m</span></td>
+              <td><span class="coef-pill orange">42</span></td>
+              <td class="sun">05:08</td>
+              <td class="sun">18:27</td>
+            </tr>
+            <tr>
+              <td><div class="day-cell"><span class="day-date">09/11</span><span class="day-name">Seg</span></div></td>
+              <td class="tide-cell high"><span class="time">04:43<span class="arrow">↑</span></span><span class="height">0,92 m</span></td>
+              <td class="tide-cell low"><span class="time">10:34<span class="arrow">↓</span></span><span class="height">0,64 m</span></td>
+              <td class="tide-cell high"><span class="time">17:26<span class="arrow">↑</span></span><span class="height">0,90 m</span></td>
+              <td class="tide-cell low"><span class="time">23:06<span class="arrow">↓</span></span><span class="height">0,68 m</span></td>
+              <td><span class="coef-pill orange">39</span></td>
+              <td class="sun">05:07</td>
+              <td class="sun">18:28</td>
+            </tr>
+            <tr>
+              <td><div class="day-cell"><span class="day-date">10/11</span><span class="day-name">Ter</span></div></td>
+              <td class="tide-cell high"><span class="time">06:04<span class="arrow">↑</span></span><span class="height">0,94 m</span></td>
+              <td class="tide-cell low"><span class="time">11:47<span class="arrow">↓</span></span><span class="height">0,66 m</span></td>
+              <td class="tide-cell high"><span class="time">18:44<span class="arrow">↑</span></span><span class="height">0,93 m</span></td>
+              <td class="tide-cell empty"><span class="time">—</span></td>
+              <td><span class="coef-pill orange">41</span></td>
+              <td class="sun">05:06</td>
+              <td class="sun">18:29</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-hint">Arraste para o lado para ver todas as colunas</div>
+    </section>
+
+    <p class="mock-note">MODELO · valores de exemplo (Santos, 04/11/2026) · o card real usa os dados do porto aberto</p>
+  </main>
+</body>
+</html>

@@ -7,9 +7,18 @@ const VAPID_KEY = 'BIEIsoBEg4UubQNr2jyhdoUATIQFhZ_gIukjnkw85uGvLB-svLQXjaNSi-fdN
 
 interface NotificationCTAProps {
   portSlug: string;
+  /**
+   * `banner` = bloco completo usado no corpo da página.
+   * `compact` = botão para o hero/card, ao lado do compartilhamento.
+   */
+  variant?: 'banner' | 'compact';
+  /** Texto do botão compacto (padrão: "Receber alerta desta maré"). */
+  label?: string;
+  /** Classes extras do botão compacto. */
+  className?: string;
 }
 
-export default function NotificationCTA({ portSlug }: NotificationCTAProps) {
+export default function NotificationCTA({ portSlug, variant = 'banner', label = 'Receber alerta desta maré', className = '' }: NotificationCTAProps) {
   const [mounted, setMounted] = useState(false);
   const [status, setStatus] = useState<'idle' | 'subscribed' | 'denied' | 'unsupported' | 'error'>('idle');
   const [loading, setLoading] = useState(false);
@@ -31,7 +40,23 @@ export default function NotificationCTA({ portSlug }: NotificationCTAProps) {
     }
   }, [portSlug]);
 
-  if (!mounted || status === 'unsupported') return null;
+  if (!mounted) {
+    if (variant === 'compact') {
+      return (
+        <button
+          type="button"
+          disabled
+          className="flex items-center gap-2 px-4 py-2.5 rounded-2xl font-semibold text-sm bg-blue-600 text-white opacity-60 cursor-wait"
+        >
+          <Bell size={16} />
+          {label}
+        </button>
+      );
+    }
+    return null;
+  }
+
+  if (status === 'unsupported') return null;
 
   async function handleSubscribe() {
     if (loading) return;
@@ -75,6 +100,31 @@ export default function NotificationCTA({ portSlug }: NotificationCTAProps) {
     } finally {
       setLoading(false);
     }
+  }
+
+  if (variant === 'compact') {
+    return (
+      <button
+        type="button"
+        onClick={handleSubscribe}
+        disabled={loading || status === 'denied'}
+        title={status === 'denied' ? 'Permissão de notificações bloqueada no navegador' : undefined}
+        className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl font-semibold text-sm transition-all duration-200 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed ${
+          status === 'subscribed'
+            ? 'bg-emerald-500/20 border border-emerald-400/40 text-emerald-300'
+            : 'bg-blue-600 hover:bg-blue-500 text-white border border-blue-400/40'
+        } ${className}`}
+      >
+        {status === 'subscribed' ? <CheckCircle2 size={16} /> : <Bell size={16} />}
+        {status === 'subscribed'
+          ? 'Alerta ativado'
+          : status === 'denied'
+          ? 'Alertas bloqueados'
+          : loading
+          ? 'Ativando...'
+          : label}
+      </button>
+    );
   }
 
   return (

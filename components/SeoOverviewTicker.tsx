@@ -30,11 +30,11 @@ export default function SeoOverviewTicker({ title, text }: { title: string; text
   }, [sentences.length]);
 
   return (
-    <div className="bg-slate-900/50 border-b border-slate-800 py-6">
+    <div className="bg-slate-900/50 border-b border-slate-800 py-3">
       <div className="container">
-        <h2 className="text-xl font-bold text-white mb-2">{title}</h2>
+        <h2 className="text-base font-bold text-white mb-1">{title}</h2>
 
-        <div className="relative min-h-[3.2em] sm:min-h-[2.2em]">
+        <div className="relative min-h-[2.8em] sm:min-h-[1.8em]">
           {sentences.map((sentence, i) => (
             <p
               key={i}
@@ -48,7 +48,7 @@ export default function SeoOverviewTicker({ title, text }: { title: string; text
         </div>
 
         {sentences.length > 1 && (
-          <div className="flex gap-1.5 mt-3">
+          <div className="flex gap-1.5 mt-2">
             {sentences.map((_, i) => (
               <button
                 key={i}

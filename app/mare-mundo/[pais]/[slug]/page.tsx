@@ -233,6 +233,7 @@ export default async function MareMundoLocalPage({ params }: Props) {
             lat={place.lat}
             lon={place.lon}
             initialDateStr={hoje}
+            utcOffsetMin={place.utcOffsetMin ?? 0}
           />
         </div>
 

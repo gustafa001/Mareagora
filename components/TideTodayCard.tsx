@@ -78,7 +78,9 @@ export default function TideTodayCard({
           </h2>
           <span className="inline-flex items-center gap-2 text-[11px] sm:text-sm font-bold text-emerald-400 whitespace-nowrap">
             <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_0_4px_rgba(52,211,153,0.12)]" />
-            Atualizado agora
+            {currentMin != null
+              ? `Estimado às ${String(Math.floor(currentMin / 60)).padStart(2, '0')}:${String(currentMin % 60).padStart(2, '0')}`
+              : 'Estimativa de hoje'}
           </span>
         </div>
 

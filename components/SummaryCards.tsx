@@ -17,13 +17,27 @@ interface SummaryCardsProps {
    * comportamento das demais rotas (ex.: `/tide`).
    */
   showMainCards?: boolean;
+  /**
+   * Offset UTC do local (em minutos). Quando informado, o relógio do card
+   * "Condições agora" mostra a hora DO LOCAL (ex.: Bali = 480) em vez da hora
+   * de Brasília. Sem ele, mantém America/Sao_Paulo (páginas do Brasil).
+   */
+  utcOffsetMin?: number;
 }
 
 import { useSeaConditions } from "@/hooks/useSeaConditions";
 import { getMoonAge, getMoonPhase, getTideCoefficient, getCountdownLabel } from "@/lib/tideUtils";
 import { useT } from "@/lib/tideI18n";
 
-export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides, currentMin, showMainCards = true }: SummaryCardsProps) {
+function formatUtcLabel(offsetMin: number): string {
+  const sign = offsetMin < 0 ? '-' : '+';
+  const abs = Math.abs(offsetMin);
+  const h = Math.floor(abs / 60);
+  const m = abs % 60;
+  return `UTC${sign}${h}${m ? `:${String(m).padStart(2, '0')}` : ''}`;
+}
+
+export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides, currentMin, showMainCards = true, utcOffsetMin }: SummaryCardsProps) {
   const { waveHeight, windSpeed, loading } = useSeaConditions(lat, lon);
   const { lang, s } = useT();
   
@@ -33,6 +47,14 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides, 
 
   useEffect(() => {
     const updateTime = () => {
+      if (typeof utcOffsetMin === 'number') {
+        // Hora do local: UTC + offset, lida com getters UTC (independe do fuso do navegador).
+        const local = new Date(Date.now() + utcOffsetMin * 60_000);
+        const hh = String(local.getUTCHours()).padStart(2, '0');
+        const mm = String(local.getUTCMinutes()).padStart(2, '0');
+        setTimeStr(`${hh}:${mm}`);
+        return;
+      }
       setTimeStr(new Date().toLocaleTimeString('pt-BR', {
         timeZone: 'America/Sao_Paulo',
         hour: '2-digit',
@@ -42,7 +64,7 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides, 
     updateTime();
     const interval = setInterval(updateTime, 60000);
     return () => clearInterval(interval);
-  }, []);
+  }, [utcOffsetMin]);
 
   // Calculado só no cliente (useEffect), depois da hidratação — evita
   // divergência de fuso/horário entre o render do servidor e do navegador
@@ -116,7 +138,12 @@ export default function SummaryCards({ nextHigh, nextLow, lat, lon, todayTides, 
               <span className="text-sm font-bold opacity-80 backdrop-blur-sm shadow-sm md:shadow-none bg-black/10 px-2 py-0.5 rounded md:bg-transparent md:px-0 md:py-0 md:rounded-none inline-block">{s.conditionsNow}</span>
               <span className="text-xl animate-pulse">🕒</span>
             </div>
-            <div className="text-4xl font-extrabold mt-4 font-syne drop-shadow-md">{timeStr}</div>
+            <div className="text-4xl font-extrabold mt-4 font-syne drop-shadow-md">
+              {timeStr}
+              {typeof utcOffsetMin === 'number' && (
+                <span className="ml-2 align-middle text-xs font-bold opacity-70">{formatUtcLabel(utcOffsetMin)}</span>
+              )}
+            </div>
           </div>
           <div className="text-sm font-bold opacity-90 mt-2 leading-tight drop-shadow-sm bg-black/10 px-3 py-1.5 rounded-lg inline-block self-start">
             {s.wind}: {windStr} · {s.waves}: {wavesStr}

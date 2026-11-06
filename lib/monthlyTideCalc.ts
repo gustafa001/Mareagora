@@ -137,7 +137,9 @@ export function buildMonthRows(
   lat: number,
   lon: number,
   todayStr: string,
-  weekdays: string[] = WEEKDAYS
+  weekdays: string[] = WEEKDAYS,
+  /** Offset UTC do local em minutos (nascer/pôr do sol saem na hora do local). Sem ele: Brasília (-3). */
+  utcOffsetMin?: number
 ): LinhaTabua[] {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
@@ -156,7 +158,10 @@ export function buildMonthRows(
     }));
 
     const coef = calcCoef(maresBrutas);
-    const { sunrise, sunset } = getSunTimes(date.getFullYear(), date.getMonth() + 1, day, lat, lon);
+    const { sunrise, sunset } = getSunTimes(
+      date.getFullYear(), date.getMonth() + 1, day, lat, lon,
+      utcOffsetMin !== undefined ? utcOffsetMin / 60 : undefined
+    );
 
     return {
       data: dateStr,

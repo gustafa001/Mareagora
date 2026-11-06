@@ -20,9 +20,11 @@ interface MonthlyTideTableProps {
     distanceKm: number;
   };
   initialDateStr?: string;
+  /** Offset UTC do local em minutos. Define o "hoje" do local (e não o do navegador). */
+  utcOffsetMin?: number;
 }
 
-export default function MonthlyTideTable({ eventos, portName, lat, lon, state = "", referencePort, initialDateStr }: MonthlyTideTableProps) {
+export default function MonthlyTideTable({ eventos, portName, lat, lon, state = "", referencePort, initialDateStr, utcOffsetMin }: MonthlyTideTableProps) {
   const { lang, s } = useT();
   const weekdays = lang === 'en' ? WEEKDAYS_EN : WEEKDAYS;
   const monthNames = lang === 'en' ? MONTHS_EN : MONTHS;
@@ -41,16 +43,41 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
 
   const tabelaRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const todayRowRef = useRef<HTMLTableRowElement>(null);
 
   const today = useMemo(() => {
     if (!now) return '';
+    if (typeof utcOffsetMin === 'number') {
+      // "Hoje" no fuso do local (UTC + offset), não no do navegador.
+      return new Date(now.getTime() + utcOffsetMin * 60_000).toISOString().slice(0, 10);
+    }
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
-  }, [now]);
+  }, [now, utcOffsetMin]);
 
   const rows = useMemo(() => {
     if (selectedYear === null || selectedMonth === null) return [];
-    return buildMonthRows(eventos, selectedYear, selectedMonth, lat, lon, today, weekdays);
-  }, [eventos, selectedMonth, selectedYear, lat, lon, today, weekdays]);
+    return buildMonthRows(eventos, selectedYear, selectedMonth, lat, lon, today, weekdays, utcOffsetMin);
+  }, [eventos, selectedMonth, selectedYear, lat, lon, today, weekdays, utcOffsetMin]);
+
+  // Rola SÓ a caixa da tabela (não a página) até o dia de hoje, deixando o dia
+  // anterior visível acima. Em meses sem "hoje", volta ao topo.
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+    const row = todayRowRef.current;
+    if (!row) {
+      container.scrollTop = 0;
+      return;
+    }
+    const head = container.querySelector("thead") as HTMLElement | null;
+    const top =
+      row.getBoundingClientRect().top -
+      container.getBoundingClientRect().top +
+      container.scrollTop -
+      (head?.offsetHeight ?? 0) -
+      row.offsetHeight;
+    container.scrollTop = Math.max(0, top);
+  }, [today, selectedMonth, selectedYear]);
 
   const availableYears = useMemo(() => {
     const years = new Set<number>();
@@ -252,17 +279,17 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
               const coefStyle = row.coef !== null ? coefColor(row.coef) : null;
 
               return (
-                <tr key={row.data} style={{
+                <tr key={row.data} ref={row.isToday ? todayRowRef : undefined} style={{
                   borderBottom: "1px solid rgba(255,255,255,0.04)",
                   background: row.isToday
-                    ? "rgba(59,130,246,0.08)"
+                    ? "rgba(59,130,246,0.16)"
                     : isSunday || isSaturday
                     ? "rgba(255,255,255,0.015)"
                     : "transparent",
                   transition: "background 0.15s",
                 }}>
                   {/* Day cell */}
-                  <td style={{ padding: "0.5rem 1rem", position: "sticky", left: 0, background: row.isToday ? "rgba(30,50,100,0.95)" : "#0f172a", zIndex: 1, borderRight: "1px solid rgba(255,255,255,0.04)" }}>
+                  <td style={{ padding: "0.5rem 1rem", position: "sticky", left: 0, background: row.isToday ? "rgba(30,50,100,0.95)" : "#0f172a", zIndex: 1, borderRight: "1px solid rgba(255,255,255,0.04)", boxShadow: row.isToday ? "inset 3px 0 0 #3b82f6" : undefined }}>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "36px" }}>
                       <div style={{
                         width: "30px", height: "30px", borderRadius: "50%",

@@ -199,6 +199,7 @@ export default async function TideLocalPage({ params }: Props) {
           lat={place.lat}
           lon={place.lon}
           todayTides={todayTides as TideEvent[]}
+          utcOffsetMin={place.utcOffsetMin ?? 0}
         />
 
         <div className="mt-12 flex flex-col lg:grid lg:grid-cols-[1fr_350px] gap-8">
@@ -213,6 +214,8 @@ export default async function TideLocalPage({ params }: Props) {
             portName={placeName}
             lat={place.lat}
             lon={place.lon}
+            initialDateStr={today}
+            utcOffsetMin={place.utcOffsetMin ?? 0}
           />
 
           {/* Daily Score */}

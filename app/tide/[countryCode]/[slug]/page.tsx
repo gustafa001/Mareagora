@@ -8,7 +8,7 @@ import { getTideForLocation } from '@/lib/tideRouter';
 import { t } from '@/lib/globalPreferences';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { getNextHighAndLow, type TideEvent } from '@/lib/tideUtils';
+import { getNextHighAndLow, tideAtMinute, minutesUntilTide, type TideEvent } from '@/lib/tideUtils';
 import type { MareDia } from '@/lib/mare';
 import rolloutStatus from '@/data/content-rollout-status.json';
 
@@ -21,13 +21,13 @@ import NavBar from '@/components/NavBar';
 const TideWeekCard = dynamic(() => import('@/components/TideWeekCard'), { ssr: false });
 import MonthlyTideTable from '@/components/MonthlyTideTable';
 import SummaryCards from '@/components/SummaryCards';
+import TideTodayCard from '@/components/TideTodayCard';
 import WindWaveCharts from '@/components/WindWaveCharts';
 import ActivityRecommendations from '@/components/ActivityRecommendations';
 import SolunarTable from '@/components/SolunarTable';
 import WeatherRadarCard from '@/components/port-operations/WeatherRadarCard';
 const DailyScoreCard = dynamic(() => import('@/components/DailyScoreCard'), { ssr: false });
 import TideSchemaMarkup from '@/components/TideSchemaMarkup';
-import ShareButton from '@/components/ShareButton';
 import { generateTideDescription } from '@/lib/tideDescription';
 import { classifyToday } from '@/lib/tideQuality';
 import TideQualityBadge from '@/components/TideQualityBadge';
@@ -107,9 +107,43 @@ export default async function TideLocalPage({ params }: Props) {
   const utcOffsetMin = place.utcOffsetMin ?? 0;
   const placeDate = new Date(now.getTime() + utcOffsetMin * 60 * 1000);
   const currentMin = placeDate.getUTCHours() * 60 + placeDate.getUTCMinutes();
-  const todayTides = weekDias[0]?.mares ?? [];
+  const todayTides = (weekDias[0]?.mares ?? []) as TideEvent[];
+  const nextDayTides = (weekDias[1]?.mares ?? []) as TideEvent[];
 
-  const { nextHigh, nextLow } = getNextHighAndLow(todayTides as TideEvent[], currentMin);
+  const { nextHigh, nextLow } = getNextHighAndLow(todayTides, currentMin, nextDayTides);
+
+  const currentHeight = todayTides.length ? tideAtMinute(currentMin, todayTides) : null;
+  const highIn = nextHigh ? minutesUntilTide(nextHigh.hora, currentMin) : null;
+  const lowIn = nextLow ? minutesUntilTide(nextLow.hora, currentMin) : null;
+  const isRising = highIn !== null && (lowIn === null || highIn <= lowIn);
+
+  const toMinutes = (hora: string) => {
+    const [h, m] = hora.split(':').map(Number);
+    return (h || 0) * 60 + (m || 0);
+  };
+
+  // Last high tide already passed today; if none yet, use yesterday's last one.
+  let lastHigh: TideEvent | null =
+    [...todayTides]
+      .filter((t) => t.tipo === 'high' && toMinutes(t.hora) <= currentMin)
+      .sort((a, b) => toMinutes(a.hora) - toMinutes(b.hora))
+      .pop() ?? null;
+
+  if (!lastHigh) {
+    const yesterday = new Date(new Date(`${today}T12:00:00Z`).getTime() - 86_400_000)
+      .toISOString()
+      .slice(0, 10);
+    const { dias: yesterdayDias } = await getTideForLocation(
+      { lat: place.lat, lon: place.lon },
+      yesterday,
+      1
+    );
+    lastHigh =
+      [...((yesterdayDias[0]?.mares ?? []) as TideEvent[])]
+        .filter((t) => t.tipo === 'high')
+        .sort((a, b) => toMinutes(a.hora) - toMinutes(b.hora))
+        .pop() ?? null;
+  }
 
   const tideQuality = classifyToday(todayTides, currentMin, 'en');
 
@@ -131,7 +165,7 @@ export default async function TideLocalPage({ params }: Props) {
       />
       <NavBar />
 
-      <section className="relative overflow-hidden bg-gradient-to-b from-slate-900 via-slate-900/90 to-slate-950 pt-24 pb-16 border-b border-white/5">
+      <section className="relative overflow-hidden bg-gradient-to-b from-slate-900 via-slate-900/90 to-slate-950 pt-10 pb-6 border-b border-white/5">
         <div className="container relative z-10">
 
           {/* Back button */}
@@ -155,14 +189,14 @@ export default async function TideLocalPage({ params }: Props) {
             </Link>
           </div>
 
-          <div className="flex flex-col gap-3 items-center px-2 text-center">
+          <div className="flex flex-col gap-2 items-center px-2 text-center pt-12 md:pt-0">
             <p className="text-xs font-bold uppercase tracking-widest text-blue-400 opacity-80">
               {countryName} · Harmonic Tide Model
             </p>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold font-syne leading-tight max-w-4xl text-white drop-shadow-md">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold font-syne leading-tight max-w-4xl text-white drop-shadow-md">
               Tide Table {placeName} — {year}
             </h1>
-            <p className="text-sm sm:text-lg md:text-xl opacity-90 font-medium font-syne hidden sm:block text-white/90">
+            <p className="text-sm sm:text-base md:text-lg opacity-90 font-medium font-syne hidden sm:block text-white/90">
               {placeName} · {countryName} · Harmonic Prediction
             </p>
 
@@ -172,43 +206,40 @@ export default async function TideLocalPage({ params }: Props) {
               </div>
             )}
 
-            <div className="mt-4 mb-6">
-              <p className="text-xs opacity-60">📍 Lat {place.lat.toFixed(4)}, Lon {place.lon.toFixed(4)}</p>
-            </div>
-
-            <ShareButton
-              title={`Tide Table ${placeName} ${year} | MaréAgora`}
-              text={`🌊 Check the tide forecast for ${placeName}, ${countryName} — MaréAgora`}
-            />
+            <p className="mt-1 text-xs opacity-60">
+              📍 Lat {place.lat.toFixed(4)}, Lon {place.lon.toFixed(4)}
+            </p>
 
             {tideQuality && (
               <div className="mt-2">
                 <TideQualityBadge result={tideQuality} />
               </div>
             )}
-
-            <div className="mb-20" />
           </div>
         </div>
       </section>
 
       <div className="container">
-        <SummaryCards
-          nextHigh={nextHigh as TideEvent | null}
-          nextLow={nextLow as TideEvent | null}
-          lat={place.lat}
-          lon={place.lon}
-          todayTides={todayTides as TideEvent[]}
-          utcOffsetMin={place.utcOffsetMin ?? 0}
+        <TideTodayCard
+          portName={placeName}
+          todayStr={today}
+          currentHeight={currentHeight}
+          isRising={isRising}
+          nextHigh={nextHigh}
+          nextLow={nextLow}
+          lastHigh={lastHigh}
+          currentMin={currentMin}
+          sharePath={`/tide/${params.countryCode}/${params.slug}`}
+          locale="en"
+          liveTides={{ today: todayTides, nextDay: nextDayTides, utcOffsetMin }}
+          sourceNote={
+            isEstimate
+              ? 'Estimate from the global harmonic model.'
+              : 'Data from the nearest reference station.'
+          }
         />
 
-        <div className="mt-12 flex flex-col lg:grid lg:grid-cols-[1fr_350px] gap-8">
-          <div className="flex flex-col gap-8">
-
-          <TideWeekCard days={weekDias} />
-
-          <WeatherRadarCard lat={place.lat} lon={place.lon} />
-
+        <div id="tabela-mensal" className="mt-6">
           <MonthlyTideTable
             eventos={yearDias}
             portName={placeName}
@@ -217,6 +248,27 @@ export default async function TideLocalPage({ params }: Props) {
             initialDateStr={today}
             utcOffsetMin={place.utcOffsetMin ?? 0}
           />
+        </div>
+
+        <div className="mt-6">
+          <SummaryCards
+            nextHigh={nextHigh as TideEvent | null}
+            nextLow={nextLow as TideEvent | null}
+            lat={place.lat}
+            lon={place.lon}
+            todayTides={todayTides}
+            currentMin={currentMin}
+            showMainCards={false}
+            utcOffsetMin={place.utcOffsetMin ?? 0}
+          />
+        </div>
+
+        <div className="mt-8 flex flex-col lg:grid lg:grid-cols-[1fr_350px] gap-8">
+          <div className="flex flex-col gap-8">
+
+          <TideWeekCard days={weekDias} />
+
+          <WeatherRadarCard lat={place.lat} lon={place.lon} />
 
           {/* Daily Score */}
           <DailyScoreCard

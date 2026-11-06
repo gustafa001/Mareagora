@@ -219,6 +219,7 @@ export default async function MareMundoLocalPage({ params }: Props) {
           currentMin={currentMin}
           countdownLabel={countdownLabel}
           sharePath={`/mare-mundo/${params.pais}/${params.slug}`}
+          locale="pt"
           sourceNote={
             isEstimate
               ? 'Estimativa por modelo harmônico global.'
@@ -246,6 +247,7 @@ export default async function MareMundoLocalPage({ params }: Props) {
             todayTides={todayTides}
             currentMin={currentMin}
             showMainCards={false}
+            utcOffsetMin={place.utcOffsetMin ?? 0}
           />
         </div>
 

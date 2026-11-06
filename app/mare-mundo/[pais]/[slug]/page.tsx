@@ -143,7 +143,7 @@ export default async function MareMundoLocalPage({ params }: Props) {
   const nearby = getNearbyGlobalPlaces(place);
 
   return (
-    <main className="min-h-screen pb-20">
+    <main className="min-h-screen pb-20 bg-[#070d19] text-white">
       <TideSchemaMarkup
         locationName={place.name}
         countryOrStateName={place.countryName}
@@ -207,7 +207,7 @@ export default async function MareMundoLocalPage({ params }: Props) {
         </div>
       </section>
 
-      <div className="container">
+      <div className="container relative z-10">
         <TideTodayCard
           portName={place.name}
           todayStr={hoje}

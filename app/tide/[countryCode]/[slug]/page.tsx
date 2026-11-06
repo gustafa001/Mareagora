@@ -150,7 +150,7 @@ export default async function TideLocalPage({ params }: Props) {
   const nearby = getNearbyGlobalPlaces(place);
 
   return (
-    <main className="min-h-screen pb-20">
+    <main className="min-h-screen pb-20 bg-[#070d19] text-white">
       <TideSchemaMarkup
         locationName={placeName}
         countryOrStateName={countryName}
@@ -165,7 +165,8 @@ export default async function TideLocalPage({ params }: Props) {
       />
       <NavBar />
 
-      <section className="relative overflow-hidden bg-gradient-to-b from-slate-900 via-slate-900/90 to-slate-950 pt-10 pb-6 border-b border-white/5">
+      <section className="relative overflow-hidden hero-section pt-10 pb-6 border-b border-white/5">
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-950/70 to-slate-950" />
         <div className="container relative z-10">
 
           {/* Back button */}
@@ -209,17 +210,11 @@ export default async function TideLocalPage({ params }: Props) {
             <p className="mt-1 text-xs opacity-60">
               📍 Lat {place.lat.toFixed(4)}, Lon {place.lon.toFixed(4)}
             </p>
-
-            {tideQuality && (
-              <div className="mt-2">
-                <TideQualityBadge result={tideQuality} />
-              </div>
-            )}
           </div>
         </div>
       </section>
 
-      <div className="container">
+      <div className="container relative z-10">
         <TideTodayCard
           portName={placeName}
           todayStr={today}

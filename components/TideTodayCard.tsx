@@ -175,9 +175,7 @@ export default function TideTodayCard({
   const effNextLow = live?.nextLow ?? nextLow;
   const effLastHigh = live?.lastHigh ?? lastHigh;
 
-  const dateLabel = locale === 'en'
-    ? todayStr.replace(/-/g, '/')
-    : todayStr.split('-').reverse().join('/');
+  const dateLabel = todayStr.split('-').reverse().join('/');
 
   const nextEvent = effIsRising ? effNextHigh : effNextLow;
   const nextEventLabel = effIsRising ? copy.nextHigh : copy.nextLow;

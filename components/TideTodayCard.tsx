@@ -1,13 +1,11 @@
 'use client';
 
-import { Bell } from 'lucide-react';
-import NotificationCTA from '@/components/NotificationCTA';
 import { getCountdownLabel, type TideEvent } from '@/lib/tideUtils';
 
 interface TideTodayCardProps {
   portName: string;
-  stateSlug: string;
-  portSlug: string;
+  stateSlug?: string;
+  portSlug?: string;
   todayStr: string;
   currentHeight: number | null;
   isRising: boolean;
@@ -16,6 +14,10 @@ interface TideTodayCardProps {
   lastHigh: TideEvent | null;
   currentMin: number | null;
   countdownLabel: string | null;
+  /** Caminho relativo para compartilhar (padrão: `/mare/{estado}/{cidade}`). */
+  sharePath?: string;
+  /** Texto da fonte no rodapé (padrão: DHN). */
+  sourceNote?: string;
 }
 
 function timeToMin(hora: string): number {
@@ -40,6 +42,8 @@ export default function TideTodayCard({
   lastHigh,
   currentMin,
   countdownLabel,
+  sharePath,
+  sourceNote = 'Dados oficiais da Marinha (DHN).',
 }: TideTodayCardProps) {
   const dateLabel = todayStr.split('-').reverse().join('/');
   const nextEvent = isRising ? nextHigh : nextLow;
@@ -58,7 +62,9 @@ export default function TideTodayCard({
     return event.hora;
   };
 
-  const shareUrl = `https://mareagora.com.br/mare/${stateSlug}/${portSlug}`;
+  const shareUrl = sharePath
+    ? `https://mareagora.com.br${sharePath}`
+    : `https://mareagora.com.br/mare/${stateSlug}/${portSlug}`;
   const whatsappText = encodeURIComponent(
     `${portName} — maré hoje, ${dateLabel} | MaréAgora\n${shareUrl}`
   );
@@ -130,14 +136,6 @@ export default function TideTodayCard({
         </div>
 
         <div className="mt-4 flex flex-col sm:flex-row gap-2 sm:gap-3">
-          <div className="flex-1 min-w-0 [&>button]:w-full [&>button]:justify-center">
-            <NotificationCTA
-              portSlug={portSlug}
-              variant="compact"
-              label="Avisar quando a maré baixar"
-            />
-          </div>
-
           <a
             href={`https://wa.me/?text=${whatsappText}`}
             target="_blank"
@@ -152,7 +150,7 @@ export default function TideTodayCard({
         </div>
 
         <p className="mt-3 text-[11px] sm:text-sm text-[#7f97b0]">
-          Dados oficiais da Marinha (DHN).
+          {sourceNote}
         </p>
       </div>
     </section>

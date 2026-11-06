@@ -7,7 +7,7 @@ import { getTideForLocation } from '@/lib/tideRouter';
 import { getGlobalPreferences, t, formatHeight, formatHour } from '@/lib/globalPreferences';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { getNextHighAndLow, type TideEvent } from '@/lib/tideUtils';
+import { getNextHighAndLow, tideAtMinute, getCountdownLabel, minutesUntilTide, type TideEvent } from '@/lib/tideUtils';
 import type { MareDia } from '@/lib/mare';
 import rolloutStatus from '@/data/content-rollout-status.json';
 
@@ -21,6 +21,7 @@ import NavBar from '@/components/NavBar';
 const TideWeekCard = dynamic(() => import('@/components/TideWeekCard'), { ssr: false });
 import MonthlyTideTable from '@/components/MonthlyTideTable';
 import SummaryCards from '@/components/SummaryCards';
+import TideTodayCard from '@/components/TideTodayCard';
 import WindWaveCharts from '@/components/WindWaveCharts';
 import ActivityRecommendations from '@/components/ActivityRecommendations';
 import SolunarTable from '@/components/SolunarTable';
@@ -29,7 +30,6 @@ import WavesCard from '@/components/WavesCard';
 const DailyScoreCard = dynamic(() => import('@/components/DailyScoreCard'), { ssr: false });
 import TideSchemaMarkup from '@/components/TideSchemaMarkup';
 import LiveCameraEmbed from '@/components/LiveCameraEmbed';
-import ShareButton from '@/components/ShareButton';
 import { generateTideDescription } from '@/lib/tideDescription';
 import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
@@ -100,9 +100,45 @@ export default async function MareMundoLocalPage({ params }: Props) {
   const utcOffsetMin = place.utcOffsetMin ?? 0;
   const placeDate = new Date(now.getTime() + utcOffsetMin * 60 * 1000);
   const currentMin = placeDate.getUTCHours() * 60 + placeDate.getUTCMinutes();
-  const todayTides = weekDias[0]?.mares ?? [];
+  const todayTides = (weekDias[0]?.mares ?? []) as TideEvent[];
+  const nextDayTides = (weekDias[1]?.mares ?? []) as TideEvent[];
 
-  const { nextHigh, nextLow } = getNextHighAndLow(todayTides as TideEvent[], currentMin);
+  const { nextHigh, nextLow } = getNextHighAndLow(todayTides, currentMin, nextDayTides);
+
+  const currentHeight = todayTides.length ? tideAtMinute(currentMin, todayTides) : null;
+  const highIn = nextHigh ? minutesUntilTide(nextHigh.hora, currentMin) : null;
+  const lowIn = nextLow ? minutesUntilTide(nextLow.hora, currentMin) : null;
+  const isRising = highIn !== null && (lowIn === null || highIn <= lowIn);
+  const nextEvent = isRising ? nextHigh : nextLow;
+  const countdownLabel = nextEvent ? getCountdownLabel(nextEvent.hora, currentMin) : null;
+
+  const toMinutes = (hora: string) => {
+    const [h, m] = hora.split(':').map(Number);
+    return (h || 0) * 60 + (m || 0);
+  };
+
+  // Última preamar já passada hoje; se ainda não houve, busca a de ontem.
+  let lastHigh: TideEvent | null =
+    [...todayTides]
+      .filter((t) => t.tipo === 'high' && toMinutes(t.hora) <= currentMin)
+      .sort((a, b) => toMinutes(a.hora) - toMinutes(b.hora))
+      .pop() ?? null;
+
+  if (!lastHigh) {
+    const ontem = new Date(new Date(`${hoje}T12:00:00Z`).getTime() - 86_400_000)
+      .toISOString()
+      .slice(0, 10);
+    const { dias: ontemDias } = await getTideForLocation(
+      { lat: place.lat, lon: place.lon },
+      ontem,
+      1
+    );
+    lastHigh =
+      [...((ontemDias[0]?.mares ?? []) as TideEvent[])]
+        .filter((t) => t.tipo === 'high')
+        .sort((a, b) => toMinutes(a.hora) - toMinutes(b.hora))
+        .pop() ?? null;
+  }
 
   const nearby = getNearbyGlobalPlaces(place);
 
@@ -122,7 +158,7 @@ export default async function MareMundoLocalPage({ params }: Props) {
       />
       <NavBar />
 
-      <section className="relative overflow-hidden hero-section pt-24 pb-16 border-b border-white/5">
+      <section className="relative overflow-hidden hero-section pt-10 pb-6 border-b border-white/5">
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-950/70 to-slate-950" />
         <div className="container relative z-10">
 
@@ -147,14 +183,14 @@ export default async function MareMundoLocalPage({ params }: Props) {
             </Link>
           </div>
 
-          <div className="flex flex-col gap-3 items-center px-2 text-center pt-14 md:pt-0">
+          <div className="flex flex-col gap-2 items-center px-2 text-center pt-12 md:pt-0">
             <p className="text-xs font-bold uppercase tracking-widest text-blue-400 opacity-80">
               {place.countryName} · Previsão Global
             </p>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold font-syne leading-tight max-w-4xl text-white drop-shadow-md">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold font-syne leading-tight max-w-4xl text-white drop-shadow-md">
               Tábua de Maré {place.name} — {ano}
             </h1>
-            <p className="text-sm sm:text-lg md:text-xl opacity-90 font-medium font-syne hidden sm:block text-white/90">
+            <p className="text-sm sm:text-base md:text-lg opacity-90 font-medium font-syne hidden sm:block text-white/90">
               {place.name} · {place.countryName} · Modelo Harmônico
             </p>
 
@@ -164,33 +200,55 @@ export default async function MareMundoLocalPage({ params }: Props) {
               </div>
             )}
 
-            <div className="mt-4 mb-6">
-              <p className="text-xs opacity-60">
-                📍 Lat {place.lat.toFixed(4)}, Lon {place.lon.toFixed(4)}
-              </p>
-            </div>
-
-            <ShareButton
-              title={`Tábua de Maré ${place.name} ${ano} | MaréAgora`}
-              text={`🌊 Confira a previsão de marés em ${place.name}, ${place.countryName} — MaréAgora`}
-            />
-
-            <div className="mb-20" />
+            <p className="mt-1 text-xs opacity-60">
+              📍 Lat {place.lat.toFixed(4)}, Lon {place.lon.toFixed(4)}
+            </p>
           </div>
         </div>
       </section>
 
       <div className="container">
-        {/* Cards de resumo — idênticos ao BR */}
-        <SummaryCards
-          nextHigh={nextHigh as TideEvent | null}
-          nextLow={nextLow as TideEvent | null}
-          lat={place.lat}
-          lon={place.lon}
-          todayTides={todayTides as TideEvent[]}
+        <TideTodayCard
+          portName={place.name}
+          todayStr={hoje}
+          currentHeight={currentHeight}
+          isRising={isRising}
+          nextHigh={nextHigh}
+          nextLow={nextLow}
+          lastHigh={lastHigh}
+          currentMin={currentMin}
+          countdownLabel={countdownLabel}
+          sharePath={`/mare-mundo/${params.pais}/${params.slug}`}
+          sourceNote={
+            isEstimate
+              ? 'Estimativa por modelo harmônico global.'
+              : 'Dados da estação de referência mais próxima.'
+          }
         />
 
-        <div className="mt-12 flex flex-col lg:grid lg:grid-cols-[1fr_350px] gap-8">
+        <div id="tabela-mensal" className="mt-6">
+          <MonthlyTideTable
+            eventos={yearDias}
+            portName={place.name}
+            lat={place.lat}
+            lon={place.lon}
+            initialDateStr={hoje}
+          />
+        </div>
+
+        <div className="mt-6">
+          <SummaryCards
+            nextHigh={nextHigh as TideEvent | null}
+            nextLow={nextLow as TideEvent | null}
+            lat={place.lat}
+            lon={place.lon}
+            todayTides={todayTides}
+            currentMin={currentMin}
+            showMainCards={false}
+          />
+        </div>
+
+        <div className="mt-8 flex flex-col lg:grid lg:grid-cols-[1fr_350px] gap-8">
           <div className="flex flex-col gap-8">
 
             {/* Gráfico semanal */}
@@ -200,14 +258,6 @@ export default async function MareMundoLocalPage({ params }: Props) {
             <div>
               <WeatherRadarCard lat={place.lat} lon={place.lon} />
             </div>
-
-            {/* Tábua mensal de 30 dias */}
-            <MonthlyTideTable
-              eventos={yearDias}
-              portName={place.name}
-              lat={place.lat}
-              lon={place.lon}
-            />
 
             {place.cameras && place.cameras.filter((c) => c.active !== false).length > 0 && (
               <div className="my-8 flex flex-col gap-6">

@@ -14,7 +14,7 @@ interface SummaryCardsProps {
    * Quando `false`, renderiza apenas a linha de coeficiente/lua (sem os 3
    * cards principais). Usado no template de cidade/porto, onde o card
    * "maré hoje" já mostra as próximas marés. Padrão `true` mantém o
-   * comportamento das demais rotas (`/tide`, `/mare-mundo`).
+   * comportamento das demais rotas (ex.: `/tide`).
    */
   showMainCards?: boolean;
 }

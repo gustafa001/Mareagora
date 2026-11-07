@@ -32,7 +32,12 @@ export async function generateStaticParams() {
 
 // Linha com as marés do dia (BRT) para abrir a meta description: dado concreto
 // aumenta o CTR frente ao texto genérico dos concorrentes. Sem eventos -> null.
-function buildTideSnippet(port: Parameters<typeof getEventosDia>[0], seoName: string, uf: string): string | null {
+function buildTideSnippet(
+  port: Parameters<typeof getEventosDia>[0],
+  seoName: string,
+  uf: string,
+  highlight?: 'piscinas-naturais' | 'amplitude'
+): string | null {
   try {
     const hoje = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
     const eventos = getEventosDia(port, hoje);
@@ -40,8 +45,23 @@ function buildTideSnippet(port: Parameters<typeof getEventosDia>[0], seoName: st
     const fmt = (e: { hora: string; altura_m: number }) => `${e.hora} (${e.altura_m.toFixed(1).replace('.', ',')} m)`;
     const altas = eventos.filter(e => e.tipo === 'high').map(fmt);
     const baixas = eventos.filter(e => e.tipo === 'low').map(fmt);
-    if (altas.length === 0 && baixas.length === 0) return null;
     const dd = `${hoje.slice(8, 10)}/${hoje.slice(5, 7)}`;
+
+    if (highlight === 'piscinas-naturais') {
+      if (baixas.length === 0) return null;
+      return `Maceió (${uf}) em ${dd}: baixamar hoje às ${baixas.join(' e ')} (piscinas naturais da Pajuçara).`;
+    }
+
+    if (highlight === 'amplitude') {
+      const alturas = eventos.map(e => e.altura_m);
+      if (alturas.length < 2) return null;
+      const min = Math.min(...alturas);
+      const max = Math.max(...alturas);
+      const amp = max - min;
+      return `São Luís (${uf}) em ${dd}: amplitude de ${amp.toFixed(2).replace('.', ',')} m (de ${min.toFixed(2).replace('.', ',')} m a ${max.toFixed(2).replace('.', ',')} m).`;
+    }
+
+    if (altas.length === 0 && baixas.length === 0) return null;
     const partes: string[] = [];
     if (altas.length) partes.push(`maré alta ${altas.join(', ')}`);
     if (baixas.length) partes.push(`baixa ${baixas.join(', ')}`);
@@ -110,7 +130,7 @@ export async function generateMetadata({ params }: { params: { slug: string, cid
   }
 
   const baseDescription = config?.description ?? defaultDesc;
-  const tideSnippet = buildTideSnippet(port, seoName, port.state);
+  const tideSnippet = buildTideSnippet(port, seoName, port.state, config?.highlight);
   const description = tideSnippet
     ? cutAtWord(`${tideSnippet} ${baseDescription}`, 200)
     : baseDescription;

@@ -359,8 +359,10 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     portoVizinhos: ['porto-de-itaqui', 'porto-de-tutoia', 'alcantara', 'barreirinhas'],
     faqs: [
       { q: 'Qual o melhor horário de maré em São Luís?', a: 'As melhores janelas são nas 2 horas ao redor da maré alta e da maré baixa. No Golfão Maranhense, a amplitude é grande e o mar avança muito entre a vazante e a enchente.' },
-      { q: 'Por que a maré de São Luís muda tanto de um dia para o outro?', a: 'São Luís está no Golfão Maranhense, onde a maré segue o dia lunar (~24h50min) e atrasa cerca de 50 minutos por dia, com variações que chegam a mais de 7 metros nas luas cheia e nova.' },
-      { q: 'A maré de São Luís é forte para banho e pesca?', a: 'Sim, é uma das mais intensas do Brasil. Na maré baixa as praias ficam com extensa faixa de areia; na alta, o banho é melhor em horários de maré média. A pesca rende na virada da maré.' },
+      { q: 'Por que o mar recua tanto em São Luís?', a: 'São Luís está situada no Golfão Maranhense, uma baía com afunilamento geográfico que amplifica naturalmente a maré semidiurna. Nas marés de sizígia (luas cheia e nova), a amplitude vertical pode ultrapassar 7 metros, fazendo a água recuar centenas de metros e expondo uma vasta faixa de areia.' },
+      { q: 'Por que a maré de São Luís muda tanto de um dia para o outro?', a: 'A maré em São Luís segue o ciclo lunar (~24h50min), o que faz os horários de preamar e baixamar avançarem cerca de 50 minutos a cada dia, variando a amplitude conforme a fase da lua.' },
+      { q: 'Posso tomar banho de mar em São Marcos na maré alta?', a: 'As condições de correnteza, arrebentação e ressaca na Praia de São Marcos variam de acordo com a maré e o vento. Recomenda-se atenção redobrada aos canais de maré, respeitar a sinalização de bandeiras na orla e seguir sempre as orientações dos guarda-vidas locais.' },
+      { q: 'A maré de São Luís é forte para pesca?', a: 'Sim. A grande movimentação de água na enchente e vazante gera correntes fortes no Golfão. A virada da maré costuma ser o período mais produtivo para a pesca costeira.' },
     ],
   },
 
@@ -376,7 +378,8 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     category: 'turismo',
     portoVizinhos: ['maragogi', 'porto-de-suape', 'terminal-maritimo-inacio-barbosa'],
     faqs: [
-      { q: 'Qual o melhor horário de maré para as piscinas naturais da Pajuçara?', a: 'As piscinas naturais da Pajuçara se formam sobre recifes e costumam ficar melhores na maré baixa, com a água mais calma e transparente. Confira o horário da baixamar na tabela acima e planeje o passeio para esse período.' },
+      { q: 'Qual o melhor horário para ir às piscinas naturais da Pajuçara?', a: 'O melhor momento costuma ser perto da baixamar, quando o nível do mar recua e a bancada de recifes fica mais exposta e protegida. Acompanhe a tábua de marés do dia e confirme sempre as condições de embarque com os jangadeiros locais na praia da Pajuçara antes de sair.' },
+      { q: 'A maré da Ponta Verde é igual à de Maragogi?', a: 'Ambas seguem a mesma estação de referência oficial do Porto de Maceió (DHN), compartilhando o padrão de maré de Alagoas. Contudo, devido à distância de cerca de 130 km pela costa, os horários exatos de preamar e baixamar podem variar alguns minutos entre as duas praias.' },
       { q: 'De onde vêm os horários de maré de Maceió?', a: 'Os horários seguem a estação do Porto de Maceió, publicada pela Marinha do Brasil (CHM), e valem como referência para as praias da cidade, como Pajuçara, Ponta Verde e Jatiúca.' },
       { q: 'O que é coeficiente de maré?', a: 'Número de 20 a 120 que indica a intensidade da maré. Acima de 70 são marés vivas, com grande variação de nível; abaixo de 45 são marés mortas, com pouca variação.' },
       { q: 'Os dados servem para navegação?', a: 'Não. Os dados do MaréAgora são referência para atividades recreativas. Para navegação oficial, consulte sempre as tábuas publicadas pela Marinha do Brasil (CHM).' },

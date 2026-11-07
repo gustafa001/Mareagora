@@ -93,28 +93,19 @@ export async function generateMetadata({ params }: { params: { slug: string, cid
   const base = `Tábua de Maré ${seoName} ${ano}`;
   const SEP = ' — ';
 
-  // Sempre respeita 60 chars. Antes, quando o sufixo não cabia inteiro, ele era
-  // descartado por completo — o que fazia ~22 das 26 páginas com SEO customizado
-  // caírem de volta no título genérico "Tábua de Maré {nome} {ano}", sem nenhum
-  // diferencial pro clique. Agora truncamos o sufixo no limite de palavra em vez
-  // de removê-lo, então toda página mantém alguma diferenciação no título.
+  // Seleciona o melhor sufixo completo que cabe no limite de 60 caracteres,
+  // sem truncar palavras no meio (evita títulos cortados como "Maré Alta e").
+  // Se o sufixo configurado/padrão não couber, testa a primeira parte do sufixo
+  // (antes do travessão) e alternativas progressivamente mais curtas ('Horários de Hoje', 'Maré Hoje').
   let title = base;
   if (base.length > 60) {
     title = base.slice(0, 60).trimEnd();
-  } else if (suffix) {
-    const fullTitle = `${base}${SEP}${suffix}`;
-    if (fullTitle.length <= 60) {
-      title = fullTitle;
-    } else {
-      const budget = 60 - base.length - SEP.length;
-      if (budget >= 8) {
-        let truncSuffix = suffix.slice(0, budget);
-        const lastSpace = truncSuffix.lastIndexOf(' ');
-        if (lastSpace > 0) truncSuffix = truncSuffix.slice(0, lastSpace);
-        truncSuffix = truncSuffix.trim().replace(/[,;:—-]+$/, '').trim();
-        if (truncSuffix) title = `${base}${SEP}${truncSuffix}`;
-      }
-    }
+  } else {
+    const candidates = Array.from(new Set(
+      [suffix, suffix.split(SEP)[0].trim(), 'Horários de Hoje', 'Maré Hoje'].filter(Boolean)
+    ));
+    const fit = candidates.find(s => `${base}${SEP}${s}`.length <= 60);
+    if (fit) title = `${base}${SEP}${fit}`;
   }
 
   const baseDescription = config?.description ?? defaultDesc;

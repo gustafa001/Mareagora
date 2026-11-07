@@ -118,7 +118,12 @@ export function getEventosAno(port: Port, ano: number): MareDia[] {
   }
 }
 
-export function getMetadata(port: Port): { nivel_medio_m?: number } | null {
+export function getMetadata(port: Port): {
+  station_id?: string;
+  station_name?: string;
+  nivel_medio_m?: number;
+  imported_at?: string;
+} | null {
   try {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const raw = require(`../data/mare/${port.dhnId}.json`);

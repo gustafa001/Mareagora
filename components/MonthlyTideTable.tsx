@@ -251,9 +251,29 @@ export default function MonthlyTideTable({ eventos, portName, lat, lon, state = 
         }}>
           <span style={{ fontSize: "0.9rem" }}>ℹ️</span>
           <p style={{ margin: 0, fontSize: "0.75rem", color: "#94a3b8", fontWeight: 500 }}>
-            {s.referenceNote(portName, referencePort.name, referencePort.distanceKm)}{" "}
-            <a href={`/mare/${getStateSlug(PORTS.find(p => p.slug === referencePort.slug)?.state || "sp")}/${referencePort.slug}`} style={{ color: "#60a5fa", textDecoration: "underline", textUnderlineOffset: "3px" }}>{referencePort.name}</a>.
-            <span className="hidden sm:inline"> {s.referenceDelta}</span>
+            {lang === 'en' ? (
+              <>
+                Data from the reference station of{' '}
+                <a
+                  href={`/mare/${getStateSlug(PORTS.find(p => p.slug === referencePort.slug)?.state || "sp")}/${referencePort.slug}`}
+                  style={{ color: "#60a5fa", textDecoration: "underline", textUnderlineOffset: "3px" }}
+                >
+                  {referencePort.name}
+                </a>{' '}
+                (~{referencePort.distanceKm} km); there may be small differences in time and height compared to the exact beach location.
+              </>
+            ) : (
+              <>
+                Dados da estação de referência de{' '}
+                <a
+                  href={`/mare/${getStateSlug(PORTS.find(p => p.slug === referencePort.slug)?.state || "sp")}/${referencePort.slug}`}
+                  style={{ color: "#60a5fa", textDecoration: "underline", textUnderlineOffset: "3px" }}
+                >
+                  {referencePort.name}
+                </a>{' '}
+                (~{referencePort.distanceKm} km); pode haver pequena diferença de horário e altura em relação ao ponto exato da praia.
+              </>
+            )}
           </p>
         </div>
       )}

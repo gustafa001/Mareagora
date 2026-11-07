@@ -12,6 +12,7 @@ interface SchemaProps {
   faq?: { question: string; answer: string }[];
   datePublished?: string;
   dateModified?: string;
+  referencePortName?: string;
 }
 
 export default function SchemaGenerator({
@@ -24,8 +25,9 @@ export default function SchemaGenerator({
   faq,
   datePublished,
   dateModified,
+  referencePortName,
 }: SchemaProps) {
-  const schemas: any[] = [];
+  const schemas: Record<string, unknown>[] = [];
   const base = 'https://mareagora.com.br';
   const logo = `${base}/icons/icon-512x512.png`;
   const defaultImage = image || `${base}/opengraph-image.png`;
@@ -114,14 +116,26 @@ export default function SchemaGenerator({
     });
 
     // 5. Dataset (Official Tide Data)
+    const datasetDescription = referencePortName
+      ? `Horários e alturas de marés oficiais em ${port.cityName}, ${port.state}. Dados oficiais da Marinha do Brasil (DHN) referenciados na estação de ${referencePortName}.`
+      : `Horários e alturas de marés oficiais em ${port.cityName}, ${port.state}. Dados oficiais da Marinha do Brasil (DHN).`;
+
     schemas.push({
       '@type': 'Dataset',
       '@id': `${url}#dataset`,
       name: `Tábua de Marés ${port.cityName} ${new Date().getFullYear()}`,
-      description: `Horários e alturas de marés oficiais em ${port.cityName}, ${port.state}. Dados da Marinha do Brasil.`,
+      description: datasetDescription,
       url,
       creator: { '@id': `${base}/#organization` },
+      provider: {
+        '@type': 'GovernmentOrganization',
+        name: 'Marinha do Brasil - Centro de Hidrografia da Marinha (CHM/DHN)',
+        url: 'https://www.marinha.mil.br/chm/',
+      },
       license: 'https://www.gov.br/marinha/pt-br',
+      temporalCoverage: `${new Date().getFullYear()}`,
+      ...(dateModified ? { dateModified } : {}),
+      ...(referencePortName ? { isBasedOn: `Estação de referência: ${referencePortName}` } : {}),
     });
 
     // 6. BreadcrumbList

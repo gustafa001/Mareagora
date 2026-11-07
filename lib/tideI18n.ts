@@ -91,8 +91,8 @@ const EN = {
   pdfError: 'Could not generate the PDF right now. Try again.',
   imageError: 'Could not generate the image right now. Try again.',
   sourceFooter: (port: string) => `Harmonic model • Times in local time • ☀ computed for ${port}`,
-  referenceNote: (portName: string, refName: string, distanceKm: number) => `Tides for ${portName} are referenced by ${refName} (~${distanceKm} km).`,
-  referenceDelta: 'Time differences are under 2 minutes.',
+  referenceNote: (portName: string, refName: string, distanceKm: number) => `Data from the reference station of ${refName} (~${distanceKm} km); there may be small differences in time and height compared to the exact beach location.`,
+  referenceDelta: 'There may be small differences in time and height compared to the exact beach location.',
   // WeatherRadarCard
   rainRadar: 'Rain Radar (Live)',
   openFullscreen: 'Open radar fullscreen',
@@ -361,8 +361,8 @@ const PT: Record<keyof typeof EN, unknown> = {
   pdfError: 'Não foi possível gerar o PDF agora. Tente novamente.',
   imageError: 'Não foi possível gerar a imagem agora. Tente novamente.',
   sourceFooter: (port: string) => `Fonte: Marinha do Brasil (CHM) · Horários em UTC-3 · ☀ calculado para ${port}`,
-  referenceNote: (portName: string, refName: string, distanceKm: number) => `Os dados de ${portName} são referenciados pelo ${refName} (~${distanceKm} km).`,
-  referenceDelta: 'As diferenças de horário são inferiores a 2 minutos.',
+  referenceNote: (portName: string, refName: string, distanceKm: number) => `Dados da estação de referência de ${refName} (~${distanceKm} km); pode haver pequena diferença de horário e altura em relação ao ponto exato da praia.`,
+  referenceDelta: 'Pode haver pequena diferença de horário e altura em relação ao ponto exato da praia.',
   // WeatherRadarCard
   rainRadar: 'Radar de Chuva (Tempo Real)',
   openFullscreen: 'Abrir radar em tela cheia',

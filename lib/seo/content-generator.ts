@@ -1,6 +1,6 @@
 import { Port } from '@/lib/ports';
-import { getEventosDia, MareDia, MareEvento } from '@/lib/mare';
-import { getMoonAge, getMoonPhase } from '@/lib/tideUtils';
+import { getEventosDia, MareEvento } from '@/lib/mare';
+import { getMoonPhase } from '@/lib/tideUtils';
 import { SeaConditionsSummary } from '@/lib/seo/sea-conditions';
 import {
   getPeriodosSolunares,
@@ -44,9 +44,6 @@ export function generateSEOContent(port: Port, date: string, sea?: SeaConditions
   const amplitude = getAmplitude(eventos);
   const isViva = amplitude > 2.0; // Simplification
 
-  // Horário atual no fuso de São Paulo, para saber quais marés já passaram.
-  const nowMinutes = getNowMinutesBR(date);
-
   // Mesmo motor solunar do SolunarTable (client-side), calculado aqui no
   // servidor para o "dia atual" — assim a nota em ★ sai no HTML/FAQ (SSR),
   // não só depois da hidratação. Usa offset -180 (BRT) por padrão, igual
@@ -56,7 +53,7 @@ export function generateSEOContent(port: Port, date: string, sea?: SeaConditions
   const idadeLua = getIdadeLua(inicioDia);
   const solunar = getAvaliacaoSolunar(idadeLua, periodos, eventos);
 
-  const text = generateSpintaxText(port, date, eventos, season, moonPhaseName, amplitude, isViva, nowMinutes, sea, solunar, fishing);
+  const text = generateSpintaxText(port, date, eventos, season, moonPhaseName, amplitude, isViva, sea, solunar, fishing);
   const faq = generateFAQ(port, date, eventos, moonPhaseName, isViva, sea, solunar, fishing);
 
   return { text, faq };
@@ -81,42 +78,6 @@ function getAmplitude(eventos: MareEvento[]) {
   return max - min;
 }
 
-/**
- * Minutos desde 00:00 no horário de São Paulo, para a data informada.
- * Se `date` não for hoje (ex: página gerada estaticamente com antecedência),
- * cai para 0 e o texto usa a primeira maré do dia normalmente.
- */
-function getNowMinutesBR(date: string): number {
-  const todayBR = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
-  if (todayBR !== date) return -1; // data não é "hoje": não filtra por horário atual
-
-  const timeStr = new Date().toLocaleTimeString('pt-BR', {
-    hour: '2-digit',
-    minute: '2-digit',
-    timeZone: 'America/Sao_Paulo',
-  });
-  const [h, m] = timeStr.split(':').map(Number);
-  return (h || 0) * 60 + (m || 0);
-}
-
-function timeToMin(hora: string): number {
-  const [h, m] = hora.split(':').map(Number);
-  return (h || 0) * 60 + (m || 0);
-}
-
-/**
- * Retorna a próxima maré (do tipo pedido) a partir do horário atual.
- * Se todas já passaram (ou não sabemos o horário atual), cai para a primeira do dia.
- */
-function proximoEvento(eventos: MareEvento[], nowMinutes: number): MareEvento | undefined {
-  if (nowMinutes >= 0) {
-    const proximo = eventos.find(e => timeToMin(e.hora) > nowMinutes);
-    if (proximo) return proximo;
-  }
-  return eventos[0];
-}
-
-// CHANGED: novo parâmetro `sea` opcional no final da assinatura.
 function generateSpintaxText(
   port: Port,
   date: string,
@@ -125,7 +86,6 @@ function generateSpintaxText(
   moonPhase: string,
   amplitude: number,
   isViva: boolean,
-  nowMinutes: number,
   sea?: SeaConditionsSummary | null,
   solunar?: AvaliacaoSolunar,
   fishing?: FishingSEO | null
@@ -135,20 +95,22 @@ function generateSpintaxText(
   const highTides = eventos.filter(e => e.tipo === 'high');
   const lowTides = eventos.filter(e => e.tipo === 'low');
 
-  const nextHigh = proximoEvento(highTides, nowMinutes);
-  const nextLow = proximoEvento(lowTides, nowMinutes);
+  const highStr = highTides.map(t => `${t.hora} (${t.altura_m.toFixed(2).replace('.', ',')}m)`).join(' e ');
+  const lowStr = lowTides.map(t => `${t.hora} (${t.altura_m.toFixed(2).replace('.', ',')}m)`).join(' e ');
 
-  const highInfo = nextHigh ? `A próxima maré alta ocorre às ${nextHigh.hora} com ${nextHigh.altura_m}m.` : '';
-  const lowInfo = nextLow ? `Já a próxima maré baixa é registrada às ${nextLow.hora} atingindo ${nextLow.altura_m}m.` : '';
+  const highInfo = highTides.length > 0
+    ? `As marés altas do dia estão previstas para ${highStr}.`
+    : '';
+  const lowInfo = lowTides.length > 0
+    ? `Já as marés baixas ocorrem às ${lowStr}.`
+    : '';
 
-  // CHANGED: frase de ondas/vento agora usa números reais quando `sea`
-  // está disponível. Mantém a frase genérica antiga como fallback.
+  // Frase de ondas/vento usa números reais quando `sea` está disponível.
   const seaInfo = sea
     ? `As ondas hoje variam entre ${sea.waveMin}m e ${sea.waveMax}m, com período de ${sea.wavePeriod}s vindo de ${sea.waveDirectionCardinal}. O vento sopra de ${sea.windDirectionCardinal} entre ${sea.windMin} e ${sea.windMax} km/h, com rajadas de até ${sea.windGustMax} km/h.`
     : 'As ondas e os ventos na região costeira podem sofrer leves alterações dependendo do horário.';
 
-  // NOVO: nota solunar real (mesmo motor do SolunarTable) exposta no HTML/SSR,
-  // não só no client depois da hidratação.
+  // Nota solunar real (mesmo motor do SolunarTable) exposta no HTML/SSR
   const solunarInfo = solunar
     ? ` A qualidade solunar de hoje para pesca é ${solunar.estrelas}/5${solunar.destaque ? ', com um período maior coincidindo com a maré cheia — janela especialmente favorável' : ''}.`
     : '';
@@ -157,12 +119,14 @@ function generateSpintaxText(
     ? ` A atividade de pesca hoje está avaliada em ${fishing.score}/10 (${fishing.label}).`
     : '';
 
+  const moonText = moonPhase.toLowerCase().startsWith('lua ') ? moonPhase : `lua ${moonPhase}`;
+
   let baseText = '';
 
   if (isCommercial) {
-    baseText = `As condições de maré em ${port.name}, ${port.state} para a data atual apresentam uma amplitude de ${amplitude.toFixed(2)}m sob a influência da lua ${moonPhase}. ${highInfo} ${lowInfo} Este cenário de ${season} é característico da região, ${isViva ? 'indicando marés vivas (sizígia) que exigem atenção nas manobras portuárias.' : 'caracterizando marés de quadratura, com variações mais suaves no calado dinâmico.'} ${seaInfo}${solunarInfo}${fishingInfo}`;
+    baseText = `As condições de maré em ${port.name}, ${port.state} para a data atual apresentam uma amplitude de ${amplitude.toFixed(2)}m sob a influência da ${moonText}. ${highInfo} ${lowInfo} Este cenário de ${season} é característico da região, ${isViva ? 'indicando marés vivas (sizígia) que exigem atenção nas manobras portuárias.' : 'caracterizando marés de quadratura, com variações mais suaves no calado dinâmico.'} ${seaInfo}${solunarInfo}${fishingInfo}`;
   } else {
-    baseText = `Confira as condições para a praia de ${port.name} (${port.state}) durante ${season === 'Primavera' ? 'a' : 'o'} ${season.toLowerCase()}. Hoje, com a lua ${moonPhase}, a amplitude da maré é de ${amplitude.toFixed(2)} metros. ${highInfo} ${lowInfo} ${isViva ? 'Com a maré viva, o mar recua bastante na baixamar, excelente para pesca na beira e encontrar piscinas naturais.' : 'Sendo maré morta, a variação é menor, proporcionando águas mais estáveis para banhistas e navegação leve.'} ${seaInfo}${solunarInfo}${fishingInfo}`;
+    baseText = `Confira as condições para a praia de ${port.name} (${port.state}) durante ${season === 'Primavera' ? 'a' : 'o'} ${season.toLowerCase()}. Hoje, com a ${moonText}, a amplitude da maré é de ${amplitude.toFixed(2)} metros. ${highInfo} ${lowInfo} ${isViva ? 'Com a maré viva, o mar recua bastante na baixamar, excelente para pesca na beira e encontrar piscinas naturais.' : 'Sendo maré morta, a variação é menor, proporcionando águas mais estáveis para banhistas e navegação leve.'} ${seaInfo}${solunarInfo}${fishingInfo}`;
   }
 
   return baseText;

@@ -22,6 +22,9 @@ async function main() {
   for (const s of stations) {
     try {
       const data = await fetch(`${DHN_BASE}/${ANO}/${s.id}.json`).then(r => r.json());
+      if (data && data.metadata) {
+        data.metadata.imported_at = new Date().toISOString().slice(0, 10);
+      }
       await fs.writeFile(path.join(OUTPUT, `${s.id}.json`), JSON.stringify(data, null, 2));
       console.log(`✅ [${s.id}] ${s.name}`);
       ok++;

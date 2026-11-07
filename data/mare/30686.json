@@ -8,7 +8,8 @@
     "longitude": -34.96,
     "nivel_medio_cm": 127.06,
     "nivel_medio_m": 1.271,
-    "tz_offset": -3
+    "tz_offset": -3,
+    "imported_at": "2026-04-04"
   },
   "events": [
     {

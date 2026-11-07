@@ -220,7 +220,7 @@ export default function TideTodayCard({
           </span>
         </div>
 
-        <p className="mt-2 sm:mt-3 text-sm sm:text-xl leading-snug text-slate-300">
+        <p className="mt-2 sm:mt-3 text-sm sm:text-xl leading-snug text-slate-300 min-h-[1.75rem] sm:min-h-[2.25rem]">
           {copy.now}{' '}
           <strong className="text-xl sm:text-3xl font-extrabold text-white">
             {formatHeight(effCurrentHeight, locale)}

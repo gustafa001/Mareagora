@@ -16,7 +16,7 @@ import { getPortoDescription } from '@/lib/porto-descriptions';
 import SchemaGenerator from '@/components/seo/SchemaGenerator';
 import { generateSEOContent, getSolunarPeriodos } from '@/lib/seo/content-generator';
 import { getSeaConditionsSummary } from '@/lib/seo/sea-conditions';
-import { getEventosDia } from '@/lib/mare';
+import { getEventosDia, getMetadata } from '@/lib/mare';
 import { calcFishingScore } from '@/lib/fishingScore';
 import SeoOverviewTicker from '@/components/SeoOverviewTicker';
 
@@ -216,6 +216,11 @@ export default async function PortPage({ params }: { params: { slug: string, cid
 
   const { text: seoText, faq: seoFaq } = generateSEOContent(port, dataHoje, seaData?.summary ?? null, fishing);
 
+  const portMeta = getMetadata(port);
+  const rawImportedAt = portMeta?.imported_at; // data de importação da tábua oficial (ex: "2026-04-04")
+  const referencePort = port.referencePortSlug ? getPortBySlug(port.referencePortSlug) : null;
+  const referencePortName = referencePort ? (referencePort.cityName || referencePort.name) : undefined;
+
   return (
     <>
       <SchemaGenerator 
@@ -225,6 +230,8 @@ export default async function PortPage({ params }: { params: { slug: string, cid
         title={`Tábua de Maré ${seoName} ${ano}`}
         description={`Horários e alturas das marés em ${seoName} (${port.state}) para ${ano}.`}
         faq={seoFaq}
+        dateModified={rawImportedAt}
+        referencePortName={referencePortName}
       />
       
       {/* Resumo Gerado (AI Overview Target) — exibido como slider, texto completo preservado no HTML */}

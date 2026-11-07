@@ -73,7 +73,7 @@ function getRainStatus(precipNext6h: number[], probNext6h: number[]): RainStatus
 }
 
 function getSeaTempStatus(temp: number | null): SeaTemp {
-  if (temp === null) return { temp: null, icon: '🌊', label: 'Carregando...', color: 'text-slate-400' };
+  if (temp === null) return { temp: null, icon: '🌊', label: 'Indisponível no momento', color: 'text-slate-500' };
   if (temp < 15) return { temp, icon: '🥶', label: 'Muito fria — não recomendada para banho', color: 'text-blue-300' };
   if (temp < 18) return { temp, icon: '❄️', label: 'Fria — adequada para surfistas com roupa', color: 'text-cyan-400' };
   if (temp < 22) return { temp, icon: '🌊', label: 'Agradável para esportes aquáticos', color: 'text-sky-400' };
@@ -83,8 +83,9 @@ function getSeaTempStatus(temp: number | null): SeaTemp {
 
 function getUvStatus(value: number | null): UvStatus {
   if (value === null) {
-    return { value: null, level: 'Carregando...', icon: '☀️', color: 'text-slate-400', bg: 'bg-white/[0.03] border-white/5', advice: '' };
+    return { value: null, level: 'Indisponível', icon: '☀️', color: 'text-slate-500', bg: 'bg-white/[0.03] border-white/5', advice: '' };
   }
+  // Escala OMS: 0-2 Baixo, 3-5 Moderado, 6-7 Alto, 8-10 Muito Alto, 11+ Extremo
   if (value < 3) {
     return {
       value, level: 'Baixo', icon: '🟢', color: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/30',
@@ -119,37 +120,50 @@ export default function WeatherRadarCard({ lat, lon }: Props) {
   const iframeContainerRef = useRef<HTMLDivElement>(null);
   const [rainStatus, setRainStatus] = useState<RainStatus | null>(null);
   const [seaTemp, setSeaTemp] = useState<SeaTemp>({ temp: null, icon: '🌊', label: 'Carregando...', color: 'text-slate-400' });
-  const [uvStatus, setUvStatus] = useState<UvStatus>(getUvStatus(null));
+  const [uvStatus, setUvStatus] = useState<UvStatus>({ value: null, level: 'Carregando...', icon: '☀️', color: 'text-slate-400', bg: 'bg-white/[0.03] border-white/5', advice: '' });
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const windyUrl = `https://embed.windy.com/embed2.html?lat=${lat}&lon=${lon}&zoom=8&level=surface&overlay=radar&product=radar&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1`;
 
-  // Fetch precipitation + SST
+  // Fetch precipitation + SST + UV em tempo real no cliente
   useEffect(() => {
-    const tz = 'auto';
+    // Usamos America/Sao_Paulo para garantir correspondência horária exata no Brasil
+    const tz = 'America%2FSao_Paulo';
     const weatherUrl =
       `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
-      `&hourly=precipitation,precipitation_probability,uv_index&forecast_days=1&timezone=${tz}`;
+      `&current=uv_index&hourly=precipitation,precipitation_probability,uv_index&forecast_days=1&timezone=${tz}`;
     const marineUrl =
       `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}` +
-      `&hourly=sea_surface_temperature&forecast_days=1&timezone=${tz}`;
+      `&current=sea_surface_temperature&hourly=sea_surface_temperature&forecast_days=1&timezone=${tz}`;
 
     Promise.all([
       fetch(weatherUrl).then(r => r.json()).catch(() => null),
       fetch(marineUrl).then(r => r.json()).catch(() => null),
     ]).then(([weatherData, marineData]) => {
-      // Rain: next 6 hours from now
-      const nowH = new Date().getHours();
+      // Hora local atual no fuso de Brasília
+      const nowH = parseInt(
+        new Intl.DateTimeFormat('pt-BR', { hour: 'numeric', hour12: false, timeZone: 'America/Sao_Paulo' }).format(new Date()),
+        10
+      );
+
+      // Rain: próximas 6 horas a partir de agora
       const precip: number[] = weatherData?.hourly?.precipitation?.slice(nowH, nowH + 6) ?? [];
       const prob: number[] = weatherData?.hourly?.precipitation_probability?.slice(nowH, nowH + 6) ?? [];
       setRainStatus(getRainStatus(precip, prob));
 
-      // SST: current hour
-      const sst: number | null = marineData?.hourly?.sea_surface_temperature?.[nowH] ?? null;
+      // SST: preferência para current.sea_surface_temperature com fallback para hourly da hora local
+      const sst: number | null =
+        (typeof marineData?.current?.sea_surface_temperature === 'number'
+          ? marineData.current.sea_surface_temperature
+          : (marineData?.hourly?.sea_surface_temperature?.[nowH] ?? null));
       setSeaTemp(getSeaTempStatus(sst));
 
-      // UV: current hour
-      const uv: number | null = weatherData?.hourly?.uv_index?.[nowH] ?? null;
+      // UV: current.uv_index reflete a medição em tempo real que considera nuvens.
+      // Fallback para hourly.uv_index[nowH] apenas se current não vier.
+      const uv: number | null =
+        (typeof weatherData?.current?.uv_index === 'number'
+          ? weatherData.current.uv_index
+          : (weatherData?.hourly?.uv_index?.[nowH] ?? null));
       setUvStatus(getUvStatus(uv));
     });
   }, [lat, lon]);

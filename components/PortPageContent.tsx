@@ -149,19 +149,23 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
   const nextLow = tideNow?.nextLow ?? null;
 
   // Última preamar que já passou: prioriza hoje; se ainda não houve nenhuma
-  // (ex.: madrugada antes da primeira alta), usa a última de ontem.
+  // e já estamos no cliente (currentMin !== null), usa a última de ontem.
+  // No SSR (currentMin === null) retorna null para evitar mostrar dado de ontem
+  // sob a data de hoje — o cliente recalcula corretamente após a hidratação.
   const lastHighToday = currentMin !== null
     ? [...todayTides]
         .filter(t => t.tipo === 'high' && timeToMinutes(t.hora) <= currentMin)
         .sort((a, b) => timeToMinutes(a.hora) - timeToMinutes(b.hora))
         .pop() ?? null
     : null;
-  const lastHigh = lastHighToday
-    ?? [...getEventosDia(port, addDays(todayStr, -1))]
-        .filter(t => t.tipo === 'high')
-        .sort((a, b) => timeToMinutes(a.hora) - timeToMinutes(b.hora))
-        .pop()
-    ?? null;
+  const lastHigh = lastHighToday !== null
+    ? lastHighToday
+    : (currentMin !== null // só no cliente, nunca no SSR
+        ? ([...getEventosDia(port, addDays(todayStr, -1))]
+              .filter(t => t.tipo === 'high')
+              .sort((a, b) => timeToMinutes(a.hora) - timeToMinutes(b.hora))
+              .pop() ?? null)
+        : null);
 
   const tideQuality = classifyToday(todayTides, currentMin);
 

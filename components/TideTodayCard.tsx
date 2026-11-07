@@ -240,10 +240,10 @@ export default function TideTodayCard({
             <div className="font-mono text-[8px] sm:text-[10px] uppercase tracking-[0.08em] text-[#7f9ab7] whitespace-nowrap overflow-hidden text-ellipsis">
               {copy.passed}
             </div>
-            <div className="mt-1 text-xl sm:text-3xl font-extrabold tabular-nums text-[#6f87a1]">
+            <div className="mt-1 min-h-[1.75rem] sm:min-h-[2.5rem] text-xl sm:text-3xl font-extrabold tabular-nums text-[#6f87a1]">
               {effLastHigh?.hora ?? '--:--'}
             </div>
-            <div className="mt-1 text-[10px] sm:text-sm font-semibold text-[#5c748c]">
+            <div className="mt-1 min-h-[1rem] sm:min-h-[1.25rem] text-[10px] sm:text-sm font-semibold text-[#5c748c]">
               {formatHeight(effLastHigh?.altura_m, locale)}
             </div>
           </div>

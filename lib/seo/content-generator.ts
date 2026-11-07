@@ -1,6 +1,7 @@
 import { Port } from '@/lib/ports';
 import { getEventosDia, MareEvento } from '@/lib/mare';
 import { getMoonPhase } from '@/lib/tideUtils';
+import { calcCoef } from '@/lib/monthlyTideCalc';
 import { SeaConditionsSummary } from '@/lib/seo/sea-conditions';
 import {
   getPeriodosSolunares,
@@ -14,6 +15,18 @@ import {
 export interface SEOContent {
   text: string;
   faq: { question: string; answer: string }[];
+}
+
+/**
+ * Classifica a força da maré em 3 faixas usando o coeficiente real (20–120).
+ * < 45  → morta  (maré de quadratura fraca)
+ * 45–70 → intermediária (sem adjetivo forte)
+ * > 70  → viva   (maré de sizígia)
+ */
+export function classifyTideStrength(coef: number): 'morta' | 'intermediaria' | 'viva' {
+  if (coef < 45) return 'morta';
+  if (coef <= 70) return 'intermediaria';
+  return 'viva';
 }
 
 /** Score de pesca calculado no servidor (ver lib/fishingScore.ts). */
@@ -42,7 +55,8 @@ export function generateSEOContent(port: Port, date: string, sea?: SeaConditions
   const moonPhaseName = getMoonPhase(dateObj).name;
 
   const amplitude = getAmplitude(eventos);
-  const isViva = amplitude > 2.0; // Simplification
+  const coef = calcCoef(eventos) ?? Math.round(amplitude * 55);
+  const tideClass = classifyTideStrength(coef);
 
   // Mesmo motor solunar do SolunarTable (client-side), calculado aqui no
   // servidor para o "dia atual" — assim a nota em ★ sai no HTML/FAQ (SSR),
@@ -53,8 +67,8 @@ export function generateSEOContent(port: Port, date: string, sea?: SeaConditions
   const idadeLua = getIdadeLua(inicioDia);
   const solunar = getAvaliacaoSolunar(idadeLua, periodos, eventos);
 
-  const text = generateSpintaxText(port, date, eventos, season, moonPhaseName, amplitude, isViva, sea, solunar, fishing);
-  const faq = generateFAQ(port, date, eventos, moonPhaseName, isViva, sea, solunar, fishing);
+  const text = generateSpintaxText(port, date, eventos, season, moonPhaseName, amplitude, tideClass, sea, solunar, fishing);
+  const faq = generateFAQ(port, date, eventos, moonPhaseName, tideClass, sea, solunar, fishing);
 
   return { text, faq };
 }
@@ -85,7 +99,7 @@ function generateSpintaxText(
   season: string,
   moonPhase: string,
   amplitude: number,
-  isViva: boolean,
+  tideClass: 'morta' | 'intermediaria' | 'viva',
   sea?: SeaConditionsSummary | null,
   solunar?: AvaliacaoSolunar,
   fishing?: FishingSEO | null
@@ -121,12 +135,27 @@ function generateSpintaxText(
 
   const moonText = moonPhase.toLowerCase().startsWith('lua ') ? moonPhase : `lua ${moonPhase}`;
 
+  // Descrição da força da maré em 3 faixas (coeficiente real, não amplitude estimada)
+  const tideStrengthCommercial =
+    tideClass === 'viva'
+      ? 'indicando marés vivas (sizígia) que exigem atenção nas manobras portuárias.'
+      : tideClass === 'morta'
+        ? 'caracterizando marés de quadratura fraca, com variações suaves no calado dinâmico.'
+        : 'com marés de intensidade intermediária, dentro da faixa habitual para a região.';
+
+  const tideStrengthBeach =
+    tideClass === 'viva'
+      ? 'Com a maré viva, o mar recua bastante na baixamar, excelente para pesca na beira e encontrar piscinas naturais.'
+      : tideClass === 'morta'
+        ? 'Com maré fraca (quadratura), a variação é menor, proporcionando águas mais estáveis para banhistas e navegação leve.'
+        : 'A maré está em intensidade intermediária — variação moderada, condições equilibradas para banho e navegação.';
+
   let baseText = '';
 
   if (isCommercial) {
-    baseText = `As condições de maré em ${port.name}, ${port.state} para a data atual apresentam uma amplitude de ${amplitude.toFixed(2)}m sob a influência da ${moonText}. ${highInfo} ${lowInfo} Este cenário de ${season} é característico da região, ${isViva ? 'indicando marés vivas (sizígia) que exigem atenção nas manobras portuárias.' : 'caracterizando marés de quadratura, com variações mais suaves no calado dinâmico.'} ${seaInfo}${solunarInfo}${fishingInfo}`;
+    baseText = `As condições de maré em ${port.name}, ${port.state} para a data atual apresentam uma amplitude de ${amplitude.toFixed(2)}m sob a influência da ${moonText}. ${highInfo} ${lowInfo} Este cenário de ${season} é característico da região, ${tideStrengthCommercial} ${seaInfo}${solunarInfo}${fishingInfo}`;
   } else {
-    baseText = `Confira as condições para a praia de ${port.name} (${port.state}) durante ${season === 'Primavera' ? 'a' : 'o'} ${season.toLowerCase()}. Hoje, com a ${moonText}, a amplitude da maré é de ${amplitude.toFixed(2)} metros. ${highInfo} ${lowInfo} ${isViva ? 'Com a maré viva, o mar recua bastante na baixamar, excelente para pesca na beira e encontrar piscinas naturais.' : 'Sendo maré morta, a variação é menor, proporcionando águas mais estáveis para banhistas e navegação leve.'} ${seaInfo}${solunarInfo}${fishingInfo}`;
+    baseText = `Confira as condições para a praia de ${port.name} (${port.state}) durante ${season === 'Primavera' ? 'a' : 'o'} ${season.toLowerCase()}. Hoje, com a ${moonText}, a amplitude da maré é de ${amplitude.toFixed(2)} metros. ${highInfo} ${lowInfo} ${tideStrengthBeach} ${seaInfo}${solunarInfo}${fishingInfo}`;
   }
 
   return baseText;
@@ -139,7 +168,7 @@ function generateFAQ(
   date: string,
   eventos: MareEvento[],
   moonPhase: string,
-  isViva: boolean,
+  tideClass: 'morta' | 'intermediaria' | 'viva',
   sea?: SeaConditionsSummary | null,
   solunar?: AvaliacaoSolunar,
   fishing?: FishingSEO | null
@@ -164,26 +193,43 @@ function generateFAQ(
     });
   }
 
-  // Q3
+  // Q3 — 3 faixas: viva / intermediária / morta
   const solunarSufixo = solunar
     ? ` A tábua solunar de hoje marca ${solunar.estrelas}/5 estrelas${solunar.destaque ? ', com um período maior batendo com a maré cheia — vale priorizar essa janela' : ''}.`
     : '';
+
+  const fishingTideNote =
+    tideClass === 'viva'
+      ? 'As marés vivas (sizígia) aumentam a movimentação das correntes e costumam ativar a alimentação dos peixes.'
+      : tideClass === 'morta'
+        ? 'As marés fracas (quadratura) têm pouca correnteza — melhor para pesca de fundo e em locais de maior calado.'
+        : 'Com maré de intensidade intermediária, as correntes são moderadas — condições equilibradas para pesca.';
+
+  const fishingTideGeneric =
+    tideClass === 'viva'
+      ? 'Sim! A maré viva (sizígia) aumenta a movimentação das correntes e dos nutrientes, o que costuma ativar a alimentação dos peixes.'
+      : tideClass === 'morta'
+        ? 'A maré fraca (quadratura) apresenta pouca correnteza. É ideal para pesca de fundo ou em locais de maior calado, embora os peixes possam estar menos ativos.'
+        : 'A maré está em intensidade intermediária. As correntes são moderadas — verifique também os períodos solunares para escolher a melhor janela.';
+
   faq.push({
     question: `A maré está boa para pesca em ${port.cityName}?`,
     answer: fishing
-      ? `Hoje a atividade de pesca está avaliada em ${fishing.score}/10 (${fishing.label}), considerando maré, lua e condições do mar. ${isViva ? 'As marés vivas (sizígia) aumentam a movimentação das correntes e costumam ativar a alimentação dos peixes.' : 'As marés de quadratura (mortas) têm pouca correnteza — melhor para pesca de fundo e em locais de maior calado.'}${solunarSufixo}`
-      : (isViva
-        ? 'Sim! A atual maré viva (sizígia) aumenta a movimentação das correntes e dos nutrientes, o que costuma ativar a alimentação dos peixes.'
-        : 'A maré de quadratura (morta) apresenta pouca correnteza. É ideal para pesca de fundo ou em locais de maior calado, embora os peixes possam estar menos ativos.'
-      ) + solunarSufixo
+      ? `Hoje a atividade de pesca está avaliada em ${fishing.score}/10 (${fishing.label}), considerando maré, lua e condições do mar. ${fishingTideNote}${solunarSufixo}`
+      : fishingTideGeneric + solunarSufixo
   });
 
-  // Q4
+  // Q4 — evita duplicar "lua" quando moonPhase já começa com "Lua "
+  // ex.: "Lua Minguante" → "Como a Lua Minguante influencia..." (não "Como a lua Lua Minguante")
+  const moonPhaseName = moonPhase.match(/^(Lua |Quarto |Gibosa )/i) ? moonPhase : `Lua ${moonPhase}`;
+  // Para o corpo da resposta, usa a fase sem prefixo de artigo
+  const moonPhaseShort = moonPhaseName.replace(/^Lua /i, '');
+
   faq.push({
-    question: `Como a lua ${moonPhase} influencia a maré em ${port.state}?`,
-    answer: (moonPhase === 'Cheia' || moonPhase === 'Nova')
-      ? `A fase ${moonPhase} alinha o Sol e a Terra, criando uma atração gravitacional muito forte. Isso causa as famosas marés vivas (ou de sizígia), resultando em marés muito altas e baixas bem secas.`
-      : `Na fase ${moonPhase}, o sol e a lua formam um ângulo reto. Isso distribui a atração gravitacional e cria marés de quadratura (mortas), com menor variação de nível.`
+    question: `Como a ${moonPhaseName} influencia a maré em ${port.state}?`,
+    answer: (moonPhaseShort === 'Cheia' || moonPhaseShort === 'Nova')
+      ? `A fase ${moonPhaseShort} alinha o Sol e a Terra, criando uma atração gravitacional muito forte. Isso causa as famosas marés vivas (ou de sizígia), resultando em marés muito altas e baixas bem secas.`
+      : `Na fase ${moonPhaseShort}, o sol e a lua formam um ângulo reto. Isso distribui a atração gravitacional e cria marés de quadratura, com menor variação de nível.`
   });
 
   // Q5 (NOVA) — só entra se tivermos dados reais de onda/vento.

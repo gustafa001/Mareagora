@@ -69,9 +69,10 @@ interface PortPageContentProps {
    */
   initialMarineHourly?: MarineHourly | null;
   initialWindHourly?: WindHourly | null;
+  highlight?: React.ReactNode;
 }
 
-export default function PortPageContent({ slug, portDescription, blogPosts, blogStrategy, todayStr, initialMarineHourly, initialWindHourly }: PortPageContentProps) {
+export default function PortPageContent({ slug, portDescription, blogPosts, blogStrategy, todayStr, initialMarineHourly, initialWindHourly, highlight }: PortPageContentProps) {
   const port = getPortBySlug(slug);
   if (!port) notFound();
 
@@ -109,10 +110,10 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
 
   const currentTimeBR = liveNow
     ? liveNow.toLocaleTimeString('pt-BR', {
-        hour: '2-digit',
-        minute: '2-digit',
-        timeZone: 'America/Sao_Paulo',
-      })
+      hour: '2-digit',
+      minute: '2-digit',
+      timeZone: 'America/Sao_Paulo',
+    })
     : '--:--';
 
   const [brH, brM] = currentTimeBR.split(':').map(Number);
@@ -154,18 +155,18 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
   // sob a data de hoje — o cliente recalcula corretamente após a hidratação.
   const lastHighToday = currentMin !== null
     ? [...todayTides]
-        .filter(t => t.tipo === 'high' && timeToMinutes(t.hora) <= currentMin)
-        .sort((a, b) => timeToMinutes(a.hora) - timeToMinutes(b.hora))
-        .pop() ?? null
+      .filter(t => t.tipo === 'high' && timeToMinutes(t.hora) <= currentMin)
+      .sort((a, b) => timeToMinutes(a.hora) - timeToMinutes(b.hora))
+      .pop() ?? null
     : null;
   const lastHigh = lastHighToday !== null
     ? lastHighToday
     : (currentMin !== null // só no cliente, nunca no SSR
-        ? ([...getEventosDia(port, addDays(todayStr, -1))]
-              .filter(t => t.tipo === 'high')
-              .sort((a, b) => timeToMinutes(a.hora) - timeToMinutes(b.hora))
-              .pop() ?? null)
-        : null);
+      ? ([...getEventosDia(port, addDays(todayStr, -1))]
+        .filter(t => t.tipo === 'high')
+        .sort((a, b) => timeToMinutes(a.hora) - timeToMinutes(b.hora))
+        .pop() ?? null)
+      : null);
 
   const tideQuality = classifyToday(todayTides, currentMin);
 
@@ -208,7 +209,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
 
           {/* Botão Voltar */}
           <div className="absolute top-0 left-4 md:left-0 pt-4 md:pt-0">
-            <a 
+            <a
               href={`/estados/${getStateSlug(port.state)}`}
               className="inline-flex items-center gap-2 text-[10px] font-bold text-blue-400 hover:text-white transition-all uppercase tracking-widest bg-white/5 hover:bg-blue-500/20 px-4 py-2 rounded-xl border border-white/10 hover:border-blue-400/50 backdrop-blur-md"
             >
@@ -244,19 +245,26 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
       </section>
 
       <div className="container">
-        <TideTodayCard
-          portName={seoName}
-          stateSlug={getStateSlug(port.state)}
-          portSlug={port.slug}
-          todayStr={todayStr}
-          currentHeight={currentHeight}
-          isRising={isRising}
-          nextHigh={nextHigh}
-          nextLow={nextLow}
-          lastHigh={lastHigh}
-          currentMin={currentMin}
-          countdownLabel={countdownLabel}
-        />
+        {highlight && (
+          <div className="relative z-20 -mt-10 md:-mt-12 mb-4">
+            {highlight}
+          </div>
+        )}
+        <div className={highlight ? "[&>section]:!mt-4" : ""}>
+          <TideTodayCard
+            portName={seoName}
+            stateSlug={getStateSlug(port.state)}
+            portSlug={port.slug}
+            todayStr={todayStr}
+            currentHeight={currentHeight}
+            isRising={isRising}
+            nextHigh={nextHigh}
+            nextLow={nextLow}
+            lastHigh={lastHigh}
+            currentMin={currentMin}
+            countdownLabel={countdownLabel}
+          />
+        </div>
 
         <div id="tabela-mensal" className="mt-6">
           <MonthlyTideTable

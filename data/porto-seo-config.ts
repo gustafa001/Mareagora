@@ -2,6 +2,7 @@
 // Tarefa 1: configuração SEO por porto
 
 export type PortoCategory = 'surf' | 'pesca' | 'turismo' | 'industrial' | 'nautica';
+export type HighlightType = 'piscinas-naturais' | 'amplitude';
 
 export interface PortoSEOConfig {
   seoName?: string; // opcional — nome usado no <title>/H1 quando difere do nome oficial do porto (ex.: busca por "Maceió", não "Porto de Maceió")
@@ -13,6 +14,7 @@ export interface PortoSEOConfig {
   portoVizinhos: string[]; // slugs de portos próximos
   faqs: { q: string; a: string }[];
   sobreTexto?: string; // opcional — se ausente, usa template da categoria
+  highlight?: HighlightType; // destaque de maré exibido no topo da página
 }
 
 export const portosConfig: Record<string, PortoSEOConfig> = {
@@ -348,6 +350,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'sao-luis': {
+    highlight: 'amplitude',
     titleSuffix: 'Maré Alta e Baixa Hoje',
     description: 'Veja a previsão de maré de São Luís (MA) em 2026: horários de premar e baixa-mar, altura das águas e as próximas 48 horas, com dados oficiais da Marinha do Brasil. Confira os horários.',
     keywords: ['maré são luís hoje', 'tabua maré são luís 2026', 'maré alta são luís', 'maré baixa são luís', 'horário maré são luís', 'golfão maranhense maré', 'maré praia do calhau'],
@@ -365,6 +368,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   // nenhuma com "porto". O slug é do porto (estação da Marinha), mas o título deve casar com a busca.
   'porto-de-maceio': {
     seoName: 'Maceió',
+    highlight: 'piscinas-naturais',
     titleSuffix: 'Horários de Hoje',
     description: 'Tábua de marés de Maceió (AL) hoje e 2026: maré alta e baixa, coeficiente e melhor horário para as piscinas naturais da Pajuçara. Dados da Marinha do Brasil.',
     keywords: ['tábua de maré maceió', 'tabua de mare maceio', 'maré maceió hoje', 'maré pajuçara', 'piscinas naturais pajuçara maré', 'maré ponta verde', 'maré jatiúca', 'tábua da maré maceió 2026'],

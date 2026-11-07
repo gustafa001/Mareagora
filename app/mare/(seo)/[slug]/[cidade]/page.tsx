@@ -19,6 +19,7 @@ import { getSeaConditionsSummary } from '@/lib/seo/sea-conditions';
 import { getEventosDia, getMetadata } from '@/lib/mare';
 import { calcFishingScore } from '@/lib/fishingScore';
 import SeoOverviewTicker from '@/components/SeoOverviewTicker';
+import TideHighlight from '@/components/TideHighlight';
 
 export const revalidate = 21600; // regenera a página a cada 6h (ISR), evita data congelada do build — reduzido de 1h p/ diminuir ISR Writes/CPU no free tier
 
@@ -241,6 +242,13 @@ export default async function PortPage({ params }: { params: { slug: string, cid
         // fetch no primeiro render do cliente (ver PortPageContent.tsx).
         initialMarineHourly={seaData?.marineHourly ?? null}
         initialWindHourly={seaData?.windHourly ?? null}
+        highlight={config?.highlight ? (
+          <TideHighlight
+            port={port}
+            todayStr={todayStr}
+            type={config.highlight}
+          />
+        ) : undefined}
       />
       <div className="container pb-16">
         <PortoFAQ slug={slug} categoria={categoria} />

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { getPortBySlug, PORTS, haversineDistance } from '@/lib/ports';
-import { getEventosDia, getEventosAno, getEventosRange, getMetadata } from '@/lib/mare';
+import { getEventosDia, getEventosAno, getEventosRange } from '@/lib/mare';
 import { portosConfig } from '@/data/porto-seo-config';
 import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
@@ -181,12 +181,6 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
     distanceKm: Math.round(haversineDistance(port.lat, port.lon, referencePort.lat, referencePort.lon))
   } : undefined;
 
-  const portMeta = getMetadata(port);
-  const importedAt = portMeta?.imported_at;
-  const tideUpdatedDate = importedAt
-    ? importedAt.split('-').reverse().join('/')
-    : String(ano);
-
   return (
     <main className="min-h-screen pb-20">
       <TideSchemaMarkup
@@ -224,7 +218,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
             <p className="text-xs sm:text-sm text-slate-300/85 font-normal leading-relaxed max-w-2xl px-2">
               Dados oficiais da Marinha do Brasil (DHN)
               {referenceData ? ` · Estação de referência: ${referenceData.name}` : ''}
-              {` · Tábua ${ano} atualizada em ${tideUpdatedDate}`}
+              {` · Tábua ${ano} oficial`}
             </p>
             <p className="text-sm sm:text-base md:text-lg opacity-90 font-medium font-syne hidden sm:block text-white/90">
               {seoName} - {ano} | Estado do {port.state}

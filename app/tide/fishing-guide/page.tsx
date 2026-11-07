@@ -61,6 +61,10 @@ const EXAMPLE = {
 };
 
 export default function FishingGuidePage() {
+  // Conteúdo editorial estático. Atualizar esta data manualmente sempre que o
+  // conteúdo do artigo for revisado/expandido (último commit editorial: 2026-08-26).
+  const FISHING_GUIDE_LAST_REVIEWED = '2026-08-26';
+
   const schemas = [
     {
       '@type': 'Article',
@@ -69,7 +73,7 @@ export default function FishingGuidePage() {
       author: { '@type': 'Organization', name: 'MaréAgora' },
       publisher: { '@type': 'Organization', name: 'MaréAgora' },
       datePublished: '2026-08-26',
-      dateModified: '2026-08-26',
+      dateModified: FISHING_GUIDE_LAST_REVIEWED,
       mainEntityOfPage: 'https://mareagora.com.br/tide/fishing-guide',
     },
     {

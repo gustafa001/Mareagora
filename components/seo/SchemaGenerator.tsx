@@ -54,7 +54,11 @@ export default function SchemaGenerator({
   });
 
   // 2. WebPage
-  schemas.push({
+  // datePublished e dateModified só são incluídos quando há uma data real vinda
+  // de fonte confiável (ex.: post de blog). Em páginas de tábua de maré (SSG/ISR)
+  // não existe "data de modificação" significativa — omitir é mais honesto para o
+  // Google do que usar a data do build/render.
+  const webPageEntry: Record<string, unknown> = {
     '@type': 'WebPage',
     '@id': `${url}#webpage`,
     url,
@@ -63,13 +67,14 @@ export default function SchemaGenerator({
     inLanguage: 'pt-BR',
     isPartOf: { '@id': `${base}/#website` },
     about: { '@id': `${base}/#organization` },
-    datePublished: datePublished || '2026-01-01T00:00:00.000Z',
-    dateModified: dateModified || '2026-01-01T00:00:00.000Z',
     primaryImageOfPage: {
       '@type': 'ImageObject',
       url: defaultImage,
     },
-  });
+  };
+  if (datePublished) webPageEntry.datePublished = datePublished;
+  if (dateModified) webPageEntry.dateModified = dateModified;
+  schemas.push(webPageEntry);
 
   // 3. SoftwareApplication (PWA)
   if (type === 'Home') {
@@ -134,7 +139,6 @@ export default function SchemaGenerator({
       },
       license: 'https://www.gov.br/marinha/pt-br',
       temporalCoverage: `${new Date().getFullYear()}`,
-      ...(dateModified ? { dateModified } : {}),
       ...(referencePortName ? { isBasedOn: `Estação de referência: ${referencePortName}` } : {}),
     });
 

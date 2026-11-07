@@ -65,19 +65,40 @@ export default async function sitemap({ id }: { id: string }): Promise<MetadataR
     }));
   }
 
-  // id === 'index' (Base generic routes)
-  const today = new Date().toISOString();
-  const staticRoutes = ['', '/portos', '/guia-praias', '/cameras', '/sobre', '/contato', '/termos', '/privacidade', '/glossario-de-mare', '/tide/fishing-guide', '/embed'];
-  const dailyRoutes = ['/mare-hoje', '/mare-amanha', '/mare-semana', '/mare-viva', '/mare-morta', '/lua', '/ondas', '/coeficiente', '/pesca', '/lugares-de-pesca'];
+  // id === 'index' (Rotas base genéricas)
+  // Rotas editoriais, institucionais e páginas sem datação granular:
+  // Omitimos lastModified para não emitir datas arbitrárias de deploy (today)
+  // que o Google ignora ou penaliza.
+  const staticRoutes = [
+    '',
+    '/portos',
+    '/guia-praias',
+    '/cameras',
+    '/sobre',
+    '/contato',
+    '/termos',
+    '/privacidade',
+    '/glossario-de-mare',
+    '/embed',
+    '/mare-hoje',
+    '/mare-amanha',
+    '/mare-semana',
+    '/mare-viva',
+    '/mare-morta',
+    '/lua',
+    '/ondas',
+    '/coeficiente',
+    '/pesca',
+    '/lugares-de-pesca',
+  ];
 
   return [
     ...staticRoutes.map(route => ({
       url: `${base}${route}`,
-      lastModified: tideDataDate(),
     })),
-    ...dailyRoutes.map(route => ({
-      url: `${base}${route}`,
-      lastModified: today,
-    })),
+    {
+      url: `${base}/tide/fishing-guide`,
+      lastModified: new Date('2026-08-26'),
+    },
   ];
 }

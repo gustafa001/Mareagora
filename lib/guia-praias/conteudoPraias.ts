@@ -327,4 +327,143 @@ export const CONTEUDO: Record<string, { sobre: string; pesca: string; melhorEpoc
     pesca: 'Os molhes da barra abrigam pescadores de fim de semana que acompanham a preamar para posicionar a linha. Nos estuários adjacentes, famílias extraem mariscos nas vazantes, tradição que segue o ritmo das águas.',
     melhorEpoca: 'O verão gaúcho, de dezembro a março, é a época de mar mais ameno e pesca agradável. O inverno traz ressacas e ventos fortes do sul.',
   },
+
+  // ── Litoral de São Paulo ───────────────────────────────────────────────────
+  'caraguatatuba': {
+    sobre: 'Caraguatatuba reúne 17 praias recortadas entre a exuberante Serra do Mar e o oceano. O litoral alterna enseadas de águas calmas como Prainha e Cocanha com a agitação da orla urbana e ondas de tombo da Martim de Sá. A maré baixa alarga as faixas de areia das praias do Indaiá e Pan Brasil por dezenas de metros.',
+    pesca: 'Excelente pesca de arremesso na beira-mar e na desembocadura do Rio Juqueriquerê. Na maré enchente, cardumes de robalos, corvinas e betaras entram nos canais para se alimentar.',
+    melhorEpoca: 'Dezembro a março para aproveitar o calor e a infraestrutura completa da orla; maio a setembro para dias claros, pesca e ecoturismo.',
+  },
+  'juquehy': {
+    sobre: 'Juquehy destaca-se pela areia clara e plana de 3,5 km e pela vegetação da Serra do Mar. A praia possui duas facetas: o canto esquerdo, junto ao rio, tem águas calmas e rasas para famílias; o canto direito recebe mar aberto com ondas de boa pressão para surfistas.',
+    pesca: 'Na maré vazante, o estuário do Rio Juquehy atrai robalos-peva e caratingas. No mar aberto, a pesca de arremesso com maré subindo rende betaras e pampos nas primeiras arrebentações.',
+    melhorEpoca: 'Novembro a abril para sol e gastronomia dos bistrôs locais; outono e inverno para praias vazias, mar translúcido e boas ondas.',
+  },
+  'praia-da-baleia': {
+    sobre: 'Balneário residencial exclusivo e tranquilo em São Sebastião, a Praia da Baleia é famosa pela ausência de comércio na areia e pela extensa faixa de areia escura e batida. Na maré baixa, transforma-se em uma imensa pista plana para caminhadas, corridas e pedaladas.',
+    pesca: 'O costão rochoso no canto da Baleia é ponto tradicional de pesca de pedras para sargos, garoupas e badejos, especialmente na subida da maré.',
+    melhorEpoca: 'O ano todo para quem busca silêncio e contato com a natureza; outono e inverno para mar calmo com transparência excelente para stand-up paddle.',
+  },
+  'camburi': {
+    sobre: 'Separada de Camburizinho pelo Rio Camburi, esta praia é um dos maiores santuários do surf paulista. De mar aberto e areia branca, possui ondas velozes e tubulares que quebram com força sobre as bancadas de areia, atraindo esportistas e apreciadores da alta gastronomia.',
+    pesca: 'A foz do rio concentra robalos na virada da maré. No costão rochoso da ponta, a pesca de costão rende peixes de passagem em dias de mar mexido.',
+    melhorEpoca: 'Abril a setembro para os melhores swells de sul/sudeste com ventos terral matinais; verão para animação e calor.',
+  },
+  'praia-do-tombo': {
+    sobre: 'Ostentando a certificação socioambiental internacional Bandeira Azul, a Praia do Tombo é o orgulho ecológico do Guarujá. Com forte declive de areia e ondas ocas e potentes, consagrou-se como berço de grandes campeões brasileiros de surf.',
+    pesca: 'Pesca de arremesso pesado (surfcasting) ao amanhecer ou entardecer, com capturas de pampos, corvinas e cações nas valas profundas.',
+    melhorEpoca: 'Março a setembro para ondas consistentes e tubulares; dezembro a fevereiro para sol forte e banho de sol na orla estruturada.',
+  },
+  'itaguare': {
+    sobre: 'Localizada no Parque Estadual Restinga de Bertioga, Itaguaré é uma das últimas praias 100% selvagens e preservadas da Baixada Santista. O Rio Itaguaré deságua na praia formando piscinas mornas de água cristalina na maré baixa entre a restinga e o mar aberto.',
+    pesca: 'Um dos pontos mais nobres do litoral paulista para a pesca esportiva de robalos-flecha com iscas artificiais no estuário e no encontro das águas.',
+    melhorEpoca: 'Maio a outubro para dias secos e trilhas ecológicas sem lama; verão para banho refrescante na foz do rio.',
+  },
+
+  // ── Bahia ──────────────────────────────────────────────────────────────────
+  'porto-seguro': {
+    sobre: 'Porto Seguro une história colonial e praias exuberantes protegidas por recifes na Costa do Descobrimento. Ao largo da costa, o Parque Marinho de Recife de Fora abriga piscinas naturais repletas de vida marinha que só emergem na maré baixa.',
+    pesca: 'Pesca oceânica embarcada em parcéis e parrais distantes para cavalas, dourados e badejos; no Rio Buranhém, robalos na maré de enchente.',
+    melhorEpoca: 'Setembro a março para tempo firme e águas límpidas; agende passeios marítimos nas luas cheia e nova para pegar as marés mais baixas.',
+  },
+  'arraial-dajuda': {
+    sobre: 'Vila histórica erguida sobre falésias multicoloridas, Arraial d\'Ajuda encanta pelas praias do Mucugê, Pitinga e Taípe. Na maré baixa, recifes de arenito formam piscinas mornas e a faixa de areia ao pé das falésias permite caminhar por quilômetros até Trancoso.',
+    pesca: 'Pesca de arremesso nos canais dos recifes na maré enchente para xaréu, cioba e sargo; pesca de linha embarcada nos parcéis.',
+    melhorEpoca: 'Agosto a março, com sol pleno, águas azul-esverdeadas e temperatura agradável em torno de 27°C.',
+  },
+  'itacare': {
+    sobre: 'Meca do surf e do ecoturismo na Costa do Cacau, Itacaré é cercada por costões rochosos e Mata Atlântica. Alterna praias de mar agitado como Tiririca e Resende com a calmaria da Praia da Concha e recantos preservados como Prainha e Jeribucaçu.',
+    pesca: 'A foz do Rio de Contas na Ponta do Xaréu é famosa pela pesca de robalos e xaréus na virada da maré; costões rochosos rendem sargos e garoupas.',
+    melhorEpoca: 'Maio a setembro para os maiores swells de surf; novembro a março para sol, banho de mar límpido e trilhas ecológicas.',
+  },
+  'taipu-de-fora': {
+    sobre: 'Uma das praias mais espetaculares do Brasil, Taipu de Fora abriga uma gigantesca piscina natural de recifes de corais de 1 km de extensão na Península de Maraú. Na maré baixa das luas de sizígia, vira um aquário cristalino para flutuação com snorkel.',
+    pesca: 'Pesca proibida na piscina de preservação; em mar aberto e parcéis externos, pesca embarcada para cavalas, badejos e olho-de-boi.',
+    melhorEpoca: 'Setembro a março para águas mais quentes e transparentes; programe a viagem rigorosamente nas fases de lua nova ou cheia.',
+  },
+  'farol-da-barra': {
+    sobre: 'O Farol da Barra marca a entrada da Baía de Todos os Santos em Salvador. Na maré baixa, os arrecifes formam piscinas mornas e calmas de água transparente ao pé do forte histórico, enquanto a preamar traz ondas para o surf na ponta do Cristo.',
+    pesca: 'Tradição secular de pesca de linha e arremesso nas pedras do forte e na ponta de Santo Antônio, capturando xaréus, budiões e sargos.',
+    melhorEpoca: 'Novembro a março para mar azul e sol pleno; final de tarde imperdível para aplaudir o pôr do sol sobre a baía.',
+  },
+  'itapua': {
+    sobre: 'Imortalizada na música e na literatura, Itapuã preserva sua colônia de jangadeiros, a estátua da Sereia e o farol listrado. Na maré baixa, bancadas de arrecifes criam poças tranquilas e seguras para banho na orla.',
+    pesca: 'Colônia tradicional de pesca Z-6 de Salvador. Jangadas navegam com a maré para pescar badejos, cavalas, lagostas e siris.',
+    melhorEpoca: 'Setembro a abril para águas azuis, ventos amenos e mar mais calmo nas piscinas de corais.',
+  },
+  'guarajuba': {
+    sobre: 'Balneário estruturado e certificado com a Bandeira Azul no Litoral Norte baiano. O trecho central possui piscinas naturais calmas de corais na maré baixa, perfeitas para famílias, enquanto o canto norte tem ondas consistentes de mar aberto.',
+    pesca: 'Pesca de praia no Canto das Caravelas para pampos e xaréus na maré enchente; pesca de linha nos parcéis para vermelhos.',
+    melhorEpoca: 'Outubro a março para dias ensolarados, mar calmo e água transparente em temperatura tépida.',
+  },
+  'ilha-de-boipeba': {
+    sobre: 'Vizinha intocada de Morro de São Paulo, Boipeba é Reserva da Biosfera pela UNESCO sem circulação de automóveis. Na maré baixa, as famosas piscinas de corais de Moreré e Castelhanos revelam águas azul-turquesa caribenhas.',
+    pesca: 'Rica extração artesanal de polvos, lambretas e caranguejos nos mangues e recifes durante a baixamar; pesca embarcada de robalo e cavala.',
+    melhorEpoca: 'Setembro a abril para dias secos e visibilidade excepcional para snorkel nas piscinas de corais.',
+  },
+
+  // ── Pernambuco ─────────────────────────────────────────────────────────────
+  'praia-dos-carneiros': {
+    sobre: 'Famosa mundialmente pela Capela de São Benedito sobre a areia e coqueirais a perder de vista, a Praia dos Carneiros é emoldurada por 6 km de recifes de arenito. Na maré baixa, surgem bancos de areia e piscinas naturais mornas no estuário do Rio Formoso.',
+    pesca: 'Pesca de arremesso e corrico na foz do Rio Formoso para robalo-flecha, caranha e tarpon durante a transição da maré.',
+    melhorEpoca: 'Outubro a março para águas mais calmas e cristalinas; consulte a tábua de marés e chegue 1h30 antes do pico da baixamar.',
+  },
+  'tamandare': {
+    sobre: 'Orla urbana acolhedora de 16 km no litoral sul pernambucano, vigiada pelo Forte de Santo Inácio de Loyola. A barreira de recifes impede a entrada de ondas bravas na maré baixa, formando uma enseada mansa e rasa ideal para crianças.',
+    pesca: 'Pesca costeira de botes e jangadas para cioba, agulha e xaréu; pesca de costão e arremesso junto aos molhes do forte.',
+    melhorEpoca: 'Novembro a abril para aproveitar dias ensolarados e mar com temperatura tépida.',
+  },
+
+  // ── Alagoas ────────────────────────────────────────────────────────────────
+  'praia-do-frances': {
+    sobre: 'A Praia do Francês é dividida por uma barreira de recifes: o lado esquerdo é uma gigantesca piscina natural de águas calmas e verde-esmeralda; o lado direito tem mar aberto de tombo com ondas fortes e velozes para surfistas.',
+    pesca: 'Pesca de arremesso e costão no canto direito para xaréu, camurim (robalo) e pescada amarela; tarrafas para camarão no lado calmo.',
+    melhorEpoca: 'Setembro a março para dias ensolarados e águas claras; outono e inverno para os melhores swells de surf no canto aberto.',
+  },
+  'barra-de-sao-miguel': {
+    sobre: 'Balneário nobre de Alagoas protegido por uma imensa muralha de recifes de corais paralela à praia. Na baixamar, forma uma lagoa cristalina de águas tépidas e sem ondas, de onde partem barcos para a Praia do Gunga.',
+    pesca: 'Foz do Rio Niquim e canais de manguezal excelentes para pesca de robalos e carapebas na virada da maré.',
+    melhorEpoca: 'Outubro a março para visibilidade límpida e mar sem ondulações.',
+  },
+  'praia-do-gunga': {
+    sobre: 'Cartão-postal alagoano encravado em uma ponta de restinga entre a Lagoa do Roteiro e o mar, cercada por milhões de coqueiros e falésias multicoloridas. Na maré baixa, a areia batida permite passeios de buggy até as falésias.',
+    pesca: 'Encontro de águas da lagoa com o oceano atrai grandes predadores como camurins, tarpons e xaréus na maré vazante.',
+    melhorEpoca: 'Setembro a março para tempo firme, sol brilhante e contraste marcante entre as águas verdes e as falésias.',
+  },
+  'sao-miguel-dos-milagres': {
+    sobre: 'Coração da Rota Ecológica dos Milagres na Costa dos Corais, polo de turismo de charme e sustentabilidade. Na maré baixa de sizígia, jangadeiros conduzem visitantes às piscinas naturais da Praia do Toque, a 1 km da costa.',
+    pesca: 'Pesca artesanal regulada com linha e anzol fora dos santuários da APA marinha, capturando ciobas, polvos e peixes de recife.',
+    melhorEpoca: 'Outubro a março para águas azuis sem chuvas; consulte a maré baixa de lua cheia ou nova para flutuação nas piscinas.',
+  },
+  'praia-do-patacho': {
+    sobre: 'Praia deserta de beleza rústica certificada com o selo Bandeira Azul em Porto de Pedras. Na maré baixa de sizígia, o mar recua centenas de metros sobre a bancada de recifes rasos, permitindo caminhar mar adentro.',
+    pesca: 'Coleta tradicional de mariscos e polvos nas fendas de recifes secos na baixamar; pesca embarcada externa para olho-de-cão e serra.',
+    melhorEpoca: 'Outubro a março, especialmente nas semanas de lua cheia e nova com marés mínimas entre 0,0m e 0,2m.',
+  },
+
+  // ── Rio Grande do Norte ────────────────────────────────────────────────────
+  'genipabu': {
+    sobre: 'Famosa mundialmente pelas dunas móveis, lagoas de água doce e passeios de buggy. Na maré baixa, a faixa de areia alarga-se e fica compacta, permitindo a circulação segura dos veículos e banho calmo na enseada.',
+    pesca: 'Pesca de arremesso em mar aberto para pampos, corvinas e cações na maré enchente; no estuário do Rio Ceará-Mirim, robalos.',
+    melhorEpoca: 'Setembro a março para ventos amenos, lagoas límpidas e sol radiante durante todo o dia.',
+  },
+  'maracajau': {
+    sobre: 'Conhecida como o Caribe potiguar, Maracajaú destaca-se pelos parrachos a 7 km da costa. Na baixamar das luas cheia e nova, catamarãs levam turistas às plataformas flutuantes para snorkel em águas transparentes sobre os corais.',
+    pesca: 'Pesca esportiva de corrico oceânico além dos recifes protegidos, capturando cavalas, dourados e atuns.',
+    melhorEpoca: 'Outubro a março para mar calmo e transparência máxima da água nos recifes.',
+  },
+
+  // ── Ceará ──────────────────────────────────────────────────────────────────
+  'cumbuco': {
+    sobre: 'Vila costeira a 30 km de Fortaleza reconhecida internacionalmente como capital dos ventos para kitesurf e windsurf. Na maré baixa, a praia forma lagoas rasas e calmas perto da foz do Cauípe, ideais para iniciantes.',
+    pesca: 'Tradição de jangadas artesanais que navegam na madrugada e retornam na enchente com cavalas, beijupirás e serras.',
+    melhorEpoca: 'Julho a janeiro para ventos alísios constantes e fortes; fevereiro a junho para praias calmas e sol pleno.',
+  },
+
+  // ── Sergipe ────────────────────────────────────────────────────────────────
+  'praia-de-atalaia': {
+    sobre: 'Principal cartão-postal de Aracaju com calçadão de 6 km, Oceanário do Projeto Tamar e a Passarela do Caranguejo. Na maré baixa, a faixa de areia recua mais de 100 metros com piso plano e firme para caminhadas.',
+    pesca: 'Pesca de praia ao amanhecer ao longo da orla e nos molhes da barra do Rio Sergipe, com robalos, corvinas e bagres.',
+    melhorEpoca: 'Setembro a março para dias secos e ensolarados; todo o ano para passeios gastronômicos e lazer familiar na orla.',
+  },
 }

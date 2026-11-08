@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import OpsCard from './OpsCard';
+import { marineLatLon } from '@/lib/marineCoords';
 
 interface Props {
   lat: number;
@@ -133,7 +134,7 @@ export default function WeatherRadarCard({ lat, lon }: Props) {
       `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
       `&current=uv_index&hourly=precipitation,precipitation_probability,uv_index&forecast_days=1&timezone=${tz}`;
     const marineUrl =
-      `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&cell_selection=sea` +
+      `https://marine-api.open-meteo.com/v1/marine?${marineLatLon(lat, lon)}` +
       `&current=sea_surface_temperature&hourly=sea_surface_temperature&forecast_days=1&timezone=${tz}`;
 
     Promise.all([

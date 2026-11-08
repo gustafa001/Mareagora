@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { marineLatLon } from '@/lib/marineCoords';
 
 interface ConditionsCardProps {
   lat: number;
@@ -13,7 +14,7 @@ export default function ConditionsCard({ lat, lon }: ConditionsCardProps) {
 
   useEffect(() => {
     async function fetchConditions() {
-      const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&cell_selection=sea&hourly=wave_height,wave_period&timezone=America%2FSao_Paulo&forecast_days=1`;
+      const url = `https://marine-api.open-meteo.com/v1/marine?${marineLatLon(lat, lon)}&hourly=wave_height,wave_period&timezone=America%2FSao_Paulo&forecast_days=1`;
       try {
         const res = await fetch(url);
         const json = await res.json();

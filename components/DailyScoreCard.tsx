@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { TideEvent } from '@/lib/tideUtils';
 import { useT, type TDict } from '@/lib/tideI18n';
 import { getPeriodosSolunares, inicioDiaLocal, type PeriodoSolunar } from '@/lib/solunar';
+import { marineLatLon } from '@/lib/marineCoords';
 
 interface Props {
   lat: number;
@@ -297,7 +298,7 @@ export default function DailyScoreCard({ lat, lon, todayTides, utcOffsetMin = 0,
     // Usar timezone=auto para a Open-Meteo detectar pelo lat/lon
     // e buscar o índice da hora LOCAL do lugar, não do navegador
     const marineUrl =
-      `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&cell_selection=sea` +
+      `https://marine-api.open-meteo.com/v1/marine?${marineLatLon(lat, lon)}` +
       `&hourly=wave_height,wave_period&forecast_days=1&timezone=auto`;
     const windUrl =
       `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +

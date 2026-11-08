@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import type { WeatherSnapshot, SeaState } from '@/lib/portOperations';
+import { marineLatLon } from '@/lib/marineCoords';
 
 export interface PortOperationsHourly {
   time: string[];
@@ -66,7 +67,7 @@ export function usePortOperationsData(lat: number, lon: number): PortOperationsD
         `&wind_speed_unit=kmh&forecast_days=4&timezone=${tz}`;
 
       const marineUrl =
-        `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&cell_selection=sea` +
+        `https://marine-api.open-meteo.com/v1/marine?${marineLatLon(lat, lon)}` +
         `&hourly=wave_height,wave_period,wave_direction,ocean_current_velocity` +
         `&forecast_days=4&timezone=${tz}`;
 

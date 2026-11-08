@@ -2,6 +2,7 @@
 
 import { degToCompass } from "@/lib/tideUtils";
 import { useEffect, useState } from "react";
+import { marineLatLon } from '@/lib/marineCoords';
 
 interface WavesCardProps {
   lat: number;
@@ -18,7 +19,7 @@ export default function WavesCard({ lat, lon }: WavesCardProps) {
   useEffect(() => {
     async function fetchWaves() {
       // Usando 7 dias para garantir estabilidade na API gratuita
-      const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&cell_selection=sea`
+      const url = `https://marine-api.open-meteo.com/v1/marine?${marineLatLon(lat, lon)}`
         + `&hourly=wave_height,wave_period,wave_direction,wind_wave_height`
         + `&wind_speed_unit=kn&timezone=America%2FSao_Paulo&forecast_days=7`;
 

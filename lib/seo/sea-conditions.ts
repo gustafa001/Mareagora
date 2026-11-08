@@ -1,4 +1,5 @@
 import { degToCompass } from '@/lib/tideUtils';
+import { marineLatLon } from '@/lib/marineCoords';
 
 export interface MarineHourly {
   time: string[];
@@ -43,7 +44,7 @@ export async function getSeaConditionsSummary(
 
   const marineUrl =
     `https://marine-api.open-meteo.com/v1/marine` +
-    `?latitude=${lat}&longitude=${lon}&cell_selection=sea` +
+    `?${marineLatLon(lat, lon)}` +
     `&hourly=wave_height,wave_period,wave_direction` +
     `&forecast_days=7&timezone=${tz}`;
 

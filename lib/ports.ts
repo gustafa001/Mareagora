@@ -32,6 +32,12 @@ export interface Port {
   offsetMinutes?: number;
   searchNames?: string[];
   referencePortSlug?: string;
+  /**
+   * Fonte oficial (ex.: tábua DHN/CHM, ponto e edição) que justifica o offsetMinutes.
+   * Enquanto estiver ausente, o local derivado é tratado como ESTIMADO na interface.
+   * Só preencha com fonte verificável — nunca com distância ou analogia.
+   */
+  offsetSource?: string;
   cameras?: PortCamera[];
 }
 
@@ -226,6 +232,20 @@ export const PORTS: Port[] = [
 
 export function getPortBySlug(slug: string): Port | undefined {
   return PORTS.find(port => port.slug === slug);
+}
+
+/**
+ * Local "derivado": não tem marégrafo próprio e usa a curva de maré de outro
+ * porto (referencePortSlug), com defasagem opcional (offsetMinutes).
+ * É ESTIMADO enquanto não houver offsetSource. A Marinha publica previsão só
+ * para portos/estações, não para praias.
+ */
+export function isEstimatedLocation(port: Port): boolean {
+  return Boolean(port.referencePortSlug) && !port.offsetSource;
+}
+
+export function getReferencePort(port: Port): Port | undefined {
+  return port.referencePortSlug ? getPortBySlug(port.referencePortSlug) : undefined;
 }
 
 export function getAllSlugs(): string[] {

@@ -1,9 +1,10 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getPortBySlug, getAllSlugs, PORTS } from '@/lib/ports';
+import { getPortBySlug, getAllSlugs, getReferencePort, isEstimatedLocation, PORTS } from '@/lib/ports';
 import { getStateSlug, getStateName } from '@/lib/states';
 import type { Metadata } from 'next';
 import PortPageContent from '@/components/PortPageContent';
+import EstimateNotice from '@/components/EstimateNotice';
 import PortoFAQ from '@/components/PortoFAQ';
 import PortosProximos from '@/components/PortosProximos';
 import ExploreCTA from '@/components/ExploreCTA';
@@ -78,6 +79,16 @@ function cutAtWord(text: string, max: number): string {
   return (i > 60 ? cut.slice(0, i) : cut).replace(/[,;:\s—-]+$/, '') + '…';
 }
 
+// Locais derivados (sem marégrafo próprio) não podem se apresentar como tábua oficial:
+// troca o enquadramento e remove selos de fonte/dados oficiais herdados do texto configurado.
+function toEstimatedWording(text: string): string {
+  return text
+    .replace(/\s*(?:Fonte oficial|Fonte):\s*Marinha do Brasil\.?/gi, '')
+    .replace(/\s*Dados oficiais da Marinha do Brasil\.?/gi, '')
+    .replace(/^Tábua de marés de /i, 'Previsão estimada de marés de ')
+    .trim();
+}
+
 export async function generateMetadata({ params }: { params: { slug: string, cidade: string } }): Promise<Metadata> {
   const estado = params.slug;
   const slug = params.cidade;
@@ -98,10 +109,15 @@ export async function generateMetadata({ params }: { params: { slug: string, cid
   // "hoje" é a intenção dominante nas buscas reais (Search Console), então vira o padrão
   // de todas as páginas sem sufixo customizado.
   const defaultSuffix = 'Maré Alta e Baixa Hoje';
-  
+
+  const estimated = isEstimatedLocation(port);
+  const estimatedRefName = estimated ? (getReferencePort(port)?.cityName ?? null) : null;
+
   const defaultDesc = isCommercial
     ? `Tábua de marés de ${seoName}, ${port.state} para ${ano}. Previsão de maré alta e baixa, horários e coeficientes oficiais com dados da Marinha do Brasil (CHM).`
-    : `Tábua de marés de ${seoName}, ${port.state} para ${ano}. Horários de maré alta e baixa para surf, pesca e atividades na praia. Fonte: Marinha do Brasil.`;
+    : estimated
+      ? `Previsão estimada de marés de ${seoName}, ${port.state} para ${ano}${estimatedRefName ? `, a partir da estação de ${estimatedRefName}` : ''}. Horários de maré alta e baixa para surf, pesca e atividades na praia.`
+      : `Tábua de marés de ${seoName}, ${port.state} para ${ano}. Horários de maré alta e baixa para surf, pesca e atividades na praia. Fonte: Marinha do Brasil.`;
 
   // Sufixo curto para o título caber em 60 caracteres junto com keyword + ano.
   // Remove "Oficiais" e ano repetido no sufixo, pois o base já injeta o ano.
@@ -129,8 +145,13 @@ export async function generateMetadata({ params }: { params: { slug: string, cid
     if (fit) title = `${base}${SEP}${fit}`;
   }
 
-  const baseDescription = config?.description ?? defaultDesc;
-  const tideSnippet = buildTideSnippet(port, seoName, port.state, config?.highlight);
+  const baseDescription = config?.description
+    ? (estimated ? toEstimatedWording(config.description) : config.description)
+    : defaultDesc;
+  const rawTideSnippet = buildTideSnippet(port, seoName, port.state, config?.highlight);
+  const tideSnippet = rawTideSnippet && estimated
+    ? rawTideSnippet.replace(/^Maré em /, 'Maré estimada em ')
+    : rawTideSnippet;
   const description = tideSnippet
     ? cutAtWord(`${tideSnippet} ${baseDescription}`, 200)
     : baseDescription;
@@ -184,7 +205,7 @@ export default async function PortPage({ params }: { params: { slug: string, cid
 
   const isCommercial = !port.referencePortSlug && (port.name.toLowerCase().includes('porto') || port.name.toLowerCase().includes('terminal') || config?.category === 'industrial');
   const seoName = config?.seoName ?? (isCommercial ? port.name : port.cityName);
-  
+
   // Data de hoje no fuso de Brasília (para AI Overview, SEO) — mesma lógica
   // do todayStr acima, evitando que o dia UTC (à frente de -03:00) desloque a data.
   const dataHoje = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
@@ -233,21 +254,24 @@ export default async function PortPage({ params }: { params: { slug: string, cid
 
   return (
     <>
-      <SchemaGenerator 
-        port={port} 
-        type={categoria === 'industrial' || port.name.toLowerCase().includes('porto') ? 'Port' : 'Beach'} 
-        url={`https://mareagora.com.br/mare/${estado}/${slug}`} 
+      <SchemaGenerator
+        port={port}
+        type={categoria === 'industrial' || port.name.toLowerCase().includes('porto') ? 'Port' : 'Beach'}
+        url={`https://mareagora.com.br/mare/${estado}/${slug}`}
         title={`Tábua de Maré ${seoName} ${ano}`}
         description={`Horários e alturas das marés em ${seoName} (${port.state}) para ${ano}.`}
         faq={seoFaq}
         referencePortName={referencePortName}
       />
-      
+
       {/* Resumo Gerado (AI Overview Target) — exibido como slider, texto completo preservado no HTML */}
       <SeoOverviewTicker
         title={`Visão Geral Hoje (${dataHoje.split('-').reverse().join('/')})`}
         text={seoText}
       />
+      {/* Aviso de previsão estimada (só locais sem marégrafo próprio). Fica fora de
+          PortPageContent para não mexer na hidratação já corrigida. */}
+      <EstimateNotice port={port} />
       <PortPageContent
         slug={slug}
         portDescription={portDescription}

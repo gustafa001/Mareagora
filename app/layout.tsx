@@ -21,7 +21,6 @@ const manrope = Manrope({
 const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-dm-sans",
-  weight: ["300", "400", "500"],
   display: "swap",
 });
 

@@ -7,7 +7,7 @@ import AdSlot from '@/components/ads/AdSlot'
 export const metadata: Metadata = {
   title: 'Guia de Praias do Brasil - Marés, Ondas e Dicas | MaréAgora',
   description:
-    'Descubra as melhores praias do Brasil com dados de marés em tempo real, condições de ondas e dicas de pesca. Guia completo do litoral brasileiro.',
+    'Descubra as melhores praias do Brasil com tábua de marés atualizada, condições de ondas e dicas de pesca. Guia completo do litoral brasileiro.',
   keywords: 'praias brasil, maré praia, ondas surf, pesca esportiva, guia praias',
 }
 
@@ -899,7 +899,7 @@ export default function GuiaPraias() {
           <p className="gp-kicker">Guia de Praias do Brasil</p>
           <h1>O litoral brasileiro, praia por praia</h1>
           <p className="gp-hero-desc">
-            Maré em tempo real, condições de ondas e dicas de pesca para cada
+            Tábua de maré, condições de ondas e dicas de pesca para cada
             praia — dados oficiais da Marinha do Brasil, integrados ao MaréAgora.
           </p>
           <div className="gp-stats">

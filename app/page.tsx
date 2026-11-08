@@ -8,8 +8,14 @@ import AdSlot from '@/components/ads/AdSlot';
 import { AD_SLOTS } from '@/lib/adConfig';
 import SchemaGenerator from '@/components/seo/SchemaGenerator';
 import HomeFaq from '@/components/HomeFaq';
+import { PORTS, getPortBySlug } from '@/lib/ports';
+import { getEventosDia } from '@/lib/mare';
+import { brtNow } from '@/lib/tideNow';
 
 export const revalidate = 3600; // ISR: classificação "hoje" não pode congelar no build
+
+const PORT_COUNT = PORTS.length;
+const REFERENCE_PORT_SLUG = 'porto-de-santos';
 
 export const metadata = {
   title: 'MaréAgora: Tábua de Maré Hoje em Todo o Brasil',
@@ -24,6 +30,12 @@ export const metadata = {
 };
 
 export default function Home() {
+  // Marés do dia (fuso de Brasília) do porto de referência, calculadas no servidor
+  // e entregues já no HTML: o gauge ao vivo só assume depois da hidratação.
+  const referencePort = getPortBySlug(REFERENCE_PORT_SLUG);
+  const todayDate = brtNow(new Date()).dateStr;
+  const todayEvents = referencePort ? getEventosDia(referencePort, todayDate) : [];
+
   return (
     <main className="min-h-screen flex flex-col bg-slate-950 relative overflow-hidden">
       <SchemaGenerator
@@ -34,7 +46,10 @@ export default function Home() {
       />
 
       {/* SEÇÃO HERO (Mantendo busca e funcionalidades originais) */}
-      <HomeHero />
+      <HomeHero
+        todayDate={todayDate}
+        todayEvents={todayEvents.map(({ hora, altura_m, tipo }) => ({ hora, altura_m, tipo }))}
+      />
 
       {/* SEÇÃO 1: Portos em Destaque */}
       <FeaturedPorts />
@@ -56,7 +71,7 @@ export default function Home() {
           </p>
 
           <p>
-            No MaréAgora, utilizamos os dados oficiais fornecidos pela <strong className="text-white">Diretoria de Hidrografia e Navegação (DHN) da Marinha do Brasil</strong>. Nossa plataforma processa essas informações astronômicas para oferecer uma interface moderna e intuitiva, permitindo que você consulte a <strong className="text-blue-400">previsão de marés</strong> de forma rápida e precisa em mais de 50 portos brasileiros, desde o Rio Grande do Sul até o Amapá.
+            No MaréAgora, utilizamos os dados oficiais fornecidos pela <strong className="text-white">Diretoria de Hidrografia e Navegação (DHN) da Marinha do Brasil</strong>. Nossa plataforma processa essas informações astronômicas para oferecer uma interface moderna e intuitiva, permitindo que você consulte a <strong className="text-blue-400">previsão de marés</strong> de forma rápida e precisa em {PORT_COUNT} portos e estações costeiras brasileiras, do Rio Grande do Sul ao Amapá.
           </p>
 
           <p>

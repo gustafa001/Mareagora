@@ -2,6 +2,7 @@ import { getStateSlug } from "@/lib/states";
 import Link from 'next/link';
 import { getPortBySlug } from '@/lib/ports';
 import { getEventosDia } from '@/lib/mare';
+import { brtNow, addDays } from '@/lib/tideNow';
 
 const POPULAR_SLUGS = [
   'porto-de-belem',
@@ -13,9 +14,8 @@ const POPULAR_SLUGS = [
 ];
 
 export default function FeaturedPorts() {
-  const todayStr = new Date().toLocaleDateString('en-CA');
-  const now = new Date();
-  const currentMin = now.getHours() * 60 + now.getMinutes();
+  // Horários das tábuas estão em Brasília; o servidor roda em UTC.
+  const { dateStr: todayStr, minutes: currentMin } = brtNow(new Date());
 
   const featuredData = POPULAR_SLUGS.map(slug => {
     const port = getPortBySlug(slug);
@@ -27,7 +27,7 @@ export default function FeaturedPorts() {
     const nextTide = tides.find(t => {
       const [h, m] = t.hora.split(':').map(Number);
       return (h * 60 + m) > currentMin;
-    }) || tides[0]; // Fallback para a primeira do dia seguinte se já passaram todas (simplificado)
+    }) || getEventosDia(port, addDays(todayStr, 1))[0]; // já passaram todas: primeira de amanhã
 
     return {
       port,

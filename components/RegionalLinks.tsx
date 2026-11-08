@@ -1,6 +1,40 @@
 import { getStateSlug } from "@/lib/states";
 import Link from 'next/link';
-import { PORTS, getAllRegions } from '@/lib/ports';
+import { PORTS, getAllRegions, getPortBySlug, type Port } from '@/lib/ports';
+
+const MAX_PER_REGION = 8;
+
+// Locais mais buscados por região, em ordem de prioridade. Slugs inexistentes são
+// ignorados e a lista é completada com os demais portos da região (sem duplicar).
+const PRIORITY_SLUGS: Record<string, string[]> = {
+  norte: ['porto-de-belem', 'ilha-do-mosqueiro', 'porto-de-macapa'],
+  nordeste: [
+    'sao-luis', 'porto-do-recife', 'porto-de-salvador', 'porto-de-mucuripe-fortaleza',
+    'porto-de-maceio', 'porto-de-natal', 'porto-de-galinhas', 'praia-do-forte',
+  ],
+  sudeste: [
+    'porto-de-santos', 'guaruja', 'ubatuba', 'rio-de-janeiro-fiscal',
+    'cabo-frio', 'buzios', 'porto-de-vitoria',
+  ],
+  sul: [
+    'porto-de-paranagua', 'porto-de-itajai', 'balneario-camboriu',
+    'joaquina', 'porto-do-rio-grande',
+  ],
+};
+
+function portsForRegion(regionId: string): Port[] {
+  const seen = new Set<string>();
+  const out: Port[] = [];
+  const add = (p: Port | undefined) => {
+    if (p && p.region === regionId && !seen.has(p.slug) && out.length < MAX_PER_REGION) {
+      seen.add(p.slug);
+      out.push(p);
+    }
+  };
+  (PRIORITY_SLUGS[regionId] ?? []).forEach(slug => add(getPortBySlug(slug)));
+  PORTS.forEach(add);
+  return out;
+}
 
 export default function RegionalLinks() {
   const regions = getAllRegions();
@@ -21,7 +55,7 @@ export default function RegionalLinks() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
         {allDisplayRegions.map((region) => {
-          const regionPorts = PORTS.filter(p => p.region === region.id).slice(0, 5);
+          const regionPorts = portsForRegion(region.id);
           
           return (
             <div key={region.id}>

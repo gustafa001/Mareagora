@@ -197,7 +197,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
       />
       <NavBar />
 
-      <section className="relative overflow-hidden hero-section pt-10 pb-6 border-b border-white/5">
+      <section className="relative z-30 hero-section pt-10 pb-6 border-b border-white/5">
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-950/70 to-slate-950" />
         <div className="container relative z-10">
 
@@ -227,7 +227,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               Estado do {port.state}
             </p>
 
-            <div className="mt-2 mb-2 w-full max-w-md static z-40">
+            <div className="mt-2 mb-2 w-full max-w-md relative z-40">
               <SearchPorts ports={PORTS} />
             </div>
 

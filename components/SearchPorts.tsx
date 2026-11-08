@@ -50,7 +50,7 @@ export default function SearchPorts({ ports }: SearchPortsProps) {
   };
 
   return (
-    <div className="relative" ref={inputRef}>
+    <div className="relative z-50" ref={inputRef}>
       <div className="relative">
         <input
           type="text"

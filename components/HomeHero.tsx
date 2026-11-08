@@ -36,7 +36,20 @@ const QUICK_SLUGS = [
   'arquipelago-de-fernando-de-noronha', 'praia-do-paiva', 'ilha-do-mosqueiro',
 ];
 
-export default function HomeHero() {
+export interface HomeHeroTideEvent {
+  hora: string;
+  altura_m: number;
+  tipo: 'high' | 'low';
+}
+
+interface HomeHeroProps {
+  /** Dia (BRT, AAAA-MM-DD) das marés renderizadas no servidor. */
+  todayDate?: string;
+  /** Marés do dia do porto de referência, calculadas no servidor (aparecem no HTML inicial). */
+  todayEvents?: HomeHeroTideEvent[];
+}
+
+export default function HomeHero({ todayDate, todayEvents = [] }: HomeHeroProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -186,11 +199,14 @@ export default function HomeHero() {
           <div className="inline-flex items-center justify-center w-20 h-20 mb-6 rounded-3xl overflow-hidden shadow-2xl shadow-blue-500/20">
             <img src="/logo-mark.png" alt="MaréAgora" className="w-full h-full object-cover" />
           </div>
-          <h1 className="text-4xl md:text-6xl font-black text-white mb-3 font-syne">
-            MaréAgora
+          <h1 className="font-syne text-white mb-3">
+            <span className="block text-4xl md:text-6xl font-black">MaréAgora</span>
+            <span className="block mt-2 text-lg md:text-2xl font-bold text-blue-100/90">
+              Tábua de Maré Hoje em Todo o Brasil
+            </span>
           </h1>
           <p className="text-blue-200/70 font-medium">
-            Previsão de maré em tempo real — Brasil e Mundo
+            Horários de maré alta e baixa — dados oficiais da Marinha do Brasil
           </p>
         </div>
 
@@ -207,16 +223,31 @@ export default function HomeHero() {
               {moon && <span className="font-tideMono text-[11px] text-blue-300/70">{moon.icon} {moon.name}</span>}
             </div>
 
-            <div className="flex items-baseline gap-2 mb-2 flex-wrap">
-              <span className="font-tideMono text-3xl font-bold text-cyan-400">
-                {currentHeight !== null ? `${currentHeight.toFixed(2)}m` : '--m'}
-              </span>
-              <span className="font-tideMono text-[11px] uppercase tracking-wider text-emerald-400">
-                {liveNow
-                  ? `Agora ${currentTimeStr} — ${isRising === null ? '' : isRising ? 'Enchendo' : 'Vazando'}${tideNow?.next ? ` · ${isRising ? 'alta' : 'baixa'} ${formatCountdown(tideNow.next.minutesFromNow)}` : ''}`
-                  : 'Carregando…'}
-              </span>
-            </div>
+            {liveNow ? (
+              <div className="flex items-baseline gap-2 mb-2 flex-wrap">
+                <span className="font-tideMono text-3xl font-bold text-cyan-400">
+                  {currentHeight !== null ? `${currentHeight.toFixed(2)}m` : '--m'}
+                </span>
+                <span className="font-tideMono text-[11px] uppercase tracking-wider text-emerald-400">
+                  {`Agora ${currentTimeStr} — ${isRising === null ? '' : isRising ? 'Enchendo' : 'Vazando'}${tideNow?.next ? ` · ${isRising ? 'alta' : 'baixa'} ${formatCountdown(tideNow.next.minutesFromNow)}` : ''}`}
+                </span>
+              </div>
+            ) : (
+              // HTML inicial (servidor): marés do dia, sempre corretas para a data indicada.
+              // O valor "agora" aparece após a hidratação.
+              <div className="mb-2">
+                <p className="font-tideMono text-[11px] uppercase tracking-wider text-emerald-400 mb-2">
+                  Marés de hoje{todayDate ? ` (${todayDate.slice(8, 10)}/${todayDate.slice(5, 7)})` : ''}
+                </p>
+                <ul className="grid grid-cols-2 gap-x-4 gap-y-1 font-tideMono text-sm">
+                  {todayEvents.map((e) => (
+                    <li key={`${e.tipo}-${e.hora}`} className={e.tipo === 'high' ? 'text-cyan-400' : 'text-orange-400'}>
+                      {e.tipo === 'high' ? '▲ Alta' : '▼ Baixa'} {e.hora} · {e.altura_m.toFixed(2)}m
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {curve && (
               <svg viewBox="0 0 600 70" preserveAspectRatio="none" className="w-full h-16">
@@ -226,10 +257,12 @@ export default function HomeHero() {
               </svg>
             )}
 
-            <div className="flex justify-between font-tideMono text-[11px] text-blue-300/70 pt-3 mt-2 border-t border-white/5">
-              <span className="text-orange-400">▼ Baixa {nextLow ? formatEventTime(nextLow) : '--:--'} · {nextLow ? `${nextLow.altura_m.toFixed(2)}m` : '--'}</span>
-              <span className="text-cyan-400">▲ Alta {nextHigh ? formatEventTime(nextHigh) : '--:--'} · {nextHigh ? `${nextHigh.altura_m.toFixed(2)}m` : '--'}</span>
-            </div>
+            {liveNow && (
+              <div className="flex justify-between font-tideMono text-[11px] text-blue-300/70 pt-3 mt-2 border-t border-white/5">
+                <span className="text-orange-400">▼ Baixa {nextLow ? formatEventTime(nextLow) : '--:--'} · {nextLow ? `${nextLow.altura_m.toFixed(2)}m` : '--'}</span>
+                <span className="text-cyan-400">▲ Alta {nextHigh ? formatEventTime(nextHigh) : '--:--'} · {nextHigh ? `${nextHigh.altura_m.toFixed(2)}m` : '--'}</span>
+              </div>
+            )}
             <p className="mt-3 text-center text-[11px] font-semibold uppercase tracking-widest text-cyan-300">
               Ver tábua completa de {referencePort.cityName || referencePort.name} →
             </p>

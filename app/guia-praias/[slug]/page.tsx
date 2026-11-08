@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const hasConteudo = !!CONTEUDO[praia.slug]
   const url = `https://mareagora.com.br/guia-praias/${praia.slug}`
   const title = `${praia.nome} - Guia Completo: Maré, Ondas e Dicas | MaréAgora`
-  const description = `Guia completo de ${praia.nome}, ${praia.estado}: maré em tempo real, condições de ondas, estrutura, segurança e dicas de pesca. Dados oficiais da Marinha do Brasil.`
+  const description = `Guia completo de ${praia.nome}, ${praia.estado}: tábua de maré de hoje, condições de ondas, estrutura, segurança e dicas de pesca. Dados oficiais da Marinha do Brasil.`
 
   return {
     title,

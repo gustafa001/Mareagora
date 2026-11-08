@@ -39,7 +39,7 @@ export function buildFaq(params: {
   // Sempre disponível: a maré é buscada em tempo real (TideCardLive) para toda praia.
   faq.push({
     pergunta: `Qual é a maré hoje em ${nome}?`,
-    resposta: `A maré em tempo real de ${nome} é atualizada a cada hora com dados oficiais da Marinha do Brasil e pode ser vista no card "Condições atuais" desta página.`,
+    resposta: `A previsão de maré de ${nome} é calculada a partir da tábua astronômica e atualizada a cada hora, com dados oficiais da Marinha do Brasil e pode ser vista no card "Condições atuais" desta página.`,
   })
 
   faq.push({
@@ -86,7 +86,7 @@ export function buildFaq(params: {
     })
     faq.push({
       pergunta: `Quando é o melhor horário para pescar em ${nome}?`,
-      resposta: `Em geral, os melhores horários são 1 hora antes e depois da virada de maré (enchente ou vazante). Consulte o card de maré em tempo real acima para o horário exato de hoje.`,
+      resposta: `Em geral, os melhores horários são 1 hora antes e depois da virada de maré (enchente ou vazante). Consulte o card de maré acima para o horário exato de hoje.`,
     })
   }
 

@@ -21,7 +21,7 @@ export default function Footer() {
               </div>
               <span className="text-white font-black text-xl">MaréAgora</span>
             </div>
-            <p className="text-sm">Previsão de marés em tempo real</p>
+            <p className="text-sm">Tábua de marés com dados oficiais da Marinha</p>
             <p className="text-xs mt-1">Dados oficiais da Marinha do Brasil • DHN</p>
           </div>
 

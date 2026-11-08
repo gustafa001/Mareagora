@@ -5,7 +5,7 @@ import NavBar from "@/components/NavBar";
 export const metadata = {
   title: "Sobre | MaréAgora",
   description:
-    "Conheça o MaréAgora — a plataforma brasileira de previsão de marés em tempo real.",
+    "Conheça o MaréAgora — a plataforma brasileira de tábua de marés com dados oficiais da Marinha do Brasil.",
 };
 
 export default function SobrePage() {
@@ -63,7 +63,7 @@ export default function SobrePage() {
             </span>{" "}
             com previsões de ondas e vento da{" "}
             <span className="text-blue-300">Open-Meteo Marine API</span>, tudo
-            apresentado de forma clara, visual e em tempo real.
+            apresentado de forma clara e visual, com o horário da próxima maré sempre à mão.
           </p>
         </Card>
 

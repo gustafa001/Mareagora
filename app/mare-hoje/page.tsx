@@ -3,7 +3,10 @@ import NavBar from '@/components/NavBar';
 import SchemaGenerator from '@/components/seo/SchemaGenerator';
 import SearchPorts from '@/components/SearchPorts';
 import { PORTS } from '@/lib/ports';
+import { getTodayBR, parseDateBR } from '@/lib/dateBR';
 import MareDiaListing, { buildEstadosDia } from '@/components/mare-dia/MareDiaListing';
+
+export const revalidate = 3600; // ISR: "hoje" precisa acompanhar o calendário de Brasília
 
 export const metadata: Metadata = {
   title: 'Maré Hoje: Horários por Estado | MaréAgora',
@@ -12,14 +15,19 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  const hoje = new Date().toLocaleDateString('en-CA');
+  const hoje = getTodayBR();
   const estados = buildEstadosDia(hoje);
 
   const agoraBR = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' });
   const [h, m] = agoraBR.split(':').map(Number);
   const currentMin = (h || 0) * 60 + (m || 0);
 
-  const dataFormatada = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+  const dataFormatada = parseDateBR(hoje).toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'America/Sao_Paulo',
+  });
 
   return (
     <main className="min-h-screen bg-slate-50">

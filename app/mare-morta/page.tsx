@@ -6,6 +6,8 @@ import SearchPorts from '@/components/SearchPorts';
 import { PORTS } from '@/lib/ports';
 import { getProximosPicos } from '@/lib/mareCiclo';
 
+export const revalidate = 3600; // ISR: as próximas datas partem do "hoje" de Brasília
+
 export const metadata: Metadata = {
   title: 'Maré Morta (Quadratura): O que é e Próximas Datas | MaréAgora',
   description: 'Entenda quando ocorre a maré morta (quadratura), seu impacto na navegação e praias, e veja as próximas datas com menor coeficiente.',

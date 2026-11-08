@@ -4,10 +4,13 @@ import NavBar from '@/components/NavBar';
 import SchemaGenerator from '@/components/seo/SchemaGenerator';
 import SearchPorts from '@/components/SearchPorts';
 import { PORTS } from '@/lib/ports';
+import { addDaysBR, getTodayBR, parseDateBR } from '@/lib/dateBR';
 import { getEventosDia } from '@/lib/mare';
 import { getTideCoefficient } from '@/lib/tideUtils';
 import { getStateSlug } from '@/lib/states';
 import { getRepresentativePorts } from '@/components/mare-dia/MareDiaListing';
+
+export const revalidate = 3600; // ISR: a semana começa no "hoje" de Brasília
 
 export const metadata: Metadata = {
   title: 'Maré da Semana: Tábua de 7 Dias por Estado | MaréAgora',
@@ -16,23 +19,23 @@ export const metadata: Metadata = {
 };
 
 function fmtDiaCurto(date: Date) {
-  return date.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '');
+  return date
+    .toLocaleDateString('pt-BR', { weekday: 'short', timeZone: 'America/Sao_Paulo' })
+    .replace('.', '');
 }
 
 export default function Page() {
-  const hoje = new Date();
+  const hoje = getTodayBR();
   const dias = Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(hoje);
-    d.setDate(d.getDate() + i);
-    return d;
+    const dataStr = addDaysBR(hoje, i);
+    return { dataStr, data: parseDateBR(dataStr) };
   });
 
   const estados = getRepresentativePorts().map((port) => {
-    const semana = dias.map((d) => {
-      const dataStr = d.toLocaleDateString('en-CA');
+    const semana = dias.map(({ dataStr, data }) => {
       const eventos = getEventosDia(port, dataStr);
       const coef = getTideCoefficient(0, eventos.length >= 2 ? eventos : undefined);
-      return { data: d, coef: eventos.length >= 2 ? coef.value : null };
+      return { data, coef: eventos.length >= 2 ? coef.value : null };
     });
     return { port, semana };
   });
@@ -62,7 +65,7 @@ export default function Page() {
                 <tr>
                   <th className="text-left px-4 py-3 sticky left-0 bg-slate-50">Estado</th>
                   {dias.map((d, i) => (
-                    <th key={i} className="text-center px-3 py-3 capitalize">{fmtDiaCurto(d)}</th>
+                    <th key={i} className="text-center px-3 py-3 capitalize">{fmtDiaCurto(d.data)}</th>
                   ))}
                 </tr>
               </thead>

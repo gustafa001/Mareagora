@@ -1,4 +1,5 @@
 import { getMoonAge, getTideCoefficient } from '@/lib/tideUtils';
+import { addDaysBR, getTodayBR, parseDateBR } from '@/lib/dateBR';
 
 export interface PicoMare {
   data: Date;
@@ -10,13 +11,11 @@ export interface PicoMare {
  * do coeficiente astronômico — ou seja, as datas de sizígia (maré viva) ou quadratura (maré morta).
  */
 export function getProximosPicos(tipo: 'viva' | 'morta', dias = 90): PicoMare[] {
-  const hoje = new Date();
-  hoje.setHours(12, 0, 0, 0);
+  const hojeStr = getTodayBR();
 
   const valores: { data: Date; coef: number }[] = [];
   for (let i = 0; i < dias; i++) {
-    const d = new Date(hoje);
-    d.setDate(d.getDate() + i);
+    const d = parseDateBR(addDaysBR(hojeStr, i));
     const coef = getTideCoefficient(getMoonAge(d)).value;
     valores.push({ data: d, coef });
   }

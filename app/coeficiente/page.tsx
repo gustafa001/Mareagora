@@ -4,7 +4,10 @@ import NavBar from '@/components/NavBar';
 import SchemaGenerator from '@/components/seo/SchemaGenerator';
 import SearchPorts from '@/components/SearchPorts';
 import { PORTS } from '@/lib/ports';
+import { addDaysBR, getTodayBR, parseDateBR } from '@/lib/dateBR';
 import { getMoonAge, getTideCoefficient, getMoonPhase } from '@/lib/tideUtils';
+
+export const revalidate = 3600; // ISR: o calendário de coeficientes começa no "hoje" de Brasília
 
 export const metadata: Metadata = {
   title: 'Coeficiente de Maré: O que é e Como Interpretar | MaréAgora',
@@ -20,18 +23,23 @@ const FAIXAS = [
 ];
 
 function formatDatePt(date: Date) {
-  return date.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit' });
+  return date.toLocaleDateString('pt-BR', {
+    weekday: 'short',
+    day: '2-digit',
+    month: '2-digit',
+    timeZone: 'America/Sao_Paulo',
+  });
 }
 
 export default function Page() {
-  const hoje = new Date();
+  const hojeStr = getTodayBR();
+  const hoje = parseDateBR(hojeStr);
   const idadeHoje = getMoonAge(hoje);
   const coefHoje = getTideCoefficient(idadeHoje);
   const faseHoje = getMoonPhase(idadeHoje);
 
   const dias = Array.from({ length: 14 }, (_, i) => {
-    const d = new Date(hoje);
-    d.setDate(d.getDate() + i);
+    const d = parseDateBR(addDaysBR(hojeStr, i));
     const idade = getMoonAge(d);
     const coef = getTideCoefficient(idade);
     const fase = getMoonPhase(idade);

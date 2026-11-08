@@ -12,9 +12,9 @@ import { useT } from "@/lib/tideI18n";
 
 interface HourlyMarine {
   time: string[];
-  wave_height?: number[];
-  wave_period?: number[];
-  wave_direction?: number[];
+  wave_height?: (number | null)[];
+  wave_period?: (number | null)[];
+  wave_direction?: (number | null)[];
 }
 
 interface WaveChartProps {
@@ -47,6 +47,23 @@ export default function WaveChart({ hourly, days = 5, beachName = "praia" }: Wav
   }, [hourly]);
 
   if (!points.length) return <ChartSkeleton label={s.loadingWaves} />;
+
+  // Open-Meteo devolve null em toda a série quando o ponto não tem célula de
+  // mar (ex.: baías/estuários). Sem isso o gráfico plotava 0 m e direção "N".
+  const hasWaveData = !!hourly?.wave_height?.some((v) => v != null);
+  if (!hasWaveData) {
+    return (
+      <div style={styles.card} aria-label={s.waveChartAria(beachName)}>
+        <header style={styles.header}>
+          <span style={styles.title}>{s.waveChartTitle}</span>
+          <span style={styles.badge}>{s.meters}</span>
+        </header>
+        <p style={{ padding: "32px 8px", textAlign: "center", opacity: 0.7 }}>
+          Dados de ondas indisponíveis para este local no momento.
+        </p>
+      </div>
+    );
+  }
 
   const dayGroups = groupHourlyByDay(points, days, groupOpts);
   // Amostra ~8 pontos por dia (a cada 3h) pra manter o visual limpo

@@ -43,7 +43,7 @@ export async function getSeaConditionsSummary(
 
   const marineUrl =
     `https://marine-api.open-meteo.com/v1/marine` +
-    `?latitude=${lat}&longitude=${lon}` +
+    `?latitude=${lat}&longitude=${lon}&cell_selection=sea` +
     `&hourly=wave_height,wave_period,wave_direction` +
     `&forecast_days=7&timezone=${tz}`;
 

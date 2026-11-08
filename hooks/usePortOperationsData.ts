@@ -66,7 +66,7 @@ export function usePortOperationsData(lat: number, lon: number): PortOperationsD
         `&wind_speed_unit=kmh&forecast_days=4&timezone=${tz}`;
 
       const marineUrl =
-        `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}` +
+        `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&cell_selection=sea` +
         `&hourly=wave_height,wave_period,wave_direction,ocean_current_velocity` +
         `&forecast_days=4&timezone=${tz}`;
 

@@ -56,7 +56,7 @@ export default function WindWaveCharts({
     // colorir as barras e desenhar as setas no estilo Surfguru.
     const marineUrl =
       `https://marine-api.open-meteo.com/v1/marine` +
-      `?latitude=${lat}&longitude=${lon}` +
+      `?latitude=${lat}&longitude=${lon}&cell_selection=sea` +
       `&hourly=wave_height,wave_period,wave_direction` +
       `&forecast_days=7&timezone=${tz}`;
 

@@ -31,7 +31,7 @@ export default function DetailedForecastTable({ lat, lon, todayTides }: Detailed
   useEffect(() => {
     async function fetchData() {
       // Pedidos para exatamente 2 dias para termos dados até ao fim do dia seguinte (cobrindo a noite de hoje)
-      const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&hourly=wave_height,wave_direction,wave_period&timezone=America%2FSao_Paulo&forecast_days=2`;
+      const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&cell_selection=sea&hourly=wave_height,wave_direction,wave_period&timezone=America%2FSao_Paulo&forecast_days=2`;
       const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m&timezone=America%2FSao_Paulo&forecast_days=2`;
 
       try {

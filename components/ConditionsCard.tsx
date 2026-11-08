@@ -13,7 +13,7 @@ export default function ConditionsCard({ lat, lon }: ConditionsCardProps) {
 
   useEffect(() => {
     async function fetchConditions() {
-      const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&hourly=wave_height,wave_period&timezone=America%2FSao_Paulo&forecast_days=1`;
+      const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&cell_selection=sea&hourly=wave_height,wave_period&timezone=America%2FSao_Paulo&forecast_days=1`;
       try {
         const res = await fetch(url);
         const json = await res.json();
@@ -26,8 +26,15 @@ export default function ConditionsCard({ lat, lon }: ConditionsCardProps) {
           return d.getHours() === nowH && d.toDateString() === now.toDateString();
         });
         const i = idx >= 0 ? idx : 0;
-        const wh = h.wave_height?.[i] ?? 0;
+        const whRaw = h.wave_height?.[i];
+        const wh = whRaw ?? 0;
         const wp = h.wave_period?.[i] ?? 0;
+        // Sem dado de onda (null) não é "mar calmo": mostra indisponível.
+        if (whRaw == null) {
+          setConditions({ icon: '❔', label: 'Dados indisponíveis', desc: 'Sem dados de ondas para este local no momento.' });
+          setLoading(false);
+          return;
+        }
 
         let icon = '🏄', label = 'Boas condições', desc = 'Ondas adequadas para a maioria das atividades.';
         if (wh < 0.3) { icon = '😴'; label = 'Mar calmo'; desc = 'Ótimo para mergulho e natação. Poucas ondas para surfe.'; }

@@ -13,7 +13,7 @@ export default function ForecastStrip({ lat, lon }: ForecastStripProps) {
 
   useEffect(() => {
     async function fetchForecast() {
-      const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&hourly=wave_height&timezone=America%2FSao_Paulo&forecast_days=7`;
+      const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&cell_selection=sea&hourly=wave_height&timezone=America%2FSao_Paulo&forecast_days=7`;
       try {
         const res = await fetch(url);
         const json = await res.json();

@@ -292,7 +292,7 @@ export default function HomeHero({ todayDate, todayEvents = [] }: HomeHeroProps)
 
           {/* Dropdown */}
           {showSuggestions && results.length > 0 && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-slate-900/97 border border-blue-500/30 rounded-2xl overflow-hidden backdrop-blur-sm max-h-80 overflow-y-auto z-20 shadow-2xl shadow-blue-500/10">
+            <div className="absolute top-full left-0 right-0 mt-2 bg-slate-900/97 border border-blue-500/30 rounded-2xl overflow-hidden backdrop-blur-sm max-h-80 overflow-y-auto z-50 shadow-2xl shadow-blue-500/10">
               {/* Group BR */}
               {results.some(r => r.type === 'br') && (
                 <div className="px-4 pt-3 pb-1">
@@ -344,7 +344,7 @@ export default function HomeHero({ todayDate, todayEvents = [] }: HomeHeroProps)
 
           {/* Sem resultados */}
           {showSuggestions && results.length === 0 && searchQuery.length >= 2 && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-slate-900/95 border border-blue-500/30 rounded-2xl backdrop-blur-sm z-20 shadow-2xl">
+            <div className="absolute top-full left-0 right-0 mt-2 bg-slate-900/95 border border-blue-500/30 rounded-2xl backdrop-blur-sm z-50 shadow-2xl">
               <div className="px-6 py-4 text-slate-400 text-sm text-center">
                 Nenhum local encontrado. Tente outro nome.
               </div>

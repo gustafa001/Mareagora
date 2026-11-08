@@ -70,7 +70,7 @@ export default function MundoSearchBar({
       </div>
 
       {open && results.length > 0 && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-slate-900/97 border border-blue-500/30 rounded-2xl overflow-hidden backdrop-blur-sm max-h-80 overflow-y-auto z-20 shadow-2xl shadow-blue-500/10">
+        <div className="absolute top-full left-0 right-0 mt-2 bg-slate-900/97 border border-blue-500/30 rounded-2xl overflow-hidden backdrop-blur-sm max-h-80 overflow-y-auto z-50 shadow-2xl shadow-blue-500/10">
           {results.map(place => (
             <button
               key={`${place.countryCode}-${place.slug}`}

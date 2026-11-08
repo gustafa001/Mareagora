@@ -20,6 +20,10 @@ interface WaveOverride {
 const WAVE_OVERRIDES: WaveOverride[] = [
   // São Luís (MA) — Baía de São Marcos não tem célula de onda
   { lat: -2.526667, lon: -44.311667, waveLat: -2.35, waveLon: -44.05 },
+  // Terminais do Golfão Maranhense (mesma baía): Itaqui, Ponta da Madeira, Alumar
+  { lat: -2.575472, lon: -44.369806, waveLat: -2.35, waveLon: -44.05 },
+  { lat: -2.565278, lon: -44.378028, waveLat: -2.35, waveLon: -44.05 },
+  { lat: -2.678278, lon: -44.358389, waveLat: -2.35, waveLon: -44.05 },
 ];
 
 const EPS = 1e-4;

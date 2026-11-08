@@ -132,8 +132,10 @@ export default function SchemaGenerator({
       description: datasetDescription,
       url,
       creator: { '@id': `${base}/#organization` },
+      // Google exige Organization ou Person em provider/creator/publisher de Dataset;
+      // subtipos como GovernmentOrganization são rejeitados pelo validador.
       provider: {
-        '@type': 'GovernmentOrganization',
+        '@type': 'Organization',
         name: 'Marinha do Brasil - Centro de Hidrografia da Marinha (CHM/DHN)',
         url: 'https://www.marinha.mil.br/chm/',
       },

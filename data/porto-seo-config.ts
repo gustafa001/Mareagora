@@ -403,6 +403,335 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     ],
   },
 
+  // ── Novas Praias: Litoral de SP & Nordeste ────────────────────────────────
+
+  'caraguatatuba': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Martim de Sá e Praias',
+    description: 'Tábua de maré de Caraguatatuba (SP) para hoje e 2026. Horários de maré alta e baixa para Martim de Sá, Cocanha, pesca no Rio Juqueriquerê e navegação. Dados oficiais da Marinha do Brasil (estação São Sebastião).',
+    keywords: ['maré caraguatatuba', 'maré caraguatatuba hoje', 'tábua de maré caraguatatuba', 'maré martim de sá', 'maré cocanha', 'maré caraguá'],
+    praias: ['Martim de Sá', 'Cocanha', 'Mococa', 'Prainha', 'Indaiá', 'Tabatinga'],
+    category: 'turismo',
+    portoVizinhos: ['porto-de-sao-sebastiao', 'ubatuba', 'juquehy'],
+    faqs: [
+      { q: 'Qual o melhor horário de maré para caminhar no Indaiá e Prainha?', a: 'Na maré baixa, a faixa de areia do Indaiá e praias centrais alarga-se por dezenas de metros com piso firme para caminhadas e esportes.' },
+      { q: 'A maré afeta as ondas na Praia Martim de Sá?', a: 'Sim. Por ser praia de tombo, a maré cheia aproxima as ondas da calçada com repuxo mais forte; na maré média a baixa as ondas quebram mais afastadas.' },
+      { q: 'De onde vêm os dados de maré de Caraguatatuba?', a: 'Seguem a estação maregráfica oficial do Porto de São Sebastião (DHN), que regula a hidrodinâmica do canal e da enseada de Caraguatatuba.' },
+    ],
+  },
+
+  'juquehy': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Surf e Família',
+    description: 'Tábua de maré de Juquehy (São Sebastião, SP) para hoje e 2026. Horários de maré para o surf no canto direito e banho calmo no canto esquerdo. Dados oficiais da Marinha do Brasil.',
+    keywords: ['maré juquehy', 'maré juquehy hoje', 'tábua de maré juquehy', 'surf juquehy maré', 'maré praia de juquehy', 'maré são sebastião juquehy'],
+    praias: ['Juquehy', 'Praia da Baleia', 'Barra do Sahy'],
+    category: 'surf',
+    portoVizinhos: ['praia-da-baleia', 'camburi', 'porto-de-sao-sebastiao'],
+    faqs: [
+      { q: 'Qual a melhor maré para surfar em Juquehy?', a: 'O canto direito funciona melhor com maré seca a média e ondulação de sul/sudeste, quando as ondas ganham forma e quebram com melhor pressão.' },
+      { q: 'Qual o melhor horário para banho com crianças em Juquehy?', a: 'No canto esquerdo, próximo ao rio, a maré baixa deixa o mar muito raso, límpido e sem ondas, perfeito para famílias com crianças pequenas.' },
+      { q: 'A maré de Juquehy é a mesma de São Sebastião?', a: 'Sim, Juquehy utiliza a tábua de São Sebastião (DHN) como referência direta de mar aberto, sem defasagem perceptível.' },
+    ],
+  },
+
+  'praia-da-baleia': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Caminhadas e Mar Calmo',
+    description: 'Tábua de maré da Praia da Baleia (São Sebastião, SP) para hoje e 2026. Horários de maré baixa para caminhadas na areia dura e banho de mar calmo. Dados oficiais da Marinha do Brasil.',
+    keywords: ['maré praia da baleia', 'maré baleia sp', 'tábua de maré praia da baleia', 'maré são sebastião baleia'],
+    praias: ['Praia da Baleia', 'Juquehy', 'Barra do Sahy'],
+    category: 'turismo',
+    portoVizinhos: ['juquehy', 'camburi', 'porto-de-sao-sebastiao'],
+    faqs: [
+      { q: 'Por que a maré baixa é famosa na Praia da Baleia?', a: 'Porque o recuo da maré revela uma extensa e plana faixa de areia batida, excelente para corrida, caminhadas longas e pedaladas à beira-mar.' },
+      { q: 'O mar da Baleia é calmo na maré cheia?', a: 'O canto sul abrigado mantém-se calmo na maior parte do tempo, enquanto o trecho central ganha pequenas ondas suaves ideais para iniciantes no surf.' },
+    ],
+  },
+
+  'camburi': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Surf e Ondas',
+    description: 'Tábua de maré de Camburi e Camburizinho (São Sebastião, SP) para hoje e 2026. Horários ideais de maré baixa a média para o surf nas bancadas tubulares. Fonte: Marinha do Brasil.',
+    keywords: ['maré camburi', 'maré camburi hoje', 'tábua de maré camburi', 'surf camburi maré', 'maré camburizinho', 'ondas camburi'],
+    praias: ['Camburi', 'Camburizinho', 'Baleia', 'Boiçucanga'],
+    category: 'surf',
+    portoVizinhos: ['praia-da-baleia', 'juquehy', 'maresias'],
+    faqs: [
+      { q: 'Qual a maré ideal para surfar em Camburi?', a: 'A maré baixa a média costuma produzir as melhores ondas tubulares no meio da praia e no canto esquerdo. Na maré cheia a quebra fica mais pesada na beira.' },
+      { q: 'É perigoso nadar em Camburi na maré alta?', a: 'Sim, a arrebentação é forte (praia de tombo) e há correntes de retorno acentuadas. Banhistas que buscam calmaria devem preferir a foz do rio ou Camburizinho.' },
+    ],
+  },
+
+  'praia-do-tombo': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Surf Bandeira Azul',
+    description: 'Tábua de maré da Praia do Tombo (Guarujá, SP) para hoje e 2026. Horários de maré e condições para o surf de alta performance na única praia Bandeira Azul de SP. Dados oficiais da Marinha do Brasil.',
+    keywords: ['maré praia do tombo', 'maré tombo guarujá', 'tábua de maré praia do tombo', 'surf praia do tombo', 'maré tombo hoje'],
+    praias: ['Praia do Tombo', 'Astúrias', 'Pitangueiras'],
+    category: 'surf',
+    portoVizinhos: ['guaruja', 'porto-de-santos', 'sao-vicente'],
+    faqs: [
+      { q: 'Qual o comportamento da maré na Praia do Tombo?', a: 'Por ter fundo arenoso com declive acentuado, a maré baixa deixa os tubos rápidos e cavados; na maré cheia o shorebreak quebra com forte impacto na rampa de areia.' },
+      { q: 'A Praia do Tombo tem correnteza forte?', a: 'Sim. Há presença constante de valas e repuxo severo. A praia é vigiada permanentemente pelo Corpo de Bombeiros e exige atenção constante de banhistas.' },
+    ],
+  },
+
+  'itaguare': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Ecoturismo e Surf',
+    description: 'Tábua de maré de Itaguaré (Bertioga, SP) para hoje e 2026. Horários para banho na foz do Rio Itaguaré e surf na praia selvagem. Fonte oficial: Marinha do Brasil (+15 min de Santos).',
+    keywords: ['maré itaguaré', 'maré itaguare bertioga', 'tábua de maré itaguaré', 'rio itaguare maré', 'maré itaguare hoje'],
+    praias: ['Itaguaré', 'Riviera de São Lourenço', 'Guaratuba'],
+    category: 'pesca',
+    portoVizinhos: ['riviera-de-sao-lourenco', 'bertioga', 'porto-de-santos'],
+    faqs: [
+      { q: 'Qual a melhor maré para tomar banho no Rio Itaguaré?', a: 'A maré baixa é perfeita: o encontro do rio com a areia forma piscinas rasas e límpidas de água morna, excelentes para relaxar e praticar stand-up paddle.' },
+      { q: 'Por que Itaguaré tem +15 minutos de defasagem?', a: 'Itaguaré segue a hidrodinâmica da enseada de Bertioga, onde a propagação da onda de maré da Marinha do Brasil atinge o pico 15 minutos após o Porto de Santos.' },
+    ],
+  },
+
+  'porto-seguro': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Recife de Fora e Praias',
+    description: 'Tábua de maré de Porto Seguro (BA) para hoje e 2026. Horário da maré baixa para as piscinas do Recife de Fora, Taperapuã, Mutá e passeios de escuna. Fonte: Marinha do Brasil (estação Ilhéus).',
+    keywords: ['maré porto seguro', 'maré porto seguro hoje', 'tábua de maré porto seguro', 'maré recife de fora', 'maré taperapuã', 'tábua da maré porto seguro 2026'],
+    praias: ['Taperapuã', 'Praia do Mutá', 'Ponta Grande', 'Mundaim'],
+    category: 'turismo',
+    portoVizinhos: ['arraial-dajuda', 'trancoso', 'porto-de-ilheus'],
+    faqs: [
+      { q: 'Qual o melhor horário de maré para o Recife de Fora?', a: 'O passeio só acontece na maré baixa, idealmente abaixo de 0,4 metros durante as luas nova e cheia (sizígia), quando os recifes emergem formando piscinas transparentes.' },
+      { q: 'Quais as melhores praias de Porto Seguro para banho calmo?', a: 'A Praia do Mutá e a Ponta Grande são protegidas por corais e oferecem piscinas mornas e sem ondas, especialmente na maré baixa.' },
+    ],
+  },
+
+  'arraial-dajuda': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Piscinas Naturais e Falésias',
+    description: 'Tábua de maré de Arraial d\'Ajuda (Porto Seguro, BA) para hoje e 2026. Horários da maré baixa para as piscinas do Mucugê, Parracho e caminhada pelas falésias de Pitinga e Taípe. Fonte: Marinha do Brasil.',
+    keywords: ['maré arraial dajuda', 'maré arraial d\'ajuda hoje', 'tábua de maré arraial dajuda', 'maré mucugê arraial', 'maré pitinga'],
+    praias: ['Mucugê', 'Parracho', 'Pitinga', 'Taípe', 'Araçaípe'],
+    category: 'turismo',
+    portoVizinhos: ['porto-seguro', 'trancoso', 'porto-de-ilheus'],
+    faqs: [
+      { q: 'Quando aparecem as piscinas naturais em Arraial d\'Ajuda?', a: 'Na maré baixa, principalmente na Praia do Mucugê e Parracho, quando os recifes retêm águas mornas e calmas repletas de peixes.' },
+      { q: 'É seguro caminhar pela praia até Taípe e Trancoso?', a: 'A caminhada só deve ser feita durante a maré vazante e baixa. Na maré cheia, as ondas batem na base das falésias e bloqueiam a passagem.' },
+    ],
+  },
+
+  'itacare': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Surf e Praias',
+    description: 'Tábua de maré de Itacaré (BA) para hoje e 2026. Horários de maré para o surf na Tiririca, Resende e Engenhoca, e banho calmo na Praia da Concha. Dados da Marinha do Brasil.',
+    keywords: ['maré itacaré', 'maré itacaré hoje', 'tábua de maré itacaré', 'surf itacaré maré', 'maré praia da concha', 'maré tiririca itacaré'],
+    praias: ['Tiririca', 'Resende', 'Praia da Concha', 'Ribeira', 'Prainha', 'Itacarezinho'],
+    category: 'surf',
+    portoVizinhos: ['porto-de-ilheus', 'taipu-de-fora', 'morro-de-sao-paulo'],
+    faqs: [
+      { q: 'Qual a melhor maré para surfar na Praia da Tiririca?', a: 'A maré seca a média proporciona ondas cavadas e tubulares com maior velocidade e potência.' },
+      { q: 'Qual praia de Itacaré é indicada para banho calmo?', a: 'A Praia da Concha, na foz do Rio de Contas, tem águas tranquilas e sem ondas, ideais para stand-up paddle e banho familiar.' },
+    ],
+  },
+
+  'taipu-de-fora': {
+    titleSuffix: 'Maré Baixa Hoje — Piscinas Naturais de Maraú',
+    description: 'Tábua de maré de Taipu de Fora (Península de Maraú, BA) hoje e 2026. Horário exato da maré baixa para snorkel nas piscinas naturais de corais. Dados da Marinha do Brasil.',
+    keywords: ['maré taipu de fora', 'maré taipu de fora hoje', 'tábua de maré taipu de fora', 'piscinas naturais taipu de fora maré', 'maré barra grande marau'],
+    praias: ['Taipu de Fora', 'Barra Grande', 'Três Coqueiros', 'Saquaíra'],
+    category: 'turismo',
+    portoVizinhos: ['itacare', 'ilha-de-boipeba', 'porto-de-ilheus'],
+    faqs: [
+      { q: 'Qual o horário ideal para ver as piscinas naturais de Taipu de Fora?', a: 'Rigorosamente na maré baixa (abaixo de 0,3 metros), nas luas cheia ou nova. Chegue cerca de 1 hora antes do pico da baixamar para aproveitar a água límpida.' },
+      { q: 'O que acontece na maré cheia em Taipu de Fora?', a: 'Na maré alta, as ondas ultrapassam a barreira de corais e o mar vira aberto com quebra forte, inviabilizando o snorkel.' },
+    ],
+  },
+
+  'farol-da-barra': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Pôr do Sol e Piscinas',
+    description: 'Tábua de maré do Farol da Barra (Salvador, BA) para hoje e 2026. Horários de maré baixa para as piscinas dos arrecifes e maré alta para surf no Cristo. Fonte oficial: Marinha do Brasil.',
+    keywords: ['maré farol da barra', 'maré farol da barra hoje', 'tábua de maré farol da barra', 'maré porto da barra', 'maré barra salvador'],
+    praias: ['Farol da Barra', 'Porto da Barra', 'Praia do Cristo'],
+    category: 'turismo',
+    portoVizinhos: ['porto-de-salvador', 'itapua', 'morro-de-sao-paulo'],
+    faqs: [
+      { q: 'Como a maré afeta o banho no Farol da Barra?', a: 'Na maré baixa, os arrecifes em frente ao farol formam piscinas naturais rasas e mornas; na maré alta, as ondas quebram sobre as pedras e o mar ganha força.' },
+      { q: 'O Porto da Barra tem maré diferente do Farol da Barra?', a: 'Não, ambas compartilham a mesma estação maregráfica oficial do Porto de Salvador (DHN), situada a menos de 5 km.' },
+    ],
+  },
+
+  'itapua': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Piscinas e Farol',
+    description: 'Tábua de maré de Itapuã (Salvador, BA) para hoje e 2026. Horários de maré baixa para as piscinas naturais da Sereia e pesca artesanal na orla. Fonte: Marinha do Brasil.',
+    keywords: ['maré itapuã', 'maré itapuã hoje', 'tábua de maré itapuã', 'maré farol de itapuã', 'maré praia da sereia salvador'],
+    praias: ['Praia de Itapuã', 'Praia da Sereia', 'Farol de Itapuã', 'Placaford'],
+    category: 'turismo',
+    portoVizinhos: ['farol-da-barra', 'guarajuba', 'porto-de-salvador'],
+    faqs: [
+      { q: 'Onde se formam piscinas naturais em Itapuã?', a: 'Na maré baixa, as bancadas de arrecifes em frente à estátua da Sereia e ao Farol de Itapuã criam poças calmas de água transparente ideais para banho.' },
+      { q: 'A pesca em Itapuã depende da maré?', a: 'Sim. Os pescadores e jangadeiros da colônia Z-6 aproveitam a maré enchente para retornar da pesca costeira com mais segurança.' },
+    ],
+  },
+
+  'guarajuba': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Piscinas Naturais e Surf',
+    description: 'Tábua de maré de Guarajuba (Camaçari, BA) para hoje e 2026. Horário da maré baixa para as piscinas de corais e maré cheia para surf no Canto das Caravelas. Dados da Marinha do Brasil.',
+    keywords: ['maré guarajuba', 'maré guarajuba hoje', 'tábua de maré guarajuba', 'piscinas naturais guarajuba maré', 'maré praia de guarajuba'],
+    praias: ['Guarajuba', 'Itacimirim', 'Praia do Forte'],
+    category: 'turismo',
+    portoVizinhos: ['praia-do-forte', 'itapua', 'porto-de-salvador'],
+    faqs: [
+      { q: 'Qual a melhor maré para famílias em Guarajuba?', a: 'A maré baixa é ideal: as barreiras de corais na parte central formam piscinas cristalinas, mornas e sem ondas.' },
+      { q: 'Onde surfar em Guarajuba?', a: 'No Canto das Caravelas (norte), o mar é aberto e a maré média a cheia oferece ondas consistentes para surf e bodyboard.' },
+    ],
+  },
+
+  'ilha-de-boipeba': {
+    titleSuffix: 'Maré Baixa Hoje — Piscinas de Moreré e Trilhas',
+    description: 'Tábua de maré da Ilha de Boipeba (Cairu, BA) para hoje e 2026. Horários da maré baixa para as piscinas naturais de Moreré, Ponta dos Castelhanos e travessia da Cueira. Fonte: Marinha do Brasil.',
+    keywords: ['maré boipeba', 'maré boipeba hoje', 'tábua de maré boipeba', 'piscinas naturais moreré maré', 'maré moreré', 'maré ilha de boipeba'],
+    praias: ['Moreré', 'Cueira', 'Boca da Barra', 'Ponta dos Castelhanos', 'Tassimirim'],
+    category: 'turismo',
+    portoVizinhos: ['morro-de-sao-paulo', 'taipu-de-fora', 'porto-de-salvador'],
+    faqs: [
+      { q: 'Qual o horário ideal para as piscinas naturais de Moreré?', a: 'Durante a baixamar das luas cheia e nova (maré abaixo de 0,4 metros). Os passeios de barco partem da praia para a barreira de corais.' },
+      { q: 'Como a maré influencia as caminhadas em Boipeba?', a: 'A travessia a pé da foz do Rio Oritiguçu (entre a Cueira e Moreré) só é possível na maré baixa com água rasa; na maré alta, barqueiros fazem a travessia.' },
+    ],
+  },
+
+  'praia-dos-carneiros': {
+    titleSuffix: 'Maré Baixa Hoje — Piscinas Naturais e Bancos de Areia',
+    description: 'Tábua de maré da Praia dos Carneiros (Tamandaré, PE) para hoje e 2026. Horário exato da maré baixa para as piscinas de recifes, bancos de areia e passeios de catamarã. Fonte: Marinha do Brasil (estação Suape).',
+    keywords: ['maré praia dos carneiros', 'maré carneiros hoje', 'tábua de maré carneiros', 'maré baixa praia dos carneiros', 'horário maré carneiros 2026'],
+    praias: ['Praia dos Carneiros', 'Tamandaré', 'Boca da Barra'],
+    category: 'turismo',
+    portoVizinhos: ['tamandare', 'porto-de-suape', 'porto-de-galinhas'],
+    faqs: [
+      { q: 'Qual a maré ideal para visitar a Praia dos Carneiros?', a: 'A maré mais baixa possível, preferencialmente abaixo de 0,3 metros. Nesse horário, emergem os bancos de areia no estuário do Rio Formoso e as piscinas de corais.' },
+      { q: 'O que acontece em Carneiros na maré alta?', a: 'Na maré cheia, as piscinas naturais e bancos de areia ficam completamente submersos e o mar atinge a linha dos coqueiros.' },
+    ],
+  },
+
+  'tamandare': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Piscinas e Forte',
+    description: 'Tábua de maré de Tamandaré (PE) para hoje e 2026. Horários de maré para as piscinas naturais da orla central, Praia de Campas e visitas ao Forte de Santo Inácio. Fonte: Marinha do Brasil.',
+    keywords: ['maré tamandaré', 'maré tamandaré hoje', 'tábua de maré tamandaré', 'maré praia de campas', 'piscinas naturais tamandaré'],
+    praias: ['Praia de Tamandaré', 'Campas', 'Praia dos Carneiros', 'Boca da Barra'],
+    category: 'turismo',
+    portoVizinhos: ['praia-dos-carneiros', 'porto-de-suape', 'maragogi'],
+    faqs: [
+      { q: 'Como é o mar em Tamandaré na maré baixa?', a: 'Graças à barreira de recifes, o mar forma uma imensa piscina rasa de águas mornas e cristalinas, sem ondas, ideal para crianças.' },
+      { q: 'Tamandaré usa a tábua de maré de qual porto?', a: 'Utiliza a estação de Suape (DHN), situada a 38 km ao norte, com horários rigorosamente síncronos na costa sul pernambucana.' },
+    ],
+  },
+
+  'praia-do-frances': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Surf e Piscinas Naturais',
+    description: 'Tábua de maré da Praia do Francês (Marechal Deodoro, AL) para hoje e 2026. Horários da maré baixa para as piscinas do lado esquerdo e maré alta para surf no lado direito. Fonte: Marinha do Brasil.',
+    keywords: ['maré praia do francês', 'maré praia do frances hoje', 'tábua de maré praia do francês', 'surf praia do francês maré', 'maré marechal deodoro'],
+    praias: ['Praia do Francês', 'Saco da Pedra', 'Barra de São Miguel'],
+    category: 'surf',
+    portoVizinhos: ['porto-de-maceio', 'barra-de-sao-miguel', 'praia-do-gunga'],
+    faqs: [
+      { q: 'Qual a diferença entre os dois lados da Praia do Francês?', a: 'O lado esquerdo é protegido por recifes e vira uma piscina calminha na maré baixa; o lado direito tem mar aberto com ondas fortes propícias para surf.' },
+      { q: 'Qual o melhor horário para snorkel na Praia do Francês?', a: 'Na maré baixa, junto à bancada de recifes do lado esquerdo, quando a visibilidade subaquática atinge seu ponto mais cristalino.' },
+    ],
+  },
+
+  'barra-de-sao-miguel': {
+    titleSuffix: 'Maré Baixa Hoje — Piscinas Naturais e Marina',
+    description: 'Tábua de maré da Barra de São Miguel (AL) para hoje e 2026. Horários da maré baixa para as piscinas formadas pela barreira de recifes e travessia para o Gunga. Dados da Marinha do Brasil.',
+    keywords: ['maré barra de são miguel', 'maré barra de sao miguel hoje', 'tábua de maré barra de são miguel', 'piscinas naturais barra de são miguel'],
+    praias: ['Barra de São Miguel', 'Praia do Gunga', 'Praia Bonita'],
+    category: 'turismo',
+    portoVizinhos: ['praia-do-frances', 'praia-do-gunga', 'porto-de-maceio'],
+    faqs: [
+      { q: 'Por que a Barra de São Miguel tem águas tão calmas?', a: 'Porque possui uma muralha natural de recifes de corais paralela à praia que bloqueia as ondas do mar aberto, criando uma lagoa calma na maré baixa.' },
+      { q: 'Qual o horário ideal para atravessar para a Praia do Gunga?', a: 'As lanchas e catamarãs operam durante todo o dia, mas a maré baixa oferece o visual mais impressionante dos bancos de areia da lagoa.' },
+    ],
+  },
+
+  'praia-do-gunga': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Falésias e Lagoa do Roteiro',
+    description: 'Tábua de maré da Praia do Gunga (Roteiro, AL) para hoje e 2026. Horários de maré baixa para passeios de buggy até as falésias e banho no encontro da lagoa com o mar. Fonte: Marinha do Brasil.',
+    keywords: ['maré praia do gunga', 'maré praia do gunga hoje', 'tábua de maré praia do gunga', 'maré gunga alagoas', 'maré lagoa do roteiro'],
+    praias: ['Praia do Gunga', 'Lagoa do Roteiro', 'Barra de São Miguel'],
+    category: 'turismo',
+    portoVizinhos: ['barra-de-sao-miguel', 'praia-do-frances', 'porto-de-maceio'],
+    faqs: [
+      { q: 'Qual a vantagem da maré baixa na Praia do Gunga?', a: 'A maré baixa deixa a areia batida para o passeio de buggy até as falésias e forma bancos rasos de água morna onde a lagoa encontra o oceano.' },
+      { q: 'A Praia do Gunga tem mar aberto?', a: 'Sim. A ponta da praia é banhada pela Lagoa do Roteiro (mar calmo), enquanto a orla oceânica possui ondas de mar aberto.' },
+    ],
+  },
+
+  'sao-miguel-dos-milagres': {
+    titleSuffix: 'Maré Baixa Hoje — Piscinas Naturais do Toque',
+    description: 'Tábua de maré de São Miguel dos Milagres (AL) para hoje e 2026. Horário exato da maré baixa para passeio de jangada às piscinas naturais da Praia do Toque. Fonte oficial: Marinha do Brasil.',
+    keywords: ['maré são miguel dos milagres', 'maré milagres hoje', 'tábua de maré são miguel dos milagres', 'maré praia do toque', 'piscinas naturais milagres maré'],
+    praias: ['Praia do Toque', 'Porto da Rua', 'Praia do Riacho', 'São Miguel dos Milagres'],
+    category: 'turismo',
+    portoVizinhos: ['praia-do-patacho', 'maragogi', 'porto-de-maceio'],
+    faqs: [
+      { q: 'Qual a maré ideal para as piscinas do Toque em Milagres?', a: 'Maré baixa entre 0,1m e 0,4m nas luas cheia ou nova. As jangadas partem da praia e levam cerca de 15 minutos até as bancadas de corais.' },
+      { q: 'Por que Milagres depende tanto da tábua de marés?', a: 'Porque os recifes e as piscinas transparentes só ficam visíveis e acessíveis para snorkel na janela de 2 horas ao redor da baixamar.' },
+    ],
+  },
+
+  'praia-do-patacho': {
+    titleSuffix: 'Maré Baixa Hoje — Piscinas Naturais Bandeira Azul',
+    description: 'Tábua de maré da Praia do Patacho (Porto de Pedras, AL) para hoje e 2026. Horários da maré baixa quando o mar recua centenas de metros sobre os recifes. Dados oficiais da Marinha do Brasil.',
+    keywords: ['maré praia do patacho', 'maré patacho hoje', 'tábua de maré praia do patacho', 'maré porto de pedras', 'piscinas naturais patacho'],
+    praias: ['Praia do Patacho', 'Praia da Laje', 'Porto de Pedras'],
+    category: 'turismo',
+    portoVizinhos: ['sao-miguel-dos-milagres', 'maragogi', 'porto-de-maceio'],
+    faqs: [
+      { q: 'Como é o recuo da maré na Praia do Patacho?', a: 'Na maré baixa de sizígia, o mar recua centenas de metros, revelando uma imensa planície de areia branca e recifes rasos para caminhar a pé mar adentro.' },
+      { q: 'A Praia do Patacho tem estrutura de quiosques?', a: 'Não, o Patacho preserva seu caráter selvagem e ecológico com selo Bandeira Azul. Recomenda-se levar água e recolher todo o resíduo.' },
+    ],
+  },
+
+  'genipabu': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Dunas e Passeios de Buggy',
+    description: 'Tábua de maré de Genipabu (Extremoz, RN) para hoje e 2026. Horários de maré baixa para circulação segura de buggies na orla e banho de mar. Fonte: Marinha do Brasil (estação Natal).',
+    keywords: ['maré genipabu', 'maré genipabu hoje', 'tábua de maré genipabu', 'maré dunas de genipabu', 'passeio buggy genipabu maré'],
+    praias: ['Genipabu', 'Santa Rita', 'Barra do Rio'],
+    category: 'turismo',
+    portoVizinhos: ['porto-de-natal', 'maracajau', 'ponta-negra'],
+    faqs: [
+      { q: 'Como a maré influencia o passeio de buggy em Genipabu?', a: 'Na maré baixa, a areia da praia fica larga e compactada, permitindo a passagem dos veículos à beira-mar entre Genipabu e as praias vizinhas.' },
+      { q: 'O banho de mar em Genipabu é calmo?', a: 'A enseada é protegida por recifes baixos, oferecendo banho agradável com ondas moderadas, principalmente na maré baixa.' },
+    ],
+  },
+
+  'maracajau': {
+    titleSuffix: 'Maré Baixa Hoje — Parrachos de Maracajaú',
+    description: 'Tábua de maré de Maracajaú (Maxaranguape, RN) para hoje e 2026. Horário da maré baixa para passeios de catamarã e mergulho snorkel nos Parrachos de Maracajaú. Fonte: Marinha do Brasil.',
+    keywords: ['maré maracajaú', 'maré maracajau hoje', 'tábua de maré maracajaú', 'maré parrachos de maracajaú', 'mergulho maracajaú maré'],
+    praias: ['Parrachos de Maracajaú', 'Praia de Maracajaú', 'Caraúbas'],
+    category: 'turismo',
+    portoVizinhos: ['genipabu', 'porto-de-natal', 'ponta-negra'],
+    faqs: [
+      { q: 'Qual a maré necessária para visitar os Parrachos de Maracajaú?', a: 'As lanchas e catamarãs só operam na maré baixa (abaixo de 0,5m nas luas nova e cheia), quando a lâmina d\'água sobre os recifes atinge cerca de 1,5m com transparência perfeita.' },
+      { q: 'A que distância da costa ficam os parrachos?', a: 'Ficam a cerca de 7 km mar adentro, em plataformas flutuantes equipadas para mergulho livre e com cilindro.' },
+    ],
+  },
+
+  'cumbuco': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Kitesurf e Dunas',
+    description: 'Tábua de maré do Cumbuco (Caucaia, CE) para hoje e 2026. Horários de maré para velejo de kitesurf na praia e na Lagoa do Cauípe. Fonte: Marinha do Brasil (Terminal do Pecém).',
+    keywords: ['maré cumbuco', 'maré cumbuco hoje', 'tábua de maré cumbuco', 'kitesurf cumbuco maré', 'maré praia do cumbuco', 'maré caucaia'],
+    praias: ['Praia do Cumbuco', 'Lagoa do Cauípe', 'Pecém'],
+    category: 'surf',
+    portoVizinhos: ['terminal-portuario-do-pecem', 'porto-de-mucuripe-fortaleza', 'praia-do-futuro'],
+    faqs: [
+      { q: 'Qual a influência da maré no kitesurf em Cumbuco?', a: 'Na maré baixa, a praia forma lagoas rasas de água lisa (flat) ideais para freestyle e iniciantes; na maré cheia, as ondas de arrebentação servem de rampa para saltos.' },
+      { q: 'Qual porto de referência o Cumbuco utiliza?', a: 'Utiliza os dados maregráficos oficiais do Terminal Portuário do Pecém (DHN 30337), situado a apenas 20 km na mesma faixa litorânea.' },
+    ],
+  },
+
+  'praia-de-atalaia': {
+    titleSuffix: 'Maré Alta e Baixa Hoje — Orla de Aracaju',
+    description: 'Tábua de maré da Praia de Atalaia (Aracaju, SE) para hoje e 2026. Horários de maré baixa para caminhadas na ampla faixa de areia e banho de mar em família. Fonte: Marinha do Brasil.',
+    keywords: ['maré praia de atalaia', 'maré atalaia aracaju hoje', 'tábua de maré atalaia aracaju', 'maré aracaju hoje', 'passarela do caranguejo maré'],
+    praias: ['Praia de Atalaia', 'Praia de Aruana', 'Praia do Mosqueiro', 'Passarela do Caranguejo'],
+    category: 'turismo',
+    portoVizinhos: ['capitania-dos-portos-de-sergipe', 'terminal-maritimo-inacio-barbosa'],
+    faqs: [
+      { q: 'Por que a maré baixa afasta tanto o mar na Praia de Atalaia?', a: 'Porque o relevo submarino tem declive muito plano; na maré baixa, a água recua mais de 100 metros, criando um imenso pátio de areia firme para caminhadas.' },
+      { q: 'O mar de Atalaia é seguro para crianças?', a: 'Sim, as ondas quebram suavemente e não há buracos profundos imediatos, sendo um dos banhos mais tranquilos de capitais nordestinas.' },
+    ],
+  },
+
 };
 
 // Templates de fallback por categoria (para portos sem config específica)

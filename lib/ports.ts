@@ -32,6 +32,12 @@ export interface Port {
   offsetMinutes?: number;
   searchNames?: string[];
   referencePortSlug?: string;
+  /**
+   * Fonte oficial (ex.: tábua DHN/CHM, ponto e edição) que justifica o offsetMinutes.
+   * Enquanto estiver ausente, o local derivado é tratado como ESTIMADO na interface.
+   * Só preencha com fonte verificável — nunca com distância ou analogia.
+   */
+  offsetSource?: string;
   cameras?: PortCamera[];
 }
 
@@ -167,6 +173,46 @@ export const PORTS: Port[] = [
   { id: '94', name: 'Barra Grande',         cityName: 'Barra Grande (PI)',    slug: 'barra-grande',         state: 'PI', region: 'nordeste', lat: -2.925000,  lon: -41.750000, dhnId: '30225', offsetMinutes: 15, searchNames: ['barra grande', 'barra grande piaui', 'barra grande pipa'], referencePortSlug: 'porto-de-luis-correia' },
   { id: '95', name: 'Praia do Rosa',        cityName: 'Praia do Rosa',        slug: 'praia-do-rosa',        state: 'SC', region: 'sul',      lat: -28.125000, lon: -48.633000, dhnId: '60250', offsetMinutes: 15, searchNames: ['praia do rosa', 'rosa', 'ilha do mel'], referencePortSlug: 'porto-de-imbituba' },
 
+  // ── Novas Praias - Litoral de SP & Nordeste ──────────────────────────────
+  // Litoral Norte e Baixada Santista (SP)
+  { id: '96',  name: 'Caraguatatuba',            cityName: 'Caraguatatuba',            slug: 'caraguatatuba',            state: 'SP', region: 'sudeste',  lat: -23.622800, lon: -45.412800, dhnId: '50210', offsetMinutes:  0, searchNames: ['caraguatatuba', 'caragua', 'martim de sa', 'cocanha'], referencePortSlug: 'porto-de-sao-sebastiao' },
+  { id: '97',  name: 'Juquehy',                  cityName: 'Juquehy',                  slug: 'juquehy',                  state: 'SP', region: 'sudeste',  lat: -23.766700, lon: -45.733300, dhnId: '50210', offsetMinutes:  0, searchNames: ['juquehy', 'juquei', 'praia de juquehy'], referencePortSlug: 'porto-de-sao-sebastiao' },
+  { id: '98',  name: 'Praia da Baleia',          cityName: 'Praia da Baleia',          slug: 'praia-da-baleia',          state: 'SP', region: 'sudeste',  lat: -23.777800, lon: -45.666700, dhnId: '50210', offsetMinutes:  0, searchNames: ['praia da baleia', 'baleia'], referencePortSlug: 'porto-de-sao-sebastiao' },
+  { id: '99',  name: 'Camburi',                  cityName: 'Camburi',                  slug: 'camburi',                  state: 'SP', region: 'sudeste',  lat: -23.776100, lon: -45.645800, dhnId: '50210', offsetMinutes:  0, searchNames: ['camburi', 'camburizinho', 'praia de camburi'], referencePortSlug: 'porto-de-sao-sebastiao' },
+  { id: '100', name: 'Praia do Tombo',           cityName: 'Praia do Tombo',           slug: 'praia-do-tombo',           state: 'SP', region: 'sudeste',  lat: -24.008900, lon: -46.273600, dhnId: '50228', offsetMinutes:  0, searchNames: ['praia do tombo', 'tombo guaruja', 'tombo'], referencePortSlug: 'porto-de-santos' },
+  { id: '101', name: 'Itaguaré',                 cityName: 'Itaguaré',                 slug: 'itaguare',                 state: 'SP', region: 'sudeste',  lat: -23.791700, lon: -45.975000, dhnId: '50228', offsetMinutes: 15, searchNames: ['itaguare', 'itaguaré', 'praia de itaguare'], referencePortSlug: 'porto-de-santos' },
+
+  // Bahia (BA)
+  { id: '102', name: 'Porto Seguro',             cityName: 'Porto Seguro',             slug: 'porto-seguro',             state: 'BA', region: 'nordeste', lat: -16.443900, lon: -39.064700, dhnId: '40145', offsetMinutes:  0, searchNames: ['porto seguro', 'taperapua', 'muta'], referencePortSlug: 'porto-de-ilheus' },
+  { id: '103', name: 'Arraial d\'Ajuda',          cityName: 'Arraial d\'Ajuda',         slug: 'arraial-dajuda',           state: 'BA', region: 'nordeste', lat: -16.493900, lon: -39.072200, dhnId: '40145', offsetMinutes:  0, searchNames: ['arraial dajuda', 'arraial d ajuda', 'mucuge', 'pitinga'], referencePortSlug: 'porto-de-ilheus' },
+  { id: '104', name: 'Itacaré',                  cityName: 'Itacaré',                  slug: 'itacare',                  state: 'BA', region: 'nordeste', lat: -14.278900, lon: -38.995800, dhnId: '40145', offsetMinutes:  0, searchNames: ['itacare', 'itacaré', 'tiririca', 'resende', 'itacarezinho'], referencePortSlug: 'porto-de-ilheus' },
+  { id: '105', name: 'Taipu de Fora',            cityName: 'Taipu de Fora',            slug: 'taipu-de-fora',            state: 'BA', region: 'nordeste', lat: -13.931700, lon: -38.928600, dhnId: '40145', offsetMinutes:  0, searchNames: ['taipu de fora', 'marau', 'peninsula de marau'], referencePortSlug: 'porto-de-ilheus' },
+  { id: '106', name: 'Farol da Barra',           cityName: 'Farol da Barra',           slug: 'farol-da-barra',           state: 'BA', region: 'nordeste', lat: -13.010300, lon: -38.532500, dhnId: '40141', offsetMinutes:  0, searchNames: ['farol da barra', 'barra salvador', 'porto da barra'], referencePortSlug: 'porto-de-salvador' },
+  { id: '107', name: 'Itapuã',                   cityName: 'Itapuã',                   slug: 'itapua',                   state: 'BA', region: 'nordeste', lat: -12.954200, lon: -38.361900, dhnId: '40141', offsetMinutes:  0, searchNames: ['itapua', 'itapuã', 'praia de itapua', 'farol de itapua'], referencePortSlug: 'porto-de-salvador' },
+  { id: '108', name: 'Guarajuba',                cityName: 'Guarajuba',                slug: 'guarajuba',                state: 'BA', region: 'nordeste', lat: -12.651700, lon: -38.070800, dhnId: '40141', offsetMinutes:  0, searchNames: ['guarajuba', 'praia de guarajuba', 'camacari'], referencePortSlug: 'porto-de-salvador' },
+  { id: '109', name: 'Ilha de Boipeba',          cityName: 'Ilha de Boipeba',          slug: 'ilha-de-boipeba',          state: 'BA', region: 'nordeste', lat: -13.585800, lon: -38.921400, dhnId: '40141', offsetMinutes:  0, searchNames: ['boipeba', 'ilha de boipeba', 'morere', 'cueira'], referencePortSlug: 'porto-de-salvador' },
+
+  // Pernambuco (PE)
+  { id: '110', name: 'Praia dos Carneiros',      cityName: 'Praia dos Carneiros',      slug: 'praia-dos-carneiros',      state: 'PE', region: 'nordeste', lat: -8.706100,  lon: -35.080300, dhnId: '30686', offsetMinutes:  0, searchNames: ['carneiros', 'praia dos carneiros', 'tamandare carneiros'], referencePortSlug: 'porto-de-suape' },
+  { id: '111', name: 'Tamandaré',                cityName: 'Tamandaré',                slug: 'tamandare',                state: 'PE', region: 'nordeste', lat: -8.759700,  lon: -35.094400, dhnId: '30686', offsetMinutes:  0, searchNames: ['tamandare', 'tamandaré', 'praia de tamandare'], referencePortSlug: 'porto-de-suape' },
+
+  // Alagoas (AL)
+  { id: '112', name: 'Praia do Francês',         cityName: 'Praia do Francês',         slug: 'praia-do-frances',         state: 'AL', region: 'nordeste', lat: -9.768600,  lon: -35.839400, dhnId: '30725', offsetMinutes:  0, searchNames: ['praia do frances', 'praia do francês', 'frances alagoas'], referencePortSlug: 'porto-de-maceio' },
+  { id: '113', name: 'Barra de São Miguel',      cityName: 'Barra de São Miguel',      slug: 'barra-de-sao-miguel',      state: 'AL', region: 'nordeste', lat: -9.838900,  lon: -35.905600, dhnId: '30725', offsetMinutes:  0, searchNames: ['barra de sao miguel', 'barra de são miguel'], referencePortSlug: 'porto-de-maceio' },
+  { id: '114', name: 'Praia do Gunga',           cityName: 'Praia do Gunga',           slug: 'praia-do-gunga',           state: 'AL', region: 'nordeste', lat: -9.866700,  lon: -35.904200, dhnId: '30725', offsetMinutes:  0, searchNames: ['gunga', 'praia do gunga', 'roteiro'], referencePortSlug: 'porto-de-maceio' },
+  { id: '115', name: 'São Miguel dos Milagres',  cityName: 'São Miguel dos Milagres',  slug: 'sao-miguel-dos-milagres',  state: 'AL', region: 'nordeste', lat: -9.268100,  lon: -35.372500, dhnId: '30725', offsetMinutes:  0, searchNames: ['sao miguel dos milagres', 'milagres', 'praia do toque'], referencePortSlug: 'porto-de-maceio' },
+  { id: '116', name: 'Praia do Patacho',         cityName: 'Praia do Patacho',         slug: 'praia-do-patacho',         state: 'AL', region: 'nordeste', lat: -9.200800,  lon: -35.321700, dhnId: '30725', offsetMinutes:  0, searchNames: ['patacho', 'praia do patacho', 'porto de pedras'], referencePortSlug: 'porto-de-maceio' },
+
+  // Rio Grande do Norte (RN)
+  { id: '117', name: 'Genipabu',                 cityName: 'Genipabu',                 slug: 'genipabu',                 state: 'RN', region: 'nordeste', lat: -5.698300,  lon: -35.201700, dhnId: '30462', offsetMinutes:  0, searchNames: ['genipabu', 'jenipabu', 'dunas de genipabu'], referencePortSlug: 'porto-de-natal' },
+  { id: '118', name: 'Maracajaú',                cityName: 'Maracajaú',                slug: 'maracajau',                state: 'RN', region: 'nordeste', lat: -5.416700,  lon: -35.312500, dhnId: '30462', offsetMinutes:  0, searchNames: ['maracajau', 'maracajaú', 'parrachos de maracajau'], referencePortSlug: 'porto-de-natal' },
+
+  // Ceará (CE)
+  { id: '119', name: 'Cumbuco',                  cityName: 'Cumbuco',                  slug: 'cumbuco',                  state: 'CE', region: 'nordeste', lat: -3.626400,  lon: -38.728900, dhnId: '30337', offsetMinutes:  0, searchNames: ['cumbuco', 'praia do cumbuco', 'caucaia'], referencePortSlug: 'terminal-portuario-do-pecem' },
+
+  // Sergipe (SE)
+  { id: '120', name: 'Praia de Atalaia',         cityName: 'Praia de Atalaia',         slug: 'praia-de-atalaia',         state: 'SE', region: 'nordeste', lat: -10.985600, lon: -37.050800, dhnId: '30825', offsetMinutes:  0, searchNames: ['atalaia', 'praia de atalaia', 'atalaia aracaju'], referencePortSlug: 'capitania-dos-portos-de-sergipe' },
+
   // ── Região Sul ────────────────────────────────────────────────────────────
   { id: '47', name: 'Barra de Paranaguá - Canal SE',            cityName: 'Paranaguá (Barra SE)',     slug: 'barra-de-paranagua-sueste',            state: 'PR',  region: 'sul',      lat: -25.540000, lon: -48.295000, dhnId: '60130' },
   { id: '48', name: 'Porto de Paranaguá',                       cityName: 'Paranaguá',                slug: 'porto-de-paranagua',                   state: 'PR',  region: 'sul',      lat: -25.501667, lon: -48.531667, dhnId: '60132' },
@@ -186,6 +232,20 @@ export const PORTS: Port[] = [
 
 export function getPortBySlug(slug: string): Port | undefined {
   return PORTS.find(port => port.slug === slug);
+}
+
+/**
+ * Local "derivado": não tem marégrafo próprio e usa a curva de maré de outro
+ * porto (referencePortSlug), com defasagem opcional (offsetMinutes).
+ * É ESTIMADO enquanto não houver offsetSource. A Marinha publica previsão só
+ * para portos/estações, não para praias.
+ */
+export function isEstimatedLocation(port: Port): boolean {
+  return Boolean(port.referencePortSlug) && !port.offsetSource;
+}
+
+export function getReferencePort(port: Port): Port | undefined {
+  return port.referencePortSlug ? getPortBySlug(port.referencePortSlug) : undefined;
 }
 
 export function getAllSlugs(): string[] {

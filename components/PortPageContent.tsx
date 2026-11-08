@@ -197,7 +197,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
       />
       <NavBar />
 
-      <section className="relative z-30 hero-section pt-10 pb-6 border-b border-white/5">
+      <section className="relative overflow-hidden hero-section pt-10 pb-6 border-b border-white/5">
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-950/70 to-slate-950" />
         <div className="container relative z-10">
 
@@ -227,9 +227,8 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               Estado do {port.state}
             </p>
 
-            <div className="mt-2 mb-2 w-full max-w-md relative z-40">
-              <SearchPorts ports={PORTS} />
-            </div>
+            {/* placeholder de altura para a barra de busca (renderizada fora da section) */}
+            <div className="mt-2 mb-2 h-[52px] w-full max-w-md" aria-hidden />
 
             <div className="mt-1 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
               {tideQuality && <TideQualityBadge result={tideQuality} />}
@@ -237,6 +236,14 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
           </div>
         </div>
       </section>
+
+      {/* Barra de busca fora da section para que o dropdown não fique preso no
+          stacking context do hero e possa sobrepor o TideTodayCard abaixo. */}
+      <div className="container relative z-50 -mt-[72px] mb-[20px] flex justify-center pointer-events-none">
+        <div className="w-full max-w-md pointer-events-auto">
+          <SearchPorts ports={PORTS} />
+        </div>
+      </div>
 
       <div className="container">
         {highlight && (

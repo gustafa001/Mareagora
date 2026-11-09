@@ -24,7 +24,7 @@ export default function LiveCamerasStrip() {
   if (cameras.length === 0) return null;
 
   return (
-    <section className="w-full max-w-4xl mx-auto px-6 pb-12" aria-labelledby="home-cameras-title">
+    <section className="w-full max-w-6xl mx-auto px-4 pb-12" aria-labelledby="home-cameras-title">
       <div className="flex items-baseline justify-between mb-4">
         <h2 id="home-cameras-title" className="font-syne text-xl font-bold text-white">
           Praias ao vivo
@@ -50,7 +50,7 @@ export default function LiveCamerasStrip() {
                 decoding="async"
                 className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
-              <span className="absolute left-2 top-2 rounded bg-red-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+              <span className="absolute bottom-2 right-2 rounded bg-red-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
                 ● Ao vivo
               </span>
             </div>

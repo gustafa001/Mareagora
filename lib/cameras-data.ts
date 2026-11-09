@@ -23,8 +23,8 @@ export interface LiveCamera {
 // Descrição curta por vídeo — mantida separada de ports.ts pra não poluir
 // aquele arquivo com texto editorial.
 const DESCRIPTIONS: Record<string, string> = {
-  qM5J5aPdmMY:
-    'Vista da praia de São Conrado, na Zona Sul do Rio, point tradicional de voo livre com a Pedra da Gávea ao fundo.',
+  ageWNRdj4ho:
+    'Vista da orla de Peruíbe (SP), a partir do Vikings Pub, na Av. Governador Mário Covas Júnior.',
   '41Lnv1Ws3fw':
     'Transmissão ao vivo da Barra da Lagoa, em Florianópolis (SC).',
   CkHrJQGVukI:

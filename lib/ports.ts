@@ -86,10 +86,7 @@ export const PORTS: Port[] = [
   { id: '37', name: 'Terminal da Ponta do Ubu',                  cityName: 'Anchieta',                 slug: 'terminal-da-ponta-do-ubu-i',           state: 'ES',  region: 'sudeste',  lat: -20.787833, lon: -40.570389, dhnId: '40292' },
   { id: '38', name: 'Terminal de Imbetiba',                      cityName: 'Macaé',                    slug: 'terminal-maritimo-de-imbetiba',        state: 'RJ',  region: 'sudeste',  lat: -22.385000, lon: -41.770000, dhnId: '50116' },
   { 
-    id: '39', name: 'Rio de Janeiro - Ilha Fiscal', cityName: 'Rio de Janeiro', slug: 'rio-de-janeiro-fiscal', state: 'RJ', region: 'sudeste', lat: -22.896694, lon: -43.166000, dhnId: '50140',
-    cameras: [
-      { title: 'Rio de Janeiro - São Conrado Beach ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/qM5J5aPdmMY', videoId: 'qM5J5aPdmMY' }
-    ]
+    id: '39', name: 'Rio de Janeiro - Ilha Fiscal', cityName: 'Rio de Janeiro', slug: 'rio-de-janeiro-fiscal', state: 'RJ', region: 'sudeste', lat: -22.896694, lon: -43.166000, dhnId: '50140'
   },
   { id: '40', name: 'Porto de Itaguaí',                          cityName: 'Itaguaí',                  slug: 'porto-de-itaguai',                     state: 'RJ',  region: 'sudeste',  lat: -22.932083, lon: -43.842278, dhnId: '50145' },
   { id: '41', name: 'Porto do Forno',                            cityName: 'Arraial do Cabo',          slug: 'porto-do-forno',                       state: 'RJ',  region: 'sudeste',  lat: -22.972667, lon: -42.013861, dhnId: '50156' },
@@ -130,7 +127,11 @@ export const PORTS: Port[] = [
       { title: 'Praia dos Sonhos (Itanhaém) ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/DvjGg1E-BZ8', videoId: 'DvjGg1E-BZ8' }
     ]
   },
-  { id: '64', name: 'Peruíbe',                 cityName: 'Peruíbe',                 slug: 'peruibe',                   state: 'SP', region: 'sudeste', lat: -24.316667, lon: -47.000000, dhnId: '50228', offsetMinutes: 20, searchNames: ['peruibe', 'peruíbe'], referencePortSlug: 'porto-de-santos' },
+  { id: '64', name: 'Peruíbe',                 cityName: 'Peruíbe',                 slug: 'peruibe',                   state: 'SP', region: 'sudeste', lat: -24.316667, lon: -47.000000, dhnId: '50228', offsetMinutes: 20, searchNames: ['peruibe', 'peruíbe'], referencePortSlug: 'porto-de-santos',
+    cameras: [
+      { title: 'Peruíbe ao Vivo - Vikings Pub', sourceName: 'Lente Livre - Peruíbe ao Vivo', sourceUrl: 'https://www.youtube.com/live/ageWNRdj4ho', videoId: 'ageWNRdj4ho' }
+    ]
+  },
 
   // ── Praias Turísticas ────────────────────────────────────────────────────
   { 

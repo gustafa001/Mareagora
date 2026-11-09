@@ -1,0 +1,50 @@
+name: Verificar câmeras ao vivo
+
+on:
+  schedule:
+    - cron: '0 12 * * 1' # segundas, 09:00 BRT
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Rodar verificação
+        id: check
+        run: |
+          set +e
+          node scripts/check-cameras.mjs | tee report.txt
+          echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+
+      - name: Abrir/atualizar issue se houver câmera fora do ar
+        if: steps.check.outputs.code == '1'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          {
+            echo "Câmeras com vídeo removido ou privado no YouTube:"
+            echo
+            echo '```'
+            grep '^FALHA' report.txt
+            echo '```'
+            echo
+            echo "Remova ou troque o \`videoId\` em \`lib/ports.ts\`/\`lib/globalPlaces.ts\` e as descrições em \`lib/live-cameras.ts\`/\`lib/cameras-data.ts\`."
+            echo
+            echo "Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          } > body.md
+          gh label create cameras --color 0E8A16 --description "Câmeras ao vivo" 2>/dev/null || true
+          existing=$(gh issue list --label cameras --state open --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body-file body.md
+          else
+            gh issue create --title "Câmeras ao vivo fora do ar" --label cameras --body-file body.md
+          fi

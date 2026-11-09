@@ -25,16 +25,12 @@ export interface LiveCamera {
 const DESCRIPTIONS: Record<string, string> = {
   qM5J5aPdmMY:
     'Vista da praia de São Conrado, na Zona Sul do Rio, point tradicional de voo livre com a Pedra da Gávea ao fundo.',
-  '5BxqzvR6TgM':
-    'Vista da entrada do canal do Porto de Santos, o maior porto da América Latina, com a movimentação de navios em tempo real.',
   CkHrJQGVukI:
     'Vista do Canal 1 de Santos, um dos canais que cortam a cidade e conectam a orla à parte continental.',
   'q5jrRV0Tc-Y':
     'Praia central do Guarujá, ao lado do calçadão, uma das mais movimentadas da cidade.',
   zd6V3jeNSOk:
     'Praia central do Guarujá, ao lado do calçadão, uma das mais movimentadas da cidade.',
-  ukoSyGLdoTQ:
-    'Vista do Morro do Itararé, em São Vicente, mirante natural com vista panorâmica da Baía de Santos.',
   'qqcsE-v9Cac':
     'Vista da Praia do Itararé, em São Vicente.',
   'DvjGg1E-BZ8':

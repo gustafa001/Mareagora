@@ -100,7 +100,6 @@ export const PORTS: Port[] = [
   { 
     id: '46', name: 'Porto de Santos', cityName: 'Santos', slug: 'porto-de-santos', state: 'SP', region: 'sudeste', lat: -23.956778, lon: -46.308111, dhnId: '50228',
     cameras: [
-      { title: 'Entrada do Canal - Porto de Santos ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/5BxqzvR6TgM', videoId: '5BxqzvR6TgM' },
       { title: 'Canal 1 - Santos ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/CkHrJQGVukI', videoId: 'CkHrJQGVukI' }
     ]
   },
@@ -118,7 +117,6 @@ export const PORTS: Port[] = [
   },
   { id: '58', name: 'São Vicente',             cityName: 'São Vicente',             slug: 'sao-vicente',               state: 'SP', region: 'sudeste', lat: -23.964444, lon: -46.391944, dhnId: '50228', offsetMinutes:  0, searchNames: ['sao vicente', 'são vicente'], referencePortSlug: 'porto-de-santos',
     cameras: [
-      { title: 'Morro do Itararé (São Vicente) ao Vivo', sourceName: 'YouTube', sourceUrl: 'https://www.youtube.com/live/ukoSyGLdoTQ', videoId: 'ukoSyGLdoTQ' },
       { title: 'Praia do Itararé (São Vicente) ao Vivo', sourceName: 'Tem Onda', sourceUrl: 'https://www.youtube.com/live/qqcsE-v9Cac', videoId: 'qqcsE-v9Cac', channelId: 'UCXXjkrL-Ue7P_cc8KG61l1g' }
     ]
   },

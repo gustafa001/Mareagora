@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { getMoonAge, getMoonPhase } from '@/lib/tideUtils';
 import { getTideNow, getTideSeries, formatCountdown, formatEventTime } from '@/lib/tideNow';
 import { useRecentPorts } from '@/hooks/useRecentPorts';
+import type { HomeConditions } from '@/lib/homeConditions';
 
 type SearchResult =
   | { type: 'br'; port: Port }
@@ -22,6 +23,10 @@ function getCountryFlag(code: string): string {
   } catch {
     return '🌍';
   }
+}
+
+function fmt(n: number, digits: number) {
+  return n.toFixed(digits).replace('.', ',');
 }
 
 function normalize(str: string) {
@@ -47,9 +52,11 @@ interface HomeHeroProps {
   todayDate?: string;
   /** Marés do dia do porto de referência, calculadas no servidor (aparecem no HTML inicial). */
   todayEvents?: HomeHeroTideEvent[];
+  /** Condições atuais do mar (servidor, cache 1h). Ausente se a API falhar. */
+  conditions?: HomeConditions | null;
 }
 
-export default function HomeHero({ todayDate, todayEvents = [] }: HomeHeroProps) {
+export default function HomeHero({ todayDate, todayEvents = [], conditions = null }: HomeHeroProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -261,6 +268,36 @@ export default function HomeHero({ todayDate, todayEvents = [] }: HomeHeroProps)
               <div className="flex justify-between font-tideMono text-[11px] text-blue-300/70 pt-3 mt-2 border-t border-white/5">
                 <span className="text-orange-400">▼ Baixa {nextLow ? formatEventTime(nextLow) : '--:--'} · {nextLow ? `${nextLow.altura_m.toFixed(2)}m` : '--'}</span>
                 <span className="text-cyan-400">▲ Alta {nextHigh ? formatEventTime(nextHigh) : '--:--'} · {nextHigh ? `${nextHigh.altura_m.toFixed(2)}m` : '--'}</span>
+              </div>
+            )}
+            {conditions && (
+              <div
+                className="mt-3 grid grid-cols-3 gap-2 border-t border-white/5 pt-3 font-tideMono text-[11px] text-blue-300/70"
+                aria-label="Condições atuais do mar"
+              >
+                {conditions.waveHeight !== null && (
+                  <div>
+                    <span className="block uppercase tracking-wider">Ondas</span>
+                    <b className="text-sm text-white">{fmt(conditions.waveHeight, 1)} m</b>
+                    {conditions.wavePeriod !== null && <span className="ml-1">{Math.round(conditions.wavePeriod)}s</span>}
+                  </div>
+                )}
+                {conditions.windSpeed !== null && (
+                  <div>
+                    <span className="block uppercase tracking-wider">Vento</span>
+                    <b className="text-sm text-white">{Math.round(conditions.windSpeed)} km/h</b>
+                    {conditions.windDirection && <span className="ml-1">{conditions.windDirection}</span>}
+                  </div>
+                )}
+                {conditions.waterTemp !== null && (
+                  <div>
+                    <span className="block uppercase tracking-wider">Água</span>
+                    <b className="text-sm text-white">{fmt(conditions.waterTemp, 1)} °C</b>
+                  </div>
+                )}
+                {conditions.time && (
+                  <p className="col-span-3 text-[10px] text-blue-300/50">Previsão do modelo às {conditions.time} · Open-Meteo</p>
+                )}
               </div>
             )}
             <p className="mt-3 text-center text-[11px] font-semibold uppercase tracking-widest text-cyan-300">

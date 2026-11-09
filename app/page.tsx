@@ -11,6 +11,7 @@ import HomeFaq from '@/components/HomeFaq';
 import { PORTS, getPortBySlug } from '@/lib/ports';
 import { getEventosDia } from '@/lib/mare';
 import { brtNow } from '@/lib/tideNow';
+import { getHomeConditions } from '@/lib/homeConditions';
 
 export const revalidate = 3600; // ISR: classificação "hoje" não pode congelar no build
 
@@ -29,12 +30,14 @@ export const metadata = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
   // Marés do dia (fuso de Brasília) do porto de referência, calculadas no servidor
   // e entregues já no HTML: o gauge ao vivo só assume depois da hidratação.
   const referencePort = getPortBySlug(REFERENCE_PORT_SLUG);
   const todayDate = brtNow(new Date()).dateStr;
   const todayEvents = referencePort ? getEventosDia(referencePort, todayDate) : [];
+  // Condições atuais do mar (onda, vento, água) — servidor, cache 1h; null se a API falhar.
+  const conditions = referencePort ? await getHomeConditions(referencePort.lat, referencePort.lon) : null;
 
   return (
     <main className="min-h-screen flex flex-col bg-slate-950 relative overflow-hidden">
@@ -49,6 +52,7 @@ export default function Home() {
       <HomeHero
         todayDate={todayDate}
         todayEvents={todayEvents.map(({ hora, altura_m, tipo }) => ({ hora, altura_m, tipo }))}
+        conditions={conditions}
       />
 
       {/* SEÇÃO 1: Portos em Destaque */}

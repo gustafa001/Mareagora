@@ -31,36 +31,45 @@ export default function EstimateNotice({ port }: { port: Port }) {
   const referenceHref = `/mare/${getStateSlug(reference.state)}/${reference.slug}`;
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-3">
       <aside
         role="note"
         aria-label="Aviso sobre a previsão estimada"
-        className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-relaxed text-amber-900"
+        className="text-xs leading-relaxed text-slate-500"
       >
-        <p className="font-semibold">Previsão estimada para {name}</p>
-        <p className="mt-1">
-          {name} não tem marégrafo próprio. Os horários vêm da estação de{' '}
-          <Link href={referenceHref} className="font-medium underline">
-            {referenceName}
-          </Link>{' '}
-          (Marinha do Brasil), a cerca de {km} km, {describeOffset(port.offsetMinutes)}. Essa defasagem ainda
-          não foi confirmada em tábua oficial, então o horário real na praia pode ser diferente.
-        </p>
-        <p className="mt-1">
-          Use como referência para pesca esportiva, lazer e passeios; não use para navegação. Em recifes,
-          piscinas naturais e bancos de areia, chegue com folga antes da baixa-mar e confira a{' '}
-          <a
-            href={CHM_TABUAS_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-medium underline"
-          >
-            tábua oficial da Marinha
-          </a>{' '}
-          do porto mais próximo.
-        </p>
+        <details className="group">
+          <summary className="flex cursor-pointer list-none items-center gap-1.5 [&::-webkit-details-marker]:hidden">
+            <span aria-hidden="true">ⓘ</span>
+            <span>
+              Previsão estimada com base na estação de {referenceName}.{' '}
+              <span className="underline decoration-dotted underline-offset-2 group-open:hidden">Saiba mais</span>
+            </span>
+          </summary>
+          <div className="mt-2 space-y-1.5 border-l-2 border-slate-200 pl-3">
+            <p>
+              {name} não tem marégrafo próprio. Os horários vêm da estação de{' '}
+              <Link href={referenceHref} className="font-medium underline">
+                {referenceName}
+              </Link>{' '}
+              (Marinha do Brasil), a cerca de {km} km, {describeOffset(port.offsetMinutes)}. Essa defasagem
+              ainda não foi confirmada em tábua oficial, então o horário real na praia pode ser diferente.
+            </p>
+            <p>
+              Use como referência para pesca esportiva, lazer e passeios; não use para navegação. Em recifes,
+              piscinas naturais e bancos de areia, chegue com folga antes da baixa-mar e confira a{' '}
+              <a
+                href={CHM_TABUAS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium underline"
+              >
+                tábua oficial da Marinha
+              </a>{' '}
+              do porto mais próximo.
+            </p>
+          </div>
+        </details>
       </aside>
     </div>
   );
 }
-

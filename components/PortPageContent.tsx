@@ -198,7 +198,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
       />
       <NavBar />
 
-      <section className="relative overflow-hidden hero-section pt-10 pb-6 border-b border-white/5">
+      <section className="relative overflow-hidden hero-section pt-10 pb-10 border-b border-white/5">
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-950/70 to-slate-950" />
         <div className="container relative z-10">
 
@@ -228,10 +228,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               Estado do {port.state}
             </p>
 
-            {/* placeholder de altura para a barra de busca (renderizada fora da section) */}
-            <div className="mt-2 mb-2 h-[52px] w-full max-w-md" aria-hidden />
-
-            <div className="mt-1 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+            <div className="mt-3 flex flex-wrap items-center justify-center gap-3">
               {tideQuality && <TideQualityBadge result={tideQuality} />}
               <FavoriteButton slug={port.slug} name={seoName} />
             </div>
@@ -240,8 +237,10 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
       </section>
 
       {/* Barra de busca fora da section para que o dropdown não fique preso no
-          stacking context do hero e possa sobrepor o TideTodayCard abaixo. */}
-      <div className="container relative z-50 -mt-[72px] mb-[20px] flex justify-center pointer-events-none">
+          stacking context do hero e possa sobrepor o TideTodayCard abaixo.
+          Fica no fluxo normal (sem margem negativa grande), apenas "a cavalo"
+          na borda inferior do hero, com espaço reservado antes do card. */}
+      <div className="container relative z-50 -mt-5 mb-6 flex justify-center pointer-events-none">
         <div className="w-full max-w-md pointer-events-auto">
           <SearchPorts ports={PORTS} />
         </div>
@@ -249,11 +248,11 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
 
       <div className="container">
         {highlight && (
-          <div className="relative z-20 -mt-10 md:-mt-12 mb-4">
+          <div className="relative z-20 mb-4">
             {highlight}
           </div>
         )}
-        <div className={highlight ? "[&>section]:!mt-4" : ""}>
+        <div className="[&>section]:!mt-0">
           <TideTodayCard
             portName={seoName}
             stateSlug={getStateSlug(port.state)}

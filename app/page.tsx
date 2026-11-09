@@ -1,5 +1,6 @@
 import HomeHero from '@/components/HomeHero';
 import FeaturedPorts from '@/components/FeaturedPorts';
+import LiveCamerasStrip from '@/components/LiveCamerasStrip';
 import MostSearchedTides from '@/components/MostSearchedTides';
 import BestTidesToday from '@/components/BestTidesToday';
 import RegionalLinks from '@/components/RegionalLinks';
@@ -54,6 +55,9 @@ export default async function Home() {
         todayEvents={todayEvents.map(({ hora, altura_m, tipo }) => ({ hora, altura_m, tipo }))}
         conditions={conditions}
       />
+
+      {/* Câmeras ao vivo (miniaturas, carregamento lazy) */}
+      <LiveCamerasStrip />
 
       {/* SEÇÃO 1: Portos em Destaque */}
       <FeaturedPorts />

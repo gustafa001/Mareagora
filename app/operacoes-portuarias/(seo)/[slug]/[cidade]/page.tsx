@@ -58,7 +58,7 @@ export default function Page({ params }: { params: { slug: string, cidade: strin
   if (!port || !isCommercialPort(slug) || getStateSlug(port.state) !== estado) notFound();
 
   const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
-  const dataHoje = new Date().toISOString().split('T')[0];
+  const dataHoje = todayStr; // dia em America/Sao_Paulo (toISOString usa UTC e vira o dia às 21h BRT)
   const { text: seoText, faq: seoFaq } = generateSEOContent(port, dataHoje);
 
   return (

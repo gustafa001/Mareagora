@@ -6,7 +6,8 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
   issues: write
 
 jobs:
@@ -25,8 +26,42 @@ jobs:
           node scripts/check-cameras.mjs | tee report.txt
           echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
 
-      - name: Abrir/atualizar issue se houver câmera fora do ar
+      - name: Abrir PR removendo as câmeras fora do ar
+        id: pr
         if: steps.check.outputs.code == '1'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set +e
+          IDS=$(grep '^FALHA' report.txt | awk '{print $2}')
+          BRANCH="auto/remove-dead-cameras"
+          if gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number' | grep -q .; then
+            echo "Já existe um PR aberto para $BRANCH; nada a fazer."
+            echo "done=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          node scripts/remove-dead-cameras.mjs $IDS || exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          git add lib
+          git commit -m "fix(cameras): remove câmeras do YouTube removidas/privadas" || exit 0
+          git push -f origin "$BRANCH" || exit 0
+          {
+            echo "Vídeos removidos ou privados no YouTube, detectados pelo workflow semanal:"
+            echo
+            echo '```'
+            grep '^FALHA' report.txt
+            echo '```'
+            echo
+            echo "Faça merge para tirar as câmeras do site, ou feche o PR e troque o videoId por um novo."
+            echo
+            echo "Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          } > body.md
+          gh pr create --base main --head "$BRANCH" --title "Remover câmeras ao vivo fora do ar" --body-file body.md \
+            && echo "done=true" >> "$GITHUB_OUTPUT"
+
+      - name: Fallback - abrir issue se não foi possível abrir o PR
+        if: steps.check.outputs.code == '1' && steps.pr.outputs.done != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -36,8 +71,6 @@ jobs:
             echo '```'
             grep '^FALHA' report.txt
             echo '```'
-            echo
-            echo "Remova ou troque o \`videoId\` em \`lib/ports.ts\`/\`lib/globalPlaces.ts\` e as descrições em \`lib/live-cameras.ts\`/\`lib/cameras-data.ts\`."
             echo
             echo "Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           } > body.md

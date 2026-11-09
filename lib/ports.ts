@@ -117,7 +117,8 @@ export const PORTS: Port[] = [
   },
   { id: '58', name: 'São Vicente',             cityName: 'São Vicente',             slug: 'sao-vicente',               state: 'SP', region: 'sudeste', lat: -23.964444, lon: -46.391944, dhnId: '50228', offsetMinutes:  0, searchNames: ['sao vicente', 'são vicente'], referencePortSlug: 'porto-de-santos',
     cameras: [
-      { title: 'Praia do Itararé (São Vicente) ao Vivo', sourceName: 'Tem Onda', sourceUrl: 'https://www.youtube.com/live/qqcsE-v9Cac', videoId: 'qqcsE-v9Cac', channelId: 'UCXXjkrL-Ue7P_cc8KG61l1g' }
+      { title: 'Praia do Itararé (São Vicente) ao Vivo', sourceName: 'Tem Onda', sourceUrl: 'https://www.youtube.com/live/qqcsE-v9Cac', videoId: 'qqcsE-v9Cac', channelId: 'UCXXjkrL-Ue7P_cc8KG61l1g' },
+      { title: 'Praia dos Milionários (São Vicente) ao Vivo', sourceName: 'Olhar 013', sourceUrl: 'https://www.youtube.com/live/IxCB3lABJEs', videoId: 'IxCB3lABJEs' }
     ]
   },
   { id: '59', name: 'Praia Grande', cityName: 'Praia Grande', slug: 'praia-grande', state: 'SP', region: 'sudeste', lat: -24.005833, lon: -46.412222, dhnId: '50228', offsetMinutes:  5, searchNames: ['praia grande', 'aviação', 'real'], referencePortSlug: 'porto-de-santos' },

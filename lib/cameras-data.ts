@@ -33,6 +33,8 @@ const DESCRIPTIONS: Record<string, string> = {
     'Praia central do Guarujá, ao lado do calçadão, uma das mais movimentadas da cidade.',
   zd6V3jeNSOk:
     'Praia central do Guarujá, ao lado do calçadão, uma das mais movimentadas da cidade.',
+  IxCB3lABJEs:
+    'Vista da Praia dos Milionários, no Itararé, em São Vicente.',
   'qqcsE-v9Cac':
     'Vista da Praia do Itararé, em São Vicente.',
   'DvjGg1E-BZ8':

@@ -25,6 +25,8 @@ export interface LiveCamera {
 const DESCRIPTIONS: Record<string, string> = {
   qM5J5aPdmMY:
     'Vista da praia de São Conrado, na Zona Sul do Rio, point tradicional de voo livre com a Pedra da Gávea ao fundo.',
+  '41Lnv1Ws3fw':
+    'Transmissão ao vivo da Barra da Lagoa, em Florianópolis (SC).',
   CkHrJQGVukI:
     'Vista do Canal 1 de Santos, um dos canais que cortam a cidade e conectam a orla à parte continental.',
   'q5jrRV0Tc-Y':
@@ -51,6 +53,7 @@ const GROUP_LABELS: Record<string, string> = {
   ubatuba: 'Litoral Norte SP',
   'rio-de-janeiro-fiscal': 'Rio de Janeiro',
   'cabo-frio': 'Região dos Lagos',
+  joaquina: 'Florianópolis',
 };
 
 const GROUP_ORDER = ['Baixada Santista', 'Litoral Norte SP', 'Rio de Janeiro'];

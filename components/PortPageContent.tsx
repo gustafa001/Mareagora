@@ -7,6 +7,7 @@ import { portosConfig } from '@/data/porto-seo-config';
 import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
 import NavBar from '@/components/NavBar';
+import FavoriteButton from '@/components/FavoriteButton';
 import TideWeekCard from '@/components/TideWeekCard';
 
 import MonthlyTideTable from '@/components/MonthlyTideTable';
@@ -232,6 +233,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
 
             <div className="mt-1 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
               {tideQuality && <TideQualityBadge result={tideQuality} />}
+              <FavoriteButton slug={port.slug} name={seoName} />
             </div>
           </div>
         </div>

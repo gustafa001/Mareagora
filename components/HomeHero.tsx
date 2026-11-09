@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { getMoonAge, getMoonPhase } from '@/lib/tideUtils';
 import { getTideNow, getTideSeries, formatCountdown, formatEventTime } from '@/lib/tideNow';
 import { useRecentPorts } from '@/hooks/useRecentPorts';
+import { useFavoritePorts } from '@/hooks/useFavoritePorts';
 import type { HomeConditions } from '@/lib/homeConditions';
 
 type SearchResult =
@@ -80,6 +81,12 @@ export default function HomeHero({ todayDate, todayEvents = [], conditions = nul
   // Último porto visitado (localStorage) — leva quem volta direto ao que já usa.
   const { recentSlugs } = useRecentPorts();
   const lastPort = recentSlugs.length ? getPortBySlug(recentSlugs[0]) : null;
+
+  // Favoritos (localStorage) — aparecem só depois de montar no cliente.
+  const { favoriteSlugs } = useFavoritePorts();
+  const favoritePorts = favoriteSlugs
+    .map(slug => getPortBySlug(slug))
+    .filter((p): p is Port => !!p);
 
   // ── Gauge de maré ao vivo (porto de referência: Santos) ──
   // liveNow só existe depois de montar no cliente (pós-hidratação) — evita
@@ -399,6 +406,33 @@ export default function HomeHero({ todayDate, todayEvents = [], conditions = nul
               <span>Voltar para {lastPort.cityName || lastPort.name}</span>
               <span className="text-cyan-300">→</span>
             </Link>
+          )}
+          {favoritePorts.length > 0 && (
+            <div className="mb-6">
+              <p className="text-slate-400 text-xs uppercase tracking-widest font-semibold mb-4 pl-2">
+                ★ Meus locais
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {favoritePorts.map((port) => {
+                  const t = liveNow ? getTideNow(port, liveNow) : null;
+                  return (
+                    <Link
+                      key={port.slug}
+                      href={`/mare/${getStateSlug(port.state)}/${port.slug}`}
+                      className="px-4 py-3 rounded-xl bg-slate-900/60 border border-amber-400/30 text-white hover:border-amber-300 hover:bg-slate-900/80 transition-all"
+                    >
+                      <span className="block text-sm font-semibold">{port.cityName || port.name}</span>
+                      {t && t.height !== null && (
+                        <span className="block font-tideMono text-[11px] text-blue-300/80">
+                          {t.height.toFixed(2)}m · {t.rising ? 'enchendo' : 'vazando'}
+                          {t.next ? ` · ${t.rising ? 'alta' : 'baixa'} ${formatCountdown(t.next.minutesFromNow)}` : ''}
+                        </span>
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
           )}
           <p className="text-slate-400 text-xs uppercase tracking-widest font-semibold mb-4 pl-2">
             Mais acessados

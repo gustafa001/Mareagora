@@ -3,7 +3,9 @@
 import { useEffect, useState } from 'react';
 import { Bell, CheckCircle2 } from 'lucide-react';
 
-const VAPID_KEY = 'BIEIsoBEg4UubQNr2jyhdoUATIQFhZ_gIukjnkw85uGvLB-svLQXjaNSi-fdN9IqgNI1NTZI1kwAbvnQiTo0aGU';
+// Mesma chave pública que o servidor usa para assinar os envios (lib/vapid.ts).
+// Chave fixa no código divergiria do par VAPID da Vercel e os avisos seriam rejeitados.
+const VAPID_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? '';
 
 interface NotificationCTAProps {
   portSlug: string;
@@ -66,6 +68,8 @@ export default function NotificationCTA({ portSlug, variant = 'banner', label = 
       if (status === 'subscribed') {
         return;
       }
+
+      if (!VAPID_KEY) throw new Error('NEXT_PUBLIC_VAPID_PUBLIC_KEY ausente');
 
       const permission = await Notification.requestPermission();
       if (permission !== 'granted') {

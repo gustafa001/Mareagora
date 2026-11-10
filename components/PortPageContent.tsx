@@ -8,6 +8,7 @@ import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
 import NavBar from '@/components/NavBar';
 import FavoriteButton from '@/components/FavoriteButton';
+import NotificationCTA from '@/components/NotificationCTA';
 import TideWeekCard from '@/components/TideWeekCard';
 
 import MonthlyTideTable from '@/components/MonthlyTideTable';
@@ -231,6 +232,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
             <div className="mt-3 flex flex-wrap items-center justify-center gap-3">
               {tideQuality && <TideQualityBadge result={tideQuality} />}
               <FavoriteButton slug={port.slug} name={seoName} />
+              <NotificationCTA portSlug={port.slug} variant="compact" label="Avisar maré baixa" />
             </div>
           </div>
         </div>

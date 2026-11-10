@@ -14,7 +14,7 @@
     "check": "tsc --noEmit",
     "indexnow": "node scripts/indexnow-ping.mjs",
     "check:cameras": "node scripts/check-cameras.mjs",
-    "test": "tsx --test tests/tideUtils.test.ts && tsx --test tests/tideRegimeClassifier.test.ts && tsx --test tests/estimatedLocation.test.ts",
+    "test": "tsx --test tests/tideUtils.test.ts && tsx --test tests/tideRegimeClassifier.test.ts && tsx --test tests/estimatedLocation.test.ts && tsx --test tests/pushLowTide.test.ts",
     "format": "prettier --write ."
   },
   "dependencies": {

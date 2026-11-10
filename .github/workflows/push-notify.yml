@@ -1,0 +1,42 @@
+name: Push de maré baixa
+
+# Dispara o /api/push/notify a cada 10 min. O cron da Vercel no plano Hobby só
+# roda 1x por dia, então o agendamento frequente fica aqui (grátis em repo
+# público). O endpoint avisa cada inscrito uma única vez por maré, então rodar
+# com frequência não gera notificação repetida.
+#
+# Configuração (Settings > Secrets and variables > Actions):
+#   - Secret   CRON_SECRET : o mesmo valor da variável CRON_SECRET no Vercel
+#   - Variable SITE_URL    : opcional; padrão https://mareagora.com.br
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: push-notify
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Chamar /api/push/notify
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          SITE_URL: ${{ vars.SITE_URL }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CRON_SECRET:-}" ]; then
+            echo "::error::Secret CRON_SECRET não configurado"
+            exit 1
+          fi
+          curl --fail-with-body --silent --show-error \
+            --retry 3 --retry-delay 10 --max-time 120 \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${SITE_URL:-https://mareagora.com.br}/api/push/notify"
+          echo

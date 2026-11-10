@@ -86,11 +86,17 @@ export default function NotificationCTA({ portSlug, variant = 'banner', label = 
         applicationServerKey: outputArray
       });
 
-      await fetch('/api/push/subscribe', {
+      const res = await fetch('/api/push/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ subscription: sub, portSlug }),
       });
+      if (!res.ok) {
+        // Servidor não salvou: desfaz a inscrição do navegador para não
+        // mostrar "ativo" sem que nenhum aviso possa chegar.
+        await sub.unsubscribe().catch(() => {});
+        throw new Error(`Falha ao salvar inscrição (HTTP ${res.status})`);
+      }
 
       localStorage.setItem(`push_subscribed_${portSlug}`, '1');
       setStatus('subscribed');

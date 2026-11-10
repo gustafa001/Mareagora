@@ -24,7 +24,7 @@ import PortBlogSection from '@/components/PortBlogSection';
 import WeatherRadarCard from '@/components/port-operations/WeatherRadarCard';
 import DailyScoreCard from '@/components/DailyScoreCard';
 import TideSchemaMarkup from '@/components/TideSchemaMarkup';
-import { getStateSlug, getStateName } from '@/lib/states';
+import { getStateSlug, getStateName, getStatePhrase } from '@/lib/states';
 import TideTodayCard from '@/components/TideTodayCard';
 import { useSeaConditions } from '@/hooks/useSeaConditions';
 import RessacaAlert from '@/components/RessacaAlert';
@@ -223,10 +223,10 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               {` · Tábua ${ano} oficial`}
             </p>
             <p className="text-sm sm:text-base md:text-lg opacity-90 font-medium font-syne hidden sm:block text-white/90">
-              {seoName} - {ano} | Estado do {port.state}
+              {seoName} - {ano} | {getStatePhrase(port.state)}
             </p>
             <p className="text-xs sm:hidden opacity-90 font-medium font-syne text-white/90">
-              Estado do {port.state}
+              {getStatePhrase(port.state)}
             </p>
 
             <div className="mt-3 flex flex-wrap items-center justify-center gap-3">

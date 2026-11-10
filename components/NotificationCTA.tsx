@@ -66,6 +66,19 @@ export default function NotificationCTA({ portSlug, variant = 'banner', label = 
 
     try {
       if (status === 'subscribed') {
+        // --- DESATIVAR ---
+        const existing = await navigator.serviceWorker.getRegistration();
+        const current = await existing?.pushManager.getSubscription();
+        if (current) {
+          await fetch('/api/push/subscribe', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ endpoint: current.endpoint }),
+          }).catch(() => {});
+          await current.unsubscribe().catch(() => {});
+        }
+        localStorage.removeItem(`push_subscribed_${portSlug}`);
+        setStatus('idle');
         return;
       }
 
@@ -118,7 +131,13 @@ export default function NotificationCTA({ portSlug, variant = 'banner', label = 
         type="button"
         onClick={handleSubscribe}
         disabled={loading || status === 'denied'}
-        title={status === 'denied' ? 'Permissão de notificações bloqueada no navegador' : undefined}
+        title={
+          status === 'denied'
+            ? 'Permissão de notificações bloqueada no navegador'
+            : status === 'subscribed'
+            ? 'Clique para desativar'
+            : undefined
+        }
         className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl font-semibold text-sm transition-all duration-200 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed ${
           status === 'subscribed'
             ? 'bg-emerald-500/20 border border-emerald-400/40 text-emerald-300'
@@ -126,12 +145,14 @@ export default function NotificationCTA({ portSlug, variant = 'banner', label = 
         } ${className}`}
       >
         {status === 'subscribed' ? <CheckCircle2 size={16} /> : <Bell size={16} />}
-        {status === 'subscribed'
-          ? 'Alerta ativado'
+        {loading
+          ? status === 'subscribed'
+            ? 'Desativando...'
+            : 'Ativando...'
+          : status === 'subscribed'
+          ? 'Alerta ativado ✓'
           : status === 'denied'
           ? 'Alertas bloqueados'
-          : loading
-          ? 'Ativando...'
           : label}
       </button>
     );
@@ -150,9 +171,19 @@ export default function NotificationCTA({ portSlug, variant = 'banner', label = 
       </div>
       
       {status === 'subscribed' ? (
-        <div className="flex items-center gap-2 text-emerald-400 font-bold bg-emerald-400/10 px-6 py-3 rounded-lg w-full md:w-auto justify-center transition-all">
-          <CheckCircle2 size={20} />
-          ✅ Alertas ativados
+        <div className="flex flex-col items-center gap-2 w-full md:w-auto">
+          <div className="flex items-center gap-2 text-emerald-400 font-bold bg-emerald-400/10 px-6 py-3 rounded-lg w-full md:w-auto justify-center transition-all">
+            <CheckCircle2 size={20} />
+            ✅ Alertas ativados
+          </div>
+          <button
+            type="button"
+            onClick={handleSubscribe}
+            disabled={loading}
+            className="text-slate-400 hover:text-slate-200 text-sm underline underline-offset-2 disabled:opacity-50 disabled:cursor-wait"
+          >
+            {loading ? 'Desativando...' : 'Desativar alertas'}
+          </button>
         </div>
       ) : (
         <button

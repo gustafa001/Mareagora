@@ -104,6 +104,9 @@ async function handleNotify(req: NextRequest) {
               await webpush.sendNotification(
                 { endpoint: sub.endpoint, keys: sub.keys },
                 payload,
+                // urgency alta: o Android não segura o aviso em economia de bateria/Doze.
+                // TTL: descarta se não entregar até a maré passar (aviso velho não serve).
+                { urgency: 'high', TTL: Math.max(60, incoming.minutesAhead * 60) },
               );
               totalSent++;
             } catch (err: unknown) {

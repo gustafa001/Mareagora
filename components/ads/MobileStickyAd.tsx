@@ -7,7 +7,9 @@ import { AD_SLOTS } from '@/lib/adConfig';
 export default function MobileStickyAd() {
   const [dismissed, setDismissed] = useState(false);
 
-  if (dismissed) return null;
+  // Anúncios desligados (NEXT_PUBLIC_ADSENSE_ENABLED != 'true'): não renderiza
+  // nem a barra fixa nem o botão "Fechar", senão sobra uma faixa vazia no mobile.
+  if (process.env.NEXT_PUBLIC_ADSENSE_ENABLED !== 'true' || dismissed) return null;
 
   return (
     <div className="mobile-sticky-ad fixed bottom-0 left-0 right-0 md:hidden z-[55] bg-slate-900 border-t border-slate-800 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] empty:hidden [&:has(ins[data-ad-status='unfilled'])]:hidden">

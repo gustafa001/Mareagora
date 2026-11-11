@@ -21,6 +21,7 @@ import { getEventosDia } from '@/lib/mare';
 import { calcFishingScore } from '@/lib/fishingScore';
 import SeoOverviewTicker from '@/components/SeoOverviewTicker';
 import TideHighlight from '@/components/TideHighlight';
+import TideOutlook from '@/components/TideOutlook';
 
 export const revalidate = 21600; // regenera a página a cada 6h (ISR), evita data congelada do build — reduzido de 1h p/ diminuir ISR Writes/CPU no free tier
 
@@ -292,6 +293,9 @@ export default async function PortPage({ params }: { params: { slug: string, cid
         ) : undefined}
       />
       <div className="container pb-16">
+        {config?.highlight && (
+          <TideOutlook port={port} todayStr={todayStr} type={config.highlight} seoName={seoName} />
+        )}
         <PortoFAQ slug={slug} categoria={categoria} />
         <PortosProximos slug={slug} />
         <ExploreCTA />

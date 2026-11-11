@@ -175,10 +175,13 @@ export default function NavBar({ className = '' }: NavBarProps) {
       const prevHtml = document.documentElement.style.overflow;
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
+      // sinaliza menu aberto: o CSS global esconde os anúncios de sobreposição do Google
+      document.documentElement.setAttribute('data-menu-open', 'true');
       return () => {
         clearTimeout(t);
         document.body.style.overflow = prevBody;
         document.documentElement.style.overflow = prevHtml;
+        document.documentElement.removeAttribute('data-menu-open');
       };
     }
   }, [menuOpen]);

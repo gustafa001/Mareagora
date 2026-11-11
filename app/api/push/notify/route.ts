@@ -100,7 +100,7 @@ async function handleNotify(req: NextRequest) {
         ok: true,
         test: true,
         subscriptions: subs.length,
-        ports: [...new Set(subs.map((s) => s.portSlug))],
+        ports: Array.from(new Set(subs.map((s) => s.portSlug))),
         sent,
         removed,
         errors,

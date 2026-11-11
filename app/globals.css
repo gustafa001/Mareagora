@@ -573,6 +573,14 @@ body {
   padding: 0 !important;
 }
 
+/* Com o menu mobile aberto, não mostra anúncios de sobreposição do Google
+   (âncora/vinheta, que levam a classe adsbygoogle-noablate). Voltam ao fechar o menu. */
+html[data-menu-open='true'] ins.adsbygoogle-noablate,
+html[data-menu-open='true'] .adsbygoogle-noablate,
+html[data-menu-open='true'] .mobile-sticky-ad {
+  display: none !important;
+}
+
 /* Animated waves (SVG in root layout). Moved from an inline <style> tag to
    this global stylesheet to avoid hydration mismatches (#425/#418/#423):
    inline <style> is a raw-text element, so the server escapes `"` as &quot;

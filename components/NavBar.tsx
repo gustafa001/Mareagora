@@ -145,7 +145,16 @@ export default function NavBar({ className = '' }: NavBarProps) {
     if (menuOpen) {
       // foca a busca ao abrir, ajuda quem já sabe o que procura
       const t = setTimeout(() => searchRef.current?.focus(), 150);
-      return () => clearTimeout(t);
+      // trava a rolagem da página por baixo enquanto o menu está aberto
+      const prevBody = document.body.style.overflow;
+      const prevHtml = document.documentElement.style.overflow;
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      return () => {
+        clearTimeout(t);
+        document.body.style.overflow = prevBody;
+        document.documentElement.style.overflow = prevHtml;
+      };
     }
   }, [menuOpen]);
 
@@ -213,7 +222,7 @@ export default function NavBar({ className = '' }: NavBarProps) {
       {/* Menu deslizante — mobile */}
       <div
         id="mobile-menu"
-        className={`sm:hidden overflow-hidden transition-all duration-300 ease-in-out ${menuOpen ? 'max-h-[calc(100dvh-5rem)] overflow-y-auto' : 'max-h-0'}`}
+        className={`sm:hidden overflow-hidden transition-all duration-300 ease-in-out ${menuOpen ? 'max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain' : 'max-h-0'}`}
       >
         <div
           className="px-4 pt-1 flex flex-col gap-2 border-t border-white/5"

@@ -60,6 +60,53 @@ async function handleNotify(req: NextRequest) {
       return NextResponse.json({ ok: true, sent: 0, message: 'No subscriptions' });
     }
 
+    // Modo teste: ?test=1 (exige o mesmo segredo). Manda uma notificação de teste
+    // agora para as inscrições, sem depender da maré e sem marcar como avisado.
+    if (req.nextUrl.searchParams.get('test') === '1') {
+      const payload = JSON.stringify({
+        title: '🌊 Teste de alerta · MaréAgora',
+        body: 'Se você está vendo isso, as notificações estão funcionando.',
+        icon: '/icons/icon-192x192.png',
+        tag: 'mareagora-test',
+        url: '/',
+      });
+      let sent = 0;
+      const errors: { endpoint: string; status?: number; message?: string }[] = [];
+      let removed = 0;
+      await Promise.all(
+        subs.map(async (sub) => {
+          try {
+            await webpush.sendNotification(
+              { endpoint: sub.endpoint, keys: sub.keys },
+              payload,
+              { urgency: 'high', TTL: 300 },
+            );
+            sent++;
+          } catch (err: unknown) {
+            const status = (err as { statusCode?: number }).statusCode;
+            if (status === 410 || status === 404) {
+              removed++;
+              await removeSubscription(sub.endpoint).catch(() => {});
+            }
+            errors.push({
+              endpoint: sub.endpoint.slice(0, 40),
+              status,
+              message: (err as { message?: string }).message?.slice(0, 120),
+            });
+          }
+        }),
+      );
+      return NextResponse.json({
+        ok: true,
+        test: true,
+        subscriptions: subs.length,
+        ports: [...new Set(subs.map((s) => s.portSlug))],
+        sent,
+        removed,
+        errors,
+      });
+    }
+
     let totalSent = 0;
     let skipped = 0;
     const failed: string[] = [];

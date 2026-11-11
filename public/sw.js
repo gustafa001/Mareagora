@@ -117,6 +117,8 @@ self.addEventListener('push', (e) => {
     icon: data.icon || '/icons/icon-192x192.png',
     badge: '/icons/icon-192x192.png',
     vibrate: [100, 50, 100],
+    tag: data.tag || undefined,
+    actions: [{ action: 'open', title: 'Ver tábua' }],
     data: { url: data.url || '/' },
   };
 

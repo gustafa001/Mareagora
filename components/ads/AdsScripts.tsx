@@ -44,6 +44,9 @@ export default function AdsScripts() {
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2920008879492175"
         crossOrigin="anonymous"
         strategy="afterInteractive"
+        // Anúncios de sobreposição (âncora) do Google só na parte de baixo da tela,
+        // onde o botão "Fechar" fica visível; no topo ele ficava escondido.
+        data-overlays="bottom"
       />
     </>
   );

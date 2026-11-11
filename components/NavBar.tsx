@@ -27,6 +27,10 @@ export default function NavBar({ className = '' }: NavBarProps) {
   const [query, setQuery] = useState('');
   const [isGeolocationLoading, setIsGeolocationLoading] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
+  const navRef = useRef<HTMLElement>(null);
+  // Altura disponível para o menu mobile = viewport visível − parte de baixo da
+  // barra. Considera anúncio/banner acima do NavBar, que empurra a barra pra baixo.
+  const [menuMaxH, setMenuMaxH] = useState<number | null>(null);
   const router = useRouter();
   const { recentSlugs, addRecentPort } = useRecentPorts();
 
@@ -142,6 +146,27 @@ export default function NavBar({ className = '' }: NavBarProps) {
   };
 
   useEffect(() => {
+    if (!menuOpen) return;
+    const measure = () => {
+      const nav = navRef.current;
+      if (!nav) return;
+      const header = nav.firstElementChild as HTMLElement | null;
+      const headerBottom = header
+        ? header.getBoundingClientRect().bottom
+        : nav.getBoundingClientRect().top + 80;
+      const viewportH = window.visualViewport?.height ?? window.innerHeight;
+      setMenuMaxH(Math.max(200, Math.floor(viewportH - headerBottom)));
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    window.visualViewport?.addEventListener('resize', measure);
+    return () => {
+      window.removeEventListener('resize', measure);
+      window.visualViewport?.removeEventListener('resize', measure);
+    };
+  }, [menuOpen]);
+
+  useEffect(() => {
     if (menuOpen) {
       // foca a busca ao abrir, ajuda quem já sabe o que procura
       const t = setTimeout(() => searchRef.current?.focus(), 150);
@@ -159,7 +184,7 @@ export default function NavBar({ className = '' }: NavBarProps) {
   }, [menuOpen]);
 
   return (
-    <nav className={`bg-slate-950/80 backdrop-blur-xl border-b border-white/5 text-white sticky top-0 z-[60] ${className}`}>
+    <nav ref={navRef} className={`bg-slate-950/80 backdrop-blur-xl border-b border-white/5 text-white sticky top-0 z-[60] ${className}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
@@ -222,11 +247,12 @@ export default function NavBar({ className = '' }: NavBarProps) {
       {/* Menu deslizante — mobile */}
       <div
         id="mobile-menu"
-        className={`sm:hidden overflow-hidden transition-all duration-300 ease-in-out ${menuOpen ? 'max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain' : 'max-h-0'}`}
+        className={`sm:hidden overflow-hidden transition-all duration-300 ease-in-out ${menuOpen ? 'overflow-y-auto overscroll-contain' : 'max-h-0'}`}
+        style={menuOpen ? { maxHeight: menuMaxH ?? 'calc(100dvh - 5rem)' } : undefined}
       >
         <div
           className="px-4 pt-1 flex flex-col gap-2 border-t border-white/5"
-          style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 2rem)' }}
+          style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 6rem)' }}
         >
 
           {/* Busca — destaque visual, é o item mais estratégico do menu */}

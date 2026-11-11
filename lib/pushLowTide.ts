@@ -24,6 +24,10 @@ export interface IncomingLowTide {
   minutesAhead: number;
   /** Identifica esta maré específica; usado para não avisar duas vezes. */
   key: string;
+  /** Verdadeiro se for a menor das baixas do dia dela (só quando há mais de uma). */
+  lowestOfDay: boolean;
+  /** Próxima preamar depois desta baixa (se houver nos dados). */
+  nextHigh: { hora: string; altura_m: number } | null;
 }
 
 /** "2026-07-24T00:38:00" ou "2026-07-24T00:38" -> ms numa régua ingênua. */
@@ -56,8 +60,28 @@ export function findIncomingLowTide(
         dt_iso: ev.dt_iso,
         minutesAhead,
         key: `${port.slug}|${ev.dt_iso.slice(0, 16)}`,
+        lowestOfDay: false,
+        nextHigh: null,
       };
     }
   }
+  if (best) {
+    const day = best.dt_iso.slice(0, 10);
+    const lowsSameDay = eventos.filter(e => e.tipo === 'low' && e.dt_iso.startsWith(day));
+    best.lowestOfDay =
+      lowsSameDay.length > 1 && lowsSameDay.every(e => e.altura_m >= best!.altura_m);
+    const after = naiveMs(best.dt_iso);
+    const high = eventos.find(e => e.tipo === 'high' && naiveMs(e.dt_iso) > after);
+    best.nextHigh = high ? { hora: high.hora, altura_m: high.altura_m } : null;
+  }
   return best;
+}
+
+/** "em 11 min", "em cerca de 1h", "em cerca de 1h30". */
+export function formatLead(minutes: number): string {
+  if (minutes < 60) return `em ${Math.max(1, minutes)} min`;
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  const approx = m === 0 ? '' : m >= 45 ? `${h + 1}h` : m >= 15 ? `${h}h30` : `${h}h`;
+  return `em cerca de ${m === 0 ? `${h}h` : approx}`;
 }

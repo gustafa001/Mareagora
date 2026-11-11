@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import { PORTS } from '../lib/ports';
 import { getEventosDia } from '../lib/mare';
-import { findIncomingLowTide, LEAD_MINUTES } from '../lib/pushLowTide';
+import { findIncomingLowTide, formatLead, LEAD_MINUTES } from '../lib/pushLowTide';
 
 // lib/mare.ts carrega data/mare/*.json com `require()`, que o Next/webpack provê
 // mas o ESM puro do tsx não. Disponibiliza um require relativo a lib/mare.ts
@@ -79,4 +79,11 @@ test('mede a antecedência pelo relógio de Brasília, não pelo do servidor', (
   const found = findIncomingLowTide(port, new Date(instant.toISOString()));
   assert.ok(found);
   assert.equal(found.minutesAhead, 45);
+});
+
+test('formatLead descreve a antecedência em texto curto', () => {
+  assert.equal(formatLead(11), 'em 11 min');
+  assert.equal(formatLead(60), 'em cerca de 1h');
+  assert.equal(formatLead(75), 'em cerca de 1h30');
+  assert.equal(formatLead(110), 'em cerca de 2h');
 });

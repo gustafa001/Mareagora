@@ -8,7 +8,8 @@ import {
   removeSubscription,
 } from '@/lib/pushStorage';
 import { PORTS } from '@/lib/ports';
-import { findIncomingLowTide } from '@/lib/pushLowTide';
+import { findIncomingLowTide, formatLead } from '@/lib/pushLowTide';
+import { getStateSlug } from '@/lib/states';
 
 /** Quantos envios em paralelo por vez (evita estourar o tempo da função). */
 const BATCH_SIZE = 25;
@@ -79,12 +80,20 @@ async function handleNotify(req: NextRequest) {
       const pending = portSubs.filter((s) => s.lastNotifiedKey !== incoming.key);
       skipped += portSubs.length - pending.length;
 
+      const local = port.cityName || port.name;
+      const altura = incoming.altura_m.toFixed(2).replace('.', ',');
+      const detalhe = [
+        `${formatLead(incoming.minutesAhead)} · ${altura} m${incoming.lowestOfDay ? ' (a menor do dia)' : ''}`,
+        incoming.nextHigh ? `Depois a maré sobe: alta às ${incoming.nextHigh.hora}.` : '',
+      ].filter(Boolean).join('\n');
+
       const payload = JSON.stringify({
-        title: '⚠️ Maré baixa chegando!',
-        body: `${port.name} — maré baixa às ${incoming.hora} (${incoming.altura_m.toFixed(2)}m)`,
+        title: `🌊 Maré baixa às ${incoming.hora} · ${local} (${port.state})`,
+        body: detalhe,
         icon: '/icons/icon-192x192.png',
-        badge: '/icons/icon-192x192.png',
-        url: `/mare/${slug}`,
+        // tag: um aviso por maré; se reenviado, substitui em vez de empilhar
+        tag: incoming.key,
+        url: `/mare/${getStateSlug(port.state)}/${slug}`,
       });
 
       for (let i = 0; i < pending.length; i += BATCH_SIZE) {
@@ -95,6 +104,9 @@ async function handleNotify(req: NextRequest) {
               await webpush.sendNotification(
                 { endpoint: sub.endpoint, keys: sub.keys },
                 payload,
+                // urgency alta: o Android não segura o aviso em economia de bateria/Doze.
+                // TTL: descarta se não entregar até a maré passar (aviso velho não serve).
+                { urgency: 'high', TTL: Math.max(60, incoming.minutesAhead * 60) },
               );
               totalSent++;
             } catch (err: unknown) {

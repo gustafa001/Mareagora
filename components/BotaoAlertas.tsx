@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import PushHelpModal from '@/components/PushHelpModal';
+import { getPushEnv, hasActiveSubscription, type PushEnv } from '@/lib/pushEnv';
 
 const VAPID_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? '';
 
@@ -22,24 +24,51 @@ export default function BotaoAlertas({ portSlug, portName }: Props) {
   const [mounted, setMounted] = useState(false);
   const [status, setStatus] = useState<'idle' | 'subscribed' | 'denied' | 'unsupported' | 'error'>('idle');
   const [loading, setLoading] = useState(false);
+  const [helpKind, setHelpKind] = useState<Exclude<PushEnv, 'ok'> | null>(null);
 
   useEffect(() => {
     setMounted(true);
     if (typeof window === 'undefined') return;
 
-    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+    const env = getPushEnv();
+
+    // iPhone fora do app instalado NÃO é "unsupported": mostra o botão e
+    // explica como instalar ao clicar.
+    if (env === 'unsupported') {
       setStatus('unsupported');
       return;
     }
+    if (env === 'denied') setStatus('denied');
+    if (env === 'ios-install') return;
 
-    const saved = localStorage.getItem(`push_subscribed_${portSlug}`);
-    if (saved === '1') setStatus('subscribed');
+    // Só mostra "ativo" se a permissão do celular ainda vale E há inscrição.
+    const saved = localStorage.getItem(`push_subscribed_${portSlug}`) === '1';
+    if (!saved) return;
+    hasActiveSubscription().then((active) => {
+      if (active) {
+        setStatus('subscribed');
+      } else {
+        localStorage.removeItem(`push_subscribed_${portSlug}`);
+      }
+    });
   }, [portSlug]);
 
   if (!mounted) return null;
 
   async function handleAction() {
     if (loading) return;
+
+    // Sem await antes do requestPermission: iOS e Chrome Android exigem que
+    // o pedido nativo rode direto no clique.
+    if (status !== 'subscribed') {
+      const env = getPushEnv();
+      if (env !== 'ok') {
+        setHelpKind(env);
+        if (env === 'denied') setStatus('denied');
+        return;
+      }
+    }
+
     setLoading(true);
 
     try {
@@ -62,7 +91,11 @@ export default function BotaoAlertas({ portSlug, portName }: Props) {
         // --- ATIVAR ---
         const permission = await Notification.requestPermission();
         if (permission !== 'granted') {
-          setStatus('denied');
+          // 'denied' = bloqueou no popup; 'default' = fechou sem escolher.
+          if (permission === 'denied') {
+            setStatus('denied');
+            setHelpKind('denied');
+          }
           return;
         }
 
@@ -115,7 +148,7 @@ export default function BotaoAlertas({ portSlug, portName }: Props) {
   const labels = {
     idle: 'Ativar alertas de maré',
     subscribed: 'Alertas ativos ✓',
-    denied: 'Notificações bloqueadas',
+    denied: 'Liberar notificações',
     error: 'Tentar novamente',
   };
 
@@ -123,9 +156,10 @@ export default function BotaoAlertas({ portSlug, portName }: Props) {
   const label = labels[status] ?? labels.idle;
 
   return (
+    <>
     <button
       onClick={handleAction}
-      disabled={loading || status === 'denied'}
+      disabled={loading}
       style={{
         display: 'inline-flex',
         alignItems: 'center',
@@ -144,5 +178,7 @@ export default function BotaoAlertas({ portSlug, portName }: Props) {
     >
       {loading ? '⏳ Processando...' : label}
     </button>
+    {helpKind && <PushHelpModal kind={helpKind} onClose={() => setHelpKind(null)} />}
+    </>
   );
 }

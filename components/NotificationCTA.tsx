@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { Bell, CheckCircle2 } from 'lucide-react';
+import PushHelpModal from '@/components/PushHelpModal';
+import { getPushEnv, hasActiveSubscription, type PushEnv } from '@/lib/pushEnv';
 
 // Mesma chave pública que o servidor usa para assinar os envios (lib/vapid.ts).
 // Chave fixa no código divergiria do par VAPID da Vercel e os avisos seriam rejeitados.
@@ -24,22 +26,34 @@ export default function NotificationCTA({ portSlug, variant = 'banner', label = 
   const [mounted, setMounted] = useState(false);
   const [status, setStatus] = useState<'idle' | 'subscribed' | 'denied' | 'unsupported' | 'error'>('idle');
   const [loading, setLoading] = useState(false);
+  const [helpKind, setHelpKind] = useState<Exclude<PushEnv, 'ok'> | null>(null);
 
   useEffect(() => {
     setMounted(true);
     if (typeof window === 'undefined') return;
 
-    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+    const env = getPushEnv();
+
+    // Navegador sem nenhum suporte: esconde o botão. (iPhone fora do app
+    // instalado NÃO entra aqui — ele mostra o botão e explica a instalação.)
+    if (env === 'unsupported') {
       setStatus('unsupported');
       return;
     }
+    if (env === 'denied') setStatus('denied');
+    if (env === 'ios-install') return;
 
-    if (Notification.permission === 'granted') {
-      const saved = localStorage.getItem(`push_subscribed_${portSlug}`);
-      if (saved === '1') {
+    // Só mostra "ativo" se a permissão do celular ainda vale E existe inscrição.
+    // Se o usuário revogou nas configurações do aparelho, limpa o estado local.
+    const saved = localStorage.getItem(`push_subscribed_${portSlug}`) === '1';
+    if (!saved) return;
+    hasActiveSubscription().then((active) => {
+      if (active) {
         setStatus('subscribed');
+      } else {
+        localStorage.removeItem(`push_subscribed_${portSlug}`);
       }
-    }
+    });
   }, [portSlug]);
 
   if (!mounted) {
@@ -62,6 +76,19 @@ export default function NotificationCTA({ portSlug, variant = 'banner', label = 
 
   async function handleSubscribe() {
     if (loading) return;
+
+    // Ambiente precisa de ajuda manual: mostra o passo a passo em vez de
+    // falhar em silêncio. Sem await antes do requestPermission abaixo — o
+    // iOS e o Chrome Android exigem que ele rode direto no clique.
+    if (status !== 'subscribed') {
+      const env = getPushEnv();
+      if (env !== 'ok') {
+        setHelpKind(env);
+        if (env === 'denied') setStatus('denied');
+        return;
+      }
+    }
+
     setLoading(true);
 
     try {
@@ -86,12 +113,16 @@ export default function NotificationCTA({ portSlug, variant = 'banner', label = 
 
       const permission = await Notification.requestPermission();
       if (permission !== 'granted') {
-        setStatus('denied');
+        // 'denied' = bloqueou no popup; 'default' = fechou sem escolher.
+        if (permission === 'denied') {
+          setStatus('denied');
+          setHelpKind('denied');
+        }
         return;
       }
 
       const reg = await navigator.serviceWorker.ready;
-      
+
       const padding = '='.repeat((4 - (VAPID_KEY.length % 4)) % 4);
       const base64 = (VAPID_KEY + padding).replace(/-/g, '+').replace(/_/g, '/');
       const rawData = window.atob(base64);
@@ -125,41 +156,45 @@ export default function NotificationCTA({ portSlug, variant = 'banner', label = 
     }
   }
 
+  const helpModal = helpKind ? (
+    <PushHelpModal kind={helpKind} onClose={() => setHelpKind(null)} />
+  ) : null;
+
   if (variant === 'compact') {
     return (
-      <button
-        type="button"
-        onClick={handleSubscribe}
-        disabled={loading || status === 'denied'}
-        title={
-          status === 'denied'
-            ? 'Permissão de notificações bloqueada no navegador'
+      <>
+        <button
+          type="button"
+          onClick={handleSubscribe}
+          disabled={loading}
+          title={status === 'subscribed' ? 'Clique para desativar' : undefined}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl font-semibold text-sm transition-all duration-200 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed ${
+            status === 'subscribed'
+              ? 'bg-emerald-500/20 border border-emerald-400/40 text-emerald-300'
+              : status === 'denied'
+              ? 'bg-amber-500/20 border border-amber-400/40 text-amber-200'
+              : 'bg-blue-600 hover:bg-blue-500 text-white border border-blue-400/40'
+          } ${className}`}
+        >
+          {status === 'subscribed' ? <CheckCircle2 size={16} /> : <Bell size={16} />}
+          {loading
+            ? status === 'subscribed'
+              ? 'Desativando...'
+              : 'Ativando...'
             : status === 'subscribed'
-            ? 'Clique para desativar'
-            : undefined
-        }
-        className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl font-semibold text-sm transition-all duration-200 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed ${
-          status === 'subscribed'
-            ? 'bg-emerald-500/20 border border-emerald-400/40 text-emerald-300'
-            : 'bg-blue-600 hover:bg-blue-500 text-white border border-blue-400/40'
-        } ${className}`}
-      >
-        {status === 'subscribed' ? <CheckCircle2 size={16} /> : <Bell size={16} />}
-        {loading
-          ? status === 'subscribed'
-            ? 'Desativando...'
-            : 'Ativando...'
-          : status === 'subscribed'
-          ? 'Alerta ativado ✓'
-          : status === 'denied'
-          ? 'Alertas bloqueados'
-          : label}
-      </button>
+            ? 'Alerta ativado ✓'
+            : status === 'denied'
+            ? 'Liberar notificações'
+            : label}
+        </button>
+        {helpModal}
+      </>
     );
   }
 
   return (
     <div className="bg-slate-800 rounded-xl p-5 md:p-6 flex flex-col md:flex-row items-center justify-between gap-4 mt-8 mb-4 shadow-lg border border-slate-700">
+      {helpModal}
       <div className="flex items-center gap-4 text-left w-full md:w-auto">
         <div className="bg-blue-500/20 p-3 rounded-full shrink-0">
           <Bell className="text-blue-400" size={24} />
@@ -188,10 +223,10 @@ export default function NotificationCTA({ portSlug, variant = 'banner', label = 
       ) : (
         <button
           onClick={handleSubscribe}
-          disabled={loading || status === 'denied'}
+          disabled={loading}
           className="w-full md:w-auto bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
         >
-          {loading ? 'Processando...' : 'Ativar alertas 🔔'}
+          {loading ? 'Processando...' : status === 'denied' ? 'Liberar notificações 🔔' : 'Ativar alertas 🔔'}
         </button>
       )}
     </div>

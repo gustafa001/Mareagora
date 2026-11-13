@@ -121,6 +121,59 @@ export function getDiaMare(
   };
 }
 
+export interface PontoCurva {
+  min: number; // minutos desde 00:00 (0..1440)
+  altura: number; // m
+}
+
+/**
+ * Curva suave da maré do dia (interpolação cosseno entre preamares/baixamares),
+ * só para desenhar o gráfico. É uma ESTIMATIVA visual: as alturas oficiais são
+ * as dos extremos. Nas pontas do dia, a curva continua espelhando o próprio dia
+ * (uma maré é simétrica ao redor de cada extremo).
+ */
+export function getCurvaDia(mares: MareResumo[], passo = 15): PontoCurva[] {
+  if (mares.length < 2) return [];
+
+  const toMin = (h: string) => {
+    const [hh, mm] = h.split(':').map(Number);
+    return (hh || 0) * 60 + (mm || 0);
+  };
+  const ext = mares
+    .map(m => ({ t: toMin(m.hora), h: m.altura_m }))
+    .sort((a, b) => a.t - b.t);
+
+  const pts = [...ext];
+  // Espelha em torno do primeiro extremo até cobrir 00:00.
+  for (let j = 1; j < ext.length && pts[0].t > 0; j++) {
+    pts.unshift({ t: 2 * ext[0].t - ext[j].t, h: ext[j].h });
+  }
+  // Espelha em torno do último extremo até cobrir 24:00.
+  const n = ext.length - 1;
+  for (let j = 1; j <= n && pts[pts.length - 1].t < 1440; j++) {
+    pts.push({ t: 2 * ext[n].t - ext[n - j].t, h: ext[n - j].h });
+  }
+  pts.sort((a, b) => a.t - b.t);
+
+  const out: PontoCurva[] = [];
+  for (let m = 0; m <= 1440; m += passo) {
+    let altura: number;
+    if (m <= pts[0].t) {
+      altura = pts[0].h;
+    } else if (m >= pts[pts.length - 1].t) {
+      altura = pts[pts.length - 1].h;
+    } else {
+      const i = pts.findIndex((p, idx) => idx < pts.length - 1 && m >= p.t && m <= pts[idx + 1].t);
+      const a = pts[i];
+      const b = pts[i + 1];
+      const r = b.t === a.t ? 0 : (m - a.t) / (b.t - a.t);
+      altura = a.h + (b.h - a.h) * ((1 - Math.cos(Math.PI * r)) / 2);
+    }
+    out.push({ min: m, altura });
+  }
+  return out;
+}
+
 /** Classificação da força da maré pelo coeficiente (mesmas faixas de content-generator). */
 export function forcaDaMare(coef: number): 'morta' | 'intermediária' | 'viva' {
   if (coef < 45) return 'morta';

@@ -10,6 +10,7 @@ import {
   buildDiaMetaDescription,
   buildDiaResumo,
   forcaDaMare,
+  getCurvaDia,
   getDiaMare,
   isDayInWindow,
   isValidISODate,
@@ -120,4 +121,27 @@ test('forcaDaMare: mesmas faixas do content-generator', () => {
 
 test('segurança: nenhum porto é indexável por padrão (Passo 2/3 = noindex)', () => {
   assert.equal(DAY_PAGE_INDEXABLE_SLUGS.size, 0);
+});
+
+test('getCurvaDia: cobre 00:00-24:00 e passa pelos extremos oficiais', () => {
+  const dia = getDiaMare(santos!, '2026-11-14', HOJE)!;
+  const curva = getCurvaDia(dia.mares);
+  assert.equal(curva[0].min, 0);
+  assert.equal(curva[curva.length - 1].min, 1440);
+
+  for (const m of dia.mares) {
+    const [h, mm] = m.hora.split(':').map(Number);
+    const alvo = h * 60 + mm;
+    const ponto = curva.reduce((a, b) => (Math.abs(b.min - alvo) < Math.abs(a.min - alvo) ? b : a));
+    // passo de 15 min: a curva fica a menos de ~0,05 m do extremo oficial
+    assert.ok(Math.abs(ponto.altura - m.altura_m) < 0.05, `curva diverge em ${m.hora}`);
+  }
+  const todas = curva.map(p => p.altura);
+  const oficiais = dia.mares.map(m => m.altura_m);
+  assert.ok(Math.max(...todas) <= Math.max(...oficiais) + 1e-9);
+  assert.ok(Math.min(...todas) >= Math.min(...oficiais) - 1e-9);
+});
+
+test('getCurvaDia: vazio com menos de 2 extremos', () => {
+  assert.deepEqual(getCurvaDia([]), []);
 });

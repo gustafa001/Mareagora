@@ -10,7 +10,15 @@ export const metadata: Metadata = {
   title: 'Maré para Pesca: Melhores Horários, Lua e Pressão | MaréAgora',
   description:
     'Guia completo de maré para pesca: como usar o coeficiente de maré, a tábua solunar e o barômetro de pressão atmosférica para achar os melhores horários e dias para pescar.',
-  alternates: { canonical: 'https://mareagora.com.br/pesca' },
+  alternates: {
+    canonical: 'https://mareagora.com.br/pesca',
+    // Referência recíproca à versão EN (/tide/fishing-guide já aponta para cá).
+    languages: {
+      pt: 'https://mareagora.com.br/pesca',
+      en: 'https://mareagora.com.br/tide/fishing-guide',
+      'x-default': 'https://mareagora.com.br/pesca',
+    },
+  },
 };
 
 const FATORES = [

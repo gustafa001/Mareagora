@@ -47,12 +47,10 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "MaréAgora",
   },
-  alternates: {
-    languages: {
-      'pt': 'https://mareagora.com.br',
-      'x-default': 'https://mareagora.com.br',
-    },
-  },
+  // Sem `alternates` global: hreflang é declarado por página. Um valor aqui
+  // era herdado por páginas sem `alternates` próprio (/sobre, /contato,
+  // /termos etc.) e apontava a versão "pt" delas para a home, gerando
+  // conflito de hreflang. A home já declara o seu em app/page.tsx.
 };
 
 export const viewport: Viewport = {

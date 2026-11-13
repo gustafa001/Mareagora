@@ -49,6 +49,7 @@ export default function SchemaGenerator({
     '@id': `${base}/#website`,
     url: base,
     name: 'MaréAgora',
+    alternateName: ['Maré Agora', 'Mare Agora', 'MareAgora'],
     description: 'A tábua de marés mais completa do Brasil',
     publisher: { '@id': `${base}/#organization` },
   });

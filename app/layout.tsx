@@ -106,7 +106,9 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'WebSite',
+              '@id': 'https://mareagora.com.br/#website',
               name: 'MaréAgora',
+              alternateName: ['Maré Agora', 'Mare Agora', 'MareAgora'],
               url: 'https://mareagora.com.br',
             })
           }}

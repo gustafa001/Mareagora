@@ -1,0 +1,40 @@
+# MaréAgora
+
+> Previsões de maré, ondas, lua e condições do mar para praias, portos e estados do Brasil. Tábua de marés com maré alta e baixa, coeficiente, ondas e vento, com dados da Marinha do Brasil (CHM). Gratuito e sem cadastro.
+
+O MaréAgora (https://mareagora.com.br) é um site em português do Brasil. Os horários de maré são exibidos por porto, praia e estado, com atualização diária.
+
+## Marés
+
+- [Maré hoje](https://mareagora.com.br/mare-hoje): horários de maré alta e baixa de hoje
+- [Maré amanhã](https://mareagora.com.br/mare-amanha): previsão para o dia seguinte
+- [Maré da semana](https://mareagora.com.br/mare-semana): previsão dos próximos dias
+- [Maré viva](https://mareagora.com.br/mare-viva): o que é e quando ocorre
+- [Maré morta](https://mareagora.com.br/mare-morta): o que é e quando ocorre
+- [Coeficiente de maré](https://mareagora.com.br/coeficiente): como interpretar o coeficiente
+
+## Locais
+
+- [Portos](https://mareagora.com.br/portos): tábua de marés dos portos brasileiros
+- [Praias](https://mareagora.com.br/praias): tábua de marés das praias
+- [Estados](https://mareagora.com.br/estados): marés por estado do litoral brasileiro
+- [Guia de praias](https://mareagora.com.br/guia-praias): guias detalhados por praia
+- [Operações portuárias](https://mareagora.com.br/operacoes-portuarias): maré aplicada a operações em portos
+
+## Mar, lua e pesca
+
+- [Ondas](https://mareagora.com.br/ondas): condições de ondas
+- [Lua](https://mareagora.com.br/lua): fases da lua e relação com as marés
+- [Pesca](https://mareagora.com.br/pesca): melhores horários de maré, lua e pressão para pescar
+- [Lugares de pesca](https://mareagora.com.br/lugares-de-pesca): pontos de pesca no litoral
+
+## Conteúdo de apoio
+
+- [Blog](https://mareagora.com.br/blog): artigos sobre como ler a tábua de marés, pesca, surf e segurança no mar
+- [Glossário de maré](https://mareagora.com.br/glossario-de-mare): termos usados em tábuas de marés
+- [Sobre](https://mareagora.com.br/sobre): quem faz o MaréAgora e a origem dos dados
+
+## Opcional
+
+- [Sitemap](https://mareagora.com.br/sitemap/index.xml)
+- [Tide tables (EN): fishing guide](https://mareagora.com.br/tide/fishing-guide): guia em inglês para ler tábuas de maré

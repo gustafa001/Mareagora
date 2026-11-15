@@ -114,3 +114,8 @@ client/public/__manus__/version.json
 
 # Inscrições de push em desenvolvimento local (contêm endpoints e chaves)
 .data/
+
+# Cloudflare / OpenNext
+.open-next
+.dev.vars
+.wrangler

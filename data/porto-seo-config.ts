@@ -321,10 +321,10 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'terminal-de-barra-do-riacho': {
-    seoName: 'Barra do Riacho',
+    seoName: 'Aracruz (Barra do Riacho)',
     titleSuffix: 'Horários de Hoje',
     description: 'Tábua de marés de Barra do Riacho e Regência (ES) para hoje e 2026. Horários ideais para o point break de Regência, pesca e operações no terminal. Fonte: Marinha do Brasil.',
-    keywords: ['maré barra do riacho hoje', 'maré regência es', 'tabua maré barra do riacho 2026', 'surf regência maré', 'maré aracruz es', 'point break regência', 'pesca barra do riacho maré'],
+    keywords: ['maré barra do riacho hoje', 'maré regência es', 'tabua maré barra do riacho 2026', 'tábua de maré aracruz es', 'surf regência maré', 'maré aracruz es', 'point break regência', 'pesca barra do riacho maré'],
     praias: ['Barra do Riacho', 'Regência', 'Povoação'],
     category: 'surf',
     portoVizinhos: ['porto-de-vitoria', 'guarapari', 'linhares'],
@@ -349,8 +349,40 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     ],
   },
 
+  'capitania-dos-portos-de-sergipe': {
+    seoName: 'Aracaju',
+    titleSuffix: 'Maré Alta e Baixa Hoje',
+    description: 'Tábua de marés de Aracaju (SE) para hoje e 2026: horários de maré alta e baixa na foz do Rio Sergipe, para pesca, passeios e a orla de Atalaia. Fonte: Marinha do Brasil.',
+    keywords: ['tábua de maré aracaju', 'maré aracaju hoje', 'tabua de mare aracaju 2026', 'maré alta aracaju', 'horário maré aracaju'],
+    praias: ['Praia de Atalaia', 'Praia de Aruana', 'Passarela do Caranguejo'],
+    category: 'turismo',
+    portoVizinhos: ['praia-de-atalaia', 'terminal-maritimo-inacio-barbosa'],
+    faqs: [],
+  },
+
+  'terminal-maritimo-de-imbetiba': {
+    seoName: 'Macaé',
+    titleSuffix: 'Maré Alta e Baixa Hoje',
+    description: 'Tábua de marés de Macaé (RJ) para hoje e 2026: horários de maré alta e baixa para pesca, navegação e operações no Terminal de Imbetiba. Fonte: Marinha do Brasil.',
+    keywords: ['tábua de maré macaé', 'maré macaé hoje', 'tabua de mares macae rj', 'maré alta macaé', 'maré terminal imbetiba'],
+    praias: ['Praia dos Cavaleiros', 'Praia do Pecado', 'Imbetiba'],
+    category: 'pesca',
+    portoVizinhos: ['porto-do-acu', 'cabo-frio', 'buzios'],
+    faqs: [],
+  },
+
+  'porto-de-santana': {
+    seoName: 'Macapá e Santana',
+    titleSuffix: 'Maré Alta e Baixa Hoje',
+    description: 'Tábua de marés de Macapá e Santana (AP) para hoje e 2026: horários de maré alta e baixa no Rio Amazonas, para navegação, pesca e travessias. Fonte: Marinha do Brasil.',
+    keywords: ['tábua de maré macapá', 'maré macapá hoje', 'maré santana amapá', 'maré rio amazonas macapá', 'horário maré macapá'],
+    praias: ['Orla de Macapá', 'Orla de Santana'],
+    category: 'pesca',
+    portoVizinhos: ['barra-norte-arco-lamoso', 'igarape-grande-do-curua'],
+    faqs: [],
+  },
+
   'sao-luis': {
-    highlight: 'amplitude',
     titleSuffix: 'Maré Alta e Baixa Hoje',
     description: 'Veja a previsão de maré de São Luís (MA) em 2026: horários de premar e baixa-mar, altura das águas e as próximas 48 horas, com dados oficiais da Marinha do Brasil. Confira os horários.',
     keywords: ['maré são luís hoje', 'tabua maré são luís 2026', 'maré alta são luís', 'maré baixa são luís', 'horário maré são luís', 'golfão maranhense maré', 'maré praia do calhau'],

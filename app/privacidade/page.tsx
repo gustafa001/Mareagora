@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import NavBar from "@/components/NavBar";
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/privacidade' },
   title: "Política de Privacidade | MaréAgora",
   description:
     "Saiba como o MaréAgora coleta, usa e protege seus dados pessoais de acordo com a LGPD.",

@@ -6,6 +6,7 @@ import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
 
 export const metadata = {
+  alternates: { canonical: '/cameras' },
   title: 'Câmeras ao Vivo das Praias | MaréAgora',
   description:
     'Veja em tempo real as condições do mar e das praias do litoral brasileiro através de câmeras ao vivo de Santos, Guarujá, Praia Grande, Ubatuba e Rio de Janeiro.',

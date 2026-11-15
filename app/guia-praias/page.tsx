@@ -5,6 +5,7 @@ import { AD_SLOTS } from '@/lib/adConfig'
 import AdSlot from '@/components/ads/AdSlot'
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/guia-praias' },
   title: 'Guia de Praias do Brasil - Marés, Ondas e Dicas | MaréAgora',
   description:
     'Descubra as melhores praias do Brasil com tábua de marés atualizada, condições de ondas e dicas de pesca. Guia completo do litoral brasileiro.',

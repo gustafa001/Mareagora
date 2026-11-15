@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import NavBar from "@/components/NavBar";
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/cookies' },
   title: "Política de Cookies | MaréAgora",
   description:
     "Saiba quais cookies o MaréAgora utiliza, para que servem e como gerenciá-los.",

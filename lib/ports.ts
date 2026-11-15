@@ -48,7 +48,7 @@ export const PORTS: Port[] = [
   { id: '2',  name: 'Ilha do Mosqueiro',                         cityName: 'Ilha do Mosqueiro',        slug: 'ilha-do-mosqueiro',                    state: 'PA',  region: 'norte',    lat: -1.165389,  lon: -48.474111, dhnId: '10525' },
   { id: '3',  name: 'Porto de Vila do Conde',                    cityName: 'Vila do Conde',            slug: 'porto-de-vila-do-conde',               state: 'PA',  region: 'norte',    lat: -1.539139,  lon: -48.753278, dhnId: '10566' },
   { id: '4',  name: 'Atracadouro de Breves',                     cityName: 'Breves',                   slug: 'atracadouro-de-breves',                state: 'PA',  region: 'norte',    lat: -1.691667,  lon: -50.483333, dhnId: '10571' },
-  { id: '5',  name: 'Porto de Santana',                          cityName: 'Santana',                  slug: 'porto-de-santana',                     state: 'AP',  region: 'norte',    lat: -0.061361,  lon: -51.167750, dhnId: '10615' },
+  { id: '5',  name: 'Porto de Santana',                          cityName: 'Santana',                  slug: 'porto-de-santana',                     state: 'AP',  region: 'norte',    lat: -0.061361,  lon: -51.167750, dhnId: '10615', searchNames: ['macapa', 'macapá', 'santana'] },
   { id: '6',  name: 'Igarapé Grande do Curuá',                   cityName: 'Igarapé do Curuá',         slug: 'igarape-grande-do-curua',              state: 'PA',  region: 'norte',    lat:  0.763333,  lon: -50.118694, dhnId: '10656' },
   { id: '7',  name: 'Barra Norte do Rio Amazonas - Arco Lamoso', cityName: 'Barra Norte do Amazonas',  slug: 'barra-norte-arco-lamoso',              state: 'PA',  region: 'norte',    lat:  1.435000,  lon: -49.221667, dhnId: '10657' },
   { id: '8',  name: 'Fundeadouro de Salinópolis',                cityName: 'Salinópolis',              slug: 'fundeadouro-de-salinopolis',           state: 'PA',  region: 'norte',    lat: -0.616667,  lon: -47.350000, dhnId: '20520' },
@@ -72,7 +72,7 @@ export const PORTS: Port[] = [
   { id: '24', name: 'Porto de Suape',                            cityName: 'Suape',                    slug: 'porto-de-suape',                       state: 'PE',  region: 'nordeste', lat: -8.393333,  lon: -34.960000, dhnId: '30686' },
   { id: '25', name: 'Porto de Maceió',                           cityName: 'Maceió',                   slug: 'porto-de-maceio',                      state: 'AL',  region: 'nordeste', lat: -9.683167,  lon: -35.725111, dhnId: '30725' },
   { id: '26', name: 'Terminal Marítimo Inácio Barbosa',          cityName: 'Barra dos Coqueiros',      slug: 'terminal-maritimo-inacio-barbosa',     state: 'SE',  region: 'nordeste', lat: -10.842778, lon: -36.917944, dhnId: '30810' },
-  { id: '27', name: 'Capitania dos Portos de Sergipe',           cityName: 'Aracaju',                  slug: 'capitania-dos-portos-de-sergipe',      state: 'SE',  region: 'nordeste', lat: -10.920000, lon: -37.045889, dhnId: '30825' },
+  { id: '27', name: 'Capitania dos Portos de Sergipe',           cityName: 'Aracaju',                  slug: 'capitania-dos-portos-de-sergipe',      state: 'SE',  region: 'nordeste', lat: -10.920000, lon: -37.045889, dhnId: '30825', searchNames: ['aracaju', 'rio sergipe'] },
   { id: '29', name: 'Porto Madre de Deus',                       cityName: 'Madre de Deus',            slug: 'porto-de-madre-de-deus',               state: 'BA',  region: 'nordeste', lat: -12.749778, lon: -38.623694, dhnId: '40118' },
   { id: '30', name: 'Base de Aratu',                             cityName: 'Aratu',                    slug: 'porto-de-aratu',                       state: 'BA',  region: 'nordeste', lat: -12.794611, lon: -38.494194, dhnId: '40135' },
   { id: '31', name: 'Porto de Salvador',                         cityName: 'Salvador',                 slug: 'porto-de-salvador',                    state: 'BA',  region: 'nordeste', lat: -12.973750, lon: -38.517222, dhnId: '40141' },
@@ -80,11 +80,11 @@ export const PORTS: Port[] = [
 
   // ── Região Sudeste ────────────────────────────────────────────────────────
   { id: '28', name: 'Fernando de Noronha',                       cityName: 'Fernando de Noronha',      slug: 'arquipelago-de-fernando-de-noronha',   state: 'PE',  region: 'especial', lat: -3.833333,  lon: -32.403333, dhnId: '30955' },
-  { id: '33', name: 'Terminal da Barra do Riacho',               cityName: 'Aracruz',                  slug: 'terminal-de-barra-do-riacho',          state: 'ES',  region: 'sudeste',  lat: -19.838639, lon: -40.059722, dhnId: '40240' },
+  { id: '33', name: 'Terminal da Barra do Riacho',               cityName: 'Aracruz',                  slug: 'terminal-de-barra-do-riacho',          state: 'ES',  region: 'sudeste',  lat: -19.838639, lon: -40.059722, dhnId: '40240', searchNames: ['aracruz', 'regencia', 'regência', 'barra do riacho'] },
   { id: '34', name: 'Porto de Tubarão',                          cityName: 'Vitória (Tubarão)',        slug: 'porto-de-tubarao',                     state: 'ES',  region: 'sudeste',  lat: -20.288778, lon: -40.243694, dhnId: '40255' },
   { id: '35', name: 'Porto de Vitória',                          cityName: 'Vitória',                  slug: 'porto-de-vitoria',                     state: 'ES',  region: 'sudeste',  lat: -20.321667, lon: -40.335944, dhnId: '40256' },
   { id: '37', name: 'Terminal da Ponta do Ubu',                  cityName: 'Anchieta',                 slug: 'terminal-da-ponta-do-ubu-i',           state: 'ES',  region: 'sudeste',  lat: -20.787833, lon: -40.570389, dhnId: '40292' },
-  { id: '38', name: 'Terminal de Imbetiba',                      cityName: 'Macaé',                    slug: 'terminal-maritimo-de-imbetiba',        state: 'RJ',  region: 'sudeste',  lat: -22.385000, lon: -41.770000, dhnId: '50116' },
+  { id: '38', name: 'Terminal de Imbetiba',                      cityName: 'Macaé',                    slug: 'terminal-maritimo-de-imbetiba',        state: 'RJ',  region: 'sudeste',  lat: -22.385000, lon: -41.770000, dhnId: '50116', searchNames: ['macae', 'macaé', 'imbetiba'] },
   { 
     id: '39', name: 'Rio de Janeiro - Ilha Fiscal', cityName: 'Rio de Janeiro', slug: 'rio-de-janeiro-fiscal', state: 'RJ', region: 'sudeste', lat: -22.896694, lon: -43.166000, dhnId: '50140'
   },

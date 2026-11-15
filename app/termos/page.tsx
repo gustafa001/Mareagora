@@ -3,6 +3,7 @@ import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/termos' },
   title: 'Termos de Uso | MaréAgora',
   description: 'Termos de Uso do MaréAgora: condições de acesso, isenção de responsabilidade náutica, propriedade intelectual e direitos do usuário.',
 };

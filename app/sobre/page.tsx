@@ -3,6 +3,7 @@ import Link from "next/link";
 import NavBar from "@/components/NavBar";
 
 export const metadata = {
+  alternates: { canonical: '/sobre' },
   title: "Sobre | MaréAgora",
   description:
     "Conheça o MaréAgora — a plataforma brasileira de tábua de marés com dados oficiais da Marinha do Brasil.",

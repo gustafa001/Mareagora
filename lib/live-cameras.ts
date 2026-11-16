@@ -1,5 +1,4 @@
 import { PORTS, type Port } from './ports';
-import { GLOBAL_PLACES, type GlobalPlace } from './globalPlaces';
 
 /**
  * Câmeras ao vivo que JÁ RODAM nas páginas de maré (/mare/[estado]/[slug]),
@@ -21,7 +20,7 @@ export interface LiveCamera {
   channelId?: string;
   portSlug: string;
   // Sobrepõe o link "Ver maré de..." quando o local não segue o padrão
-  // /mare/[estado]/[slug] (ex: locais globais em /mare-mundo/[pais]/[slug]).
+  // /mare/[estado]/[slug].
   href?: string;
 }
 
@@ -63,7 +62,7 @@ const GROUP_LABELS: Record<string, string> = {
   joaquina: 'Florianópolis',
 };
 
-const GROUP_ORDER = ['Baixada Santista', 'Litoral Norte SP', 'Rio de Janeiro', 'Região dos Lagos', 'Florianópolis', 'Internacional'];
+const GROUP_ORDER = ['Baixada Santista', 'Litoral Norte SP', 'Rio de Janeiro', 'Região dos Lagos', 'Florianópolis'];
 
 function toLiveCameras(port: Port): LiveCamera[] {
   if (!port.cameras || port.cameras.length === 0) return [];
@@ -84,28 +83,8 @@ function toLiveCameras(port: Port): LiveCamera[] {
     }));
 }
 
-function toLiveCamerasFromPlace(place: GlobalPlace): LiveCamera[] {
-  if (!place.cameras || place.cameras.length === 0) return [];
-  return place.cameras
-    .filter((cam) => cam.active !== false && (Boolean(cam.videoId) || Boolean(cam.channelId)))
-    .map((cam) => ({
-      id: `${place.slug}-${cam.videoId ?? cam.channelId}`,
-      title: cam.title,
-      cityName: place.name,
-      state: place.countryName,
-      groupLabel: 'Internacional',
-      description: (cam.videoId && DESCRIPTIONS[cam.videoId]) ?? '',
-      sourceName: cam.sourceName,
-      sourceUrl: cam.sourceUrl,
-      videoId: cam.videoId,
-      channelId: cam.channelId,
-      portSlug: place.slug,
-      href: `/mare-mundo/${place.countryCode}/${place.slug}`,
-    }));
-}
-
 export function getLiveCameras(): LiveCamera[] {
-  return [...PORTS.flatMap(toLiveCameras), ...GLOBAL_PLACES.flatMap(toLiveCamerasFromPlace)];
+  return PORTS.flatMap(toLiveCameras);
 }
 
 export function getLiveCameraGroups(): { label: string; cameras: LiveCamera[] }[] {

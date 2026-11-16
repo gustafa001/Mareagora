@@ -9,7 +9,7 @@ import { getStateSlug } from '@/lib/states';
 import { useRecentPorts } from '@/hooks/useRecentPorts';
 import { useT } from '@/lib/tideI18n';
 import {
-  Umbrella, Anchor, Map, Globe, FileText, Building2, MapPin, Loader2,
+  Umbrella, Anchor, Map, FileText, Building2, MapPin, Loader2,
   Waves, CalendarClock, CalendarDays, TrendingUp, Moon, Sparkles, MoonStar, Fish, Camera,
 } from 'lucide-react';
 
@@ -42,7 +42,6 @@ export default function NavBar({ className = '' }: NavBarProps) {
     { href: '/lugares-de-pesca', icon: Fish, label: s.navFishing },
     { href: '/cameras', icon: Camera, label: s.navCameras },
     { href: '/estados', icon: Map, label: s.navStates },
-    { href: '/mare-mundo', icon: Globe, label: s.navWorld },
     { href: '/blog', icon: FileText, label: s.navBlog },
     { href: '/operacoes-portuarias', icon: Building2, label: s.navPortOps },
   ];
@@ -86,7 +85,6 @@ export default function NavBar({ className = '' }: NavBarProps) {
         { href: '/portos', icon: Anchor, label: s.navPorts },
         { href: '/cameras', icon: Camera, label: s.navBeachLive },
         { href: '/estados', icon: Map, label: s.navStates },
-        { href: '/mare-mundo', icon: Globe, label: s.navWorld },
         { href: '/blog', icon: FileText, label: s.navBlog },
         { href: '/operacoes-portuarias', icon: Building2, label: s.navPortOps },
       ],

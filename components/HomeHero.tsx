@@ -1,7 +1,6 @@
 'use client';
 import { getStateSlug } from "@/lib/states";
 import { PORTS, getNearestPort, getPortBySlug, type Port } from '@/lib/ports';
-import type { GlobalPlace } from '@/lib/globalPlaces';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { AD_SLOTS } from '@/lib/adConfig';
@@ -13,18 +12,7 @@ import { useRecentPorts } from '@/hooks/useRecentPorts';
 import { useFavoritePorts } from '@/hooks/useFavoritePorts';
 import type { HomeConditions } from '@/lib/homeConditions';
 
-type SearchResult =
-  | { type: 'br'; port: Port }
-  | { type: 'global'; place: GlobalPlace };
-
-function getCountryFlag(code: string): string {
-  try {
-    const codePoints = code.toUpperCase().split('').map(c => 127397 + c.charCodeAt(0));
-    return String.fromCodePoint(...codePoints);
-  } catch {
-    return '🌍';
-  }
-}
+type SearchResult = { type: 'br'; port: Port };
 
 function fmt(n: number, digits: number) {
   return n.toFixed(digits).replace('.', ',');
@@ -64,15 +52,6 @@ export default function HomeHero({ todayDate, todayEvents = [], conditions = nul
   const [isGeolocationLoading, setIsGeolocationLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const globalPlacesRef = useRef<GlobalPlace[] | null>(null);
-
-  const loadGlobalPlaces = useCallback(async () => {
-    if (!globalPlacesRef.current) {
-      const mod = await import('@/lib/globalPlaces');
-      globalPlacesRef.current = mod.GLOBAL_PLACES;
-    }
-    return globalPlacesRef.current;
-  }, []);
 
   const popularPorts = QUICK_SLUGS
     .map(slug => getPortBySlug(slug))
@@ -152,29 +131,14 @@ export default function HomeHero({ todayDate, todayEvents = [], conditions = nul
       .slice(0, 6)
       .map(port => ({ type: 'br' as const, port }));
 
-    // Global places (carregado dinamicamente sob demanda)
-    const globalPlaces = await loadGlobalPlaces();
-    const globalResults: SearchResult[] = globalPlaces.filter(place => {
-      return (
-        normalize(place.name).includes(q) ||
-        normalize(place.countryName).includes(q)
-      );
-    })
-      .slice(0, 8)
-      .map(place => ({ type: 'global' as const, place }));
-
-    setResults([...brResults, ...globalResults].slice(0, 12));
+    setResults(brResults);
     setShowSuggestions(true);
-  }, [loadGlobalPlaces]);
+  }, []);
 
   const handleSelect = (result: SearchResult) => {
     setShowSuggestions(false);
     setSearchQuery('');
-    if (result.type === 'br') {
-      router.push(`/mare/${getStateSlug(result.port.state)}/${result.port.slug}`);
-    } else {
-      router.push(`/mare-mundo/${result.place.countryCode}/${result.place.slug}`);
-    }
+    router.push(`/mare/${getStateSlug(result.port.state)}/${result.port.slug}`);
   };
 
   const handleGeolocation = () => {
@@ -319,11 +283,10 @@ export default function HomeHero({ todayDate, todayEvents = [], conditions = nul
             <input
               ref={searchInputRef}
               type="text"
-              placeholder="Buscar porto, praia ou cidade no mundo..."
+              placeholder="Buscar porto, praia ou cidade..."
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
               onFocus={() => {
-                loadGlobalPlaces();
                 if (searchQuery.length >= 2) setShowSuggestions(true);
               }}
               onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
@@ -355,30 +318,6 @@ export default function HomeHero({ todayDate, todayEvents = [], conditions = nul
                     <div>
                       <span className="font-medium">{port.cityName || port.name}</span>
                       <span className="text-slate-400 text-xs ml-2">({port.state})</span>
-                    </div>
-                  </button>
-                );
-              })}
-
-              {/* Group Global */}
-              {results.some(r => r.type === 'global') && (
-                <div className="px-4 pt-3 pb-1 border-t border-slate-800/50">
-                  <p className="text-[10px] font-bold text-cyan-400 uppercase tracking-widest">🌍 Mundo</p>
-                </div>
-              )}
-              {results.filter(r => r.type === 'global').map((result) => {
-                const place = (result as { type: 'global'; place: GlobalPlace }).place;
-                const flag = getCountryFlag(place.countryCode);
-                return (
-                  <button
-                    key={`global-${place.slug}`}
-                    onClick={() => handleSelect(result)}
-                    className="w-full px-6 py-3 text-left text-white hover:bg-cyan-500/10 transition-colors border-b border-slate-800/30 last:border-0 flex items-center gap-3"
-                  >
-                    <span className="text-lg">{flag}</span>
-                    <div>
-                      <span className="font-medium">{place.name}</span>
-                      <span className="text-slate-400 text-xs ml-2">{place.countryName}</span>
                     </div>
                   </button>
                 );

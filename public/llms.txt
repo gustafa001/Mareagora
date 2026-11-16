@@ -37,4 +37,3 @@ O MaréAgora (https://mareagora.com.br) é um site em português do Brasil. Os h
 ## Opcional
 
 - [Sitemap](https://mareagora.com.br/sitemap/index.xml)
-- [Tide tables (EN): fishing guide](https://mareagora.com.br/tide/fishing-guide): guia em inglês para ler tábuas de maré

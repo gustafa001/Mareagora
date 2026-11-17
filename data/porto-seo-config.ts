@@ -37,6 +37,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'porto-de-santos': {
+    seoName: 'Santos', // busca real é "tábua de maré santos", não "Porto de ..."
     titleSuffix: 'Horários e Coeficientes Oficiais',
     description: 'Tábua de marés do Porto de Santos para hoje e 2026. Horários de maré alta e baixa, coeficientes oficiais da Marinha do Brasil para operações portuárias, pesca e navegação no estuário.',
     keywords: ['maré santos hoje', 'tabua maré santos 2026', 'maré alta santos', 'porto de santos maré', 'horário maré santos', 'maré gonzaga', 'maré porto santos'],
@@ -105,6 +106,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'porto-de-florianopolis': {
+    seoName: 'Florianópolis', // busca real é "tábua de maré florianópolis", não "Porto de ..."
     titleSuffix: 'Maré Alta e Baixa Hoje — Surf e Turismo',
     description: 'Tábua de marés de Florianópolis para hoje e 2026. Horários de maré para surf em Joaquina e Campeche, pesca e passeios. Fonte: Marinha do Brasil.',
     keywords: ['maré florianópolis hoje', 'maré floripa', 'tabua maré florianópolis 2026', 'surf joaquina maré', 'maré campeche floripa', 'maré jurerê florianópolis', 'maré ingleses floripa'],
@@ -321,7 +323,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'terminal-de-barra-do-riacho': {
-    seoName: 'Aracruz (Barra do Riacho)',
+    seoName: 'Barra do Riacho (Aracruz)',
     titleSuffix: 'Horários de Hoje',
     description: 'Tábua de marés de Barra do Riacho e Regência (ES) para hoje e 2026. Horários ideais para o point break de Regência, pesca e operações no terminal. Fonte: Marinha do Brasil.',
     keywords: ['maré barra do riacho hoje', 'maré regência es', 'tabua maré barra do riacho 2026', 'tábua de maré aracruz es', 'surf regência maré', 'maré aracruz es', 'point break regência', 'pesca barra do riacho maré'],

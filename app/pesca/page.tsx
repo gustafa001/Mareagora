@@ -6,10 +6,13 @@ import SearchPorts from '@/components/SearchPorts';
 import { PORTS } from '@/lib/ports';
 import { getMoonAge, getTideCoefficient, getMoonPhase } from '@/lib/tideUtils';
 
+// Regenera a cada 6h: o card "hoje" (coeficiente e lua) não pode ficar congelado no build.
+export const revalidate = 21600;
+
 export const metadata: Metadata = {
   title: 'Maré para Pesca: Melhores Horários, Lua e Pressão | MaréAgora',
   description:
-    'Guia completo de maré para pesca: como usar o coeficiente de maré, a tábua solunar e o barômetro de pressão atmosférica para achar os melhores horários e dias para pescar.',
+    'Maré para pesca: veja o coeficiente de hoje, a fase da lua e como usar a tábua solunar e o barômetro para achar o melhor horário de pescar.',
   alternates: {
     canonical: 'https://mareagora.com.br/pesca',
     // Referência recíproca à versão EN (/tide/fishing-guide já aponta para cá).
@@ -25,7 +28,7 @@ const FATORES = [
   {
     icon: '🌊',
     titulo: 'Coeficiente de Maré',
-    desc: 'Quanto maior o coeficiente (acima de 70), mais forte é a correnteza — isso movimenta cardumes e nutrientes, geralmente melhorando a pesca. Marés muito fracas (abaixo de 40) tendem a deixar os peixes menos ativos.',
+    desc: 'Acima de 70, a correnteza é forte e movimenta cardumes e nutrientes, geralmente melhorando a pesca. Entre 40 e 70 a maré é moderada: a pesca costuma ser regular e vale combinar com o horário da virada da maré e a tábua solunar. Abaixo de 40 (maré morta) os peixes tendem a ficar menos ativos.',
     link: { href: '/coeficiente', label: 'Ver coeficiente de hoje' },
   },
   {
@@ -57,7 +60,7 @@ const BAROMETRO_FAIXAS = [
 ];
 
 function formatDatePt(date: Date) {
-  return date.toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long' });
+  return date.toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long', timeZone: 'America/Sao_Paulo' });
 }
 
 export default function Page() {
@@ -67,6 +70,12 @@ export default function Page() {
   const faseHoje = getMoonPhase(idadeHoje);
 
   const coefBom = coefHoje.value >= 70;
+  // A legenda segue as mesmas faixas do texto: ≥70 favorável, 41–69 moderado, ≤40 fraco.
+  const coefMsg = coefBom
+    ? '🎣 Coeficiente favorável para pesca hoje'
+    : coefHoje.value > 40
+      ? 'Coeficiente moderado — combine com a tábua solunar do seu porto'
+      : 'Maré fraca hoje — foque na virada da maré e no amanhecer/entardecer';
 
   const faq = [
     {
@@ -143,7 +152,7 @@ export default function Page() {
               </div>
             </div>
             <p className={`mt-6 inline-block px-4 py-2 rounded-full text-sm font-bold border ${coefBom ? 'bg-emerald-100 text-emerald-700 border-emerald-200' : 'bg-slate-100 text-slate-600 border-slate-200'}`}>
-              {coefBom ? '🎣 Coeficiente favorável para pesca hoje' : 'Coeficiente moderado — combine com a tábua solunar do seu porto'}
+              {coefMsg}
             </p>
           </div>
 
@@ -154,7 +163,7 @@ export default function Page() {
               <div key={f.titulo} className="bg-white rounded-xl border border-slate-100 shadow-sm p-5">
                 <div className="flex items-center gap-3 mb-2">
                   <span className="text-2xl">{f.icon}</span>
-                  <p className="font-bold text-slate-800">{f.titulo}</p>
+                  <h3 className="font-bold text-slate-800">{f.titulo}</h3>
                 </div>
                 <p className="text-sm text-slate-600 leading-relaxed mb-3">{f.desc}</p>
                 {f.link && (
@@ -196,7 +205,7 @@ export default function Page() {
           <div className="space-y-4 mb-10">
             {faq.map((f) => (
               <div key={f.question} className="bg-white rounded-xl border border-slate-100 p-5">
-                <p className="font-bold text-slate-800 mb-1">{f.question}</p>
+                <h3 className="font-bold text-slate-800 mb-1">{f.question}</h3>
                 <p className="text-sm text-slate-600 leading-relaxed">{f.answer}</p>
               </div>
             ))}

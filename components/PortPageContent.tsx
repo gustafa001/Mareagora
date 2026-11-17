@@ -17,6 +17,7 @@ import WindWaveCharts from '@/components/WindWaveCharts';
 import LiveCameraEmbed from '@/components/LiveCameraEmbed';
 import SearchPorts from '@/components/SearchPorts';
 import PortStatistics from '@/components/PortStatistics';
+import FishingNearby from '@/components/FishingNearby';
 import ActivityRecommendations from '@/components/ActivityRecommendations';
 import SolunarTable from '@/components/SolunarTable';
 import BarometerCard from '@/components/BarometerCard';
@@ -453,6 +454,8 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               eventos={dataAno}
               portName={seoName}
             />
+
+            <FishingNearby cityName={seoName} state={port.state} lat={port.lat} lon={port.lon} />
 
             <section className="classic-card prose prose-slate max-w-none">
               <h2 className="text-2xl font-bold mb-4 font-syne">Sobre as Marés em {seoName}</h2>

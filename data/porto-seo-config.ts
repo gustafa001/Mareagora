@@ -239,8 +239,8 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
 
   'maracaipe': {
     titleSuffix: 'Maré Alta e Baixa Hoje — Surf e Piscinas Naturais',
-    description: 'Tábua de maré de Maracaípe (Ipojuca, PE) para hoje e 2026. Horários para o surf na praia e as piscinas naturais do Pontal de Maracaípe na maré baixa. Fonte: Marinha do Brasil (estação de Suape).',
-    keywords: ['maré maracaípe', 'maré maracaípe hoje', 'tábua de maré maracaípe', 'surf maracaípe maré', 'pontal de maracaípe maré', 'maré maracaipe porto de galinhas'],
+    description: 'Tábua da maré de Maracaípe (Ipojuca, PE) para hoje e 2026: horários de maré alta e baixa para o surf e as piscinas naturais do Pontal na maré baixa. Fonte: Marinha do Brasil (Suape).',
+    keywords: ['maré maracaípe', 'maré maracaípe hoje', 'tábua de maré maracaípe', 'tábua da maré maracaípe', 'surf maracaípe maré', 'pontal de maracaípe maré', 'maré maracaipe porto de galinhas'],
     praias: ['Maracaípe', 'Porto de Galinhas', 'Serrambi'],
     category: 'surf',
     portoVizinhos: ['porto-de-galinhas', 'serrambi'],
@@ -581,6 +581,20 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     faqs: [
       { q: 'Como a maré afeta o banho no Farol da Barra?', a: 'Na maré baixa, os arrecifes em frente ao farol formam piscinas naturais rasas e mornas; na maré alta, as ondas quebram sobre as pedras e o mar ganha força.' },
       { q: 'O Porto da Barra tem maré diferente do Farol da Barra?', a: 'Não, ambas compartilham a mesma estação maregráfica oficial do Porto de Salvador (DHN), situada a menos de 5 km.' },
+    ],
+  },
+
+  'praia-do-forte': {
+    titleSuffix: 'Maré Alta e Baixa Hoje',
+    description: 'Tábua de marés de Praia do Forte (Mata de São João, BA) para hoje e 2026. Horários de maré alta e baixa para as piscinas naturais, o banho de mar e os passeios no Litoral Norte da Bahia.',
+    keywords: ['maré praia do forte', 'tábua de maré praia do forte', 'tabua de mare praia do forte bahia', 'maré praia do forte hoje', 'maré baixa praia do forte', 'piscinas naturais praia do forte maré'],
+    praias: ['Praia do Forte', 'Papa Gente'],
+    category: 'turismo',
+    portoVizinhos: ['guarajuba', 'itapua', 'porto-de-salvador'],
+    faqs: [
+      { q: 'Qual o melhor horário de maré para as piscinas naturais de Praia do Forte?', a: 'A maré baixa, de preferência em dias de maré viva (coeficiente alto), é quando os recifes ficam expostos e formam piscinas calmas. Consulte os horários de baixamar acima e chegue cerca de 1 hora antes.' },
+      { q: 'A tábua de maré de Praia do Forte é oficial?', a: 'Praia do Forte não tem marégrafo próprio. O MaréAgora mostra uma previsão estimada a partir da estação de Salvador (Marinha do Brasil), por isso pode haver pequena diferença de horário e altura no local.' },
+      { q: 'Qual a melhor maré para o banho de mar em Praia do Forte?', a: 'Maré média a alta deixa a água mais funda e calma junto à praia; na maré baixa os recifes aparecem e a água fica mais rasa. Veja o horário do dia na tábua acima.' },
     ],
   },
 

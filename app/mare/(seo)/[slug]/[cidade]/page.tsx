@@ -64,9 +64,13 @@ function buildTideSnippet(
     }
 
     if (altas.length === 0 && baixas.length === 0) return null;
+    // Versão curta (só horários): no celular o Google mostra ~120-160 caracteres
+    // da descrição, e as alturas já estão na página. Sobra espaço pro resto do texto.
+    const altasH = eventos.filter(e => e.tipo === 'high').map(e => e.hora);
+    const baixasH = eventos.filter(e => e.tipo === 'low').map(e => e.hora);
     const partes: string[] = [];
-    if (altas.length) partes.push(`maré alta ${altas.join(', ')}`);
-    if (baixas.length) partes.push(`baixa ${baixas.join(', ')}`);
+    if (altasH.length) partes.push(`alta ${altasH.join(', ')}`);
+    if (baixasH.length) partes.push(`baixa ${baixasH.join(', ')}`);
     return `Maré em ${seoName} (${uf}) em ${dd}: ${partes.join('; ')}.`;
   } catch {
     return null;
@@ -154,7 +158,7 @@ export async function generateMetadata({ params }: { params: { slug: string, cid
     ? rawTideSnippet.replace(/^Maré em /, 'Maré estimada em ')
     : rawTideSnippet;
   const description = tideSnippet
-    ? cutAtWord(`${tideSnippet} ${baseDescription}`, 200)
+    ? cutAtWord(`${tideSnippet} ${baseDescription}`, 160)
     : baseDescription;
 
   const keywords = config?.keywords

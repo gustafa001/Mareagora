@@ -225,6 +225,19 @@ export const FISHING_SPOTS: FishingSpot[] = [
     nearestPortSlug: 'guaruja',
     // ⚠️ coordenada aproximada — ajustar após conferência exata no Google Maps
   },
+  {
+    id: 'fs-16',
+    name: 'Espigão Costeiro',
+    slug: 'espigao-costeiro-sao-luis',
+    type: 'molhe',
+    state: 'MA',
+    region: 'nordeste',
+    lat: -2.501186,
+    lon: -44.3217298,
+    description: 'Espigão costeiro de São Luís, mapeado como pesqueiro pela comunidade do OpenStreetMap.',
+    nearestPortSlug: 'sao-luis',
+    // ⚠️ coordenada do OpenStreetMap (nó 2959807624, nome "PESQUEIRO ESPIGÃO COSTEIRO", 17/11/2026) — conferir no Google Maps; espécies a preencher
+  },
 ];
 
 export function getFishingSpotBySlug(slug: string): FishingSpot | undefined {

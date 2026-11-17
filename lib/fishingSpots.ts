@@ -147,7 +147,7 @@ export const FISHING_SPOTS: FishingSpot[] = [
   },
   {
     id: 'fs-10',
-    name: 'Praia do Forte',
+    name: 'Praia do Forte (Cabo Frio)',
     slug: 'praia-do-forte-cabo-frio',
     type: 'praia',
     state: 'RJ',

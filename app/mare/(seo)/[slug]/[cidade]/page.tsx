@@ -44,34 +44,30 @@ function buildTideSnippet(
     const hoje = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
     const eventos = getEventosDia(port, hoje);
     if (!eventos || eventos.length === 0) return null;
-    const fmt = (e: { hora: string; altura_m: number }) => `${e.hora} (${e.altura_m.toFixed(1).replace('.', ',')} m)`;
-    const altas = eventos.filter(e => e.tipo === 'high').map(fmt);
-    const baixas = eventos.filter(e => e.tipo === 'low').map(fmt);
     const dd = `${hoje.slice(8, 10)}/${hoje.slice(5, 7)}`;
 
+    // Só horários nas descrições (alturas ficam na página): é o que a busca "tábua de maré <cidade>" quer.
+    const altasH = eventos.filter(e => e.tipo === 'high').map(e => e.hora);
+    const baixasH = eventos.filter(e => e.tipo === 'low').map(e => e.hora);
+    const horarios = [
+      altasH.length ? `alta ${altasH.join(', ')}` : '',
+      baixasH.length ? `baixa ${baixasH.join(', ')}` : '',
+    ].filter(Boolean).join('; ');
+
     if (highlight === 'piscinas-naturais') {
-      if (baixas.length === 0) return null;
-      return `Maceió (${uf}) em ${dd}: baixamar hoje às ${baixas.join(' e ')} (piscinas naturais da Pajuçara).`;
+      if (baixasH.length === 0) return null;
+      return `Maceió (${uf}) em ${dd}: ${horarios}. Melhor hora p/ piscinas naturais da Pajuçara: baixa-mar.`;
     }
 
     if (highlight === 'amplitude') {
       const alturas = eventos.map(e => e.altura_m);
       if (alturas.length < 2) return null;
-      const min = Math.min(...alturas);
-      const max = Math.max(...alturas);
-      const amp = max - min;
-      return `São Luís (${uf}) em ${dd}: amplitude de ${amp.toFixed(2).replace('.', ',')} m (de ${min.toFixed(2).replace('.', ',')} m a ${max.toFixed(2).replace('.', ',')} m).`;
+      const amp = Math.max(...alturas) - Math.min(...alturas);
+      return `São Luís (${uf}) em ${dd}: ${horarios}; amplitude ${amp.toFixed(1).replace('.', ',')} m.`;
     }
 
-    if (altas.length === 0 && baixas.length === 0) return null;
-    // Versão curta (só horários): no celular o Google mostra ~120-160 caracteres
-    // da descrição, e as alturas já estão na página. Sobra espaço pro resto do texto.
-    const altasH = eventos.filter(e => e.tipo === 'high').map(e => e.hora);
-    const baixasH = eventos.filter(e => e.tipo === 'low').map(e => e.hora);
-    const partes: string[] = [];
-    if (altasH.length) partes.push(`alta ${altasH.join(', ')}`);
-    if (baixasH.length) partes.push(`baixa ${baixasH.join(', ')}`);
-    return `Maré em ${seoName} (${uf}) em ${dd}: ${partes.join('; ')}.`;
+    if (altasH.length === 0 && baixasH.length === 0) return null;
+    return `Maré em ${seoName} (${uf}) em ${dd}: ${horarios}.`;
   } catch {
     return null;
   }
@@ -159,7 +155,7 @@ export async function generateMetadata({ params }: { params: { slug: string, cid
     : rawTideSnippet;
   const description = tideSnippet
     ? cutAtWord(`${tideSnippet} ${baseDescription}`, 160)
-    : baseDescription;
+    : cutAtWord(baseDescription, 160);
 
   const keywords = config?.keywords
     ?? [

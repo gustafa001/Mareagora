@@ -252,3 +252,35 @@ export function groupFishingSpotsByRegion(): { region: FishingSpot['region']; sp
     spots: FISHING_SPOTS.filter((s) => s.region === region),
   })).filter((g) => g.spots.length > 0);
 }
+
+/**
+ * Píeres e cais públicos do Nordeste mapeados no OpenStreetMap (export de 17/11/2026,
+ * © colaboradores do OpenStreetMap, ODbL). NÃO são pontos de pesca verificados: o OSM não diz
+ * se a pesca é permitida ou produtiva ali. Aparecem em seção separada, com aviso, e não
+ * no mapa. Terminais industriais, pesque-pagues e locais privados ficaram de fora.
+ */
+export interface OsmPier {
+  name: string;
+  state: string;
+  lat: number;
+  lon: number;
+}
+
+export const OSM_PIERS: OsmPier[] = [
+  { name: 'Marco dos Corais', state: 'AL', lat: -9.6655493, lon: -35.6962822 },
+  { name: 'Píer do Marco Zero', state: 'PE', lat: -8.0631591, lon: -34.8708287 },
+  { name: 'Píer Aurora', state: 'PE', lat: -8.0548064, lon: -34.8761426 },
+  { name: 'Píer Apipucos', state: 'PE', lat: -8.0209305, lon: -34.9338188 },
+  { name: 'Píer Mariassú', state: 'PE', lat: -8.6843259, lon: -35.1026548 },
+  { name: 'Cais de São José de Ribamar', state: 'MA', lat: -2.5651983, lon: -44.0565268 },
+  { name: 'Cais de Alcântara', state: 'MA', lat: -2.4059752, lon: -44.4241806 },
+  { name: 'Cais Pesqueiro', state: 'MA', lat: -2.5066305, lon: -43.443657 },
+  { name: 'Píer do Mailame', state: 'BA', lat: -15.682776, lon: -38.9430532 },
+  { name: 'Píer de Cachoeira', state: 'BA', lat: -12.6058562, lon: -38.963686 },
+  { name: 'Píer do Pontal', state: 'BA', lat: -14.806868, lon: -39.0410123 },
+  { name: 'Atracadouro de Campinho', state: 'BA', lat: -13.9126, lon: -38.9887864 },
+  { name: 'Cais de Cairu', state: 'BA', lat: -13.4835047, lon: -39.0449569 },
+  { name: 'Píer de Mutá', state: 'BA', lat: -12.9915501, lon: -38.7767262 },
+  { name: 'Ponte do Lôrete', state: 'BA', lat: -12.9204686, lon: -38.5030285 },
+  { name: 'Praia dos Pescadores', state: 'BA', lat: -12.9271345, lon: -38.619031 },
+];

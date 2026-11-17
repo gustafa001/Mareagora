@@ -5,8 +5,8 @@ import NavBar from '@/components/NavBar';
 import SchemaGenerator from '@/components/seo/SchemaGenerator';
 import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
-import { FISHING_SPOTS, groupFishingSpotsByRegion } from '@/lib/fishingSpots';
-import { getPortBySlug } from '@/lib/ports';
+import { FISHING_SPOTS, OSM_PIERS, groupFishingSpotsByRegion } from '@/lib/fishingSpots';
+import { getPortBySlug, PORTS, haversineDistance } from '@/lib/ports';
 import { getStateSlug } from '@/lib/states';
 
 const FishingSpotsMap = dynamic(() => import('@/components/FishingSpotsMap'), { ssr: false });
@@ -29,6 +29,14 @@ const REGION_LABEL: Record<string, string> = {
 export default function Page() {
   const grupos = groupFishingSpotsByRegion();
   const total = FISHING_SPOTS.length;
+
+  // Liga cada píer à página de maré da cidade mais próxima (até 25 km).
+  const piers = OSM_PIERS.map((pier) => {
+    const nearest = PORTS
+      .map((p) => ({ p, km: haversineDistance(pier.lat, pier.lon, p.lat, p.lon) }))
+      .sort((a, b) => a.km - b.km)[0];
+    return { pier, port: nearest && nearest.km <= 25 ? nearest.p : undefined };
+  });
 
   const itemList = {
     '@context': 'https://schema.org',
@@ -122,6 +130,33 @@ export default function Page() {
               </div>
             </div>
           ))}
+
+          <div className="mb-10">
+            <h2 className="text-2xl font-bold text-slate-900 font-syne mb-2">
+              Píeres e cais públicos no Nordeste
+            </h2>
+            <p className="text-sm text-slate-600 mb-4">
+              Lista de píeres e cais mapeados pela comunidade do OpenStreetMap. Não são pontos de pesca
+              confirmados: antes de ir, confira se a pesca é permitida no local e as condições de acesso.
+            </p>
+            <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-slate-700">
+              {piers.map(({ pier, port }) => (
+                <li key={pier.name + pier.lat}>
+                  <span className="font-semibold text-slate-800">{pier.name}</span> ({pier.state})
+                  {port && (
+                    <>
+                      {' '}— <Link href={`/mare/${getStateSlug(port.state)}/${port.slug}`} className="text-blue-600 hover:underline">
+                        maré em {port.cityName}
+                      </Link>
+                    </>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-3 text-xs text-slate-500">
+              Dados de localização © colaboradores do <a href="https://www.openstreetmap.org/copyright" className="underline" rel="noopener noreferrer">OpenStreetMap</a> (ODbL).
+            </p>
+          </div>
 
           <div className="text-center">
             <Link href="/pesca" className="text-blue-600 font-medium hover:underline">

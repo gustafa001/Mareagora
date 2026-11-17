@@ -92,11 +92,6 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
   const config = portosConfig[slug];
   const categoria = config?.category ?? 'turismo';
 
-  const todayTides = getEventosDia(port, todayStr);
-  const weekTides = getEventosRange(port, todayStr, 7);
-  const ano = Number(todayStr.slice(0, 4));
-  const dataAno = getEventosAno(port, ano);
-
   // Relógio "vivo": só passa a existir depois de montar no cliente
   // (pós-hidratação). Antes disso usamos um placeholder fixo — igual no
   // servidor e no primeiro render do cliente — em vez de recalcular
@@ -109,6 +104,20 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
     const timer = setInterval(() => setLiveNow(new Date()), 30_000); // atualiza a cada 30s
     return () => clearInterval(timer);
   }, []);
+
+  // "Hoje" efetivo (fuso de Brasília). O `todayStr` vem do HTML em cache (ISR,
+  // revalidate de 6h) e pode ficar um dia atrasado após a meia-noite. Antes de
+  // montar (SSR + 1º render do cliente) usamos o `todayStr` do servidor, igual
+  // nos dois lados, então não há erro de hidratação; depois de montar passa a
+  // seguir o relógio do navegador e vira o dia sozinho, sem custo de ISR.
+  const todayEff = liveNow
+    ? liveNow.toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' })
+    : todayStr;
+
+  const todayTides = getEventosDia(port, todayEff);
+  const weekTides = getEventosRange(port, todayEff, 7);
+  const ano = Number(todayEff.slice(0, 4));
+  const dataAno = getEventosAno(port, ano);
 
   const currentTimeBR = liveNow
     ? liveNow.toLocaleTimeString('pt-BR', {
@@ -130,7 +139,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
       const now = new Date();
       const year = now.getFullYear();
       const month = now.getMonth();
-      const rows = buildMonthRows(dataAno, year, month, port.lat, port.lon, todayStr, WEEKDAYS);
+      const rows = buildMonthRows(dataAno, year, month, port.lat, port.lon, todayEff, WEEKDAYS);
       await exportTidePdf({
         portName: seoName,
         state: port.state,
@@ -164,7 +173,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
   const lastHigh = lastHighToday !== null
     ? lastHighToday
     : (currentMin !== null // só no cliente, nunca no SSR
-      ? ([...getEventosDia(port, addDays(todayStr, -1))]
+      ? ([...getEventosDia(port, addDays(todayEff, -1))]
         .filter(t => t.tipo === 'high')
         .sort((a, b) => timeToMinutes(a.hora) - timeToMinutes(b.hora))
         .pop() ?? null)
@@ -259,7 +268,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
             portName={seoName}
             stateSlug={getStateSlug(port.state)}
             portSlug={port.slug}
-            todayStr={todayStr}
+            todayStr={todayEff}
             currentHeight={currentHeight}
             isRising={isRising}
             nextHigh={nextHigh}
@@ -318,7 +327,7 @@ export default function PortPageContent({ slug, portDescription, blogPosts, blog
               lon={port.lon}
               todayTides={todayTides}
               utcOffsetMin={-180}
-              todayStr={todayStr}
+              todayStr={todayEff}
             />
           </ClientOnly>
         </div>

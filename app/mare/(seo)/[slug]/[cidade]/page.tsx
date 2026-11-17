@@ -267,7 +267,8 @@ export default async function PortPage({ params }: { params: { slug: string, cid
 
       {/* Resumo Gerado (AI Overview Target) — exibido como slider, texto completo preservado no HTML */}
       <SeoOverviewTicker
-        title={`Visão Geral Hoje (${dataHoje.split('-').reverse().join('/')})`}
+        title="Visão Geral Hoje"
+        dateStr={dataHoje}
         text={seoText}
       />
       {/* Aviso de previsão estimada (só locais sem marégrafo próprio). Fica fora de

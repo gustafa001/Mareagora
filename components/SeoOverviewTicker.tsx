@@ -12,7 +12,32 @@ import { useEffect, useState } from 'react';
  * já que remover fisicamente o texto do DOM reduziria o valor desse bloco
  * pra SEO/AI Overview.
  */
-export default function SeoOverviewTicker({ title, text }: { title: string; text: string }) {
+export default function SeoOverviewTicker({
+  title,
+  text,
+  dateStr,
+}: {
+  title: string;
+  text: string;
+  /** Data (YYYY-MM-DD) calculada no servidor. Quando passada, o título mostra
+   *  "{title} (dd/mm/aaaa)" e a data acompanha o relógio do navegador após
+   *  montar, para não ficar um dia atrasada em páginas servidas do cache (ISR). */
+  dateStr?: string;
+}) {
+  const [liveDate, setLiveDate] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!dateStr) return;
+    const update = () =>
+      setLiveDate(new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' }));
+    update();
+    const id = setInterval(update, 60_000);
+    return () => clearInterval(id);
+  }, [dateStr]);
+
+  const shownDate = dateStr ? (liveDate ?? dateStr) : null;
+  const fullTitle = shownDate ? `${title} (${shownDate.split('-').reverse().join('/')})` : title;
+
   // Divide em frases (por ponto final seguido de espaço/maiúscula), sem perder o texto original.
   const sentences = text
     .split(/(?<=[.!?])\s+(?=[A-ZÀ-Ú])/)
@@ -32,7 +57,7 @@ export default function SeoOverviewTicker({ title, text }: { title: string; text
   return (
     <div className="bg-slate-900/50 border-b border-slate-800 py-3">
       <div className="container">
-        <h2 className="text-base font-bold text-white mb-1">{title}</h2>
+        <h2 className="text-base font-bold text-white mb-1">{fullTitle}</h2>
 
         <div className="relative min-h-[2.8em] sm:min-h-[1.8em]">
           {sentences.map((sentence, i) => (

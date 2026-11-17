@@ -3,7 +3,7 @@
  * Base de pontos de pesca (píers, molhes, praias, costões) para o mapa
  * de "Lugares de Pesca".
  *
- * Status da verificação (27/07/2026): ✅ 12 de 12 pontos conferidos no Google Maps.
+ * Status da verificação (27/07/2026): ✅ 12 pontos conferidos no Google Maps; 13/09/2026: +3 (fs-13 a fs-15).
  * 4 deles com coordenada exata extraída da página do local (fs-1, fs-2, fs-4, fs-5);
  * os demais com área geral confirmada visualmente (nível de praia/cidade).
  * Dois nomes foram corrigidos pra bater com o nome real no Maps (fs-4, fs-5, fs-11).
@@ -98,7 +98,7 @@ export const FISHING_SPOTS: FishingSpot[] = [
   },
   {
     id: 'fs-6',
-    name: 'Canal de Bertioga',
+    name: 'Canal de Bertioga (lado de Bertioga)',
     slug: 'canal-de-bertioga',
     type: 'rio',
     state: 'SP',

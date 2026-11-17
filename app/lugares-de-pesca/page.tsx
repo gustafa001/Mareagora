@@ -5,12 +5,14 @@ import NavBar from '@/components/NavBar';
 import SchemaGenerator from '@/components/seo/SchemaGenerator';
 import { AD_SLOTS } from '@/lib/adConfig';
 import AdSlot from '@/components/ads/AdSlot';
-import { groupFishingSpotsByRegion } from '@/lib/fishingSpots';
+import { FISHING_SPOTS, groupFishingSpotsByRegion } from '@/lib/fishingSpots';
+import { getPortBySlug } from '@/lib/ports';
+import { getStateSlug } from '@/lib/states';
 
 const FishingSpotsMap = dynamic(() => import('@/components/FishingSpotsMap'), { ssr: false });
 
 export const metadata: Metadata = {
-  title: 'Lugares de Pesca no Brasil — Mapa de Píers, Molhes e Praias | MaréAgora',
+  title: 'Lugares de Pesca no Brasil: Mapa de Píers e Molhes',
   description:
     'Mapa com os principais lugares de pesca do Brasil: píers, molhes, costões e praias. Encontre o ponto mais perto de você e veja a maré do local.',
   alternates: { canonical: 'https://mareagora.com.br/lugares-de-pesca' },
@@ -26,6 +28,24 @@ const REGION_LABEL: Record<string, string> = {
 
 export default function Page() {
   const grupos = groupFishingSpotsByRegion();
+  const total = FISHING_SPOTS.length;
+
+  const itemList = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Lugares de pesca no Brasil',
+    numberOfItems: total,
+    itemListElement: FISHING_SPOTS.map((s, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'Place',
+        name: s.name,
+        geo: { '@type': 'GeoCoordinates', latitude: s.lat, longitude: s.lon },
+        address: { '@type': 'PostalAddress', addressRegion: s.state, addressCountry: 'BR' },
+      },
+    })),
+  };
 
   return (
     <main className="min-h-screen bg-slate-50">
@@ -35,6 +55,7 @@ export default function Page() {
         title="Lugares de Pesca no Brasil — Mapa de Píers, Molhes e Praias | MaréAgora"
         description="Mapa com os principais lugares de pesca do Brasil: píers, molhes, costões e praias."
       />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }} />
       <NavBar />
 
       <div className="px-4 py-12 sm:px-6 lg:px-8">
@@ -50,7 +71,7 @@ export default function Page() {
           <div className="mb-4 flex items-start gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
             <span>✅</span>
             <p>
-              Os 12 pontos abaixo já foram conferidos no Google Maps. Conhece um bom lugar de pesca que não está
+              Os {total} pontos abaixo foram conferidos no Google Maps (a localização de alguns é aproximada). Conhece um bom lugar de pesca que não está
               aqui? <Link href="/contato" className="font-medium underline">Manda pra gente</Link>.
             </p>
           </div>
@@ -85,6 +106,17 @@ export default function Page() {
                     {spot.species && spot.species.length > 0 && (
                       <p className="text-sm text-slate-500">🐟 {spot.species.join(', ')}</p>
                     )}
+                    {(() => {
+                      const port = spot.nearestPortSlug ? getPortBySlug(spot.nearestPortSlug) : undefined;
+                      return port ? (
+                        <Link
+                          href={`/mare/${getStateSlug(port.state)}/${port.slug}`}
+                          className="mt-2 inline-block text-sm font-medium text-blue-600 hover:underline"
+                        >
+                          Tábua de maré de {port.cityName} →
+                        </Link>
+                      ) : null;
+                    })()}
                   </div>
                 ))}
               </div>

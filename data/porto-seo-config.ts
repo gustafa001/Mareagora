@@ -136,6 +136,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'porto-de-salvador': {
+    seoName: 'Salvador',
     titleSuffix: 'Maré Alta e Baixa Hoje — Praias e Náutica',
     description: 'Tábua de marés de Salvador (BA) para hoje e 2026. Horários de maré para as praias da orla, pesca e navegação na Baía de Todos os Santos. Fonte: Marinha do Brasil.',
     keywords: ['maré salvador hoje', 'tabua maré salvador 2026', 'maré barra salvador', 'maré ondina salvador', 'pesca baía todos os santos maré', 'maré itapuã salvador'],
@@ -160,6 +161,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'porto-de-sao-sebastiao': {
+    seoName: 'São Sebastião',
     titleSuffix: 'Maré Alta e Baixa Hoje — Praias e Ilhabela',
     description: 'Tábua de marés de São Sebastião para hoje e 2026. Horários para surf, pesca e travessia para Ilhabela. Fonte oficial: Marinha do Brasil.',
     keywords: ['maré são sebastião hoje', 'tabua maré são sebastião 2026', 'maré ilhabela', 'travessia ilhabela maré', 'pesca são sebastião maré', 'surf são sebastião'],
@@ -172,6 +174,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'porto-do-recife': {
+    seoName: 'Recife',
     titleSuffix: 'Maré Alta e Baixa Hoje — Piscinas Naturais e Pesca',
     description: 'Tábua de marés do Recife para hoje e 2026. Horários para as piscinas naturais de Porto de Galinhas, Boa Viagem e pesca no litoral pernambucano. Fonte: Marinha do Brasil.',
     keywords: ['maré recife hoje', 'tabua maré recife 2026', 'maré boa viagem recife', 'piscinas naturais porto galinhas maré', 'maré baixa porto galinhas', 'pesca recife maré'],
@@ -239,8 +242,8 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
 
   'maracaipe': {
     titleSuffix: 'Maré Alta e Baixa Hoje — Surf e Piscinas Naturais',
-    description: 'Tábua de maré de Maracaípe (Ipojuca, PE) para hoje e 2026. Horários para o surf na praia e as piscinas naturais do Pontal de Maracaípe na maré baixa. Fonte: Marinha do Brasil (estação de Suape).',
-    keywords: ['maré maracaípe', 'maré maracaípe hoje', 'tábua de maré maracaípe', 'surf maracaípe maré', 'pontal de maracaípe maré', 'maré maracaipe porto de galinhas'],
+    description: 'Tábua da maré de Maracaípe (Ipojuca, PE) para hoje e 2026: horários de maré alta e baixa para o surf e as piscinas naturais do Pontal na maré baixa. Fonte: Marinha do Brasil (Suape).',
+    keywords: ['maré maracaípe', 'maré maracaípe hoje', 'tábua de maré maracaípe', 'tábua da maré maracaípe', 'surf maracaípe maré', 'pontal de maracaípe maré', 'maré maracaipe porto de galinhas'],
     praias: ['Maracaípe', 'Porto de Galinhas', 'Serrambi'],
     category: 'surf',
     portoVizinhos: ['porto-de-galinhas', 'serrambi'],
@@ -338,6 +341,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   },
 
   'porto-de-tutoia': {
+    seoName: 'Tutóia',
     titleSuffix: 'Delta do Parnaíba Hoje',
     description: 'Tábua de marés de Tutóia (MA) para hoje e 2026. Horários essenciais para passeios de barco pelo Delta do Parnaíba, acesso aos Lençóis Maranhenses e pesca nos igarapés. Fonte: Marinha do Brasil.',
     keywords: ['maré tutóia hoje', 'tabua maré tutóia 2026', 'delta do parnaíba maré', 'lençóis maranhenses barco maré', 'passeio delta das américas maré', 'maré igarapés tutóia', 'pesca tutóia maré'],
@@ -384,9 +388,66 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     faqs: [],
   },
 
+  // Busca real no Search Console: "tabua de mare vitoria", "tábua de maré vitória es" (nunca "porto de vitória").
+  'porto-de-vitoria': {
+    seoName: 'Vitória',
+    titleSuffix: 'Horários de Hoje',
+    description: 'Tábua de marés de Vitória (ES) hoje e 2026: maré alta e baixa, coeficiente e horários para praias, pesca e navegação recreativa. Dados da Marinha do Brasil.',
+    keywords: ['tábua de maré vitória', 'tabua de mare vitoria es', 'maré vitória hoje', 'tábua da maré vitória 2026', 'maré alta vitória es', 'horário maré vitória'],
+    praias: ['Camburi', 'Curva da Jurema', 'Praia do Canto'],
+    category: 'turismo',
+    portoVizinhos: ['porto-de-tubarao', 'terminal-da-ponta-do-ubu-i'],
+    faqs: [],
+  },
+
+  // Consultas reais: "tabua de mare pipa", "mare pipa", "tabua da mare pipa".
+  'pipa': {
+    titleSuffix: 'Horários de Hoje',
+    description: 'Tábua de marés de Pipa (RN) hoje e 2026: maré alta e baixa e coeficiente para Praia do Amor, Baía dos Golfinhos e Madeiro. Dados da Marinha do Brasil.',
+    keywords: ['tábua de maré pipa', 'tabua de mare pipa', 'maré pipa hoje', 'tábua da maré pipa 2026', 'maré praia do amor pipa', 'maré baía dos golfinhos', 'maré praia do madeiro'],
+    praias: ['Praia do Amor', 'Baía dos Golfinhos', 'Praia do Madeiro', 'Chapadão'],
+    category: 'turismo',
+    portoVizinhos: ['porto-de-guamare', 'porto-de-natal'],
+    faqs: [],
+  },
+
+  // Consultas reais: "tabua de mares cabo frio" (plural), "tabua de mare cabo frio", "mare cabo frio".
+  'cabo-frio': {
+    titleSuffix: 'Horários de Hoje',
+    description: 'Tábua de marés de Cabo Frio (RJ) hoje e 2026: maré alta e baixa e coeficiente para Praia do Forte, Dunas e Foguete. Dados da Marinha do Brasil.',
+    keywords: ['tábua de maré cabo frio', 'tabua de mares cabo frio', 'tabua de mare cabo frio', 'maré cabo frio hoje', 'maré praia do forte cabo frio', 'tábua da maré cabo frio 2026'],
+    praias: ['Praia do Forte', 'Praia das Dunas', 'Praia do Foguete', 'Praia das Conchas'],
+    category: 'turismo',
+    portoVizinhos: ['buzios', 'arraial-dajuda'],
+    faqs: [],
+  },
+
+  // Consultas reais: "maré copacabana", "tabua de mare copacabana", "mare copacabana hoje".
+  'copacabana': {
+    titleSuffix: 'Horários de Hoje',
+    description: 'Tábua de marés de Copacabana (RJ) hoje e 2026: maré alta e baixa e coeficiente para banho, surf e esportes na orla. Dados da Marinha do Brasil.',
+    keywords: ['maré copacabana', 'maré copacabana hoje', 'tabua de mare copacabana', 'tábua de maré copacabana 2026', 'horário maré copacabana'],
+    praias: ['Copacabana', 'Leme', 'Posto 6'],
+    category: 'turismo',
+    portoVizinhos: ['ipanema', 'rio-de-janeiro-fiscal'],
+    faqs: [],
+  },
+
+  // Consultas reais: "tabua de mare salinopolis", "mare salinopolis", "tábua de maré salinópolis".
+  'fundeadouro-de-salinopolis': {
+    seoName: 'Salinópolis',
+    titleSuffix: 'Horários de Hoje',
+    description: 'Tábua de marés de Salinópolis (PA) hoje e 2026: maré alta e baixa e coeficiente para Atalaia, Maçarico e Farol Velho. Dados da Marinha do Brasil.',
+    keywords: ['tábua de maré salinópolis', 'tabua de mare salinopolis', 'maré salinópolis hoje', 'tabua de mares salinopolis', 'maré atalaia salinópolis'],
+    praias: ['Atalaia', 'Maçarico', 'Farol Velho', 'Corvina'],
+    category: 'turismo',
+    portoVizinhos: ['ilha-do-mosqueiro'],
+    faqs: [],
+  },
+
   'sao-luis': {
     titleSuffix: 'Maré Alta e Baixa Hoje',
-    description: 'Veja a previsão de maré de São Luís (MA) em 2026: horários de premar e baixa-mar, altura das águas e as próximas 48 horas, com dados oficiais da Marinha do Brasil. Confira os horários.',
+    description: 'Tábua de marés de São Luís (MA) em 2026: preamar, baixamar e coeficiente. No Golfão Maranhense a amplitude passa de 7 m. Dados da Marinha do Brasil.',
     keywords: ['maré são luís hoje', 'tabua maré são luís 2026', 'maré alta são luís', 'maré baixa são luís', 'horário maré são luís', 'golfão maranhense maré', 'maré praia do calhau'],
     praias: ['Calhau', 'São Marcos', 'Ponta d’Areia', 'Olho d’Água', 'Praia do Meio'],
     category: 'turismo',
@@ -581,6 +642,20 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     faqs: [
       { q: 'Como a maré afeta o banho no Farol da Barra?', a: 'Na maré baixa, os arrecifes em frente ao farol formam piscinas naturais rasas e mornas; na maré alta, as ondas quebram sobre as pedras e o mar ganha força.' },
       { q: 'O Porto da Barra tem maré diferente do Farol da Barra?', a: 'Não, ambas compartilham a mesma estação maregráfica oficial do Porto de Salvador (DHN), situada a menos de 5 km.' },
+    ],
+  },
+
+  'praia-do-forte': {
+    titleSuffix: 'Maré Alta e Baixa Hoje',
+    description: 'Tábua de marés de Praia do Forte (Mata de São João, BA) para hoje e 2026. Horários de maré alta e baixa para as piscinas naturais, o banho de mar e os passeios no Litoral Norte da Bahia.',
+    keywords: ['maré praia do forte', 'tábua de maré praia do forte', 'tabua de mare praia do forte bahia', 'maré praia do forte hoje', 'maré baixa praia do forte', 'piscinas naturais praia do forte maré'],
+    praias: ['Praia do Forte', 'Papa Gente'],
+    category: 'turismo',
+    portoVizinhos: ['guarajuba', 'itapua', 'porto-de-salvador'],
+    faqs: [
+      { q: 'Qual o melhor horário de maré para as piscinas naturais de Praia do Forte?', a: 'A maré baixa, de preferência em dias de maré viva (coeficiente alto), é quando os recifes ficam expostos e formam piscinas calmas. Consulte os horários de baixamar acima e chegue cerca de 1 hora antes.' },
+      { q: 'A tábua de maré de Praia do Forte é oficial?', a: 'Praia do Forte não tem marégrafo próprio. O MaréAgora mostra uma previsão estimada a partir da estação de Salvador (Marinha do Brasil), por isso pode haver pequena diferença de horário e altura no local.' },
+      { q: 'Qual a melhor maré para o banho de mar em Praia do Forte?', a: 'Maré média a alta deixa a água mais funda e calma junto à praia; na maré baixa os recifes aparecem e a água fica mais rasa. Veja o horário do dia na tábua acima.' },
     ],
   },
 

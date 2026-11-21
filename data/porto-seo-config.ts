@@ -342,8 +342,8 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
 
   'porto-de-tutoia': {
     seoName: 'Tutóia',
-    titleSuffix: 'Delta do Parnaíba Hoje',
-    description: 'Tábua de marés de Tutóia (MA) para hoje e 2026. Horários essenciais para passeios de barco pelo Delta do Parnaíba, acesso aos Lençóis Maranhenses e pesca nos igarapés. Fonte: Marinha do Brasil.',
+    titleSuffix: 'Maré Alta e Baixa Hoje', // buscas reais: "tábua de maré tutóia", "maré tutóia hoje" (sem "delta")
+    description: 'Tábua de marés de Tutóia (MA) hoje e 2026: maré alta e baixa, coeficiente e horários para passeio de barco no Delta do Parnaíba, Lençóis Maranhenses e pesca nos igarapés. Fonte: Marinha do Brasil.',
     keywords: ['maré tutóia hoje', 'tabua maré tutóia 2026', 'delta do parnaíba maré', 'lençóis maranhenses barco maré', 'passeio delta das américas maré', 'maré igarapés tutóia', 'pesca tutóia maré'],
     praias: ['Tutóia', 'Caburé', 'Delta do Parnaíba'],
     category: 'turismo',
@@ -351,6 +351,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     faqs: [
       { q: 'Qual o melhor horário de maré para o passeio de barco no Delta do Parnaíba?', a: 'Prefira sair próximo da maré alta ou logo depois dela. Na maré baixa, muitos igarapés e canais do delta secam rapidamente, o que pode encalhar embarcações ou impedir o acesso a certos trechos.' },
       { q: 'A maré afeta o acesso aos Lençóis Maranhenses saindo de Tutóia?', a: 'Sim. A travessia por Caburé e os canais que dão acesso às dunas dependem do nível da maré. Barqueiros locais costumam ajustar o horário de saída conforme a tábua do dia.' },
+      { q: 'Como ver a tábua de maré de Tutóia hoje?', a: 'Nesta página estão os horários de maré alta e baixa de Tutóia (MA) para hoje e os próximos dias, com coeficiente e tabela do mês. Os dados seguem a estação do Porto de Tutóia, da Marinha do Brasil.' },
       { q: 'É seguro navegar pelos igarapés na maré vazante?', a: 'Requer atenção. A vazante pode expor bancos de areia e deixar canais estreitos demais para embarcações maiores. Piloteiros experientes usam a tábua de marés para planejar a rota de ida e volta com segurança.' },
     ],
   },
@@ -467,8 +468,8 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
   'porto-de-maceio': {
     seoName: 'Maceió',
     highlight: 'piscinas-naturais',
-    titleSuffix: 'Horários de Hoje',
-    description: 'Tábua de marés de Maceió (AL) hoje e 2026: maré alta e baixa, coeficiente e melhor horário para as piscinas naturais da Pajuçara. Dados da Marinha do Brasil.',
+    titleSuffix: 'Maré Alta e Baixa Hoje', // buscas reais: "maré baixa maceió hoje", "maré hoje maceió"
+    description: 'Tábua e tabela de marés de Maceió (AL) hoje, amanhã e 2026: maré alta e baixa, coeficiente e melhor horário para as piscinas naturais da Pajuçara. Dados da Marinha do Brasil.',
     keywords: ['tábua de maré maceió', 'tabua de mare maceio', 'maré maceió hoje', 'maré pajuçara', 'piscinas naturais pajuçara maré', 'maré ponta verde', 'maré jatiúca', 'tábua da maré maceió 2026'],
     praias: ['Pajuçara', 'Ponta Verde', 'Jatiúca', 'Cruz das Almas', 'Garça Torta', 'Riacho Doce'],
     category: 'turismo',
@@ -479,6 +480,8 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
       { q: 'De onde vêm os horários de maré de Maceió?', a: 'Os horários seguem a estação do Porto de Maceió, publicada pela Marinha do Brasil (CHM), e valem como referência para as praias da cidade, como Pajuçara, Ponta Verde e Jatiúca.' },
       { q: 'O que é coeficiente de maré?', a: 'Número de 20 a 120 que indica a intensidade da maré. Acima de 70 são marés vivas, com grande variação de nível; abaixo de 45 são marés mortas, com pouca variação.' },
       { q: 'Os dados servem para navegação?', a: 'Não. Os dados do MaréAgora são referência para atividades recreativas. Para navegação oficial, consulte sempre as tábuas publicadas pela Marinha do Brasil (CHM).' },
+      { q: 'Como ver a maré de amanhã em Maceió?', a: 'Nesta página você vê os horários de maré alta e baixa de hoje e dos próximos dias em Maceió, com a tabela do mês. Os horários seguem a estação do Porto de Maceió (Marinha do Brasil) e avançam cerca de 50 minutos a cada dia.' },
+      { q: 'A tábua de maré de Maceió e a do Porto de Maceió são a mesma?', a: 'Sim, é a mesma previsão. A estação de referência fica no Porto de Maceió e vale para as praias da cidade, como Pajuçara, Ponta Verde e Jatiúca.' },
     ],
   },
 

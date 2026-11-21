@@ -451,6 +451,7 @@ export const portosConfig: Record<string, PortoSEOConfig> = {
     keywords: ['maré são luís hoje', 'tabua maré são luís 2026', 'maré alta são luís', 'maré baixa são luís', 'horário maré são luís', 'golfão maranhense maré', 'maré praia do calhau'],
     praias: ['Calhau', 'São Marcos', 'Ponta d’Areia', 'Olho d’Água', 'Praia do Meio'],
     category: 'turismo',
+    highlight: 'amplitude', // destaque "Amplitude de hoje" no topo (backlink do Brasil 247 chega nesta página)
     portoVizinhos: ['porto-de-itaqui', 'porto-de-tutoia'],
     faqs: [
       { q: 'Qual o melhor horário de maré em São Luís?', a: 'As melhores janelas são nas 2 horas ao redor da maré alta e da maré baixa. No Golfão Maranhense, a amplitude é grande e o mar avança muito entre a vazante e a enchente.' },
